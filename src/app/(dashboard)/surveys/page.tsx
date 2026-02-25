@@ -6,10 +6,12 @@ import { cn } from '@/lib/utils';
 export const metadata = { title: 'Surveys & Inspections' };
 
 const STATUS_CONFIG: Record<string, { label: string; class: string }> = {
-  SCHEDULED:   { label: 'Scheduled',   class: 'status-badge-blue' },
-  IN_PROGRESS: { label: 'In Progress', class: 'status-badge-yellow' },
-  COMPLETE:    { label: 'Complete',    class: 'status-badge-green' },
-  OVERDUE:     { label: 'Overdue',     class: 'status-badge-red' },
+  SCHEDULED:          { label: 'Scheduled',          class: 'status-badge-blue'   },
+  IN_PROGRESS:        { label: 'In Progress',         class: 'status-badge-yellow' },
+  COMPLETED:          { label: 'Completed',           class: 'status-badge-green'  },
+  RESPONSE_DUE:       { label: 'Response Due',        class: 'status-badge-orange' },
+  RESPONSE_SUBMITTED: { label: 'Response Submitted',  class: 'status-badge-purple' },
+  CLOSED:             { label: 'Closed',              class: 'status-badge-gray'   },
 };
 
 export default async function SurveysPage() {
@@ -18,13 +20,13 @@ export default async function SurveysPage() {
 
   const surveys = await prisma.survey.findMany({
     where: { facilityId },
-    orderBy: { surveyDate: 'desc' },
+    orderBy: { createdAt: 'desc' },
   });
 
-  const total   = surveys.length;
-  const open    = surveys.filter(s => s.status !== 'COMPLETE').length;
-  const overdue = surveys.filter(s => s.status === 'OVERDUE').length;
-  const complete = surveys.filter(s => s.status === 'COMPLETE').length;
+  const total       = surveys.length;
+  const open        = surveys.filter(s => !['COMPLETED', 'CLOSED'].includes(s.status)).length;
+  const responseDue = surveys.filter(s => s.status === 'RESPONSE_DUE').length;
+  const complete    = surveys.filter(s => ['COMPLETED', 'CLOSED'].includes(s.status)).length;
 
   return (
     <div className="space-y-6">
@@ -49,10 +51,10 @@ export default async function SurveysPage() {
       {/* Summary cards */}
       <div className="grid grid-cols-4 gap-4">
         {[
-          { label: 'Total Surveys',  value: total,   icon: ClipboardList, color: 'text-slate-600', bg: 'bg-slate-50'  },
-          { label: 'Open / Active',  value: open,    icon: Clock,         color: 'text-blue-600',  bg: 'bg-blue-50'   },
-          { label: 'Overdue',        value: overdue, icon: AlertTriangle, color: 'text-red-600',   bg: 'bg-red-50'    },
-          { label: 'Completed',      value: complete,icon: CheckCircle2,  color: 'text-green-600', bg: 'bg-green-50'  },
+          { label: 'Total Surveys',  value: total,       icon: ClipboardList, color: 'text-slate-600',  bg: 'bg-slate-50'  },
+          { label: 'Open / Active',  value: open,        icon: Clock,         color: 'text-blue-600',  bg: 'bg-blue-50'   },
+          { label: 'Response Due',   value: responseDue, icon: AlertTriangle, color: 'text-orange-600',bg: 'bg-orange-50' },
+          { label: 'Completed',      value: complete,    icon: CheckCircle2,  color: 'text-green-600', bg: 'bg-green-50'  },
         ].map(card => (
           <div key={card.label} className={cn('rounded-xl border border-slate-200 p-5 flex items-start gap-4', card.bg)}>
             <card.icon className={cn('w-5 h-5 mt-0.5', card.color)} />
@@ -76,13 +78,13 @@ export default async function SurveysPage() {
           <table className="data-table">
             <thead className="data-table-head">
               <tr>
-                <th className="data-table-th">Survey / Inspection</th>
-                <th className="data-table-th">Type</th>
-                <th className="data-table-th">Agency</th>
-                <th className="data-table-th">Survey Date</th>
+                <th className="data-table-th">Survey Type</th>
+                <th className="data-table-th">Regulatory Body</th>
+                <th className="data-table-th">Conducted Date</th>
                 <th className="data-table-th">Status</th>
                 <th className="data-table-th">Findings</th>
-                <th className="data-table-th">Next Due</th>
+                <th className="data-table-th">Response Deadline</th>
+                <th className="data-table-th">Flags</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -90,22 +92,27 @@ export default async function SurveysPage() {
                 const cfg = STATUS_CONFIG[survey.status] ?? { label: survey.status, class: 'status-badge-gray' };
                 return (
                   <tr key={survey.id} className="data-table-row">
-                    <td className="data-table-td font-medium text-slate-900">{survey.title}</td>
-                    <td className="data-table-td text-slate-600">{survey.surveyType.replace(/_/g, ' ')}</td>
-                    <td className="data-table-td text-slate-600">{survey.agency ?? '—'}</td>
+                    <td className="data-table-td font-medium text-slate-900">{survey.surveyType.replace(/_/g, ' ')}</td>
+                    <td className="data-table-td text-slate-600">{survey.regulatoryBody.replace(/_/g, ' ')}</td>
                     <td className="data-table-td text-slate-600">
-                      {survey.surveyDate
-                        ? new Date(survey.surveyDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                      {survey.conductedDate
+                        ? new Date(survey.conductedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
                         : '—'}
                     </td>
                     <td className="data-table-td">
                       <span className={cn('status-badge', cfg.class)}>{cfg.label}</span>
                     </td>
-                    <td className="data-table-td text-slate-600">{survey.findingsCount ?? 0}</td>
+                    <td className="data-table-td text-slate-600">{survey.findingCount ?? 0}</td>
                     <td className="data-table-td text-slate-600">
-                      {survey.nextDue
-                        ? new Date(survey.nextDue).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                      {survey.responseDeadline
+                        ? new Date(survey.responseDeadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
                         : '—'}
+                    </td>
+                    <td className="data-table-td">
+                      <div className="flex gap-1 flex-wrap">
+                        {survey.immediateJeopardy && <span className="status-badge status-badge-red">IJ</span>}
+                        {survey.conditionLevel && <span className="status-badge status-badge-orange">CL</span>}
+                      </div>
                     </td>
                   </tr>
                 );

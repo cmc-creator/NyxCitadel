@@ -22,7 +22,6 @@ export default async function DocumentsPage() {
   const documents = await prisma.document.findMany({
     where: { facilityId },
     orderBy: { updatedAt: 'desc' },
-    include: { uploadedBy: { select: { name: true } } },
   });
 
   return (
@@ -70,7 +69,7 @@ export default async function DocumentsPage() {
               {documents.map(doc => (
                 <tr key={doc.id} className="data-table-row">
                   <td className="data-table-td">
-                    <span className="font-medium text-slate-900">{doc.title}</span>
+                    <span className="font-medium text-slate-900">{doc.name}</span>
                     {doc.description && (
                       <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{doc.description}</p>
                     )}
@@ -80,7 +79,7 @@ export default async function DocumentsPage() {
                       {doc.category.replace(/_/g, ' ')}
                     </span>
                   </td>
-                  <td className="data-table-td text-sm text-slate-600">{doc.uploadedBy?.name ?? '—'}</td>
+                  <td className="data-table-td text-sm text-slate-600">{doc.uploadedBy ?? '—'}</td>
                   <td className="data-table-td text-sm text-slate-600">
                     {new Date(doc.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </td>
