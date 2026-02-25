@@ -20,17 +20,22 @@ function LoginForm() {
     setLoading(true);
     setError('');
 
-    const result = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    });
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      });
 
-    if (result?.error) {
-      setError('Invalid email or password. Please try again.');
+      if (result?.error) {
+        setError('Invalid email or password. Please try again.');
+        setLoading(false);
+      } else {
+        router.push(callbackUrl);
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
       setLoading(false);
-    } else {
-      router.push(callbackUrl);
     }
   }
 
