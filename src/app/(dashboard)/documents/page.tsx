@@ -61,7 +61,6 @@ export default async function DocumentsPage() {
                 <th className="data-table-th">Category</th>
                 <th className="data-table-th">Uploaded By</th>
                 <th className="data-table-th">Last Updated</th>
-                <th className="data-table-th">Version</th>
                 <th className="data-table-th">Actions</th>
               </tr>
             </thead>
@@ -83,7 +82,6 @@ export default async function DocumentsPage() {
                   <td className="data-table-td text-sm text-slate-600">
                     {new Date(doc.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </td>
-                  <td className="data-table-td text-sm text-slate-600">{doc.version ?? 'v1.0'}</td>
                   <td className="data-table-td">
                     {doc.fileUrl && (
                       <a
