@@ -7,10 +7,7 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  // POSTGRES_PRISMA_URL uses connection pooling (required on Vercel serverless)
-  // For local dev, set DATABASE_URL in .env.local and leave directUrl unset
   url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
