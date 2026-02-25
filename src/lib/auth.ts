@@ -1,10 +1,10 @@
 import NextAuth, { type DefaultSession } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/lib/prisma';
 import { compare } from 'bcryptjs';
 import { z } from 'zod';
 import type { UserRole } from '@prisma/client';
+import { authConfig } from '@/auth.config';
 
 // Extend the session and JWT types to include role and facilityId
 declare module 'next-auth' {
@@ -28,32 +28,8 @@ const loginSchema = z.object({
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
-  session: {
-    strategy: 'jwt',
-  },
-  pages: {
-    signIn: '/login',
-    error: '/login',
-  },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-        token.facilityId = user.facilityId;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as UserRole;
-        session.user.facilityId = token.facilityId as string;
-      }
-      return session;
-    },
-  },
+  ...authConfig,
+  session: { strategy: 'jwt' },
   providers: [
     Credentials({
       name: 'credentials',
