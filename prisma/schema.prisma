@@ -1,0 +1,918 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  // POSTGRES_PRISMA_URL uses connection pooling (required on Vercel serverless)
+  // For local dev, set DATABASE_URL in .env.local and leave directUrl unset
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// WHITE-LABEL FACILITY CONFIGURATION
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Facility {
+  id              String   @id @default(cuid())
+  name            String
+  shortName       String?
+  logoUrl         String?
+  primaryColor    String   @default("#1e40af")
+  secondaryColor  String   @default("#3b82f6")
+  address         String?
+  city            String?
+  state           String   @default("AZ")
+  zip             String?
+  phone           String?
+  fax             String?
+  npi             String?  // National Provider Identifier
+  medicareId      String?
+  medicaidId      String?
+  jcAhcId         String?  // Joint Commission accreditation ID
+  licenseNumber   String?  // AZ ADHS license number
+  licenseExpiry   DateTime?
+  facilityType    FacilityType @default(ACUTE_PSYCH)
+  bedCount        Int?
+  timezone        String   @default("America/Phoenix")
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  users           User[]
+  complianceItems ComplianceItem[]
+  calendarEvents  CalendarEvent[]
+  trackerItems    TrackerItem[]
+  policies        Policy[]
+  incidents       Incident[]
+  trainingRecords TrainingRecord[]
+  drills          Drill[]
+  hvaAssessments  HvaAssessment[]
+  emPlans         EmergencyPlan[]
+  capItems        CorrectiveActionPlan[]
+  surveys         Survey[]
+  documents       Document[]
+  notifications   Notification[]
+
+  @@map("facilities")
+}
+
+enum FacilityType {
+  ACUTE_PSYCH
+  GENERAL_ACUTE
+  LTAC
+  SNF
+  BEHAVIORAL_HEALTH_OUTPATIENT
+  CRISIS_CENTER
+  RESIDENTIAL
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// USERS & AUTH
+// ─────────────────────────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  role          UserRole  @default(STAFF)
+  title         String?
+  department    String?
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+  facilityId    String
+  facility      Facility  @relation(fields: [facilityId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // NextAuth relations
+  accounts      Account[]
+  sessions      Session[]
+
+  // App relations
+  assignedItems    TrackerItem[]       @relation("AssignedTo")
+  createdItems     TrackerItem[]       @relation("CreatedBy")
+  assignedCaps     CorrectiveActionPlan[] @relation("CAPAssignee")
+  notifications    Notification[]
+  auditLogs        AuditLog[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  SUPER_ADMIN      // Multi-facility admin (white-label root)
+  ADMIN            // Facility administrator
+  COMPLIANCE_OFFICER
+  RISK_MANAGER
+  EM_COORDINATOR   // Emergency Management Coordinator
+  QUALITY          // Quality/PI staff
+  EDUCATION        // Staff education/training
+  STAFF            // Read + limited write
+  READ_ONLY
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COMPLIANCE CALENDAR & EVENTS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model CalendarEvent {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  title           String
+  description     String?
+  category        EventCategory
+  regulatoryBody  RegulatoryBody?
+  dueDate         DateTime
+  completedDate   DateTime?
+  status          EventStatus     @default(UPCOMING)
+  isRecurring     Boolean         @default(false)
+  recurrenceRule  String?         // iCal RRULE format
+  parentEventId   String?         // For recurring instances
+  parentEvent     CalendarEvent?  @relation("RecurringEvents", fields: [parentEventId], references: [id])
+  childEvents     CalendarEvent[] @relation("RecurringEvents")
+  priority        Priority        @default(MEDIUM)
+  notes           String?         @db.Text
+  documentUrl     String?
+  remindDaysBefore Int[]          @default([90, 60, 30, 14, 7])
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  trackerItem     TrackerItem?
+
+  @@map("calendar_events")
+}
+
+enum EventCategory {
+  // Emergency Management
+  EM_COMMITTEE_MEETING
+  HVA_ASSESSMENT
+  TABLETOP_EXERCISE
+  FUNCTIONAL_DRILL
+  FULL_SCALE_DRILL
+  EM_PLAN_REVIEW
+  AFTER_ACTION_REVIEW
+  COMMUNITY_PARTNER_MEETING
+
+  // Joint Commission
+  JC_SURVEY_PREP
+  JC_TRACER
+  JC_EC_ROUNDS
+  JC_MOCK_SURVEY
+  JC_STANDARDS_REVIEW
+  JC_PI_MEETING
+
+  // CMS / Conditions of Participation
+  CMS_SURVEY_PREP
+  CMS_MOCK_SURVEY
+  CMS_QAPI_MEETING
+  CMS_CONDITIONS_REVIEW
+
+  // Arizona State (ADHS / BOMEX / etc.)
+  AZ_LICENSE_RENEWAL
+  AZ_ADHS_SURVEY
+  AZ_INSPECTION
+  AZ_REPORT_SUBMISSION
+  AZ_BEHAVIORAL_HEALTH_REVIEW
+
+  // Life Safety / Environment of Care
+  FIRE_MARSHAL_INSPECTION
+  LIFE_SAFETY_ROUNDS
+  UTILITY_MANAGEMENT_TEST
+  MEDICAL_EQUIPMENT_PM
+  EOC_COMMITTEE_MEETING
+  FIRE_EXTINGUISHER_INSPECTION
+  SPRINKLER_INSPECTION
+  FIRE_ALARM_TEST
+  GENERATOR_TEST
+  BACKFLOW_PREVENTER_TEST
+  ELEVATOR_INSPECTION
+
+  // Infection Control
+  IC_COMMITTEE_MEETING
+  IC_RISK_ASSESSMENT
+  IC_SURVEILLANCE_REVIEW
+  HAND_HYGIENE_AUDIT
+
+  // Quality / PI
+  QAPI_MEETING
+  PEER_REVIEW
+  UTILIZATION_REVIEW
+  PATIENT_SATISFACTION_REVIEW
+  MORTALITY_REVIEW
+
+  // HR / Staff
+  POLICY_REVIEW
+  STAFF_TRAINING
+  COMPETENCY_ASSESSMENT
+  ANNUAL_EVALUATION
+  MANDATORY_EDUCATION
+
+  // Pharmacy / Medication
+  MEDICATION_MANAGEMENT_REVIEW
+  FORMULARY_REVIEW
+  CONTROLLED_SUBSTANCE_AUDIT
+  PHARMACY_INSPECTION
+
+  // Patient Rights / Ethics
+  PATIENT_RIGHTS_REVIEW
+  ETHICS_COMMITTEE_MEETING
+  INFORMED_CONSENT_AUDIT
+
+  // Governance
+  BOARD_MEETING
+  MEDICAL_STAFF_MEETING
+  CREDENTIALING_REVIEW
+  BYLAWS_REVIEW
+
+  OTHER
+}
+
+enum RegulatoryBody {
+  JOINT_COMMISSION
+  CMS
+  AZ_ADHS
+  AZ_BOMEX
+  AZ_BON        // Board of Nursing
+  AZ_BPPE       // Board of Pharmacy
+  DEA
+  OSHA
+  EPA
+  TJC_PATHWAYS  // Pathways to Excellence
+  CARF
+  DNV
+  NCQA
+  SAMHSA
+  INTERNAL
+  OTHER
+}
+
+enum EventStatus {
+  UPCOMING
+  IN_PROGRESS
+  COMPLETED
+  OVERDUE
+  WAIVED
+  NA
+}
+
+enum Priority {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COMPLIANCE ITEMS / REQUIREMENTS REGISTRY
+// ─────────────────────────────────────────────────────────────────────────────
+
+model ComplianceItem {
+  id             String          @id @default(cuid())
+  facilityId     String
+  facility       Facility        @relation(fields: [facilityId], references: [id])
+  title          String
+  description    String?         @db.Text
+  regulatoryBody RegulatoryBody
+  standardRef    String?         // e.g., "EC.02.05.07", "42 CFR 482.41"
+  category       String
+  frequency      Frequency
+  lastDoneDate   DateTime?
+  nextDueDate    DateTime?
+  status         ComplianceStatus @default(ACTIVE)
+  isRequired     Boolean         @default(true)
+  notes          String?         @db.Text
+  evidenceUrl    String?
+  responsibleRole UserRole?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@map("compliance_items")
+}
+
+enum ComplianceStatus {
+  ACTIVE
+  COMPLIANT
+  NON_COMPLIANT
+  PENDING_REVIEW
+  WAIVED
+  NA
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  SEMI_ANNUAL
+  ANNUAL
+  BIENNIAL
+  AS_NEEDED
+  ONE_TIME
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TRACKER ITEMS (Universal tracker for tasks/action items)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model TrackerItem {
+  id              String       @id @default(cuid())
+  facilityId      String
+  facility        Facility     @relation(fields: [facilityId], references: [id])
+  title           String
+  description     String?      @db.Text
+  category        TrackerCategory
+  status          TrackerStatus @default(OPEN)
+  priority        Priority     @default(MEDIUM)
+  dueDate         DateTime?
+  completedDate   DateTime?
+  assignedToId    String?
+  assignedTo      User?        @relation("AssignedTo", fields: [assignedToId], references: [id])
+  createdById     String
+  createdBy       User         @relation("CreatedBy", fields: [createdById], references: [id])
+  regulatoryBody  RegulatoryBody?
+  standardRef     String?
+  calendarEventId String?      @unique
+  calendarEvent   CalendarEvent? @relation(fields: [calendarEventId], references: [id])
+  notes           String?      @db.Text
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@map("tracker_items")
+}
+
+enum TrackerCategory {
+  COMPLIANCE
+  EMERGENCY_MANAGEMENT
+  LIFE_SAFETY
+  INFECTION_CONTROL
+  QUALITY
+  STAFF_EDUCATION
+  POLICY
+  CORRECTIVE_ACTION
+  SURVEY_PREP
+  OTHER
+}
+
+enum TrackerStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  OVERDUE
+  CANCELLED
+  ON_HOLD
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POLICY & PROCEDURE TRACKER
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Policy {
+  id              String        @id @default(cuid())
+  facilityId      String
+  facility        Facility      @relation(fields: [facilityId], references: [id])
+  policyNumber    String
+  title           String
+  category        PolicyCategory
+  regulatoryBody  RegulatoryBody[]
+  standardRef     String?
+  effectiveDate   DateTime
+  nextReviewDate  DateTime
+  lastReviewedDate DateTime?
+  reviewFrequency Frequency     @default(ANNUAL)
+  status          PolicyStatus  @default(ACTIVE)
+  version         String        @default("1.0")
+  owner           String?       // Department/role responsible
+  documentUrl     String?
+  summary         String?       @db.Text
+  revisionHistory Json?         // Array of {version, date, changedBy, summary}
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@map("policies")
+}
+
+enum PolicyCategory {
+  ADMINISTRATIVE
+  CLINICAL
+  EMERGENCY_MANAGEMENT
+  ENVIRONMENT_OF_CARE
+  HUMAN_RESOURCES
+  INFECTION_CONTROL
+  INFORMATION_MANAGEMENT
+  LEADERSHIP
+  LIFE_SAFETY
+  MEDICATION_MANAGEMENT
+  PATIENT_RIGHTS
+  PERFORMANCE_IMPROVEMENT
+  PRIVACY_SECURITY
+  OTHER
+}
+
+enum PolicyStatus {
+  DRAFT
+  UNDER_REVIEW
+  ACTIVE
+  ARCHIVED
+  OVERDUE_REVIEW
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STAFF TRAINING & COMPETENCY TRACKER
+// ─────────────────────────────────────────────────────────────────────────────
+
+model TrainingRecord {
+  id              String        @id @default(cuid())
+  facilityId      String
+  facility        Facility      @relation(fields: [facilityId], references: [id])
+  staffName       String
+  staffId         String?       // Employee ID
+  department      String?
+  jobTitle        String?
+  trainingName    String
+  category        TrainingCategory
+  completedDate   DateTime?
+  expiryDate      DateTime?
+  isRequired      Boolean       @default(true)
+  status          TrainingStatus @default(PENDING)
+  score           Float?
+  passingScore    Float?
+  provider        String?       // Who delivered the training
+  certificateUrl  String?
+  notes           String?
+  regulatoryBody  RegulatoryBody?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@map("training_records")
+}
+
+enum TrainingCategory {
+  ORIENTATION
+  ANNUAL_MANDATORY
+  EMERGENCY_MANAGEMENT
+  FIRE_SAFETY
+  INFECTION_CONTROL
+  CPR_BLS
+  CPI_DE_ESCALATION
+  SUICIDE_RISK
+  RESTRAINT_SECLUSION
+  MEDICATION_MANAGEMENT
+  HIPAA_PRIVACY
+  CLINICAL_COMPETENCY
+  LEADERSHIP
+  HAZMAT
+  OTHER
+}
+
+enum TrainingStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  EXPIRED
+  OVERDUE
+  EXEMPT
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INCIDENT / OCCURRENCE TRACKER
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Incident {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  incidentNumber  String          @unique
+  dateOccurred    DateTime
+  dateReported    DateTime        @default(now())
+  incidentType    IncidentType
+  severity        IncidentSeverity
+  location        String?
+  description     String          @db.Text
+  immediateActions String?        @db.Text
+  patientInvolved Boolean         @default(false)
+  staffInvolved   Boolean         @default(false)
+  rootCauseAnalysis String?       @db.Text
+  correctionRequired Boolean      @default(false)
+  capId           String?
+  cap             CorrectiveActionPlan? @relation(fields: [capId], references: [id])
+  reportableToState Boolean       @default(false)
+  reportedToState Boolean         @default(false)
+  stateReportDate DateTime?
+  reportableToJC  Boolean         @default(false)
+  jcReportDate    DateTime?
+  status          IncidentStatus  @default(OPEN)
+  closedDate      DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("incidents")
+}
+
+enum IncidentType {
+  PATIENT_FALL
+  MEDICATION_ERROR
+  ELOPEMENT
+  ASSAULT_PATIENT_TO_STAFF
+  ASSAULT_PATIENT_TO_PATIENT
+  SELF_HARM
+  SUICIDE_ATTEMPT
+  RESTRAINT_SECLUSION
+  EQUIPMENT_FAILURE
+  INFECTION
+  PRIVACY_BREACH
+  COMPLAINT_GRIEVANCE
+  SENTINEL_EVENT
+  NEAR_MISS
+  WORKPLACE_INJURY
+  PROPERTY_DAMAGE
+  SECURITY_INCIDENT
+  ABUSE_NEGLECT
+  OTHER
+}
+
+enum IncidentSeverity {
+  MINOR         // No harm
+  MODERATE      // Temporary harm
+  MAJOR         // Permanent harm
+  CATASTROPHIC  // Death
+  SENTINEL      // Joint Commission Sentinel Event
+}
+
+enum IncidentStatus {
+  OPEN
+  UNDER_INVESTIGATION
+  RCA_IN_PROGRESS
+  CAP_IN_PROGRESS
+  CLOSED
+  REPORTABLE_PENDING
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CORRECTIVE ACTION PLANS (CAPs)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model CorrectiveActionPlan {
+  id              String    @id @default(cuid())
+  facilityId      String
+  facility        Facility  @relation(fields: [facilityId], references: [id])
+  capNumber       String    @unique
+  title           String
+  source          CapSource
+  sourceRef       String?   // Incident#, survey finding#, etc.
+  description     String    @db.Text
+  rootCause       String?   @db.Text
+  correctionPlan  String    @db.Text
+  measureOfSuccess String?  @db.Text
+  assigneeId      String?
+  assignee        User?     @relation("CAPAssignee", fields: [assigneeId], references: [id])
+  targetDate      DateTime
+  completedDate   DateTime?
+  status          CapStatus @default(OPEN)
+  priority        Priority  @default(HIGH)
+  regulatoryBody  RegulatoryBody?
+  followUpDate    DateTime?
+  followUpNotes   String?   @db.Text
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  incidents       Incident[]
+  surveys         Survey[]
+
+  @@map("corrective_action_plans")
+}
+
+enum CapSource {
+  INTERNAL_AUDIT
+  SURVEY_FINDING
+  INCIDENT
+  COMPLAINT
+  SENTINEL_EVENT
+  RISK_ASSESSMENT
+  STAFF_CONCERN
+  REGULATORY_REQUIREMENT
+  OTHER
+}
+
+enum CapStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  VERIFIED
+  OVERDUE
+  EXTENDED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EMERGENCY MANAGEMENT MODULE
+// ─────────────────────────────────────────────────────────────────────────────
+
+model HvaAssessment {
+  id              String    @id @default(cuid())
+  facilityId      String
+  facility        Facility  @relation(fields: [facilityId], references: [id])
+  assessmentYear  Int
+  completedDate   DateTime?
+  reviewedBy      String?
+  approvedBy      String?
+  status          HvaStatus @default(IN_PROGRESS)
+  totalRiskScore  Float?
+  hazards         HvaHazard[]
+  notes           String?   @db.Text
+  documentUrl     String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([facilityId, assessmentYear])
+  @@map("hva_assessments")
+}
+
+enum HvaStatus {
+  IN_PROGRESS
+  COMPLETED
+  REVIEWED
+  APPROVED
+}
+
+model HvaHazard {
+  id             String        @id @default(cuid())
+  assessmentId   String
+  assessment     HvaAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  hazardName     String
+  hazardType     HazardType
+  probability    Int           // 0-3 scale
+  magnitude      Int           // 0-3 scale
+  preparedness   Int           // 0-3 scale (inverse — lower = less prepared)
+  riskScore      Float         // calculated: (probability * magnitude * preparedness) / max
+  mitigationPlan String?       @db.Text
+  responsibleParty String?
+  notes          String?
+
+  @@map("hva_hazards")
+}
+
+enum HazardType {
+  NATURAL           // Earthquake, flood, tornado, extreme heat
+  TECHNOLOGICAL     // Power outage, IT failure, chemical spill
+  HUMAN             // Mass casualty, active threat, civil unrest
+  HAZMAT            // Chemical, biological, radiological
+  INFRASTRUCTURE    // Water, HVAC, structural
+}
+
+model Drill {
+  id              String      @id @default(cuid())
+  facilityId      String
+  facility        Facility    @relation(fields: [facilityId], references: [id])
+  drillName       String
+  drillType       DrillType
+  scheduledDate   DateTime
+  conductedDate   DateTime?
+  location        String?
+  scenario        String?     @db.Text
+  objectives      String?     @db.Text
+  participantCount Int?
+  observer        String?
+  status          DrillStatus @default(SCHEDULED)
+  strengths       String?     @db.Text
+  improvements    String?     @db.Text
+  correctionsDue  DateTime?
+  correctionsCompleted DateTime?
+  documentUrl     String?
+  regulatoryBody  RegulatoryBody?
+  standardRef     String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@map("drills")
+}
+
+enum DrillType {
+  FIRE_EVACUATION
+  CODE_RED
+  CODE_BLUE
+  CODE_GRAY         // Combative patient
+  CODE_SILVER       // Active shooter/weapon
+  CODE_ORANGE       // Hazmat
+  CODE_PURPLE       // Child abduction
+  CODE_BLACK        // Bomb threat
+  UTILITY_FAILURE
+  MASS_CASUALTY
+  IT_DISASTER_RECOVERY
+  COMMUNICATION_FAILURE
+  SHELTER_IN_PLACE
+  DECONTAMINATION
+  TABLETOP
+  FULL_SCALE
+}
+
+enum DrillStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  RESCHEDULED
+}
+
+model EmergencyPlan {
+  id              String    @id @default(cuid())
+  facilityId      String
+  facility        Facility  @relation(fields: [facilityId], references: [id])
+  planName        String
+  planType        EmPlanType
+  version         String    @default("1.0")
+  effectiveDate   DateTime
+  nextReviewDate  DateTime
+  lastReviewedDate DateTime?
+  approvedBy      String?
+  status          PolicyStatus @default(ACTIVE)
+  documentUrl     String?
+  summary         String?   @db.Text
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("emergency_plans")
+}
+
+enum EmPlanType {
+  EMERGENCY_OPERATIONS_PLAN
+  FIRE_RESPONSE_PLAN
+  EVACUATION_PLAN
+  SHELTER_IN_PLACE
+  ACTIVE_THREAT
+  MASS_CASUALTY
+  UTILITY_FAILURE
+  IT_DISASTER_RECOVERY
+  COMMUNICATION_PLAN
+  CONTINUITY_OF_OPERATIONS
+  HAZMAT_RESPONSE
+  PANDEMIC_PLAN
+  COMMUNITY_PARTNER_MOU
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SURVEYS / INSPECTIONS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Survey {
+  id              String    @id @default(cuid())
+  facilityId      String
+  facility        Facility  @relation(fields: [facilityId], references: [id])
+  surveyType      SurveyType
+  regulatoryBody  RegulatoryBody
+  conductedDate   DateTime?
+  surveyorNames   String?
+  status          SurveyStatus @default(SCHEDULED)
+  outcome         String?
+  findingCount    Int?
+  immediateJeopardy Boolean  @default(false)
+  conditionLevel  Boolean   @default(false)
+  reportUrl       String?
+  responseDeadline DateTime?
+  responseSubmitted DateTime?
+  capId           String?
+  cap             CorrectiveActionPlan? @relation(fields: [capId], references: [id])
+  notes           String?   @db.Text
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("surveys")
+}
+
+enum SurveyType {
+  ACCREDITATION
+  VALIDATION
+  COMPLAINT
+  LICENSURE
+  CERTIFICATION
+  FOLLOW_UP
+  SELF_ASSESSMENT
+  MOCK
+}
+
+enum SurveyStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  RESPONSE_DUE
+  RESPONSE_SUBMITTED
+  CLOSED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DOCUMENTS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Document {
+  id          String   @id @default(cuid())
+  facilityId  String
+  facility    Facility @relation(fields: [facilityId], references: [id])
+  name        String
+  description String?
+  category    String
+  fileUrl     String
+  fileSize    Int?
+  mimeType    String?
+  uploadedBy  String?
+  expiryDate  DateTime?
+  tags        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("documents")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NOTIFICATIONS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Notification {
+  id          String           @id @default(cuid())
+  facilityId  String
+  facility    Facility         @relation(fields: [facilityId], references: [id])
+  userId      String
+  user        User             @relation(fields: [userId], references: [id])
+  title       String
+  message     String
+  type        NotificationType
+  isRead      Boolean          @default(false)
+  readAt      DateTime?
+  linkUrl     String?
+  createdAt   DateTime         @default(now())
+
+  @@map("notifications")
+}
+
+enum NotificationType {
+  DEADLINE_REMINDER
+  OVERDUE_ALERT
+  ASSIGNMENT
+  SURVEY_ALERT
+  CAP_UPDATE
+  POLICY_REVIEW_DUE
+  TRAINING_EXPIRING
+  INCIDENT_UPDATE
+  SYSTEM
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AUDIT LOG
+// ─────────────────────────────────────────────────────────────────────────────
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  action     String
+  entityType String
+  entityId   String
+  changes    Json?
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  @@map("audit_logs")
+}
