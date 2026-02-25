@@ -11,7 +11,7 @@ const INCIDENT_TYPES = [
   'VISITOR_INJURY', 'EQUIPMENT_FAILURE', 'FIRE', 'UTILITY_FAILURE', 'OTHER',
 ];
 
-const SEVERITY_LEVELS = ['LOW', 'MODERATE', 'HIGH', 'CRITICAL', 'SENTINEL'];
+const SEVERITY_LEVELS = ['MINOR', 'MODERATE', 'MAJOR', 'CATASTROPHIC', 'SENTINEL'];
 
 export default function NewIncidentPage() {
   const router = useRouter();
@@ -24,16 +24,14 @@ export default function NewIncidentPage() {
     setError('');
     const form = e.currentTarget;
     const data = {
-      title:          (form.elements.namedItem('title') as HTMLInputElement).value,
-      incidentType:   (form.elements.namedItem('incidentType') as HTMLSelectElement).value,
-      severity:       (form.elements.namedItem('severity') as HTMLSelectElement).value,
-      incidentDate:   (form.elements.namedItem('incidentDate') as HTMLInputElement).value,
-      location:       (form.elements.namedItem('location') as HTMLInputElement).value,
-      patientInitials:(form.elements.namedItem('patientInitials') as HTMLInputElement).value,
-      description:    (form.elements.namedItem('description') as HTMLTextAreaElement).value,
-      immediateActions:(form.elements.namedItem('immediateActions') as HTMLTextAreaElement).value,
-      injuryOccurred: (form.elements.namedItem('injuryOccurred') as HTMLInputElement).checked,
-      requiresStateReport: (form.elements.namedItem('requiresStateReport') as HTMLInputElement).checked,
+      incidentType:      (form.elements.namedItem('incidentType') as HTMLSelectElement).value,
+      severity:          (form.elements.namedItem('severity') as HTMLSelectElement).value,
+      dateOccurred:      (form.elements.namedItem('dateOccurred') as HTMLInputElement).value,
+      location:          (form.elements.namedItem('location') as HTMLInputElement).value,
+      description:       (form.elements.namedItem('description') as HTMLTextAreaElement).value,
+      immediateActions:  (form.elements.namedItem('immediateActions') as HTMLTextAreaElement).value,
+      patientInvolved:   (form.elements.namedItem('patientInvolved') as HTMLInputElement).checked,
+      reportableToState: (form.elements.namedItem('reportableToState') as HTMLInputElement).checked,
     };
 
     const res = await fetch('/api/incidents', {
@@ -75,10 +73,6 @@ export default function NewIncidentPage() {
         {/* Core info */}
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-slate-800">Incident Information</h2>
-          <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Incident Title / Brief Description *</label>
-            <input name="title" required className="form-input w-full" placeholder="e.g. Patient fall in Room 12B" />
-          </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Incident Type *</label>
@@ -102,16 +96,12 @@ export default function NewIncidentPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Date &amp; Time of Incident *</label>
-              <input name="incidentDate" type="datetime-local" required className="form-input w-full" />
+              <input name="dateOccurred" type="datetime-local" required className="form-input w-full" />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Location</label>
               <input name="location" className="form-input w-full" placeholder="e.g. Unit 3B, Room 12, Common Area" />
             </div>
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials (if applicable)</label>
-            <input name="patientInitials" className="form-input w-full max-w-xs" placeholder="e.g. J.D." />
           </div>
         </div>
 
@@ -134,11 +124,11 @@ export default function NewIncidentPage() {
         <div className="px-6 py-5 space-y-3">
           <h2 className="text-sm font-semibold text-slate-800">Reporting Flags</h2>
           <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
-            <input name="injuryOccurred" type="checkbox" className="rounded border-slate-300 text-purple-600" />
-            Physical injury occurred
+            <input name="patientInvolved" type="checkbox" className="rounded border-slate-300 text-purple-600" />
+            Patient was involved in this incident
           </label>
           <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
-            <input name="requiresStateReport" type="checkbox" className="rounded border-slate-300 text-purple-600" />
+            <input name="reportableToState" type="checkbox" className="rounded border-slate-300 text-purple-600" />
             Requires AZ ADHS / Regulatory Reporting (Sentinel Event, Abuse, Unexpected Death)
           </label>
         </div>

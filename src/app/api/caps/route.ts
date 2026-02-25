@@ -19,25 +19,24 @@ export async function POST(req: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await req.json();
-  const { title, description, source, priority, assignedTo, dueDate, targetMeasure } = body;
+  const { title, description, source, priority, targetDate, measureOfSuccess } = body;
 
-  if (!title || !source || !priority) {
+  if (!title || !source || !priority || !targetDate) {
     return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
   }
 
   const cap = await prisma.correctiveActionPlan.create({
     data: {
-      facilityId:    session.user.facilityId,
-      createdById:   session.user.id,
-      capNumber:     generateCapNumber(),
+      facilityId:       session.user.facilityId,
+      capNumber:        generateCapNumber(),
       title,
-      description:   description ?? null,
+      description:      description ?? '',
       source,
       priority,
-      assignedTo:    assignedTo ?? null,
-      dueDate:       dueDate ? new Date(dueDate) : null,
-      targetMeasure: targetMeasure ?? null,
-      status:        'OPEN',
+      correctionPlan:   description ?? '',
+      targetDate:       new Date(targetDate),
+      measureOfSuccess: measureOfSuccess ?? null,
+      status:           'OPEN',
     },
   });
 

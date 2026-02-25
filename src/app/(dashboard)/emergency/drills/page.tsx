@@ -150,7 +150,7 @@ export default async function DrillsPage({
                 const aarOverdue =
                   aarDue &&
                   new Date() > aarDue &&
-                  !drill.correctionsCompleted;
+                  drill.status !== 'COMPLETED';
                 return (
                   <tr key={drill.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-4 py-3">

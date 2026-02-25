@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { addDays } from 'date-fns';
 
 export async function GET() {
   const session = await auth();
@@ -19,27 +18,21 @@ export async function POST(req: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await req.json();
-  const { title, drillType, scheduledDate, shift, location, objectives, facilitator } = body;
+  const { drillName, drillType, scheduledDate, location, objectives, scenario } = body;
 
-  if (!title || !drillType || !scheduledDate || !shift) {
+  if (!drillName || !drillType || !scheduledDate) {
     return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
   }
-
-  const scheduled = new Date(scheduledDate);
 
   const drill = await prisma.drill.create({
     data: {
       facilityId:    session.user.facilityId,
-      createdById:   session.user.id,
-      title,
+      drillName,
       drillType,
-      scheduledDate: scheduled,
-      shift,
+      scheduledDate: new Date(scheduledDate),
       location:      location ?? null,
       objectives:    objectives ?? null,
-      facilitator:   facilitator ?? null,
-      // AAR due 30 days after drill per JC EM.04.01.01
-      aarDueDate:    addDays(scheduled, 30),
+      scenario:      scenario ?? null,
       status:        'SCHEDULED',
     },
   });

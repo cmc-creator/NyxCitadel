@@ -9,7 +9,7 @@ export async function GET() {
 
   const incidents = await prisma.incident.findMany({
     where: { facilityId: session.user.facilityId },
-    orderBy: { incidentDate: 'desc' },
+    orderBy: { dateOccurred: 'desc' },
   });
   return NextResponse.json(incidents);
 }
@@ -20,31 +20,28 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   const {
-    title, incidentType, severity, incidentDate,
-    location, patientInitials, description,
-    immediateActions, injuryOccurred, requiresStateReport,
+    incidentType, severity, dateOccurred,
+    location, description, immediateActions,
+    patientInvolved, reportableToState,
   } = body;
 
-  if (!title || !incidentType || !severity || !incidentDate) {
+  if (!incidentType || !severity || !dateOccurred || !description) {
     return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
   }
 
   const incident = await prisma.incident.create({
     data: {
-      facilityId:          session.user.facilityId,
-      reportedById:        session.user.id,
-      incidentNumber:      generateIncidentNumber(),
-      title,
+      facilityId:        session.user.facilityId,
+      incidentNumber:    generateIncidentNumber(),
       incidentType,
       severity,
-      incidentDate:        new Date(incidentDate),
-      location:            location ?? null,
-      patientInitials:     patientInitials ?? null,
+      dateOccurred:      new Date(dateOccurred),
+      location:          location ?? null,
       description,
-      immediateActions:    immediateActions ?? null,
-      injuryOccurred:      injuryOccurred ?? false,
-      requiresStateReport: requiresStateReport ?? false,
-      status:              'OPEN',
+      immediateActions:  immediateActions ?? null,
+      patientInvolved:   patientInvolved ?? false,
+      reportableToState: reportableToState ?? false,
+      status:            'OPEN',
     },
   });
 

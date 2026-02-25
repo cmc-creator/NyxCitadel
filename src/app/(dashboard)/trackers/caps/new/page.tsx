@@ -18,13 +18,12 @@ export default function NewCapPage() {
     setError('');
     const form = e.currentTarget;
     const data = {
-      title:       (form.elements.namedItem('title') as HTMLInputElement).value,
-      description: (form.elements.namedItem('description') as HTMLTextAreaElement).value,
-      source:      (form.elements.namedItem('source') as HTMLSelectElement).value,
-      priority:    (form.elements.namedItem('priority') as HTMLSelectElement).value,
-      assignedTo:  (form.elements.namedItem('assignedTo') as HTMLInputElement).value,
-      dueDate:     (form.elements.namedItem('dueDate') as HTMLInputElement).value,
-      targetMeasure: (form.elements.namedItem('targetMeasure') as HTMLTextAreaElement).value,
+      title:            (form.elements.namedItem('title') as HTMLInputElement).value,
+      description:      (form.elements.namedItem('description') as HTMLTextAreaElement).value,
+      source:           (form.elements.namedItem('source') as HTMLSelectElement).value,
+      priority:         (form.elements.namedItem('priority') as HTMLSelectElement).value,
+      targetDate:       (form.elements.namedItem('targetDate') as HTMLInputElement).value,
+      measureOfSuccess: (form.elements.namedItem('measureOfSuccess') as HTMLTextAreaElement).value,
     };
 
     const res = await fetch('/api/caps', {
@@ -85,19 +84,13 @@ export default function NewCapPage() {
               placeholder="What issue or gap is being addressed? What is the root cause?" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Target / Success Measure</label>
-            <textarea name="targetMeasure" rows={2} className="form-input w-full"
+            <label className="block text-xs font-medium text-slate-600 mb-1">Measure of Success</label>
+            <textarea name="measureOfSuccess" rows={2} className="form-input w-full"
               placeholder="How will you know the corrective action was effective? What metric will be monitored?" />
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Assigned To</label>
-              <input name="assignedTo" className="form-input w-full" placeholder="Name or department" />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Due Date</label>
-              <input name="dueDate" type="date" className="form-input w-full" />
-            </div>
+          <div>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Target Date *</label>
+            <input name="targetDate" type="date" required className="form-input w-full max-w-xs" />
           </div>
         </div>
         <div className="px-6 py-4 flex items-center justify-end gap-3">

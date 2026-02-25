@@ -20,27 +20,24 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const {
     title, description, dueDate, category,
-    regulatoryBody, priority, frequency, assignedTo, notes,
+    regulatoryBody, priority, notes,
   } = body;
 
-  if (!title || !dueDate) {
-    return NextResponse.json({ error: 'Title and due date are required.' }, { status: 400 });
+  if (!title || !dueDate || !category) {
+    return NextResponse.json({ error: 'Title, due date and category are required.' }, { status: 400 });
   }
 
   const event = await prisma.calendarEvent.create({
     data: {
       facilityId:     session.user.facilityId,
-      createdById:    session.user.id,
       title,
       description:    description ?? null,
       dueDate:        new Date(dueDate),
-      category:       category ?? 'OTHER',
+      category,
       regulatoryBody: regulatoryBody ?? null,
       priority:       priority ?? 'MEDIUM',
-      frequency:      frequency ?? 'ONCE',
-      assignedTo:     assignedTo ?? null,
       notes:          notes ?? null,
-      status:         'PENDING',
+      status:         'UPCOMING',
     },
   });
 

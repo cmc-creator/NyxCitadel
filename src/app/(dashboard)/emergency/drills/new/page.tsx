@@ -9,8 +9,6 @@ const DRILL_TYPES = [
   'LOCKDOWN', 'MASS_CASUALTY', 'HAZMAT', 'UTILITY_FAILURE',
   'ELOPEMENT', 'TABLETOP_EXERCISE', 'FUNCTIONAL_EXERCISE', 'FULL_SCALE',
 ];
-const SHIFTS = ['DAY', 'EVENING', 'NIGHT', 'NOT_APPLICABLE'];
-
 export default function NewDrillPage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
@@ -22,13 +20,11 @@ export default function NewDrillPage() {
     setError('');
     const form = e.currentTarget;
     const data = {
-      title:        (form.elements.namedItem('title') as HTMLInputElement).value,
+      drillName:    (form.elements.namedItem('drillName') as HTMLInputElement).value,
       drillType:    (form.elements.namedItem('drillType') as HTMLSelectElement).value,
       scheduledDate:(form.elements.namedItem('scheduledDate') as HTMLInputElement).value,
-      shift:        (form.elements.namedItem('shift') as HTMLSelectElement).value,
       location:     (form.elements.namedItem('location') as HTMLInputElement).value,
       objectives:   (form.elements.namedItem('objectives') as HTMLTextAreaElement).value,
-      facilitator:  (form.elements.namedItem('facilitator') as HTMLInputElement).value,
     };
 
     const res = await fetch('/api/drills', {
@@ -67,8 +63,8 @@ export default function NewDrillPage() {
       <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
         <div className="px-6 py-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Drill Title *</label>
-            <input name="title" required className="form-input w-full" placeholder="e.g. Q1 Fire Drill – Day Shift – Unit 3B" />
+            <label className="block text-xs font-medium text-slate-600 mb-1">Drill Name *</label>
+            <input name="drillName" required className="form-input w-full" placeholder="e.g. Q1 Fire Drill – Day Shift – Unit 3B" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -79,26 +75,13 @@ export default function NewDrillPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Shift *</label>
-              <select name="shift" required className="form-input w-full">
-                <option value="">Select shift…</option>
-                {SHIFTS.map(s => <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>)}
-              </select>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Scheduled Date *</label>
               <input name="scheduledDate" type="date" required className="form-input w-full" />
             </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Location / Units</label>
-              <input name="location" className="form-input w-full" placeholder="e.g. All units, Unit 3B" />
-            </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Facilitator / Lead</label>
-            <input name="facilitator" className="form-input w-full" placeholder="Name or title" />
+            <label className="block text-xs font-medium text-slate-600 mb-1">Location / Units</label>
+            <input name="location" className="form-input w-full" placeholder="e.g. All units, Unit 3B" />
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Objectives / Scenario Notes</label>
