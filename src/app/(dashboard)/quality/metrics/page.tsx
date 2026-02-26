@@ -97,8 +97,8 @@ export default function QapiMetricsPage() {
     const updated = await fetch(`/api/qapi/metrics?year=${year}`).then(r => r.json());
     setMetrics(Array.isArray(updated) ? updated : []);
     setSaving(null);
-    setSaved(prev => new Set([...prev, ind.key]));
-    setTimeout(() => setSaved(prev => { const s = new Set(prev); s.delete(ind.key); return s; }), 2000);
+    setSaved(prev => new Set(Array.from(prev).concat(ind.key)));
+    setTimeout(() => setSaved(prev => { const s = new Set(Array.from(prev)); s.delete(ind.key); return s; }), 2000);
   }
 
   function buildTrendData(key: string): Array<{ month: number; year: number; value: number; target?: number }> {
