@@ -5,7 +5,7 @@
  * Run with: npm run db:seed
  */
 
-import { PrismaClient, UserRole, FacilityType } from '@prisma/client';
+import { PrismaClient, UserRole, FacilityType, ResponseTemplateCategory } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import {
   allArizonaComplianceRequirements,
@@ -679,7 +679,8 @@ Destiny Springs Healthcare | Peoria, AZ`,
   ];
 
   for (const tpl of defaultTemplates) {
-    const { id, variables, daysRequired, ...rest } = tpl;
+    const { id, variables, daysRequired, category, ...rest } = tpl;
+    const typedCategory = category as ResponseTemplateCategory;
     await prisma.responseTemplate.upsert({
       where: { id },
       create: {
@@ -687,6 +688,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
         facilityId: facility.id,
         variables,
         daysRequired: daysRequired ?? null,
+        category: typedCategory,
         isDefault: true,
         isActive: true,
         ...rest,
@@ -694,6 +696,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
       update: {
         variables,
         daysRequired: daysRequired ?? null,
+        category: typedCategory,
         isDefault: true,
         isActive: true,
         ...rest,
