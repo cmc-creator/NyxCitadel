@@ -63,6 +63,8 @@ model Facility {
   grievances      GrievanceRecord[]
   plansOfCorrection PlanOfCorrection[]
   rootCauseAnalyses RootCauseAnalysis[]
+  qocComplaints   QocComplaint[]
+  incidentReports IncidentReport[]
 
   @@map("facilities")
 }
@@ -1393,3 +1395,201 @@ enum RcaStatus {
 }
 
 // Add relation to Survey for PlanOfCorrection
+
+// ─────────────────────────────────────────────────────────────────────────────
+// QOC / LOI TRACKER
+// CMS 42 CFR 488 — Quality of Care Complaints & Letters of Investigation
+// ─────────────────────────────────────────────────────────────────────────────
+
+model QocComplaint {
+  id                    String              @id @default(cuid())
+  facilityId            String
+  facility              Facility            @relation(fields: [facilityId], references: [id])
+  qocNumber             String              @unique   // e.g. QOC-2026-001
+
+  // Complaint intake
+  dateReceived          DateTime
+  complainantType       QocComplainantType
+  cmsComplaintNumber    String?             // CMS tracking / confirm number
+  stateReferenceNumber  String?             // ADHS / state reference
+  allegationSummary     String              @db.Text
+  allegationCategories  Json                @default("[]")
+
+  // Letter of Investigation
+  loiReceivedDate       DateTime?
+  investigationType     QocInvestigationType @default(STANDARD)
+  investigatorName      String?
+  responseDueDate       DateTime?           // auto-calc: LOI date + 10 biz days
+  responseSubmittedDate DateTime?
+  surveyDate            DateTime?           // date of on-site inspection if any
+
+  // Findings
+  findingsSummary       String?             @db.Text
+  deficienciesFound     Boolean             @default(false)
+  citationsIssued       Json                @default("[]")
+
+  // Assignments & links
+  assignedTo            String?
+  linkedGrievanceId     String?
+  linkedPocId           String?
+  linkedRcaId           String?
+
+  status                QocStatus           @default(OPEN)
+  closedDate            DateTime?
+  notes                 String?             @db.Text
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@map("qoc_complaints")
+}
+
+enum QocStatus {
+  OPEN
+  LOI_RECEIVED
+  RESPONSE_SUBMITTED
+  UNDER_INVESTIGATION
+  FINDINGS_ISSUED
+  SUBSTANTIATED
+  UNSUBSTANTIATED
+  CLOSED
+}
+
+enum QocComplainantType {
+  ANONYMOUS
+  PATIENT
+  FAMILY_MEMBER
+  EMPLOYEE
+  ADVOCACY_ORG
+  OTHER_PROVIDER
+  CMS_INITIATED
+  OTHER
+}
+
+enum QocInvestigationType {
+  STANDARD
+  IMMEDIATE_JEOPARDY
+  EXPANDED
+  REVISIT
+  FOLLOW_UP
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// IR / IAD TRACKER
+// Incident Report & Incident/Adverse Data — ADHS, AHCCCS, JC Reporting
+// ARS 36-2402, ADHS R9-10-120, AHCCCS ACOM Policy
+// ─────────────────────────────────────────────────────────────────────────────
+
+model IncidentReport {
+  id                      String          @id @default(cuid())
+  facilityId              String
+  facility                Facility        @relation(fields: [facilityId], references: [id])
+  irNumber                String          @unique   // e.g. IR-2026-001
+
+  // Event details
+  incidentDate            DateTime
+  incidentTime            String?         // HH:MM
+  reportedDate            DateTime        @default(now())
+  incidentType            IrIncidentType
+  severity                IrSeverity
+  location                String?
+  unitName                String?
+  briefDescription        String          @db.Text
+  injuryDescription       String?         @db.Text
+  immediateActions        String?         @db.Text
+
+  // Patient info
+  patientName             String?
+  patientMRN              String?
+  patientDOB              DateTime?
+  patientAge              Int?
+
+  // Staff / witnesses
+  staffInvolvedNames      String?         @db.Text
+  witnessNames            String?         @db.Text
+
+  // Notifications
+  physicianNotified       Boolean         @default(false)
+  physicianNotifiedTime   String?
+  supervisorNotified      Boolean         @default(false)
+  supervisorNotifiedTime  String?
+  familyNotified          Boolean         @default(false)
+  familyNotifiedDate      DateTime?
+
+  // Regulatory reporting — ADHS
+  adhsReportable          Boolean         @default(false)
+  adhsReportableCategory  String?         // "24-hour", "5-day", "annual IAD"
+  adhsReported            Boolean         @default(false)
+  adhsReportDate          DateTime?
+  adhsConfirmationNumber  String?
+  adhsReportDue           DateTime?       // auto-calc deadline
+
+  // Regulatory reporting — AHCCCS
+  ahcccsReportable        Boolean         @default(false)
+  ahcccsReported          Boolean         @default(false)
+  ahcccsReportDate        DateTime?
+
+  // Regulatory reporting — Joint Commission
+  jcReportable            Boolean         @default(false)
+  jcReported              Boolean         @default(false)
+  jcReportDate            DateTime?
+
+  // IAD submission (formal state adverse data submission)
+  iadRequired             Boolean         @default(false)
+  iadSubmitted            Boolean         @default(false)
+  iadSubmittedDate        DateTime?
+  iadPeriod               String?         // e.g. "Q1 2026"
+
+  // Investigation
+  assignedTo              String?
+  investigationFindings   String?         @db.Text
+  rootCauseIdentified     Boolean         @default(false)
+  linkedRcaId             String?
+  preventiveActions       String?         @db.Text
+  linkedCapId             String?
+
+  status                  IrStatus        @default(OPEN)
+  closedDate              DateTime?
+  notes                   String?         @db.Text
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+
+  @@map("incident_reports")
+}
+
+enum IrStatus {
+  OPEN
+  INVESTIGATING
+  PENDING_REVIEW
+  REPORTED_TO_STATE
+  CLOSED
+  REOPENED
+}
+
+enum IrIncidentType {
+  PATIENT_FALL
+  MEDICATION_ERROR
+  ELOPEMENT
+  ASSAULT_PATIENT_TO_STAFF
+  ASSAULT_PATIENT_TO_PATIENT
+  SELF_HARM
+  SUICIDE_ATTEMPT
+  SUICIDE_COMPLETION
+  RESTRAINT_SECLUSION_INJURY
+  ABUSE_NEGLECT
+  SEXUAL_ASSAULT
+  EQUIPMENT_FAILURE
+  INFECTION_OUTBREAK
+  PRIVACY_BREACH
+  WORKPLACE_INJURY
+  SENTINEL_EVENT
+  NEAR_MISS
+  OTHER
+}
+
+enum IrSeverity {
+  NEAR_MISS
+  MINOR
+  MODERATE
+  SERIOUS
+  SENTINEL
+}

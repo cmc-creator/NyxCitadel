@@ -28,6 +28,8 @@ import {
   ClipboardCheck,
   Search,
   Mail,
+  Scale,
+  FileWarning,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -63,6 +65,8 @@ const navItems: NavItem[] = [
       { href: '/trackers/caps', label: 'Corrective Action Plans', icon: ClipboardList },
       { href: '/trackers/risk-assessments', label: 'Risk Assessments', icon: ShieldAlert },
       { href: '/trackers/grievances', label: 'Patient Grievances', icon: MessageSquareWarning, badge: 'CMS', badgeColor: 'bg-orange-100 text-orange-700' },
+      { href: '/trackers/qoc', label: 'QOC / LOI Complaints', icon: Scale, badge: 'CMS', badgeColor: 'bg-purple-100 text-purple-700' },
+      { href: '/trackers/ir-iad', label: 'IR / IAD Incidents', icon: FileWarning, badge: 'ADHS', badgeColor: 'bg-red-100 text-red-700' },
       { href: '/trackers/rca', label: 'Root Cause Analyses', icon: Search },
     ],
   },
