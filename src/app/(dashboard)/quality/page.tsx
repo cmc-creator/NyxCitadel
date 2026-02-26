@@ -37,7 +37,7 @@ export default async function QualityPage() {
       take: 8,
     }),
     prisma.correctiveActionPlan.count({
-      where: { facilityId, status: { notIn: ['COMPLETED', 'VERIFIED', 'CANCELLED'] } },
+      where: { facilityId, status: { notIn: ['COMPLETED', 'VERIFIED'] } },
     }),
     prisma.correctiveActionPlan.count({
       where: { facilityId, status: { in: ['COMPLETED', 'VERIFIED'] } },
