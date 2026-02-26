@@ -24,6 +24,10 @@ import {
   Activity,
   BarChart2,
   Target,
+  MessageSquareWarning,
+  ClipboardCheck,
+  Search,
+  Mail,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -58,6 +62,8 @@ const navItems: NavItem[] = [
       { href: '/trackers/incidents', label: 'Incidents / Occurrences', icon: AlertTriangle },
       { href: '/trackers/caps', label: 'Corrective Action Plans', icon: ClipboardList },
       { href: '/trackers/risk-assessments', label: 'Risk Assessments', icon: ShieldAlert },
+      { href: '/trackers/grievances', label: 'Patient Grievances', icon: MessageSquareWarning, badge: 'CMS', badgeColor: 'bg-orange-100 text-orange-700' },
+      { href: '/trackers/rca', label: 'Root Cause Analyses', icon: Search },
     ],
   },
   {
@@ -68,6 +74,9 @@ const navItems: NavItem[] = [
       { href: '/quality', label: 'QAPI Dashboard', icon: BarChart2 },
       { href: '/quality/metrics', label: 'Quality Metrics', icon: Activity },
       { href: '/quality/projects', label: 'QAPI Projects', icon: Target },
+      { href: '/quality/response-templates', label: 'Response Templates', icon: FileText },
+      { href: '/quality/responses', label: 'Generated Responses', icon: Mail },
+      { href: '/quality/poc', label: 'Plans of Correction', icon: ClipboardCheck },
     ],
   },
   {

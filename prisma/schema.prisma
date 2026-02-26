@@ -58,6 +58,11 @@ model Facility {
   riskAssessments RiskAssessment[]
   qapiMetrics     QapiMetric[]
   qapiProjects    QapiProject[]
+  responseTemplates ResponseTemplate[]
+  generatedResponses GeneratedResponse[]
+  grievances      GrievanceRecord[]
+  plansOfCorrection PlanOfCorrection[]
+  rootCauseAnalyses RootCauseAnalysis[]
 
   @@map("facilities")
 }
@@ -813,11 +818,12 @@ model Survey {
   reportUrl       String?
   responseDeadline DateTime?
   responseSubmitted DateTime?
-  capId           String?
-  cap             CorrectiveActionPlan? @relation(fields: [capId], references: [id])
-  notes           String?   @db.Text
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  capId               String?
+  cap                 CorrectiveActionPlan? @relation(fields: [capId], references: [id])
+  plansOfCorrection   PlanOfCorrection[]
+  notes               String?   @db.Text
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
   @@map("surveys")
 }
@@ -1087,3 +1093,303 @@ enum QapiProjectStatus {
   SUSPENDED
   CANCELLED
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RESPONSE TEMPLATES & QOC CORRESPONDENCE
+// CMS 482.13(e) patient grievance response requirements
+// JC RI.01.07.01 / AZ ADHS complaint response obligations
+// ─────────────────────────────────────────────────────────────────────────────
+
+model ResponseTemplate {
+  id              String                   @id @default(cuid())
+  facilityId      String
+  facility        Facility                 @relation(fields: [facilityId], references: [id])
+  name            String
+  category        ResponseTemplateCategory
+  description     String?
+  subject         String?
+  bodyTemplate    String                   @db.Text
+  variables       String[]                 // e.g. ["{{PATIENT_NAME}}", "{{INCIDENT_DATE}}"]
+  regulatoryRef   String?                  // e.g. "42 CFR 482.13(e)"
+  daysRequired    Int?                     // Regulatory deadline in days (e.g. 7, 30)
+  instructions    String?                  @db.Text
+  isDefault       Boolean                  @default(false)  // Seeded system templates
+  isActive        Boolean                  @default(true)
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+  responses       GeneratedResponse[]
+
+  @@map("response_templates")
+}
+
+model GeneratedResponse {
+  id              String                   @id @default(cuid())
+  facilityId      String
+  facility        Facility                 @relation(fields: [facilityId], references: [id])
+  templateId      String?
+  template        ResponseTemplate?        @relation(fields: [templateId], references: [id])
+  title           String
+  category        ResponseTemplateCategory
+  recipientName   String?
+  recipientRole   String?
+  recipientAddress String?
+  subject         String
+  body            String                   @db.Text
+  status          ResponseStatus           @default(DRAFT)
+  sourceType      String?                  // "INCIDENT" | "GRIEVANCE" | "SURVEY" | "CAP"
+  sourceId        String?
+  sourceRef       String?                  // Human-readable ref (incident#, etc.)
+  dueDate         DateTime?
+  sentDate        DateTime?
+  sentBy          String?
+  draftedBy       String?
+  reviewedBy      String?
+  aiGenerated     Boolean                  @default(false)
+  notes           String?                  @db.Text
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+
+  @@map("generated_responses")
+}
+
+enum ResponseTemplateCategory {
+  PATIENT_GRIEVANCE_ACKNOWLEDGMENT     // CMS 482.13(e) — due within 7 days
+  PATIENT_GRIEVANCE_RESOLUTION         // CMS 482.13(e) — due within 30 days
+  SENTINEL_EVENT_FAMILY_NOTICE         // Family notification after sentinel event
+  PLAN_OF_CORRECTION                   // POC to surveying agency
+  CAP_COMPLETION_NOTICE                // CAP verified/closed notification
+  INCIDENT_FAMILY_NOTIFICATION         // Notify family of incident
+  STATE_ADVERSE_EVENT_REPORT           // AZ ADHS R9-10-211 mandatory report
+  JC_SENTINEL_EVENT_REPORT             // JC sentinel event report cover
+  SURVEY_RESPONSE_COVER                // General survey response cover letter
+  REGULATORY_INQUIRY_RESPONSE          // Response to a regulatory inquiry/letter
+  COMPLAINT_ACKNOWLEDGMENT             // Acknowledge receipt of a complaint
+  PATIENT_RIGHTS_VIOLATION_RESPONSE    // AZ Mental Health Bill of Rights
+  EMPLOYEE_SAFETY_INCIDENT             // Worker's comp / OSHA notification
+  OTHER
+}
+
+enum ResponseStatus {
+  DRAFT
+  UNDER_REVIEW
+  APPROVED
+  SENT
+  FILED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PATIENT GRIEVANCE TRACKER
+// CMS 42 CFR 482.13(e) — Joint Commission RI.01.07.01
+// AZ ADHS A.A.C. R9-10-209 (patient rights / grievances)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model GrievanceRecord {
+  id                    String          @id @default(cuid())
+  facilityId            String
+  facility              Facility        @relation(fields: [facilityId], references: [id])
+  grievanceNumber       String          @unique
+  dateReceived          DateTime
+  complainantName       String
+  complainantType       ComplainantType
+  complainantPhone      String?
+  complainantEmail      String?
+  patientName           String?
+  patientDOB            DateTime?
+  patientMRN            String?
+  admissionDate         DateTime?
+  dischargeDate         DateTime?
+  summary               String          @db.Text
+  category              GrievanceCategory
+  severity              GrievanceSeverity @default(STANDARD)
+  assignedTo            String?
+  acknowledgmentDueDate DateTime        // +7 calendar days from receipt
+  resolutionDueDate     DateTime        // +30 calendar days from receipt
+  acknowledgmentDate    DateTime?
+  acknowledgmentSentBy  String?
+  resolutionDate        DateTime?
+  resolutionSentBy      String?
+  status                GrievanceStatus @default(OPEN)
+  resolution            String?         @db.Text
+  outcomeCategory       String?         // "Substantiated", "Unsubstantiated", "Partially substantiated"
+  reportableToAdhs      Boolean         @default(false)
+  reportedToAdhs        Boolean         @default(false)
+  adshReportDate        DateTime?
+  linkedIncidentId      String?
+  linkedCapId           String?
+  notes                 String?         @db.Text
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@map("grievance_records")
+}
+
+enum ComplainantType {
+  PATIENT
+  FAMILY_MEMBER
+  GUARDIAN_CONSERVATOR
+  PATIENT_ADVOCATE
+  STAFF
+  EXTERNAL_AGENCY
+  ANONYMOUS
+  OTHER
+}
+
+enum GrievanceCategory {
+  CLINICAL_CARE_QUALITY       // Quality of clinical care
+  MEDICATION                  // Medication-related complaint
+  STAFF_CONDUCT               // Staff behavior / attitude
+  PATIENT_RIGHTS              // Patient rights violation (AZ Mental Health Bill of Rights)
+  RESTRAINT_SECLUSION         // Restraint/seclusion complaint
+  DISCHARGE_PLANNING          // Discharge planning concerns
+  FACILITY_ENVIRONMENT        // Environment, safety, cleanliness
+  BILLING                     // Billing / financial
+  PRIVACY_CONFIDENTIALITY     // HIPAA / privacy concern
+  COMMUNICATION               // Communication with family / care team
+  NEGLECT_ABUSE               // Neglect or abuse allegation
+  OTHER
+}
+
+enum GrievanceSeverity {
+  STANDARD          // Routine grievance
+  EXPEDITED         // Clinical condition requires faster response
+  REGULATORY        // Potential regulatory violation
+  SENTINEL          // Linked to sentinel event or serious harm
+}
+
+enum GrievanceStatus {
+  OPEN
+  UNDER_REVIEW
+  ACKNOWLEDGMENT_SENT
+  PENDING_RESOLUTION
+  RESOLVED
+  ESCALATED            // Escalated to leadership / regulatory
+  CLOSED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PLAN OF CORRECTION (POC)
+// For survey/inspection findings — CMS, JC, AZ ADHS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PlanOfCorrection {
+  id              String        @id @default(cuid())
+  facilityId      String
+  facility        Facility      @relation(fields: [facilityId], references: [id])
+  surveyId        String?
+  survey          Survey?       @relation(fields: [surveyId], references: [id])
+  pocNumber       String        @unique
+  title           String
+  regulatoryBody  RegulatoryBody
+  surveyDate      DateTime?
+  responseDeadline DateTime?
+  submittedDate   DateTime?
+  status          PocStatus     @default(DRAFT)
+  findings        PocFinding[]
+  coverLetter     String?       @db.Text
+  certificationStatement String? @db.Text
+  submittedBy     String?
+  approvedBy      String?
+  notes           String?       @db.Text
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@map("plans_of_correction")
+}
+
+model PocFinding {
+  id                  String          @id @default(cuid())
+  pocId               String
+  poc                 PlanOfCorrection @relation(fields: [pocId], references: [id], onDelete: Cascade)
+  findingNumber       String          // e.g., "F-Tag 689", "EC.02.05.07 EP3"
+  findingDescription  String          @db.Text
+  howCorrected        String?         @db.Text  // What specifically was done
+  howPrevented        String?         @db.Text  // Systemic fix / policy change
+  howMonitored        String?         @db.Text  // Monitoring plan / audit
+  responsibleParty    String?
+  targetDate          DateTime?
+  completedDate       DateTime?
+  evidenceOfCorrection String?        @db.Text
+  status              PocFindingStatus @default(OPEN)
+
+  @@map("poc_findings")
+}
+
+enum PocStatus {
+  DRAFT
+  UNDER_REVIEW
+  SUBMITTED
+  ACCEPTED
+  REJECTED
+  RESUBMIT_REQUIRED
+  CLOSED
+}
+
+enum PocFindingStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  VERIFIED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ROOT CAUSE ANALYSIS (RCA)
+// JC LD.04.04.05 — Required for sentinel events and serious incidents
+// ─────────────────────────────────────────────────────────────────────────────
+
+model RootCauseAnalysis {
+  id              String    @id @default(cuid())
+  facilityId      String
+  facility        Facility  @relation(fields: [facilityId], references: [id])
+  rcaNumber       String    @unique
+  eventDate       DateTime
+  eventDescription String   @db.Text
+  eventType       String    // e.g., "Sentinel Event", "Serious Incident"
+  linkedIncidentId String?
+  teamMembers     String?   @db.Text  // Names / roles of RCA team
+  completedBy     String?
+  approvedBy      String?
+  conductedDate   DateTime?
+  status          RcaStatus @default(IN_PROGRESS)
+
+  // Timeline
+  eventTimeline   String?   @db.Text  // Chronological narrative
+
+  // Contributing factors (JC requires these categories)
+  humanFactors    String?   @db.Text  // Staff performance, communication, etc.
+  equipmentFactors String?  @db.Text  // Device failures
+  environmentFactors String? @db.Text // Physical environment
+  processFactors  String?   @db.Text  // Workflow / process breakdowns
+  organizationalFactors String? @db.Text  // Leadership, culture, resources
+
+  // 5-Whys or Fishbone
+  whyAnalysis     Json?     // Array of {why: string, answer: string}
+
+  // Root causes & actions
+  rootCauses      Json?     // Array of identified root causes
+  actionItems     Json?     // Array of {action, responsible, targetDate, status}
+
+  // Outcome
+  conclusion      String?   @db.Text
+  preventabilityRating String?  // "Preventable", "Possibly preventable", "Not preventable"
+  systemChangesRequired Boolean @default(false)
+  policyChangesRequired Boolean @default(false)
+  trainingRequired      Boolean @default(false)
+
+  documentUrl     String?
+  notes           String?   @db.Text
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("root_cause_analyses")
+}
+
+enum RcaStatus {
+  IN_PROGRESS
+  DRAFT_COMPLETE
+  UNDER_REVIEW
+  APPROVED
+  SUBMITTED_TO_JC
+  CLOSED
+}
+
+// Add relation to Survey for PlanOfCorrection
