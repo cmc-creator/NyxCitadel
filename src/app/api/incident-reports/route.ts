@@ -28,11 +28,21 @@ export async function GET(req: NextRequest) {
 
   const { searchParams } = new URL(req.url);
   const status = searchParams.get('status');
+  const type   = searchParams.get('type');
+  const from   = searchParams.get('from');
+  const to     = searchParams.get('to');
 
   const items = await prisma.incidentReport.findMany({
     where: {
       facilityId: session.user.facilityId,
-      ...(status ? { status: status as any } : {}),
+      ...(status ? { status: status as never } : {}),
+      ...(type   ? { incidentType: type as never } : {}),
+      ...(from || to ? {
+        incidentDate: {
+          ...(from ? { gte: new Date(from) } : {}),
+          ...(to   ? { lte: new Date(to)   } : {}),
+        },
+      } : {}),
     },
     orderBy: { incidentDate: 'desc' },
   });
