@@ -21,6 +21,9 @@ import {
   FileSearch,
   ChevronDown,
   Building2,
+  Activity,
+  BarChart2,
+  Target,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -54,6 +57,17 @@ const navItems: NavItem[] = [
       { href: '/trackers/training', label: 'Training & Competency', icon: GraduationCap },
       { href: '/trackers/incidents', label: 'Incidents / Occurrences', icon: AlertTriangle },
       { href: '/trackers/caps', label: 'Corrective Action Plans', icon: ClipboardList },
+      { href: '/trackers/risk-assessments', label: 'Risk Assessments', icon: ShieldAlert },
+    ],
+  },
+  {
+    href: '/quality',
+    label: 'Quality / QAPI',
+    icon: Activity,
+    children: [
+      { href: '/quality', label: 'QAPI Dashboard', icon: BarChart2 },
+      { href: '/quality/metrics', label: 'Quality Metrics', icon: Activity },
+      { href: '/quality/projects', label: 'QAPI Projects', icon: Target },
     ],
   },
   {

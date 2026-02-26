@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { Sidebar } from '@/components/layout/sidebar';
 import { TopBar } from '@/components/layout/topbar';
+import { AssistantChat } from '@/components/ai/assistant-chat';
 
 export default async function DashboardLayout({
   children,
@@ -20,6 +21,7 @@ export default async function DashboardLayout({
           {children}
         </main>
       </div>
+      <AssistantChat />
     </div>
   );
 }

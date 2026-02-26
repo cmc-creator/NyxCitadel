@@ -37,17 +37,22 @@ export interface ComplianceRequirement {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const emergencyManagementRequirements: ComplianceRequirement[] = [
+  // NOTE: JC EM.01.01.01 requires a designated EM leader and a management process,
+  // but does NOT mandate a specific meeting frequency. Monthly EM-only meetings
+  // are administrative best practice, not a regulatory requirement for a small
+  // acute psychiatric facility. EM topics are covered in the quarterly EOC meeting.
   {
     id: 'em-001',
-    title: 'Emergency Management Committee Meeting',
+    title: 'Emergency Management Program Review (Quarterly)',
     description:
-      'Monthly EM committee meeting to review plans, drills, and preparedness activities.',
+      'Quarterly review of EM program status, drill outcomes, plan updates, and upcoming exercises — typically rolled into the EOC/Safety committee meeting.',
     category: EventCategory.EM_COMMITTEE_MEETING,
     regulatoryBody: RegulatoryBody.JOINT_COMMISSION,
     standardRef: 'EM.01.01.01',
-    frequency: Frequency.MONTHLY,
-    priority: Priority.HIGH,
+    frequency: Frequency.QUARTERLY,
+    priority: Priority.MEDIUM,
     responsibleRole: 'EM_COORDINATOR',
+    notes: 'No JC standard requires standalone monthly EM meetings. Quarterly review during EOC is compliant.',
   },
   {
     id: 'em-002',
@@ -152,14 +157,17 @@ export const emergencyManagementRequirements: ComplianceRequirement[] = [
 export const lifeSafetyRequirements: ComplianceRequirement[] = [
   {
     id: 'ls-001',
-    title: 'Environment of Care Committee Meeting',
-    description: 'Monthly EOC committee meeting.',
+    // JC EC.01.01.01 requires a functional safety committee but does NOT specify
+    // monthly meetings; quarterly is compliant and standard for small BH facilities.
+    title: 'Environment of Care / Safety Committee Meeting',
+    description: 'Quarterly EOC/Safety committee meeting reviewing life safety, utilities, environment of care, and EM program status. Covers EM.01.01.01 EM program review as well.',
     category: EventCategory.EOC_COMMITTEE_MEETING,
     regulatoryBody: RegulatoryBody.JOINT_COMMISSION,
     standardRef: 'EC.01.01.01',
-    frequency: Frequency.MONTHLY,
+    frequency: Frequency.QUARTERLY,
     priority: Priority.HIGH,
     responsibleRole: 'COMPLIANCE_OFFICER',
+    notes: 'Quarterly is compliant for small acute psych facilities. Include EM program agenda item each meeting.',
   },
   {
     id: 'ls-002',

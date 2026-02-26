@@ -55,6 +55,9 @@ model Facility {
   surveys         Survey[]
   documents       Document[]
   notifications   Notification[]
+  riskAssessments RiskAssessment[]
+  qapiMetrics     QapiMetric[]
+  qapiProjects    QapiProject[]
 
   @@map("facilities")
 }
@@ -912,4 +915,175 @@ model AuditLog {
   createdAt  DateTime @default(now())
 
   @@map("audit_logs")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RISK ASSESSMENTS
+// JC LD.04.04.01 — annual proactive risk assessment required
+// ─────────────────────────────────────────────────────────────────────────────
+
+model RiskAssessment {
+  id              String               @id @default(cuid())
+  facilityId      String
+  facility        Facility             @relation(fields: [facilityId], references: [id])
+  title           String
+  assessmentType  RiskAssessmentType
+  scope           String?              // Area / department / process assessed
+  conductedDate   DateTime?
+  conductedBy     String?
+  reviewedBy      String?
+  approvedBy      String?
+  status          RiskAssessmentStatus @default(IN_PROGRESS)
+  summary         String?              @db.Text
+  overallRiskLevel RiskLevel?
+  regulatoryBody  RegulatoryBody?
+  standardRef     String?
+  nextReviewDate  DateTime?
+  documentUrl     String?
+  notes           String?              @db.Text
+  items           RiskAssessmentItem[]
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  @@map("risk_assessments")
+}
+
+model RiskAssessmentItem {
+  id               String         @id @default(cuid())
+  assessmentId     String
+  assessment       RiskAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  riskDescription  String
+  category         String?        // e.g., "Patient Safety", "Security", "Infection Control"
+  likelihood       Int            // 1-5
+  severity         Int            // 1-5
+  riskScore        Int            // likelihood * severity (1-25)
+  riskLevel        RiskLevel      // calculated
+  currentControls  String?        @db.Text
+  recommendedActions String?      @db.Text
+  priority         Priority       @default(MEDIUM)
+  assignedTo       String?
+  targetDate       DateTime?
+  status           RiskItemStatus @default(OPEN)
+  resolvedDate     DateTime?
+  notes            String?
+
+  @@map("risk_assessment_items")
+}
+
+enum RiskAssessmentType {
+  ANNUAL_PROACTIVE        // JC LD.04.04.01 annual facility-wide
+  INFECTION_CONTROL       // IC.01.01.01 EP4 annual ICRA
+  SECURITY                // Physical / workplace violence risk
+  MEDICATION              // Medication management risk
+  CLINICAL_PROCESS        // FMEA for a specific clinical process
+  EMERGENCY_MANAGEMENT    // EM program risk factors
+  IT_SECURITY             // HIPAA Security Risk Analysis
+  ENVIRONMENT_OF_CARE     // EOC / physical environment
+  CONSTRUCTION            // ICRA for construction/renovation
+  OTHER
+}
+
+enum RiskAssessmentStatus {
+  IN_PROGRESS
+  COMPLETED
+  REVIEWED
+  APPROVED
+  ARCHIVED
+}
+
+enum RiskLevel {
+  CRITICAL    // Score 20-25
+  HIGH        // Score 12-19
+  MEDIUM      // Score 6-11
+  LOW         // Score 1-5
+}
+
+enum RiskItemStatus {
+  OPEN
+  IN_PROGRESS
+  MITIGATED
+  ACCEPTED
+  CLOSED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// QAPI — QUALITY ASSESSMENT & PERFORMANCE IMPROVEMENT
+// CMS 42 CFR 482.21 (required for CMS-certified hospitals)
+// JC PI.01.01.01 / PI.02.01.01
+// ─────────────────────────────────────────────────────────────────────────────
+
+model QapiMetric {
+  id           String          @id @default(cuid())
+  facilityId   String
+  facility     Facility        @relation(fields: [facilityId], references: [id])
+  metricName   String
+  metricKey    String          // machine-readable slug, e.g. "restraint_rate"
+  category     QapiCategory
+  month        Int             // 1-12
+  year         Int
+  value        Float
+  target       Float?
+  unit         String?         // "per 1000 pt-days", "%", "hours", etc.
+  numerator    Float?
+  denominator  Float?
+  notes        String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@unique([facilityId, metricKey, month, year])
+  @@map("qapi_metrics")
+}
+
+model QapiProject {
+  id              String            @id @default(cuid())
+  facilityId      String
+  facility        Facility          @relation(fields: [facilityId], references: [id])
+  projectNumber   String            @unique
+  title           String
+  category        QapiCategory
+  problemStatement String           @db.Text
+  aim             String            @db.Text
+  measure         String?           // How success will be measured
+  baselineValue   Float?
+  targetValue     Float?
+  targetUnit      String?
+  interventions   String?           @db.Text
+  owner           String?
+  team            String?
+  startDate       DateTime
+  targetDate      DateTime
+  completedDate   DateTime?
+  status          QapiProjectStatus @default(ACTIVE)
+  outcome         String?           @db.Text
+  sustainPlan     String?           @db.Text
+  relatedMetricKey String?
+  regulatoryBody  RegulatoryBody?
+  standardRef     String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@map("qapi_projects")
+}
+
+enum QapiCategory {
+  PATIENT_SAFETY
+  CLINICAL_CARE
+  RESTRAINT_SECLUSION
+  MEDICATION_SAFETY
+  INFECTION_PREVENTION
+  PATIENT_EXPERIENCE
+  STAFF_SAFETY
+  READMISSIONS
+  THROUGHPUT
+  COMPLIANCE
+  WORKFORCE
+  OTHER
+}
+
+enum QapiProjectStatus {
+  ACTIVE
+  MONITORING
+  COMPLETED
+  SUSPENDED
+  CANCELLED
 }
