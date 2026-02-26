@@ -1,9 +1,10 @@
 'use client';
 
 import { Suspense, useState } from 'react';
+import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
 
 function LoginForm() {
   const router = useRouter();
@@ -44,16 +45,19 @@ function LoginForm() {
       <div className="w-full max-w-md">
         {/* Logo / Branding */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-purple-600 shadow-lg mb-4">
-            <ShieldCheck className="w-9 h-9 text-white" />
+          <div className="flex justify-center mb-4">
+            <Image
+              src="/logo-white.svg"
+              alt="Destiny Springs Healthcare"
+              width={240}
+              height={52}
+              priority
+              className="h-14 w-auto"
+            />
           </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">
-            Destiny Springs Healthcare
-          </h1>
-          <p className="text-slate-400 mt-1 text-sm">
+          <p className="text-slate-400 mt-2 text-sm">
             Compliance &amp; Risk Management Platform
           </p>
-          <p className="text-slate-600 mt-1 text-xs">Powered by NyxCitadel</p>
         </div>
 
         {/* Login Card */}

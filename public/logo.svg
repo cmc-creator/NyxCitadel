@@ -1,0 +1,19 @@
+<!-- Destiny Springs Healthcare — color logo (use on light/white backgrounds) -->
+<!-- REPLACE THIS FILE with your official logo SVG — keep filename as logo.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 52" fill="none">
+  <!-- Shield icon -->
+  <path d="M10 8 L26 4 L42 8 L42 24 C42 34 26 42 26 42 C26 42 10 34 10 24 Z"
+        fill="#7c3aed" />
+  <path d="M20 22 L24 26 L32 18" stroke="white" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- "Destiny Springs" -->
+  <text x="52" y="24" font-family="system-ui, -apple-system, sans-serif"
+        font-size="16" font-weight="700" fill="#1e293b" letter-spacing="-0.3">
+    Destiny Springs
+  </text>
+  <!-- "Healthcare" -->
+  <text x="52" y="40" font-family="system-ui, -apple-system, sans-serif"
+        font-size="12" font-weight="500" fill="#7c3aed" letter-spacing="0.5">
+    HEALTHCARE
+  </text>
+</svg>

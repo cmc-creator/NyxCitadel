@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Bell, Search } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -15,6 +16,17 @@ interface TopBarProps {
 export function TopBar({ user }: TopBarProps) {
   return (
     <header className="h-14 bg-white border-b border-slate-200 flex items-center px-6 gap-4 sticky top-0 z-20">
+      {/* Mobile logo — hidden on desktop (sidebar shows it there) */}
+      <div className="lg:hidden flex-shrink-0">
+        <Image
+          src="/logo.svg"
+          alt="Destiny Springs Healthcare"
+          width={160}
+          height={36}
+          className="h-9 w-auto"
+        />
+      </div>
+
       {/* Search */}
       <div className="flex-1 max-w-md">
         <div className="relative">

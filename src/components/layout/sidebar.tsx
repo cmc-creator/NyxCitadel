@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { cn } from '@/lib/utils';
@@ -159,18 +160,17 @@ export function Sidebar() {
   return (
     <aside className="sidebar w-64 min-h-screen flex flex-col fixed left-0 top-0 bottom-0 z-30">
       {/* Branding */}
-      <div className="flex items-center gap-3 px-4 py-5 border-b border-white/10">
-        <div className="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center flex-shrink-0">
-          <ShieldCheck className="w-5 h-5 text-white" />
-        </div>
-        <div className="min-w-0">
-          <p className="text-sm font-semibold text-white truncate leading-tight">
-            Destiny Springs
-          </p>
-          <p className="text-xs text-slate-500 leading-tight">
-            Compliance Platform
-          </p>
-        </div>
+      <div className="flex items-center px-4 py-4 border-b border-white/10">
+        <Link href="/dashboard" className="block">
+          <Image
+            src="/logo-white.svg"
+            alt="Destiny Springs Healthcare"
+            width={200}
+            height={44}
+            priority
+            className="h-11 w-auto"
+          />
+        </Link>
       </div>
 
       {/* Main Nav */}
