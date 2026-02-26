@@ -41,12 +41,22 @@ function DaysIndicator({ dueDate, label }: { dueDate: Date; label: string }) {
   );
 }
 
-export default async function GrievancesPage() {
+export default async function GrievancesPage({
+  searchParams,
+}: {
+  searchParams: { year?: string };
+}) {
   const session = await auth();
   const facilityId = session!.user.facilityId;
+  const year = searchParams.year ? parseInt(searchParams.year, 10) : null;
+  const yearStart = year ? new Date(year, 0, 1) : null;
+  const yearEnd   = year ? new Date(year + 1, 0, 1) : null;
 
   const grievances = await prisma.grievanceRecord.findMany({
-    where: { facilityId },
+    where: {
+      facilityId,
+      ...(yearStart && yearEnd ? { dateReceived: { gte: yearStart, lt: yearEnd } } : {}),
+    },
     orderBy: { dateReceived: 'desc' },
   });
 
@@ -76,6 +86,16 @@ export default async function GrievancesPage() {
           <Plus className="w-4 h-4" /> Log Grievance
         </Link>
       </div>
+
+      {/* Archive year banner */}
+      {year && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
+          <p className="text-sm text-amber-800">
+            <strong>{year} Archive View</strong> — showing grievances received within {year}.
+          </p>
+          <Link href="/trackers/grievances" className="text-xs text-amber-700 underline">Return to live view</Link>
+        </div>
+      )}
 
       {/* Alert banners */}
       {overdueAck.length > 0 && (

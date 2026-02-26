@@ -42,12 +42,22 @@ function DeadlineTag({ dueDate, label }: { dueDate: Date; label: string }) {
   );
 }
 
-export default async function IrIadPage() {
+export default async function IrIadPage({
+  searchParams,
+}: {
+  searchParams: { year?: string };
+}) {
   const session = await auth();
   const facilityId = session!.user.facilityId;
+  const year = searchParams.year ? parseInt(searchParams.year, 10) : null;
+  const yearStart = year ? new Date(year, 0, 1) : null;
+  const yearEnd   = year ? new Date(year + 1, 0, 1) : null;
 
   const reports = await prisma.incidentReport.findMany({
-    where: { facilityId },
+    where: {
+      facilityId,
+      ...(yearStart && yearEnd ? { incidentDate: { gte: yearStart, lt: yearEnd } } : {}),
+    },
     orderBy: { incidentDate: 'desc' },
   });
 
@@ -70,6 +80,7 @@ export default async function IrIadPage() {
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
             Incident Reports & Adverse Data · ADHS ARS 36-2402 · AHCCCS ACOM · JC Sentinel Event Policy
+            {year && <span className="ml-2 font-semibold text-purple-700">· {year} Archive</span>}
           </p>
         </div>
         <Link

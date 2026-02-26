@@ -15,12 +15,22 @@ const STATUS_COLORS: Record<string, string> = {
   CLOSED:          'bg-slate-100 text-slate-500',
 };
 
-export default async function RcaPage() {
+export default async function RcaPage({
+  searchParams,
+}: {
+  searchParams: { year?: string };
+}) {
   const session = await auth();
   const facilityId = session!.user.facilityId;
+  const year = searchParams.year ? parseInt(searchParams.year, 10) : null;
+  const yearStart = year ? new Date(year, 0, 1) : null;
+  const yearEnd   = year ? new Date(year + 1, 0, 1) : null;
 
   const rcas = await prisma.rootCauseAnalysis.findMany({
-    where: { facilityId },
+    where: {
+      facilityId,
+      ...(yearStart && yearEnd ? { eventDate: { gte: yearStart, lt: yearEnd } } : {}),
+    },
     orderBy: { eventDate: 'desc' },
   });
 
@@ -48,7 +58,17 @@ export default async function RcaPage() {
         </Link>
       </div>
 
-      {/* Stats */}
+      {/* Archive year banner */}
+      {year && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
+          <p className="text-sm text-amber-800">
+            <strong>{year} Archive View</strong> — showing RCAs with event date within {year}.
+          </p>
+          <Link href="/trackers/rca" className="text-xs text-amber-700 underline">Return to live view</Link>
+        </div>
+      )}
+
+      {/* Stats */
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-white rounded-xl border border-slate-200 p-4">
           <div className="text-2xl font-bold text-yellow-600">{inProgress.length}</div>

@@ -30,6 +30,7 @@ import {
   Mail,
   Scale,
   FileWarning,
+  Archive,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -97,6 +98,11 @@ const navItems: NavItem[] = [
     href: '/surveys',
     label: 'Surveys & Inspections',
     icon: FileSearch,
+  },
+  {
+    href: '/archives',
+    label: 'Compliance Archive',
+    icon: Archive,
   },
   {
     href: '/documents',

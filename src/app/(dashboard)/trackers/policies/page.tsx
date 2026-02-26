@@ -10,13 +10,16 @@ export const metadata = { title: 'Policy & Procedure Tracker' };
 export default async function PoliciesPage({
   searchParams,
 }: {
-  searchParams: { filter?: string; category?: string };
+  searchParams: { filter?: string; category?: string; year?: string };
 }) {
   const session = await auth();
   const facilityId = session!.user.facilityId;
 
   const filter = searchParams.filter;
   const now = new Date();
+  const year = searchParams.year ? parseInt(searchParams.year, 10) : null;
+  const yearStart = year ? new Date(year, 0, 1) : null;
+  const yearEnd   = year ? new Date(year + 1, 0, 1) : null;
 
   const policies = await prisma.policy.findMany({
     where: {
@@ -24,6 +27,7 @@ export default async function PoliciesPage({
       ...(filter === 'overdue'
         ? { nextReviewDate: { lt: now }, status: { not: 'ARCHIVED' } }
         : {}),
+      ...(yearStart && yearEnd ? { nextReviewDate: { gte: yearStart, lt: yearEnd } } : {}),
       ...(searchParams.category ? { category: searchParams.category as never } : {}),
     },
     orderBy: [{ nextReviewDate: 'asc' }],
@@ -62,6 +66,16 @@ export default async function PoliciesPage({
           Add Policy
         </Link>
       </div>
+
+      {/* Archive year banner */}
+      {year && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
+          <p className="text-sm text-amber-800">
+            <strong>{year} Archive View</strong> — showing policies with review date within {year}.
+          </p>
+          <Link href="/trackers/policies" className="text-xs text-amber-700 underline">Return to live view</Link>
+        </div>
+      )}
 
       {overdueCount > 0 && (
         <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg p-3">
