@@ -40,5 +40,22 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  // Auto-create a calendar event for the CAP target date
+  try {
+    await prisma.calendarEvent.create({
+      data: {
+        facilityId: session.user.facilityId,
+        title:      `CAP Due: ${title}`,
+        category:   'OTHER',
+        dueDate:    new Date(targetDate),
+        priority:   priority === 'CRITICAL' ? 'URGENT' : priority === 'HIGH' ? 'HIGH' : 'NORMAL',
+        notes:      `Auto-created for CAP ${cap.capNumber}. ${description ?? ''}`.trim(),
+        status:     'SCHEDULED',
+      },
+    });
+  } catch {
+    // Non-fatal — CAP was saved, calendar event creation failed silently
+  }
+
   return NextResponse.json(cap, { status: 201 });
 }

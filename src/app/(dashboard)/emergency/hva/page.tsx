@@ -68,6 +68,61 @@ export default async function HvaPage() {
         </p>
       </div>
 
+      {/* Top 3 High-Risk Hazards Action Panel */}
+      {currentYearHva && currentYearHva.hazards.length > 0 && (() => {
+        const topHazards = [...currentYearHva.hazards]
+          .sort((a, b) => b.riskScore - a.riskScore)
+          .slice(0, 3);
+        const highRisk = topHazards.filter(h => h.riskScore >= 0.7);
+        return (
+          <div className={`rounded-xl border p-4 ${
+            highRisk.length > 0 ? 'bg-red-50 border-red-200' : 'bg-amber-50 border-amber-200'
+          }`}>
+            <div className="flex items-center gap-2 mb-3">
+              <ShieldAlert className={`w-4 h-4 ${ highRisk.length > 0 ? 'text-red-600' : 'text-amber-600' }`} />
+              <span className={`text-sm font-bold ${ highRisk.length > 0 ? 'text-red-800' : 'text-amber-800' }`}>
+                {currentYear} Top {topHazards.length} Priority Hazards
+              </span>
+            </div>
+            <div className="space-y-2">
+              {topHazards.map((hazard, i) => {
+                const risk = riskLevel(hazard.riskScore);
+                return (
+                  <div key={hazard.id} className="flex items-start gap-3 bg-white rounded-lg p-3 border border-white/60">
+                    <span className={`text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      risk.label === 'HIGH' ? 'bg-red-100 text-red-700' :
+                      risk.label === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'
+                    }`}>{i + 1}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-slate-800">{hazard.hazardName}</span>
+                        <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${
+                          risk.label === 'HIGH' ? 'bg-red-100 text-red-700' :
+                          risk.label === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'
+                        }`}>{risk.label} — {(hazard.riskScore * 100).toFixed(0)}%</span>
+                      </div>
+                      {hazard.mitigationPlan ? (
+                        <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">{hazard.mitigationPlan}</p>
+                      ) : (
+                        <p className="text-xs text-red-500 mt-0.5 font-medium">No mitigation plan documented</p>
+                      )}
+                    </div>
+                    {!hazard.mitigationPlan && (
+                      <Link
+                        href={`/emergency/hva/${currentYear}/edit`}
+                        className="text-xs text-amber-700 bg-amber-50 border border-amber-200 px-2 py-1 rounded-lg hover:bg-amber-100 transition-colors whitespace-nowrap"
+                      >
+                        Add mitigation →
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Assessment cards */}
       {assessments.length === 0 ? (
         <div className="bg-white rounded-xl border border-slate-200 p-12 text-center text-slate-400">

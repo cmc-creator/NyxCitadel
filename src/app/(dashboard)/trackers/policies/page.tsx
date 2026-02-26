@@ -1,9 +1,9 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
-import { FileText, Plus, AlertTriangle } from 'lucide-react';
+import { FileText, Plus, AlertTriangle, Clock } from 'lucide-react';
 import Link from 'next/link';
-import { isPast } from 'date-fns';
+import { isPast, differenceInCalendarDays } from 'date-fns';
 
 export const metadata = { title: 'Policy & Procedure Tracker' };
 
@@ -146,11 +146,21 @@ export default async function PoliciesPage({
                       {formatDate(policy.effectiveDate)}
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${
-                        isOverdue ? 'status-overdue' : className
-                      }`}>
-                        {isOverdue ? 'Overdue' : formatDate(policy.nextReviewDate)}
-                      </span>
+                      {policy.nextReviewDate ? (() => {
+                        const days = differenceInCalendarDays(policy.nextReviewDate, now);
+                        const overdue = days < 0;
+                        const urgent = days >= 0 && days <= 30;
+                        return (
+                          <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full border ${
+                            overdue ? 'bg-red-100 text-red-700 border-red-200' :
+                            urgent  ? 'bg-amber-100 text-amber-700 border-amber-200' :
+                                      'bg-slate-100 text-slate-600 border-slate-200'
+                          }`}>
+                            <Clock className="w-3 h-3" />
+                            {overdue ? `${Math.abs(days)}d overdue` : days === 0 ? 'Due today' : `Due in ${days}d`}
+                          </span>
+                        );
+                      })() : <span className="text-xs text-slate-400">—</span>}
                     </td>
                     <td className="px-4 py-3">
                       <span className={`text-xs font-medium px-2 py-0.5 rounded border ${statusColor[policy.status] ?? ''}`}>

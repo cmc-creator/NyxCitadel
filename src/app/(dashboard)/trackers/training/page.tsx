@@ -42,6 +42,22 @@ export default async function TrainingPage({
       r.status !== 'EXEMPT'
   ).length;
 
+  // Compliance by category
+  const categoryMap: Record<string, { total: number; completed: number }> = {};
+  for (const r of records) {
+    if (r.status === 'EXEMPT') continue;
+    if (!r.isRequired) continue;
+    const key = r.category.replace(/_/g, ' ');
+    if (!categoryMap[key]) categoryMap[key] = { total: 0, completed: 0 };
+    categoryMap[key].total++;
+    if (r.status === 'COMPLETED') categoryMap[key].completed++;
+  }
+  const categoryStats = Object.entries(categoryMap).sort((a, b) => {
+    const pctA = a[1].total ? a[1].completed / a[1].total : 1;
+    const pctB = b[1].total ? b[1].completed / b[1].total : 1;
+    return pctA - pctB; // lowest compliance first
+  });
+
   const statusColor: Record<string, string> = {
     PENDING: 'bg-slate-100 text-slate-700',
     IN_PROGRESS: 'bg-blue-100 text-blue-700',
@@ -88,7 +104,38 @@ export default async function TrainingPage({
         </div>
       )}
 
-      {/* Filter tabs */}
+      {/* Compliance by category */}
+      {categoryStats.length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-5">
+          <h3 className="text-sm font-semibold text-slate-800 mb-3">Compliance by Category</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {categoryStats.map(([cat, { total, completed }]) => {
+              const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+              return (
+                <div key={cat} className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-slate-600 truncate max-w-[80%]">{cat}</span>
+                    <span className={`text-xs font-bold ${
+                      pct >= 90 ? 'text-green-600' : pct >= 70 ? 'text-yellow-600' : 'text-red-600'
+                    }`}>{pct}%</span>
+                  </div>
+                  <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${
+                        pct >= 90 ? 'bg-green-500' : pct >= 70 ? 'bg-yellow-500' : 'bg-red-500'
+                      }`}
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-slate-400">{completed}/{total} complete</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Filter tabs */}}
       <div className="flex gap-2 flex-wrap">
         {[
           { href: '/trackers/training', label: 'All', active: !filter },

@@ -139,12 +139,13 @@ export default async function IrIadPage() {
                 <th className="text-left px-4 py-3 font-medium text-slate-600">Patient / MRN</th>
                 <th className="text-left px-4 py-3 font-medium text-slate-600">Reporting</th>
                 <th className="text-left px-4 py-3 font-medium text-slate-600">Status</th>
+                <th className="text-left px-4 py-3 font-medium text-slate-600">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {reports.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-4 py-12 text-center text-slate-400">
+                  <td colSpan={8} className="px-4 py-12 text-center text-slate-400">
                     <FileWarning className="w-8 h-8 mx-auto mb-2 opacity-30" />
                     No incident reports logged yet.
                   </td>
@@ -193,6 +194,24 @@ export default async function IrIadPage() {
                       <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[r.status] ?? 'bg-slate-100 text-slate-600'}`}>
                         {r.status.replace(/_/g, ' ')}
                       </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      {(r.severity === 'SENTINEL' || r.iadRequired) && !r.linkedRcaId && r.status !== 'CLOSED' && (
+                        <Link
+                          href={`/trackers/rca/new?fromIr=${r.id}&type=${encodeURIComponent(r.incidentType)}&date=${r.incidentDate.toISOString()}&desc=${encodeURIComponent(r.briefDescription?.slice(0, 200) ?? '')}`}
+                          className="inline-flex items-center gap-1 text-xs font-medium text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-1 rounded-lg hover:bg-indigo-100 transition-colors whitespace-nowrap"
+                        >
+                          → Start RCA
+                        </Link>
+                      )}
+                      {r.linkedRcaId && (
+                        <Link
+                          href={`/trackers/rca`}
+                          className="inline-flex items-center gap-1 text-xs text-green-600 font-medium whitespace-nowrap"
+                        >
+                          <CheckCircle2 className="w-3 h-3" /> RCA linked
+                        </Link>
+                      )}
                     </td>
                   </tr>
                 ))

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ClipboardCheck, ArrowLeft } from 'lucide-react';
 
 const PRIORITY_LEVELS = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
@@ -9,6 +9,12 @@ const SOURCES = ['INCIDENT', 'SURVEY_FINDING', 'AUDIT', 'SELF_IDENTIFIED', 'REGU
 
 export default function NewCapPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const fromRca    = searchParams.get('fromRca')    ?? '';
+  const prefillTitle = searchParams.get('title')  ?? '';
+  const prefillSource = searchParams.get('source') ?? '';
+  const prefillDesc  = searchParams.get('desc')   ?? '';
+
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
@@ -56,16 +62,23 @@ export default function NewCapPage() {
 
       {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
 
+      {fromRca && (
+        <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2.5 text-sm text-emerald-700">
+          <ClipboardCheck className="w-4 h-4 shrink-0" />
+          Pre-filled from Root Cause Analysis. Review all fields and set a target date.
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
         <div className="px-6 py-5 space-y-4">
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">CAP Title *</label>
-            <input name="title" required className="form-input w-full" placeholder="Brief description of the corrective action" />
+            <input name="title" required defaultValue={prefillTitle} className="form-input w-full" placeholder="Brief description of the corrective action" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Source *</label>
-              <select name="source" required className="form-input w-full">
+              <select name="source" required defaultValue={prefillSource} className="form-input w-full">
                 <option value="">Select source…</option>
                 {SOURCES.map(s => <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>)}
               </select>
@@ -80,7 +93,7 @@ export default function NewCapPage() {
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Problem Description *</label>
-            <textarea name="description" required rows={4} className="form-input w-full"
+            <textarea name="description" required rows={4} defaultValue={prefillDesc} className="form-input w-full"
               placeholder="What issue or gap is being addressed? What is the root cause?" />
           </div>
           <div>

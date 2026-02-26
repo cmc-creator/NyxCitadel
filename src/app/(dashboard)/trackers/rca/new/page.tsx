@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, ArrowLeft, Plus, Trash2 } from 'lucide-react';
 
 interface WhyItem {
@@ -36,6 +36,12 @@ const EVENT_TYPES = [
 
 export default function NewRcaPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const fromIr    = searchParams.get('fromIr')    ?? '';
+  const prefillDate = searchParams.get('date')    ? new Date(searchParams.get('date')!).toISOString().slice(0, 10) : '';
+  const prefillType = searchParams.get('type')    ?? '';
+  const prefillDesc = searchParams.get('desc')    ?? '';
+
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState<'event' | 'factors' | 'analysis' | 'actions'>('event');
@@ -131,6 +137,13 @@ export default function NewRcaPage() {
         </p>
       </div>
 
+      {fromIr && (
+        <div className="flex items-center gap-2 bg-indigo-50 border border-indigo-200 rounded-lg px-4 py-2.5 text-sm text-indigo-700">
+          <Search className="w-4 h-4 shrink-0" />
+          Pre-filled from Incident Report. Review and complete all sections below.
+        </div>
+      )}
+
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
@@ -164,6 +177,7 @@ export default function NewRcaPage() {
                   name="eventDate"
                   type="date"
                   required
+                  defaultValue={prefillDate}
                   className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
@@ -173,6 +187,7 @@ export default function NewRcaPage() {
                 <select
                   name="eventType"
                   required
+                  defaultValue={prefillType}
                   className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="">Select type...</option>
@@ -203,6 +218,7 @@ export default function NewRcaPage() {
                 <input
                   name="linkedIncidentId"
                   placeholder="Incident record ID (if applicable)"
+                  defaultValue={fromIr}
                   className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
@@ -214,6 +230,7 @@ export default function NewRcaPage() {
                 name="eventDescription"
                 required
                 rows={4}
+                defaultValue={prefillDesc}
                 placeholder="Describe what happened — what was the adverse event or sentinel event?"
                 className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
               />
