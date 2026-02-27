@@ -134,7 +134,7 @@ export default async function RiskAssessmentsPage() {
         ) : (
           <div className="divide-y divide-slate-50">
             {assessments.map((a) => (
-              <div key={a.id} className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-colors">
+              <Link key={a.id} href={`/trackers/risk-assessments/${a.id}`} className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-colors">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="text-sm font-semibold text-slate-800">{a.title}</p>
@@ -162,7 +162,7 @@ export default async function RiskAssessmentsPage() {
                     {a.status.replace('_', ' ')}
                   </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

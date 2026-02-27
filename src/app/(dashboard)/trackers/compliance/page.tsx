@@ -94,9 +94,9 @@ export default async function ComplianceTrackerPage({
               items.map((item) => {
                 const { label, className } = getDueDateStatus(item.nextDueDate);
                 return (
-                  <tr key={item.id} className="hover:bg-slate-50 transition-colors">
+                  <tr key={item.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
                     <td className="px-4 py-3">
-                      <p className="font-medium text-slate-800">{item.title}</p>
+                      <Link href={`/trackers/compliance/${item.id}`} className="font-medium text-slate-800 hover:underline hover:text-purple-700">{item.title}</Link>
                       <p className="text-xs text-slate-400">{item.category}</p>
                     </td>
                     <td className="px-4 py-3 text-slate-600 text-xs">

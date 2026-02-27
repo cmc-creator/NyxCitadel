@@ -163,8 +163,10 @@ export default async function IrIadPage({
                 </tr>
               ) : (
                 reports.map(r => (
-                  <tr key={r.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-4 py-3 font-mono text-xs font-semibold text-red-700">{r.irNumber}</td>
+                  <tr key={r.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
+                    <td className="px-4 py-3 font-mono text-xs font-semibold text-red-700">
+                      <Link href={`/trackers/ir-iad/${r.id}`} className="hover:underline">{r.irNumber}</Link>
+                    </td>
                     <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{formatDate(r.incidentDate)}</td>
                     <td className="px-4 py-3 text-slate-700 whitespace-nowrap text-xs">
                       {r.incidentType.replace(/_/g, ' ')}
