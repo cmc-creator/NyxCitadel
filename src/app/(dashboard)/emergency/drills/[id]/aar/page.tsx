@@ -45,7 +45,7 @@ export default async function DrillAARPage({
   const allClears    = drill.drillActions.filter((a) => a.actionType === 'ALL_CLEAR');
   const notifications = drill.drillActions.filter((a) => a.actionType === 'NOTIFICATION');
   const evacuations  = drill.drillActions.filter((a) => a.actionType === 'EVACUATION');
-  const actionTypes  = [...new Set(drill.drillActions.map((a) => a.actionType))];
+  const actionTypes  = Array.from(new Set(drill.drillActions.map((a) => a.actionType)));
 
   // Elapsed compute
   const first = drill.drillActions[0]?.timestamp;
