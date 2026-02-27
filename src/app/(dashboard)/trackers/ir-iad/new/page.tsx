@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { FileWarning, ArrowLeft } from 'lucide-react';
+import { FileWarning, ArrowLeft, ShieldAlert, Zap, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
+import { computeTriage, triageBadgeStyle } from '@/lib/aiTriage';
 
 export default function NewIrIadPage() {
   const router = useRouter();
@@ -61,6 +62,14 @@ export default function NewIrIadPage() {
   const toggle = (field: BoolField) => () =>
     setForm(f => ({ ...f, [field]: !f[field] }));
 
+  // ── AI Triage (computed, not stored in form state) ─────────────────────────
+  const triage = useMemo(() => computeTriage({
+    incidentType:   form.incidentType,
+    severity:       form.severity,
+    adhsReportable: form.adhsReportable,
+    jcReportable:   form.jcReportable,
+  }), [form.incidentType, form.severity, form.adhsReportable, form.jcReportable]);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
@@ -74,6 +83,11 @@ export default function NewIrIadPage() {
           patientAge: form.patientAge ? Number(form.patientAge) : null,
           patientDOB: form.patientDOB || null,
           familyNotifiedDate: form.familyNotifiedDate || null,
+          // AI Triage fields
+          aiTriageSeverity:   triage.severity,
+          aiTriageTags:       triage.tags.join(','),
+          aiCascadeTriggered: triage.cascadeTriggered,
+          aiTriageReason:     triage.reason,
         }),
       });
       if (!res.ok) {
@@ -310,6 +324,40 @@ export default function NewIrIadPage() {
               placeholder="Additional notes..."
               className="input-field w-full resize-none" />
           </div>
+        </div>
+
+        {/* ── NyxSentinel AI Triage Panel ──────────────────────────────── */}
+        <div className="bg-slate-900 border border-slate-700 rounded-xl p-5 space-y-3">
+          <div className="flex items-center gap-2">
+            <ShieldAlert className="w-4 h-4 text-indigo-400" />
+            <span className="text-xs font-bold text-indigo-300 uppercase tracking-widest">NyxSentinel — AI Triage Assessment</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className={`text-sm font-bold px-3 py-1.5 rounded-lg ${triageBadgeStyle(triage.severity)}`}>
+              {triage.severity}
+            </span>
+            {triage.cascadeTriggered && (
+              <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-red-900 text-red-300 border border-red-700">
+                <Zap className="w-3 h-3" /> RCA Workflow Will Auto-Trigger
+              </span>
+            )}
+          </div>
+          {triage.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {triage.tags.map(tag => (
+                <span key={tag} className="text-xs font-medium text-slate-300 bg-slate-700 px-2 py-0.5 rounded">
+                  {tag.replace(/_/g, ' ')}
+                </span>
+              ))}
+            </div>
+          )}
+          <p className="text-xs text-slate-400 leading-relaxed">{triage.reason}</p>
+          {triage.severity === 'CRITICAL' && (
+            <div className="flex items-start gap-2 text-xs text-amber-300 bg-amber-900/30 border border-amber-700 rounded-lg p-2">
+              <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+              <span>This incident meets the threshold for immediate escalation. Ensure all required regulatory notifications are completed and an RCA is initiated within 45 days.</span>
+            </div>
+          )}
         </div>
 
         <div className="flex gap-3 pb-8">

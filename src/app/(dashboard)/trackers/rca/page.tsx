@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import { Search, Plus, CheckCircle2, Clock, ClipboardList } from 'lucide-react';
+import { Search, Plus, CheckCircle2, Clock, ClipboardList, Repeat } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
 export const metadata = { title: 'Root Cause Analyses' };
@@ -130,6 +130,15 @@ export default async function RcaPage({
                       className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded-lg hover:bg-emerald-100 transition-colors whitespace-nowrap"
                     >
                       <ClipboardList className="w-3.5 h-3.5" /> → Create CAP
+                    </Link>
+                  )}
+                  {/* PDSA cycle launch — for approved RCAs where system-level change is needed */}
+                  {(rca.status === 'APPROVED' || rca.status === 'SUBMITTED_TO_JC' || rca.status === 'CLOSED') && (
+                    <Link
+                      href={`/trackers/caps/new?fromRca=${rca.id}&isPdsa=true&title=${encodeURIComponent(`PDSA: ${rca.eventType}`)}&source=INCIDENT&desc=${encodeURIComponent((rca.conclusion ?? '').slice(0, 200))}`}
+                      className="inline-flex items-center gap-1 text-xs font-medium text-purple-700 bg-purple-50 border border-purple-200 px-2 py-1 rounded-lg hover:bg-purple-100 transition-colors whitespace-nowrap"
+                    >
+                      <Repeat className="w-3.5 h-3.5" /> → Launch PDSA
                     </Link>
                   )}
                   {rca.linkedCapId && (

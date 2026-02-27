@@ -65,6 +65,7 @@ model Facility {
   rootCauseAnalyses RootCauseAnalysis[]
   qocComplaints   QocComplaint[]
   incidentReports IncidentReport[]
+  floorPlans      FacilityFloorPlan[]
 
   @@map("facilities")
 }
@@ -625,6 +626,19 @@ model CorrectiveActionPlan {
   regulatoryBody  RegulatoryBody?
   followUpDate    DateTime?
   followUpNotes   String?   @db.Text
+
+  // PDSA (Plan-Do-Study-Act) Quality Improvement Cycle
+  isPdsa           Boolean  @default(false)
+  pdsaLinkedRcaId  String?  // RCA this PDSA originated from
+  pdsaPlan         String?  @db.Text  // Plan: problem statement, planned intervention
+  pdsaDo           String?  @db.Text  // Do: execution notes, what was actually done
+  pdsaStudy        String?  @db.Text  // Study: results, metrics, observations
+  pdsaAct          String?  @db.Text  // Act: standardize, adjust, or restart cycle
+  vigilanceDays    Int?               // Days of active monitoring post-intervention
+  vigilanceEndDate DateTime?
+  vigilanceStatus  String?  @default("PENDING") // PENDING | ACTIVE | BREACH | COMPLETE
+  vigilanceBreaches Int?    @default(0)
+
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
@@ -732,8 +746,11 @@ model Drill {
   documentUrl     String?
   regulatoryBody  RegulatoryBody?
   standardRef     String?
+  aarGeneratedAt  DateTime?   // When the After-Action Report was finalized
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
+
+  drillActions    DrillAction[]
 
   @@map("drills")
 }
@@ -759,9 +776,39 @@ enum DrillType {
 
 enum DrillStatus {
   SCHEDULED
+  IN_PROGRESS    // Drill is actively running (War Room mode)
   COMPLETED
   CANCELLED
   RESCHEDULED
+}
+
+model DrillAction {
+  id           String          @id @default(cuid())
+  drillId      String
+  drill        Drill           @relation(fields: [drillId], references: [id], onDelete: Cascade)
+  facilityId   String
+  timestamp    DateTime        @default(now())
+  actor        String          // Person name / role who performed action
+  actionType   DrillActionType
+  description  String          @db.Text
+  outcomeNotes String?
+  issueFlag    Boolean         @default(false) // Mark as a breakdown/issue for AAR
+  createdAt    DateTime        @default(now())
+
+  @@map("drill_actions")
+}
+
+enum DrillActionType {
+  ACTIVATION
+  NOTIFICATION
+  EVACUATION
+  COMMUNICATION
+  RESOURCE_DEPLOYMENT
+  PATIENT_CARE
+  ISSUE_NOTED
+  RESOLUTION
+  ALL_CLEAR
+  OBSERVATION
 }
 
 model EmergencyPlan {
@@ -1551,8 +1598,12 @@ model IncidentReport {
   status                  IrStatus        @default(OPEN)
   closedDate              DateTime?
   notes                   String?         @db.Text
-  createdAt               DateTime        @default(now())
-  updatedAt               DateTime        @updatedAt
+
+  // AI Triage (rule-based severity classification)
+  aiTriageSeverity  String?   // CRITICAL | HIGH | MODERATE | LOW
+  aiTriageTags      String?   // Comma-separated: "medication_security,repeat_offense,regulatory_exposure"
+  aiCascadeTriggered Boolean  @default(false) // True if auto-RCA was triggered
+  aiTriageReason    String?   // Human-readable explanation of the triage decision
 
   @@map("incident_reports")
 }
@@ -1564,6 +1615,25 @@ enum IrStatus {
   REPORTED_TO_STATE
   CLOSED
   REOPENED
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// FACILITY FLOOR PLANS (Digital Twin)
+// ────────────────────────────────────────────────────────────────────────────
+
+model FacilityFloorPlan {
+  id          String   @id @default(cuid())
+  facilityId  String
+  facility    Facility @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  name        String   // e.g. "Ground Floor", "Wing A - Acute Unit"
+  floor       Int      @default(1)
+  imageUrl    String   // path to uploaded file
+  notes       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("facility_floor_plans")
 }
 
 enum IrIncidentType {

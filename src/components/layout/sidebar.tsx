@@ -31,6 +31,9 @@ import {
   Scale,
   FileWarning,
   Archive,
+  Map,
+  FileBarChart,
+  ShieldCheck as ResilienceIcon,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -89,10 +92,18 @@ const navItems: NavItem[] = [
     label: 'Emergency Management',
     icon: Siren,
     children: [
-      { href: '/emergency/hva', label: 'HVA Assessment', icon: ShieldAlert },
+      { href: '/emergency/hva',   label: 'HVA Assessment',   icon: ShieldAlert },
       { href: '/emergency/drills', label: 'Drills & Exercises', icon: Siren },
-      { href: '/emergency/plans', label: 'EM Plans', icon: BookOpen },
+      { href: '/emergency/plans',  label: 'EM Plans',           icon: BookOpen },
+      { href: '/emergency/map',    label: 'Facility Map',       icon: Map,   badge: 'TWIN', badgeColor: 'bg-sky-100 text-sky-700' },
     ],
+  },
+  {
+    href: '/resilience',
+    label: 'Resilience Scorecard',
+    icon: ResilienceIcon,
+    badge: 'NEW',
+    badgeColor: 'bg-indigo-100 text-indigo-700',
   },
   {
     href: '/surveys',
@@ -103,6 +114,13 @@ const navItems: NavItem[] = [
     href: '/archives',
     label: 'Compliance Archive',
     icon: Archive,
+  },
+  {
+    href: '/board-report',
+    label: 'Board Report',
+    icon: FileBarChart,
+    badge: 'EXEC',
+    badgeColor: 'bg-emerald-100 text-emerald-700',
   },
   {
     href: '/documents',
