@@ -2,7 +2,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { redirect, notFound } from 'next/navigation';
 import Link from 'next/link';
-import PrintButton from '@/components/ui/PrintButton';
+import { PrintButton } from '@/components/ui/PrintButton';
 import { ShieldCheck, AlertTriangle, ChevronRight, Award } from 'lucide-react';
 
 function gradeToColor(grade: string): string {

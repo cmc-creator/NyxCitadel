@@ -77,9 +77,9 @@ export default async function BoardReportPage() {
       orderBy: { metricName: 'asc' },
     }),
     prisma.survey.findMany({
-      where: { facilityId, surveyDate: { gte: since90 } },
-      orderBy: { surveyDate: 'desc' },
-      select: { surveyType: true, surveyingBody: true, surveyDate: true, outcome: true, deficiencyCount: true },
+      where: { facilityId, conductedDate: { gte: since90 } },
+      orderBy: { conductedDate: 'desc' },
+      select: { surveyType: true, regulatoryBody: true, conductedDate: true, outcome: true, findingCount: true },
       take: 5,
     }),
     prisma.grievanceRecord.count({
@@ -418,11 +418,11 @@ export default async function BoardReportPage() {
                 {surveys.map((s, i) => (
                   <tr key={i} className="border-b border-slate-100">
                     <td className="py-1.5 text-xs font-medium">{s.surveyType?.replace(/_/g, ' ') ?? '—'}</td>
-                    <td className="py-1.5 text-xs text-slate-500">{s.surveyingBody ?? '—'}</td>
-                    <td className="py-1.5 text-xs text-slate-500">{formatDate(s.surveyDate)}</td>
+                    <td className="py-1.5 text-xs text-slate-500">{s.regulatoryBody?.replace(/_/g, ' ') ?? '—'}</td>
+                    <td className="py-1.5 text-xs text-slate-500">{formatDate(s.conductedDate)}</td>
                     <td className="py-1.5 text-xs">{s.outcome ?? '—'}</td>
-                    <td className={`py-1.5 text-center text-xs font-semibold ${(s.deficiencyCount ?? 0) > 0 ? 'text-orange-600' : 'text-emerald-600'}`}>
-                      {s.deficiencyCount ?? 0}
+                    <td className={`py-1.5 text-center text-xs font-semibold ${(s.findingCount ?? 0) > 0 ? 'text-orange-600' : 'text-emerald-600'}`}>
+                      {s.findingCount ?? 0}
                     </td>
                   </tr>
                 ))}
