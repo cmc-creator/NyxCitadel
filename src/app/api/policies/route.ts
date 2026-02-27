@@ -31,9 +31,8 @@ export async function POST(req: NextRequest) {
     effectiveDate,
     nextReviewDate,
     owner,
-    approvedBy,
-    description,
-    documentPath,
+    summary,
+    documentUrl,
   } = body;
 
   if (!title || !category || !effectiveDate || !nextReviewDate) {
@@ -51,9 +50,8 @@ export async function POST(req: NextRequest) {
       effectiveDate:  new Date(effectiveDate),
       nextReviewDate: new Date(nextReviewDate),
       owner:          owner ?? null,
-      approvedBy:     approvedBy ?? null,
-      description:    description ?? null,
-      documentPath:   documentPath ?? null,
+      summary:        summary ?? null,
+      documentUrl:    documentUrl ?? null,
     },
   });
 
