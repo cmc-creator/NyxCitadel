@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         title:      `CAP Due: ${title}`,
         category:   'OTHER',
         dueDate:    new Date(targetDate),
-        priority:   priority === 'CRITICAL' ? 'URGENT' : priority === 'HIGH' ? 'HIGH' : 'NORMAL',
+        priority:   priority === 'CRITICAL' ? 'CRITICAL' : priority === 'HIGH' ? 'HIGH' : 'MEDIUM',
         notes:      `Auto-created for CAP ${cap.capNumber}. ${description ?? ''}`.trim(),
         status:     'SCHEDULED',
       },
