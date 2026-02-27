@@ -138,7 +138,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
               <span className="text-xs font-mono text-slate-500 mr-2">{survey.cap.capNumber}</span>
               <span className="text-sm font-medium text-slate-800 group-hover:text-purple-700">{survey.cap.title}</span>
             </div>
-            <span className={`text-xs px-2 py-0.5 rounded font-medium ${{OPEN:'bg-blue-100 text-blue-700',IN_PROGRESS:'bg-yellow-100 text-yellow-700',COMPLETED:'bg-green-100 text-green-700',VERIFIED:'bg-teal-100 text-teal-700'}[survey.cap.status] ?? 'bg-slate-100 text-slate-600'}`}>
+            <span className={`text-xs px-2 py-0.5 rounded font-medium ${ ({OPEN:'bg-blue-100 text-blue-700',IN_PROGRESS:'bg-yellow-100 text-yellow-700',COMPLETED:'bg-green-100 text-green-700',VERIFIED:'bg-teal-100 text-teal-700',OVERDUE:'bg-red-100 text-red-700',EXTENDED:'bg-purple-100 text-purple-700'} as Record<string,string>)[survey.cap.status] ?? 'bg-slate-100 text-slate-600'}`}>
               {survey.cap.status.replace(/_/g, ' ')}
             </span>
           </Link>
