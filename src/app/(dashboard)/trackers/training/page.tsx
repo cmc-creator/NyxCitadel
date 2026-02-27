@@ -149,7 +149,7 @@ export default async function TrainingPage({
         </div>
       )}
 
-      {/* Filter tabs */}}
+      {/* Filter tabs */}
       <div className="flex gap-2 flex-wrap">
         {[
           { href: '/trackers/training', label: 'All', active: !filter },
