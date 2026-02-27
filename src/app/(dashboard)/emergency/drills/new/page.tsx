@@ -4,10 +4,23 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Flame, ArrowLeft } from 'lucide-react';
 
-const DRILL_TYPES = [
-  'FIRE_EVACUATION', 'CODE_GREY', 'CODE_SILVER', 'CODE_ORANGE',
-  'LOCKDOWN', 'MASS_CASUALTY', 'HAZMAT', 'UTILITY_FAILURE',
-  'ELOPEMENT', 'TABLETOP_EXERCISE', 'FUNCTIONAL_EXERCISE', 'FULL_SCALE',
+const DRILL_TYPES: { value: string; label: string }[] = [
+  { value: 'FIRE_EVACUATION',       label: 'Fire Evacuation' },
+  { value: 'CODE_RED',              label: 'Code RED (Fire)' },
+  { value: 'CODE_BLUE',             label: 'Code BLUE (Medical Emergency)' },
+  { value: 'CODE_GRAY',             label: 'Code GRAY (Combative Patient)' },
+  { value: 'CODE_SILVER',           label: 'Code SILVER (Active Shooter/Weapon)' },
+  { value: 'CODE_ORANGE',           label: 'Code ORANGE (Hazmat)' },
+  { value: 'CODE_PURPLE',           label: 'Code PURPLE (Child Abduction)' },
+  { value: 'CODE_BLACK',            label: 'Code BLACK (Bomb Threat)' },
+  { value: 'UTILITY_FAILURE',       label: 'Utility Failure' },
+  { value: 'MASS_CASUALTY',         label: 'Mass Casualty Incident' },
+  { value: 'IT_DISASTER_RECOVERY',  label: 'IT Disaster Recovery' },
+  { value: 'COMMUNICATION_FAILURE', label: 'Communication Failure' },
+  { value: 'SHELTER_IN_PLACE',      label: 'Shelter in Place' },
+  { value: 'DECONTAMINATION',       label: 'Decontamination' },
+  { value: 'TABLETOP',              label: 'Tabletop Exercise' },
+  { value: 'FULL_SCALE',            label: 'Full-Scale Exercise' },
 ];
 export default function NewDrillPage() {
   const router = useRouter();
@@ -20,11 +33,16 @@ export default function NewDrillPage() {
     setError('');
     const form = e.currentTarget;
     const data = {
-      drillName:    (form.elements.namedItem('drillName') as HTMLInputElement).value,
-      drillType:    (form.elements.namedItem('drillType') as HTMLSelectElement).value,
-      scheduledDate:(form.elements.namedItem('scheduledDate') as HTMLInputElement).value,
-      location:     (form.elements.namedItem('location') as HTMLInputElement).value,
-      objectives:   (form.elements.namedItem('objectives') as HTMLTextAreaElement).value,
+      drillName:        (form.elements.namedItem('drillName') as HTMLInputElement).value,
+      drillType:        (form.elements.namedItem('drillType') as HTMLSelectElement).value,
+      scheduledDate:    (form.elements.namedItem('scheduledDate') as HTMLInputElement).value,
+      location:         (form.elements.namedItem('location') as HTMLInputElement).value,
+      scenario:         (form.elements.namedItem('scenario') as HTMLTextAreaElement).value,
+      objectives:       (form.elements.namedItem('objectives') as HTMLTextAreaElement).value,
+      participantCount: (form.elements.namedItem('participantCount') as HTMLInputElement).value
+                          ? Number((form.elements.namedItem('participantCount') as HTMLInputElement).value)
+                          : undefined,
+      observer:         (form.elements.namedItem('observer') as HTMLInputElement).value,
     };
 
     const res = await fetch('/api/drills', {
@@ -34,7 +52,8 @@ export default function NewDrillPage() {
     });
 
     if (res.ok) {
-      router.push('/emergency/drills');
+      const created = await res.json();
+      router.push(`/emergency/drills/${created.id}`);
       router.refresh();
     } else {
       const body = await res.json();
@@ -71,7 +90,7 @@ export default function NewDrillPage() {
               <label className="block text-xs font-medium text-slate-600 mb-1">Drill Type *</label>
               <select name="drillType" required className="form-input w-full">
                 <option value="">Select type…</option>
-                {DRILL_TYPES.map(t => <option key={t} value={t}>{t.replace(/_/g, ' ')}</option>)}
+                {DRILL_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
             </div>
             <div>
@@ -84,9 +103,24 @@ export default function NewDrillPage() {
             <input name="location" className="form-input w-full" placeholder="e.g. All units, Unit 3B" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Objectives / Scenario Notes</label>
-            <textarea name="objectives" rows={4} className="form-input w-full"
-              placeholder="What competencies will this drill test? Describe the scenario or objectives…" />
+            <label className="block text-xs font-medium text-slate-600 mb-1">Scenario Description</label>
+            <textarea name="scenario" rows={3} className="form-input w-full"
+              placeholder="Describe the emergency scenario that will be simulated…" />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Learning Objectives</label>
+            <textarea name="objectives" rows={3} className="form-input w-full"
+              placeholder="What competencies will this drill test?" />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Expected Participant Count</label>
+              <input name="participantCount" type="number" min="1" className="form-input w-full" placeholder="e.g. 24" />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Observer / Evaluator</label>
+              <input name="observer" className="form-input w-full" placeholder="Name and title" />
+            </div>
           </div>
         </div>
         <div className="px-6 py-4 flex items-center justify-end gap-3">

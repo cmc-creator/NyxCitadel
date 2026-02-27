@@ -99,13 +99,6 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    href: '/resilience',
-    label: 'Resilience Scorecard',
-    icon: ResilienceIcon,
-    badge: 'NEW',
-    badgeColor: 'bg-indigo-100 text-indigo-700',
-  },
-  {
     href: '/surveys',
     label: 'Surveys & Inspections',
     icon: FileSearch,
@@ -116,11 +109,13 @@ const navItems: NavItem[] = [
     icon: Archive,
   },
   {
-    href: '/board-report',
-    label: 'Board Report',
-    icon: FileBarChart,
-    badge: 'EXEC',
-    badgeColor: 'bg-emerald-100 text-emerald-700',
+    href: '/intelligence',
+    label: 'Intelligence',
+    icon: BarChart2,
+    children: [
+      { href: '/resilience',   label: 'Resilience Scorecard', icon: ResilienceIcon },
+      { href: '/board-report', label: 'Board Report',         icon: FileBarChart, badge: 'EXEC', badgeColor: 'bg-emerald-100 text-emerald-700' },
+    ],
   },
   {
     href: '/documents',
@@ -148,7 +143,10 @@ function NavLink({
 
   const isActive =
     depth === 0
-      ? pathname === item.href || (item.children && pathname.startsWith(item.href))
+      ? pathname === item.href ||
+        (item.children
+          ? item.children.some((c) => pathname.startsWith(c.href))
+          : pathname.startsWith(item.href))
       : pathname === item.href || pathname.startsWith(item.href + '/');
 
   if (item.children) {

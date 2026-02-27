@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await req.json();
-  const { drillName, drillType, scheduledDate, location, objectives, scenario } = body;
+  const { drillName, drillType, scheduledDate, location, objectives, scenario, participantCount, observer } = body;
 
   if (!drillName || !drillType || !scheduledDate) {
     return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
@@ -26,14 +26,16 @@ export async function POST(req: NextRequest) {
 
   const drill = await prisma.drill.create({
     data: {
-      facilityId:    session.user.facilityId,
+      facilityId:      session.user.facilityId,
       drillName,
       drillType,
-      scheduledDate: new Date(scheduledDate),
-      location:      location ?? null,
-      objectives:    objectives ?? null,
-      scenario:      scenario ?? null,
-      status:        'SCHEDULED',
+      scheduledDate:   new Date(scheduledDate),
+      location:        location   || null,
+      objectives:      objectives || null,
+      scenario:        scenario   || null,
+      participantCount: participantCount ? Number(participantCount) : null,
+      observer:        observer   || null,
+      status:          'SCHEDULED',
     },
   });
 

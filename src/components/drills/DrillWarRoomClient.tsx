@@ -1,9 +1,9 @@
 ﻿'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Clock, AlertTriangle, CheckCircle2, Loader2, MapPin, Flame,
-  Radio, Users, QrCode, Plus, X, ShieldAlert, BarChart3,
+  Radio, Users, QrCode, Plus, X, ShieldAlert, BarChart3, RefreshCw,
 } from 'lucide-react';
 
 //  Types 
@@ -101,6 +101,69 @@ export default function DrillWarRoomClient({
   const [muster, setMuster] = useState<MusterEntry[]>(initialMuster);
   const [submitting, setSubmitting] = useState(false);
   const [ending, setEnding] = useState(false);
+  const [lastSynced, setLastSynced] = useState<Date | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const actionsRef = useRef(actions);
+  const killTasksRef = useRef(killTasks);
+  const musterRef = useRef(muster);
+
+  // Keep refs in sync so the polling effect can read latest state without re-subscribing
+  useEffect(() => { actionsRef.current = actions; }, [actions]);
+  useEffect(() => { killTasksRef.current = killTasks; }, [killTasks]);
+  useEffect(() => { musterRef.current = muster; }, [muster]);
+
+  // Live polling — 10-second interval while drill is IN_PROGRESS
+  useEffect(() => {
+    if (drillStatus !== 'IN_PROGRESS') return;
+
+    async function poll() {
+      setSyncing(true);
+      try {
+        const [actRes, taskRes, musterRes] = await Promise.all([
+          fetch(`/api/drill-actions?drillId=${drillId}`),
+          fetch(`/api/drill-tasks?drillId=${drillId}`),
+          fetch(`/api/drill-muster?drillId=${drillId}`),
+        ]);
+        if (!actRes.ok || !taskRes.ok || !musterRes.ok) return;
+
+        const [rawActions, rawTasks, rawMuster] = await Promise.all([
+          actRes.json(), taskRes.json(), musterRes.json(),
+        ]);
+
+        // Map DB shape → client interface shape
+        const mappedActions: DrillAction[] = rawActions.map((a: any) => ({
+          id:          a.id,
+          actionType:  a.actionType,
+          description: a.description,
+          severity:    a.severity ?? 'LOW',
+          performedBy: a.actor ?? a.performedBy ?? null,
+          location:    a.location ?? null,
+          createdAt:   a.timestamp ?? a.createdAt,
+        }));
+
+        // Only update if counts changed (avoid flicker when nothing new)
+        if (mappedActions.length !== actionsRef.current.length) setActions(mappedActions);
+        if (rawTasks.length !== killTasksRef.current.length || rawTasks.some((t: any, i: number) => {
+          const ex = killTasksRef.current[i];
+          return !ex || t.completedAt !== ex.completedAt || t.isMissed !== ex.isMissed;
+        })) setKillTasks(rawTasks);
+        if (rawMuster.length !== musterRef.current.length || rawMuster.some((e: any, i: number) => {
+          const ex = musterRef.current[i];
+          return !ex || e.status !== ex.status;
+        })) setMuster(rawMuster);
+
+        setLastSynced(new Date());
+      } catch {
+        // Network error — silently skip this poll cycle
+      } finally {
+        setSyncing(false);
+      }
+    }
+
+    poll(); // immediate first poll
+    const interval = setInterval(poll, 10_000);
+    return () => clearInterval(interval);
+  }, [drillId, drillStatus]);
 
   // Log action form
   const [logForm, setLogForm] = useState({
@@ -214,6 +277,12 @@ export default function DrillWarRoomClient({
           {drillStatus === 'IN_PROGRESS' && (
             <span className="text-xs bg-red-600 text-white px-2 py-0.5 rounded-full animate-pulse font-medium ml-1">
               LIVE
+            </span>
+          )}
+          {drillStatus === 'IN_PROGRESS' && (
+            <span className="hidden md:flex items-center gap-1 text-xs text-slate-500 ml-2">
+              <RefreshCw className={`w-3 h-3 ${syncing ? 'animate-spin text-slate-400' : 'text-slate-600'}`} />
+              {lastSynced ? `synced ${lastSynced.toLocaleTimeString()}` : 'syncing…'}
             </span>
           )}
         </div>

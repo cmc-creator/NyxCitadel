@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
+import { scoreToGrade5, incidentScore, capScore, grievanceScore, grade12ToScore } from '@/lib/grading';
 import {
   Shield,
   ShieldAlert,
@@ -17,36 +18,7 @@ import {
 
 export const metadata = { title: 'Resilience Scorecard' };
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-function grade(score: number): { label: string; color: string; bg: string } {
-  if (score >= 90) return { label: 'A', color: 'text-emerald-700', bg: 'bg-emerald-50 border-emerald-200' };
-  if (score >= 80) return { label: 'B', color: 'text-blue-700',    bg: 'bg-blue-50 border-blue-200' };
-  if (score >= 70) return { label: 'C', color: 'text-yellow-700',  bg: 'bg-yellow-50 border-yellow-200' };
-  if (score >= 60) return { label: 'D', color: 'text-orange-700',  bg: 'bg-orange-50 border-orange-200' };
-  return               { label: 'F', color: 'text-red-700',        bg: 'bg-red-50 border-red-200' };
-}
-
-function incidentScore(count: number): number {
-  if (count === 0) return 100;
-  if (count <= 2)  return 80;
-  if (count <= 5)  return 60;
-  if (count <= 10) return 40;
-  return 20;
-}
-
-function capScore(count: number): number {
-  if (count === 0) return 100;
-  if (count <= 2)  return 85;
-  if (count <= 5)  return 70;
-  return 55;
-}
-
-function grievanceScore(count: number): number {
-  if (count === 0) return 100;
-  if (count <= 2)  return 80;
-  return 60;
-}
+// Helpers imported from @/lib/grading
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
@@ -56,7 +28,7 @@ export default async function ResilienceScorecardPage() {
   const since60 = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000);
 
   // Parallel data fetching
-  const [trainingAll, trainingCompleted, recentIR, openCaps, openGrievances, openIR, facility] =
+  const [trainingAll, trainingCompleted, recentIR, openCaps, openGrievances, openIR, facility, recentDrills] =
     await Promise.all([
       // All required training records – group by department
       prisma.trainingRecord.findMany({
@@ -85,6 +57,13 @@ export default async function ResilienceScorecardPage() {
         where: { facilityId, status: { notIn: ['CLOSED'] } },
       }),
       prisma.facility.findUnique({ where: { id: facilityId }, select: { name: true } }),
+      // Recent completed drills with grades
+      prisma.drill.findMany({
+        where: { facilityId, status: 'COMPLETED', resilienceGrade: { not: null } },
+        select: { resilienceGrade: true, drillName: true, drillEndedAt: true },
+        orderBy: { drillEndedAt: 'desc' },
+        take: 6,
+      }),
     ]);
 
   // ─── Department training breakdown ────────────────────────────────────────
@@ -96,6 +75,12 @@ export default async function ResilienceScorecardPage() {
     if (r.status === 'COMPLETED') entry.completed++;
     deptMap.set(key, entry);
   }
+
+  // Drill average score
+  const drillScores = recentDrills.map((d: any) => grade12ToScore(d.resilienceGrade ?? 'F'));
+  const drillAvgScore = drillScores.length > 0
+    ? Math.round(drillScores.reduce((a: number, b: number) => a + b, 0) / drillScores.length)
+    : null;
 
   // IR counts by unitName
   const unitIRMap = new Map<string, number>();
@@ -117,7 +102,7 @@ export default async function ResilienceScorecardPage() {
 
     // Weighted score: Training 60%, IR 40% (dept-level, no CAP/grievance split at dept)
     const deptScore = Math.round(trainingPct * 0.6 + irPct * 0.4);
-    const g = grade(deptScore);
+    const g = scoreToGrade5(deptScore);
 
     // Cascading risk: training < 70% → elevate emergency preparedness flag
     const emergencyRisk = trainingPct < 70;
@@ -134,14 +119,24 @@ export default async function ResilienceScorecardPage() {
   const facilityCapScore    = capScore(openCaps);
   const facilityGrvScore    = grievanceScore(openGrievances);
 
-  // Weighted: Training 40%, IR 30%, CAPs 20%, Grievances 10%
-  const facilityScore = Math.round(
-    facilityTrainingPct * 0.40 +
-    facilityIRScore     * 0.30 +
-    facilityCapScore    * 0.20 +
-    facilityGrvScore    * 0.10
-  );
-  const facilityGrade = grade(facilityScore);
+  // Weighted composite — includes drill performance when data exists
+  // With drills: Training 35%, IR 25%, CAPs 20%, Grievances 10%, Drills 10%
+  // Without drills: Training 40%, IR 30%, CAPs 20%, Grievances 10%
+  const facilityScore = drillAvgScore != null
+    ? Math.round(
+        facilityTrainingPct * 0.35 +
+        facilityIRScore     * 0.25 +
+        facilityCapScore    * 0.20 +
+        facilityGrvScore    * 0.10 +
+        drillAvgScore       * 0.10
+      )
+    : Math.round(
+        facilityTrainingPct * 0.40 +
+        facilityIRScore     * 0.30 +
+        facilityCapScore    * 0.20 +
+        facilityGrvScore    * 0.10
+      );
+  const facilityGrade = scoreToGrade5(facilityScore);
 
   const cascadeDepts = departments.filter((d) => d.emergencyRisk);
 
@@ -158,7 +153,12 @@ export default async function ResilienceScorecardPage() {
             Facility-wide compliance health — training gaps cascade into emergency readiness risk flags.
           </p>
         </div>
-        <span className="text-xs text-slate-400">Rolling 60-day snapshot · {facility?.name}</span>
+        <div className="text-right">
+          <span className="text-xs text-slate-400">Rolling 60-day snapshot · {facility?.name}</span>
+          {drillAvgScore != null && (
+            <p className="text-xs text-slate-400 mt-0.5">Drill avg: <strong className="text-slate-600">{drillAvgScore}/100</strong> ({recentDrills.length} scored)</p>
+          )}
+        </div>
       </div>
 
       {/* Facility Score Banner */}
@@ -182,6 +182,13 @@ export default async function ResilienceScorecardPage() {
             <div>
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-orange-100 text-orange-800">
                 <ShieldAlert className="w-3 h-3" /> {cascadeDepts.length} dept(s) below emergency training threshold
+              </span>
+            </div>
+          )}
+          {drillAvgScore != null && drillAvgScore < 70 && (
+            <div>
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-red-100 text-red-800">
+                <AlertTriangle className="w-3 h-3" /> Drill performance below threshold ({drillAvgScore}/100)
               </span>
             </div>
           )}
@@ -339,6 +346,7 @@ export default async function ResilienceScorecardPage() {
         <QuickLink href="/trackers/training" label="Manage Training" color="blue" />
         <QuickLink href="/trackers/ir-iad" label="View All IR" color="orange" />
         <QuickLink href="/trackers/caps" label="Open CAPs" color="purple" />
+        <QuickLink href="/emergency/drills" label="View Drills" color="red" />
         <QuickLink href="/board-report" label="Board Report" color="indigo" />
       </div>
     </div>
@@ -379,6 +387,7 @@ function QuickLink({ href, label, color }: { href: string; label: string; color:
     orange: 'bg-orange-600 hover:bg-orange-700',
     purple: 'bg-purple-600 hover:bg-purple-700',
     indigo: 'bg-indigo-600 hover:bg-indigo-700',
+    red:    'bg-red-600 hover:bg-red-700',
   };
   return (
     <Link

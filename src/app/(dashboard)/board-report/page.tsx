@@ -68,7 +68,7 @@ export default async function BoardReportPage() {
     prisma.drill.findMany({
       where: { facilityId, scheduledDate: { gte: since90 } },
       orderBy: { scheduledDate: 'desc' },
-      select: { drillName: true, drillType: true, status: true, scheduledDate: true, aarGeneratedAt: true },
+      select: { id: true, drillName: true, drillType: true, status: true, scheduledDate: true, aarGeneratedAt: true, resilienceGrade: true },
     }),
     prisma.qapiMetric.findMany({
       where: { facilityId, year: thisYear, month: thisMonth },
@@ -294,19 +294,33 @@ export default async function BoardReportPage() {
                   <th className="py-1.5 text-left">Type</th>
                   <th className="py-1.5 text-left">Date</th>
                   <th className="py-1.5 text-center">Status</th>
+                  <th className="py-1.5 text-center">Grade</th>
                   <th className="py-1.5 text-center">AAR</th>
                 </tr>
               </thead>
               <tbody>
                 {drillsLast90.map((d, i) => (
                   <tr key={i} className="border-b border-slate-100">
-                    <td className="py-1.5 text-xs font-medium">{d.drillName}</td>
+                    <td className="py-1.5 text-xs font-medium">
+                      <a href={`/emergency/drills/${d.id}`} className="hover:text-indigo-600 hover:underline">{d.drillName}</a>
+                    </td>
                     <td className="py-1.5 text-xs text-slate-500">{d.drillType.replace(/_/g, ' ')}</td>
                     <td className="py-1.5 text-xs text-slate-500">{formatDate(d.scheduledDate)}</td>
                     <td className="py-1.5 text-center">
                       <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${d.status === 'COMPLETED' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
                         {d.status}
                       </span>
+                    </td>
+                    <td className="py-1.5 text-center">
+                      {d.resilienceGrade ? (
+                        <span className={`text-sm font-black ${
+                          d.resilienceGrade.startsWith('A') ? 'text-emerald-600' :
+                          d.resilienceGrade.startsWith('B') ? 'text-blue-600' :
+                          d.resilienceGrade.startsWith('C') ? 'text-yellow-600' : 'text-red-600'
+                        }`}>{d.resilienceGrade}</span>
+                      ) : (
+                        <span className="text-slate-400 text-xs">—</span>
+                      )}
                     </td>
                     <td className="py-1.5 text-center text-xs">
                       {d.aarGeneratedAt ? (
