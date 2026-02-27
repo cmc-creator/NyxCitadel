@@ -201,8 +201,10 @@ export default async function TrainingPage({
                   isWithinInterval(record.expiryDate, { start: now, end: addDays(now, 30) });
 
                 return (
-                  <tr key={record.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-4 py-3 font-medium text-slate-800">{record.staffName}</td>
+                  <tr key={record.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
+                    <td className="px-4 py-3 font-medium text-slate-800">
+                      <Link href={`/trackers/training/${record.id}`} className="hover:underline">{record.staffName}</Link>
+                    </td>
                     <td className="px-4 py-3 text-xs text-slate-500">{record.department ?? '—'}</td>
                     <td className="px-4 py-3">
                       <p className="font-medium text-slate-700">{record.trainingName}</p>

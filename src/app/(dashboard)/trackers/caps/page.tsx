@@ -133,9 +133,10 @@ export default async function CapsPage({
             const isOverdue = isPast(cap.targetDate) && !['COMPLETED', 'VERIFIED'].includes(cap.status);
             const { label: dueLabel, className: dueClass } = getDueDateStatus(cap.targetDate);
             return (
-              <div
+              <Link
                 key={cap.id}
-                className="bg-white rounded-xl border border-slate-200 p-5 hover:shadow-sm transition-shadow"
+                href={`/trackers/caps/${cap.id}`}
+                className="block bg-white rounded-xl border border-slate-200 p-5 hover:shadow-md hover:border-purple-300 transition-all"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
@@ -181,7 +182,7 @@ export default async function CapsPage({
                     <p className="text-sm text-slate-700 line-clamp-2">{cap.correctionPlan}</p>
                   </div>
                 )}
-              </div>
+              </Link>
             );
           })
         )}

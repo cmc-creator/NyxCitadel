@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import Link from 'next/link';
 import { ClipboardList, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SatisfactionPushButton } from '@/components/surveys/satisfaction-push-button';
@@ -93,8 +94,10 @@ export default async function SurveysPage() {
               {surveys.map(survey => {
                 const cfg = STATUS_CONFIG[survey.status] ?? { label: survey.status, class: 'status-badge-gray' };
                 return (
-                  <tr key={survey.id} className="data-table-row">
-                    <td className="data-table-td font-medium text-slate-900">{survey.surveyType.replace(/_/g, ' ')}</td>
+                  <tr key={survey.id} className="data-table-row cursor-pointer">
+                    <td className="data-table-td font-medium text-slate-900">
+                      <Link href={`/surveys/${survey.id}`} className="hover:underline">{survey.surveyType.replace(/_/g, ' ')}</Link>
+                    </td>
                     <td className="data-table-td text-slate-600">{survey.regulatoryBody.replace(/_/g, ' ')}</td>
                     <td className="data-table-td text-slate-600">
                       {survey.conductedDate

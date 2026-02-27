@@ -169,8 +169,10 @@ export default async function QocPage({
                 </tr>
               ) : (
                 complaints.map(c => (
-                  <tr key={c.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-4 py-3 font-mono text-xs font-semibold text-purple-700">{c.qocNumber}</td>
+                  <tr key={c.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
+                    <td className="px-4 py-3 font-mono text-xs font-semibold text-purple-700">
+                      <Link href={`/trackers/qoc/${c.id}`} className="hover:underline">{c.qocNumber}</Link>
+                    </td>
                     <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{formatDate(c.dateReceived)}</td>
                     <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
                       {c.complainantType.replace(/_/g, ' ')}

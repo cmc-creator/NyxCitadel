@@ -142,9 +142,9 @@ export default async function PoliciesPage({
                 const { label, className } = getDueDateStatus(policy.nextReviewDate);
 
                 return (
-                  <tr key={policy.id} className="hover:bg-slate-50 transition-colors">
+                  <tr key={policy.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
                     <td className="px-4 py-3 font-mono text-xs text-slate-600">
-                      {policy.policyNumber}
+                      <Link href={`/trackers/policies/${policy.id}`} className="hover:underline">{policy.policyNumber}</Link>
                     </td>
                     <td className="px-4 py-3">
                       <p className="font-medium text-slate-800">{policy.title}</p>

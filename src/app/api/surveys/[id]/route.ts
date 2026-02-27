@@ -2,9 +2,27 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const session = await auth();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const survey = await prisma.survey.findFirst({
+    where: { id: params.id, facilityId: session.user.facilityId },
+    include: {
+      cap: { select: { id: true, capNumber: true, title: true, status: true } },
+      plansOfCorrection: { select: { id: true, status: true, openFindingCount: true, totalFindingCount: true } },
+    },
+  });
+
+  if (!survey) return NextResponse.json({ error: 'Survey not found.' }, { status: 404 });
+  return NextResponse.json(survey);
+}
+
 // PATCH /api/surveys/[id]
-// Body: { satisfactionScore: number (0-100), pushToQapi?: boolean }
-// When pushToQapi is true (default), upserts a QapiMetric for patient_satisfaction
+// Body: general survey fields, or { satisfactionScore, pushToQapi } for QAPI push
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -12,30 +30,45 @@ export async function PATCH(
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const body = await req.json();
-  const { satisfactionScore, pushToQapi = true } = body;
-
-  if (satisfactionScore == null || isNaN(Number(satisfactionScore))) {
-    return NextResponse.json({ error: 'satisfactionScore is required (0-100).' }, { status: 400 });
-  }
-
-  const score = Math.min(100, Math.max(0, Number(satisfactionScore)));
-
-  // Verify the survey belongs to this facility
   const existing = await prisma.survey.findFirst({
     where: { id: params.id, facilityId: session.user.facilityId },
   });
   if (!existing) return NextResponse.json({ error: 'Survey not found.' }, { status: 404 });
 
+  const body = await req.json();
+  const {
+    satisfactionScore, pushToQapi = true,
+    status, outcome, conductedDate, surveyorNames,
+    findingCount, immediateJeopardy, conditionLevel,
+    responseDeadline, responseSubmitted, reportUrl, notes, capId,
+  } = body;
+
+  const score = satisfactionScore != null
+    ? Math.min(100, Math.max(0, Number(satisfactionScore)))
+    : undefined;
+
   // Update the survey record
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const updated = await (prisma.survey as any).update({
+  const updated = await prisma.survey.update({
     where: { id: params.id },
-    data: { satisfactionScore: score },
+    data: {
+      ...(score              != null && { satisfactionScore: score }),
+      ...(status             != null && { status }),
+      ...(outcome            != null && { outcome }),
+      ...(conductedDate      != null && { conductedDate: new Date(conductedDate) }),
+      ...(surveyorNames      != null && { surveyorNames }),
+      ...(findingCount       != null && { findingCount: Number(findingCount) }),
+      ...(immediateJeopardy  != null && { immediateJeopardy }),
+      ...(conditionLevel     != null && { conditionLevel }),
+      ...(responseDeadline   != null && { responseDeadline: new Date(responseDeadline) }),
+      ...(responseSubmitted  != null && { responseSubmitted: new Date(responseSubmitted) }),
+      ...(reportUrl          != null && { reportUrl }),
+      ...(notes              != null && { notes }),
+      ...(capId              != null && { capId }),
+    },
   });
 
-  // Push to QAPI patient_satisfaction metric for the survey's conducted month/year
-  if (pushToQapi) {
+  // Push to QAPI patient_satisfaction metric when satisfactionScore is provided
+  if (score != null && pushToQapi) {
     const refDate = existing.conductedDate ?? existing.createdAt;
     const month = refDate.getMonth() + 1; // 1-12
     const year  = refDate.getFullYear();
