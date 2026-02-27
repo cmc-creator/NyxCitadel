@@ -35,7 +35,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
     include: {
       cap: { select: { id: true, capNumber: true, title: true, status: true } },
       plansOfCorrection: {
-        select: { id: true, status: true, openFindingCount: true, totalFindingCount: true, createdAt: true },
+        select: { id: true, status: true, createdAt: true, findings: { select: { status: true } } },
         orderBy: { createdAt: 'desc' },
       },
     },
@@ -160,8 +160,8 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
                   <span className="ml-2 text-xs text-slate-400">created {formatDate(poc.createdAt)}</span>
                 </div>
                 <div className="flex items-center gap-3 text-xs text-slate-500">
-                  {poc.openFindingCount != null && poc.totalFindingCount != null && (
-                    <span>{poc.openFindingCount} open / {poc.totalFindingCount} total findings</span>
+                  {poc.findings.length > 0 && (
+                    <span>{poc.findings.filter(f => f.status === 'OPEN').length} open / {poc.findings.length} total findings</span>
                   )}
                   <span className="text-xs text-purple-600 group-hover:underline">View →</span>
                 </div>
