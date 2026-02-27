@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
         dueDate:    new Date(targetDate),
         priority:   priority === 'CRITICAL' ? 'CRITICAL' : priority === 'HIGH' ? 'HIGH' : 'MEDIUM',
         notes:      `Auto-created for CAP ${cap.capNumber}. ${description ?? ''}`.trim(),
-        status:     'SCHEDULED',
+        status:     'UPCOMING',
       },
     });
   } catch {

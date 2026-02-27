@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
         dueDate:        new Date(nextReviewDate),
         priority:       'MEDIUM',
         notes:          `Auto-created for policy ${policy.policyNumber}. Annual review required.`,
-        status:         'SCHEDULED',
+        status:         'UPCOMING',
       },
     });
   } catch {
@@ -111,7 +111,7 @@ export async function PATCH(req: NextRequest) {
           dueDate:    new Date(updates.nextReviewDate),
           priority:   'MEDIUM',
           notes:      `Review date updated for ${policy.policyNumber}.`,
-          status:     'SCHEDULED',
+          status:     'UPCOMING',
         },
       });
     } catch {
