@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { ClipboardList, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { SatisfactionPushButton } from '@/components/surveys/satisfaction-push-button';
 
 export const metadata = { title: 'Surveys & Inspections' };
 
@@ -85,6 +86,7 @@ export default async function SurveysPage() {
                 <th className="data-table-th">Findings</th>
                 <th className="data-table-th">Response Deadline</th>
                 <th className="data-table-th">Flags</th>
+                <th className="data-table-th">Satisfaction → QAPI</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -113,6 +115,13 @@ export default async function SurveysPage() {
                         {survey.immediateJeopardy && <span className="status-badge status-badge-red">IJ</span>}
                         {survey.conditionLevel && <span className="status-badge status-badge-orange">CL</span>}
                       </div>
+                    </td>
+                    <td className="data-table-td">
+                      <SatisfactionPushButton
+                        surveyId={survey.id}
+                        existingScore={(survey as Record<string, unknown>).satisfactionScore as number | null}
+                        conductedDate={survey.conductedDate}
+                      />
                     </td>
                   </tr>
                 );

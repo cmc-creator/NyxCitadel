@@ -78,7 +78,17 @@ export default function QapiMetricsPage() {
   const [savedAll, setSavedAll] = useState(false);
   const [autoElopements, setAutoElopements] = useState<number | null>(null);
   const [expandedTrend, setExpandedTrend] = useState<string | null>(null);
-  const BEDS = 60;
+  const [facilityBeds, setFacilityBeds] = useState<number>(60);
+
+  // Load facility bed count dynamically
+  useEffect(() => {
+    fetch('/api/facility')
+      .then(r => r.json())
+      .then(data => { if (data.bedCount) setFacilityBeds(data.bedCount); })
+      .catch(() => {/* use default */});
+  }, []);
+
+  const BEDS = facilityBeds;
   const suggestedDays = BEDS * daysInMonth(month, year);
 
   const loadMetrics = useCallback(() => {

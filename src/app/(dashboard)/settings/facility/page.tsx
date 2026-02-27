@@ -1,136 +1,300 @@
-import { auth } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { Building2 } from 'lucide-react';
+﻿'use client';
 
-export const metadata = { title: 'Facility Configuration' };
+import { useState, useEffect } from 'react';
+import { Building2, Save, CheckCircle2, AlertCircle, Palette } from 'lucide-react';
 
-export default async function FacilitySettingsPage() {
-  const session = await auth();
-  const facilityId = session!.user.facilityId;
+const FACILITY_TYPES = [
+  { value: 'ACUTE_PSYCH',                  label: 'Acute Psychiatric Hospital' },
+  { value: 'GENERAL_ACUTE',                label: 'General Acute Care Hospital' },
+  { value: 'LTAC',                          label: 'Long-Term Acute Care (LTAC)' },
+  { value: 'SNF',                           label: 'Skilled Nursing Facility (SNF)' },
+  { value: 'BEHAVIORAL_HEALTH_OUTPATIENT', label: 'Behavioral Health Outpatient' },
+  { value: 'CRISIS_CENTER',                label: 'Crisis Stabilization Center' },
+  { value: 'RESIDENTIAL',                  label: 'Residential Treatment' },
+];
 
-  const facility = await prisma.facility.findUnique({
-    where: { id: facilityId },
-  });
+const US_STATES = [
+  'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA',
+  'KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ',
+  'NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT',
+  'VA','WA','WV','WI','WY','DC',
+];
 
-  if (!facility) return null;
+const TIMEZONES = [
+  { value: 'America/Phoenix',     label: 'Mountain (Arizona)  No DST' },
+  { value: 'America/Denver',      label: 'Mountain (MT/CO/NM/UT)' },
+  { value: 'America/Chicago',     label: 'Central' },
+  { value: 'America/New_York',    label: 'Eastern' },
+  { value: 'America/Los_Angeles', label: 'Pacific' },
+  { value: 'America/Anchorage',   label: 'Alaska' },
+  { value: 'Pacific/Honolulu',    label: 'Hawaii' },
+];
+
+interface FacilityForm {
+  name: string; shortName: string; facilityType: string; bedCount: string;
+  address: string; city: string; state: string; zip: string;
+  phone: string; fax: string; timezone: string;
+  npi: string; medicareId: string; medicaidId: string; jcAhcId: string;
+  licenseNumber: string; licenseExpiry: string;
+  primaryColor: string; secondaryColor: string;
+}
+
+const EMPTY: FacilityForm = {
+  name: '', shortName: '', facilityType: 'ACUTE_PSYCH', bedCount: '',
+  address: '', city: '', state: 'AZ', zip: '', phone: '', fax: '',
+  timezone: 'America/Phoenix', npi: '', medicareId: '', medicaidId: '',
+  jcAhcId: '', licenseNumber: '', licenseExpiry: '',
+  primaryColor: '#1e40af', secondaryColor: '#3b82f6',
+};
+
+export default function FacilitySettingsPage() {
+  const [form, setForm]     = useState<FacilityForm>(EMPTY);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving]   = useState(false);
+  const [saved, setSaved]     = useState(false);
+  const [error, setError]     = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('/api/facility')
+      .then(r => r.json())
+      .then(data => {
+        setForm({
+          name:          data.name          ?? '',
+          shortName:     data.shortName     ?? '',
+          facilityType:  data.facilityType  ?? 'ACUTE_PSYCH',
+          bedCount:      data.bedCount != null ? String(data.bedCount) : '',
+          address:       data.address       ?? '',
+          city:          data.city          ?? '',
+          state:         data.state         ?? 'AZ',
+          zip:           data.zip           ?? '',
+          phone:         data.phone         ?? '',
+          fax:           data.fax           ?? '',
+          timezone:      data.timezone      ?? 'America/Phoenix',
+          npi:           data.npi           ?? '',
+          medicareId:    data.medicareId    ?? '',
+          medicaidId:    data.medicaidId    ?? '',
+          jcAhcId:       data.jcAhcId       ?? '',
+          licenseNumber: data.licenseNumber ?? '',
+          licenseExpiry: data.licenseExpiry
+            ? new Date(data.licenseExpiry).toISOString().slice(0, 10)
+            : '',
+          primaryColor:   data.primaryColor   ?? '#1e40af',
+          secondaryColor: data.secondaryColor ?? '#3b82f6',
+        });
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  function set(field: keyof FacilityForm, value: string) {
+    setForm(f => ({ ...f, [field]: value }));
+  }
+
+  async function handleSave(e: React.FormEvent) {
+    e.preventDefault();
+    setSaving(true); setError(null); setSaved(false);
+    const res = await fetch('/api/facility', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...form,
+        bedCount: form.bedCount ? parseInt(form.bedCount, 10) : null,
+        licenseExpiry: form.licenseExpiry || null,
+      }),
+    });
+    if (res.ok) {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 4000);
+    } else {
+      const data = await res.json();
+      setError(data.error ?? 'Save failed. Check your permissions.');
+    }
+    setSaving(false);
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-48">
+        <div className="w-6 h-6 border-2 border-purple-600 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  const Field = ({ label, note, children }: { label: string; note?: string; children: React.ReactNode }) => (
+    <div>
+      <label className="block text-xs font-medium text-slate-500 mb-1">
+        {label}{note && <span className="font-normal text-slate-400 ml-1">{note}</span>}
+      </label>
+      {children}
+    </div>
+  );
 
   return (
-    <div className="space-y-6 max-w-3xl">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Building2 className="w-6 h-6 text-purple-600" />
-          Facility Configuration
-        </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
-          White-label branding, facility details, and regulatory identifiers.
-        </p>
+    <form onSubmit={handleSave} className="space-y-6 max-w-3xl">
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <Building2 className="w-6 h-6 text-purple-600" />
+            Facility Configuration
+          </h1>
+          <p className="text-sm text-slate-500 mt-0.5">
+            White-label branding, facility details, and regulatory identifiers.
+            Changes apply platform-wide for this facility.
+          </p>
+        </div>
+        <button type="submit" disabled={saving}
+          className="inline-flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+          <Save className="w-4 h-4" />{saving ? 'Saving' : 'Save Changes'}
+        </button>
       </div>
 
-      {/* Facility Details Card */}
+      {saved && (
+        <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-4 py-3">
+          <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
+          <p className="text-sm text-green-800 font-medium">Facility settings saved successfully.</p>
+        </div>
+      )}
+      {error && (
+        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+          <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />
+          <p className="text-sm text-red-800">{error}</p>
+        </div>
+      )}
+
       <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
-        <div className="px-6 py-4">
+        {/* Facility Info */}
+        <div className="px-6 py-5">
           <h2 className="text-sm font-semibold text-slate-800 mb-4">Facility Information</h2>
-          <dl className="grid grid-cols-2 gap-4">
-            <div>
-              <dt className="text-xs font-medium text-slate-500">Facility Name</dt>
-              <dd className="text-sm font-medium text-slate-900 mt-0.5">{facility.name}</dd>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Field label="Facility Name *">
+              <input required type="text" value={form.name}
+                onChange={e => set('name', e.target.value)}
+                placeholder="Destiny Springs Behavioral Health"
+                className="form-input w-full text-sm" />
+            </Field>
+            <Field label="Short Name / Abbreviation">
+              <input type="text" value={form.shortName}
+                onChange={e => set('shortName', e.target.value)}
+                placeholder="DSBH" className="form-input w-full text-sm" />
+            </Field>
+            <Field label="Facility Type">
+              <select value={form.facilityType} onChange={e => set('facilityType', e.target.value)}
+                className="form-input w-full text-sm">
+                {FACILITY_TYPES.map(ft => <option key={ft.value} value={ft.value}>{ft.label}</option>)}
+              </select>
+            </Field>
+            <Field label="Licensed Bed Count" note="(used in QAPI occupancy rate calculations)">
+              <input type="number" min={1} max={9999} value={form.bedCount}
+                onChange={e => set('bedCount', e.target.value)}
+                placeholder="95" className="form-input w-full text-sm" />
+            </Field>
+            <div className="sm:col-span-2">
+              <Field label="Street Address">
+                <input type="text" value={form.address}
+                  onChange={e => set('address', e.target.value)}
+                  placeholder="1234 W Health Pkwy" className="form-input w-full text-sm" />
+              </Field>
             </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500">Short Name / Abbreviation</dt>
-              <dd className="text-sm font-medium text-slate-900 mt-0.5">{facility.shortName ?? '—'}</dd>
+            <Field label="City">
+              <input type="text" value={form.city} onChange={e => set('city', e.target.value)}
+                placeholder="Peoria" className="form-input w-full text-sm" />
+            </Field>
+            <div className="grid grid-cols-2 gap-2">
+              <Field label="State">
+                <select value={form.state} onChange={e => set('state', e.target.value)}
+                  className="form-input w-full text-sm">
+                  {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
+                </select>
+              </Field>
+              <Field label="ZIP">
+                <input type="text" value={form.zip} onChange={e => set('zip', e.target.value)}
+                  placeholder="85345" className="form-input w-full text-sm" />
+              </Field>
             </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500">Facility Type</dt>
-              <dd className="text-sm text-slate-900 mt-0.5">{facility.facilityType.replace(/_/g, ' ')}</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500">Licensed Bed Count</dt>
-              <dd className="text-sm text-slate-900 mt-0.5">{facility.bedCount ?? '—'}</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500">Address</dt>
-              <dd className="text-sm text-slate-900 mt-0.5">
-                {facility.address}<br />
-                {facility.city}, {facility.state} {facility.zip}
-              </dd>
-            </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500">Phone / Fax</dt>
-              <dd className="text-sm text-slate-900 mt-0.5">
-                {facility.phone ?? '—'} / {facility.fax ?? '—'}
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        {/* Regulatory IDs */}
-        <div className="px-6 py-4">
-          <h2 className="text-sm font-semibold text-slate-800 mb-4">Regulatory Identifiers</h2>
-          <dl className="grid grid-cols-2 gap-4">
-            <div>
-              <dt className="text-xs font-medium text-slate-500">NPI (National Provider ID)</dt>
-              <dd className="text-sm font-mono text-slate-900 mt-0.5">{facility.npi ?? '—'}</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500">Medicare Provider #</dt>
-              <dd className="text-sm font-mono text-slate-900 mt-0.5">{facility.medicareId ?? '—'}</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500">Medicaid Provider #</dt>
-              <dd className="text-sm font-mono text-slate-900 mt-0.5">{facility.medicaidId ?? '—'}</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500">Joint Commission (AHCA) ID</dt>
-              <dd className="text-sm font-mono text-slate-900 mt-0.5">{facility.jcAhcId ?? '—'}</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500">AZ ADHS License #</dt>
-              <dd className="text-sm font-mono text-slate-900 mt-0.5">{facility.licenseNumber ?? '—'}</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500">License Expiry</dt>
-              <dd className="text-sm text-slate-900 mt-0.5">
-                {facility.licenseExpiry
-                  ? new Date(facility.licenseExpiry).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-                  : '—'}
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        {/* Branding */}
-        <div className="px-6 py-4">
-          <h2 className="text-sm font-semibold text-slate-800 mb-4">Branding (White-Label)</h2>
-          <div className="flex items-center gap-6">
-            <div>
-              <dt className="text-xs font-medium text-slate-500 mb-2">Primary Color</dt>
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-8 h-8 rounded-lg border border-slate-200"
-                  style={{ backgroundColor: facility.primaryColor }}
-                />
-                <span className="text-sm font-mono text-slate-700">{facility.primaryColor}</span>
-              </div>
-            </div>
-            <div>
-              <dt className="text-xs font-medium text-slate-500 mb-2">Secondary Color</dt>
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-8 h-8 rounded-lg border border-slate-200"
-                  style={{ backgroundColor: facility.secondaryColor }}
-                />
-                <span className="text-sm font-mono text-slate-700">{facility.secondaryColor}</span>
-              </div>
-            </div>
+            <Field label="Phone">
+              <input type="tel" value={form.phone} onChange={e => set('phone', e.target.value)}
+                placeholder="(623) 555-0100" className="form-input w-full text-sm" />
+            </Field>
+            <Field label="Fax">
+              <input type="tel" value={form.fax} onChange={e => set('fax', e.target.value)}
+                placeholder="(623) 555-0199" className="form-input w-full text-sm" />
+            </Field>
+            <Field label="Timezone">
+              <select value={form.timezone} onChange={e => set('timezone', e.target.value)}
+                className="form-input w-full text-sm">
+                {TIMEZONES.map(tz => <option key={tz.value} value={tz.value}>{tz.label}</option>)}
+              </select>
+            </Field>
           </div>
         </div>
 
-        <div className="px-6 py-4">
-          <p className="text-xs text-slate-400">
-            To update facility information, contact your NyxCitadel system administrator or use the Admin API.
+        {/* Regulatory IDs */}
+        <div className="px-6 py-5">
+          <h2 className="text-sm font-semibold text-slate-800 mb-4">Regulatory Identifiers</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Field label="NPI (National Provider Identifier)">
+              <input type="text" value={form.npi} onChange={e => set('npi', e.target.value)}
+                placeholder="1234567890" className="form-input w-full text-sm font-mono" />
+            </Field>
+            <Field label="Medicare Provider #">
+              <input type="text" value={form.medicareId} onChange={e => set('medicareId', e.target.value)}
+                placeholder="03-XXXX" className="form-input w-full text-sm font-mono" />
+            </Field>
+            <Field label="Medicaid Provider #">
+              <input type="text" value={form.medicaidId} onChange={e => set('medicaidId', e.target.value)}
+                className="form-input w-full text-sm font-mono" />
+            </Field>
+            <Field label="Joint Commission (AHCA) ID">
+              <input type="text" value={form.jcAhcId} onChange={e => set('jcAhcId', e.target.value)}
+                className="form-input w-full text-sm font-mono" />
+            </Field>
+            <Field label="State License # (AZ ADHS or other)">
+              <input type="text" value={form.licenseNumber} onChange={e => set('licenseNumber', e.target.value)}
+                className="form-input w-full text-sm font-mono" />
+            </Field>
+            <Field label="License Expiry Date">
+              <input type="date" value={form.licenseExpiry} onChange={e => set('licenseExpiry', e.target.value)}
+                className="form-input w-full text-sm" />
+            </Field>
+          </div>
+        </div>
+
+        {/* Branding */}
+        <div className="px-6 py-5">
+          <h2 className="text-sm font-semibold text-slate-800 mb-1 flex items-center gap-1.5">
+            <Palette className="w-4 h-4 text-purple-500" />
+            Branding (White-Label)
+          </h2>
+          <p className="text-xs text-slate-400 mb-4">
+            Stored for report headers, PDF exports, and future theming.
           </p>
+          <div className="flex items-center gap-10">
+            {(['primaryColor', 'secondaryColor'] as const).map(key => (
+              <div key={key}>
+                <label className="block text-xs font-medium text-slate-500 mb-2">
+                  {key === 'primaryColor' ? 'Primary' : 'Secondary'} Color
+                </label>
+                <div className="flex items-center gap-3">
+                  <input type="color" value={form[key]} onChange={e => set(key, e.target.value)}
+                    className="w-10 h-10 rounded-lg border border-slate-200 cursor-pointer p-0.5" />
+                  <input type="text" value={form[key]} onChange={e => set(key, e.target.value)}
+                    pattern="^#[0-9a-fA-F]{6}$" className="form-input w-28 text-sm font-mono" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="px-6 py-4 flex items-center justify-between bg-slate-50 rounded-b-xl">
+          <p className="text-xs text-slate-400">
+            Changes are scoped to this facility only. Multi-facility environments each configure independently.
+          </p>
+          <button type="submit" disabled={saving}
+            className="inline-flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+            <Save className="w-4 h-4" />{saving ? 'Saving' : 'Save Changes'}
+          </button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

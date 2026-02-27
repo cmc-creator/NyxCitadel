@@ -815,6 +815,7 @@ model Survey {
   status          SurveyStatus @default(SCHEDULED)
   outcome         String?
   findingCount    Int?
+  satisfactionScore Float?   // 0-100 patient satisfaction %; auto-pushes to QAPI patient_satisfaction metric
   immediateJeopardy Boolean  @default(false)
   conditionLevel  Boolean   @default(false)
   reportUrl       String?
