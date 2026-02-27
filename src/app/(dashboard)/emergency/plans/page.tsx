@@ -128,8 +128,10 @@ export default async function EmergencyPlansPage() {
                   plan.nextReviewDate && isPast(plan.nextReviewDate) && plan.status === 'ACTIVE';
                 const { label, className } = getDueDateStatus(plan.nextReviewDate);
                 return (
-                  <tr key={plan.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-4 py-3 font-medium text-slate-800">{plan.planName}</td>
+                  <tr key={plan.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
+                    <td className="px-4 py-3">
+                      <Link href={`/emergency/plans/${plan.id}`} className="font-medium text-slate-800 hover:underline hover:text-purple-700">{plan.planName}</Link>
+                    </td>
                     <td className="px-4 py-3 text-xs text-slate-500">
                       {planTypeLabel[plan.planType] ?? plan.planType.replace(/_/g, ' ')}
                     </td>
