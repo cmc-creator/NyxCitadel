@@ -68,7 +68,7 @@ export default async function RcaPage({
         </div>
       )}
 
-      {/* Stats */
+      {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-white rounded-xl border border-slate-200 p-4">
           <div className="text-2xl font-bold text-yellow-600">{inProgress.length}</div>
