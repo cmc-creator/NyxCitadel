@@ -13,7 +13,7 @@ export async function GET(
     where: { id: params.id, facilityId: session.user.facilityId },
     include: {
       cap: { select: { id: true, capNumber: true, title: true, status: true } },
-      plansOfCorrection: { select: { id: true, status: true, openFindingCount: true, totalFindingCount: true } },
+      plansOfCorrection: { select: { id: true, status: true, findings: { select: { status: true } } } },
     },
   });
 
