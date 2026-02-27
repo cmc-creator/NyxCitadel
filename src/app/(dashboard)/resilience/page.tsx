@@ -49,8 +49,8 @@ export default async function ResilienceScorecardPage() {
         where: { facilityId, status: { in: ['OPEN', 'IN_PROGRESS', 'OVERDUE'] } },
       }),
       // Open grievances
-      prisma.grievance.count({
-        where: { facilityId, status: { in: ['OPEN', 'IN_PROGRESS', 'PENDING_REVIEW'] } },
+      prisma.grievanceRecord.count({
+        where: { facilityId, status: { in: ['OPEN', 'UNDER_REVIEW', 'ACKNOWLEDGMENT_SENT', 'PENDING_RESOLUTION'] } },
       }),
       // All open IR
       prisma.incidentReport.count({

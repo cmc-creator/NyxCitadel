@@ -82,14 +82,14 @@ export default async function BoardReportPage() {
       select: { surveyType: true, surveyingBody: true, surveyDate: true, outcome: true, deficiencyCount: true },
       take: 5,
     }),
-    prisma.grievance.count({
-      where: { facilityId, receivedDate: { gte: since90 } },
+    prisma.grievanceRecord.count({
+      where: { facilityId, dateReceived: { gte: since90 } },
     }),
-    prisma.grievance.count({
-      where: { facilityId, status: { in: ['OPEN', 'IN_PROGRESS', 'PENDING_REVIEW'] } },
+    prisma.grievanceRecord.count({
+      where: { facilityId, status: { in: ['OPEN', 'UNDER_REVIEW', 'ACKNOWLEDGMENT_SENT', 'PENDING_RESOLUTION'] } },
     }),
     prisma.correctiveActionPlan.findMany({
-      where: { facilityId, status: { notIn: ['COMPLETED', 'CLOSED'] } },
+      where: { facilityId, status: { notIn: ['COMPLETED', 'VERIFIED'] } },
       orderBy: { targetDate: 'asc' },
       take: 5,
       select: { capNumber: true, title: true, status: true, targetDate: true, priority: true },
