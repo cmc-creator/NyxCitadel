@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import { Search, Plus, CheckCircle2, Clock, ClipboardList, Repeat } from 'lucide-react';
+import { Search, Plus, Clock, ClipboardList, Repeat } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
 export const metadata = { title: 'Root Cause Analyses' };
@@ -124,7 +124,7 @@ export default async function RcaPage({
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   {(rca.status === 'APPROVED' || rca.status === 'SUBMITTED_TO_JC' || rca.status === 'CLOSED') &&
-                    rca.systemChangesRequired && !rca.linkedCapId && (
+                    rca.systemChangesRequired && (
                     <Link
                       href={`/trackers/caps/new?fromRca=${rca.id}&title=${encodeURIComponent(`CAP: ${rca.eventType}`)}&source=INCIDENT&desc=${encodeURIComponent((rca.conclusion ?? '').slice(0, 200))}`}
                       className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded-lg hover:bg-emerald-100 transition-colors whitespace-nowrap"
@@ -141,11 +141,7 @@ export default async function RcaPage({
                       <Repeat className="w-3.5 h-3.5" /> → Launch PDSA
                     </Link>
                   )}
-                  {rca.linkedCapId && (
-                    <span className="inline-flex items-center gap-1 text-xs text-green-600 font-medium">
-                      <CheckCircle2 className="w-3 h-3" /> CAP linked
-                    </span>
-                  )}
+
                   <Link
                     href={`/trackers/rca/${rca.id}`}
                     className="text-xs text-indigo-600 hover:text-indigo-700 font-medium shrink-0"
