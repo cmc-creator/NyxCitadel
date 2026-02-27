@@ -746,11 +746,24 @@ model Drill {
   documentUrl     String?
   regulatoryBody  RegulatoryBody?
   standardRef     String?
-  aarGeneratedAt  DateTime?   // When the After-Action Report was finalized
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  aarGeneratedAt    DateTime?   // When the After-Action Report was finalized
 
-  drillActions    DrillAction[]
+  // Tactical Scorecard (computed when drill ends)
+  drillStartedAt    DateTime?   // When IN_PROGRESS was first triggered
+  drillEndedAt      DateTime?   // When drill was formally ended
+  evacuationSeconds Int?        // Seconds from start to final ALL_CLEAR
+  accountabilityPct Float?      // % of muster entries with PRESENT status
+  taskMasteryPct    Float?      // % of required kill tasks completed on time
+  commLagSeconds    Int?        // Seconds from start to first logged action
+  resilienceGrade   String?     // A+/A/B+/B/B-/C/D/F overall drill grade
+  autoRemediated    Boolean     @default(false) // Auto-training assigned to ghosted staff
+
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  drillActions      DrillAction[]
+  killTasks         DrillKillTask[]
+  musterEntries     DrillMusterEntry[]
 
   @@map("drills")
 }
@@ -809,6 +822,52 @@ enum DrillActionType {
   RESOLUTION
   ALL_CLEAR
   OBSERVATION
+}
+
+// ─── Kill Tasks (Critical Asset Verification via QR scan) ─────────────────────
+model DrillKillTask {
+  id               String   @id @default(cuid())
+  drillId          String
+  drill            Drill    @relation(fields: [drillId], references: [id], onDelete: Cascade)
+  facilityId       String
+  taskName         String                    // e.g. "Clear the Med Room"
+  assignedRole     String                    // e.g. "Charge Nurse"
+  locationLabel    String                    // e.g. "Med Room 2A"
+  qrToken          String   @unique @default(cuid())
+  timeLimitMinutes Int      @default(3)
+  isRequired       Boolean  @default(true)
+  completedAt      DateTime?
+  completedBy      String?                   // Name of person who scanned
+  isMissed         Boolean  @default(false)  // Time limit expired without completion
+  createdAt        DateTime @default(now())
+
+  @@map("drill_kill_tasks")
+}
+
+// ─── Muster Roster (Staff Accountability) ─────────────────────────────────────
+model DrillMusterEntry {
+  id           String       @id @default(cuid())
+  drillId      String
+  drill        Drill        @relation(fields: [drillId], references: [id], onDelete: Cascade)
+  facilityId   String
+  staffName    String
+  staffRole    String?
+  department   String?
+  musterPoint  String?      // Designated muster station label
+  qrToken      String       @unique @default(cuid())
+  status       MusterStatus @default(UNACCOUNTED)
+  checkedInAt  DateTime?
+  notes        String?
+  createdAt    DateTime     @default(now())
+
+  @@map("drill_muster_entries")
+}
+
+enum MusterStatus {
+  UNACCOUNTED  // Not yet checked in
+  PRESENT      // Scanned in at muster point
+  EXCUSED      // Pre-approved absence
+  GHOSTED      // Drill ended without check-in
 }
 
 model EmergencyPlan {

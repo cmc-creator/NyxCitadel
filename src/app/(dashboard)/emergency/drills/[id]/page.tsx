@@ -37,6 +37,8 @@ export default async function DrillDetailPage({
     where: { id: params.id, facilityId },
     include: {
       drillActions: { orderBy: { timestamp: 'asc' } },
+      killTasks: { orderBy: { taskName: 'asc' } },
+      musterEntries: { orderBy: { staffName: 'asc' } },
     },
   });
 
@@ -46,14 +48,38 @@ export default async function DrillDetailPage({
   const actionCount  = drill.drillActions.length;
 
   // Serialize for client component
+  const serializedKillTasks = drill.killTasks.map((t: any) => ({
+    id:              t.id,
+    taskName:        t.taskName,
+    assignedRole:    t.assignedRole,
+    locationLabel:   t.locationLabel,
+    qrToken:         t.qrToken,
+    timeLimitMinutes: t.timeLimitMinutes,
+    isRequired:      t.isRequired,
+    completedAt:     t.completedAt ? t.completedAt.toISOString() : null,
+    completedBy:     t.completedBy,
+    isMissed:        t.isMissed,
+  }));
+
+  const serializedMuster = drill.musterEntries.map((e: any) => ({
+    id:          e.id,
+    staffName:   e.staffName,
+    staffRole:   e.staffRole,
+    department:  e.department,
+    musterPoint: e.musterPoint,
+    qrToken:     e.qrToken,
+    status:      e.status,
+    checkedInAt: e.checkedInAt ? e.checkedInAt.toISOString() : null,
+  }));
+
   const serializedActions = drill.drillActions.map((a) => ({
     id:           a.id,
-    timestamp:    a.timestamp.toISOString(),
-    actor:        a.actor,
+    createdAt:    a.timestamp.toISOString(),
     actionType:   a.actionType,
     description:  a.description,
-    outcomeNotes: a.outcomeNotes,
-    issueFlag:    a.issueFlag,
+    severity:     (a as any).severity ?? 'LOW',
+    performedBy:  a.actor,
+    location:     (a as any).location ?? null,
   }));
 
   return (
@@ -95,6 +121,14 @@ export default async function DrillDetailPage({
               className="inline-flex items-center gap-1 text-sm font-medium bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg transition-colors"
             >
               <FileText className="w-3.5 h-3.5" /> View AAR
+            </Link>
+          )}
+          {(drill as any).resilienceGrade && (
+            <Link
+              href={`/emergency/drills/${drill.id}/scorecard`}
+              className="inline-flex items-center gap-1 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg transition-colors"
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" /> Scorecard ({(drill as any).resilienceGrade})
             </Link>
           )}
         </div>
@@ -175,7 +209,10 @@ export default async function DrillDetailPage({
         <DrillWarRoomClient
           drillId={drill.id}
           initialActions={serializedActions}
+          initialKillTasks={serializedKillTasks}
+          initialMuster={serializedMuster}
           drillStatus={drill.status}
+          drillName={drill.drillName}
         />
       </div>
     </div>
