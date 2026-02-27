@@ -61,8 +61,8 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
   const reviewOverdue = a.nextReviewDate && !['ARCHIVED'].includes(a.status) && isPast(a.nextReviewDate);
   const reviewSoon = a.nextReviewDate && !reviewOverdue && isWithinInterval(a.nextReviewDate, { start: now, end: addDays(now, 30) });
 
-  const criticalItems = a.items.filter(i => i.riskLevel === 'CRITICAL' && i.status !== 'RESOLVED');
-  const highItems     = a.items.filter(i => i.riskLevel === 'HIGH'     && i.status !== 'RESOLVED');
+  const criticalItems = a.items.filter(i => i.riskLevel === 'CRITICAL' && (i.status === 'OPEN' || i.status === 'IN_PROGRESS'));
+  const highItems     = a.items.filter(i => i.riskLevel === 'HIGH'     && (i.status === 'OPEN' || i.status === 'IN_PROGRESS'));
 
   return (
     <div className="space-y-6 max-w-5xl">
@@ -256,7 +256,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                         <td className="px-4 py-3 text-xs text-slate-500">
                           <div>{item.assignedTo ?? '—'}</div>
                           {item.targetDate && (
-                            <div className={`text-xs ${isPast(item.targetDate) && item.status !== 'RESOLVED' ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
+                            <div className={`text-xs ${isPast(item.targetDate) && (item.status === 'OPEN' || item.status === 'IN_PROGRESS') ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
                               {formatDate(item.targetDate)}
                             </div>
                           )}
