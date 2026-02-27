@@ -59,7 +59,7 @@ export default async function ComplianceTrackerPage({
 
       {/* Status Summary Cards */}
       <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
-        {Object.entries(statusCounts).map(([status, count]) => (
+        {(Object.entries(statusCounts) as [string, number][]).map(([status, count]) => (
           <div key={status} className="bg-white rounded-lg border border-slate-200 p-3 text-center">
             <p className="text-2xl font-bold text-slate-900">{count}</p>
             <p className="text-xs text-slate-500 mt-0.5">{status.replace(/_/g, ' ')}</p>

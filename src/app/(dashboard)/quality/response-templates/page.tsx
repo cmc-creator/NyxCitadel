@@ -123,7 +123,7 @@ export default async function ResponseTemplatesPage() {
           </Link>
         </div>
       ) : (
-        Object.entries(grouped).map(([category, items]) => (
+        (Object.entries(grouped) as [string, typeof templates][]).map(([category, items]) => (
           <div key={category}>
             <h2 className="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-3">{category}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
