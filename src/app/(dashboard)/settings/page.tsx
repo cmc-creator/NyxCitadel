@@ -17,7 +17,6 @@ const sections = [
     href: '/settings/notifications',
     title: 'Notification Preferences',
     description: 'Configure email alerts for overdue items, upcoming deadlines, incidents.',
-    soon: true,
   },
   {
     href: '/settings/integrations',

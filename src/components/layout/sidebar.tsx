@@ -34,6 +34,7 @@ import {
   Map,
   FileBarChart,
   ShieldCheck as ResilienceIcon,
+  Sparkles,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -51,6 +52,18 @@ const navItems: NavItem[] = [
     href: '/dashboard',
     label: 'Dashboard',
     icon: LayoutDashboard,
+  },
+  {
+    href: '/assistant',
+    label: 'NyxAI Assistant',
+    icon: Sparkles,
+    badge: 'AI',
+    badgeColor: 'bg-purple-100 text-purple-700',
+  },
+  {
+    href: '/search',
+    label: 'Search',
+    icon: Search,
   },
   {
     href: '/calendar',
