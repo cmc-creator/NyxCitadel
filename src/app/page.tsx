@@ -3,7 +3,7 @@ import Link from 'next/link';
 import {
   Shield, AlertTriangle, BarChart3,
   CheckCircle, ArrowRight, Activity,
-  Lock, Zap, ChevronRight,
+  Lock, Star, Zap, ChevronRight,
   ClipboardList, TrendingUp, Bell, Users,
 } from 'lucide-react';
 
