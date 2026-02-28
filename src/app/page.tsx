@@ -1,10 +1,9 @@
-import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
 import Link from 'next/link';
 import {
-  Shield, FileText, AlertTriangle, BarChart3,
-  Users, BookOpen, CheckCircle, ArrowRight,
-  Activity, Lock, Star, Zap, ChevronRight,
+  Shield, AlertTriangle, BarChart3,
+  CheckCircle, ArrowRight,
+  Lock, Zap, ChevronRight,
   ClipboardList, TrendingUp, Bell,
 } from 'lucide-react';
 
@@ -56,7 +55,9 @@ const stats = [
 
 export default async function RootPage() {
   const session = await auth();
-  if (session) redirect('/dashboard');
+  const isLoggedIn  = !!session;
+  const portalHref  = isLoggedIn ? '/dashboard' : '/login';
+  const portalLabel = isLoggedIn ? 'Go to Dashboard' : 'Platform Login';
 
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-x-hidden">
@@ -83,10 +84,10 @@ export default async function RootPage() {
             <a href="#about" className="hover:text-white transition-colors">About</a>
           </nav>
           <Link
-            href="/login"
+            href={portalHref}
             className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 rounded-lg text-sm font-semibold transition-colors"
           >
-            Platform Login <ChevronRight className="w-4 h-4" />
+            {portalLabel} <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
       </header>
@@ -114,7 +115,7 @@ export default async function RootPage() {
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <Link
-                href="/login"
+                href={portalHref}
                 className="flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-xl font-semibold transition-all hover:shadow-lg hover:shadow-purple-500/25"
               >
                 Access Your Portal <ArrowRight className="w-4 h-4" />
@@ -269,10 +270,10 @@ export default async function RootPage() {
             Sign in to your facility's NyxCitadel portal and take command of compliance.
           </p>
           <Link
-            href="/login"
+            href={portalHref}
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-purple-600 hover:bg-purple-500 rounded-xl font-semibold text-lg transition-all hover:shadow-lg hover:shadow-purple-500/30"
           >
-            Sign In to Your Portal <ArrowRight className="w-5 h-5" />
+            {isLoggedIn ? 'Go to Dashboard' : 'Sign In to Your Portal'} <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </section>
@@ -287,8 +288,8 @@ export default async function RootPage() {
             <span className="font-semibold text-slate-400">NyxCitadel</span>
           </div>
           <p>© {new Date().getFullYear()} NyxCitadel · HIPAA-compliant healthcare compliance platform</p>
-          <Link href="/login" className="text-slate-400 hover:text-white transition-colors">
-            Platform Login →
+          <Link href={portalHref} className="text-slate-400 hover:text-white transition-colors">
+            {portalLabel} →
           </Link>
         </div>
       </footer>
