@@ -198,9 +198,9 @@ export default async function CalendarPage({
                     {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <p className="text-sm font-semibold text-slate-800">
+                        <Link href={`/calendar/${event.id}`} className="text-sm font-semibold text-slate-800 hover:text-purple-700 transition-colors">
                           {event.title}
-                        </p>
+                        </Link>
                         {event.isRecurring && (
                           <span className="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-medium">
                             RECURRING

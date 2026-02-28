@@ -1,8 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { Bell, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
+import { NotificationBell } from '@/components/layout/NotificationBell';
 
 interface TopBarProps {
   user: {
@@ -46,10 +47,7 @@ export function TopBar({ user }: TopBarProps) {
         </span>
 
         {/* Notifications */}
-        <button className="relative p-2 rounded-lg hover:bg-slate-100 transition">
-          <Bell className="w-5 h-5 text-slate-600" />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
-        </button>
+        <NotificationBell />
 
         {/* User avatar */}
         <div className="flex items-center gap-2">

@@ -12,7 +12,6 @@ const sections = [
     href: '/settings/users',
     title: 'User Management',
     description: 'Invite staff, assign roles (Compliance Officer, EM Coordinator, Read Only, etc.).',
-    soon: true,
   },
   {
     href: '/settings/notifications',
