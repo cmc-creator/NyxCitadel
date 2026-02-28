@@ -1,7 +1,8 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { FileText, Download } from 'lucide-react';
+import { FileText, Download, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 export const metadata = { title: 'Documents' };
 
@@ -68,7 +69,7 @@ export default async function DocumentsPage() {
               {documents.map(doc => (
                 <tr key={doc.id} className="data-table-row">
                   <td className="data-table-td">
-                    <span className="font-medium text-slate-900">{doc.name}</span>
+                    <Link href={`/documents/${doc.id}`} className="font-medium text-slate-900 hover:text-purple-700 transition-colors">{doc.name}</Link>
                     {doc.description && (
                       <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{doc.description}</p>
                     )}
@@ -83,16 +84,24 @@ export default async function DocumentsPage() {
                     {new Date(doc.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </td>
                   <td className="data-table-td">
-                    {doc.fileUrl && (
-                      <a
-                        href={doc.fileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <div className="flex items-center gap-3">
+                      <Link
+                        href={`/documents/${doc.id}`}
                         className="inline-flex items-center gap-1 text-xs text-purple-600 hover:text-purple-800"
                       >
-                        <Download className="w-3.5 h-3.5" /> Download
-                      </a>
-                    )}
+                        <Eye className="w-3.5 h-3.5" /> View
+                      </Link>
+                      {doc.fileUrl && (
+                        <a
+                          href={doc.fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700"
+                        >
+                          <Download className="w-3.5 h-3.5" /> Download
+                        </a>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}

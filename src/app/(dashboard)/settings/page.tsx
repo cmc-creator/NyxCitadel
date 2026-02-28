@@ -22,7 +22,6 @@ const sections = [
     href: '/settings/integrations',
     title: 'Integrations',
     description: 'Connect to HR / LMS systems for automatic training record sync.',
-    soon: true,
   },
 ];
 
