@@ -2,9 +2,9 @@ import { auth } from '@/lib/auth';
 import Link from 'next/link';
 import {
   Shield, AlertTriangle, BarChart3,
-  CheckCircle, ArrowRight,
+  CheckCircle, ArrowRight, Activity,
   Lock, Zap, ChevronRight,
-  ClipboardList, TrendingUp, Bell,
+  ClipboardList, TrendingUp, Bell, Users,
 } from 'lucide-react';
 
 const features = [
