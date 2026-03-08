@@ -68,7 +68,7 @@ const modules = [
     border: 'border-amber-700/40',
     label: 'Ligature Risk',
     desc: 'Room-by-room anchor point tracking and mitigation plans',
-    badge: 'JCAHO EC.02.06.01',
+    badge: 'TJC EC.02.06.01',
     badgeColor: 'bg-amber-950/60 text-amber-300 border border-amber-700/40',
   },
   {
@@ -180,7 +180,7 @@ export default function EocOverviewPage() {
         </div>
       </div>
 
-      {/* JCAHO banner */}
+      {/* TJC banner */}
       <div className="flex items-start gap-3 p-4 rounded-lg bg-amber-950/30 border border-amber-700/40">
         <ShieldCheck className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
         <div className="text-sm">

@@ -49,7 +49,7 @@ export default function OppePage() {
           <div className="flex items-center gap-3 mb-1">
             <Award className="w-5 h-5 text-indigo-400" />
             <h1 className="text-xl font-bold text-white">OPPE Records</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">JCAHO MS.06.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
           </div>
           <p className="text-slate-400 text-sm">Ongoing Professional Practice Evaluation — quarterly performance data reviewed by Medical Executive Committee.</p>
         </div>
@@ -63,7 +63,7 @@ export default function OppePage() {
           <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
           <div>
             <p className="text-sm font-semibold text-amber-300">{needsImprovement} provider(s) rated Needs Improvement this cycle</p>
-            <p className="text-xs text-amber-200/70 mt-0.5">JCAHO requires MEC review and a focused improvement plan for providers below acceptable threshold. Consider initiating FPPE if issues persist next quarter.</p>
+            <p className="text-xs text-amber-200/70 mt-0.5">TJC requires MEC review and a focused improvement plan for providers below acceptable threshold. Consider initiating FPPE if issues persist next quarter.</p>
           </div>
         </div>
       )}

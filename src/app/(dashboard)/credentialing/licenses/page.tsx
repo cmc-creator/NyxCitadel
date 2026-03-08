@@ -29,7 +29,7 @@ export default function LicensesPage() {
           <div className="flex items-center gap-3 mb-1">
             <FileText className="w-5 h-5 text-indigo-400" />
             <h1 className="text-xl font-bold text-white">License Tracker</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">JCAHO MS.06.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
           </div>
           <p className="text-slate-400 text-sm">Medical licenses, APRN licenses, and DEA registrations — expiry tracking with automated alerts.</p>
         </div>

@@ -1970,7 +1970,7 @@ enum PmStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// RESTRAINT & SECLUSION — CMS §482.13(e)–(f), JCAHO RC.02.01.01
+// RESTRAINT & SECLUSION — CMS §482.13(e)–(f), TJC RC.02.01.01
 // ─────────────────────────────────────────────────────────────────────────────
 
 model RestraintEvent {
@@ -2043,7 +2043,7 @@ enum RsStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// INFECTION CONTROL — CMS §482.42, JCAHO IC standards
+// INFECTION CONTROL — CMS §482.42, TJC IC standards
 // ─────────────────────────────────────────────────────────────────────────────
 
 model IcRiskAssessment {
@@ -2152,7 +2152,7 @@ model HandHygieneAudit {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CREDENTIALING & PRIVILEGING — JCAHO MS.06.01
+// CREDENTIALING & PRIVILEGING — TJC MS.06.01
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Provider {
@@ -2313,7 +2313,7 @@ enum FppeStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// TREATMENT PLANNING — CMS, JCAHO PC.01.02.03, ADHS (Psych-specific)
+// TREATMENT PLANNING — CMS, TJC PC.01.02.03, ADHS (Psych-specific)
 // ─────────────────────────────────────────────────────────────────────────────
 
 model TreatmentPlan {
@@ -2452,7 +2452,7 @@ enum BaaStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PATIENT RIGHTS — CMS §482.13, JCAHO RI standards
+// PATIENT RIGHTS — CMS §482.13, TJC RI standards
 // ─────────────────────────────────────────────────────────────────────────────
 
 model ConsentRecord {
@@ -2578,7 +2578,7 @@ enum HoldStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MEDICATION MANAGEMENT / PHARMACY — CMS MM CoP, JCAHO MM standards
+// MEDICATION MANAGEMENT / PHARMACY — CMS MM CoP, TJC MM standards
 // ─────────────────────────────────────────────────────────────────────────────
 
 model ControlledSubstanceLog {
@@ -2681,7 +2681,7 @@ model PtMeeting {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// GOVERNANCE / COMMITTEES — JCAHO GV standards
+// GOVERNANCE / COMMITTEES — TJC GV standards
 // ─────────────────────────────────────────────────────────────────────────────
 
 model CommitteeMeeting {

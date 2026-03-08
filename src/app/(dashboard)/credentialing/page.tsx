@@ -29,7 +29,7 @@ const subModules = [
     title: 'OPPE Records',
     description: 'Ongoing Professional Practice Evaluation — quarterly metrics per provider reviewed by MEC.',
     icon: '📊',
-    badge: 'JCAHO MS.06',
+    badge: 'TJC MS.06',
     badgeColor: 'bg-purple-100 text-purple-700',
     stat: 'Q1 2026 in progress',
     statColor: 'text-blue-400',
@@ -60,7 +60,7 @@ export default function CredentialingPage() {
           <div className="flex items-center gap-3 mb-1">
             <UserCheck className="w-6 h-6 text-indigo-400" />
             <h1 className="text-2xl font-bold text-white">Credentialing & Privileging</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">JCAHO MS.06.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">CMS CoP</span>
           </div>
           <p className="text-slate-400 text-sm">Provider licenses, clinical privileges, OPPE/FPPE, and medical staff committee records.</p>

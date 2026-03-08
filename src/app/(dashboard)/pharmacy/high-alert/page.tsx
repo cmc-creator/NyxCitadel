@@ -20,7 +20,7 @@ export default function HighAlertMedsPage() {
           <div className="flex items-center gap-3 mb-1">
             <AlertTriangle className="w-5 h-5 text-amber-400" />
             <h1 className="text-xl font-bold text-white">High-Alert Medication Audits</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">ISMP / JCAHO MM.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">ISMP / TJC MM.01</span>
           </div>
           <p className="text-slate-400 text-sm">Storage, labeling, access restriction, and double-check compliance audits for ISMP high-alert medications.</p>
         </div>

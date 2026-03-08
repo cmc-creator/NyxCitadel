@@ -31,7 +31,7 @@ export default function HandHygienePage() {
           <div className="flex items-center gap-3 mb-1">
             <Droplets className="w-5 h-5 text-teal-400" />
             <h1 className="text-xl font-bold text-white">Hand Hygiene Audits</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">JCAHO NPSG 07.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">TJC NPSG 07.01</span>
           </div>
           <p className="text-slate-400 text-sm">Unit-level direct observation audits — compliance rate vs. 90% facility goal.</p>
         </div>

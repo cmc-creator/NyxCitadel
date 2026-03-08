@@ -71,7 +71,7 @@ export default function TreatmentPlansPage() {
           <div className="flex items-center gap-3 mb-1">
             <ClipboardList className="w-6 h-6 text-violet-400" />
             <h1 className="text-2xl font-bold text-white">Treatment Planning</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-violet-100 text-violet-700">JCAHO PC.01.02.03</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-violet-100 text-violet-700">TJC PC.01.02.03</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">ADHS R9-10</span>
           </div>
           <p className="text-slate-400 text-sm">Individualized treatment plans — creation within 24h, weekly reviews, patient participation documentation.</p>

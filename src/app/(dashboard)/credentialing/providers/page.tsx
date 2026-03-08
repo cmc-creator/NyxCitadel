@@ -47,7 +47,7 @@ export default function ProvidersPage() {
           <div className="flex items-center gap-3 mb-1">
             <UserCheck className="w-5 h-5 text-indigo-400" />
             <h1 className="text-xl font-bold text-white">Provider Directory</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">JCAHO MS.06.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
           </div>
           <p className="text-slate-400 text-sm">Active medical staff — credentials, privileges, license expiry, and OPPE/FPPE status.</p>
         </div>

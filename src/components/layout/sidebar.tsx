@@ -130,7 +130,7 @@ const navItems: NavItem[] = [
     badge: 'EOC',
     badgeColor: 'bg-amber-100 text-amber-700',
     children: [
-      { href: '/eoc/ligature',    label: 'Ligature Risk',    icon: CircleAlert,  badge: 'JCAHO', badgeColor: 'bg-amber-100 text-amber-700' },
+      { href: '/eoc/ligature',    label: 'Ligature Risk',    icon: CircleAlert,  badge: 'TJC', badgeColor: 'bg-amber-100 text-amber-700' },
       { href: '/eoc/rounds',      label: 'Safety Rounds',   icon: ClipboardList },
       { href: '/eoc/deficiencies',label: 'Deficiencies',    icon: AlertTriangle },
       { href: '/eoc/equipment',   label: 'Equipment PM',    icon: Wrench },
@@ -161,7 +161,7 @@ const navItems: NavItem[] = [
     href: '/credentialing',
     label: 'Credentialing',
     icon: UserCheck,
-    badge: 'JCAHO',
+    badge: 'TJC',
     badgeColor: 'bg-indigo-100 text-indigo-700',
     children: [
       { href: '/credentialing/providers', label: 'Provider Directory', icon: UserCheck },

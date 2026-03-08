@@ -19,7 +19,7 @@ const subModules = [
     title: 'High-Alert Med Audits',
     description: 'ISMP high-alert medications — storage, labeling, double-check compliance audits.',
     icon: '⚠️',
-    badge: 'ISMP / JCAHO MM',
+    badge: 'ISMP / TJC MM',
     badgeColor: 'bg-amber-100 text-amber-700',
     stat: '1 Action Required',
     statColor: 'text-amber-400',
@@ -52,7 +52,7 @@ export default function PharmacyPage() {
             <Pill className="w-6 h-6 text-emerald-400" />
             <h1 className="text-2xl font-bold text-white">Medication Management</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">CMS MM CoP</span>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">JCAHO MM.04</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">TJC MM.04</span>
           </div>
           <p className="text-slate-400 text-sm">Controlled substance reconciliation, high-alert medication audits, PDMP compliance, and P&T committee records.</p>
         </div>

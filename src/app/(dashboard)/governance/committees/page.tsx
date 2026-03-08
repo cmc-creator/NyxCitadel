@@ -33,7 +33,7 @@ export default function CommitteesPage() {
           <div className="flex items-center gap-3 mb-1">
             <Users className="w-5 h-5 text-indigo-400" />
             <h1 className="text-xl font-bold text-white">Committee Meetings</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">JCAHO LD.03.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC LD.03.01</span>
           </div>
           <p className="text-slate-400 text-sm">All governance committee meeting logs — MEC, QAPI, P&T, Safety, Ethics, and Peer Review.</p>
         </div>

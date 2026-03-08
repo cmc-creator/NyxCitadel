@@ -28,7 +28,7 @@ const rounds = [
     totalItems: 10,
     openItems: 4,
     status: 'COMPLETED',
-    summary: 'Full facility ligature survey completed per JCAHO EC.02.06.01. 10 items identified; 1 IMMEDIATE (seclusion shower rod), 3 HIGH, 4 MEDIUM, 2 LOW. Written mitigation plans issued for all.',
+    summary: 'Full facility ligature survey completed per TJC EC.02.06.01. 10 items identified; 1 IMMEDIATE (seclusion shower rod), 3 HIGH, 4 MEDIUM, 2 LOW. Written mitigation plans issued for all.',
   },
   {
     id: 'EOC-ROUND-2026-02',

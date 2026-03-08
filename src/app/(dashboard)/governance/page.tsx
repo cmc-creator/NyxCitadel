@@ -9,7 +9,7 @@ const subModules = [
     title: 'Committee Meetings',
     description: 'Medical Executive Committee, QA/QAPI, P&T, Safety, Ethics, and Peer Review — meeting minutes, quorum, and action items.',
     icon: '🏛️',
-    badge: 'JCAHO LD.03.01',
+    badge: 'TJC LD.03.01',
     badgeColor: 'bg-indigo-100 text-indigo-700',
     stat: 'All Q1 2026 meetings complete',
     statColor: 'text-emerald-400',
@@ -19,7 +19,7 @@ const subModules = [
     title: 'Governance Documents',
     description: 'Board bylaws, medical staff bylaws, organizational charts, policies, and self-assessment documents.',
     icon: '📄',
-    badge: 'JCAHO LD.01.01',
+    badge: 'TJC LD.01.01',
     badgeColor: 'bg-blue-100 text-blue-700',
     stat: '3 Documents Due for Review',
     statColor: 'text-amber-400',
@@ -43,7 +43,7 @@ export default function GovernancePage() {
           <div className="flex items-center gap-3 mb-1">
             <Building2 className="w-6 h-6 text-indigo-400" />
             <h1 className="text-2xl font-bold text-white">Governance</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">JCAHO LD</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC LD</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">CMS §482.12</span>
           </div>
           <p className="text-slate-400 text-sm">Committee meetings, governance documents, board oversight, and organizational leadership compliance.</p>

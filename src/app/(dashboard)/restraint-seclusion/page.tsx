@@ -68,7 +68,7 @@ export default function RestraintSeclusionPage() {
             <ShieldOff className="w-6 h-6 text-red-400" />
             <h1 className="text-2xl font-bold text-white">Restraint & Seclusion</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">CMS §482.13</span>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">JCAHO RC.02</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">TJC RC.02</span>
           </div>
           <p className="text-slate-400 text-sm">Track every restraint and seclusion event — orders, monitoring, debriefs, and CMS reporting.</p>
         </div>

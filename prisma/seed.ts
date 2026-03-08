@@ -1391,7 +1391,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
       participantIds: ['Maria Santos RN', 'Risk Manager'],
       areasInspected: ['All Patient Rooms', 'Bathrooms', 'Group Therapy Rooms', 'Seclusion Room', 'Common Areas'],
       totalItems: 10, openItems: 4, status: 'COMPLETED' as const,
-      summary: 'Full facility ligature survey completed per JCAHO EC.02.06.01. 10 items identified; 1 IMMEDIATE, 3 HIGH, 4 MEDIUM, 2 LOW. Written mitigation plans issued for all.',
+      summary: 'Full facility ligature survey completed per TJC EC.02.06.01. 10 items identified; 1 IMMEDIATE, 3 HIGH, 4 MEDIUM, 2 LOW. Written mitigation plans issued for all.',
     },
   });
 

@@ -39,7 +39,7 @@ const subModules = [
     title: 'Hand Hygiene Audits',
     description: 'Unit-level compliance audits — opportunities observed vs. compliant events.',
     icon: '🧴',
-    badge: 'JCAHO NPSG 07.01',
+    badge: 'TJC NPSG 07.01',
     badgeColor: 'bg-amber-100 text-amber-700',
     stat: '88% compliance',
     statColor: 'text-amber-400',
@@ -63,7 +63,7 @@ export default function InfectionControlPage() {
             <Biohazard className="w-6 h-6 text-teal-400" />
             <h1 className="text-2xl font-bold text-white">Infection Control</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700">CMS §482.42</span>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">JCAHO IC</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">TJC IC</span>
           </div>
           <p className="text-slate-400 text-sm">IC risk assessment, HAI surveillance, outbreak management, and hand hygiene compliance.</p>
         </div>

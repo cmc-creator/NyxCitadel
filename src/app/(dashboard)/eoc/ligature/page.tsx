@@ -78,7 +78,7 @@ export default function LigaturePage() {
             <span className="text-sm text-foreground font-medium">Ligature Risk</span>
           </div>
           <h1 className="text-2xl font-bold text-foreground mt-1">Ligature Risk Assessment</h1>
-          <p className="text-sm text-slate-400 mt-0.5">JCAHO EC.02.06.01 — Psychiatric Environment Ligature Point Tracking</p>
+          <p className="text-sm text-slate-400 mt-0.5">TJC EC.02.06.01 — Psychiatric Environment Ligature Point Tracking</p>
         </div>
         <button className="px-3 py-1.5 text-sm rounded-md bg-amber-600 hover:bg-amber-500 text-white font-medium transition-colors">
           + Add Item
@@ -89,7 +89,7 @@ export default function LigaturePage() {
       <div className="flex items-start gap-3 p-4 rounded-lg bg-amber-950/30 border border-amber-700/40">
         <Info className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
         <p className="text-xs text-amber-300/90 leading-relaxed">
-          <span className="font-semibold">JCAHO EC.02.06.01</span> requires psychiatric facilities to conduct a comprehensive ligature risk assessment and implement time-limited plans of correction for all identified risks.
+          <span className="font-semibold">TJC EC.02.06.01</span> requires psychiatric facilities to conduct a comprehensive ligature risk assessment and implement time-limited plans of correction for all identified risks.
           IMMEDIATE risks must be corrected before patient occupancy. HIGH risks require a written mitigation plan within 72 hours and correction within 30–45 days.
           All accepted risks require Medical Director / Administrator sign-off with documented rationale.
         </p>

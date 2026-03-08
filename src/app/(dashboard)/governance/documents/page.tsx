@@ -7,7 +7,7 @@ const mockDocs = [
   { id: '1', title: 'Medical Staff Bylaws', docType: 'BYLAWS', version: '4.2', lastReviewDate: '2024-11-01', nextReviewDate: '2025-11-01', status: 'OVERDUE_REVIEW', approvedBy: 'Board of Directors', notes: null },
   { id: '2', title: 'Governing Board Bylaws', docType: 'BYLAWS', version: '3.1', lastReviewDate: '2025-01-15', nextReviewDate: '2026-01-15', status: 'DUE_SOON', approvedBy: 'Board of Directors', notes: null },
   { id: '3', title: 'Allied Health Professionals Bylaws', docType: 'BYLAWS', version: '2.0', lastReviewDate: '2024-09-10', nextReviewDate: '2025-09-10', status: 'OVERDUE_REVIEW', approvedBy: 'MEC', notes: null },
-  { id: '4', title: 'JCAHO Self-Assessment Checklist 2025', docType: 'SELF_ASSESSMENT', version: '2025', lastReviewDate: '2025-12-01', nextReviewDate: '2026-06-01', status: 'CURRENT', approvedBy: 'Quality Director', notes: null },
+  { id: '4', title: 'TJC Self-Assessment Checklist 2025', docType: 'SELF_ASSESSMENT', version: '2025', lastReviewDate: '2025-12-01', nextReviewDate: '2026-06-01', status: 'CURRENT', approvedBy: 'Quality Director', notes: null },
   { id: '5', title: 'Organizational Chart — Medical Staff', docType: 'ORG_CHART', version: '1.8', lastReviewDate: '2025-06-01', nextReviewDate: '2026-06-01', status: 'CURRENT', approvedBy: 'CMO', notes: null },
   { id: '6', title: 'Board Resolution — 2025 Budget Approval', docType: 'RESOLUTION', version: null, lastReviewDate: '2025-01-20', nextReviewDate: null, status: 'ARCHIVED', approvedBy: 'Board of Directors', notes: null },
 ];
@@ -38,9 +38,9 @@ export default function GovernanceDocumentsPage() {
           <div className="flex items-center gap-3 mb-1">
             <FileText className="w-5 h-5 text-indigo-400" />
             <h1 className="text-xl font-bold text-white">Governance Documents</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">JCAHO LD.01.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC LD.01.01</span>
           </div>
-          <p className="text-slate-400 text-sm">Board bylaws, medical staff bylaws, org charts, resolutions, and JCAHO self-assessments.</p>
+          <p className="text-slate-400 text-sm">Board bylaws, medical staff bylaws, org charts, resolutions, and TJC self-assessments.</p>
         </div>
         <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Add Document
@@ -50,7 +50,7 @@ export default function GovernanceDocumentsPage() {
       {overdue > 0 && (
         <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
-          <p className="text-sm text-red-300">{overdue} document(s) are overdue for review. JCAHO requires governance documents — particularly bylaws — to be reviewed at least annually. Initiate review immediately.</p>
+          <p className="text-sm text-red-300">{overdue} document(s) are overdue for review. TJC requires governance documents — particularly bylaws — to be reviewed at least annually. Initiate review immediately.</p>
         </div>
       )}
 
