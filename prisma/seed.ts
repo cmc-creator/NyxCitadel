@@ -1148,7 +1148,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
   // ─── QAPI METRICS (6 months rolling) ─────────────────────────────────────
   console.log('\n📊 Seeding QAPI metrics...');
   const currentMonth = now.getMonth() + 1; // 1-based
-  const currentYear  = now.getFullYear();
+  const qapiYear     = now.getFullYear();
 
   interface MetricDef {
     metricName: string;
@@ -1170,7 +1170,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
   for (const metric of metricDefs) {
     for (let i = 0; i < 6; i++) {
       let month = currentMonth - 5 + i;
-      let year  = currentYear;
+      let year  = qapiYear;
       if (month <= 0) { month += 12; year -= 1; }
       await prisma.qapiMetric.upsert({
         where: {
