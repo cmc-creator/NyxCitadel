@@ -705,6 +705,593 @@ Destiny Springs Healthcare | Peoria, AZ`,
   }
   console.log(`  ✅ Seeded ${defaultTemplates.length} default QOC response templates`);
 
+  // ─── TRAINING RECORDS ─────────────────────────────────────────────────────
+  console.log('\n📚 Seeding training records...');
+  const now = new Date();
+  const y = now.getFullYear();
+
+  const trainingData = [
+    // Nursing staff — all current
+    { staffName: 'Maria Santos, RN',   staffId: 'EMP-101', department: 'Acute Inpatient', jobTitle: 'Registered Nurse', trainingName: 'Annual Mandatory Training Package', category: 'ANNUAL_MANDATORY' as const, completedDate: new Date(`${y}-01-15`), expiryDate: new Date(`${y+1}-01-15`), status: 'COMPLETED' as const, score: 94, passingScore: 80, provider: 'HealthStream' },
+    { staffName: 'Maria Santos, RN',   staffId: 'EMP-101', department: 'Acute Inpatient', jobTitle: 'Registered Nurse', trainingName: 'CPI Nonviolent Crisis Intervention', category: 'CPI_DE_ESCALATION' as const, completedDate: new Date(`${y}-02-10`), expiryDate: new Date(`${y+1}-02-10`), status: 'COMPLETED' as const, score: 88, passingScore: 80, provider: 'Crisis Prevention Institute' },
+    { staffName: 'Maria Santos, RN',   staffId: 'EMP-101', department: 'Acute Inpatient', jobTitle: 'Registered Nurse', trainingName: 'BLS / CPR Recertification', category: 'CPR_BLS' as const, completedDate: new Date(`${y}-03-05`), expiryDate: new Date(`${y+2}-03-05`), status: 'COMPLETED' as const, score: 100, passingScore: 80, provider: 'American Heart Association' },
+    { staffName: 'Darnell Williams, MHT', staffId: 'EMP-102', department: 'Acute Inpatient', jobTitle: 'Mental Health Technician', trainingName: 'Annual Mandatory Training Package', category: 'ANNUAL_MANDATORY' as const, completedDate: new Date(`${y}-01-20`), expiryDate: new Date(`${y+1}-01-20`), status: 'COMPLETED' as const, score: 86, passingScore: 80, provider: 'HealthStream' },
+    { staffName: 'Darnell Williams, MHT', staffId: 'EMP-102', department: 'Acute Inpatient', jobTitle: 'Mental Health Technician', trainingName: 'Suicide Risk Assessment', category: 'SUICIDE_RISK' as const, completedDate: new Date(`${y}-02-28`), expiryDate: new Date(`${y+1}-02-28`), status: 'COMPLETED' as const, score: 91, passingScore: 80, provider: 'Zero Suicide Institute' },
+    { staffName: 'Darnell Williams, MHT', staffId: 'EMP-102', department: 'Acute Inpatient', jobTitle: 'Mental Health Technician', trainingName: 'Restraint & Seclusion — Safe Application', category: 'RESTRAINT_SECLUSION' as const, completedDate: new Date(`${y}-03-12`), expiryDate: new Date(`${y+1}-03-12`), status: 'COMPLETED' as const, score: 90, passingScore: 80, provider: 'Internal' },
+    // Overdue staff
+    { staffName: 'Takeshi Yamamoto, LCSW', staffId: 'EMP-103', department: 'Clinical', jobTitle: 'Licensed Clinical Social Worker', trainingName: 'Annual Mandatory Training Package', category: 'ANNUAL_MANDATORY' as const, completedDate: new Date(`${y-1}-01-10`), expiryDate: new Date(`${y}-01-10`), status: 'OVERDUE' as const, score: null, passingScore: 80, provider: 'HealthStream' },
+    { staffName: 'Takeshi Yamamoto, LCSW', staffId: 'EMP-103', department: 'Clinical', jobTitle: 'Licensed Clinical Social Worker', trainingName: 'HIPAA Privacy & Security', category: 'HIPAA_PRIVACY' as const, completedDate: new Date(`${y}-04-01`), expiryDate: new Date(`${y+1}-04-01`), status: 'COMPLETED' as const, score: 97, passingScore: 80, provider: 'HealthStream' },
+    { staffName: 'Carmen Reyes, LPN',  staffId: 'EMP-104', department: 'Acute Inpatient', jobTitle: 'Licensed Practical Nurse', trainingName: 'Annual Mandatory Training Package', category: 'ANNUAL_MANDATORY' as const, completedDate: new Date(`${y}-01-18`), expiryDate: new Date(`${y+1}-01-18`), status: 'COMPLETED' as const, score: 89, passingScore: 80, provider: 'HealthStream' },
+    { staffName: 'Carmen Reyes, LPN',  staffId: 'EMP-104', department: 'Acute Inpatient', jobTitle: 'Licensed Practical Nurse', trainingName: 'Medication Management Safety', category: 'MEDICATION_MANAGEMENT' as const, completedDate: new Date(`${y}-02-20`), expiryDate: new Date(`${y+1}-02-20`), status: 'COMPLETED' as const, score: 92, passingScore: 80, provider: 'HealthStream' },
+    { staffName: 'Priya Nair, RN',    staffId: 'EMP-105', department: 'Intake/Assessment', jobTitle: 'Assessment Nurse', trainingName: 'Annual Mandatory Training Package', category: 'ANNUAL_MANDATORY' as const, completedDate: new Date(`${y}-01-22`), expiryDate: new Date(`${y+1}-01-22`), status: 'COMPLETED' as const, score: 93, passingScore: 80, provider: 'HealthStream' },
+    { staffName: 'Priya Nair, RN',    staffId: 'EMP-105', department: 'Intake/Assessment', jobTitle: 'Assessment Nurse', trainingName: 'Suicide Risk Assessment', category: 'SUICIDE_RISK' as const, completedDate: null, expiryDate: null, status: 'PENDING' as const, score: null, passingScore: 80, provider: 'Zero Suicide Institute' },
+    // Leadership
+    { staffName: 'James Holloway, CEO', staffId: 'EMP-001', department: 'Administration', jobTitle: 'Chief Executive Officer', trainingName: 'Emergency Management Leadership', category: 'EMERGENCY_MANAGEMENT' as const, completedDate: new Date(`${y}-03-01`), expiryDate: new Date(`${y+1}-03-01`), status: 'COMPLETED' as const, score: 95, passingScore: 80, provider: 'Internal' },
+    { staffName: 'Linda Park, CNO',   staffId: 'EMP-002', department: 'Nursing Administration', jobTitle: 'Chief Nursing Officer', trainingName: 'Infection Control Annual Update', category: 'INFECTION_CONTROL' as const, completedDate: new Date(`${y}-02-14`), expiryDate: new Date(`${y+1}-02-14`), status: 'COMPLETED' as const, score: 98, passingScore: 80, provider: 'APIC' },
+    // Dietary — expired
+    { staffName: 'Oscar Tran, CDM',   staffId: 'EMP-201', department: 'Dietary', jobTitle: 'Certified Dietary Manager', trainingName: 'Fire Safety & Evacuation', category: 'FIRE_SAFETY' as const, completedDate: new Date(`${y-1}-06-15`), expiryDate: new Date(`${y}-06-15`), status: 'EXPIRED' as const, score: 88, passingScore: 80, provider: 'Internal' },
+  ];
+
+  for (const t of trainingData) {
+    await prisma.trainingRecord.create({
+      data: {
+        facilityId: facility.id,
+        staffName: t.staffName,
+        staffId: t.staffId,
+        department: t.department,
+        jobTitle: t.jobTitle,
+        trainingName: t.trainingName,
+        category: t.category,
+        completedDate: t.completedDate,
+        expiryDate: t.expiryDate,
+        isRequired: true,
+        status: t.status,
+        score: t.score,
+        passingScore: t.passingScore,
+        provider: t.provider,
+      },
+    });
+  }
+  console.log(`  ✅ Seeded ${trainingData.length} training records`);
+
+  // ─── INCIDENTS ────────────────────────────────────────────────────────────
+  console.log('\n🚨 Seeding incidents...');
+  const incidents = [
+    { incidentNumber: `INC-${y}-001`, dateOccurred: new Date(`${y}-01-08 14:30`), incidentType: 'PATIENT_FALL' as const, severity: 'MODERATE' as const, location: 'Unit A — Room 104', description: 'Patient found on floor beside bed during afternoon rounds. No apparent injury. Non-slip socks not applied per care plan.', immediateActions: 'Vital signs assessed, physician notified, family contacted. PT/OT consult ordered.', patientInvolved: true, correctionRequired: true, reportableToState: false, status: 'CLOSED' as const, closedDate: new Date(`${y}-02-01`) },
+    { incidentNumber: `INC-${y}-002`, dateOccurred: new Date(`${y}-01-19 09:15`), incidentType: 'MEDICATION_ERROR' as const, severity: 'MINOR' as const, location: 'Medication Room — Unit B', description: 'Patient received incorrect dose of Lithium 300mg instead of 600mg. Error discovered during nurse-to-nurse handoff.', immediateActions: 'Physician notified, patient monitored x4 hours. Pharmacy incident report filed.', patientInvolved: true, correctionRequired: true, reportableToState: false, status: 'CLOSED' as const, closedDate: new Date(`${y}-02-10`) },
+    { incidentNumber: `INC-${y}-003`, dateOccurred: new Date(`${y}-02-14 23:45`), incidentType: 'ELOPEMENT' as const, severity: 'MAJOR' as const, location: 'East Exit — Parking Lot', description: 'ITA patient eloped through unsecured exterior door during overnight shift. Patient located by law enforcement 30 minutes later, returned safely.', immediateActions: 'Code Green activated, law enforcement called, family notified, physician notified. Patient returned unharmed. Door mechanism inspected.', patientInvolved: true, correctionRequired: true, reportableToState: true, reportedToState: true, stateReportDate: new Date(`${y}-02-15`), status: 'UNDER_INVESTIGATION' as const },
+    { incidentNumber: `INC-${y}-004`, dateOccurred: new Date(`${y}-03-02 16:20`), incidentType: 'ASSAULT_PATIENT_TO_STAFF' as const, severity: 'MODERATE' as const, location: 'Unit A — Day Room', description: 'Acutely agitated patient struck MHT in face during de-escalation attempt. Staff sustained minor laceration.', immediateActions: 'Security called, patient placed on 1:1 observation. Staff assessed in employee health. PRN medication administered per orders.', staffInvolved: true, patientInvolved: true, correctionRequired: true, reportableToState: false, status: 'CLOSED' as const, closedDate: new Date(`${y}-03-20`) },
+    { incidentNumber: `INC-${y}-005`, dateOccurred: new Date(`${y}-03-18 11:00`), incidentType: 'RESTRAINT_SECLUSION' as const, severity: 'MODERATE' as const, location: 'Seclusion Room 1', description: 'Patient placed in emergency physical hold and seclusion for imminent danger to self. Hold lasted 22 minutes. All monitoring documentation completed.', immediateActions: 'Physician verbal order obtained within 1 hour. Debriefing conducted with patient and staff within 24 hours.', patientInvolved: true, correctionRequired: false, reportableToState: false, status: 'CLOSED' as const, closedDate: new Date(`${y}-03-25`) },
+    { incidentNumber: `INC-${y}-006`, dateOccurred: new Date(`${y}-04-05 08:00`), incidentType: 'NEAR_MISS' as const, severity: 'MINOR' as const, location: 'Pharmacy', description: 'Nurse almost administered medication to wrong patient — caught by barcode scanning system at bedside. No patient harm.', immediateActions: 'Staff counseled on two-patient identifier policy. Pharmacy notified. Near-miss documented.', patientInvolved: true, correctionRequired: true, reportableToState: false, status: 'OPEN' as const },
+  ];
+
+  const createdIncidents: Record<string, string> = {};
+  for (const inc of incidents) {
+    const record = await prisma.incident.create({
+      data: {
+        facilityId: facility.id,
+        incidentNumber: inc.incidentNumber,
+        dateOccurred: inc.dateOccurred,
+        incidentType: inc.incidentType,
+        severity: inc.severity,
+        location: inc.location,
+        description: inc.description,
+        immediateActions: inc.immediateActions,
+        patientInvolved: inc.patientInvolved ?? false,
+        staffInvolved: (inc as any).staffInvolved ?? false,
+        correctionRequired: inc.correctionRequired,
+        reportableToState: inc.reportableToState,
+        reportedToState: (inc as any).reportedToState ?? false,
+        stateReportDate: (inc as any).stateReportDate ?? null,
+        status: inc.status,
+        closedDate: (inc as any).closedDate ?? null,
+      },
+    });
+    createdIncidents[inc.incidentNumber] = record.id;
+  }
+  console.log(`  ✅ Seeded ${incidents.length} incidents`);
+
+  // ─── CORRECTIVE ACTION PLANS ─────────────────────────────────────────────
+  console.log('\n📋 Seeding corrective action plans...');
+  const caps = [
+    {
+      capNumber: `CAP-${y}-001`,
+      title: 'Patient Fall Prevention — Non-Slip Footwear Compliance',
+      source: 'INCIDENT' as const,
+      sourceRef: `INC-${y}-001`,
+      description: 'Following a patient fall in Unit A, a review found 3 of 10 patients on fall precautions were not wearing non-slip socks. This CAP addresses the system gap in care plan-to-bedside compliance.',
+      rootCause: 'Oncoming nursing staff failed to verify fall precaution accessories during shift handoff. Handoff checklist did not include fall risk gear verification.',
+      correctionPlan: '1. Update shift handoff checklist to include fall precaution gear check.\n2. Laminated fall-risk visual cues placed outside patient rooms.\n3. Re-education for all nursing staff on fall bundle compliance.\n4. CNO review of fall precaution audits at weekly safety huddle.',
+      measureOfSuccess: 'Zero fall-related incidents attributed to missing fall gear for 90 consecutive days. 100% compliance on monthly fall bundle audits.',
+      targetDate: new Date(`${y}-04-30`),
+      completedDate: new Date(`${y}-04-15`),
+      status: 'VERIFIED' as const,
+      priority: 'HIGH' as const,
+    },
+    {
+      capNumber: `CAP-${y}-002`,
+      title: 'Medication Administration — Two-Patient Identifier Protocol',
+      source: 'INCIDENT' as const,
+      sourceRef: `INC-${y}-002`,
+      description: 'A near-miss medication error revealed that barcode scanning compliance was below 80% on Unit B. This CAP reinforces the two-patient identifier requirement at point of administration.',
+      rootCause: 'Scanner device battery issues caused staff to bypass scanning and rely on visual verification only. No backup process was documented.',
+      correctionPlan: '1. All scanner devices charged nightly — assigned to charge nurse to verify.\n2. New policy: medication not administered without successful scan unless device failure documented and pharmacist notified.\n3. Bi-weekly medication safety audits by charge nurses.\n4. Monthly compliance rate reported to QAPI committee.',
+      measureOfSuccess: 'Barcode scan compliance >95% on monthly audits for 3 consecutive months.',
+      targetDate: new Date(`${y}-05-15`),
+      completedDate: null,
+      status: 'IN_PROGRESS' as const,
+      priority: 'HIGH' as const,
+    },
+    {
+      capNumber: `CAP-${y}-003`,
+      title: 'Elopement Risk — Perimeter Security Hardening',
+      source: 'INCIDENT' as const,
+      sourceRef: `INC-${y}-003`,
+      description: 'Patient elopement through unsecured east exterior door. Root cause analysis identified a malfunctioning magnetic lock and delayed staff response to door alarm.',
+      rootCause: 'East door magnetic lock had intermittent fault for 3 days prior to incident. Maintenance work order had been submitted but not prioritized. Door alarm was silenced by security without investigation.',
+      correctionPlan: '1. All exterior door locks inspected and certified by Facilities within 48 hours.\n2. Door alarm protocol revised — all alarms require physical investigation before silence.\n3. Maintenance work order SLA for security hardware set to 4-hour response.\n4. AWOL / elopement risk screening added to admission assessment.',
+      measureOfSuccess: 'Zero elopement incidents for 180 days. 100% monthly door lock inspection completion.',
+      targetDate: new Date(`${y}-06-01`),
+      completedDate: null,
+      status: 'IN_PROGRESS' as const,
+      priority: 'HIGH' as const,
+    },
+    {
+      capNumber: `CAP-${y}-004`,
+      title: 'Annual Staff Training Completion — Overdue Staff Resolution',
+      source: 'INTERNAL_AUDIT' as const,
+      sourceRef: 'HR-AUDIT-2026-Q1',
+      description: 'Q1 HR audit identified 3 staff members with overdue annual mandatory training. CMS CoP requires all staff to complete annual mandatory training.',
+      rootCause: 'HealthStream auto-reminders disabled for staff on FMLA. No supervisor-level backup notification existed.',
+      correctionPlan: '1. HealthStream supervisor notification enabled for all direct reports regardless of leave status.\n2. Monthly training compliance dashboard review added to department head meetings.\n3. HR to audit outstanding training at end of each quarter.',
+      measureOfSuccess: '≥95% annual mandatory training completion rate at next quarterly audit.',
+      targetDate: new Date(`${y}-07-31`),
+      completedDate: null,
+      status: 'OPEN' as const,
+      priority: 'MEDIUM' as const,
+    },
+  ];
+
+  for (const cap of caps) {
+    await prisma.correctiveActionPlan.create({
+      data: {
+        facilityId: facility.id,
+        capNumber: cap.capNumber,
+        title: cap.title,
+        source: cap.source,
+        sourceRef: cap.sourceRef,
+        description: cap.description,
+        rootCause: cap.rootCause,
+        correctionPlan: cap.correctionPlan,
+        measureOfSuccess: cap.measureOfSuccess,
+        targetDate: cap.targetDate,
+        completedDate: cap.completedDate,
+        status: cap.status,
+        priority: cap.priority,
+      },
+    });
+  }
+  console.log(`  ✅ Seeded ${caps.length} corrective action plans`);
+
+  // ─── GRIEVANCES ───────────────────────────────────────────────────────────
+  console.log('\n📬 Seeding grievances...');
+  const grievances = [
+    {
+      grievanceNumber: `GRV-${y}-001`,
+      dateReceived: new Date(`${y}-02-03`),
+      complainantName: 'Patricia Moore',
+      complainantType: 'FAMILY_MEMBER' as const,
+      complainantPhone: '(602) 555-0191',
+      patientName: 'D. Moore',
+      patientMRN: 'MRN-78234',
+      summary: 'Family member reports that patient was placed in seclusion on 01/28 without adequate explanation to family. Family states staff were rude and dismissive when they called for an update.',
+      category: 'RESTRAINT_SECLUSION' as const,
+      severity: 'STANDARD' as const,
+      assignedTo: 'Patient Advocate',
+      acknowledgmentDueDate: new Date(`${y}-02-10`),
+      resolutionDueDate: new Date(`${y}-03-05`),
+      acknowledgmentDate: new Date(`${y}-02-07`),
+      acknowledgmentSentBy: 'Patient Rights Officer',
+      resolutionDate: new Date(`${y}-02-28`),
+      resolutionSentBy: 'CNO / Patient Rights Officer',
+      status: 'RESOLVED' as const,
+      resolution: 'Full review of seclusion event conducted. Seclusion was clinically justified and documented appropriately. Patient and family meeting facilitated with treatment team. Staff reminded of family communication obligations. No regulatory violation found.',
+      outcomeCategory: 'Unsubstantiated',
+      reportableToAdhs: false,
+    },
+    {
+      grievanceNumber: `GRV-${y}-002`,
+      dateReceived: new Date(`${y}-03-10`),
+      complainantName: 'Anonymous',
+      complainantType: 'ANONYMOUS' as const,
+      patientName: null,
+      patientMRN: null,
+      summary: 'Anonymous complainant states that on multiple occasions nursing staff have been observed not washing hands between patient rooms on Unit B.',
+      category: 'CLINICAL_CARE_QUALITY' as const,
+      severity: 'STANDARD' as const,
+      assignedTo: 'Infection Control Officer',
+      acknowledgmentDueDate: new Date(`${y}-03-17`),
+      resolutionDueDate: new Date(`${y}-04-09`),
+      acknowledgmentDate: null,
+      resolutionDate: null,
+      status: 'UNDER_REVIEW' as const,
+      resolution: null,
+      outcomeCategory: null,
+      reportableToAdhs: false,
+    },
+    {
+      grievanceNumber: `GRV-${y}-003`,
+      dateReceived: new Date(`${y}-04-01`),
+      complainantName: 'Roberto Fuentes',
+      complainantType: 'PATIENT' as const,
+      complainantPhone: '(480) 555-0242',
+      patientName: 'Roberto Fuentes',
+      patientMRN: 'MRN-91045',
+      summary: 'Patient alleges that a staff member made demeaning comments during a group therapy session regarding his diagnosis and nationality.',
+      category: 'STAFF_CONDUCT' as const,
+      severity: 'EXPEDITED' as const,
+      assignedTo: 'HR / Clinical Director',
+      acknowledgmentDueDate: new Date(`${y}-04-08`),
+      resolutionDueDate: new Date(`${y}-05-01`),
+      acknowledgmentDate: new Date(`${y}-04-04`),
+      acknowledgmentSentBy: 'Patient Rights Officer',
+      resolutionDate: null,
+      status: 'PENDING_RESOLUTION' as const,
+      resolution: null,
+      outcomeCategory: null,
+      reportableToAdhs: false,
+    },
+  ];
+
+  for (const g of grievances) {
+    await prisma.grievanceRecord.create({
+      data: {
+        facilityId: facility.id,
+        grievanceNumber: g.grievanceNumber,
+        dateReceived: g.dateReceived,
+        complainantName: g.complainantName,
+        complainantType: g.complainantType,
+        complainantPhone: (g as any).complainantPhone ?? null,
+        patientName: (g as any).patientName ?? null,
+        patientMRN: (g as any).patientMRN ?? null,
+        summary: g.summary,
+        category: g.category,
+        severity: g.severity,
+        assignedTo: g.assignedTo,
+        acknowledgmentDueDate: g.acknowledgmentDueDate,
+        resolutionDueDate: g.resolutionDueDate,
+        acknowledgmentDate: (g as any).acknowledgmentDate ?? null,
+        acknowledgmentSentBy: (g as any).acknowledgmentSentBy ?? null,
+        resolutionDate: (g as any).resolutionDate ?? null,
+        resolutionSentBy: (g as any).resolutionSentBy ?? null,
+        status: g.status,
+        resolution: (g as any).resolution ?? null,
+        outcomeCategory: (g as any).outcomeCategory ?? null,
+        reportableToAdhs: g.reportableToAdhs,
+      },
+    });
+  }
+  console.log(`  ✅ Seeded ${grievances.length} grievances`);
+
+  // ─── QOC / LOI COMPLAINTS ─────────────────────────────────────────────────
+  console.log('\n🔍 Seeding QOC/LOI complaints...');
+  await prisma.qocComplaint.create({
+    data: {
+      facilityId: facility.id,
+      qocNumber: `QOC-${y}-001`,
+      dateReceived: new Date(`${y}-02-20`),
+      complainantType: 'FAMILY_MEMBER',
+      allegationSummary: 'Complainant alleges patient was denied access to phone to call family for 3 days, violating patient rights under ARS 36-507.',
+      allegationCategories: ['Patient Rights', 'Communication'],
+      loiReceivedDate: new Date(`${y}-03-01`),
+      investigationType: 'STANDARD',
+      investigatorName: 'AZ ADHS Survey Team',
+      responseDueDate: new Date(`${y}-03-15`),
+      status: 'RESPONSE_SUBMITTED',
+      responseSubmittedDate: new Date(`${y}-03-14`),
+      deficienciesFound: false,
+    },
+  });
+  await prisma.qocComplaint.create({
+    data: {
+      facilityId: facility.id,
+      qocNumber: `QOC-${y}-002`,
+      dateReceived: new Date(`${y}-04-10`),
+      complainantType: 'ANONYMOUS',
+      allegationSummary: 'Anonymous complaint alleges inadequate supervision of patients at-risk for self-harm on the overnight shift of 04/05/2026.',
+      allegationCategories: ['Patient Safety', 'Staffing'],
+      loiReceivedDate: null,
+      investigationType: 'STANDARD',
+      responseDueDate: null,
+      status: 'OPEN',
+      deficienciesFound: false,
+    },
+  });
+  console.log('  ✅ Seeded 2 QOC/LOI complaints');
+
+  // ─── INCIDENT REPORTS (IR/IAD) ────────────────────────────────────────────
+  console.log('\n📄 Seeding incident reports (IR/IAD)...');
+  const irRecords = [
+    {
+      irNumber: `IR-${y}-001`,
+      incidentDate: new Date(`${y}-01-08`),
+      incidentTime: '14:30',
+      incidentType: 'PATIENT_FALL' as const,
+      severity: 'MODERATE' as const,
+      location: 'Unit A',
+      unitName: 'Acute Inpatient Unit A',
+      briefDescription: 'Patient found on floor beside bed during afternoon rounds. Non-slip socks not in place per care plan.',
+      injuryDescription: 'No apparent injury. Vital signs stable.',
+      immediateActions: 'VS assessed, MD notified, family contacted. PT/OT consult ordered.',
+      patientName: 'T.R. (Patient)',
+      patientMRN: 'MRN-78011',
+      physicianNotified: true,
+      physicianNotifiedTime: '14:45',
+      supervisorNotified: true,
+      supervisorNotifiedTime: '14:40',
+      adhsReportable: false,
+      status: 'CLOSED' as const,
+      closedDate: new Date(`${y}-01-25`),
+      aiTriageSeverity: 'MODERATE',
+      aiTriageTags: 'patient_safety,fall_risk',
+    },
+    {
+      irNumber: `IR-${y}-002`,
+      incidentDate: new Date(`${y}-02-14`),
+      incidentTime: '23:45',
+      incidentType: 'ELOPEMENT' as const,
+      severity: 'SERIOUS' as const,
+      location: 'East Exit',
+      unitName: 'Acute Inpatient Unit B',
+      briefDescription: 'ITA patient eloped through unsecured exterior door on overnight shift. Located by law enforcement within 30 minutes.',
+      injuryDescription: 'No physical injury reported.',
+      immediateActions: 'Code Green activated. Law enforcement notified. Family notified at 00:10. Patient returned safely at 00:22.',
+      patientName: 'K.M. (Patient)',
+      patientMRN: 'MRN-83442',
+      physicianNotified: true,
+      physicianNotifiedTime: '23:50',
+      supervisorNotified: true,
+      supervisorNotifiedTime: '23:48',
+      familyNotified: true,
+      adhsReportable: true,
+      adhsReportableCategory: '24-hour',
+      adhsReported: true,
+      adhsReportDate: new Date(`${y}-02-15`),
+      adhsConfirmationNumber: 'ADHS-2026-04821',
+      status: 'CLOSED' as const,
+      closedDate: new Date(`${y}-03-01`),
+      aiTriageSeverity: 'HIGH',
+      aiTriageTags: 'elopement,regulatory_exposure,ita_patient',
+      aiCascadeTriggered: true,
+    },
+    {
+      irNumber: `IR-${y}-003`,
+      incidentDate: new Date(`${y}-03-02`),
+      incidentTime: '16:20',
+      incidentType: 'ASSAULT_PATIENT_TO_STAFF' as const,
+      severity: 'MODERATE' as const,
+      location: 'Unit A Day Room',
+      unitName: 'Acute Inpatient Unit A',
+      briefDescription: 'Acutely agitated patient struck MHT in face during de-escalation attempt. Staff sustained minor facial laceration.',
+      injuryDescription: 'Staff: 1.5cm laceration above left eyebrow, sutured in ED.',
+      immediateActions: 'Security called. Patient placed on 1:1 observation. Staff sent to Employee Health/ED. PRN administered.',
+      patientMRN: 'MRN-91203',
+      staffInvolvedNames: 'Darnell Williams, MHT',
+      physicianNotified: true,
+      physicianNotifiedTime: '16:30',
+      supervisorNotified: true,
+      supervisorNotifiedTime: '16:22',
+      adhsReportable: false,
+      status: 'CLOSED' as const,
+      closedDate: new Date(`${y}-03-25`),
+      aiTriageSeverity: 'MODERATE',
+      aiTriageTags: 'staff_safety,aggression,workplace_injury',
+    },
+    {
+      irNumber: `IR-${y}-004`,
+      incidentDate: new Date(`${y}-04-05`),
+      incidentTime: '08:00',
+      incidentType: 'MEDICATION_ERROR' as const,
+      severity: 'NEAR_MISS' as const,
+      location: 'Pharmacy / Unit B Bedside',
+      unitName: 'Acute Inpatient Unit B',
+      briefDescription: 'Nurse almost administered medication to wrong patient. Caught by barcode scanning system. No harm occurred.',
+      immediateActions: 'Scan failure investigated. Correct patient verified via two-identifier protocol. Pharmacy notified. Staff counseled.',
+      patientMRN: 'MRN-56712',
+      physicianNotified: false,
+      supervisorNotified: true,
+      supervisorNotifiedTime: '08:15',
+      adhsReportable: false,
+      status: 'INVESTIGATING' as const,
+      aiTriageSeverity: 'LOW',
+      aiTriageTags: 'medication_safety,near_miss',
+    },
+  ];
+
+  for (const ir of irRecords) {
+    await prisma.incidentReport.create({
+      data: {
+        facilityId: facility.id,
+        irNumber: ir.irNumber,
+        incidentDate: ir.incidentDate,
+        incidentTime: ir.incidentTime,
+        incidentType: ir.incidentType,
+        severity: ir.severity,
+        location: ir.location,
+        unitName: ir.unitName,
+        briefDescription: ir.briefDescription,
+        injuryDescription: (ir as any).injuryDescription ?? null,
+        immediateActions: ir.immediateActions,
+        patientName: (ir as any).patientName ?? null,
+        patientMRN: (ir as any).patientMRN ?? null,
+        staffInvolvedNames: (ir as any).staffInvolvedNames ?? null,
+        physicianNotified: ir.physicianNotified,
+        physicianNotifiedTime: (ir as any).physicianNotifiedTime ?? null,
+        supervisorNotified: ir.supervisorNotified,
+        supervisorNotifiedTime: (ir as any).supervisorNotifiedTime ?? null,
+        familyNotified: (ir as any).familyNotified ?? false,
+        adhsReportable: ir.adhsReportable,
+        adhsReportableCategory: (ir as any).adhsReportableCategory ?? null,
+        adhsReported: (ir as any).adhsReported ?? false,
+        adhsReportDate: (ir as any).adhsReportDate ?? null,
+        adhsConfirmationNumber: (ir as any).adhsConfirmationNumber ?? null,
+        status: ir.status,
+        closedDate: (ir as any).closedDate ?? null,
+        aiTriageSeverity: ir.aiTriageSeverity,
+        aiTriageTags: ir.aiTriageTags,
+        aiCascadeTriggered: (ir as any).aiCascadeTriggered ?? false,
+      },
+    });
+  }
+  console.log(`  ✅ Seeded ${irRecords.length} incident reports (IR/IAD)`);
+
+  // ─── QAPI METRICS (6 months rolling) ─────────────────────────────────────
+  console.log('\n📊 Seeding QAPI metrics...');
+  const currentMonth = now.getMonth() + 1; // 1-based
+  const currentYear  = now.getFullYear();
+
+  interface MetricDef {
+    metricName: string;
+    metricKey: string;
+    category: 'PATIENT_SAFETY' | 'RESTRAINT_SECLUSION' | 'MEDICATION_SAFETY' | 'PATIENT_EXPERIENCE' | 'INFECTION_PREVENTION';
+    unit: string;
+    target: number;
+    values: number[]; // 6 months oldest first
+  }
+
+  const metricDefs: MetricDef[] = [
+    { metricName: 'Patient Fall Rate', metricKey: 'patient_fall_rate', category: 'PATIENT_SAFETY', unit: 'per 1000 pt-days', target: 2.0, values: [3.1, 2.8, 2.2, 1.9, 2.1, 1.7] },
+    { metricName: 'Restraint Utilization Rate', metricKey: 'restraint_rate', category: 'RESTRAINT_SECLUSION', unit: '%', target: 5.0, values: [7.2, 6.8, 6.1, 5.9, 5.4, 4.8] },
+    { metricName: 'Medication Error Rate', metricKey: 'medication_error_rate', category: 'MEDICATION_SAFETY', unit: 'per 1000 doses', target: 1.5, values: [2.4, 2.0, 1.8, 1.6, 1.9, 1.4] },
+    { metricName: 'Patient Satisfaction Score', metricKey: 'patient_satisfaction', category: 'PATIENT_EXPERIENCE', unit: '%', target: 80.0, values: [71.0, 73.5, 75.0, 77.0, 78.5, 80.0] },
+    { metricName: 'Hand Hygiene Compliance', metricKey: 'hand_hygiene_compliance', category: 'INFECTION_PREVENTION', unit: '%', target: 90.0, values: [82.0, 84.0, 86.5, 87.0, 89.0, 91.0] },
+  ];
+
+  for (const metric of metricDefs) {
+    for (let i = 0; i < 6; i++) {
+      let month = currentMonth - 5 + i;
+      let year  = currentYear;
+      if (month <= 0) { month += 12; year -= 1; }
+      await prisma.qapiMetric.upsert({
+        where: {
+          facilityId_metricKey_month_year: {
+            facilityId: facility.id,
+            metricKey:  metric.metricKey,
+            month,
+            year,
+          },
+        },
+        create: {
+          facilityId:  facility.id,
+          metricName:  metric.metricName,
+          metricKey:   metric.metricKey,
+          category:    metric.category,
+          month,
+          year,
+          value:  metric.values[i],
+          target: metric.target,
+          unit:   metric.unit,
+        },
+        update: {
+          value:  metric.values[i],
+          target: metric.target,
+        },
+      });
+    }
+  }
+  console.log(`  ✅ Seeded QAPI metrics (5 metrics × 6 months)`);
+
+  // ─── SURVEYS ──────────────────────────────────────────────────────────────
+  console.log('\n🏥 Seeding surveys...');
+  await prisma.survey.upsert({
+    where: { id: 'survey-az-annual-2025' },
+    create: {
+      id:             'survey-az-annual-2025',
+      facilityId:     facility.id,
+      surveyType:     'LICENSURE',
+      regulatoryBody: 'AZ_ADHS',
+      conductedDate:  new Date(`${y-1}-11-14`),
+      surveyorNames:  'ADHS Survey Team (3 surveyors)',
+      status:         'CLOSED',
+      outcome:        'Conditional — 2 Standard-level findings issued',
+      findingCount:   2,
+      satisfactionScore: 76.0,
+      immediateJeopardy: false,
+      conditionLevel: false,
+      responseDeadline: new Date(`${y-1}-12-14`),
+      responseSubmitted: new Date(`${y-1}-12-10`),
+      notes: 'Annual licensure renewal survey. Two findings: F1 — lack of documented patient rights discussion at admission; F2 — incomplete advance directive documentation in 3 of 10 records reviewed. POC submitted and accepted.',
+    },
+    update: {},
+  });
+  await prisma.survey.upsert({
+    where: { id: 'survey-mock-jc-2026' },
+    create: {
+      id:             'survey-mock-jc-2026',
+      facilityId:     facility.id,
+      surveyType:     'MOCK',
+      regulatoryBody: 'JOINT_COMMISSION',
+      conductedDate:  new Date(`${y}-05-20`),
+      status:         'SCHEDULED',
+      findingCount:   0,
+      immediateJeopardy: false,
+      conditionLevel: false,
+      notes: 'Internal mock Joint Commission survey scheduled prior to anticipated accreditation renewal in Q3. Conducted by external consultants.',
+    },
+    update: {},
+  });
+  console.log('  ✅ Seeded 2 surveys (1 completed licensure, 1 scheduled mock JC)');
+
+  // ─── RISK ASSESSMENT ──────────────────────────────────────────────────────
+  console.log('\n⚠️  Seeding risk assessment...');
+  const ra = await prisma.riskAssessment.upsert({
+    where: { id: 'ra-annual-proactive-2026' },
+    create: {
+      id:              'ra-annual-proactive-2026',
+      facilityId:      facility.id,
+      title:           `${y} Annual Proactive Risk Assessment`,
+      assessmentType:  'ANNUAL_PROACTIVE',
+      scope:           'Facility-wide — all patient care areas and support departments',
+      conductedDate:   new Date(`${y}-01-30`),
+      conductedBy:     'Quality & Compliance Team',
+      reviewedBy:      'Linda Park, CNO',
+      approvedBy:      'James Holloway, CEO',
+      status:          'APPROVED',
+      summary:         `Annual proactive risk assessment per JC LD.04.04.01. Identified 12 risk items across 5 domains. Highest priority: elopement risk from perimeter access control failures and medication safety related to scanner compliance. Both items linked to active CAPs.`,
+      overallRiskLevel: 'MEDIUM',
+      regulatoryBody:  'JOINT_COMMISSION',
+      standardRef:     'LD.04.04.01',
+      nextReviewDate:  new Date(`${y+1}-01-30`),
+    },
+    update: {},
+  });
+
+  const riskItems = [
+    { riskDescription: 'Perimeter access control — east wing door lock failure history', category: 'Security', likelihood: 3, severity: 5, riskScore: 15, riskLevel: 'HIGH' as const, currentControls: 'Magnetic locks, security camera coverage, door alarms', recommendedActions: 'Monthly door lock certification; 4-hour maintenance SLA for security hardware', priority: 'HIGH' as const, targetDate: new Date(`${y}-03-31`), status: 'IN_PROGRESS' as const },
+    { riskDescription: 'Medication barcode scanning compliance below 90%', category: 'Medication Safety', likelihood: 4, severity: 3, riskScore: 12, riskLevel: 'HIGH' as const, currentControls: 'Barcoding system, 2-patient identifier policy', recommendedActions: 'Device maintenance protocol, compliance audits, staff re-education', priority: 'HIGH' as const, targetDate: new Date(`${y}-04-30`), status: 'IN_PROGRESS' as const },
+    { riskDescription: 'Incomplete fall precaution bundle compliance at shift change', category: 'Patient Safety', likelihood: 3, severity: 3, riskScore: 9, riskLevel: 'MEDIUM' as const, currentControls: 'Fall bundle protocol, fall risk assessment on admission', recommendedActions: 'Updated handoff checklist, visual fall cues, routine audits', priority: 'MEDIUM' as const, targetDate: new Date(`${y}-04-30`), status: 'MITIGATED' as const },
+  ];
+
+  for (const item of riskItems) {
+    await prisma.riskAssessmentItem.create({
+      data: {
+        assessmentId: ra.id,
+        riskDescription: item.riskDescription,
+        category: item.category,
+        likelihood: item.likelihood,
+        severity: item.severity,
+        riskScore: item.riskScore,
+        riskLevel: item.riskLevel,
+        currentControls: item.currentControls,
+        recommendedActions: item.recommendedActions,
+        priority: item.priority,
+        targetDate: item.targetDate,
+        status: item.status,
+      },
+    });
+  }
+  console.log('  ✅ Seeded 1 risk assessment with 3 risk items');
+
   console.log('\n✅ Seed complete!\n');
   console.log('─────────────────────────────────────────────────');
   console.log('LOGIN CREDENTIALS:');

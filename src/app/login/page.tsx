@@ -8,6 +8,7 @@ import {
   Loader2, AlertCircle, Shield, CheckCircle,
   Lock, Eye, EyeOff, ArrowLeft,
   ClipboardList, BarChart3, AlertTriangle,
+  Copy, CheckCheck, ChevronDown,
 } from 'lucide-react';
 
 const leftFeatures = [
@@ -38,6 +39,20 @@ function LoginForm() {
   const [showPw, setShowPw]     = useState(false);
   const [error, setError]       = useState('');
   const [loading, setLoading]   = useState(false);
+  const [showDemo, setShowDemo] = useState(false);
+  const [copied, setCopied]     = useState<string | null>(null);
+
+  function copyText(text: string, key: string) {
+    navigator.clipboard.writeText(text);
+    setCopied(key);
+    setTimeout(() => setCopied(null), 1500);
+  }
+
+  function fillDemo(email: string, pw: string) {
+    setEmail(email);
+    setPassword(pw);
+    setShowDemo(false);
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -230,9 +245,47 @@ function LoginForm() {
               </button>
             </form>
 
-            <div className="mt-5 pt-5 border-t border-white/5">
+            <div className="mt-5 pt-5 border-t border-white/5 space-y-3">
+              {/* Demo credentials toggle */}
+              <button
+                type="button"
+                onClick={() => setShowDemo(v => !v)}
+                className="w-full flex items-center justify-between text-xs text-slate-500 hover:text-slate-300 transition-colors px-1"
+              >
+                <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /> Demo access available</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showDemo ? 'rotate-180' : ''}`} />
+              </button>
+              {showDemo && (
+                <div className="bg-slate-800/50 border border-white/6 rounded-xl p-4 space-y-3">
+                  <p className="text-xs text-slate-500 mb-2">Click a row to auto-fill · Facility: Destiny Springs Healthcare (AZ)</p>
+                  {[
+                    { role: 'Administrator', email: 'admin@destinysprings.com', pw: 'Admin@DSH2026!' },
+                    { role: 'Compliance Officer', email: 'compliance@destinysprings.com', pw: 'Compliance@DSH2026!' },
+                    { role: 'EM Coordinator', email: 'emc@destinysprings.com', pw: 'Emergency@DSH2026!' },
+                  ].map(acc => (
+                    <div
+                      key={acc.email}
+                      onClick={() => fillDemo(acc.email, acc.pw)}
+                      className="flex items-center justify-between bg-slate-900/60 hover:bg-slate-900 border border-white/5 hover:border-purple-500/30 rounded-lg px-3 py-2 cursor-pointer transition-all group"
+                    >
+                      <div>
+                        <p className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">{acc.role}</p>
+                        <p className="text-[10px] text-slate-600 font-mono">{acc.email}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={e => { e.stopPropagation(); copyText(acc.pw, acc.email); }}
+                        className="text-slate-600 hover:text-slate-300 transition-colors"
+                      >
+                        {copied === acc.email ? <CheckCheck className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
               <p className="text-center text-slate-600 text-xs">
-                Need access? Contact your system administrator.
+                Need access?{' '}
+                <a href="/signup" className="text-purple-500 hover:text-purple-400 transition-colors">Request a demo</a>
               </p>
             </div>
           </div>
