@@ -24,19 +24,19 @@ export function getDueDateStatus(date: Date | string | null): {
   className: string;
   colorClass: string;
 } {
-  if (!date) return { label: 'No date', className: 'status-na', colorClass: 'text-gray-500' };
+  if (!date) return { label: 'No date', className: 'status-na', colorClass: 'text-gray-500 dark:text-gray-400' };
   const d = new Date(date);
   const now = new Date();
   if (isPast(d)) {
-    return { label: 'Overdue', className: 'status-overdue', colorClass: 'text-red-600' };
+    return { label: 'Overdue', className: 'status-overdue', colorClass: 'text-red-600 dark:text-red-400' };
   }
   if (isWithinInterval(d, { start: now, end: addDays(now, 14) })) {
-    return { label: 'Due Soon', className: 'status-warning', colorClass: 'text-yellow-600' };
+    return { label: 'Due Soon', className: 'status-warning', colorClass: 'text-yellow-600 dark:text-yellow-400' };
   }
   if (isWithinInterval(d, { start: now, end: addDays(now, 30) })) {
-    return { label: 'Upcoming', className: 'status-upcoming', colorClass: 'text-blue-600' };
+    return { label: 'Upcoming', className: 'status-upcoming', colorClass: 'text-blue-600 dark:text-blue-400' };
   }
-  return { label: 'Scheduled', className: 'status-compliant', colorClass: 'text-green-600' };
+  return { label: 'Scheduled', className: 'status-compliant', colorClass: 'text-green-600 dark:text-green-400' };
 }
 
 /** Color for event categories */

@@ -5,6 +5,7 @@ import {
   Lock, Star, Zap, ChevronRight, ClipboardList, TrendingUp, Bell, Users,
   Radio, BookOpen, Newspaper, RefreshCw, Award, Target, HeartPulse,
   FileCheck, Siren, BrainCircuit, Sparkles, Globe, BadgeCheck,
+  Check, X,
 } from 'lucide-react';
 
 const features = [
@@ -97,6 +98,78 @@ const stats = [
   { value: 'Real-Time', label: 'Regulatory Alerts', sub: 'Before deadlines hit' },
 ];
 
+const pricingTiers = [
+  {
+    name: 'Starter',
+    tagline: 'Everything you need to stay survey-ready.',
+    price: '$399',
+    period: '/mo, billed annually',
+    badge: null,
+    color: 'border-white/10',
+    buttonStyle: 'bg-white/8 hover:bg-white/15 border border-white/10 text-white',
+    features: [
+      { label: '1 facility', included: true },
+      { label: 'Up to 5 users', included: true },
+      { label: 'Compliance calendar & tracker', included: true },
+      { label: 'Policy & procedure management', included: true },
+      { label: 'Training & competency tracking', included: true },
+      { label: 'Incident management & CAPs', included: true },
+      { label: 'Basic reporting & exports', included: true },
+      { label: 'Email regulatory alerts', included: true },
+      { label: 'QAPI & quality modules', included: false },
+      { label: 'Emergency preparedness suite', included: false },
+      { label: 'NyxAI™ Assistant', included: false },
+      { label: 'Executive & board dashboards', included: false },
+    ],
+  },
+  {
+    name: 'Professional',
+    tagline: 'The full platform — built for quality teams.',
+    price: '$799',
+    period: '/mo, billed annually',
+    badge: 'Most Popular',
+    color: 'border-purple-500/60',
+    buttonStyle: 'bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 text-white shadow-lg shadow-purple-900/40',
+    features: [
+      { label: 'Up to 3 facilities', included: true },
+      { label: 'Up to 20 users', included: true },
+      { label: 'Everything in Starter', included: true },
+      { label: 'QAPI & performance improvement', included: true },
+      { label: 'Emergency preparedness suite', included: true },
+      { label: 'Survey management & POCs', included: true },
+      { label: 'NyxAI™ Assistant', included: true },
+      { label: 'Executive & board dashboards', included: true },
+      { label: 'Risk assessment module', included: true },
+      { label: 'Phone & email support', included: true },
+      { label: 'Custom regulatory feeds', included: false },
+      { label: 'White-label & SSO', included: false },
+    ],
+  },
+  {
+    name: 'Enterprise',
+    tagline: 'Unlimited scale. Dedicated support. Fully custom.',
+    price: 'Custom',
+    period: 'Contact us for pricing',
+    badge: 'Full Power',
+    color: 'border-blue-500/40',
+    buttonStyle: 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-lg shadow-blue-900/40',
+    features: [
+      { label: 'Unlimited facilities', included: true },
+      { label: 'Unlimited users', included: true },
+      { label: 'Everything in Professional', included: true },
+      { label: 'Custom regulatory feed configuration', included: true },
+      { label: 'White-label branding', included: true },
+      { label: 'SSO / SAML integration', included: true },
+      { label: 'Dedicated compliance consultant', included: true },
+      { label: 'Custom API access', included: true },
+      { label: 'SLA guarantee', included: true },
+      { label: 'Priority 24/7 support', included: true },
+      { label: 'Custom onboarding & training', included: true },
+      { label: 'Custom integrations (EHR, etc.)', included: true },
+    ],
+  },
+];
+
 const painPoints = [
   {
     icon: Newspaper,
@@ -119,7 +192,7 @@ export default async function RootPage() {
   const session     = await auth();
   const isLoggedIn  = !!session;
   const portalHref  = isLoggedIn ? '/dashboard' : '/login';
-  const portalLabel = isLoggedIn ? 'Go to Dashboard' : 'Platform Login';
+  const portalLabel = isLoggedIn ? 'Go to Dashboard' : 'Sign In';
 
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-x-hidden">
@@ -140,29 +213,40 @@ export default async function RootPage() {
       </div>
 
       {/* ── Navbar ── */}
-      <header className="relative z-20 border-b border-white/5 backdrop-blur-md sticky top-0">
+      <header className="z-20 border-b border-white/5 backdrop-blur-md sticky top-0">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
               <Shield className="w-5 h-5 text-white" />
             </div>
             <div>
-              <span className="font-extrabold text-lg tracking-tight">NyxCitadel</span>
+              <span className="font-extrabold text-lg tracking-tight">NyxCitadel<sup className="text-[10px] font-normal align-super ml-0.5">™</sup></span>
               <span className="hidden sm:inline text-slate-600 text-xs ml-2">Healthcare Compliance Platform</span>
             </div>
           </div>
-          <nav className="hidden md:flex items-center gap-8 text-sm text-slate-400">
+          <nav className="hidden md:flex items-center gap-7 text-sm text-slate-400">
             <a href="#intel" className="hover:text-white transition-colors">Reg. Intelligence</a>
             <a href="#features" className="hover:text-white transition-colors">Features</a>
             <a href="#quality" className="hover:text-white transition-colors">Quality &amp; Risk</a>
             <a href="#compliance" className="hover:text-white transition-colors">Standards</a>
+            <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
           </nav>
-          <Link
-            href={portalHref}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-purple-900/40"
-          >
-            {portalLabel} <ChevronRight className="w-4 h-4" />
-          </Link>
+          <div className="flex items-center gap-2">
+            {!isLoggedIn && (
+              <Link
+                href="/signup"
+                className="flex items-center gap-2 px-4 py-2 border border-purple-500/50 hover:border-purple-400 hover:bg-purple-500/10 rounded-lg text-sm font-semibold text-purple-300 hover:text-purple-200 transition-all"
+              >
+                Get Started
+              </Link>
+            )}
+            <Link
+              href={portalHref}
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-purple-900/40"
+            >
+              {portalLabel} <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -182,7 +266,7 @@ export default async function RootPage() {
                 Regulations.
               </span>
               <br />
-              Let NyxCitadel{' '}
+              Let NyxCitadel<sup className="text-2xl font-normal align-super">™</sup>{' '}
               <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
                 Chase Them For You.
               </span>
@@ -200,18 +284,29 @@ export default async function RootPage() {
               facilities that refuse to be caught off guard.
             </p>
             <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href={portalHref}
-                className="flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-xl font-bold text-lg transition-all shadow-xl shadow-purple-900/40 hover:shadow-purple-700/40 hover:-translate-y-0.5"
-              >
-                Access Your Portal <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a
-                href="#intel"
-                className="flex items-center gap-2 px-7 py-3.5 border border-white/10 hover:border-purple-500/50 rounded-xl font-semibold text-slate-300 hover:text-white transition-all hover:-translate-y-0.5"
-              >
-                See Regulatory Intelligence
-              </a>
+              {isLoggedIn ? (
+                <Link
+                  href="/dashboard"
+                  className="flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-xl font-bold text-lg transition-all shadow-xl shadow-purple-900/40 hover:shadow-purple-700/40 hover:-translate-y-0.5"
+                >
+                  Go to Dashboard <ArrowRight className="w-5 h-5" />
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/signup"
+                    className="flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-xl font-bold text-lg transition-all shadow-xl shadow-purple-900/40 hover:shadow-purple-700/40 hover:-translate-y-0.5"
+                  >
+                    Get Started Free <ArrowRight className="w-5 h-5" />
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-2 px-7 py-3.5 border border-white/10 hover:border-purple-500/50 rounded-xl font-semibold text-slate-300 hover:text-white transition-all hover:-translate-y-0.5"
+                  >
+                    Sign In
+                  </Link>
+                </>
+              )}
             </div>
             <div className="flex flex-wrap items-center gap-5 mt-10 pt-8 border-t border-white/5">
               {[
@@ -597,6 +692,100 @@ export default async function RootPage() {
       </section>
 
       {/* ══════════════════════════════
+          PRICING
+      ══════════════════════════════ */}
+      <section id="pricing" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-purple-950/20 via-transparent to-transparent">
+        <div className="max-w-7xl mx-auto px-6 py-24">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs font-semibold mb-6">
+              <Sparkles className="w-3.5 h-3.5" />
+              Simple, Transparent Pricing
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
+              The right plan for{' '}
+              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                every facility.
+              </span>
+            </h2>
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+              No surprise fees. No module paywalls. Every plan includes onboarding support
+              and a 30-day satisfaction guarantee.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {pricingTiers.map((tier) => (
+              <div
+                key={tier.name}
+                className={`relative flex flex-col bg-slate-900/60 border ${
+                  tier.badge === 'Most Popular'
+                    ? tier.color + ' ring-1 ring-purple-500/40 shadow-2xl shadow-purple-900/30'
+                    : tier.color
+                } rounded-2xl p-7 hover:-translate-y-1 transition-all duration-200`}
+              >
+                {tier.badge && (
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${
+                      tier.badge === 'Most Popular'
+                        ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-lg shadow-purple-900/40'
+                        : 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-900/40'
+                    }`}>
+                      {tier.badge}
+                    </span>
+                  </div>
+                )}
+
+                <div className="mb-6">
+                  <h3 className="text-xl font-extrabold text-white mb-1">{tier.name}</h3>
+                  <p className="text-sm text-slate-400">{tier.tagline}</p>
+                </div>
+
+                <div className="mb-7">
+                  <div className="flex items-end gap-1">
+                    <span className="text-4xl font-extrabold text-white">{tier.price}</span>
+                    {tier.price !== 'Custom' && (
+                      <span className="text-slate-500 text-sm mb-1.5">{tier.period}</span>
+                    )}
+                  </div>
+                  {tier.price === 'Custom' && (
+                    <p className="text-sm text-slate-500 mt-1">{tier.period}</p>
+                  )}
+                </div>
+
+                <Link
+                  href={tier.price === 'Custom' ? 'mailto:sales@nyxcitadel.com' : '/signup'}
+                  className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all mb-7 ${tier.buttonStyle}`}
+                >
+                  {tier.price === 'Custom' ? 'Contact Sales' : 'Get Started'} <ArrowRight className="w-4 h-4" />
+                </Link>
+
+                <ul className="space-y-2.5 flex-1">
+                  {tier.features.map((f) => (
+                    <li key={f.label} className="flex items-center gap-2.5 text-sm">
+                      {f.included ? (
+                        <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
+                      ) : (
+                        <X className="w-4 h-4 text-slate-700 flex-shrink-0" />
+                      )}
+                      <span className={f.included ? 'text-slate-300' : 'text-slate-600'}>
+                        {f.label}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-center text-sm text-slate-600 mt-8">
+            All plans billed annually. Monthly billing available at a 20% premium.
+            Need a custom quote?{' '}
+            <a href="mailto:sales@nyxcitadel.com" className="text-purple-400 hover:text-purple-300 underline underline-offset-2">Contact our sales team.</a>
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════
           FINAL CTA
       ══════════════════════════════ */}
       <section id="about" className="relative z-10 max-w-7xl mx-auto px-6 py-28 text-center">
@@ -625,12 +814,31 @@ export default async function RootPage() {
               Join the healthcare facilities that have turned compliance from a crisis response
               into a competitive advantage.
             </p>
-            <Link
-              href={portalHref}
-              className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-2xl font-bold text-xl transition-all shadow-2xl shadow-purple-900/50 hover:shadow-purple-700/50 hover:-translate-y-1"
-            >
-              {isLoggedIn ? 'Go to Your Dashboard' : 'Sign In & Take Command'} <ArrowRight className="w-6 h-6" />
-            </Link>
+            <div className="flex flex-wrap justify-center gap-4">
+              {isLoggedIn ? (
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-2xl font-bold text-xl transition-all shadow-2xl shadow-purple-900/50 hover:shadow-purple-700/50 hover:-translate-y-1"
+                >
+                  Go to Your Dashboard <ArrowRight className="w-6 h-6" />
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/signup"
+                    className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-2xl font-bold text-xl transition-all shadow-2xl shadow-purple-900/50 hover:shadow-purple-700/50 hover:-translate-y-1"
+                  >
+                    Get Started Free <ArrowRight className="w-6 h-6" />
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-3 px-8 py-4 border border-white/15 hover:border-purple-500/50 rounded-2xl font-semibold text-lg text-slate-300 hover:text-white transition-all hover:-translate-y-1"
+                  >
+                    Sign In
+                  </Link>
+                </>
+              )}
+            </div>
             <div className="flex flex-wrap justify-center items-center gap-6 mt-10 pt-8 border-t border-white/10">
               {[
                 { icon: Lock,       label: 'HIPAA Encrypted' },
@@ -657,11 +865,11 @@ export default async function RootPage() {
               <Shield className="w-4 h-4 text-white" />
             </div>
             <div>
-              <span className="font-bold text-slate-400">NyxCitadel</span>
+              <span className="font-bold text-slate-400">NyxCitadel<sup className="text-[9px] font-normal">™</sup></span>
               <span className="text-slate-700 ml-2 hidden sm:inline">· Healthcare Compliance &amp; Risk Management Platform</span>
             </div>
           </div>
-          <p>© {new Date().getFullYear()} NyxCitadel · HIPAA-compliant · Survey-ready · Always current</p>
+          <p>© {new Date().getFullYear()} NyxCitadel™ · HIPAA-compliant · Survey-ready · Always current</p>
           <Link href={portalHref} className="text-slate-500 hover:text-white transition-colors font-medium">
             {portalLabel} →
           </Link>

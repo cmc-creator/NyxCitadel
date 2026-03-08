@@ -2,7 +2,7 @@ import { Settings } from 'lucide-react';
 
 export const metadata = { title: 'Settings' };
 
-const sections = [
+const sections: { href: string; title: string; description: string; soon?: boolean }[] = [
   {
     href: '/settings/facility',
     title: 'Facility Configuration',
@@ -29,11 +29,11 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Settings className="w-6 h-6 text-purple-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <Settings className="w-6 h-6 text-purple-400" />
           Settings
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Manage your facility configuration and application preferences.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Manage your facility configuration and application preferences.</p>
       </div>
 
       <div className="grid gap-3">
@@ -41,18 +41,18 @@ export default function SettingsPage() {
           <a
             key={s.href}
             href={s.soon ? '#' : s.href}
-            className="bg-white border border-slate-200 rounded-xl px-5 py-4 flex items-start justify-between hover:border-purple-300 transition-colors group"
+            className="bg-card border border-border rounded-xl px-5 py-4 flex items-start justify-between hover:border-purple-600/50 transition-colors group"
           >
             <div>
-              <p className="text-sm font-semibold text-slate-900 group-hover:text-purple-700">{s.title}</p>
-              <p className="text-xs text-slate-500 mt-0.5">{s.description}</p>
+              <p className="text-sm font-semibold text-foreground group-hover:text-purple-400">{s.title}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{s.description}</p>
             </div>
             {s.soon ? (
-              <span className="text-xs font-medium text-slate-400 bg-slate-100 rounded-full px-2 py-0.5 mt-0.5 shrink-0">
+              <span className="text-xs font-medium text-muted-foreground bg-muted rounded-full px-2 py-0.5 mt-0.5 shrink-0">
                 Coming Soon
               </span>
             ) : (
-              <span className="text-slate-400 group-hover:text-purple-600 mt-0.5">→</span>
+              <span className="text-muted-foreground group-hover:text-purple-400 mt-0.5">→</span>
             )}
           </a>
         ))}

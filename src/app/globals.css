@@ -1,169 +1,402 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   CITADEL DESIGN SYSTEM — Strong · Fortified · Metallic · Glass
+═══════════════════════════════════════════════════════════════════════════ */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 220 18% 96%;
+    --foreground: 224 30% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 224 30% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
-
-    /* Brand (white-label override) — default: professional blue */
-    --brand: 221.2 83.2% 53.3%;
-    --brand-foreground: 210 40% 98%;
-    --brand-light: 213.3 96.9% 87.3%;
-
-    /* Sidebar */
-    --sidebar-bg: 222.2 47.4% 11.2%;
-    --sidebar-fg: 210 40% 98%;
-    --sidebar-muted: 215 20.2% 65.1%;
-    --sidebar-accent: 221.2 83.2% 53.3%;
-    --sidebar-border: 217.2 32.6% 17.5%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-    --brand: 217.2 91.2% 59.8%;
-    --brand-foreground: 222.2 47.4% 11.2%;
-    --brand-light: 217.2 32.6% 17.5%;
-  }
-
-  /* ── Destiny Springs Healthcare Brand Theme ─────────────────────────── */
-  [data-facility="destiny-springs"] {
-    --brand: 258 80% 45%;         /* Deep purple */
+    --popover-foreground: 224 30% 10%;
+    --primary: 251 86% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 92%;
+    --secondary-foreground: 224 25% 20%;
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 10% 48%;
+    --accent: 251 80% 95%;
+    --accent-foreground: 251 60% 35%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 86%;
+    --input: 220 13% 88%;
+    --ring: 251 86% 60%;
+    --radius: 0.75rem;
+    --brand: 251 86% 60%;
     --brand-foreground: 0 0% 100%;
-    --brand-light: 258 70% 92%;
-    --sidebar-bg: 258 45% 15%;
-    --sidebar-accent: 258 80% 55%;
+    --brand-light: 251 80% 95%;
+    --sidebar-bg: 230 35% 8%;
+    --sidebar-fg: 218 20% 94%;
+    --sidebar-muted: 218 15% 52%;
+    --sidebar-accent: 251 86% 63%;
+    --sidebar-border: 230 25% 14%;
+  }
+
+  /* CITADEL DARK — deep charcoal, metallic, glass */
+  .dark {
+    --background: 224 22% 5%;
+    --foreground: 214 20% 90%;
+    --card: 224 20% 8%;
+    --card-foreground: 214 20% 90%;
+    --popover: 224 18% 10%;
+    --popover-foreground: 214 20% 90%;
+    --primary: 251 86% 68%;
+    --primary-foreground: 224 30% 5%;
+    --secondary: 224 18% 13%;
+    --secondary-foreground: 214 18% 82%;
+    --muted: 224 18% 13%;
+    --muted-foreground: 218 14% 52%;
+    --accent: 251 30% 16%;
+    --accent-foreground: 251 80% 75%;
+    --destructive: 0 60% 42%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 224 16% 15%;
+    --input: 224 18% 12%;
+    --ring: 251 86% 68%;
+    --brand: 251 86% 68%;
+    --brand-foreground: 224 30% 5%;
+    --brand-light: 251 30% 16%;
+    --sidebar-bg: 222 28% 4%;
+    --sidebar-fg: 214 20% 90%;
+    --sidebar-muted: 218 12% 48%;
+    --sidebar-accent: 251 86% 68%;
+    --sidebar-border: 222 20% 11%;
+  }
+
+  [data-facility="destiny-springs"] {
+    --brand: 258 80% 60%;
+    --brand-foreground: 0 0% 100%;
+    --brand-light: 258 40% 18%;
+    --sidebar-bg: 258 35% 6%;
+    --sidebar-accent: 258 80% 65%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.4); }
 }
 
-/* ── Status Badge Colors ────────────────────────────────────────────────── */
-@layer utilities {
-  .status-compliant { @apply bg-green-100 text-green-800 border-green-200; }
-  .status-warning   { @apply bg-yellow-100 text-yellow-800 border-yellow-200; }
-  .status-overdue   { @apply bg-red-100 text-red-800 border-red-200; }
-  .status-upcoming  { @apply bg-blue-100 text-blue-800 border-blue-200; }
-  .status-pending   { @apply bg-purple-100 text-purple-800 border-purple-200; }
-  .status-na        { @apply bg-gray-100 text-gray-600 border-gray-200; }
+/* ═══════════════════════════════════════════════════════════════════════════
+   DARK-MODE GLOBAL OVERRIDES
+   Remaps hardcoded light Tailwind classes app-wide via CSS specificity.
+═══════════════════════════════════════════════════════════════════════════ */
+@layer base {
+  .dark .bg-white                  { background-color: hsl(var(--card)); }
+  .dark .bg-slate-50               { background-color: hsl(224 20% 9%); }
+  .dark .bg-slate-100              { background-color: hsl(var(--muted)); }
+  .dark .bg-slate-200              { background-color: hsl(var(--secondary)); }
+  .dark .bg-gray-50                { background-color: hsl(224 20% 9%); }
+  .dark .bg-gray-100               { background-color: hsl(var(--muted)); }
 
-  /* Priority badges */
-  .priority-critical { @apply bg-red-600 text-white; }
-  .priority-high     { @apply bg-orange-500 text-white; }
-  .priority-medium   { @apply bg-yellow-500 text-white; }
-  .priority-low      { @apply bg-gray-400 text-white; }
+  .dark .border-slate-50           { border-color: hsl(var(--border) / 0.5); }
+  .dark .border-slate-100          { border-color: hsl(var(--border) / 0.7); }
+  .dark .border-slate-200          { border-color: hsl(var(--border)); }
+  .dark .border-slate-300          { border-color: hsl(var(--border)); }
+  .dark .border-gray-100           { border-color: hsl(var(--border) / 0.6); }
+  .dark .border-gray-200           { border-color: hsl(var(--border)); }
+
+  .dark .text-slate-900            { color: hsl(var(--foreground)); }
+  .dark .text-slate-800            { color: hsl(214 18% 85%); }
+  .dark .text-slate-700            { color: hsl(214 15% 75%); }
+  .dark .text-slate-600            { color: hsl(218 12% 60%); }
+  .dark .text-slate-500            { color: hsl(var(--muted-foreground)); }
+  .dark .text-slate-400            { color: hsl(218 12% 48%); }
+  .dark .text-slate-300            { color: hsl(218 14% 65%); }
+  .dark .text-gray-900             { color: hsl(var(--foreground)); }
+  .dark .text-gray-800             { color: hsl(214 18% 80%); }
+  .dark .text-gray-700             { color: hsl(214 15% 75%); }
+  .dark .text-gray-600             { color: hsl(218 12% 60%); }
+  .dark .text-gray-500             { color: hsl(var(--muted-foreground)); }
+  .dark .text-gray-400             { color: hsl(218 12% 48%); }
+
+  .dark .divide-slate-50  > :not([hidden]) ~ :not([hidden]) { border-color: hsl(var(--border) / 0.4); }
+  .dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]) { border-color: hsl(var(--border) / 0.6); }
+  .dark .divide-slate-200 > :not([hidden]) ~ :not([hidden]) { border-color: hsl(var(--border)); }
+  .dark .divide-gray-100  > :not([hidden]) ~ :not([hidden]) { border-color: hsl(var(--border) / 0.6); }
+  .dark .divide-gray-200  > :not([hidden]) ~ :not([hidden]) { border-color: hsl(var(--border)); }
+
+  .dark .hover\:bg-slate-50:hover  { background-color: hsl(224 18% 12%); }
+  .dark .hover\:bg-slate-100:hover { background-color: hsl(var(--secondary)); }
+  .dark .hover\:bg-gray-50:hover   { background-color: hsl(224 18% 12%); }
+  .dark .hover\:bg-gray-100:hover  { background-color: hsl(var(--secondary)); }
+
+  /* Status / category badge colors */
+  .dark .bg-green-50               { background-color: rgb(16 185 129 / 0.07); }
+  .dark .bg-green-100              { background-color: rgb(16 185 129 / 0.12); }
+  .dark .text-green-900, .dark .text-green-800 { color: rgb(52 211 153); }
+  .dark .text-green-700, .dark .text-green-600 { color: rgb(52 211 153); }
+  .dark .border-green-200, .dark .border-green-300 { border-color: rgb(16 185 129 / 0.25); }
+
+  .dark .bg-yellow-50              { background-color: rgb(245 158 11 / 0.07); }
+  .dark .bg-yellow-100             { background-color: rgb(245 158 11 / 0.12); }
+  .dark .text-yellow-900, .dark .text-yellow-800 { color: rgb(253 224 71); }
+  .dark .text-yellow-700, .dark .text-yellow-600 { color: rgb(252 211 77); }
+  .dark .border-yellow-200, .dark .border-yellow-300 { border-color: rgb(245 158 11 / 0.25); }
+
+  .dark .bg-amber-50               { background-color: rgb(245 158 11 / 0.07); }
+  .dark .bg-amber-100              { background-color: rgb(245 158 11 / 0.12); }
+  .dark .text-amber-900, .dark .text-amber-800 { color: rgb(252 211 77); }
+  .dark .text-amber-700, .dark .text-amber-600 { color: rgb(251 191 36); }
+  .dark .border-amber-200, .dark .border-amber-300 { border-color: rgb(245 158 11 / 0.25); }
+
+  .dark .bg-red-50                 { background-color: rgb(239 68 68 / 0.07); }
+  .dark .bg-red-100                { background-color: rgb(239 68 68 / 0.12); }
+  .dark .text-red-900, .dark .text-red-800 { color: rgb(252 165 165); }
+  .dark .text-red-700, .dark .text-red-600 { color: rgb(248 113 113); }
+  .dark .border-red-200, .dark .border-red-300 { border-color: rgb(239 68 68 / 0.25); }
+
+  .dark .bg-blue-50                { background-color: rgb(59 130 246 / 0.07); }
+  .dark .bg-blue-100               { background-color: rgb(59 130 246 / 0.12); }
+  .dark .text-blue-900, .dark .text-blue-800 { color: rgb(147 197 253); }
+  .dark .text-blue-700, .dark .text-blue-600 { color: rgb(96 165 250); }
+  .dark .border-blue-200, .dark .border-blue-300 { border-color: rgb(59 130 246 / 0.25); }
+
+  .dark .bg-purple-50              { background-color: rgb(139 92 246 / 0.07); }
+  .dark .bg-purple-100             { background-color: rgb(139 92 246 / 0.12); }
+  .dark .text-purple-900, .dark .text-purple-800 { color: rgb(196 181 253); }
+  .dark .text-purple-700, .dark .text-purple-600 { color: rgb(167 139 250); }
+  .dark .border-purple-200, .dark .border-purple-300 { border-color: rgb(139 92 246 / 0.3); }
+  .dark .hover\:text-purple-700:hover, .dark .hover\:text-purple-800:hover { color: rgb(196 181 253); }
+  .dark .focus\:ring-purple-500:focus  { --tw-ring-color: hsl(var(--brand)); }
+  .dark .focus\:border-purple-500:focus { border-color: hsl(var(--brand)); }
+
+  .dark .bg-orange-50              { background-color: rgb(249 115 22 / 0.07); }
+  .dark .bg-orange-100             { background-color: rgb(249 115 22 / 0.12); }
+  .dark .text-orange-900, .dark .text-orange-800 { color: rgb(253 186 116); }
+  .dark .text-orange-700, .dark .text-orange-600 { color: rgb(251 146 60); }
+  .dark .border-orange-200, .dark .border-orange-300 { border-color: rgb(249 115 22 / 0.25); }
+
+  .dark .bg-rose-50                { background-color: rgb(244 63 94 / 0.07); }
+  .dark .bg-rose-100               { background-color: rgb(244 63 94 / 0.12); }
+  .dark .text-rose-800, .dark .text-rose-700, .dark .text-rose-600 { color: rgb(253 164 175); }
+  .dark .border-rose-200           { border-color: rgb(244 63 94 / 0.25); }
+
+  .dark .bg-sky-100                { background-color: rgb(14 165 233 / 0.12); }
+  .dark .text-sky-700, .dark .text-sky-600 { color: rgb(56 189 248); }
+
+  .dark .bg-emerald-50             { background-color: rgb(16 185 129 / 0.07); }
+  .dark .bg-emerald-100            { background-color: rgb(16 185 129 / 0.12); }
+  .dark .text-emerald-800, .dark .text-emerald-700 { color: rgb(52 211 153); }
+  .dark .border-emerald-200        { border-color: rgb(16 185 129 / 0.25); }
+
+  .dark .bg-indigo-100             { background-color: rgb(99 102 241 / 0.12); }
+  .dark .text-indigo-800, .dark .text-indigo-700, .dark .text-indigo-600 { color: rgb(165 180 252); }
+  .dark .border-indigo-200         { border-color: rgb(99 102 241 / 0.25); }
 }
 
-/* ── Sidebar styles ─────────────────────────────────────────────────────── */
+/* Table dark override — outside @layer for specificity */
+.dark table thead tr  { background-color: hsl(224 20% 10%) !important; }
+.dark tbody tr:hover  { background-color: hsl(224 18% 12%) !important; }
+
+/* Native form elements in dark */
+.dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.dark textarea,
+.dark select {
+  background-color: hsl(var(--input));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+.dark input::placeholder, .dark textarea::placeholder {
+  color: hsl(var(--muted-foreground) / 0.6);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SIDEBAR — fortified wall
+═══════════════════════════════════════════════════════════════════════════ */
 .sidebar {
-  background-color: hsl(var(--sidebar-bg));
+  background: linear-gradient(180deg, hsl(var(--sidebar-bg)) 0%, hsl(222 28% 3%) 100%);
   color: hsl(var(--sidebar-fg));
+  border-right: 1px solid hsl(var(--sidebar-border));
 }
 .sidebar-link {
-  @apply flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all;
+  @apply flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 relative;
   color: hsl(var(--sidebar-muted));
 }
-.sidebar-link:hover,
-.sidebar-link.active {
-  background-color: hsl(var(--sidebar-accent) / 0.15);
+.sidebar-link:hover {
+  background-color: hsl(var(--sidebar-accent) / 0.1);
   color: hsl(var(--sidebar-fg));
 }
 .sidebar-link.active {
-  background-color: hsl(var(--sidebar-accent) / 0.25);
-  color: hsl(var(--brand-foreground));
+  background: linear-gradient(90deg, hsl(var(--sidebar-accent) / 0.18) 0%, hsl(var(--sidebar-accent) / 0.04) 100%);
+  color: hsl(var(--sidebar-fg));
+}
+.sidebar-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15%;
+  bottom: 15%;
+  width: 2.5px;
+  border-radius: 0 2px 2px 0;
+  background: hsl(var(--sidebar-accent));
+  box-shadow: 0 0 8px hsl(var(--sidebar-accent) / 0.55);
 }
 
-/* ── Status Badge System ────────────────────────────────────────────────── */
-@layer utilities {
-  .status-badge {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPONENT LIBRARY
+═══════════════════════════════════════════════════════════════════════════ */
+@layer components {
+  /* Metallic glass card */
+  .citadel-card {
+    @apply relative overflow-hidden rounded-xl;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
   }
-  .status-badge-green  { @apply bg-green-100 text-green-800; }
-  .status-badge-yellow { @apply bg-yellow-100 text-yellow-800; }
-  .status-badge-red    { @apply bg-red-100 text-red-800; }
-  .status-badge-blue   { @apply bg-blue-100 text-blue-800; }
-  .status-badge-purple { @apply bg-purple-100 text-purple-800; }
-  .status-badge-orange { @apply bg-orange-100 text-orange-800; }
-  .status-badge-gray   { @apply bg-slate-100 text-slate-600; }
+  .dark .citadel-card {
+    background: linear-gradient(135deg, hsl(224 20% 9%) 0%, hsl(224 18% 10%) 100%);
+    border-color: hsl(224 16% 16%);
+  }
+  .citadel-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Glass panel */
+  .citadel-glass {
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    background: hsl(var(--card) / 0.75);
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+  }
+  .dark .citadel-glass {
+    background: hsl(224 20% 8% / 0.82);
+    border-color: hsl(224 18% 18%);
+  }
+
+  /* Metric stat tile */
+  .citadel-stat {
+    @apply relative overflow-hidden rounded-xl border transition-all duration-200;
+    background: hsl(var(--card));
+    border-color: hsl(var(--border));
+  }
+  .dark .citadel-stat {
+    background: linear-gradient(135deg, hsl(224 20% 9%) 0%, hsl(224 18% 11%) 100%);
+    border-color: hsl(224 16% 16%);
+  }
+  .citadel-stat:hover {
+    border-color: hsl(var(--brand) / 0.4);
+    box-shadow: 0 4px 20px hsl(var(--brand) / 0.08), 0 0 0 1px hsl(var(--brand) / 0.1);
+  }
+
+  /* Alert zones */
+  .citadel-alert-red {
+    background: rgb(239 68 68 / 0.07);
+    border: 1px solid rgb(239 68 68 / 0.2);
+    border-radius: var(--radius);
+    padding: 1rem;
+  }
+  .citadel-alert-amber {
+    background: rgb(245 158 11 / 0.07);
+    border: 1px solid rgb(245 158 11 / 0.2);
+    border-radius: var(--radius);
+    padding: 1rem;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all;
+    background: hsl(var(--brand));
+    color: hsl(var(--brand-foreground));
+  }
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 0 3px hsl(var(--brand) / 0.2);
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all;
+    color: hsl(var(--muted-foreground));
+    border: 1px solid hsl(var(--border));
+  }
+  .btn-ghost:hover {
+    background: hsl(var(--muted) / 0.5);
+    color: hsl(var(--foreground));
+    border-color: hsl(var(--brand) / 0.35);
+  }
 }
 
-/* ── Data Table System ──────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITY CLASSES
+═══════════════════════════════════════════════════════════════════════════ */
 @layer utilities {
-  .data-table {
-    @apply min-w-full divide-y divide-slate-200 text-sm;
-  }
-  .data-table-head {
-    @apply bg-slate-50;
-  }
-  .data-table-th {
-    @apply px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider;
-  }
-  .data-table-row {
-    @apply hover:bg-slate-50 transition-colors;
-  }
-  .data-table-td {
-    @apply px-4 py-3 text-sm text-slate-700 align-middle;
-  }
-}
+  .status-compliant { @apply bg-emerald-500/15 text-emerald-600 border-emerald-500/30 dark:text-emerald-400; }
+  .status-warning   { @apply bg-amber-500/15  text-amber-600  border-amber-500/30  dark:text-amber-400;  }
+  .status-overdue   { @apply bg-red-500/15    text-red-600    border-red-500/30    dark:text-red-400;    }
+  .status-upcoming  { @apply bg-blue-500/15   text-blue-600   border-blue-500/30   dark:text-blue-400;   }
+  .status-pending   { @apply bg-violet-500/15 text-violet-600 border-violet-500/30 dark:text-violet-400; }
+  .status-na        { @apply bg-slate-500/10  text-slate-500  border-slate-500/20  dark:text-slate-400;  }
 
-/* ── Form Inputs ────────────────────────────────────────────────────────── */
-@layer utilities {
+  .status-badge        { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border; }
+  .status-badge-green  { @apply bg-emerald-500/15 text-emerald-600 border-emerald-500/30 dark:text-emerald-400; }
+  .status-badge-yellow { @apply bg-amber-500/15  text-amber-600  border-amber-500/30  dark:text-amber-400;  }
+  .status-badge-red    { @apply bg-red-500/15    text-red-600    border-red-500/30    dark:text-red-400;    }
+  .status-badge-blue   { @apply bg-blue-500/15   text-blue-600   border-blue-500/30   dark:text-blue-400;   }
+  .status-badge-purple { @apply bg-violet-500/15 text-violet-600 border-violet-500/30 dark:text-violet-400; }
+  .status-badge-orange { @apply bg-orange-500/15 text-orange-600 border-orange-500/30 dark:text-orange-400; }
+  .status-badge-gray   { @apply bg-slate-500/10  text-slate-500  border-slate-500/20  dark:text-slate-400;  }
+
+  .priority-critical { @apply bg-red-500/90    text-white; }
+  .priority-high     { @apply bg-orange-500/90 text-white; }
+  .priority-medium   { @apply bg-amber-500/80  text-white; }
+  .priority-low      { @apply bg-slate-500/60  text-white; }
+
+  .data-table      { @apply min-w-full divide-y divide-border text-sm; }
+  .data-table-head { @apply bg-muted/30; }
+  .data-table-th   { @apply px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider; }
+  .data-table-row  { @apply hover:bg-muted/20 transition-colors; }
+  .data-table-td   { @apply px-4 py-3 text-sm text-foreground align-middle; }
+
   .form-input {
-    @apply block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900
-           placeholder-slate-400 shadow-sm
-           focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500
-           disabled:cursor-not-allowed disabled:opacity-50;
+    @apply block w-full rounded-lg px-3 py-2 text-sm shadow-sm transition-colors
+           focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50;
+    background: hsl(var(--input));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
+  }
+  .form-input::placeholder { color: hsl(var(--muted-foreground) / 0.7); }
+  .form-input:focus { border-color: hsl(var(--brand)); --tw-ring-color: hsl(var(--brand) / 0.25); }
+
+  .card-elevated    { @apply bg-card rounded-xl  border border-border shadow-sm; }
+  .card-elevated-lg { @apply bg-card rounded-2xl border border-border shadow-md; }
+
+  .text-citadel {
+    background: linear-gradient(135deg, hsl(214 20% 90%) 0%, hsl(218 30% 70%) 50%, hsl(251 80% 78%) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .border-brand-glow {
+    border-color: hsl(var(--brand) / 0.5);
+    box-shadow: 0 0 0 1px hsl(var(--brand) / 0.15), 0 0 12px hsl(var(--brand) / 0.1);
+  }
+  .citadel-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
   }
 }
 
-/* ── Print styles for reports ───────────────────────────────────────────── */
+/* ── Print ── */
 @media print {
   .no-print { display: none !important; }
   .sidebar  { display: none !important; }
-  body      { background: white; }
+  body      { background: white !important; color: black !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }

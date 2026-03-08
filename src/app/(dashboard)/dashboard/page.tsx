@@ -118,9 +118,9 @@ async function getDashboardStats(facilityId: string) {
 
 // ─── Trend Icon ─────────────────────────────────────────────────────────────
 function TrendIcon({ value, prev, higherIsBetter = false }: { value: number; prev?: number; higherIsBetter?: boolean }) {
-  if (prev === undefined) return <Minus className="w-3.5 h-3.5 text-slate-400" />;
+  if (prev === undefined) return <Minus className="w-3.5 h-3.5 text-muted-foreground" />;
   const improved = higherIsBetter ? value >= prev : value <= prev;
-  if (value === prev) return <Minus className="w-3.5 h-3.5 text-slate-400" />;
+  if (value === prev) return <Minus className="w-3.5 h-3.5 text-muted-foreground" />;
   return improved
     ? <TrendingDown className="w-3.5 h-3.5 text-green-500" />
     : <TrendingUp className="w-3.5 h-3.5 text-red-500" />;
@@ -133,13 +133,13 @@ function ProgressBar({ value, max, label, sublabel }: { value: number; max: numb
   return (
     <div>
       <div className="flex items-center justify-between mb-1">
-        <span className="text-xs font-medium text-slate-700">{label}</span>
-        <span className="text-xs text-slate-500">{value}/{max} <span className="font-semibold text-slate-700">{pct}%</span></span>
+        <span className="text-xs font-medium text-foreground/80">{label}</span>
+        <span className="text-xs text-muted-foreground">{value}/{max} <span className="font-semibold text-foreground/80">{pct}%</span></span>
       </div>
-      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-2 bg-muted rounded-full overflow-hidden">
         <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${pct}%` }} />
       </div>
-      {sublabel && <p className="text-xs text-slate-400 mt-0.5">{sublabel}</p>}
+      {sublabel && <p className="text-xs text-muted-foreground/60 mt-0.5">{sublabel}</p>}
     </div>
   );
 }
@@ -157,14 +157,14 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Compliance Command Center</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Destiny Springs Healthcare · {formatDate(new Date(), 'MMMM d, yyyy')}</p>
+          <h1 className="text-2xl font-bold text-foreground">Compliance Command Center</h1>
+          <p className="text-sm text-muted-foreground mt-0.5">Destiny Springs Healthcare · {formatDate(new Date(), 'MMMM d, yyyy')}</p>
         </div>
         <div className="flex items-center gap-2">
-          <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-purple-600 border border-purple-200 bg-purple-50 hover:bg-purple-100 px-3 py-1.5 rounded-lg transition-colors">
+          <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-purple-400 border border-purple-800/50 bg-purple-950/30 hover:bg-purple-950/60 px-3 py-1.5 rounded-lg transition-colors">
             <Activity className="w-3.5 h-3.5" /> QAPI Metrics
           </Link>
-          <Link href="/calendar" className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+          <Link href="/calendar" className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
             <CalendarDays className="w-4 h-4" /> Calendar
           </Link>
         </div>
@@ -172,7 +172,7 @@ export default async function DashboardPage() {
 
       {/* RED ZONE */}
       {urgentCount > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 space-y-2">
+        <div className="citadel-alert-red rounded-xl p-4 space-y-2">
           <div className="flex items-center gap-2 mb-1">
             <Zap className="w-4 h-4 text-red-600" />
             <span className="text-sm font-bold text-red-800">Requires Immediate Action ({urgentCount})</span>
@@ -191,7 +191,7 @@ export default async function DashboardPage() {
 
       {/* AMBER ZONE */}
       {watchCount > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
+        <div className="citadel-alert-amber rounded-xl p-4 space-y-2">
           <div className="flex items-center gap-2 mb-1">
             <Clock className="w-4 h-4 text-amber-600" />
             <span className="text-sm font-bold text-amber-800">Watch List ({watchCount})</span>
@@ -221,32 +221,32 @@ export default async function DashboardPage() {
 
       {/* COMPLIANCE HEALTH BARS */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white rounded-xl border border-slate-200 p-5">
+        <div className="bg-card rounded-xl border border-border p-5">
           <div className="flex items-center gap-2 mb-4">
-            <GraduationCap className="w-4 h-4 text-purple-600" />
-            <h3 className="text-sm font-semibold text-slate-800">Staff Training Compliance</h3>
-            <Link href="/trackers/training" className="ml-auto text-xs text-purple-600 hover:underline">View all →</Link>
+            <GraduationCap className="w-4 h-4 text-purple-400" />
+            <h3 className="text-sm font-semibold text-foreground">Staff Training Compliance</h3>
+            <Link href="/trackers/training" className="ml-auto text-xs text-purple-400 hover:underline">View all →</Link>
           </div>
           {s.trainingCompliancePct !== null ? (
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs text-slate-500">Required trainings complete</span>
+                <span className="text-xs text-muted-foreground">Required trainings complete</span>
                 <span className={`text-2xl font-bold ${s.trainingCompliancePct >= 85 ? 'text-green-600' : s.trainingCompliancePct >= 70 ? 'text-yellow-600' : 'text-red-600'}`}>{s.trainingCompliancePct}%</span>
               </div>
-              <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-3 bg-muted rounded-full overflow-hidden">
                 <div className={`h-full rounded-full transition-all ${s.trainingCompliancePct >= 85 ? 'bg-green-500' : s.trainingCompliancePct >= 70 ? 'bg-yellow-500' : 'bg-red-500'}`} style={{ width: `${s.trainingCompliancePct}%` }} />
               </div>
-              <p className="text-xs text-slate-400 mt-1">{s.trainingCompliancePct >= 90 ? '✓ Target met (≥90%)' : `Target: 90% · ${s.expiringTraining30} expiring in 30d`}</p>
+              <p className="text-xs text-muted-foreground mt-1">{s.trainingCompliancePct >= 90 ? '✓ Target met (≥90%)' : `Target: 90% · ${s.expiringTraining30} expiring in 30d`}</p>
             </div>
           ) : (
-            <p className="text-sm text-slate-400">No training records. <Link href="/trackers/training/new" className="text-purple-600 hover:underline">Add records</Link></p>
+            <p className="text-sm text-muted-foreground">No training records. <Link href="/trackers/training/new" className="text-purple-400 hover:underline">Add records</Link></p>
           )}
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-5">
+        <div className="bg-card rounded-xl border border-border p-5">
           <div className="flex items-center gap-2 mb-4">
-            <Siren className="w-4 h-4 text-blue-600" />
-            <h3 className="text-sm font-semibold text-slate-800">{new Date().getFullYear()} Drill Compliance</h3>
-            <Link href="/emergency/drills" className="ml-auto text-xs text-purple-600 hover:underline">View all →</Link>
+            <Siren className="w-4 h-4 text-blue-400" />
+            <h3 className="text-sm font-semibold text-foreground">{new Date().getFullYear()} Drill Compliance</h3>
+            <Link href="/emergency/drills" className="ml-auto text-xs text-purple-400 hover:underline">View all →</Link>
           </div>
           <div className="space-y-3">
             <ProgressBar value={s.fireDrills} max={12} label="Fire Evacuation Drills" sublabel="All shifts, quarterly min. 12/year · JC" />
@@ -258,11 +258,11 @@ export default async function DashboardPage() {
 
       {/* QAPI SNAPSHOT */}
       {Object.keys(s.latestMetrics).length > 0 && (
-        <div className="bg-white rounded-xl border border-slate-200 p-5">
+        <div className="bg-card rounded-xl border border-border p-5">
           <div className="flex items-center gap-2 mb-4">
-            <Activity className="w-4 h-4 text-purple-600" />
-            <h3 className="text-sm font-semibold text-slate-800">QAPI Metrics Snapshot</h3>
-            <Link href="/quality/metrics" className="ml-auto text-xs text-purple-600 hover:underline">Enter metrics →</Link>
+            <Activity className="w-4 h-4 text-purple-400" />
+            <h3 className="text-sm font-semibold text-foreground">QAPI Metrics Snapshot</h3>
+            <Link href="/quality/metrics" className="ml-auto text-xs text-purple-400 hover:underline">Enter metrics →</Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
             {([
@@ -274,22 +274,22 @@ export default async function DashboardPage() {
             ] as const).map(({ key, label, unit, target, lowerBetter }) => {
               const m = s.latestMetrics[key];
               if (!m) return (
-                <div key={key} className="bg-slate-50 rounded-lg p-3 text-center border border-slate-100">
-                  <p className="text-xs text-slate-400 font-medium">{label}</p>
-                  <p className="text-xs text-slate-300 mt-1">No data</p>
+                <div key={key} className="bg-muted/50 rounded-lg p-3 text-center border border-border/50">
+                  <p className="text-xs text-muted-foreground font-medium">{label}</p>
+                  <p className="text-xs text-muted-foreground/50 mt-1">No data</p>
                 </div>
               );
               const onTarget = lowerBetter ? m.value <= target : m.value >= target;
               return (
-                <div key={key} className={`rounded-lg p-3 text-center border ${onTarget ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
-                  <p className="text-xs font-medium text-slate-600">{label}</p>
+                <div key={key} className={`rounded-lg p-3 text-center border ${onTarget ? 'bg-emerald-950/40 border-emerald-700/40' : 'bg-red-950/40 border-red-700/40'}`}>
+                  <p className="text-xs font-medium text-muted-foreground">{label}</p>
                   <div className="flex items-center justify-center gap-1 mt-1">
-                    <span className={`text-lg font-bold ${onTarget ? 'text-green-700' : 'text-red-700'}`}>
+                    <span className={`text-lg font-bold ${onTarget ? 'text-emerald-400' : 'text-red-400'}`}>
                       {Number.isInteger(m.value) ? m.value : m.value.toFixed(1)}{unit}
                     </span>
                     <TrendIcon value={m.value} prev={m.prev} higherIsBetter={!lowerBetter} />
                   </div>
-                  <p className="text-xs text-slate-400">Target: {target}{unit}</p>
+                  <p className="text-xs text-muted-foreground/60">Target: {target}{unit}</p>
                 </div>
               );
             })}
@@ -298,15 +298,15 @@ export default async function DashboardPage() {
       )}
 
       {/* UPCOMING EVENTS */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-          <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-            <CalendarDays className="w-5 h-5 text-purple-600" />
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border/50">
+          <h2 className="text-base font-semibold text-foreground flex items-center gap-2">
+            <CalendarDays className="w-5 h-5 text-purple-400" />
             Next Up: Compliance Events
           </h2>
-          <Link href="/calendar" className="text-sm text-purple-600 hover:text-purple-700 font-medium">View all →</Link>
+          <Link href="/calendar" className="text-sm text-purple-400 hover:text-purple-300 font-medium">View all →</Link>
         </div>
-        <div className="divide-y divide-slate-50">
+        <div className="divide-y divide-border/30">
           {s.recentEvents.length === 0 ? (
             <div className="flex items-center justify-center py-12 text-slate-400">
               <div className="text-center">
@@ -318,14 +318,14 @@ export default async function DashboardPage() {
             s.recentEvents.map((event) => {
               const { label, className } = getDueDateStatus(event.dueDate);
               return (
-                <div key={event.id} className="flex items-center gap-4 px-6 py-3.5 hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-4 px-6 py-3.5 hover:bg-muted/30 transition-colors">
                   <div className="text-center w-12 flex-shrink-0">
-                    <p className="text-lg font-bold text-slate-900 leading-none">{formatDate(event.dueDate, 'd')}</p>
-                    <p className="text-xs text-slate-500">{formatDate(event.dueDate, 'MMM')}</p>
+                    <p className="text-lg font-bold text-foreground leading-none">{formatDate(event.dueDate, 'd')}</p>
+                    <p className="text-xs text-muted-foreground">{formatDate(event.dueDate, 'MMM')}</p>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-800 truncate">{event.title}</p>
-                    <p className="text-xs text-slate-400">{event.category.replace(/_/g, ' ')}{event.regulatoryBody && ` · ${event.regulatoryBody.replace(/_/g, ' ')}`}</p>
+                    <p className="text-sm font-medium text-foreground/90 truncate">{event.title}</p>
+                    <p className="text-xs text-muted-foreground/70">{event.category.replace(/_/g, ' ')}{event.regulatoryBody && ` · ${event.regulatoryBody.replace(/_/g, ' ')}`}</p>
                   </div>
                   <span className={`text-xs font-medium px-2 py-1 rounded-full border ${className}`}>{label}</span>
                 </div>
@@ -338,10 +338,10 @@ export default async function DashboardPage() {
       {/* QUICK ACTIONS */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {([
-          { href: '/trackers/ir-iad/new',     label: 'Log Incident Report',  icon: FileWarning,          color: 'text-red-600    bg-red-50    border-red-200    hover:bg-red-100'    },
-          { href: '/trackers/grievances/new', label: 'Log Grievance',         icon: MessageSquareWarning, color: 'text-orange-600 bg-orange-50 border-orange-200 hover:bg-orange-100' },
-          { href: '/trackers/caps/new',        label: 'New CAP',              icon: ClipboardList,        color: 'text-purple-600 bg-purple-50 border-purple-200 hover:bg-purple-100' },
-          { href: '/quality/metrics',          label: 'Enter QAPI Metrics',   icon: Activity,             color: 'text-purple-600 bg-purple-50 border-purple-200 hover:bg-purple-100' },
+          { href: '/trackers/ir-iad/new',     label: 'Log Incident Report',  icon: FileWarning,          color: 'text-red-400    bg-red-950/30    border-red-800/50    hover:bg-red-950/50'    },
+          { href: '/trackers/grievances/new', label: 'Log Grievance',         icon: MessageSquareWarning, color: 'text-orange-400 bg-orange-950/30 border-orange-800/50 hover:bg-orange-950/50' },
+          { href: '/trackers/caps/new',        label: 'New CAP',              icon: ClipboardList,        color: 'text-purple-400 bg-purple-950/30 border-purple-800/50 hover:bg-purple-950/50' },
+          { href: '/quality/metrics',          label: 'Enter QAPI Metrics',   icon: Activity,             color: 'text-purple-400 bg-purple-950/30 border-purple-800/50 hover:bg-purple-950/50' },
         ] as const).map(({ href, label, icon: Icon, color }) => (
           <Link key={href} href={href} className={`flex items-center gap-2 border rounded-xl px-4 py-3 text-sm font-medium transition-colors ${color}`}>
             <Icon className="w-4 h-4 flex-shrink-0" />
@@ -357,16 +357,16 @@ export default async function DashboardPage() {
 
 function UrgentChip({ href, label, subtitle }: { href: string; label: string; subtitle: string }) {
   return (
-    <Link href={href} className="inline-flex flex-col bg-white border border-red-300 rounded-lg px-3 py-2 hover:bg-red-50 transition-colors">
-      <span className="text-xs font-semibold text-red-700">{label}</span>
-      <span className="text-xs text-red-400">{subtitle}</span>
+    <Link href={href} className="inline-flex flex-col bg-red-950/30 border border-red-700/50 rounded-lg px-3 py-2 hover:bg-red-950/60 transition-colors">
+      <span className="text-xs font-semibold text-red-300">{label}</span>
+      <span className="text-xs text-red-400/80">{subtitle}</span>
     </Link>
   );
 }
 
 function WatchChip({ href, label }: { href: string; label: string }) {
   return (
-    <Link href={href} className="inline-flex items-center text-xs font-medium text-amber-700 bg-white border border-amber-300 rounded-lg px-3 py-1.5 hover:bg-amber-50 transition-colors">
+    <Link href={href} className="inline-flex items-center text-xs font-medium text-amber-300 bg-amber-950/30 border border-amber-700/50 rounded-lg px-3 py-1.5 hover:bg-amber-950/60 transition-colors">
       {label}
     </Link>
   );
@@ -378,21 +378,21 @@ function StatCard({ title, value, icon: Icon, color, href, description }: {
   href: string; description: string;
 }) {
   const colorMap = {
-    red:    { bg: 'bg-red-50',    icon: 'text-red-600',    ring: 'ring-red-100',    value: 'text-red-700'    },
-    yellow: { bg: 'bg-yellow-50', icon: 'text-yellow-600', ring: 'ring-yellow-100', value: 'text-yellow-700' },
-    orange: { bg: 'bg-orange-50', icon: 'text-orange-600', ring: 'ring-orange-100', value: 'text-orange-700' },
-    purple: { bg: 'bg-purple-50', icon: 'text-purple-600', ring: 'ring-purple-100', value: 'text-purple-700' },
-    blue:   { bg: 'bg-blue-50',   icon: 'text-blue-600',   ring: 'ring-blue-100',   value: 'text-blue-700'   },
-    green:  { bg: 'bg-green-50',  icon: 'text-green-600',  ring: 'ring-green-100',  value: 'text-green-700'  },
+    red:    { bg: 'bg-red-950/40',    icon: 'text-red-400',    ring: 'ring-red-800/40',    value: 'text-red-400'    },
+    yellow: { bg: 'bg-yellow-950/40', icon: 'text-yellow-400', ring: 'ring-yellow-800/40', value: 'text-yellow-400' },
+    orange: { bg: 'bg-orange-950/40', icon: 'text-orange-400', ring: 'ring-orange-800/40', value: 'text-orange-400' },
+    purple: { bg: 'bg-purple-950/40', icon: 'text-purple-400', ring: 'ring-purple-800/40', value: 'text-purple-400' },
+    blue:   { bg: 'bg-blue-950/40',   icon: 'text-blue-400',   ring: 'ring-blue-800/40',   value: 'text-blue-400'   },
+    green:  { bg: 'bg-green-950/40',  icon: 'text-green-400',  ring: 'ring-green-800/40',  value: 'text-green-400'  },
   };
   const c = colorMap[color];
   return (
-    <Link href={href} className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-md hover:-translate-y-0.5 transition-all">
+    <Link href={href} className="bg-card rounded-xl border border-border p-4 hover:border-brand/40 hover:shadow-[0_0_15px_rgba(139,92,246,0.12)] hover:-translate-y-0.5 transition-all">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">{title}</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{title}</p>
           <p className={`text-3xl font-bold mt-1 ${c.value}`}>{value}</p>
-          <p className="text-xs text-slate-400 mt-0.5">{description}</p>
+          <p className="text-xs text-muted-foreground/60 mt-0.5">{description}</p>
         </div>
         <div className={`w-10 h-10 rounded-xl ${c.bg} ring-1 ${c.ring} flex items-center justify-center flex-shrink-0`}>
           <Icon className={`w-5 h-5 ${c.icon}`} />

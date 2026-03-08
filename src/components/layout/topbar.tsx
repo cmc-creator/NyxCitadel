@@ -27,7 +27,7 @@ export function TopBar({ user }: TopBarProps) {
   }
 
   return (
-    <header className="h-14 bg-white border-b border-slate-200 flex items-center px-6 gap-4 sticky top-0 z-20">
+    <header className="h-14 bg-background/95 backdrop-blur-sm border-b border-border flex items-center px-6 gap-4 sticky top-0 z-20">
       {/* Mobile logo — hidden on desktop (sidebar shows it there) */}
       <div className="lg:hidden flex-shrink-0">
         <Image
@@ -42,20 +42,20 @@ export function TopBar({ user }: TopBarProps) {
       {/* Search */}
       <form onSubmit={handleSearch} className="flex-1 max-w-md">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search compliance items, policies, events..."
-            className="w-full pl-9 pr-4 py-1.5 text-sm bg-slate-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-white transition"
+            className="w-full pl-9 pr-4 py-1.5 text-sm bg-muted border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-brand focus:bg-card text-foreground placeholder:text-muted-foreground transition"
           />
         </div>
       </form>
 
       <div className="flex items-center gap-3 ml-auto">
         {/* Date */}
-        <span className="text-xs text-slate-500 hidden sm:block">
+        <span className="text-xs text-muted-foreground hidden sm:block">
           {formatDate(new Date(), 'EEEE, MMMM d, yyyy')}
         </span>
 
@@ -68,10 +68,10 @@ export function TopBar({ user }: TopBarProps) {
             {user.name?.charAt(0)?.toUpperCase() ?? user.email?.charAt(0)?.toUpperCase() ?? 'U'}
           </div>
           <div className="hidden md:block text-right">
-            <p className="text-sm font-medium text-slate-700 leading-none">
+            <p className="text-sm font-medium text-foreground leading-none">
               {user.name ?? user.email}
             </p>
-            <p className="text-xs text-slate-400 mt-0.5">{user.role?.replace(/_/g, ' ')}</p>
+            <p className="text-xs text-muted-foreground mt-0.5">{user.role?.replace(/_/g, ' ')}</p>
           </div>
         </div>
       </div>
