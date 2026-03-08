@@ -67,6 +67,12 @@ model Facility {
   incidentReports IncidentReport[]
   floorPlans      FacilityFloorPlan[]
 
+  // Environment of Care
+  ligatureRiskItems LigatureRiskItem[]
+  eocRounds         EocRound[]
+  eocDeficiencies   EocDeficiency[]
+  equipmentPms      EquipmentPm[]
+
   @@map("facilities")
 }
 
@@ -1722,4 +1728,201 @@ enum IrSeverity {
   MODERATE
   SERIOUS
   SENTINEL
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ENVIRONMENT OF CARE (EOC)
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Ligature risk items — critical for psychiatric facilities
+model LigatureRiskItem {
+  id              String              @id @default(cuid())
+  facilityId      String
+  facility        Facility            @relation(fields: [facilityId], references: [id])
+  itemNumber      String              // e.g. "LIG-2026-001"
+  location        String              // e.g. "Room 112 – Bathroom"
+  unit            String?             // e.g. "Acute Adult Unit"
+  itemDescription String              // e.g. "Towel bar – not ligature-resistant"
+  riskLevel       LigatureRiskLevel
+  status          LigatureItemStatus  @default(OPEN)
+  identifiedDate  DateTime
+  identifiedBy    String
+  mitigationPlan  String?             @db.Text
+  targetDate      DateTime?
+  resolvedDate    DateTime?
+  resolvedBy      String?
+  verifiedBy      String?
+  notes           String?             @db.Text
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@map("ligature_risk_items")
+}
+
+enum LigatureRiskLevel {
+  IMMEDIATE   // Must be addressed before patient occupancy
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum LigatureItemStatus {
+  OPEN
+  IN_MITIGATION
+  MITIGATED
+  RESOLVED
+  ACCEPTED_RISK   // Documented risk acceptance with admin sign-off
+}
+
+// EOC / Life Safety rounds
+model EocRound {
+  id            String          @id @default(cuid())
+  facilityId    String
+  facility      Facility        @relation(fields: [facilityId], references: [id])
+  roundNumber   String          // e.g. "EOC-ROUND-2026-Q1-01"
+  roundType     EocRoundType
+  conductedDate DateTime
+  conductedBy   String
+  participantIds String[]        // Additional inspectors
+  areasInspected String[]
+  totalItems    Int             @default(0)
+  openItems     Int             @default(0)
+  status        EocRoundStatus  @default(IN_PROGRESS)
+  summary       String?         @db.Text
+  deficiencies  EocDeficiency[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@map("eoc_rounds")
+}
+
+enum EocRoundType {
+  LIFE_SAFETY_GENERAL
+  LIGATURE_RISK
+  FIRE_SAFETY
+  INFECTION_CONTROL
+  SECURITY
+  UTILITIES
+  PATIENT_ENVIRONMENT
+  EOC_COMMITTEE
+}
+
+enum EocRoundStatus {
+  IN_PROGRESS
+  COMPLETED
+  REVIEWED
+  APPROVED
+}
+
+// Deficiencies found during EOC rounds or ad-hoc inspections
+model EocDeficiency {
+  id              String                @id @default(cuid())
+  facilityId      String
+  facility        Facility              @relation(fields: [facilityId], references: [id])
+  defNumber       String                // e.g. "DEF-2026-001"
+  roundId         String?
+  round           EocRound?             @relation(fields: [roundId], references: [id])
+  location        String
+  unit            String?
+  description     String                @db.Text
+  category        EocDeficiencyCategory
+  severity        EocDeficiencySeverity
+  status          EocDeficiencyStatus   @default(OPEN)
+  assignedTo      String?
+  dueDate         DateTime?
+  resolvedDate    DateTime?
+  resolvedBy      String?
+  verificationDate DateTime?
+  verifiedBy      String?
+  notes           String?               @db.Text
+  photoUrls       String[]
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@map("eoc_deficiencies")
+}
+
+enum EocDeficiencyCategory {
+  LIFE_SAFETY
+  LIGATURE_RISK
+  FIRE_SAFETY
+  SECURITY
+  UTILITIES
+  EQUIPMENT_FAILURE
+  CLEANLINESS
+  INFECTION_CONTROL
+  PATIENT_SAFETY
+  STRUCTURAL
+  OTHER
+}
+
+enum EocDeficiencySeverity {
+  IMMEDIATE_JEOPARDY    // Correct before patient occupancy
+  HIGH                  // Correct within 24 hours
+  MEDIUM                // Correct within 30 days
+  LOW                   // Correct within 90 days
+  OBSERVATION           // Monitor / no action required
+}
+
+enum EocDeficiencyStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  VERIFIED
+  ACCEPTED
+}
+
+// Equipment preventive maintenance tracking
+model EquipmentPm {
+  id              String            @id @default(cuid())
+  facilityId      String
+  facility        Facility          @relation(fields: [facilityId], references: [id])
+  equipmentName   String
+  equipmentId     String?           // Asset tag / serial number
+  location        String
+  category        EquipmentCategory
+  frequency       PmFrequency
+  lastServiceDate DateTime?
+  nextServiceDate DateTime
+  vendor          String?
+  contactPhone    String?
+  status          PmStatus          @default(UPCOMING)
+  notes           String?           @db.Text
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@map("equipment_pm")
+}
+
+enum EquipmentCategory {
+  FIRE_SUPPRESSION
+  FIRE_ALARM
+  EMERGENCY_LIGHTING
+  GENERATOR
+  HVAC
+  MEDICAL_GAS
+  ELEVATOR
+  SECURITY_SYSTEM
+  PLUMBING
+  ELECTRICAL
+  MEDICAL_EQUIPMENT
+  NURSE_CALL
+  DOOR_HARDWARE
+}
+
+enum PmFrequency {
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  SEMI_ANNUAL
+  ANNUAL
+  AS_NEEDED
+}
+
+enum PmStatus {
+  UPCOMING
+  DUE_SOON    // Within 30 days
+  OVERDUE
+  IN_PROGRESS
+  COMPLETED
 }

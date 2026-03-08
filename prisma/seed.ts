@@ -1292,6 +1292,295 @@ Destiny Springs Healthcare | Peoria, AZ`,
   }
   console.log('  ✅ Seeded 1 risk assessment with 3 risk items');
 
+  // ─── ENVIRONMENT OF CARE ────────────────────────────────────────────────────
+  console.log('\n[8/8] Seeding Environment of Care data...');
+
+  // --- Ligature Risk Items ---
+  const ligatureItems = [
+    {
+      id: 'lig-2026-001', itemNumber: 'LIG-2026-001',
+      location: 'Seclusion Room 1 – Bathroom', unit: 'Acute Adult',
+      itemDescription: 'Shower curtain rod – standard (not breakaway)',
+      riskLevel: 'IMMEDIATE' as const, status: 'IN_MITIGATION' as const,
+      identifiedDate: new Date('2026-01-15'), identifiedBy: 'Maria Santos RN',
+      mitigationPlan: 'Remove rod; switch to curtain-less design pending plumber',
+      targetDate: new Date('2026-01-16'),
+      notes: 'Do NOT return to patient use until resolved. Plant Ops notified.',
+    },
+    {
+      id: 'lig-2026-002', itemNumber: 'LIG-2026-002',
+      location: 'Room 118 – Bathroom', unit: 'Acute Adult',
+      itemDescription: 'Door hinges – standard exposed knuckle can serve as anchor',
+      riskLevel: 'HIGH' as const, status: 'OPEN' as const,
+      identifiedDate: new Date('2026-02-20'), identifiedBy: 'Compliance Officer',
+      mitigationPlan: 'Replace with anti-ligature continuous piano hinges',
+      targetDate: new Date('2026-03-20'),
+      notes: 'Vendor quote requested from Creative Safety Supply',
+    },
+    {
+      id: 'lig-2026-003', itemNumber: 'LIG-2026-003',
+      location: 'Room 104 – Bathroom', unit: 'Adolescent Unit',
+      itemDescription: 'Towel hook – exposed J-hook style',
+      riskLevel: 'HIGH' as const, status: 'OPEN' as const,
+      identifiedDate: new Date('2026-02-20'), identifiedBy: 'Compliance Officer',
+      mitigationPlan: 'Replace with anti-ligature concealed towel bar',
+      targetDate: new Date('2026-03-20'), notes: '',
+    },
+    {
+      id: 'lig-2026-004', itemNumber: 'LIG-2026-004',
+      location: 'Main Hallway – North Wing', unit: 'All Units',
+      itemDescription: 'Overhead data conduit accessible from common area ceiling tile',
+      riskLevel: 'HIGH' as const, status: 'IN_MITIGATION' as const,
+      identifiedDate: new Date('2026-01-28'), identifiedBy: 'Carlos Vega EOC Chair',
+      mitigationPlan: 'Enclose in locked chase; in progress by maintenance',
+      targetDate: new Date('2026-02-28'), notes: '70% complete as of 3/1/2026',
+    },
+    {
+      id: 'lig-2026-005', itemNumber: 'LIG-2026-005',
+      location: 'Group Therapy Room A', unit: 'Acute Adult',
+      itemDescription: 'Ceiling sprinkler head – unguarded',
+      riskLevel: 'MEDIUM' as const, status: 'OPEN' as const,
+      identifiedDate: new Date('2026-02-25'), identifiedBy: 'Maria Santos RN',
+      mitigationPlan: 'Install anti-ligature sprinkler guards',
+      targetDate: new Date('2026-03-25'), notes: 'Order placed; 3-week lead time per vendor',
+    },
+    {
+      id: 'lig-2026-006', itemNumber: 'LIG-2026-006',
+      location: 'Room 115 – Bedroom', unit: 'Acute Adult',
+      itemDescription: 'Window blinds cord – looped pull cord exposed',
+      riskLevel: 'MEDIUM' as const, status: 'OPEN' as const,
+      identifiedDate: new Date('2026-02-25'), identifiedBy: 'Maria Santos RN',
+      mitigationPlan: 'Replace all corded blinds with cordless roller shades',
+      targetDate: new Date('2026-03-10'), notes: '',
+    },
+    {
+      id: 'lig-2026-007', itemNumber: 'LIG-2026-007',
+      location: 'Family Visitation Room', unit: 'Main Floor',
+      itemDescription: 'Picture frame wire – hanging artwork in visitation',
+      riskLevel: 'LOW' as const, status: 'RESOLVED' as const,
+      identifiedDate: new Date('2025-10-05'), identifiedBy: 'Survey Prep Team',
+      mitigationPlan: 'All artwork removed; replaced with anti-ligature mounted prints',
+      targetDate: new Date('2025-10-20'),
+      resolvedDate: new Date('2025-10-18'), resolvedBy: 'Facilities', notes: '',
+    },
+  ];
+
+  for (const item of ligatureItems) {
+    await prisma.ligatureRiskItem.upsert({
+      where: { id: item.id },
+      update: {},
+      create: { ...item, facilityId: 'destiny-springs' },
+    });
+  }
+  console.log(`  ✅ Seeded ${ligatureItems.length} ligature risk items`);
+
+  // --- EOC Rounds ---
+  const eocRound1Id = 'eoc-round-2026-lig-01';
+  const eocRound2Id = 'eoc-round-2026-02';
+  const eocRound3Id = 'eoc-round-2026-03';
+
+  await prisma.eocRound.upsert({
+    where: { id: eocRound1Id },
+    update: {},
+    create: {
+      id: eocRound1Id, facilityId: 'destiny-springs',
+      roundNumber: 'EOC-ROUND-2026-LIG-01',
+      roundType: 'LIGATURE_RISK' as const,
+      conductedDate: new Date('2026-02-20'),
+      conductedBy: 'Compliance Officer / Carlos Vega',
+      participantIds: ['Maria Santos RN', 'Risk Manager'],
+      areasInspected: ['All Patient Rooms', 'Bathrooms', 'Group Therapy Rooms', 'Seclusion Room', 'Common Areas'],
+      totalItems: 10, openItems: 4, status: 'COMPLETED' as const,
+      summary: 'Full facility ligature survey completed per JCAHO EC.02.06.01. 10 items identified; 1 IMMEDIATE, 3 HIGH, 4 MEDIUM, 2 LOW. Written mitigation plans issued for all.',
+    },
+  });
+
+  await prisma.eocRound.upsert({
+    where: { id: eocRound2Id },
+    update: {},
+    create: {
+      id: eocRound2Id, facilityId: 'destiny-springs',
+      roundNumber: 'EOC-ROUND-2026-02',
+      roundType: 'LIFE_SAFETY_GENERAL' as const,
+      conductedDate: new Date('2026-02-07'),
+      conductedBy: 'Carlos Vega, EOC Chair',
+      participantIds: ['Linda Park CNO', 'Facilities Manager'],
+      areasInspected: ['Adolescent Unit', 'Step-Down Unit', 'Family Visitation', 'Cafeteria', 'Parking/Exterior'],
+      totalItems: 38, openItems: 0, status: 'REVIEWED' as const,
+      summary: 'All findings from January round resolved. No persistent open items. Certificate signed by CNO.',
+    },
+  });
+
+  await prisma.eocRound.upsert({
+    where: { id: eocRound3Id },
+    update: {},
+    create: {
+      id: eocRound3Id, facilityId: 'destiny-springs',
+      roundNumber: 'EOC-ROUND-2026-03',
+      roundType: 'LIFE_SAFETY_GENERAL' as const,
+      conductedDate: new Date('2026-03-07'),
+      conductedBy: 'Carlos Vega, EOC Chair',
+      participantIds: ['Maria Santos RN', 'Darnell Williams MHT'],
+      areasInspected: ['Acute Adult Unit', 'Nursing Stations', 'Medication Room', 'Stairwells', 'Mechanical Room'],
+      totalItems: 42, openItems: 3, status: 'IN_PROGRESS' as const,
+      summary: 'Round in progress. Three open deficiencies identified: two ligature-related, one fire door.',
+    },
+  });
+  console.log('  ✅ Seeded 3 EOC rounds');
+
+  // --- EOC Deficiencies ---
+  const deficiencies = [
+    {
+      id: 'def-2026-001', defNumber: 'DEF-2026-001',
+      roundId: eocRound1Id,
+      location: 'Seclusion Room 1 – Bathroom', unit: 'Acute Adult',
+      description: 'Shower curtain rod – standard, not breakaway',
+      category: 'LIGATURE_RISK' as const, severity: 'IMMEDIATE_JEOPARDY' as const, status: 'RESOLVED' as const,
+      assignedTo: 'Carlos Vega', dueDate: new Date('2026-01-16'),
+      resolvedDate: new Date('2026-01-15'), resolvedBy: 'Carlos Vega',
+      notes: 'Rod removed same day. Room cleared for occupancy after verification.',
+    },
+    {
+      id: 'def-2026-002', defNumber: 'DEF-2026-002',
+      roundId: eocRound1Id,
+      location: 'Main Hallway – North Wing', unit: 'All Units',
+      description: 'Overhead data conduit accessible from common area ceiling tile',
+      category: 'LIGATURE_RISK' as const, severity: 'HIGH' as const, status: 'IN_PROGRESS' as const,
+      assignedTo: 'Facilities Manager', dueDate: new Date('2026-02-28'),
+      notes: 'Chase enclosure 70% complete as of 3/1/2026.',
+    },
+    {
+      id: 'def-2026-004', defNumber: 'DEF-2026-004',
+      roundId: eocRound3Id,
+      location: 'Medication Room', unit: 'Acute Adult',
+      description: 'Hand hygiene dispenser empty – bracket corroded and inoperable',
+      category: 'INFECTION_CONTROL' as const, severity: 'MEDIUM' as const, status: 'OPEN' as const,
+      assignedTo: 'Maria Santos RN', dueDate: new Date('2026-03-12'),
+      notes: 'New dispenser ordered. Temporary soap pump placed.',
+    },
+    {
+      id: 'def-2026-005', defNumber: 'DEF-2026-005',
+      roundId: eocRound3Id,
+      location: 'Nurses Station – Wing B', unit: 'Acute Adult',
+      description: 'Fire door closer inoperable – door does not fully latch',
+      category: 'FIRE_SAFETY' as const, severity: 'MEDIUM' as const, status: 'IN_PROGRESS' as const,
+      assignedTo: 'Facilities Manager', dueDate: new Date('2026-03-21'),
+      notes: 'Door closer on order. Staff instructed to manually close door.',
+    },
+    {
+      id: 'def-2026-006', defNumber: 'DEF-2026-006',
+      roundId: eocRound3Id,
+      location: 'Seclusion Room 1', unit: 'Acute Adult',
+      description: 'Emergency ligature cutter not mounted at door',
+      category: 'LIGATURE_RISK' as const, severity: 'HIGH' as const, status: 'IN_PROGRESS' as const,
+      assignedTo: 'Carlos Vega', dueDate: new Date('2026-03-10'),
+      notes: 'Cutter ordered — standard hook-and-blade mount kit. ETA 3/10.',
+    },
+    {
+      id: 'def-2026-007', defNumber: 'DEF-2026-007',
+      roundId: eocRound1Id,
+      location: 'Room 118 – Bathroom', unit: 'Acute Adult',
+      description: 'Door hinge plates non-ligature-resistant (standard exposed knuckle)',
+      category: 'LIGATURE_RISK' as const, severity: 'HIGH' as const, status: 'OPEN' as const,
+      assignedTo: 'Facilities Manager', dueDate: new Date('2026-03-20'),
+      notes: 'Anti-ligature piano hinge vendor quote requested.',
+    },
+  ];
+
+  for (const d of deficiencies) {
+    await prisma.eocDeficiency.upsert({
+      where: { id: d.id },
+      update: {},
+      create: { ...d, facilityId: 'destiny-springs', photoUrls: [] },
+    });
+  }
+  console.log(`  ✅ Seeded ${deficiencies.length} EOC deficiencies`);
+
+  // --- Equipment PM ---
+  const equipmentItems = [
+    {
+      id: 'pm-2026-001', equipmentName: 'Kitchen Hood Suppression System (Ansul R-102)',
+      equipmentId: 'FS-HOOD-01', location: 'Dietary – Kitchen',
+      category: 'FIRE_SUPPRESSION' as const, frequency: 'SEMI_ANNUAL' as const,
+      lastServiceDate: new Date('2025-09-05'), nextServiceDate: new Date('2026-03-05'),
+      vendor: 'Ansul Service AZ', contactPhone: '(623) 555-0190',
+      status: 'OVERDUE' as const, notes: 'Service scheduled 3/20/2026. Tag expired 3/5.',
+    },
+    {
+      id: 'pm-2026-002', equipmentName: 'Emergency Exit Lighting – North Wing',
+      equipmentId: 'EL-N-WING-01', location: 'North Hallway – 1st Floor',
+      category: 'EMERGENCY_LIGHTING' as const, frequency: 'ANNUAL' as const,
+      lastServiceDate: new Date('2025-02-10'), nextServiceDate: new Date('2026-02-10'),
+      vendor: 'Arizona Life Safety LLC', contactPhone: '(602) 555-0141',
+      status: 'OVERDUE' as const, notes: '30-second and 90-minute battery test overdue.',
+    },
+    {
+      id: 'pm-2026-003', equipmentName: 'Fire Alarm Panel – Notifier NFS2-3030',
+      equipmentId: 'FA-PANEL-MAIN', location: 'Main Electrical Room',
+      category: 'FIRE_ALARM' as const, frequency: 'ANNUAL' as const,
+      lastServiceDate: new Date('2025-03-18'), nextServiceDate: new Date('2026-03-18'),
+      vendor: 'Arizona Fire Systems', contactPhone: '(602) 555-0182',
+      status: 'DUE_SOON' as const, notes: 'Full panel inspection includes detector testing and sprinkler flow test.',
+    },
+    {
+      id: 'pm-2026-004', equipmentName: 'Emergency Generator – Cummins 500kW Diesel',
+      equipmentId: 'GEN-MAIN-01', location: 'Exterior – East Mechanical Pad',
+      category: 'GENERATOR' as const, frequency: 'MONTHLY' as const,
+      lastServiceDate: new Date('2026-02-07'), nextServiceDate: new Date('2026-03-07'),
+      vendor: 'Cummins Power Systems – AZ', contactPhone: '(602) 555-0175',
+      status: 'DUE_SOON' as const, notes: 'Monthly load test: run under load for 30 minutes.',
+    },
+    {
+      id: 'pm-2026-005', equipmentName: 'Fire Extinguishers – All Areas (42 units)',
+      equipmentId: 'FE-ALL', location: 'Facility-wide',
+      category: 'FIRE_SUPPRESSION' as const, frequency: 'ANNUAL' as const,
+      lastServiceDate: new Date('2025-03-15'), nextServiceDate: new Date('2026-03-15'),
+      vendor: 'Phoenix Fire Equipment', contactPhone: '(602) 555-0163',
+      status: 'DUE_SOON' as const, notes: 'Annual certification + 6-year inspection for applicable units.',
+    },
+    {
+      id: 'pm-2026-006', equipmentName: 'Elevator – Kone MiniSpace (Wing A)',
+      equipmentId: 'ELV-WING-A', location: 'Wing A – 1st/2nd Floor',
+      category: 'ELEVATOR' as const, frequency: 'ANNUAL' as const,
+      lastServiceDate: new Date('2025-04-01'), nextServiceDate: new Date('2026-04-01'),
+      vendor: 'KONE Americas', contactPhone: '(602) 555-0199',
+      status: 'UPCOMING' as const, notes: 'State-required annual certification by AZ Elevator Safety.',
+    },
+    {
+      id: 'pm-2026-007', equipmentName: 'AHU-1 – Air Handling Unit (Acute Unit)',
+      equipmentId: 'HVAC-AHU-1', location: 'Roof – Acute Unit Zone',
+      category: 'HVAC' as const, frequency: 'QUARTERLY' as const,
+      lastServiceDate: new Date('2026-01-10'), nextServiceDate: new Date('2026-04-10'),
+      vendor: 'Comfort Systems AZ', contactPhone: '(602) 555-0177',
+      status: 'UPCOMING' as const, notes: 'Change MERV-14 filters, check coils, verify negative pressure.',
+    },
+    {
+      id: 'pm-2026-008', equipmentName: 'Sprinkler System – Quarterly Inspection',
+      equipmentId: 'SPK-ALL', location: 'Facility-wide',
+      category: 'FIRE_SUPPRESSION' as const, frequency: 'QUARTERLY' as const,
+      lastServiceDate: new Date('2026-01-20'), nextServiceDate: new Date('2026-04-20'),
+      vendor: 'Arizona Fire Systems', contactPhone: '(602) 555-0182',
+      status: 'COMPLETED' as const, notes: 'Q1 2026 complete. Certificate posted in EOC binder. No deficiencies.',
+    },
+    {
+      id: 'pm-2026-009', equipmentName: 'Security Camera System – Annual Review',
+      equipmentId: 'SEC-CAM-ALL', location: 'Facility-wide',
+      category: 'SECURITY_SYSTEM' as const, frequency: 'ANNUAL' as const,
+      lastServiceDate: new Date('2026-02-15'), nextServiceDate: new Date('2027-02-15'),
+      vendor: 'Integrated Security Solutions', contactPhone: '(602) 555-0188',
+      status: 'COMPLETED' as const, notes: 'All 34 cameras verified operational. 90-day retention confirmed.',
+    },
+  ];
+
+  for (const item of equipmentItems) {
+    await prisma.equipmentPm.upsert({
+      where: { id: item.id },
+      update: {},
+      create: { ...item, facilityId: 'destiny-springs' },
+    });
+  }
+  console.log(`  ✅ Seeded ${equipmentItems.length} equipment PM records`);
+
   console.log('\n✅ Seed complete!\n');
   console.log('─────────────────────────────────────────────────');
   console.log('LOGIN CREDENTIALS:');

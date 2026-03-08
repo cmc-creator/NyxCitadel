@@ -35,6 +35,9 @@ import {
   FileBarChart,
   ShieldCheck as ResilienceIcon,
   Sparkles,
+  HardHat,
+  CircleAlert,
+  Wrench,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -109,6 +112,19 @@ const navItems: NavItem[] = [
       { href: '/emergency/drills', label: 'Drills & Exercises', icon: Siren },
       { href: '/emergency/plans',  label: 'EM Plans',           icon: BookOpen },
       { href: '/emergency/map',    label: 'Facility Map',       icon: Map,   badge: 'TWIN', badgeColor: 'bg-sky-100 text-sky-700' },
+    ],
+  },
+  {
+    href: '/eoc',
+    label: 'Environment of Care',
+    icon: HardHat,
+    badge: 'EOC',
+    badgeColor: 'bg-amber-100 text-amber-700',
+    children: [
+      { href: '/eoc/ligature',    label: 'Ligature Risk',    icon: CircleAlert,  badge: 'JCAHO', badgeColor: 'bg-amber-100 text-amber-700' },
+      { href: '/eoc/rounds',      label: 'Safety Rounds',   icon: ClipboardList },
+      { href: '/eoc/deficiencies',label: 'Deficiencies',    icon: AlertTriangle },
+      { href: '/eoc/equipment',   label: 'Equipment PM',    icon: Wrench },
     ],
   },
   {
