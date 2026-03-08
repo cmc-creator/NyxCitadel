@@ -16,15 +16,22 @@ interface Notification {
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  DEADLINE_REMINDER:  'bg-amber-500/15 text-amber-400',
-  OVERDUE_ALERT:      'bg-red-500/15   text-red-400',
-  ASSIGNMENT:         'bg-blue-500/15  text-blue-400',
-  SURVEY_ALERT:       'bg-violet-500/15 text-violet-400',
-  CAP_UPDATE:         'bg-emerald-500/15 text-emerald-400',
-  POLICY_REVIEW_DUE:  'bg-orange-500/15 text-orange-400',
-  TRAINING_EXPIRING:  'bg-amber-500/15 text-amber-400',
-  INCIDENT_UPDATE:    'bg-rose-500/15  text-rose-400',
-  SYSTEM:             'bg-slate-500/10 text-slate-400',
+  DEADLINE_REMINDER:      'bg-amber-500/15 text-amber-400',
+  OVERDUE_ALERT:          'bg-red-500/15   text-red-400',
+  ASSIGNMENT:             'bg-blue-500/15  text-blue-400',
+  SURVEY_ALERT:           'bg-violet-500/15 text-violet-400',
+  CAP_UPDATE:             'bg-emerald-500/15 text-emerald-400',
+  POLICY_REVIEW_DUE:      'bg-orange-500/15 text-orange-400',
+  TRAINING_EXPIRING:      'bg-amber-500/15 text-amber-400',
+  INCIDENT_UPDATE:        'bg-rose-500/15  text-rose-400',
+  SYSTEM:                 'bg-slate-500/10 text-slate-400',
+  // Compliance alert types
+  LICENSE_EXPIRING:       'bg-amber-500/15 text-amber-400',
+  CS_DISCREPANCY:         'bg-red-500/20   text-red-300',
+  TB_OVERDUE:             'bg-orange-500/15 text-orange-400',
+  MOON_MISSING:           'bg-yellow-500/15 text-yellow-400',
+  GOVERNANCE_DOC_OVERDUE: 'bg-indigo-500/15 text-indigo-400',
+  BREACH_REPORTABLE:      'bg-red-600/20   text-red-300',
 };
 
 function timeAgo(dateStr: string): string {

@@ -1,13 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { generateComplianceAlerts } from '@/lib/notifications/alertScanner';
 
 // GET /api/notifications — current user's notifications (most recent 30)
+// Also triggers compliance alert generation so the bell stays current.
 export async function GET() {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const userId = session.user.id as string;
+  const facilityId = session.user.facilityId as string;
+
+  // Scan for new compliance alerts (deduped — safe on every poll)
+  try {
+    await generateComplianceAlerts({ userId, facilityId });
+  } catch {
+    // Non-fatal — don't block notification delivery if alert scan fails
+  }
 
   const notifications = await prisma.notification.findMany({
     where: { userId },

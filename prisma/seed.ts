@@ -1581,6 +1581,609 @@ Destiny Springs Healthcare | Peoria, AZ`,
   }
   console.log(`  ✅ Seeded ${equipmentItems.length} equipment PM records`);
 
+  // ─── RESTRAINT & SECLUSION EVENTS ─────────────────────────────────────────
+  console.log('\n🔒 Seeding restraint & seclusion events...');
+  const rsEvents = [
+    {
+      eventNumber: `RS-${y}-001`,
+      patientInitials: 'T.R.',
+      unit: 'Acute Inpatient Unit A',
+      eventDate: new Date(`${y}-01-15T14:30:00`),
+      eventTime: '14:30',
+      rsType: 'PHYSICAL_RESTRAINT' as const,
+      orderingProvider: 'Dr. Elena Vasquez, MD',
+      orderDateTime: new Date(`${y}-01-15T14:45:00`),
+      initiatedBy: 'Maria Santos, RN',
+      clinicalJustification: 'Patient exhibiting imminent danger to self — attempting to strike head against wall.',
+      behaviors: 'Head-banging, self-injurious behavior, not responding to verbal redirection.',
+      lessRestrictiveTried: 'Verbal de-escalation attempted for 5 minutes. PRN medication offered and declined.',
+      monitoringLogs: [
+        { time: '14:30', staff: 'Maria Santos, RN', assessment: 'Patient restrained, agitated', vitals: 'HR 102, RR 16' },
+        { time: '14:45', staff: 'Maria Santos, RN', assessment: 'Calming, cooperative', vitals: 'HR 94, RR 14' },
+        { time: '15:00', staff: 'Darnell Williams, MHT', assessment: 'Calm, requesting release', vitals: 'HR 88, RR 14' },
+      ],
+      faceToFaceTime: new Date(`${y}-01-15T15:10:00`),
+      faceToFaceBy: 'Dr. Elena Vasquez, MD',
+      releasedAt: new Date(`${y}-01-15T15:12:00`),
+      releasedBy: 'Maria Santos, RN',
+      releaseReason: 'BEHAVIORAL_CRITERIA_MET' as const,
+      durationMinutes: 42,
+      debrief: true,
+      debriefDate: new Date(`${y}-01-15T16:00:00`),
+      debriefParticipants: ['T.R. (Patient)', 'Maria Santos, RN', 'Darnell Williams, MHT'],
+      debriefNotes: 'Patient expressed preference for weighted blanket as PRN comfort measure.',
+      injuryOccurred: false,
+      deathOccurred: false,
+      status: 'CLOSED' as const,
+    },
+    {
+      eventNumber: `RS-${y}-002`,
+      patientInitials: 'K.M.',
+      unit: 'Acute Inpatient Unit B',
+      eventDate: new Date(`${y}-02-22T22:15:00`),
+      eventTime: '22:15',
+      rsType: 'SECLUSION' as const,
+      orderingProvider: 'Dr. James Ortega, DO (on-call)',
+      orderDateTime: new Date(`${y}-02-22T22:25:00`),
+      initiatedBy: 'Carmen Reyes, LPN',
+      clinicalJustification: 'Patient is ITA, actively threatening staff and other patients with improvised weapon (broken utensil).',
+      behaviors: 'Threatening behavior, brandishing object, refusing all verbal redirection.',
+      lessRestrictiveTried: 'Security called, verbal de-escalation by two staff, PRN offered.',
+      monitoringLogs: [
+        { time: '22:15', staff: 'Carmen Reyes, LPN', assessment: 'Highly agitated, shouting', vitals: 'HR 118, RR 20' },
+        { time: '22:30', staff: 'Darnell Williams, MHT', assessment: 'Still agitated', vitals: 'HR 110, RR 18' },
+        { time: '22:45', staff: 'Darnell Williams, MHT', assessment: 'Calming, sitting down', vitals: 'HR 98, RR 16' },
+      ],
+      faceToFaceTime: new Date(`${y}-02-22T23:10:00`),
+      faceToFaceBy: 'Dr. James Ortega, DO',
+      releasedAt: new Date(`${y}-02-22T23:00:00`),
+      releasedBy: 'Carmen Reyes, LPN',
+      releaseReason: 'BEHAVIORAL_CRITERIA_MET' as const,
+      durationMinutes: 45,
+      debrief: true,
+      debriefDate: new Date(`${y}-02-23T10:00:00`),
+      debriefParticipants: ['K.M. (Patient)', 'Carmen Reyes, LPN', 'Dr. James Ortega, DO'],
+      debriefNotes: 'Patient reported feeling overwhelmed by noise on unit. Sensory break protocol added to care plan.',
+      injuryOccurred: false,
+      deathOccurred: false,
+      status: 'CLOSED' as const,
+    },
+  ];
+
+  for (const ev of rsEvents) {
+    await prisma.restraintEvent.upsert({
+      where: { id: `${facility.id}-${ev.eventNumber}` },
+      update: {},
+      create: { id: `${facility.id}-${ev.eventNumber}`, facilityId: facility.id, ...ev },
+    });
+  }
+  console.log(`  ✅ Seeded ${rsEvents.length} restraint/seclusion events`);
+
+  // ─── INFECTION CONTROL ────────────────────────────────────────────────────
+  console.log('\n🦠 Seeding infection control data...');
+
+  await prisma.icRiskAssessment.upsert({
+    where: { id: `${facility.id}-icra-${y}` },
+    update: {},
+    create: {
+      id: `${facility.id}-icra-${y}`,
+      facilityId: facility.id,
+      assessmentYear: y,
+      conductedDate: new Date(`${y}-01-25`),
+      conductedBy: 'Linda Park, CNO / IC Committee',
+      reviewedBy: 'James Holloway, CEO',
+      status: 'APPROVED' as const,
+      riskAreas: [
+        { area: 'Hand Hygiene Compliance', risk: 'Staff non-compliance during high-census periods', rating: 'HIGH', mitigationGoal: 'Achieve ≥90% compliance by Q3' },
+        { area: 'Multi-Drug Resistant Organisms (MDROs)', risk: 'MRSA transmission to immunocompromised psychiatric patients', rating: 'MEDIUM', mitigationGoal: 'Zero MRSA BSI; active surveillance for known MRSA patients' },
+        { area: 'Respiratory Illness (Flu)', risk: 'Annual influenza outbreak in inpatient population', rating: 'MEDIUM', mitigationGoal: '≥90% staff flu vaccination by Oct 1' },
+        { area: 'C. difficile', risk: 'CDI risk from antibiotic use in medically complex patients', rating: 'LOW', mitigationGoal: 'Maintain CDI rate below NHSN benchmark' },
+        { area: 'Construction/Renovation (ICRA)', risk: 'Aspergillus risk if renovation occurs near patient areas', rating: 'LOW', mitigationGoal: 'ICRA completion before any construction initiation' },
+      ],
+      goals: [
+        { goal: 'Hand hygiene compliance ≥90%', baseline: '84%', target: '90%', method: 'Monthly direct observation audits', responsible: 'IC Officer' },
+        { goal: 'Staff flu vaccination ≥90%', baseline: '78% (prior year)', target: '90%', method: 'Tracking via Employee Health', responsible: 'HR / Employee Health' },
+        { goal: 'Zero CLABSI / CAUTI', baseline: '0 events (YTD)', target: '0 events', method: 'NHSN monthly surveillance', responsible: 'IC Officer / CNO' },
+      ],
+      approvedDate: new Date(`${y}-02-01`),
+      approvedBy: 'James Holloway, CEO',
+      notes: 'Annual ICRA completed per CMS §482.42 and TJC IC.01.01.01.',
+    },
+  });
+
+  const haiData = [
+    { reportMonth: 1, reportYear: y, haiType: 'CAUTI' as const, caseCount: 0, patientDays: 420, rate: 0, nhsnBenchmark: 0.8, sir: 0 },
+    { reportMonth: 2, reportYear: y, haiType: 'CAUTI' as const, caseCount: 0, patientDays: 389, rate: 0, nhsnBenchmark: 0.8, sir: 0 },
+    { reportMonth: 3, reportYear: y, haiType: 'CAUTI' as const, caseCount: 1, patientDays: 410, rate: 2.44, nhsnBenchmark: 0.8, sir: 3.0 },
+    { reportMonth: 1, reportYear: y, haiType: 'CLABSI' as const, caseCount: 0, patientDays: 420, rate: 0, nhsnBenchmark: 0.5, sir: 0 },
+    { reportMonth: 2, reportYear: y, haiType: 'CLABSI' as const, caseCount: 0, patientDays: 389, rate: 0, nhsnBenchmark: 0.5, sir: 0 },
+    { reportMonth: 3, reportYear: y, haiType: 'CLABSI' as const, caseCount: 0, patientDays: 410, rate: 0, nhsnBenchmark: 0.5, sir: 0 },
+  ];
+
+  for (const hai of haiData) {
+    await prisma.haiSurveillance.upsert({
+      where: { id: `${facility.id}-hai-${hai.haiType}-${hai.reportYear}-${hai.reportMonth}` },
+      update: {},
+      create: { id: `${facility.id}-hai-${hai.haiType}-${hai.reportYear}-${hai.reportMonth}`, facilityId: facility.id, ...hai, submittedToNhsn: true },
+    });
+  }
+
+  await prisma.handHygieneAudit.upsert({
+    where: { id: `${facility.id}-hh-${y}-01` },
+    update: {},
+    create: { id: `${facility.id}-hh-${y}-01`, facilityId: facility.id, auditDate: new Date(`${y}-01-20`), unit: 'Acute Inpatient Unit A', auditor: 'IC Officer', opportunities: 62, compliant: 52, complianceRate: 83.9, staffType: 'Mixed', notes: 'Below 90% target; re-education delivered.' },
+  });
+  await prisma.handHygieneAudit.upsert({
+    where: { id: `${facility.id}-hh-${y}-02` },
+    update: {},
+    create: { id: `${facility.id}-hh-${y}-02`, facilityId: facility.id, auditDate: new Date(`${y}-02-18`), unit: 'Acute Inpatient Unit A', auditor: 'IC Officer', opportunities: 58, compliant: 51, complianceRate: 87.9, staffType: 'RN', notes: 'Improving trend.' },
+  });
+  await prisma.handHygieneAudit.upsert({
+    where: { id: `${facility.id}-hh-${y}-03` },
+    update: {},
+    create: { id: `${facility.id}-hh-${y}-03`, facilityId: facility.id, auditDate: new Date(`${y}-03-15`), unit: 'Acute Inpatient Unit B', auditor: 'IC Officer', opportunities: 55, compliant: 50, complianceRate: 90.9, staffType: 'Mixed', notes: 'Met 90% target for first time this year.' },
+  });
+
+  console.log('  ✅ Seeded IC risk assessment, 6 HAI surveillance records, 3 hand hygiene audits');
+
+  // ─── CREDENTIALING — PROVIDERS & LICENSES ────────────────────────────────
+  console.log('\n🩺 Seeding providers, licenses & OPPE...');
+  const providersData = [
+    {
+      id: `${facility.id}-prov-001`,
+      npi: '1234567890',
+      firstName: 'Elena', lastName: 'Vasquez', credentials: 'MD',
+      specialty: 'Psychiatry', providerType: 'PHYSICIAN' as const,
+      department: 'Inpatient Psychiatry',
+      primaryEmail: 'evasquez@destinysprings.com',
+      phone: '(623) 555-0101',
+      status: 'ACTIVE' as const,
+      initialAppointDate: new Date(`${y-3}-07-01`),
+      reappointmentDate: new Date(`${y+1}-07-01`),
+    },
+    {
+      id: `${facility.id}-prov-002`,
+      npi: '0987654321',
+      firstName: 'James', lastName: 'Ortega', credentials: 'DO',
+      specialty: 'Psychiatry', providerType: 'PHYSICIAN' as const,
+      department: 'Inpatient Psychiatry',
+      primaryEmail: 'jortega@destinysprings.com',
+      phone: '(623) 555-0102',
+      status: 'ACTIVE' as const,
+      initialAppointDate: new Date(`${y-2}-03-01`),
+      reappointmentDate: new Date(`${y+2}-03-01`),
+    },
+    {
+      id: `${facility.id}-prov-003`,
+      npi: '1122334455',
+      firstName: 'Priya', lastName: 'Sharma', credentials: 'PMHNP-BC',
+      specialty: 'Psychiatric Mental Health NP', providerType: 'ADVANCED_PRACTICE' as const,
+      department: 'Outpatient Services',
+      primaryEmail: 'psharma@destinysprings.com',
+      phone: '(623) 555-0103',
+      status: 'ACTIVE' as const,
+      initialAppointDate: new Date(`${y-1}-10-01`),
+      reappointmentDate: new Date(`${y+3}-10-01`),
+    },
+  ];
+
+  for (const p of providersData) {
+    await prisma.provider.upsert({
+      where: { id: p.id },
+      update: {},
+      create: { ...p, facilityId: facility.id },
+    });
+  }
+
+  // Provider licenses — including one expiring soon for notification testing
+  const licensesData = [
+    { id: `${facility.id}-lic-001`, providerId: `${facility.id}-prov-001`, licenseType: 'Medical License', licenseNumber: 'AZ-MD-123456', state: 'AZ', issuedDate: new Date(`${y-2}-07-01`), expiryDate: new Date(`${y+1}-06-30`), isVerified: true, verifiedDate: new Date(`${y-1}-11-01`), verifiedBy: 'Credentialing Coordinator', status: 'ACTIVE' as const },
+    { id: `${facility.id}-lic-002`, providerId: `${facility.id}-prov-001`, licenseType: 'DEA Certificate', licenseNumber: 'BV1234567', state: 'AZ', issuedDate: new Date(`${y-1}-01-01`), expiryDate: new Date(`${y}-06-01`), isVerified: true, verifiedDate: new Date(`${y-1}-11-01`), verifiedBy: 'Credentialing Coordinator', status: 'ACTIVE' as const },
+    { id: `${facility.id}-lic-003`, providerId: `${facility.id}-prov-002`, licenseType: 'Medical License', licenseNumber: 'AZ-DO-654321', state: 'AZ', issuedDate: new Date(`${y-1}-03-01`), expiryDate: new Date(`${y+3}-02-28`), isVerified: true, verifiedDate: new Date(`${y-1}-11-01`), verifiedBy: 'Credentialing Coordinator', status: 'ACTIVE' as const },
+    { id: `${facility.id}-lic-004`, providerId: `${facility.id}-prov-003`, licenseType: 'APRN License', licenseNumber: 'AZ-APRN-778899', state: 'AZ', issuedDate: new Date(`${y-1}-10-01`), expiryDate: new Date(`${y}-09-30`), isVerified: true, verifiedDate: new Date(`${y-1}-11-01`), verifiedBy: 'Credentialing Coordinator', status: 'ACTIVE' as const },
+  ];
+
+  for (const lic of licensesData) {
+    await prisma.providerLicense.upsert({
+      where: { id: lic.id },
+      update: {},
+      create: lic,
+    });
+  }
+
+  // Clinical Privileges
+  await prisma.clinicalPrivilege.upsert({
+    where: { id: `${facility.id}-priv-001` },
+    update: {},
+    create: { id: `${facility.id}-priv-001`, providerId: `${facility.id}-prov-001`, category: 'Inpatient Psychiatry', description: 'Full inpatient psychiatric privileges including admission, treatment orders, restraint/seclusion orders.', grantedDate: new Date(`${y-3}-07-01`), expiryDate: new Date(`${y+1}-07-01`), status: 'GRANTED' as const, requiresFppe: false },
+  });
+  await prisma.clinicalPrivilege.upsert({
+    where: { id: `${facility.id}-priv-002` },
+    update: {},
+    create: { id: `${facility.id}-priv-002`, providerId: `${facility.id}-prov-003`, category: 'Advanced Practice Prescribing — Psychiatry', description: 'Prescriptive authority for psychiatric medications per NP collaborative agreement.', grantedDate: new Date(`${y-1}-10-01`), expiryDate: new Date(`${y+3}-10-01`), status: 'PROVISIONAL' as const, requiresFppe: true, notes: 'FPPE in progress — 10 cases required.' },
+  });
+
+  // OPPE Record
+  await prisma.oppeRecord.upsert({
+    where: { id: `${facility.id}-oppe-001` },
+    update: {},
+    create: {
+      id: `${facility.id}-oppe-001`,
+      providerId: `${facility.id}-prov-001`,
+      periodStart: new Date(`${y-1}-01-01`),
+      periodEnd: new Date(`${y-1}-12-31`),
+      reviewCycle: `Annual ${y-1}`,
+      totalCases: 48,
+      compliantCases: 46,
+      metrics: [
+        { metric: 'Documentation completeness', numerator: 46, denominator: 48, rate: 95.8, benchmark: 95.0 },
+        { metric: 'Treatment plan timeliness (within 24h)', numerator: 48, denominator: 48, rate: 100.0, benchmark: 95.0 },
+        { metric: 'Restraint order compliance', numerator: 5, denominator: 5, rate: 100.0, benchmark: 100.0 },
+      ],
+      overallRating: 'ACCEPTABLE' as const,
+      reviewedBy: 'Medical Executive Committee',
+      approvedByMec: true,
+      notes: 'No concerns identified. Reappointment recommended.',
+    },
+  });
+
+  console.log('  ✅ Seeded 3 providers, 4 licenses, 2 privileges, 1 OPPE record');
+
+  // ─── TREATMENT PLANS ──────────────────────────────────────────────────────
+  console.log('\n📋 Seeding treatment plans...');
+  const tx1Id = `${facility.id}-tp-001`;
+  await prisma.treatmentPlan.upsert({
+    where: { id: tx1Id },
+    update: {},
+    create: {
+      id: tx1Id,
+      facilityId: facility.id,
+      patientInitials: 'A.B.',
+      admitDate: new Date(`${y}-03-10`),
+      unit: 'Acute Inpatient Unit A',
+      primaryDx: 'Major Depressive Disorder with Suicidal Ideation (F32.2)',
+      treatmentTeam: ['Dr. Elena Vasquez, MD', 'Takeshi Yamamoto, LCSW', 'Maria Santos, RN', 'Priya Nair, RN (Intake)'],
+      planCreatedDate: new Date(`${y}-03-11`),
+      planCreatedBy: 'Dr. Elena Vasquez, MD',
+      patientParticipated: true,
+      participationNotes: 'Patient verbalized understanding of all goals and signed participation attestation.',
+      goals: [
+        { goalText: 'Reduce PHQ-9 score from 22 to <10 by discharge', targetDate: new Date(`${y}-03-24`), progress: 'In progress — PHQ-9 now 16 at Day 4' },
+        { goalText: 'Develop individualized safety plan with patient', targetDate: new Date(`${y}-03-13`), progress: 'Completed on Day 2' },
+        { goalText: 'Identify 3 coping strategies for suicidal ideation', targetDate: new Date(`${y}-03-18`), progress: 'In progress — 2 of 3 identified' },
+      ],
+      dischargeGoal: 'Discharge to home with outpatient CBT weekly and medication management follow-up within 7 days.',
+      estimatedLos: '14 days',
+      status: 'ACTIVE' as const,
+    },
+  });
+
+  await prisma.treatmentPlanReview.upsert({
+    where: { id: `${facility.id}-tpr-001` },
+    update: {},
+    create: {
+      id: `${facility.id}-tpr-001`,
+      planId: tx1Id,
+      reviewDate: new Date(`${y}-03-14`),
+      reviewedBy: 'Dr. Elena Vasquez, MD',
+      attendees: ['Patient A.B.', 'Dr. Elena Vasquez, MD', 'Takeshi Yamamoto, LCSW', 'Maria Santos, RN'],
+      progressSummary: 'Patient demonstrates improved mood. PHQ-9 dropped to 14. Safety plan reviewed and patient verbalized all elements. Discharge planning initiated.',
+      goalsUpdated: true,
+      dischargeTarget: `${y}-03-24`,
+    },
+  });
+
+  console.log('  ✅ Seeded 1 treatment plan with review');
+
+  // ─── HIPAA ────────────────────────────────────────────────────────────────
+  console.log('\n🔐 Seeding HIPAA breach log & BAA tracker...');
+
+  await prisma.hipaaBreachLog.upsert({
+    where: { id: `${facility.id}-hipaa-001` },
+    update: {},
+    create: {
+      id: `${facility.id}-hipaa-001`,
+      facilityId: facility.id,
+      incidentNumber: `HIPAA-${y}-001`,
+      discoveryDate: new Date(`${y}-02-10`),
+      incidentDate: new Date(`${y}-02-08`),
+      breachType: 'MISDIRECTED_COMMUNICATIONS' as const,
+      phiInvolved: ['Name', 'Dates of service', 'Diagnosis'],
+      individualCount: 1,
+      description: 'Discharge summary for patient J.T. was faxed to incorrect number. Fax was intended for outpatient therapist but sent to unrelated medical office. Receiving office confirmed receipt and destruction of document.',
+      immediateActions: 'Receiving office contacted and confirmed document destroyed. Fax number corrected in EHR. Incident reported to Privacy Officer.',
+      riskAssessment: 'LOW' as const,
+      reportableBreach: false,
+      status: 'CLOSED' as const,
+      closedDate: new Date(`${y}-02-20`),
+      notes: 'Four-factor risk assessment completed. Not likely reportable per §164.402 standard. Documented in breach log per policy.',
+    },
+  });
+
+  await prisma.hipaaBreachLog.upsert({
+    where: { id: `${facility.id}-hipaa-002` },
+    update: {},
+    create: {
+      id: `${facility.id}-hipaa-002`,
+      facilityId: facility.id,
+      incidentNumber: `HIPAA-${y}-002`,
+      discoveryDate: new Date(`${y}-04-01`),
+      breachType: 'UNAUTHORIZED_ACCESS' as const,
+      phiInvolved: ['Name', 'MRN', 'Dates of service', 'Diagnosis', 'Medication list'],
+      individualCount: 3,
+      description: 'Former employee accessed EHR records of 3 patients without authorization in the 2 days prior to termination. Access identified through routine audit log review.',
+      immediateActions: 'Access terminated immediately. IT audit log preserved. Legal counsel notified. HR notified.',
+      riskAssessment: 'HIGH' as const,
+      reportableBreach: true,
+      status: 'INVESTIGATION' as const,
+      notes: 'Under investigation. Decision on HHS notification pending legal review. 60-day HHS notification deadline: June 1.',
+    },
+  });
+
+  const baaVendors = [
+    { id: `${facility.id}-baa-001`, vendorName: 'HealthStream', vendorContact: 'Account Manager', vendorEmail: 'accounts@healthstream.com', serviceDescription: 'Online learning management system for staff training and competency tracking.', agreementDate: new Date(`${y-2}-06-01`), expiryDate: new Date(`${y+1}-05-31`), autoRenew: true, status: 'ACTIVE' as const, phoneHipaaVerified: true },
+    { id: `${facility.id}-baa-002`, vendorName: 'Shred-it / Stericycle', vendorContact: 'Client Services', vendorEmail: 'service@shred-it.com', serviceDescription: 'Shredding services for PHI documents and media destruction.', agreementDate: new Date(`${y-1}-01-15`), expiryDate: new Date(`${y+2}-01-14`), autoRenew: false, status: 'ACTIVE' as const, phoneHipaaVerified: true },
+    { id: `${facility.id}-baa-003`, vendorName: 'Arizona Health Information Exchange', vendorContact: 'Legal Department', vendorEmail: 'legal@azhie.org', serviceDescription: 'State health information exchange for care coordination and clinical data sharing.', agreementDate: new Date(`${y-3}-04-01`), expiryDate: null, autoRenew: false, status: 'ACTIVE' as const, phoneHipaaVerified: true },
+    { id: `${facility.id}-baa-004`, vendorName: 'Nuance Communications (AI Transcription)', vendorContact: 'Enterprise Support', vendorEmail: 'enterprise@nuance.com', serviceDescription: 'AI-powered clinical documentation dictation and transcription service.', agreementDate: new Date(`${y-1}-09-01`), expiryDate: new Date(`${y+2}-08-31`), autoRenew: true, status: 'ACTIVE' as const, phoneHipaaVerified: false, notes: 'HIPAA verification phone call pending per annual audit.' },
+  ];
+
+  for (const baa of baaVendors) {
+    await prisma.baaTracker.upsert({ where: { id: baa.id }, update: {}, create: { ...baa, facilityId: facility.id } });
+  }
+
+  console.log('  ✅ Seeded 2 HIPAA breach logs, 4 BAA tracker records');
+
+  // ─── PATIENT RIGHTS ───────────────────────────────────────────────────────
+  console.log('\n⚖️  Seeding patient rights records...');
+
+  // Consents
+  const consents = [
+    { id: `${facility.id}-con-001`, patientInitials: 'A.B.', admitDate: new Date(`${y}-03-10`), consentType: 'GENERAL_TREATMENT' as const, consentDate: new Date(`${y}-03-10`), obtainedBy: 'Priya Nair, RN', status: 'SIGNED' as const },
+    { id: `${facility.id}-con-002`, patientInitials: 'A.B.', admitDate: new Date(`${y}-03-10`), consentType: 'MEDICATION' as const, consentDate: new Date(`${y}-03-10`), obtainedBy: 'Priya Nair, RN', status: 'SIGNED' as const },
+    { id: `${facility.id}-con-003`, patientInitials: 'K.M.', admitDate: new Date(`${y}-02-14`), consentType: 'GENERAL_TREATMENT' as const, consentDate: new Date(`${y}-02-14`), obtainedBy: 'Carmen Reyes, LPN', patientCapacityDetermined: false, legalRepresentative: 'Court-appointed guardian (ITA)', status: 'SIGNED' as const },
+  ];
+  for (const c of consents) {
+    await prisma.consentRecord.upsert({ where: { id: c.id }, update: {}, create: { ...c, facilityId: facility.id } });
+  }
+
+  // Advance directives
+  await prisma.advanceDirectiveRecord.upsert({
+    where: { id: `${facility.id}-ad-001` },
+    update: {},
+    create: { id: `${facility.id}-ad-001`, facilityId: facility.id, patientInitials: 'A.B.', admitDate: new Date(`${y}-03-10`), adExists: true, adType: 'DPAHC', adOnFile: true, informationProvided: true, providedBy: 'Priya Nair, RN', documentedBy: 'Priya Nair, RN', documentedDate: new Date(`${y}-03-10`) },
+  });
+
+  // MOON notices — include one PENDING for notification testing
+  const moonNotices = [
+    { id: `${facility.id}-moon-001`, patientInitials: 'R.W.', admitDate: new Date(`${y}-03-05`), observationStartDate: new Date(`${y}-03-05`), noticeIssuedDate: new Date(`${y}-03-05`), noticeIssuedBy: 'Carmen Reyes, LPN', patientSignedDate: new Date(`${y}-03-05`), status: 'SIGNED' as const },
+    { id: `${facility.id}-moon-002`, patientInitials: 'P.D.', admitDate: new Date(`${y}-04-10`), observationStartDate: new Date(`${y}-04-10`), status: 'PENDING' as const, notes: 'Notice not yet issued — patient admitted to observation status today. Must issue within 36 hours.' },
+  ];
+  for (const m of moonNotices) {
+    await prisma.moonNotice.upsert({ where: { id: m.id }, update: {}, create: { ...m, facilityId: facility.id } });
+  }
+
+  // Involuntary holds
+  await prisma.involuntaryHoldLog.upsert({
+    where: { id: `${facility.id}-hold-001` },
+    update: {},
+    create: { id: `${facility.id}-hold-001`, facilityId: facility.id, patientInitials: 'K.M.', holdType: 'Title 36 – 72hr ITA', holdStartDate: new Date(`${y}-02-14`), holdExpiryDate: new Date(`${y}-02-17`), orderingPhysician: 'Dr. James Ortega, DO', legalCounselNotified: true, outcome: 'Converted to voluntary admission on Day 2', status: 'DISCHARGED' as const },
+  });
+
+  console.log('  ✅ Seeded 3 consents, 1 advance directive, 2 MOON notices, 1 involuntary hold');
+
+  // ─── PHARMACY ─────────────────────────────────────────────────────────────
+  console.log('\n💊 Seeding pharmacy records...');
+
+  // Controlled substance logs — include one DISCREPANCY_OPEN for notification testing
+  const csLogs = [
+    { id: `${facility.id}-cs-001`, logDate: new Date(`${y}-04-01T07:00:00`), unit: 'Acute Inpatient Unit A', shift: 'Day', medicationName: 'Lorazepam 1mg (CIV)', schedule: 'SCHEDULE_IV' as const, amountExpected: 20, amountCounted: 20, countDifference: 0, discrepancyFound: false, witnessName: 'Darnell Williams, MHT', countedBy: 'Maria Santos, RN', status: 'RECONCILED' as const },
+    { id: `${facility.id}-cs-002`, logDate: new Date(`${y}-04-02T07:00:00`), unit: 'Acute Inpatient Unit A', shift: 'Day', medicationName: 'Clonazepam 0.5mg (CIV)', schedule: 'SCHEDULE_IV' as const, amountExpected: 15, amountCounted: 14, countDifference: -1, discrepancyFound: true, witnessName: 'Carmen Reyes, LPN', countedBy: 'Maria Santos, RN', discrepancyExplanation: null, reportedToPharmacy: true, reportedDate: new Date(`${y}-04-02T07:30:00`), status: 'DISCREPANCY_OPEN' as const },
+  ];
+  for (const cs of csLogs) {
+    await prisma.controlledSubstanceLog.upsert({ where: { id: cs.id }, update: {}, create: { ...cs, facilityId: facility.id } });
+  }
+
+  // High alert med audits
+  await prisma.highAlertMedAudit.upsert({
+    where: { id: `${facility.id}-ha-001` },
+    update: {},
+    create: { id: `${facility.id}-ha-001`, facilityId: facility.id, auditDate: new Date(`${y}-03-20`), medication: 'Insulin (all formulations)', unit: 'Medical Unit', auditor: 'Carmen Reyes, LPN', storageCorrect: true, labelingCorrect: true, doubleCheckDone: true, auditFindings: 'No deficiencies noted. All high-alert labels in place. Double-check log current.', actionRequired: false },
+  });
+  await prisma.highAlertMedAudit.upsert({
+    where: { id: `${facility.id}-ha-002` },
+    update: {},
+    create: { id: `${facility.id}-ha-002`, facilityId: facility.id, auditDate: new Date(`${y}-03-20`), medication: 'Lithium (all strengths)', unit: 'Acute Inpatient Unit B', auditor: 'Carmen Reyes, LPN', storageCorrect: true, labelingCorrect: false, doubleCheckDone: true, auditFindings: 'Lithium 300mg and 600mg stored in same bin — labeling not sufficiently differentiated. CAP initiated.', actionRequired: true, actionTaken: 'Separate bins ordered. Interim: additional "VERIFY DOSE" label affixed to Lithium bin.' },
+  });
+
+  // PDMP checks
+  await prisma.pdmpCheck.upsert({
+    where: { id: `${facility.id}-pdmp-001` },
+    update: {},
+    create: { id: `${facility.id}-pdmp-001`, facilityId: facility.id, checkDate: new Date(`${y}-03-10`), patientInitials: 'A.B.', prescriberId: `${facility.id}-prov-001`, prescriptionType: 'Benzodiazepine (Lorazepam)', significantFinding: false, actionTaken: 'No concurrent prescriptions from other prescribers identified.' },
+  });
+
+  // P&T Committee meeting
+  await prisma.ptMeeting.upsert({
+    where: { id: `${facility.id}-pt-001` },
+    update: {},
+    create: {
+      id: `${facility.id}-pt-001`,
+      facilityId: facility.id,
+      meetingDate: new Date(`${y}-02-14`),
+      quorumMet: true,
+      chair: 'Dr. Elena Vasquez, MD',
+      attendees: ['Dr. Elena Vasquez, MD', 'Dr. James Ortega, DO', 'Carmen Reyes, LPN (Pharmacy Liaison)', 'Linda Park, CNO'],
+      agendaItems: ['Q4 Medication Error Trend Review', 'High Alert Medication Policy Update', 'Formulary Addition: Brexpiprazole', 'ADE Reports'],
+      formularyChanges: [{ drug: 'Brexpiprazole (Rexulti)', action: 'ADDED', rationale: 'Evidence-based adjunct for MDD; requested by Dr. Vasquez' }],
+      medErrorsTrended: 3,
+      actionItems: [
+        { item: 'Update high-alert med policy to separate Lithium storage', owner: 'CNO', dueDate: new Date(`${y}-03-15`), status: 'IN_PROGRESS' },
+        { item: 'Staff re-education on two-patient identifier for all high-alert meds', owner: 'Education Coordinator', dueDate: new Date(`${y}-03-31`), status: 'COMPLETED' },
+      ],
+      nextMeetingDate: new Date(`${y}-05-09`),
+      minutesApproved: true,
+    },
+  });
+
+  console.log('  ✅ Seeded 2 CS logs (1 discrepancy), 2 high-alert audits, 1 PDMP check, 1 P&T meeting');
+
+  // ─── GOVERNANCE ───────────────────────────────────────────────────────────
+  console.log('\n🏛️  Seeding governance records...');
+
+  const govDocs = [
+    { id: `${facility.id}-gd-001`, docType: 'MEDICAL_STAFF_BYLAWS' as const, title: 'Medical Staff Bylaws', version: '3.2', effectiveDate: new Date(`${y-1}-07-01`), reviewDate: new Date(`${y+2}-07-01`), approvedBy: 'Governing Body Board', status: 'ACTIVE' as const },
+    { id: `${facility.id}-gd-002`, docType: 'BOARD_BYLAWS' as const, title: 'Board of Directors Bylaws', version: '5.0', effectiveDate: new Date(`${y-2}-01-01`), reviewDate: new Date(`${y+1}-01-01`), approvedBy: 'Chairman of the Board', status: 'ACTIVE' as const },
+    { id: `${facility.id}-gd-003`, docType: 'RULES_REGULATIONS' as const, title: 'Medical Staff Rules and Regulations', version: '2.1', effectiveDate: new Date(`${y-1}-07-01`), reviewDate: new Date(`${y+2}-07-01`), approvedBy: 'Medical Executive Committee', status: 'ACTIVE' as const },
+    { id: `${facility.id}-gd-004`, docType: 'CREDENTIALING_CRITERIA' as const, title: 'Credentialing Policies and Criteria', version: '1.5', effectiveDate: new Date(`${y-1}-01-15`), reviewDate: new Date(`${y}-01-15`), approvedBy: 'Credentials Committee', status: 'UNDER_REVIEW' as const, notes: 'Annual review overdue — scheduled for next Credentials Committee meeting.' },
+  ];
+  for (const gd of govDocs) {
+    await prisma.governanceDocument.upsert({ where: { id: gd.id }, update: {}, create: { ...gd, facilityId: facility.id } });
+  }
+
+  await prisma.committeeMeeting.upsert({
+    where: { id: `${facility.id}-cm-001` },
+    update: {},
+    create: {
+      id: `${facility.id}-cm-001`,
+      facilityId: facility.id,
+      committeeType: 'QUALITY_PATIENT_SAFETY' as const,
+      meetingDate: new Date(`${y}-02-20`),
+      quorumMet: true,
+      chair: 'Linda Park, CNO',
+      attendees: ['Linda Park, CNO', 'Dr. Elena Vasquez, MD', 'James Holloway, CEO', 'Compliance Officer', 'Quality Director'],
+      absentees: [],
+      agendaItems: ['QAPI Metrics Q4 Review', 'Incident Trend Review', 'CAP Status Update', 'Ligature Risk Mitigation Update'],
+      actionItems: [
+        { item: 'CAP-2026-002: Barcode compliance to reach 95% by May 15', owner: 'CNO', dueDate: new Date(`${y}-05-15`), status: 'IN_PROGRESS' },
+        { item: 'Complete all HIGH-priority ligature items by Q1 end', owner: 'Carlos Vega', dueDate: new Date(`${y}-03-31`), status: 'IN_PROGRESS' },
+      ],
+      reportReferences: ['QAPI Dashboard', 'Incident Reports', 'CAP Tracker', 'EOC Report'],
+      minutesApprovedDate: new Date(`${y}-03-06`),
+      nextMeetingDate: new Date(`${y}-04-17`),
+    },
+  });
+
+  await prisma.committeeMeeting.upsert({
+    where: { id: `${facility.id}-cm-002` },
+    update: {},
+    create: {
+      id: `${facility.id}-cm-002`,
+      facilityId: facility.id,
+      committeeType: 'GOVERNING_BODY' as const,
+      meetingDate: new Date(`${y}-03-15`),
+      quorumMet: true,
+      chair: 'Harold Stevens (Board Chair)',
+      attendees: ['Harold Stevens', 'Patricia Nguyen', 'Robert Moore', 'James Holloway, CEO'],
+      absentees: ['Thomas Grant'],
+      agendaItems: ['CEO Report', 'QAPI Annual Report', 'Medical Staff Appointments/Reappointments', 'Financial Review Q1'],
+      actionItems: [
+        { item: 'Approve Dr. Vasquez reappointment per MEC recommendation', owner: 'Board Secretary', dueDate: new Date(`${y}-03-30`), status: 'COMPLETED' },
+      ],
+      reportReferences: ['CEO Report', 'QAPI Annual Report', 'Medical Staff MEC Minutes'],
+      minutesApprovedDate: new Date(`${y}-04-19`),
+      nextMeetingDate: new Date(`${y}-06-21`),
+    },
+  });
+
+  console.log('  ✅ Seeded 4 governance documents, 2 committee meetings');
+
+  // ─── WORKFORCE HEALTH ─────────────────────────────────────────────────────
+  console.log('\n🩺 Seeding employee health records...');
+
+  const empHealthData = [
+    { id: `${facility.id}-eh-001`, employeeId: 'EMP-101', employeeName: 'Maria Santos, RN', department: 'Acute Inpatient', hireDate: new Date(`${y-3}-03-01`), tbScreenDate: new Date(`${y}-01-10`), tbMethod: 'IGRA', tbResult: 'Negative', tbNextDueDate: new Date(`${y+1}-01-10`), fluVaxDate: new Date(`${y-1}-10-15`), fluVaxSeason: `${y-1}-${y}`, fluVaxDeclined: false, covidVaxStatus: 'Fully vaccinated + boosted', bgCheckDate: new Date(`${y-3}-02-15`), licenseVerified: true, fitTestDate: new Date(`${y}-01-10`), fitTestResult: 'PASS', fitTestModel: '3M 1860 N95' },
+    { id: `${facility.id}-eh-002`, employeeId: 'EMP-102', employeeName: 'Darnell Williams, MHT', department: 'Acute Inpatient', hireDate: new Date(`${y-2}-08-15`), tbScreenDate: new Date(`${y}-01-12`), tbMethod: 'TST', tbResult: 'Negative', tbNextDueDate: new Date(`${y+1}-01-12`), fluVaxDate: new Date(`${y-1}-10-20`), fluVaxSeason: `${y-1}-${y}`, fluVaxDeclined: false, covidVaxStatus: 'Fully vaccinated', bgCheckDate: new Date(`${y-2}-08-01`), licenseVerified: false, fitTestDate: new Date(`${y}-01-12`), fitTestResult: 'PASS', fitTestModel: '3M 8210 N95' },
+    { id: `${facility.id}-eh-003`, employeeId: 'EMP-103', employeeName: 'Takeshi Yamamoto, LCSW', department: 'Clinical', hireDate: new Date(`${y-5}-06-01`), tbScreenDate: new Date(`${y-1}-01-08`), tbMethod: 'IGRA', tbResult: 'Negative', tbNextDueDate: new Date(`${y}-01-08`), fluVaxDate: null, fluVaxSeason: null, fluVaxDeclined: true, fluDeclineReason: 'Religious exemption filed', covidVaxStatus: 'Exemption on file', bgCheckDate: new Date(`${y-5}-05-15`), licenseVerified: true, notes: 'TB screening was due 01/08 — OVERDUE. Schedule immediately.' },
+    { id: `${facility.id}-eh-004`, employeeId: 'EMP-001', employeeName: 'James Holloway, CEO', department: 'Administration', hireDate: new Date(`${y-7}-01-01`), tbScreenDate: new Date(`${y}-02-01`), tbMethod: 'IGRA', tbResult: 'Negative', tbNextDueDate: new Date(`${y+1}-02-01`), fluVaxDate: new Date(`${y-1}-10-05`), fluVaxSeason: `${y-1}-${y}`, fluVaxDeclined: false, covidVaxStatus: 'Fully vaccinated + boosted', bgCheckDate: new Date(`${y-7}-12-01`), licenseVerified: false },
+  ];
+
+  for (const eh of empHealthData) {
+    await prisma.employeeHealthRecord.upsert({ where: { id: eh.id }, update: {}, create: { ...eh, facilityId: facility.id } });
+  }
+
+  // OSHA 300 Log
+  await prisma.oshaLog.upsert({
+    where: { id: `${facility.id}-osha-001` },
+    update: {},
+    create: {
+      id: `${facility.id}-osha-001`,
+      facilityId: facility.id,
+      caseNumber: `OSHA-300-${y}-001`,
+      caseYear: y,
+      injuryDate: new Date(`${y}-03-02`),
+      employeeName: 'Darnell Williams, MHT',
+      jobTitle: 'Mental Health Technician',
+      department: 'Acute Inpatient',
+      injuryType: 'PATIENT_ASSAULT' as const,
+      bodyPart: 'Face (above left eyebrow)',
+      description: 'Employee was struck in the face by an acutely agitated patient during de-escalation attempt in the Day Room. 1.5cm laceration sustained; sutured in ED.',
+      daysAway: 2,
+      daysRestriction: 5,
+      recordable: true,
+      privacyCase: false,
+      outcome: 'DAYS_AWAY' as const,
+      rootCause: 'Insufficient staffing ratio during high-acuity patient de-escalation event. CPI training refresher needed for staff.',
+      correctiveAction: 'CPI refresher scheduled for all unit staff. Staffing ratio policy reviewed and updated for high-acuity situations.',
+    },
+  });
+
+  console.log('  ✅ Seeded 4 employee health records, 1 OSHA 300 log entry');
+
+  // ─── DISCHARGE PLANNING ───────────────────────────────────────────────────
+  console.log('\n🏠 Seeding discharge plans...');
+
+  const dischargePlans = [
+    {
+      id: `${facility.id}-dp-001`,
+      patientInitials: 'A.B.',
+      admitDate: new Date(`${y}-03-10`),
+      unit: 'Acute Inpatient Unit A',
+      assessmentStartDate: new Date(`${y}-03-10`),
+      assessmentBy: 'Priya Nair, RN',
+      expectedDisposition: 'HOME_WITH_SERVICES' as const,
+      estimatedDischargeDate: new Date(`${y}-03-24`),
+      primaryDx: 'Major Depressive Disorder with SI (F32.2)',
+      careCoordinator: 'Takeshi Yamamoto, LCSW',
+      familyInvolved: true,
+      barrierNotes: 'Transportation barrier — patient does not drive. Identified family member willing to transport.',
+      moonRequired: false,
+      actualDischargeDate: new Date(`${y}-03-23`),
+      actualDisposition: 'HOME_WITH_SERVICES' as const,
+      referralsSent: ['Outpatient CBT therapist (Dr. R. Chen)', 'Psychiatrist follow-up (Dr. Vasquez telehealth)', 'Crisis line handout given'],
+      transitionCareNote: true,
+      followUpCall1Date: new Date(`${y}-03-25`),
+      followUpCall1By: 'Takeshi Yamamoto, LCSW',
+      followUpCall1Notes: 'Patient at home; feeling stable. Confirmed therapy appointment for 3/28.',
+      followUpResult: 'Successful transition. Patient engaged with outpatient care.',
+      status: 'DISCHARGED' as const,
+    },
+    {
+      id: `${facility.id}-dp-002`,
+      patientInitials: 'K.M.',
+      admitDate: new Date(`${y}-02-14`),
+      unit: 'Acute Inpatient Unit B',
+      assessmentStartDate: new Date(`${y}-02-14`),
+      assessmentBy: 'Carmen Reyes, LPN',
+      expectedDisposition: 'RESIDENTIAL_TREATMENT' as const,
+      estimatedDischargeDate: new Date(`${y}-03-05`),
+      primaryDx: 'Schizoaffective Disorder, Bipolar Type (F25.0)',
+      careCoordinator: 'Takeshi Yamamoto, LCSW',
+      familyInvolved: false,
+      barrierNotes: 'No family support. Homeless at time of admission. Court-ordered (ITA) — discharge requires judge approval.',
+      moonRequired: true,
+      moonIssuedDate: new Date(`${y}-02-22`),
+      referralsSent: ['Arizona Behavioral Health Authority residential referral', 'ACT Team referral'],
+      transitionCareNote: false,
+      status: 'ACTIVE' as const,
+    },
+  ];
+
+  for (const dp of dischargePlans) {
+    await prisma.dischargePlan.upsert({ where: { id: dp.id }, update: {}, create: { ...dp, facilityId: facility.id } });
+  }
+
+  console.log('  ✅ Seeded 2 discharge plans');
+
   console.log('\n✅ Seed complete!\n');
   console.log('─────────────────────────────────────────────────');
   console.log('LOGIN CREDENTIALS:');
