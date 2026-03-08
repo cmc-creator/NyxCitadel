@@ -73,6 +73,48 @@ model Facility {
   eocDeficiencies   EocDeficiency[]
   equipmentPms      EquipmentPm[]
 
+  // Restraint & Seclusion
+  restraintEvents   RestraintEvent[]
+
+  // Infection Control
+  icRiskAssessments  IcRiskAssessment[]
+  haiSurveillance    HaiSurveillance[]
+  icOutbreaks        IcOutbreak[]
+  handHygieneAudits  HandHygieneAudit[]
+
+  // Credentialing
+  providers          Provider[]
+
+  // Treatment Planning
+  treatmentPlans     TreatmentPlan[]
+
+  // HIPAA
+  hipaaBreachLog     HipaaBreachLog[]
+  baaTracker         BaaTracker[]
+
+  // Patient Rights
+  consentRecords     ConsentRecord[]
+  advanceDirectives  AdvanceDirectiveRecord[]
+  moonNotices        MoonNotice[]
+  involuntaryHolds   InvoluntaryHoldLog[]
+
+  // Medication / Pharmacy
+  csLogs             ControlledSubstanceLog[]
+  highAlertAudits    HighAlertMedAudit[]
+  pdmpChecks         PdmpCheck[]
+  ptMeetings         PtMeeting[]
+
+  // Governance
+  committeeMeetings  CommitteeMeeting[]
+  governanceDocs     GovernanceDocument[]
+
+  // Workforce Health
+  employeeHealthRecords EmployeeHealthRecord[]
+  oshaLog               OshaLog[]
+
+  // Discharge Planning
+  dischargePlans     DischargePlan[]
+
   @@map("facilities")
 }
 
@@ -1925,4 +1967,946 @@ enum PmStatus {
   OVERDUE
   IN_PROGRESS
   COMPLETED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RESTRAINT & SECLUSION — CMS §482.13(e)–(f), JCAHO RC.02.01.01
+// ─────────────────────────────────────────────────────────────────────────────
+
+model RestraintEvent {
+  id                  String           @id @default(cuid())
+  facilityId          String
+  facility            Facility         @relation(fields: [facilityId], references: [id])
+  eventNumber         String           // e.g. "RS-2026-001"
+  patientMrn          String?
+  patientInitials     String
+  unit                String
+  eventDate           DateTime
+  eventTime           String           // "14:30"
+  rsType              RsType
+  orderingProvider    String
+  orderDateTime       DateTime
+  initiatedBy         String
+  clinicalJustification String         @db.Text
+  behaviors           String           @db.Text  // Behavior that necessitated R/S
+  lessRestrictiveTried String         @db.Text  // What was tried first
+  // Monitoring (every 15 min)
+  monitoringLogs      Json[]           // [{ time, staff, assessment, vitals }]
+  // Physician face-to-face (required within 1 hour)
+  faceToFaceTime      DateTime?
+  faceToFaceBy        String?
+  // Release
+  releasedAt          DateTime?
+  releasedBy          String?
+  releaseReason       RsReleaseReason?
+  durationMinutes     Int?
+  // Post-event
+  debrief             Boolean          @default(false)
+  debriefDate         DateTime?
+  debriefParticipants String[]
+  debriefNotes        String?          @db.Text
+  injuryOccurred      Boolean          @default(false)
+  injuryDescription   String?          @db.Text
+  // CMS death reporting
+  deathOccurred       Boolean          @default(false)
+  deathReportedToCms  Boolean          @default(false)
+  deathReportDate     DateTime?
+  status              RsStatus         @default(OPEN)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  @@map("restraint_events")
+}
+
+enum RsType {
+  PHYSICAL_RESTRAINT
+  MECHANICAL_RESTRAINT
+  CHEMICAL_RESTRAINT
+  SECLUSION
+  PHYSICAL_HOLD         // Manual hold, under 15 min, CPS-exempt in some states
+}
+
+enum RsReleaseReason {
+  BEHAVIORAL_CRITERIA_MET
+  PHYSICIAN_ORDER_EXPIRED
+  PATIENT_REQUEST_GRANTED
+  SAFETY_CONCERN_RESOLVED
+  OTHER
+}
+
+enum RsStatus {
+  OPEN        // Event in progress
+  MONITORING  // Released, within monitoring window
+  DEBRIEFED   // Debrief completed
+  CLOSED      // All documentation complete
+  REPORTED    // Reported to CMS (death or serious injury)
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INFECTION CONTROL — CMS §482.42, JCAHO IC standards
+// ─────────────────────────────────────────────────────────────────────────────
+
+model IcRiskAssessment {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  assessmentYear  Int
+  conductedDate   DateTime
+  conductedBy     String
+  reviewedBy      String?
+  status          IcraStatus      @default(DRAFT)
+  riskAreas       Json[]          // [{ area, risk, rating, mitigationGoal }]
+  goals           Json[]          // Annual IC goals
+  approvedDate    DateTime?
+  approvedBy      String?
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("ic_risk_assessments")
+}
+
+enum IcraStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  SUPERSEDED
+}
+
+model HaiSurveillance {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  reportMonth     Int             // 1-12
+  reportYear      Int
+  haiType         HaiType
+  caseCount       Int             @default(0)
+  patientDays     Int?
+  rate            Float?          // Per 1000 patient-days
+  nhsnBenchmark   Float?          // NHSN SIR benchmark
+  sir             Float?          // Standardized infection ratio
+  notes           String?         @db.Text
+  submittedToNhsn Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("hai_surveillance")
+}
+
+enum HaiType {
+  CAUTI           // Catheter-associated UTI
+  CLABSI          // Central line bloodstream infection
+  SSI             // Surgical site infection
+  MRSA_BSI        // MRSA bacteremia
+  CDI             // C. difficile infection
+  VAP             // Ventilator-associated pneumonia
+  HAP             // Hospital-acquired pneumonia
+  SSI_COLON
+  OTHER
+}
+
+model IcOutbreak {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  outbreakNumber  String          // "OB-2026-001"
+  organism        String
+  unitAffected    String
+  caseCount       Int             @default(0)
+  startDate       DateTime
+  endDate         DateTime?
+  reportedToHealth Boolean       @default(false)
+  reportDate      DateTime?
+  containmentActions String[]
+  status          OutbreakStatus  @default(ACTIVE)
+  summary         String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("ic_outbreaks")
+}
+
+enum OutbreakStatus {
+  ACTIVE
+  CONTAINED
+  RESOLVED
+  SURVEILLANCE
+}
+
+model HandHygieneAudit {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  auditDate       DateTime
+  unit            String
+  auditor         String
+  opportunities   Int
+  compliant       Int
+  complianceRate  Float           // calculated: compliant/opportunities * 100
+  staffType       String?         // RN, MD, CNA, etc.
+  notes           String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("hand_hygiene_audits")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CREDENTIALING & PRIVILEGING — JCAHO MS.06.01
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Provider {
+  id              String            @id @default(cuid())
+  facilityId      String
+  facility        Facility          @relation(fields: [facilityId], references: [id])
+  npi             String?
+  firstName       String
+  lastName        String
+  credentials     String            // "MD", "DO", "APRN", etc.
+  specialty       String
+  providerType    ProviderType
+  department      String?
+  primaryEmail    String?
+  phone           String?
+  status          ProviderStatus    @default(ACTIVE)
+  initialAppointDate DateTime?
+  reappointmentDate  DateTime?
+  licenses        ProviderLicense[]
+  privileges      ClinicalPrivilege[]
+  oppeRecords     OppeRecord[]
+  fppeRecords     FppeRecord[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@map("providers")
+}
+
+enum ProviderType {
+  PHYSICIAN
+  ADVANCED_PRACTICE
+  DENTIST
+  PSYCHOLOGIST
+  ALLIED_HEALTH
+  TELEMEDICINE
+}
+
+enum ProviderStatus {
+  ACTIVE
+  PENDING
+  SUSPENDED
+  RESIGNED
+  EXPIRED
+  REVOKED
+}
+
+model ProviderLicense {
+  id              String              @id @default(cuid())
+  providerId      String
+  provider        Provider            @relation(fields: [providerId], references: [id])
+  licenseType     String              // "Medical License", "DEA", "APRN", etc.
+  licenseNumber   String
+  state           String
+  issuedDate      DateTime?
+  expiryDate      DateTime
+  isVerified      Boolean             @default(false)
+  verifiedDate    DateTime?
+  verifiedBy      String?
+  status          LicenseStatus       @default(ACTIVE)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@map("provider_licenses")
+}
+
+enum LicenseStatus {
+  ACTIVE
+  EXPIRED
+  SUSPENDED
+  REVOKED
+  PENDING_RENEWAL
+}
+
+model ClinicalPrivilege {
+  id              String              @id @default(cuid())
+  providerId      String
+  provider        Provider            @relation(fields: [providerId], references: [id])
+  category        String              // "Psychiatry – Inpatient", "Procedures", etc.
+  description     String              @db.Text
+  grantedDate     DateTime
+  expiryDate      DateTime?
+  status          PrivilegeStatus     @default(GRANTED)
+  requiresFppe    Boolean             @default(false)
+  notes           String?             @db.Text
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@map("clinical_privileges")
+}
+
+enum PrivilegeStatus {
+  GRANTED
+  PROVISIONAL   // Pending FPPE
+  SUSPENDED
+  REVOKED
+  EXPIRED
+}
+
+model OppeRecord {
+  id              String          @id @default(cuid())
+  providerId      String
+  provider        Provider        @relation(fields: [providerId], references: [id])
+  periodStart     DateTime
+  periodEnd       DateTime
+  reviewCycle     String          // "Q1 2026", "Annual 2025"
+  totalCases      Int             @default(0)
+  compliantCases  Int             @default(0)
+  metrics         Json[]          // [{ metric, numerator, denominator, rate, benchmark }]
+  overallRating   OppeRating      @default(ACCEPTABLE)
+  reviewedBy      String?
+  approvedByMec   Boolean         @default(false)
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("oppe_records")
+}
+
+enum OppeRating {
+  EXCELLENT
+  ACCEPTABLE
+  NEEDS_IMPROVEMENT
+  UNSATISFACTORY
+}
+
+model FppeRecord {
+  id              String          @id @default(cuid())
+  providerId      String
+  provider        Provider        @relation(fields: [providerId], references: [id])
+  triggerReason   String          // "New privilege", "Concern identified"
+  privilegeArea   String
+  startDate       DateTime
+  targetCases     Int             @default(10)
+  casesReviewed   Int             @default(0)
+  findings        String?         @db.Text
+  outcome         FppeOutcome?
+  completedDate   DateTime?
+  reviewedBy      String?
+  notes           String?         @db.Text
+  status          FppeStatus      @default(IN_PROGRESS)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("fppe_records")
+}
+
+enum FppeOutcome {
+  FULL_PRIVILEGES_GRANTED
+  PRIVILEGES_MODIFIED
+  PRIVILEGES_REVOKED
+  ADDITIONAL_FPPE_REQUIRED
+}
+
+enum FppeStatus {
+  IN_PROGRESS
+  COMPLETED
+  EXTENDED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TREATMENT PLANNING — CMS, JCAHO PC.01.02.03, ADHS (Psych-specific)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model TreatmentPlan {
+  id                  String              @id @default(cuid())
+  facilityId          String
+  facility            Facility            @relation(fields: [facilityId], references: [id])
+  patientMrn          String?
+  patientInitials     String
+  admitDate           DateTime
+  unit                String
+  primaryDx           String
+  treatmentTeam       String[]            // Names / roles
+  planCreatedDate     DateTime
+  planCreatedBy       String
+  patientParticipated Boolean             @default(true)
+  participationNotes  String?
+  goals               Json[]              // [{ goalText, targetDate, progress }]
+  dischargeGoal       String?             @db.Text
+  estimatedLos        String?
+  status              TreatmentPlanStatus @default(ACTIVE)
+  dischargedDate      DateTime?
+  reviews             TreatmentPlanReview[]
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  @@map("treatment_plans")
+}
+
+enum TreatmentPlanStatus {
+  ACTIVE
+  UPDATED
+  DISCHARGED
+  TRANSFERRED
+}
+
+model TreatmentPlanReview {
+  id              String          @id @default(cuid())
+  planId          String
+  plan            TreatmentPlan   @relation(fields: [planId], references: [id])
+  reviewDate      DateTime
+  reviewedBy      String
+  attendees       String[]
+  progressSummary String          @db.Text
+  goalsUpdated    Boolean         @default(false)
+  dischargeTarget String?
+  signature       String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("treatment_plan_reviews")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HIPAA / PRIVACY COMPLIANCE — 45 CFR Parts 160 & 164
+// ─────────────────────────────────────────────────────────────────────────────
+
+model HipaaBreachLog {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  incidentNumber  String          // "HIPAA-2026-001"
+  discoveryDate   DateTime
+  incidentDate    DateTime?
+  breachType      BreachType
+  phiInvolved     String[]        // Types of PHI exposed
+  individualCount Int?
+  description     String          @db.Text
+  immediateActions String         @db.Text
+  riskAssessment  BreachRisk      @default(LOW)
+  reportableBreach Boolean       @default(false)
+  hhsNotifyDate   DateTime?       // Must be within 60 days if 500+ individuals
+  mediaNotifyDate DateTime?
+  individualNotifyDate DateTime?
+  status          BreachStatus    @default(UNDER_REVIEW)
+  closedDate      DateTime?
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("hipaa_breach_log")
+}
+
+enum BreachType {
+  UNAUTHORIZED_ACCESS
+  IMPROPER_DISPOSAL
+  LOST_STOLEN_DEVICE
+  RANSOMWARE_CYBERATTACK
+  MISDIRECTED_COMMUNICATIONS
+  INSIDER_THREAT
+  VERBAL_DISCLOSURE
+  OTHER
+}
+
+enum BreachRisk {
+  LOW         // Not likely reportable
+  MEDIUM      // Investigation ongoing
+  HIGH        // Likely reportable
+  CONFIRMED   // Confirmed reportable breach
+}
+
+enum BreachStatus {
+  UNDER_REVIEW
+  INVESTIGATION
+  NOTIFIED
+  CLOSED
+  REPORTED_TO_HHS
+}
+
+model BaaTracker {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  vendorName      String
+  vendorContact   String?
+  vendorEmail     String?
+  serviceDescription String       @db.Text
+  agreementDate   DateTime
+  expiryDate      DateTime?
+  autoRenew       Boolean         @default(false)
+  status          BaaStatus       @default(ACTIVE)
+  documentUrl     String?
+  phoneHipaaVerified Boolean      @default(false)
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("baa_tracker")
+}
+
+enum BaaStatus {
+  ACTIVE
+  EXPIRED
+  PENDING_RENEWAL
+  TERMINATED
+  UNDER_NEGOTIATION
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PATIENT RIGHTS — CMS §482.13, JCAHO RI standards
+// ─────────────────────────────────────────────────────────────────────────────
+
+model ConsentRecord {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  patientMrn      String?
+  patientInitials String
+  admitDate       DateTime?
+  consentType     ConsentType
+  consentDate     DateTime
+  obtainedBy      String
+  witnessName     String?
+  patientCapacityDetermined Boolean @default(true)
+  legalRepresentative String?     // if patient lacked capacity
+  status          ConsentStatus   @default(SIGNED)
+  revokedDate     DateTime?
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("consent_records")
+}
+
+enum ConsentType {
+  GENERAL_TREATMENT
+  MEDICATION
+  PROCEDURE
+  TELEHEALTH
+  PHOTOGRAPHY_RECORDING
+  RELEASE_OF_INFO
+  PARTICIPATION_IN_RESEARCH
+  ECT             // Electroconvulsive therapy
+  SPECIALIZED_TREATMENT
+}
+
+enum ConsentStatus {
+  SIGNED
+  VERBAL
+  REFUSED
+  REVOKED
+  UNABLE_CAPACITY
+}
+
+model AdvanceDirectiveRecord {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  patientMrn      String?
+  patientInitials String
+  admitDate       DateTime
+  adExists        Boolean
+  adType          String?         // "Living Will", "DPAHC", "POLST", "None"
+  adOnFile        Boolean         @default(false)
+  informationProvided Boolean     @default(true)
+  providedBy      String?
+  patientDeclined Boolean         @default(false)
+  documentedBy    String
+  documentedDate  DateTime
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("advance_directive_records")
+}
+
+model MoonNotice {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  patientMrn      String?
+  patientInitials String
+  admitDate       DateTime
+  observationStartDate DateTime
+  noticeIssuedDate DateTime?
+  noticeIssuedBy  String?
+  patientSignedDate DateTime?
+  patientDeclinedSignature Boolean @default(false)
+  status          MoonStatus      @default(PENDING)
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("moon_notices")
+}
+
+enum MoonStatus {
+  PENDING
+  ISSUED
+  SIGNED
+  DECLINED
+  NOT_APPLICABLE
+}
+
+model InvoluntaryHoldLog {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  patientMrn      String?
+  patientInitials String
+  holdType        String          // "Title 36 – 72hr", "Court Order 5-Day", etc.
+  holdStartDate   DateTime
+  holdExpiryDate  DateTime
+  petitionerName  String?
+  orderingPhysician String
+  legalCounselNotified Boolean   @default(false)
+  courtHearingDate DateTime?
+  outcome         String?
+  notes           String?         @db.Text
+  status          HoldStatus      @default(ACTIVE)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("involuntary_hold_log")
+}
+
+enum HoldStatus {
+  ACTIVE
+  EXTENDED
+  DISCHARGED
+  CONVERTED_VOLUNTARY
+  COURT_ORDERED_CONTINUED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MEDICATION MANAGEMENT / PHARMACY — CMS MM CoP, JCAHO MM standards
+// ─────────────────────────────────────────────────────────────────────────────
+
+model ControlledSubstanceLog {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  logDate         DateTime
+  unit            String
+  shift           String          // "Day", "Evening", "Night"
+  medicationName  String
+  schedule        CsSchedule      // DEA Schedule II-V
+  discrepancyFound Boolean        @default(false)
+  amountExpected  Float
+  amountCounted   Float
+  countDifference Float
+  witnessName     String
+  countedBy       String
+  discrepancyExplanation String?  @db.Text
+  reportedToPharmacy Boolean      @default(false)
+  reportedDate    DateTime?
+  status          CsLogStatus     @default(RECONCILED)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("controlled_substance_log")
+}
+
+enum CsSchedule {
+  SCHEDULE_II
+  SCHEDULE_III
+  SCHEDULE_IV
+  SCHEDULE_V
+}
+
+enum CsLogStatus {
+  RECONCILED
+  DISCREPANCY_OPEN
+  DISCREPANCY_EXPLAINED
+  REPORTED_DEA
+  INVESTIGATION
+}
+
+model HighAlertMedAudit {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  auditDate       DateTime
+  medication      String
+  unit            String
+  auditor         String
+  storageCorrect  Boolean
+  labelingCorrect Boolean
+  doubleCheckDone Boolean
+  auditFindings   String?         @db.Text
+  actionRequired  Boolean         @default(false)
+  actionTaken     String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("high_alert_med_audits")
+}
+
+model PdmpCheck {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  checkDate       DateTime
+  patientInitials String
+  patientDob      DateTime?
+  prescriberId    String
+  prescriptionType String
+  significantFinding Boolean      @default(false)
+  findingNotes    String?         @db.Text
+  actionTaken     String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("pdmp_checks")
+}
+
+model PtMeeting {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  meetingDate     DateTime
+  quorumMet       Boolean         @default(true)
+  chair           String
+  attendees       String[]
+  agendaItems     String[]
+  formularyChanges Json[]         // [{ drug, action, rationale }]
+  medErrorsTrended Int            @default(0)
+  actionItems     Json[]          // [{ item, owner, dueDate }]
+  nextMeetingDate DateTime?
+  minutesApproved Boolean         @default(false)
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("pt_meetings")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GOVERNANCE / COMMITTEES — JCAHO GV standards
+// ─────────────────────────────────────────────────────────────────────────────
+
+model CommitteeMeeting {
+  id              String            @id @default(cuid())
+  facilityId      String
+  facility        Facility          @relation(fields: [facilityId], references: [id])
+  committeeType   CommitteeType
+  meetingDate     DateTime
+  quorumMet       Boolean           @default(true)
+  chair           String
+  attendees       String[]
+  absentees       String[]
+  agendaItems     String[]
+  actionItems     Json[]            // [{ item, owner, dueDate, status }]
+  reportReferences String[]         // Modules / reports reviewed (e.g. QAPI, IC)
+  minutesApprovedDate DateTime?
+  nextMeetingDate DateTime?
+  notes           String?           @db.Text
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@map("committee_meetings")
+}
+
+enum CommitteeType {
+  GOVERNING_BODY
+  MEDICAL_EXECUTIVE
+  QUALITY_PATIENT_SAFETY
+  INFECTION_CONTROL
+  PHARMACY_THERAPEUTICS
+  PEER_REVIEW
+  ENVIRONMENT_OF_CARE
+  EMERGENCY_PREPAREDNESS
+  ETHICS
+  CREDENTIALS
+  FINANCE
+  COMPLIANCE
+}
+
+model GovernanceDocument {
+  id              String              @id @default(cuid())
+  facilityId      String
+  facility        Facility            @relation(fields: [facilityId], references: [id])
+  docType         GovDocType
+  title           String
+  version         String?
+  effectiveDate   DateTime
+  reviewDate      DateTime?
+  approvedBy      String?
+  status          GovDocStatus        @default(ACTIVE)
+  documentUrl     String?
+  notes           String?             @db.Text
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@map("governance_documents")
+}
+
+enum GovDocType {
+  MEDICAL_STAFF_BYLAWS
+  BOARD_BYLAWS
+  RULES_REGULATIONS
+  CREDENTIALING_CRITERIA
+  PRIVILEGE_DELINEATION
+  CONFLICT_OF_INTEREST
+  DELEGATION_AUTHORITY
+  RESOLUTION
+  SELF_ASSESSMENT
+}
+
+enum GovDocStatus {
+  ACTIVE
+  UNDER_REVIEW
+  SUPERSEDED
+  ARCHIVED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// WORKFORCE HEALTH & SAFETY — OSHA 300, CMS §482.11
+// ─────────────────────────────────────────────────────────────────────────────
+
+model EmployeeHealthRecord {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  employeeId      String?
+  employeeName    String
+  department      String
+  hireDate        DateTime?
+  // TB Screening
+  tbScreenDate    DateTime?
+  tbMethod        String?         // "IGRA", "TST", "CXR"
+  tbResult        String?         // "Negative", "Positive", "Indeterminate"
+  tbNextDueDate   DateTime?
+  // Flu Vaccine
+  fluVaxDate      DateTime?
+  fluVaxSeason    String?         // "2025-2026"
+  fluVaxDeclined  Boolean         @default(false)
+  fluDeclineReason String?
+  // COVID
+  covidVaxStatus  String?
+  // Other clearances
+  bgCheckDate     DateTime?
+  licenseVerified Boolean         @default(false)
+  // N95 Fit Test
+  fitTestDate     DateTime?
+  fitTestResult   String?
+  fitTestModel    String?
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("employee_health_records")
+}
+
+model OshaLog {
+  id              String          @id @default(cuid())
+  facilityId      String
+  facility        Facility        @relation(fields: [facilityId], references: [id])
+  caseNumber      String          // "OSHA-300-2026-001"
+  caseYear        Int
+  injuryDate      DateTime
+  employeeName    String
+  jobTitle        String
+  department      String
+  injuryType      OshaInjuryType
+  bodyPart        String
+  description     String          @db.Text
+  daysAway        Int             @default(0)
+  daysRestriction Int             @default(0)
+  recordable      Boolean         @default(true)
+  privacyCase     Boolean         @default(false)
+  outcome         OshaOutcome     @default(INJURY_ILLNESS)
+  wouldRecur      Boolean         @default(false)
+  rootCause       String?         @db.Text
+  correctiveAction String?        @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("osha_log")
+}
+
+enum OshaInjuryType {
+  NEEDLESTICK_SHARPS
+  PATIENT_HANDLING_MUSCULOSKELETAL
+  SLIP_TRIP_FALL
+  STRUCK_BY_OBJECT
+  PATIENT_ASSAULT
+  CHEMICAL_EXPOSURE
+  WORKPLACE_VIOLENCE
+  REPETITIVE_MOTION
+  OTHER
+}
+
+enum OshaOutcome {
+  INJURY_ILLNESS
+  DAYS_AWAY
+  JOB_TRANSFER_RESTRICTION
+  MEDICAL_TREATMENT_ONLY
+  FATALITY
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DISCHARGE PLANNING — CMS §482.43, Conditions of Participation
+// ─────────────────────────────────────────────────────────────────────────────
+
+model DischargePlan {
+  id                  String              @id @default(cuid())
+  facilityId          String
+  facility            Facility            @relation(fields: [facilityId], references: [id])
+  patientMrn          String?
+  patientInitials     String
+  admitDate           DateTime
+  unit                String
+  assessmentStartDate DateTime            // Within 24h of admission per CMS
+  assessmentBy        String
+  expectedDisposition DischargeDisposition
+  estimatedDischargeDate DateTime?
+  insuranceAuth       String?
+  primaryDx           String
+  careCoordinator     String?
+  familyInvolved      Boolean             @default(false)
+  barrierNotes        String?             @db.Text
+  // MOON notice tracking
+  moonRequired        Boolean             @default(false)
+  moonIssuedDate      DateTime?
+  // Actual discharge
+  actualDischargeDate DateTime?
+  actualDisposition   DischargeDisposition?
+  referralsSent       String[]
+  transitionCareNote  Boolean             @default(false)
+  // Post-discharge
+  followUpCall1Date   DateTime?
+  followUpCall1By     String?
+  followUpCall1Notes  String?
+  followUpCall2Date   DateTime?
+  followUpCall2By     String?
+  followUpResult      String?
+  status              DischargePlanStatus @default(ACTIVE)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  @@map("discharge_plans")
+}
+
+enum DischargeDisposition {
+  HOME_INDEPENDENT
+  HOME_WITH_SERVICES
+  ASSISTED_LIVING
+  SNF_REHAB
+  LTAC
+  INPATIENT_PSYCH
+  RESIDENTIAL_TREATMENT
+  CRISIS_RESPITE
+  JAIL_CORRECTIONAL
+  AMA               // Against medical advice
+  DECEASED
+  TRANSFERRED_ACUTE
+  OTHER
+}
+
+enum DischargePlanStatus {
+  ACTIVE
+  UPDATED
+  DISCHARGED
+  TRANSFERRED
+  AMA
 }

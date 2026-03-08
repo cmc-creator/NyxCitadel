@@ -38,6 +38,15 @@ import {
   HardHat,
   CircleAlert,
   Wrench,
+  ShieldOff,
+  Biohazard,
+  UserCheck,
+  Lock,
+  HeartHandshake,
+  Pill,
+  Users2,
+  Truck,
+  TestTube2,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -127,6 +136,105 @@ const navItems: NavItem[] = [
       { href: '/eoc/equipment',   label: 'Equipment PM',    icon: Wrench },
     ],
   },
+  // ── Regulatory Compliance Modules ────────────────────────────
+  {
+    href: '/restraint-seclusion',
+    label: 'Restraint & Seclusion',
+    icon: ShieldOff,
+    badge: 'CMS',
+    badgeColor: 'bg-red-100 text-red-700',
+  },
+  {
+    href: '/infection-control',
+    label: 'Infection Control',
+    icon: Biohazard,
+    badge: 'IC',
+    badgeColor: 'bg-teal-100 text-teal-700',
+    children: [
+      { href: '/infection-control/icra',          label: 'ICRA Assessments', icon: TestTube2 },
+      { href: '/infection-control/hai',            label: 'HAI Surveillance',  icon: Biohazard },
+      { href: '/infection-control/outbreaks',      label: 'Outbreak Tracking', icon: AlertTriangle },
+      { href: '/infection-control/hand-hygiene',   label: 'Hand Hygiene',      icon: ShieldCheck },
+    ],
+  },
+  {
+    href: '/credentialing',
+    label: 'Credentialing',
+    icon: UserCheck,
+    badge: 'JCAHO',
+    badgeColor: 'bg-indigo-100 text-indigo-700',
+    children: [
+      { href: '/credentialing/providers', label: 'Provider Directory', icon: UserCheck },
+      { href: '/credentialing/licenses',  label: 'License Tracker',    icon: FileText },
+      { href: '/credentialing/oppe',      label: 'OPPE / FPPE',        icon: ClipboardCheck },
+    ],
+  },
+  {
+    href: '/treatment-plans',
+    label: 'Treatment Planning',
+    icon: ClipboardList,
+    badge: 'ADHS',
+    badgeColor: 'bg-violet-100 text-violet-700',
+  },
+  {
+    href: '/hipaa',
+    label: 'HIPAA / Privacy',
+    icon: Lock,
+    badge: 'HIPAA',
+    badgeColor: 'bg-blue-100 text-blue-700',
+    children: [
+      { href: '/hipaa/breaches', label: 'Breach Log', icon: AlertTriangle },
+      { href: '/hipaa/baa',      label: 'BAA Tracker', icon: FileText },
+    ],
+  },
+  {
+    href: '/patient-rights',
+    label: 'Patient Rights',
+    icon: HeartHandshake,
+    badge: 'CMS',
+    badgeColor: 'bg-rose-100 text-rose-700',
+    children: [
+      { href: '/patient-rights/consents',             label: 'Consent Records',     icon: FileText },
+      { href: '/patient-rights/advance-directives',   label: 'Advance Directives',  icon: ClipboardCheck },
+      { href: '/patient-rights/holds',                label: 'Involuntary Holds',   icon: ShieldOff, badge: 'Title 36', badgeColor: 'bg-red-100 text-red-700' },
+    ],
+  },
+  {
+    href: '/pharmacy',
+    label: 'Pharmacy / Meds',
+    icon: Pill,
+    children: [
+      { href: '/pharmacy/controlled-substances', label: 'Controlled Substances', icon: ClipboardList },
+      { href: '/pharmacy/high-alert',            label: 'High-Alert Meds',       icon: AlertTriangle },
+      { href: '/pharmacy/pdmp',                  label: 'PDMP Check Log',        icon: Search },
+    ],
+  },
+  {
+    href: '/governance',
+    label: 'Governance',
+    icon: Building2,
+    children: [
+      { href: '/governance/committees', label: 'Committees',          icon: Users2 },
+      { href: '/governance/documents',  label: 'Governance Docs',     icon: FileText },
+    ],
+  },
+  {
+    href: '/workforce-health',
+    label: 'Workforce Health',
+    icon: Users2,
+    children: [
+      { href: '/workforce-health/employee-health', label: 'Employee Health', icon: HeartHandshake },
+      { href: '/workforce-health/osha',            label: 'OSHA 300 Log',    icon: HardHat },
+    ],
+  },
+  {
+    href: '/discharge-planning',
+    label: 'Discharge Planning',
+    icon: Truck,
+    badge: 'CMS',
+    badgeColor: 'bg-sky-100 text-sky-700',
+  },
+  // ─────────────────────────────────────────────────────────────
   {
     href: '/surveys',
     label: 'Surveys & Inspections',
