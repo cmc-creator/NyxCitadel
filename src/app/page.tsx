@@ -98,6 +98,27 @@ const stats = [
   { value: 'Real-Time', label: 'Regulatory Alerts', sub: 'Before deadlines hit' },
 ];
 
+const testimonials = [
+  {
+    quote: 'We went from a 14-finding survey to zero deficiencies in 18 months. NyxCitadel gave us the visibility we never had before.',
+    author: 'Chief Compliance Officer',
+    org: '60-Bed Acute Psychiatric Hospital · Arizona',
+    stars: 5,
+  },
+  {
+    quote: 'Our board used to ask why compliance costs kept rising with no results. Now I hand them a one-page report and they understand everything.',
+    author: 'CEO',
+    org: 'Behavioral Health Network · 3 Facilities',
+    stars: 5,
+  },
+  {
+    quote: 'We had an ADHS unannounced survey 6 weeks after go-live. Our CAPs, policies, and incident records were all in one place. We were ready.',
+    author: 'Director of Quality',
+    org: 'Crisis Stabilization & Residential Program · Southwest',
+    stars: 5,
+  },
+];
+
 const pricingTiers = [
   {
     name: 'Starter',
@@ -415,26 +436,7 @@ export default async function RootPage() {
           ))}
         </div>
         <div className="grid md:grid-cols-3 gap-5">
-          {[
-            {
-              quote: “We went from a 14-finding survey to zero deficiencies in 18 months. NyxCitadel gave us the visibility we never had before.”,
-              author: 'Chief Compliance Officer',
-              org: '60-Bed Acute Psychiatric Hospital · Arizona',
-              stars: 5,
-            },
-            {
-              quote: “Our board used to ask why compliance costs kept rising with no results. Now I hand them a one-page report and they understand everything.”,
-              author: 'CEO',
-              org: 'Behavioral Health Network · 3 Facilities',
-              stars: 5,
-            },
-            {
-              quote: “We had a ADHS unannounced survey 6 weeks after go-live. Our CAPs, policies, and incident records were all in one place. We were ready.”,
-              author: 'Director of Quality',
-              org: 'Crisis Stabilization &amp; Residential Program · Southwest',
-              stars: 5,
-            },
-          ].map((t, i) => (
+          {testimonials.map((t, i) => (
             <div key={i} className="bg-slate-900/50 border border-white/8 rounded-2xl p-7 hover:border-purple-500/25 transition-all">
               <div className="flex gap-0.5 mb-4">
                 {Array.from({ length: t.stars }).map((_, j) => (
@@ -444,7 +446,7 @@ export default async function RootPage() {
               <p className="text-sm text-slate-300 leading-relaxed mb-5 italic">&ldquo;{t.quote}&rdquo;</p>
               <div>
                 <p className="text-xs font-semibold text-white">{t.author}</p>
-                <p className="text-xs text-slate-500" dangerouslySetInnerHTML={{ __html: t.org }} />
+                <p className="text-xs text-slate-500">{t.org}</p>
               </div>
             </div>
           ))}
