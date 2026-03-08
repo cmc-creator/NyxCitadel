@@ -44,18 +44,18 @@ const ICON_MAP: Record<string, React.ElementType> = {
 };
 
 const GROUP_COLORS: Record<string, string> = {
-  calendar: 'text-purple-600 bg-purple-50',
-  policy:   'text-blue-600   bg-blue-50',
-  training: 'text-green-600  bg-green-50',
-  incident: 'text-red-600    bg-red-50',
-  cap:      'text-orange-600 bg-orange-50',
-  grievance:'text-pink-600   bg-pink-50',
-  survey:   'text-teal-600   bg-teal-50',
-  iriad:    'text-rose-600   bg-rose-50',
-  rca:      'text-indigo-600 bg-indigo-50',
-  qoc:      'text-violet-600 bg-violet-50',
-  risk:     'text-amber-600  bg-amber-50',
-  doc:      'text-slate-600  bg-slate-100',
+  calendar: 'text-purple-400 bg-purple-950/40',
+  policy:   'text-blue-400   bg-blue-950/40',
+  training: 'text-green-400  bg-green-950/40',
+  incident: 'text-red-400    bg-red-950/40',
+  cap:      'text-orange-400 bg-orange-950/40',
+  grievance:'text-pink-400   bg-pink-950/40',
+  survey:   'text-teal-400   bg-teal-950/40',
+  iriad:    'text-rose-400   bg-rose-950/40',
+  rca:      'text-indigo-400 bg-indigo-950/40',
+  qoc:      'text-violet-400 bg-violet-950/40',
+  risk:     'text-amber-400  bg-amber-950/40',
+  doc:      'text-slate-400  bg-slate-800/50',
 };
 
 function SearchContent() {
@@ -104,8 +104,8 @@ function SearchContent() {
     <div className="max-w-3xl space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Search className="w-6 h-6 text-purple-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <Search className="w-6 h-6 text-purple-400" />
           Global Search
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Search across all compliance modules — policies, incidents, CAPs, training, surveys, and more.</p>
@@ -119,7 +119,7 @@ function SearchContent() {
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Search by keyword, number, name, or description…"
-          className="w-full pl-12 pr-4 py-3.5 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-900"
+          className="w-full pl-12 pr-4 py-3.5 text-sm bg-card border border-border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-foreground placeholder:text-slate-500"
         />
         {loading && (
           <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 animate-spin" />
@@ -154,18 +154,18 @@ function SearchContent() {
                     <h2 className="text-xs font-semibold text-slate-600 uppercase tracking-wide">{group.label}</h2>
                     <span className="text-xs text-slate-400 ml-1">({group.items.length})</span>
                   </div>
-                  <div className="bg-white border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-50">
+                  <div className="bg-card border border-border rounded-xl overflow-hidden divide-y divide-border/50">
                     {group.items.map(item => (
                       <Link
                         key={item.id}
                         href={item.href}
-                        className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50 transition-colors group"
+                        className="flex items-center gap-4 px-5 py-3.5 hover:bg-white/5 transition-colors group"
                       >
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 group-hover:text-purple-700 truncate">{item.title}</p>
+                          <p className="text-sm font-medium text-foreground group-hover:text-purple-400 truncate">{item.title}</p>
                           <p className="text-xs text-slate-400 truncate mt-0.5">{item.meta}</p>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-purple-500 flex-shrink-0" />
+                        <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-purple-400 flex-shrink-0" />
                       </Link>
                     ))}
                   </div>
@@ -178,16 +178,16 @@ function SearchContent() {
 
       {/* Empty state hint */}
       {!searched && !query && (
-        <div className="bg-white border border-slate-200 rounded-xl p-8 text-center">
-          <Search className="w-10 h-10 text-slate-200 mx-auto mb-3" />
-          <p className="text-sm text-slate-500 font-medium">Start typing to search</p>
-          <p className="text-xs text-slate-400 mt-1">Searches across 12 modules including policies, incidents, CAPs, surveys, grievances, and more.</p>
+        <div className="bg-card border border-border rounded-xl p-8 text-center">
+          <Search className="w-10 h-10 text-slate-700 mx-auto mb-3" />
+          <p className="text-sm text-slate-400 font-medium">Start typing to search</p>
+          <p className="text-xs text-slate-500 mt-1">Searches across 12 modules including policies, incidents, CAPs, surveys, grievances, and more.</p>
           <div className="mt-4 flex flex-wrap gap-2 justify-center">
             {['CAP-2026', 'restraint', 'fire drill', 'HIPAA', 'John Doe', 'JC mock survey'].map(hint => (
               <button
                 key={hint}
                 onClick={() => setQuery(hint)}
-                className="text-xs bg-slate-100 text-slate-600 hover:bg-purple-50 hover:text-purple-700 px-3 py-1.5 rounded-full transition"
+                className="text-xs bg-slate-800/60 text-slate-400 hover:bg-purple-950/40 hover:text-purple-300 px-3 py-1.5 rounded-full transition"
               >
                 {hint}
               </button>

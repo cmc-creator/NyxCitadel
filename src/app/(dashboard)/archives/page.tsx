@@ -164,8 +164,8 @@ export default async function ArchivesPage({
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <Archive className="w-6 h-6 text-slate-600" />
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <Archive className="w-6 h-6 text-slate-400" />
             Compliance Archive
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -176,7 +176,7 @@ export default async function ArchivesPage({
           <a
             href={`/archives?year=${year}`}
             onClick={(e) => { e.preventDefault(); window.print(); }}
-            className="inline-flex items-center gap-1.5 text-sm text-slate-600 border border-slate-200 bg-white hover:bg-slate-50 px-3 py-1.5 rounded-lg transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-slate-400 border border-border bg-card hover:bg-white/5 px-3 py-1.5 rounded-lg transition-colors"
           >
             <Printer className="w-3.5 h-3.5" /> Print / Export
           </a>
@@ -191,8 +191,8 @@ export default async function ArchivesPage({
             href={`/archives?year=${y}`}
             className={`text-sm font-semibold px-4 py-1.5 rounded-lg border transition-colors ${
               y === year
-                ? 'bg-slate-800 text-white border-slate-800'
-                : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                ? 'bg-slate-700 text-white border-slate-700'
+                : 'bg-card text-slate-400 border-border hover:bg-white/5'
             }`}
           >
             {y}
@@ -203,25 +203,25 @@ export default async function ArchivesPage({
 
       {/* Audit readiness banner */}
       <div className={`rounded-xl border px-5 py-4 flex items-start gap-3 ${
-        flags > 0 ? 'bg-red-50 border-red-200' :
-        warns > 0 ? 'bg-amber-50 border-amber-200' :
-                    'bg-green-50 border-green-200'
+        flags > 0 ? 'bg-red-950/30 border-red-700/40' :
+        warns > 0 ? 'bg-amber-950/30 border-amber-700/40' :
+                    'bg-green-950/30 border-green-700/40'
       }`}>
         {flags > 0
-          ? <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+          ? <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
           : warns > 0
-          ? <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-          : <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+          ? <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+          : <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
         }
         <div>
-          <p className={`text-sm font-bold ${flags > 0 ? 'text-red-800' : warns > 0 ? 'text-amber-800' : 'text-green-800'}`}>
+          <p className={`text-sm font-bold ${flags > 0 ? 'text-red-300' : warns > 0 ? 'text-amber-300' : 'text-green-300'}`}>
             {year} Audit Readiness:{' '}
             {flags > 0 ? `${flags} area${flags > 1 ? 's' : ''} require attention` :
              warns > 0 ? `${warns} area${warns > 1 ? 's' : ''} incomplete` :
              'All domains complete'}
             {isCurrent && ' (year in progress)'}
           </p>
-          <p className={`text-xs mt-0.5 ${flags > 0 ? 'text-red-600' : warns > 0 ? 'text-amber-600' : 'text-green-600'}`}>
+          <p className={`text-xs mt-0.5 ${flags > 0 ? 'text-red-400' : warns > 0 ? 'text-amber-400' : 'text-green-400'}`}>
             Review flagged sections below before presenting to regulators or insurance reviewers.
           </p>
         </div>
@@ -386,8 +386,8 @@ export default async function ArchivesPage({
       </div>
 
       {/* Audit notes footer */}
-      <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-500 space-y-1">
-        <p className="font-semibold text-slate-700">Audit Documentation Notes</p>
+      <div className="bg-card border border-border rounded-xl p-4 text-xs text-slate-500 space-y-1">
+        <p className="font-semibold text-slate-300">Audit Documentation Notes</p>
         <p>• All records are stored in NyxCitadel and retrievable by regulators on request. Use the "View Full Records →" links above to navigate to each domain&apos;s complete record set.</p>
         <p>• For regulatory surveys (ADHS, AHCCCS, CMS), printed or exported records from each tracker page include all required fields, dates, and chain-of-custody information.</p>
         <p>• For insurance / provider audits (UHC, BCBS, Aetna, etc.), combine this summary with the CAPs and Training records for credentialing submissions.</p>
@@ -419,48 +419,48 @@ function DomainCard({
   note?: string;
 }) {
   const colorMap: Record<string, string> = {
-    red:    'text-red-600 bg-red-50',
-    orange: 'text-orange-600 bg-orange-50',
-    purple: 'text-purple-600 bg-purple-50',
-    blue:   'text-blue-600 bg-blue-50',
-    indigo: 'text-indigo-600 bg-indigo-50',
-    teal:   'text-teal-600 bg-teal-50',
-    slate:  'text-slate-600 bg-slate-50',
-    amber:  'text-amber-600 bg-amber-50',
-    green:  'text-green-600 bg-green-50',
-    yellow: 'text-yellow-600 bg-yellow-50',
+    red:    'text-red-400 bg-red-950/40',
+    orange: 'text-orange-400 bg-orange-950/40',
+    purple: 'text-purple-400 bg-purple-950/40',
+    blue:   'text-blue-400 bg-blue-950/40',
+    indigo: 'text-indigo-400 bg-indigo-950/40',
+    teal:   'text-teal-400 bg-teal-950/40',
+    slate:  'text-slate-400 bg-slate-800/50',
+    amber:  'text-amber-400 bg-amber-950/40',
+    green:  'text-green-400 bg-green-950/40',
+    yellow: 'text-yellow-400 bg-yellow-950/40',
   };
   const highlightColor: Record<string, string> = {
-    red:  'text-red-600 font-semibold',
-    green:'text-green-600 font-semibold',
-    warn: 'text-amber-600 font-semibold',
+    red:  'text-red-400 font-semibold',
+    green:'text-green-400 font-semibold',
+    warn: 'text-amber-400 font-semibold',
   };
   const iconClass = colorMap[color] ?? 'text-slate-600 bg-slate-50';
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col">
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-100">
+    <div className="bg-card rounded-xl border border-border overflow-hidden flex flex-col">
+      <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${iconClass}`}>
           <Icon className="w-4 h-4" />
         </div>
-        <h3 className="text-sm font-semibold text-slate-800 flex-1" dangerouslySetInnerHTML={{ __html: title }} />
+        <h3 className="text-sm font-semibold text-foreground flex-1" dangerouslySetInnerHTML={{ __html: title }} />
         <div className="flex-shrink-0">{statusIcon(status)}</div>
       </div>
       <div className="px-4 py-3 space-y-2 flex-1">
         {rows.map((row, i) => (
           <div key={i} className="flex items-center justify-between text-xs">
             <span className="text-slate-500">{row.label}</span>
-            <span className={row.highlight ? highlightColor[row.highlight] : 'text-slate-800 font-medium'}>
+            <span className={row.highlight ? highlightColor[row.highlight] : 'text-foreground font-medium'}>
               {row.value}
             </span>
           </div>
         ))}
       </div>
       <div className="px-4 pb-3 pt-1 flex items-end justify-between gap-2">
-        {note && <p className="text-xs text-slate-400 leading-snug">{note}</p>}
+        {note && <p className="text-xs text-slate-500 leading-snug">{note}</p>}
         <Link
           href={href}
-          className="text-xs text-purple-600 hover:text-purple-700 font-medium whitespace-nowrap shrink-0 ml-auto"
+          className="text-xs text-purple-400 hover:text-purple-300 font-medium whitespace-nowrap shrink-0 ml-auto"
         >
           View records →
         </Link>

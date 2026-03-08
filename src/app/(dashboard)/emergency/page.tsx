@@ -58,8 +58,8 @@ export default async function EmergencyManagementPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <Siren className="w-6 h-6 text-purple-600" />
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <Siren className="w-6 h-6 text-purple-400" />
             Emergency Management
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -72,13 +72,13 @@ export default async function EmergencyManagementPage() {
       <div className="grid grid-cols-3 gap-4">
         <Link
           href="/emergency/hva"
-          className="bg-white rounded-xl border border-slate-200 p-5 hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center gap-3"
+          className="bg-card rounded-xl border border-border p-5 hover:border-amber-600/50 hover:-translate-y-0.5 transition-all flex items-center gap-3"
         >
-          <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center">
-            <ShieldAlert className="w-6 h-6 text-amber-600" />
+          <div className="w-12 h-12 rounded-xl bg-amber-950/40 border border-amber-800/30 flex items-center justify-center">
+            <ShieldAlert className="w-6 h-6 text-amber-400" />
           </div>
           <div>
-            <p className="font-semibold text-slate-800">HVA Assessment</p>
+            <p className="font-semibold text-foreground">HVA Assessment</p>
             <p className="text-xs text-slate-500">
               {currentHva
                 ? currentHva.status === 'APPROVED'
@@ -91,13 +91,13 @@ export default async function EmergencyManagementPage() {
 
         <Link
           href="/emergency/drills"
-          className="bg-white rounded-xl border border-slate-200 p-5 hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center gap-3"
+          className="bg-card rounded-xl border border-border p-5 hover:border-blue-600/50 hover:-translate-y-0.5 transition-all flex items-center gap-3"
         >
-          <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
-            <Siren className="w-6 h-6 text-blue-600" />
+          <div className="w-12 h-12 rounded-xl bg-blue-950/40 border border-blue-800/30 flex items-center justify-center">
+            <Siren className="w-6 h-6 text-blue-400" />
           </div>
           <div>
-            <p className="font-semibold text-slate-800">Drills &amp; Exercises</p>
+            <p className="font-semibold text-foreground">Drills &amp; Exercises</p>
             <p className="text-xs text-slate-500">
               {upcomingDrills.length} upcoming · {recentDrills.length} recently completed
             </p>
@@ -106,13 +106,13 @@ export default async function EmergencyManagementPage() {
 
         <Link
           href="/emergency/plans"
-          className="bg-white rounded-xl border border-slate-200 p-5 hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center gap-3"
+          className="bg-card rounded-xl border border-border p-5 hover:border-purple-600/50 hover:-translate-y-0.5 transition-all flex items-center gap-3"
         >
-          <div className="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center">
-            <BookOpen className="w-6 h-6 text-purple-600" />
+          <div className="w-12 h-12 rounded-xl bg-purple-950/40 border border-purple-800/30 flex items-center justify-center">
+            <BookOpen className="w-6 h-6 text-purple-400" />
           </div>
           <div>
-            <p className="font-semibold text-slate-800">EM Plans</p>
+            <p className="font-semibold text-foreground">EM Plans</p>
             <p className="text-xs text-slate-500">
               {activePlans.length} active plans
             </p>
@@ -121,9 +121,9 @@ export default async function EmergencyManagementPage() {
       </div>
 
       {/* HVA Summary */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-          <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+          <h2 className="text-base font-semibold text-foreground flex items-center gap-2">
             <ShieldAlert className="w-5 h-5 text-amber-500" />
             {now.getFullYear()} Hazard Vulnerability Analysis (HVA)
           </h2>
@@ -147,10 +147,10 @@ export default async function EmergencyManagementPage() {
             <div className="flex items-center gap-3 mb-4">
               <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${
                 currentHva.status === 'APPROVED'
-                  ? 'bg-green-100 text-green-800'
+                  ? 'bg-green-950/40 text-green-400'
                   : currentHva.status === 'COMPLETED'
-                  ? 'bg-blue-100 text-blue-800'
-                  : 'bg-yellow-100 text-yellow-800'
+                  ? 'bg-blue-950/40 text-blue-400'
+                  : 'bg-yellow-950/40 text-yellow-400'
               }`}>
                 {currentHva.status}
               </span>
@@ -161,7 +161,7 @@ export default async function EmergencyManagementPage() {
               )}
               {currentHva.totalRiskScore !== null && (
                 <span className="text-sm text-slate-500">
-                  Overall Risk Score: <span className="font-semibold text-slate-700">{currentHva.totalRiskScore.toFixed(1)}</span>
+                  Overall Risk Score: <span className="font-semibold text-foreground">{currentHva.totalRiskScore.toFixed(1)}</span>
                 </span>
               )}
             </div>
@@ -175,10 +175,10 @@ export default async function EmergencyManagementPage() {
                     <div key={hazard.id} className="flex items-center gap-3">
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-0.5">
-                          <span className="text-sm font-medium text-slate-700">{hazard.hazardName}</span>
-                          <span className="text-xs font-semibold text-slate-600">{(hazard.riskScore * 100).toFixed(0)}%</span>
+                          <span className="text-sm font-medium text-slate-300">{hazard.hazardName}</span>
+                          <span className="text-xs font-semibold text-slate-400">{(hazard.riskScore * 100).toFixed(0)}%</span>
                         </div>
-                        <div className="w-full bg-slate-100 rounded-full h-1.5">
+                        <div className="w-full bg-slate-700 rounded-full h-1.5">
                           <div
                             className={`h-1.5 rounded-full ${
                               hazard.riskScore > 0.7
@@ -191,7 +191,7 @@ export default async function EmergencyManagementPage() {
                           />
                         </div>
                       </div>
-                      <span className="text-xs bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded flex-shrink-0">
+                      <span className="text-xs bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded flex-shrink-0">
                         {hazard.hazardType}
                       </span>
                     </div>
@@ -206,7 +206,7 @@ export default async function EmergencyManagementPage() {
             <p className="font-medium">No HVA for {now.getFullYear()} yet</p>
             <p className="text-sm mt-1">
               The HVA should be completed annually in Q1.{' '}
-              <Link href="/emergency/hva/new" className="text-amber-600 hover:underline">
+              <Link href="/emergency/hva/new" className="text-amber-400 hover:underline">
                 Start now
               </Link>
             </p>
@@ -217,32 +217,32 @@ export default async function EmergencyManagementPage() {
       {/* Upcoming Drills + Recent Drills */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Upcoming */}
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
-            <h2 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-blue-500" />
+        <div className="bg-card rounded-xl border border-border overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+            <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+              <Clock className="w-4 h-4 text-blue-400" />
               Upcoming Drills (90 days)
             </h2>
-            <Link href="/emergency/drills/new" className="inline-flex items-center gap-1 text-xs text-purple-600 hover:text-purple-700 font-medium">
+            <Link href="/emergency/drills/new" className="inline-flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300 font-medium">
               <Plus className="w-3 h-3" /> Add
             </Link>
           </div>
-          <div className="divide-y divide-slate-50">
+          <div className="divide-y divide-border/50">
             {upcomingDrills.length === 0 ? (
               <p className="text-center text-sm text-slate-400 py-8">No upcoming drills scheduled</p>
             ) : (
               upcomingDrills.map((drill) => (
                 <div key={drill.id} className="flex items-center gap-3 px-5 py-3">
-                  <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex flex-col items-center justify-center flex-shrink-0">
-                    <span className="text-xs font-bold text-blue-700 leading-none">
+                  <div className="w-9 h-9 rounded-lg bg-blue-950/40 border border-blue-800/30 flex flex-col items-center justify-center flex-shrink-0">
+                    <span className="text-xs font-bold text-blue-400 leading-none">
                       {formatDate(drill.scheduledDate, 'd')}
                     </span>
-                    <span className="text-[9px] text-blue-500 leading-none">
+                    <span className="text-[9px] text-blue-400/70 leading-none">
                       {formatDate(drill.scheduledDate, 'MMM')}
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-800 truncate">{drill.drillName}</p>
+                    <p className="text-sm font-medium text-foreground truncate">{drill.drillName}</p>
                     <p className="text-xs text-slate-400">{drillTypeLabel(drill.drillType)}</p>
                   </div>
                 </div>
@@ -252,25 +252,25 @@ export default async function EmergencyManagementPage() {
         </div>
 
         {/* Recently Completed */}
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
-            <h2 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-500" />
+        <div className="bg-card rounded-xl border border-border overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+            <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-green-400" />
               Recently Completed Drills
             </h2>
-            <Link href="/emergency/drills" className="text-xs text-purple-600 hover:text-purple-700 font-medium">
+            <Link href="/emergency/drills" className="text-xs text-purple-400 hover:text-purple-300 font-medium">
               View all →
             </Link>
           </div>
-          <div className="divide-y divide-slate-50">
+          <div className="divide-y divide-border/50">
             {recentDrills.length === 0 ? (
               <p className="text-center text-sm text-slate-400 py-8">No completed drills yet</p>
             ) : (
               recentDrills.map((drill) => (
                 <div key={drill.id} className="flex items-center gap-3 px-5 py-3">
-                  <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-800 truncate">{drill.drillName}</p>
+                    <p className="text-sm font-medium text-foreground truncate">{drill.drillName}</p>
                     <p className="text-xs text-slate-400">
                       {drillTypeLabel(drill.drillType)} · {formatDate(drill.conductedDate)}
                     </p>
