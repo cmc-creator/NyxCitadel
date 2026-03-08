@@ -315,9 +315,9 @@ async function main() {
     },
   ];
 
-  const now = new Date();
+  const drillNow = new Date();
   for (const d of drillSeeds) {
-    const scheduledDate = new Date(now.getTime() + d.scheduledOffset * 24 * 60 * 60 * 1000);
+    const scheduledDate = new Date(drillNow.getTime() + d.scheduledOffset * 24 * 60 * 60 * 1000);
     await prisma.drill.upsert({
       where: { id: `${facility.id}-${d.name.replace(/\s/g, '-').toLowerCase()}` },
       update: {},
