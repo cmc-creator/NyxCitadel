@@ -115,6 +115,9 @@ model Facility {
   // Discharge Planning
   dischargePlans     DischargePlan[]
 
+  // Regulatory Reference Library (custom / facility-specific entries)
+  regulatoryReferences RegulatoryReference[]
+
   @@map("facilities")
 }
 
@@ -2909,4 +2912,34 @@ enum DischargePlanStatus {
   DISCHARGED
   TRANSFERRED
   AMA
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REGULATORY REFERENCE LIBRARY
+// Global built-in entries seeded from src/lib/compliance/*.ts
+// Facility-specific custom entries (facilityId non-null).
+// ─────────────────────────────────────────────────────────────────────────────
+
+model RegulatoryReference {
+  id              String    @id @default(cuid())
+  refId           String    @unique  // e.g. "cms-rs-001" or "custom-<cuid>"
+  title           String
+  description     String    @db.Text
+  standardRef     String    // e.g. "42 CFR 482.13"
+  regulatoryBody  String    // free-text: "CMS", "DEA", "AZ_ADHS", etc.
+  category        String    // EventCategory value or custom string
+  frequency       String    // "ANNUAL", "MONTHLY", etc.
+  priority        String    // "CRITICAL" | "HIGH" | "MEDIUM" | "LOW"
+  responsibleRole String?
+  months          Int[]     // calendar months (1-12) when typically due
+  notes           String?   @db.Text
+  sourceUrl       String?   // link to official regulation text
+  lastVerified    DateTime? // date the standard was last reviewed
+  isBuiltIn       Boolean   @default(true)  // true = seeded from TS library
+  facilityId      String?   // null = global; non-null = facility-specific custom
+  facility        Facility? @relation(fields: [facilityId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("regulatory_references")
 }

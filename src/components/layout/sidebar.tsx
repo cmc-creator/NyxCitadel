@@ -47,6 +47,7 @@ import {
   Users2,
   Truck,
   TestTube2,
+  Library,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -81,6 +82,13 @@ const navItems: NavItem[] = [
     href: '/calendar',
     label: 'Compliance Calendar',
     icon: CalendarDays,
+  },
+  {
+    href: '/compliance-library',
+    label: 'Reg. Library',
+    icon: Library,
+    badge: 'REF',
+    badgeColor: 'bg-slate-100 text-slate-600',
   },
   {
     href: '/trackers',
