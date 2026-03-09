@@ -1,6 +1,8 @@
-import { Droplets, Plus, TrendingUp, TrendingDown, AlertTriangle } from 'lucide-react';
+﻿import { Droplets, Plus, TrendingUp, TrendingDown, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 export default async function HandHygienePage({ searchParams }: { searchParams: { unit?: string } }) {
   const session = await auth();

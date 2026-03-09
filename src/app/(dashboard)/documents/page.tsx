@@ -1,8 +1,10 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { FileText, Download, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Documents' };
 

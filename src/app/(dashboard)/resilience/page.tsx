@@ -1,8 +1,10 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { scoreToGrade5, incidentScore, capScore, grievanceScore, grade12ToScore } from '@/lib/grading';
 import {
+
+export const dynamic = 'force-dynamic';
   Shield,
   ShieldAlert,
   TrendingUp,

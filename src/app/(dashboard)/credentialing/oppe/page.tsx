@@ -1,6 +1,8 @@
-import { Award, Plus, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
+﻿import { Award, Plus, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 const ratingConfig: Record<string, { label: string; color: string }> = {
   EXCELLENT:         { label: 'Excellent',         color: 'bg-emerald-100 text-emerald-700' },

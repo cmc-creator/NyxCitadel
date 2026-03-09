@@ -1,7 +1,9 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
+
+export const dynamic = 'force-dynamic';
   BarChart2, Shield, FileBarChart, TrendingUp,
   AlertTriangle, CheckCircle2, ClipboardList, Activity,
 } from 'lucide-react';

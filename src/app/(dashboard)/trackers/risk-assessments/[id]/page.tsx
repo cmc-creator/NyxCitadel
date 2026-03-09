@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -8,6 +8,8 @@ import {
   CheckCircle2, ClipboardCheck, FileText, ExternalLink,
 } from 'lucide-react';
 import { isPast, isWithinInterval, addDays } from 'date-fns';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Risk Assessment Detail' };
 

@@ -1,6 +1,8 @@
-import { Biohazard, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
+﻿import { Biohazard, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 const statusConfig: Record<string, { label: string; color: string }> = {
   ACTIVE:       { label: 'Active',      color: 'bg-red-100 text-red-700' },

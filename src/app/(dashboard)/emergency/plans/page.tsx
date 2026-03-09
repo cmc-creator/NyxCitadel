@@ -1,9 +1,11 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
 import { BookOpen, Plus, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
 import { isPast } from 'date-fns';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Emergency Plans' };
 

@@ -2,6 +2,8 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 const statusConfig: Record<string, { label: string; classes: string }> = {
   OPEN:       { label: 'Open',       classes: 'bg-red-100 text-red-700' },
   CLOSED:     { label: 'Closed',     classes: 'bg-emerald-100 text-emerald-700' },

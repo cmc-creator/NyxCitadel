@@ -1,9 +1,11 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { Scale, ArrowLeft, AlertTriangle, Clock, CheckCircle2, FileSearch, Link2 } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'QOC / LOI Complaint' };
 

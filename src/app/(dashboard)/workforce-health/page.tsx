@@ -3,6 +3,8 @@ import { Users2, ChevronRight, AlertTriangle, CheckCircle, HeartHandshake, Shiel
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 export default async function WorkforceHealthPage() {
   const session = await auth();
   const facilityId = session!.user.facilityId;

@@ -1,7 +1,9 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { UserCheck, Award, FileCheck, AlertTriangle, ChevronRight, Clock } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 export default async function CredentialingPage() {
   const session = await auth();

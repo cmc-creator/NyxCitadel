@@ -1,182 +1,88 @@
-'use client';
+﻿import { Shield, Plus, AlertTriangle } from 'lucide-react';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
-import { useState, useEffect } from 'react';
-import { CheckCircle2, AlertTriangle, Loader2, Users, ShieldAlert } from 'lucide-react';
+export const dynamic = 'force-dynamic';
 
-export default function DrillMusterScanPage({ params }: { params: { token: string } }) {
-  const [entry, setEntry]     = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [result, setResult]   = useState<{ success?: boolean; alreadyCheckedIn?: boolean; error?: string } | null>(null);
-  const [error, setError]     = useState('');
+export default async function OshaLogPage() {
+  const session = await auth();
+  const facilityId = session!.user.facilityId;
+  const now = new Date();
+  const yearStart = new Date(now.getFullYear(), 0, 1);
 
-  useEffect(() => {
-    fetch(`/api/drill-muster/${params.token}`)
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.error) setError(data.error);
-        else setEntry(data);
-      })
-      .catch(() => setError('Failed to load entry.'))
-      .finally(() => setLoading(false));
-  }, [params.token]);
+  const logs = await prisma.oshaLog.findMany({
+    where: { facilityId },
+    orderBy: { injuryDate: 'desc' },
+  });
 
-  async function handleCheckIn() {
-    setSubmitting(true);
-    try {
-      const res = await fetch(`/api/drill-muster/${params.token}`, { method: 'POST' });
-      const data = await res.json();
-      if (!res.ok) setResult({ error: data.error });
-      else if (data.alreadyCheckedIn) setResult({ alreadyCheckedIn: true });
-      else setResult({ success: true });
-    } catch {
-      setResult({ error: 'Network error. Try again.' });
-    } finally {
-      setSubmitting(false);
-    }
-  }
+  const recordable = logs.filter(l => l.recordable).length;
+  const ytdLogs = logs.filter(l => l.injuryDate >= yearStart).length;
+  const daysAway = logs.reduce((sum, l) => sum + (l.daysAway ?? 0), 0);
 
-  if (loading) {
-    return (
-      <Screen>
-        <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
-      </Screen>
-    );
-  }
-
-  if (error || (!entry && !loading)) {
-    return (
-      <Screen>
-        <AlertTriangle className="w-10 h-10 text-red-500" />
-        <p className="font-semibold text-red-700 mt-2">Not Found</p>
-        <p className="text-sm text-slate-500 mt-1">{error || 'This QR code is invalid or expired.'}</p>
-      </Screen>
-    );
-  }
-
-  if (result?.alreadyCheckedIn || entry?.status === 'PRESENT') {
-    return (
-      <Screen>
-        <CheckCircle2 className="w-12 h-12 text-emerald-500" />
-        <p className="font-bold text-emerald-700 text-lg mt-2">Already Checked In</p>
-        <p className="text-sm text-slate-600 mt-1">{entry.staffName}</p>
-        <p className="text-xs text-slate-400 mt-0.5">
-          {entry.musterPoint ? `Muster point: ${entry.musterPoint}` : 'Muster point registered'}
-        </p>
-      </Screen>
-    );
-  }
-
-  if (result?.success) {
-    return (
-      <Screen>
-        <CheckCircle2 className="w-14 h-14 text-emerald-500" />
-        <p className="font-black text-emerald-700 text-2xl mt-2">ACCOUNTED ✓</p>
-        <p className="text-slate-700 font-semibold mt-1">{entry.staffName}</p>
-        {entry.musterPoint && (
-          <p className="text-sm text-slate-500 mt-0.5">Muster Point: {entry.musterPoint}</p>
-        )}
-        <p className="text-xs text-slate-400 mt-1">Checked in at {new Date().toLocaleTimeString()}</p>
-        <div className="mt-4 bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-center max-w-xs">
-          <p className="text-sm text-emerald-700 font-medium">You are accounted for. Stay at your muster point until the All Clear.</p>
+  return (
+    <div className="p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="flex items-center gap-3 mb-1">
+            <Shield className="w-5 h-5 text-amber-400" />
+            <h1 className="text-xl font-bold text-white">OSHA 300 Log</h1>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">29 CFR 1904</span>
+          </div>
+          <p className="text-slate-400 text-sm">Recordable work-related injuries and illnesses per OSHA 300/300A requirements.</p>
         </div>
-      </Screen>
-    );
-  }
-
-  if (result?.error) {
-    return (
-      <Screen>
-        <AlertTriangle className="w-10 h-10 text-red-500" />
-        <p className="font-semibold text-red-700 mt-2">{result.error}</p>
-        <button onClick={() => setResult(null)} className="mt-3 text-sm text-indigo-600 underline">
-          Try again
+        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-sm font-medium transition-colors">
+          <Plus className="w-4 h-4" /> Add Entry
         </button>
-      </Screen>
-    );
-  }
-
-  const drillActive = entry.drillStatus === 'IN_PROGRESS';
-
-  return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4">
-      <div className="flex items-center gap-2 mb-6">
-        <ShieldAlert className="w-6 h-6 text-red-400" />
-        <span className="text-white font-bold text-lg tracking-wide">NyxCitadel</span>
-        {drillActive && (
-          <span className="ml-2 text-xs bg-red-600 text-white px-2 py-0.5 rounded-full animate-pulse font-medium">
-            DRILL ACTIVE
-          </span>
-        )}
       </div>
 
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">
-        <div className="bg-emerald-600 px-5 py-4">
-          <div className="flex items-center gap-2 mb-1">
-            <Users className="w-4 h-4 text-emerald-200" />
-            <span className="text-emerald-200 text-xs font-medium uppercase tracking-wide">Muster Point Check-In</span>
+      <div className="grid grid-cols-4 gap-4">
+        {[
+          { label: 'Total Incidents', value: logs.length, color: 'text-blue-400' },
+          { label: 'YTD Incidents', value: ytdLogs, color: 'text-blue-400' },
+          { label: 'Recordable Cases', value: recordable, color: recordable > 0 ? 'text-amber-400' : 'text-emerald-400' },
+          { label: 'Total Days Away', value: daysAway, color: daysAway > 0 ? 'text-amber-400' : 'text-slate-400' },
+        ].map(s => (
+          <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
+            <p className="text-xs text-slate-400 mb-1">{s.label}</p>
+            <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
           </div>
-          <p className="text-white text-2xl font-black">{entry.staffName}</p>
-          {entry.staffRole && <p className="text-emerald-200 text-sm">{entry.staffRole}</p>}
-        </div>
-
-        <div className="px-5 py-4 space-y-3 border-b border-slate-100">
-          {entry.department && (
-            <div className="flex justify-between text-sm">
-              <span className="text-slate-500">Department</span>
-              <span className="font-medium text-slate-800">{entry.department}</span>
-            </div>
-          )}
-          {entry.musterPoint && (
-            <div className="flex justify-between text-sm">
-              <span className="text-slate-500">Muster Point</span>
-              <span className="font-medium text-slate-800">{entry.musterPoint}</span>
-            </div>
-          )}
-          <div className="flex justify-between text-sm">
-            <span className="text-slate-500">Drill</span>
-            <span className="font-medium text-slate-800">{entry.drillName}</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-slate-500">Status</span>
-            <span className="font-bold text-orange-600">UNACCOUNTED</span>
-          </div>
-        </div>
-
-        {!drillActive ? (
-          <div className="px-5 py-4 text-center">
-            <AlertTriangle className="w-8 h-8 text-orange-400 mx-auto mb-2" />
-            <p className="text-sm text-orange-700 font-medium">Drill is not currently active.</p>
-          </div>
-        ) : (
-          <div className="px-5 py-5">
-            <button
-              onClick={handleCheckIn}
-              disabled={submitting}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-black py-5 rounded-xl text-xl transition-colors flex items-center justify-center gap-3"
-            >
-              {submitting ? (
-                <><Loader2 className="w-6 h-6 animate-spin" /> Checking in…</>
-              ) : (
-                <><CheckCircle2 className="w-7 h-7" /> I AM HERE</>
-              )}
-            </button>
-            <p className="text-xs text-center text-slate-400 mt-3">
-              Tap above to confirm you have reached your designated muster point.
-            </p>
-          </div>
-        )}
+        ))}
       </div>
 
-      <p className="text-slate-500 text-xs mt-4">NyxCitadel Compliance Platform</p>
-    </div>
-  );
-}
-
-function Screen({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
-      {children}
+      <div className="rounded-xl border border-white/10 bg-slate-800/50 overflow-hidden">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-white/10 text-slate-400 text-xs">
+              <th className="text-left px-4 py-3">Case #</th>
+              <th className="text-left px-4 py-3">Date</th>
+              <th className="text-left px-4 py-3">Employee</th>
+              <th className="text-left px-4 py-3">Title / Dept</th>
+              <th className="text-left px-4 py-3">Injury Type</th>
+              <th className="text-left px-4 py-3">Days Away</th>
+              <th className="text-left px-4 py-3">Recordable</th>
+            </tr>
+          </thead>
+          <tbody>
+            {logs.length === 0 ? (
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">No OSHA log entries on record.</td></tr>
+            ) : logs.map(l => (
+              <tr key={l.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td className="px-4 py-3 text-slate-300">{l.caseNumber}</td>
+                <td className="px-4 py-3 text-slate-300">{l.injuryDate.toLocaleDateString()}</td>
+                <td className="px-4 py-3 text-white font-medium">{l.employeeName}</td>
+                <td className="px-4 py-3 text-slate-400">{l.jobTitle ?? '—'} {l.department ? `/ ${l.department}` : ''}</td>
+                <td className="px-4 py-3 text-slate-400">{l.injuryType ?? '—'}</td>
+                <td className="px-4 py-3 text-slate-300">{l.daysAway ?? 0}</td>
+                <td className="px-4 py-3">
+                  {l.recordable
+                    ? <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Yes</span>
+                    : <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">No</span>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

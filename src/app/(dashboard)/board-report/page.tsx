@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import { PrintButton } from '@/components/ui/PrintButton';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Board Compliance Report' };
 

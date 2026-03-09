@@ -1,9 +1,11 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { GraduationCap, Plus, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
 import { isPast, isWithinInterval, addDays } from 'date-fns';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Training & Competency Tracker' };
 

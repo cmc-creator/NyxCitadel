@@ -1,9 +1,11 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { redirect, notFound } from 'next/navigation';
 import Link from 'next/link';
 import { PrintButton } from '@/components/ui/PrintButton';
 import { ShieldCheck, AlertTriangle, ChevronRight, Award } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
 
 function gradeToColor(grade: string): string {
   if (grade.startsWith('A')) return 'text-emerald-600';

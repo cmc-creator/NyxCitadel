@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -12,6 +12,8 @@ import {
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import { PrintButton } from '@/components/ui/PrintButton';
+
+export const dynamic = 'force-dynamic';
 
 export default async function DrillAARPage({
   params,

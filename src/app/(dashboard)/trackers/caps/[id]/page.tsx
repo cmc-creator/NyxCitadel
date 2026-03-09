@@ -1,10 +1,12 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ClipboardList, ArrowLeft, AlertTriangle, CheckCircle2, Clock, ShieldCheck, RefreshCw, Target } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { isPast } from 'date-fns';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Corrective Action Plan' };
 

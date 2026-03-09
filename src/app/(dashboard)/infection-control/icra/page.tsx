@@ -1,7 +1,9 @@
-import { ClipboardList, CheckCircle, AlertTriangle, Plus } from 'lucide-react';
+﻿import { ClipboardList, CheckCircle, AlertTriangle, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 const ratingColor: Record<string, string> = {
   HIGH: 'bg-red-100 text-red-700',

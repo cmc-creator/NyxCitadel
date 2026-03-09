@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import DrillWarRoomClient from '@/components/drills/DrillWarRoomClient';
 import { formatDate } from '@/lib/utils';
+
+export const dynamic = 'force-dynamic';
 
 const STATUS_STYLES: Record<string, string> = {
   SCHEDULED:   'bg-blue-100 text-blue-700',

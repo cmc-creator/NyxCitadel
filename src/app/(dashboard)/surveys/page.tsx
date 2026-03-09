@@ -1,9 +1,11 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { ClipboardList, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SatisfactionPushButton } from '@/components/surveys/satisfaction-push-button';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Surveys & Inspections' };
 

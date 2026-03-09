@@ -3,6 +3,8 @@ import { HeartHandshake, ChevronRight, CheckCircle, AlertTriangle, Shield, Clock
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 const rightsChecklist = [
   { right: 'Right to be informed of rights at admission',               required: 'Admission',                   status: true  },
   { right: 'Right to informed consent prior to treatment',              required: 'Before start of treatment',   status: true  },

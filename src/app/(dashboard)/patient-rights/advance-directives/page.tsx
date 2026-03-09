@@ -1,6 +1,8 @@
-import { FileText, Plus, CheckCircle, AlertTriangle } from 'lucide-react';
+﻿import { FileText, Plus, CheckCircle, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 export default async function AdvanceDirectivesPage() {
   const session = await auth();

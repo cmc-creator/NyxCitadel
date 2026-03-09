@@ -1,8 +1,10 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { BookOpen, Plus, Clock, Send, CheckCircle2, FileEdit } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Generated Responses' };
 

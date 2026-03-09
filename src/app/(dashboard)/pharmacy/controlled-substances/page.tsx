@@ -1,6 +1,8 @@
-import { Clipboard, Plus, AlertTriangle } from 'lucide-react';
+﻿import { Clipboard, Plus, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 const statusConfig: Record<string, { label: string; color: string }> = {
   RECONCILED:            { label: 'Reconciled',          color: 'bg-emerald-100 text-emerald-700' },

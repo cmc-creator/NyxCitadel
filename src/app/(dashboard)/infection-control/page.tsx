@@ -1,7 +1,9 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { Biohazard, Activity, AlertTriangle, CheckCircle, ChevronRight, Droplets } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 export default async function InfectionControlPage() {
   const session = await auth();

@@ -1,7 +1,9 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { Lock, AlertTriangle, ChevronRight, CheckCircle, FileText, Clock } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 export default async function HipaaPage() {
   const session = await auth();

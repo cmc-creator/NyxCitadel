@@ -1,6 +1,8 @@
-import { Activity, TrendingDown, TrendingUp, Plus, AlertTriangle } from 'lucide-react';
+﻿import { Activity, TrendingDown, TrendingUp, Plus, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 export default async function HaiPage() {
   const session = await auth();

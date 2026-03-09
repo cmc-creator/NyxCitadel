@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import {
   CalendarDays,
@@ -10,6 +10,8 @@ import {
 import { formatDate, getDueDateStatus } from '@/lib/utils';
 import Link from 'next/link';
 import { addDays, addMonths, startOfMonth, endOfMonth } from 'date-fns';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Compliance Calendar' };
 

@@ -1,6 +1,8 @@
-import { UserCheck, Plus, AlertTriangle, Search } from 'lucide-react';
+﻿import { UserCheck, Plus, AlertTriangle, Search } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 const typeConfig: Record<string, { label: string; color: string }> = {
   PHYSICIAN:    { label: 'MD/DO',   color: 'bg-indigo-100 text-indigo-700' },

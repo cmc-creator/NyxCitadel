@@ -1,6 +1,8 @@
-import { FileText, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
+﻿import { FileText, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 const typeLabels: Record<string, string> = {
   GENERAL_TREATMENT:       'General Treatment',
