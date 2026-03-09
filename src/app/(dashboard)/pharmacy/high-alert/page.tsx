@@ -1,17 +1,18 @@
-'use client';
+﻿import { AlertTriangle, Plus, CheckCircle } from 'lucide-react';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
-import { useState } from 'react';
-import { AlertTriangle, Plus, CheckCircle } from 'lucide-react';
+export default async function HighAlertMedsPage() {
+  const session = await auth();
+  const facilityId = session!.user.facilityId;
 
-const mockAudits = [
-  { id: '1', auditDate: '2026-03-06', unit: 'Acute Adult A', medication: 'Concentrated Oral Potassium', ismpCategory: 'Electrolytes', storageCorrect: true, labelingCorrect: true, doubleCheckDocumented: true, accessRestricted: true, actionRequired: false, findings: null },
-  { id: '2', auditDate: '2026-03-06', unit: 'Acute Adult A', medication: 'Insulin (all types)', ismpCategory: 'Insulin', storageCorrect: true, labelingCorrect: false, doubleCheckDocumented: true, accessRestricted: true, actionRequired: true, findings: 'Insulin aspart and glargine stored adjacent without color differentiation — add auxiliary label.' },
-  { id: '3', auditDate: '2026-03-05', unit: 'Geriatric Psych', medication: 'Warfarin', ismpCategory: 'Anticoagulants', storageCorrect: true, labelingCorrect: true, doubleCheckDocumented: false, accessRestricted: true, actionRequired: true, findings: 'No documented double-check for today\'s dosing — complete independent double-check per policy.' },
-  { id: '4', auditDate: '2026-03-04', unit: 'Child/Adolescent', medication: 'Heparin IV', ismpCategory: 'Anticoagulants', storageCorrect: true, labelingCorrect: true, doubleCheckDocumented: true, accessRestricted: true, actionRequired: false, findings: null },
-];
+  const audits = await prisma.highAlertMedAudit.findMany({
+    where: { facilityId },
+    orderBy: { auditDate: 'desc' },
+    take: 50,
+  });
 
-export default function HighAlertMedsPage() {
-  const actions = mockAudits.filter(a => a.actionRequired).length;
+  const actions = audits.filter(a => a.actionRequired).length;
 
   return (
     <div className="p-6 space-y-6">
@@ -37,24 +38,24 @@ export default function HighAlertMedsPage() {
       )}
 
       <div className="space-y-4">
-        {mockAudits.map(a => (
+        {audits.length === 0 ? (
+          <div className="rounded-xl border border-white/10 bg-slate-800/50 p-8 text-center text-slate-500 text-sm">No high-alert medication audits on record.</div>
+        ) : audits.map(a => (
           <div key={a.id} className={`rounded-xl border p-4 ${a.actionRequired ? 'border-amber-500/30 bg-amber-500/5' : 'border-white/10 bg-slate-800/50'}`}>
             <div className="flex items-start justify-between mb-3">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <p className="font-bold text-white">{a.medication}</p>
-                  <span className="text-xs text-slate-400 bg-slate-700/60 px-2 py-0.5 rounded">{a.ismpCategory}</span>
                   {a.actionRequired && <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Action Required</span>}
                 </div>
-                <p className="text-xs text-slate-400">{a.unit} — {a.auditDate}</p>
+                <p className="text-xs text-slate-400">{a.unit} â€” {a.auditDate.toLocaleDateString()} â€” Auditor: {a.auditor}</p>
               </div>
             </div>
-            <div className="grid grid-cols-4 gap-3 text-xs mt-2">
+            <div className="grid grid-cols-3 gap-3 text-xs mt-2">
               {[
-                { label: 'Storage', ok: a.storageCorrect },
-                { label: 'Labeling', ok: a.labelingCorrect },
-                { label: 'Double-Check', ok: a.doubleCheckDocumented },
-                { label: 'Access Restricted', ok: a.accessRestricted },
+                { label: 'Storage Correct',  ok: a.storageCorrect },
+                { label: 'Labeling Correct', ok: a.labelingCorrect },
+                { label: 'Double-Check Done', ok: a.doubleCheckDone },
               ].map(item => (
                 <div key={item.label} className="flex items-center gap-1">
                   {item.ok ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />}
@@ -62,7 +63,6 @@ export default function HighAlertMedsPage() {
                 </div>
               ))}
             </div>
-            {a.findings && <p className="text-xs text-amber-200/80 mt-2 border-t border-amber-500/20 pt-2">⚠️ {a.findings}</p>}
           </div>
         ))}
       </div>

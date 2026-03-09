@@ -1,106 +1,69 @@
-'use client';
-
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { Users2, ChevronRight, AlertTriangle, CheckCircle, HeartHandshake, Shield } from 'lucide-react';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
-const subModules = [
-  {
-    href: '/workforce-health/employee-health',
-    title: 'Employee Health Records',
-    description: 'TB testing, flu vaccine compliance, hepatitis B series, and annual health screenings for clinical staff.',
-    icon: '🩺',
-    badge: 'CDC / CMS',
-    badgeColor: 'bg-teal-100 text-teal-700',
-    stat: '94% Flu Vaccination Rate',
-    statColor: 'text-emerald-400',
-  },
-  {
-    href: '/workforce-health/osha',
-    title: 'OSHA 300 Log',
-    description: 'Workplace injuries and illnesses — recordable events, days away, restricted duty, and illness tracking.',
-    icon: '⛑️',
-    badge: 'OSHA 29 CFR 1904',
-    badgeColor: 'bg-amber-100 text-amber-700',
-    stat: '3 Recordable Events YTD',
-    statColor: 'text-amber-400',
-  },
-];
+export default async function WorkforceHealthPage() {
+  const session = await auth();
+  const facilityId = session!.user.facilityId;
+  const now = new Date();
+  const in90 = new Date(now); in90.setDate(in90.getDate() + 90);
+  const yearStart = new Date(now.getFullYear(), 0, 1);
 
-const healthStats = [
-  { label: 'TB Tests Current', value: '98%', color: 'text-emerald-400' },
-  { label: 'Flu Vaccination Rate', value: '94%', color: 'text-emerald-400' },
-  { label: 'OSHA Recordables YTD', value: 3, color: 'text-amber-400' },
-  { label: 'Hep B Series Complete', value: '87%', color: 'text-amber-400' },
-];
+  const [totalStaff, tbOverdue, oshaRecordable, fluDeclined] = await Promise.all([
+    prisma.employeeHealthRecord.count({ where: { facilityId } }),
+    prisma.employeeHealthRecord.count({ where: { facilityId, tbNextDueDate: { lt: now } } }),
+    prisma.oshaLog.count({ where: { facilityId, recordable: true, injuryDate: { gte: yearStart } } }),
+    prisma.employeeHealthRecord.count({ where: { facilityId, fluVaxDeclined: true } }),
+  ]);
 
-export default function WorkforceHealthPage() {
+  const compliant = tbOverdue === 0 && oshaRecordable === 0;
+
+  const subModules = [
+    { href: '/workforce-health/employee-health', icon: HeartHandshake, label: 'Employee Health', desc: 'TB screening, flu vaccination, and exposure tracking', color: 'text-emerald-400' },
+    { href: '/workforce-health/osha', icon: Shield, label: 'OSHA Log (300/300A)', desc: 'Recordable injuries, illnesses, and DART rates', color: 'text-amber-400' },
+  ];
+
   return (
     <div className="p-6 space-y-6">
-      {/* Header */}
-      <div className="flex items-start justify-between">
-        <div>
-          <div className="flex items-center gap-3 mb-1">
-            <Users2 className="w-6 h-6 text-teal-400" />
-            <h1 className="text-2xl font-bold text-white">Workforce Health & Safety</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700">CMS CoP</span>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">OSHA</span>
-          </div>
-          <p className="text-slate-400 text-sm">Employee health screening, vaccination compliance, workplace safety, and OSHA recordable event log.</p>
-        </div>
+      <div className="flex items-center gap-3 mb-2">
+        <Users2 className="w-5 h-5 text-emerald-400" />
+        <h1 className="text-xl font-bold text-white">Workforce Health</h1>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {healthStats.map(s => (
-          <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
+      <div className="grid grid-cols-4 gap-4">
+        {[
+          { label: 'Total Staff Records', value: totalStaff, color: 'text-blue-400' },
+          { label: 'TB Screening Overdue', value: tbOverdue, color: tbOverdue > 0 ? 'text-red-400' : 'text-emerald-400' },
+          { label: 'OSHA Recordable (YTD)', value: oshaRecordable, color: oshaRecordable > 0 ? 'text-amber-400' : 'text-emerald-400' },
+          { label: 'Flu Vax Declined', value: fluDeclined, color: fluDeclined > 0 ? 'text-amber-400' : 'text-emerald-400' },
+        ].map(s => (
+          <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
+            <p className="text-xs text-slate-400 mb-1">{s.label}</p>
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
-            <p className="text-xs text-slate-400 mt-1">{s.label}</p>
           </div>
         ))}
       </div>
 
-      {/* Sub-modules */}
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className={`rounded-xl border p-4 flex items-center gap-3 ${compliant ? 'border-emerald-500/30 bg-emerald-500/10' : 'border-amber-500/30 bg-amber-500/10'}`}>
+        {compliant
+          ? <><CheckCircle className="w-5 h-5 text-emerald-400" /><p className="text-sm text-emerald-300">No overdue TB screenings and no OSHA recordable incidents YTD.</p></>
+          : <><AlertTriangle className="w-5 h-5 text-amber-400" /><p className="text-sm text-amber-300">Action required: {tbOverdue > 0 ? `${tbOverdue} TB screening(s) overdue. ` : ''}{oshaRecordable > 0 ? `${oshaRecordable} OSHA recordable incident(s) YTD.` : ''}</p></>}
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
         {subModules.map(m => (
-          <Link key={m.href} href={m.href}
-            className="rounded-xl bg-slate-800/50 border border-white/10 p-5 hover:border-teal-500/40 transition-all group">
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">{m.icon}</span>
-                <div>
-                  <p className="font-semibold text-white group-hover:text-teal-300 transition-colors">{m.title}</p>
-                  <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full ${m.badgeColor}`}>{m.badge}</span>
-                </div>
+          <Link key={m.href} href={m.href} className="rounded-xl border border-white/10 bg-slate-800/50 hover:bg-slate-700/50 p-5 flex items-center justify-between group transition-colors">
+            <div className="flex items-center gap-3">
+              <m.icon className={`w-5 h-5 ${m.color}`} />
+              <div>
+                <p className="font-semibold text-white">{m.label}</p>
+                <p className="text-xs text-slate-400">{m.desc}</p>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-teal-400 transition-colors" />
             </div>
-            <p className="text-xs text-slate-400 mb-3">{m.description}</p>
-            <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>
+            <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
           </Link>
         ))}
-      </div>
-
-      {/* Compliance Summary */}
-      <div className="rounded-xl bg-slate-800/50 border border-white/10 p-5">
-        <p className="text-sm font-semibold text-white mb-3">Annual Compliance Calendar</p>
-        <div className="space-y-2">
-          {[
-            { item: 'Flu Vaccination Campaign', deadline: 'Oct–Dec 2025', status: true },
-            { item: 'Annual TB Tests (clinical staff)', deadline: 'Rolling — by hire anniversary', status: true },
-            { item: 'Hepatitis B Series Completion', deadline: 'Within 6 months of hire', status: false },
-            { item: 'OSHA 300A Annual Summary Posted', deadline: 'Feb 1 – Apr 30 annually', status: true },
-            { item: 'Blood-borne Pathogen Training', deadline: 'Annual', status: true },
-            { item: 'Emergency Action Plan Review', deadline: 'Annual', status: true },
-          ].map(r => (
-            <div key={r.item} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
-              <div className="flex items-center gap-2">
-                {r.status ? <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" /> : <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />}
-                <p className={`text-xs ${r.status ? 'text-slate-300' : 'text-amber-300'}`}>{r.item}</p>
-              </div>
-              <span className="text-xs text-slate-500">{r.deadline}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

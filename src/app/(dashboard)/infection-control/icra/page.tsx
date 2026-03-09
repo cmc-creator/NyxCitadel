@@ -1,18 +1,7 @@
-'use client';
-
-import { useState } from 'react';
 import { ClipboardList, CheckCircle, AlertTriangle, Plus } from 'lucide-react';
-
-const riskAreas = [
-  { area: 'Hand Hygiene Compliance', risk: 'Transmission of pathogens due to non-compliance', rating: 'HIGH', goal: 'Achieve ≥90% compliance by Q3 2026', owner: 'IC Nurse' },
-  { area: 'Environmental Cleaning', risk: 'Insufficient terminal cleaning of patient rooms', rating: 'MEDIUM', goal: '100% checklist completion on all discharges', owner: 'EVS Supervisor' },
-  { area: 'Multi-Drug Resistant Organisms', risk: 'MRSA/ESBL colonization spread to other patients', rating: 'HIGH', goal: 'Zero MRSA BSI; contact precaution compliance >95%', owner: 'IC Nurse' },
-  { area: 'Respiratory Infections (Influenza)', risk: 'Facility-wide influenza outbreak during flu season', rating: 'MEDIUM', goal: '≥90% staff flu vaccination rate annually', owner: 'Employee Health' },
-  { area: 'C. difficile', risk: 'CDI rates above NHSN benchmark', rating: 'MEDIUM', goal: 'SIR <1.0; antibiotic stewardship adherence ≥85%', owner: 'Pharmacy / IC' },
-  { area: 'Sharps / Needlestick Injuries', risk: 'Bloodborne pathogen exposure to staff', rating: 'LOW', goal: 'Zero needlestick injuries; safety device compliance 100%', owner: 'Employee Health' },
-  { area: 'Surgical / Procedure Site Infections', risk: 'SSI from bedside procedures', rating: 'LOW', goal: 'Sterile technique audit ≥95% compliance', owner: 'CNO' },
-  { area: 'Construction / Renovation (ICRA)', risk: 'Aspergillus / fungal exposure during construction', rating: 'MEDIUM', goal: 'ICRA permit required for all projects > 8 sq ft', owner: 'Facilities / IC' },
-];
+import Link from 'next/link';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 const ratingColor: Record<string, string> = {
   HIGH: 'bg-red-100 text-red-700',
@@ -20,8 +9,26 @@ const ratingColor: Record<string, string> = {
   LOW: 'bg-emerald-100 text-emerald-700',
 };
 
-export default function IcraPage() {
-  const [showForm, setShowForm] = useState(false);
+const statusConfig: Record<string, { label: string; color: string }> = {
+  DRAFT:      { label: 'Draft',      color: 'bg-slate-100 text-slate-600' },
+  IN_REVIEW:  { label: 'In Review',  color: 'bg-amber-100 text-amber-700' },
+  APPROVED:   { label: 'Approved',   color: 'bg-emerald-100 text-emerald-700' },
+  SUPERSEDED: { label: 'Superseded', color: 'bg-slate-100 text-slate-500' },
+};
+
+export default async function IcraPage() {
+  const session = await auth();
+  const facilityId = session!.user.facilityId;
+
+  const assessments = await prisma.icRiskAssessment.findMany({
+    where: { facilityId },
+    orderBy: { assessmentYear: 'desc' },
+  });
+
+  const current = assessments.find(a => a.status === 'APPROVED') ?? assessments[0] ?? null;
+  const riskAreas = Array.isArray(current?.riskAreas)
+    ? (current.riskAreas as Array<{ area: string; risk: string; rating: string; mitigationGoal: string; owner?: string }>)
+    : [];
 
   return (
     <div className="p-6 space-y-6">
@@ -34,49 +41,104 @@ export default function IcraPage() {
           </div>
           <p className="text-slate-400 text-sm">Annual infection control risk assessment — identifies risks, assigns ratings, sets mitigation goals.</p>
         </div>
-        <button onClick={() => setShowForm(!showForm)}
+        <Link href="/infection-control/icra/new"
           className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Assessment
-        </button>
+        </Link>
       </div>
 
-      {/* Current Assessment Banner */}
-      <div className="rounded-xl border border-teal-500/30 bg-teal-500/10 p-4 flex items-start gap-3">
-        <CheckCircle className="w-5 h-5 text-teal-400 mt-0.5 flex-shrink-0" />
-        <div>
-          <p className="text-sm font-semibold text-teal-300">2026 ICRA — APPROVED</p>
-          <p className="text-xs text-teal-200/70 mt-0.5">Conducted: January 15, 2026 · Approved by: Chief Nursing Officer · Next due: January 2027</p>
+      {current ? (
+        <div className={`rounded-xl border p-4 flex items-start gap-3 ${current.status === 'APPROVED' ? 'border-teal-500/30 bg-teal-500/10' : 'border-amber-500/30 bg-amber-500/10'}`}>
+          {current.status === 'APPROVED'
+            ? <CheckCircle className="w-5 h-5 text-teal-400 mt-0.5 flex-shrink-0" />
+            : <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+          }
+          <div>
+            <p className={`text-sm font-semibold ${current.status === 'APPROVED' ? 'text-teal-300' : 'text-amber-300'}`}>
+              {current.assessmentYear} ICRA — {statusConfig[current.status]?.label ?? current.status}
+            </p>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Conducted: {new Date(current.conductedDate).toLocaleDateString()}
+              {current.approvedBy ? ` · Approved by: ${current.approvedBy}` : ''}
+              {current.reviewedBy ? ` · Reviewed by: ${current.reviewedBy}` : ''}
+            </p>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-red-300">No active ICRA found. An annual IC Risk Assessment is required per CMS §482.42.</p>
+        </div>
+      )}
 
-      {/* Risk Areas Table */}
-      <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
-        <div className="px-5 py-3 border-b border-white/10">
-          <p className="font-semibold text-white text-sm">2026 Risk Areas ({riskAreas.length} identified)</p>
-        </div>
-        <table className="w-full text-sm">
-          <thead className="bg-slate-900/40">
-            <tr>
-              {['Risk Area', 'Risk Description', 'Rating', 'Mitigation Goal', 'Owner'].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-3">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-white/5">
-            {riskAreas.map((r, i) => (
-              <tr key={i} className="hover:bg-white/5 transition-colors">
-                <td className="px-4 py-3 font-semibold text-white text-xs">{r.area}</td>
-                <td className="px-4 py-3 text-slate-400 text-xs max-w-xs">{r.risk}</td>
-                <td className="px-4 py-3">
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ratingColor[r.rating]}`}>{r.rating}</span>
-                </td>
-                <td className="px-4 py-3 text-slate-300 text-xs max-w-sm">{r.goal}</td>
-                <td className="px-4 py-3 text-slate-400 text-xs">{r.owner}</td>
+      {riskAreas.length > 0 && (
+        <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
+          <div className="px-5 py-3 border-b border-white/10">
+            <p className="font-semibold text-white text-sm">{current?.assessmentYear} Risk Areas ({riskAreas.length} identified)</p>
+          </div>
+          <table className="w-full text-sm">
+            <thead className="bg-slate-900/40">
+              <tr>
+                {['Risk Area', 'Risk Description', 'Rating', 'Mitigation Goal', 'Owner'].map(h => (
+                  <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-3">{h}</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="divide-y divide-white/5">
+              {riskAreas.map((r, i) => (
+                <tr key={i} className="hover:bg-white/5 transition-colors">
+                  <td className="px-4 py-3 font-semibold text-white text-xs">{r.area}</td>
+                  <td className="px-4 py-3 text-slate-400 text-xs max-w-xs">{r.risk}</td>
+                  <td className="px-4 py-3">
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ratingColor[r.rating] ?? 'bg-slate-100 text-slate-600'}`}>{r.rating}</span>
+                  </td>
+                  <td className="px-4 py-3 text-slate-300 text-xs max-w-sm">{r.mitigationGoal}</td>
+                  <td className="px-4 py-3 text-slate-400 text-xs">{r.owner ?? '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {assessments.length > 1 && (
+        <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
+          <div className="px-5 py-3 border-b border-white/10">
+            <p className="font-semibold text-white text-sm">Assessment History</p>
+          </div>
+          <table className="w-full text-sm">
+            <thead className="bg-slate-900/40">
+              <tr>
+                {['Year', 'Conducted', 'Conducted By', 'Status', 'Approved By'].map(h => (
+                  <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-3">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/5">
+              {assessments.map(a => (
+                <tr key={a.id} className="hover:bg-white/5">
+                  <td className="px-4 py-3 font-semibold text-white text-xs">{a.assessmentYear}</td>
+                  <td className="px-4 py-3 text-slate-400 text-xs">{new Date(a.conductedDate).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-slate-300 text-xs">{a.conductedBy}</td>
+                  <td className="px-4 py-3">
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[a.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                      {statusConfig[a.status]?.label ?? a.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-slate-400 text-xs">{a.approvedBy ?? '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {assessments.length === 0 && (
+        <div className="text-center py-12 text-slate-500">
+          <ClipboardList className="w-10 h-10 mx-auto mb-3 opacity-30" />
+          <p className="text-sm">No IC risk assessments on record.</p>
+        </div>
+      )}
     </div>
   );
 }

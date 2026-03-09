@@ -1,113 +1,70 @@
-'use client';
-
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { Building2, ChevronRight, Users, FileText, CheckCircle, AlertTriangle } from 'lucide-react';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
-const subModules = [
-  {
-    href: '/governance/committees',
-    title: 'Committee Meetings',
-    description: 'Medical Executive Committee, QA/QAPI, P&T, Safety, Ethics, and Peer Review — meeting minutes, quorum, and action items.',
-    icon: '🏛️',
-    badge: 'TJC LD.03.01',
-    badgeColor: 'bg-indigo-100 text-indigo-700',
-    stat: 'All Q1 2026 meetings complete',
-    statColor: 'text-emerald-400',
-  },
-  {
-    href: '/governance/documents',
-    title: 'Governance Documents',
-    description: 'Board bylaws, medical staff bylaws, organizational charts, policies, and self-assessment documents.',
-    icon: '📄',
-    badge: 'TJC LD.01.01',
-    badgeColor: 'bg-blue-100 text-blue-700',
-    stat: '3 Documents Due for Review',
-    statColor: 'text-amber-400',
-  },
-];
+export default async function GovernancePage() {
+  const session = await auth();
+  const facilityId = session!.user.facilityId;
+  const now = new Date();
+  const in30 = new Date(now); in30.setDate(in30.getDate() + 30);
+  const in90 = new Date(now); in90.setDate(in90.getDate() + 90);
+  const yearStart = new Date(now.getFullYear(), 0, 1);
 
-const recentActivity = [
-  { type: 'MEC Meeting', date: '2026-03-04', action: 'Credentialing approvals: 2 providers — Dr. Patel, NP Santos', status: 'Complete' },
-  { type: 'QA/QAPI Committee', date: '2026-02-18', action: 'Reviewed Q4 2025 PI Projects — 3 action items assigned', status: 'Complete' },
-  { type: 'P&T Committee', date: '2026-02-20', action: 'Formulary update: 2 additions, 1 removal', status: 'Complete' },
-  { type: 'Safety Committee', date: '2026-02-12', action: 'EOC rounds results reviewed — 1 corrective action', status: 'In Progress' },
-  { type: 'Ethics Committee', date: '2026-01-30', action: 'Patient rights consultation — capacity determination', status: 'Complete' },
-];
+  const [committeeMeetings, overdueDocuments, expiringSoonDocs, upcomingMeetings] = await Promise.all([
+    prisma.committeeMeeting.count({ where: { facilityId, meetingDate: { gte: yearStart } } }),
+    prisma.governanceDocument.count({ where: { facilityId, reviewDate: { lt: now } } }),
+    prisma.governanceDocument.count({ where: { facilityId, reviewDate: { gte: now, lte: in90 } } }),
+    prisma.committeeMeeting.count({ where: { facilityId, meetingDate: { gte: now, lte: in30 } } }),
+  ]);
 
-export default function GovernancePage() {
+  const overallCompliant = overdueDocuments === 0;
+
+  const subModules = [
+    { href: '/governance/committees', icon: Users, label: 'Committee Meetings', desc: 'Track quorum, minutes, and action items', color: 'text-violet-400' },
+    { href: '/governance/documents', icon: FileText, label: 'Governance Documents', desc: 'Bylaws, policies, charters, and approvals', color: 'text-blue-400' },
+  ];
+
   return (
     <div className="p-6 space-y-6">
-      {/* Header */}
-      <div className="flex items-start justify-between">
-        <div>
-          <div className="flex items-center gap-3 mb-1">
-            <Building2 className="w-6 h-6 text-indigo-400" />
-            <h1 className="text-2xl font-bold text-white">Governance</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC LD</span>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">CMS §482.12</span>
-          </div>
-          <p className="text-slate-400 text-sm">Committee meetings, governance documents, board oversight, and organizational leadership compliance.</p>
-        </div>
+      <div className="flex items-center gap-3 mb-2">
+        <Building2 className="w-5 h-5 text-violet-400" />
+        <h1 className="text-xl font-bold text-white">Governance</h1>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 gap-4">
         {[
-          { label: 'Active Committees', value: 5, icon: Users, color: 'text-indigo-400' },
-          { label: 'YTD Meetings Held', value: 14, icon: CheckCircle, color: 'text-emerald-400' },
-          { label: 'Docs Due for Review', value: 3, icon: AlertTriangle, color: 'text-amber-400' },
-          { label: 'Open Action Items', value: 4, icon: FileText, color: 'text-amber-400' },
+          { label: 'Committee Meetings YTD', value: committeeMeetings, color: 'text-violet-400' },
+          { label: 'Upcoming Meetings (30d)', value: upcomingMeetings, color: 'text-blue-400' },
+          { label: 'Documents Overdue Review', value: overdueDocuments, color: overdueDocuments > 0 ? 'text-red-400' : 'text-emerald-400' },
+          { label: 'Expiring Soon (90d)', value: expiringSoonDocs, color: expiringSoonDocs > 0 ? 'text-amber-400' : 'text-emerald-400' },
         ].map(s => (
-          <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <s.icon className={`w-4 h-4 ${s.color}`} />
-              <span className="text-xs text-slate-400">{s.label}</span>
-            </div>
-            <p className="text-2xl font-bold text-white">{s.value}</p>
+          <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
+            <p className="text-xs text-slate-400 mb-1">{s.label}</p>
+            <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
           </div>
         ))}
       </div>
 
-      {/* Sub-modules */}
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className={`rounded-xl border p-4 flex items-center gap-3 ${overallCompliant ? 'border-emerald-500/30 bg-emerald-500/10' : 'border-amber-500/30 bg-amber-500/10'}`}>
+        {overallCompliant
+          ? <><CheckCircle className="w-5 h-5 text-emerald-400" /><p className="text-sm text-emerald-300">All governance documents are current — no overdue reviews.</p></>
+          : <><AlertTriangle className="w-5 h-5 text-amber-400" /><p className="text-sm text-amber-300">{overdueDocuments} governance document(s) require review. Address before next board meeting.</p></>}
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
         {subModules.map(m => (
-          <Link key={m.href} href={m.href}
-            className="rounded-xl bg-slate-800/50 border border-white/10 p-5 hover:border-indigo-500/40 transition-all group">
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">{m.icon}</span>
-                <div>
-                  <p className="font-semibold text-white group-hover:text-indigo-300 transition-colors">{m.title}</p>
-                  <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full ${m.badgeColor}`}>{m.badge}</span>
-                </div>
+          <Link key={m.href} href={m.href} className="rounded-xl border border-white/10 bg-slate-800/50 hover:bg-slate-700/50 p-5 flex items-center justify-between group transition-colors">
+            <div className="flex items-center gap-3">
+              <m.icon className={`w-5 h-5 ${m.color}`} />
+              <div>
+                <p className="font-semibold text-white">{m.label}</p>
+                <p className="text-xs text-slate-400">{m.desc}</p>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-indigo-400 transition-colors" />
             </div>
-            <p className="text-xs text-slate-400 mb-3">{m.description}</p>
-            <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>
+            <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
           </Link>
         ))}
-      </div>
-
-      {/* Recent Activity */}
-      <div className="rounded-xl bg-slate-800/50 border border-white/10 p-5">
-        <p className="text-sm font-semibold text-white mb-3">Recent Committee Activity</p>
-        <div className="space-y-3">
-          {recentActivity.map((a, i) => (
-            <div key={i} className="flex items-start justify-between gap-4 py-2 border-b border-white/5 last:border-0">
-              <div>
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-xs font-semibold text-slate-300">{a.type}</span>
-                  <span className="text-xs text-slate-500">{a.date}</span>
-                </div>
-                <p className="text-xs text-slate-400">{a.action}</p>
-              </div>
-              <span className={`text-xs font-semibold flex-shrink-0 ${a.status === 'Complete' ? 'text-emerald-400' : 'text-amber-400'}`}>
-                {a.status}
-              </span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

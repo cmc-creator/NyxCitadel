@@ -15,7 +15,9 @@ export async function GET(req: NextRequest) {
 
   const search = { contains: q, mode: 'insensitive' as const };
 
-  const [policies, training, incidents, caps, grievances, surveys, iriad, rca, qoc, risks, docs, calEvents] = await Promise.all([
+  const [policies, training, incidents, caps, grievances, surveys, iriad, rca, qoc, risks, docs, calEvents,
+    providers, hipaaBreaches, governanceDocs, employeeHealth, oshaEntries, treatmentPlans, dischargePlans, restraintEvents
+  ] = await Promise.all([
     // Policies
     prisma.policy.findMany({
       where: { facilityId, OR: [{ title: search }, { summary: search }, { policyNumber: search }] },
@@ -86,6 +88,54 @@ export async function GET(req: NextRequest) {
     prisma.calendarEvent.findMany({
       where: { facilityId, OR: [{ title: search }, { description: search }, { notes: search }] },
       select: { id: true, title: true, category: true, status: true, dueDate: true },
+      take: 5,
+    }),
+    // Providers (credentialing)
+    prisma.provider.findMany({
+      where: { facilityId, OR: [{ firstName: search }, { lastName: search }, { npi: search }, { specialty: search }] },
+      select: { id: true, firstName: true, lastName: true, specialty: true, status: true },
+      take: 5,
+    }),
+    // HIPAA Breaches
+    prisma.hipaaBreachLog.findMany({
+      where: { facilityId, OR: [{ breachNumber: search }, { briefDescription: search }, { affectedIndividuals: search }] },
+      select: { id: true, breachNumber: true, breachDate: true, status: true },
+      take: 5,
+    }),
+    // Governance Documents
+    prisma.governanceDocument.findMany({
+      where: { facilityId, OR: [{ title: search }, { docType: search }, { approvedBy: search }] },
+      select: { id: true, title: true, docType: true, status: true },
+      take: 5,
+    }),
+    // Employee Health
+    prisma.employeeHealthRecord.findMany({
+      where: { facilityId, OR: [{ employeeName: search }, { department: search }] },
+      select: { id: true, employeeName: true, department: true, tbResult: true },
+      take: 5,
+    }),
+    // OSHA Log
+    prisma.oshaLog.findMany({
+      where: { facilityId, OR: [{ caseNumber: search }, { employeeName: search }, { injuryType: search }] },
+      select: { id: true, caseNumber: true, employeeName: true, injuryType: true, recordable: true },
+      take: 5,
+    }),
+    // Treatment Plans
+    prisma.treatmentPlan.findMany({
+      where: { facilityId, OR: [{ patientInitials: search }, { primaryDx: search }, { unit: search }] },
+      select: { id: true, patientInitials: true, primaryDx: true, status: true },
+      take: 5,
+    }),
+    // Discharge Plans
+    prisma.dischargePlan.findMany({
+      where: { facilityId, OR: [{ patientInitials: search }, { expectedDisposition: search }, { unit: search }] },
+      select: { id: true, patientInitials: true, expectedDisposition: true, status: true },
+      take: 5,
+    }),
+    // Restraint Events
+    prisma.restraintEvent.findMany({
+      where: { facilityId, OR: [{ eventNumber: search }, { patientInitials: search }, { unit: search }] },
+      select: { id: true, eventNumber: true, patientInitials: true, status: true, deathOccurred: true },
       take: 5,
     }),
   ]);
@@ -221,6 +271,94 @@ export async function GET(req: NextRequest) {
       href: `/documents`,
       title: d.name,
       meta: d.category,
+    })),
+  });
+
+  if (providers.length) results.push({
+    label: 'Providers (Credentialing)',
+    icon: 'provider',
+    items: providers.map(p => ({
+      id: p.id,
+      href: `/credentialing/providers`,
+      title: `${p.firstName} ${p.lastName}`,
+      meta: `${p.specialty ?? 'Provider'} · ${p.status}`,
+    })),
+  });
+
+  if (hipaaBreaches.length) results.push({
+    label: 'HIPAA Breaches',
+    icon: 'hipaa',
+    items: hipaaBreaches.map(b => ({
+      id: b.id,
+      href: `/hipaa/breaches`,
+      title: b.breachNumber,
+      meta: `${b.status} · ${new Date(b.breachDate).toLocaleDateString()}`,
+    })),
+  });
+
+  if (governanceDocs.length) results.push({
+    label: 'Governance Documents',
+    icon: 'governance',
+    items: governanceDocs.map(g => ({
+      id: g.id,
+      href: `/governance/documents`,
+      title: g.title,
+      meta: `${g.docType} · ${g.status}`,
+    })),
+  });
+
+  if (employeeHealth.length) results.push({
+    label: 'Employee Health',
+    icon: 'health',
+    items: employeeHealth.map(e => ({
+      id: e.id,
+      href: `/workforce-health/employee-health`,
+      title: e.employeeName,
+      meta: `${e.department ?? 'Staff'} · TB: ${e.tbResult ?? 'Not recorded'}`,
+    })),
+  });
+
+  if (oshaEntries.length) results.push({
+    label: 'OSHA 300 Log',
+    icon: 'osha',
+    items: oshaEntries.map(o => ({
+      id: o.id,
+      href: `/workforce-health/osha`,
+      title: `${o.caseNumber} — ${o.employeeName}`,
+      meta: `${o.injuryType ?? 'Injury'} · ${o.recordable ? 'Recordable' : 'Non-recordable'}`,
+    })),
+  });
+
+  if (treatmentPlans.length) results.push({
+    label: 'Treatment Plans',
+    icon: 'treatment',
+    items: treatmentPlans.map(t => ({
+      id: t.id,
+      href: `/treatment-plans`,
+      title: `${t.patientInitials} — ${t.primaryDx ?? 'No Dx'}`,
+      meta: t.status,
+    })),
+  });
+
+  if (dischargePlans.length) results.push({
+    label: 'Discharge Plans',
+    icon: 'discharge',
+    items: dischargePlans.map(d => ({
+      id: d.id,
+      href: `/discharge-planning`,
+      title: `${d.patientInitials} — ${d.expectedDisposition ?? 'TBD'}`,
+      meta: d.status,
+    })),
+  });
+
+  if (restraintEvents.length) results.push({
+    label: 'Restraint / Seclusion Events',
+    icon: 'restraint',
+    items: restraintEvents.map(r => ({
+      id: r.id,
+      href: `/restraint-seclusion`,
+      title: `${r.eventNumber} — ${r.patientInitials}`,
+      meta: `${r.status}${r.deathOccurred ? ' · DEATH REPORTED' : ''}`,
     })),
   });
 

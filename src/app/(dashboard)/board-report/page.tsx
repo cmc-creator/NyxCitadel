@@ -24,6 +24,8 @@ export default async function BoardReportPage() {
   const since90   = new Date(Date.now() - 90  * 24 * 60 * 60 * 1000);
   const since60   = new Date(Date.now() - 60  * 24 * 60 * 60 * 1000);
   const now       = new Date();
+  const in90      = new Date(Date.now() + 90  * 24 * 60 * 60 * 1000);
+  const yearStart = new Date(now.getFullYear(), 0, 1);
   const thisMonth = now.getMonth() + 1;
   const thisYear  = now.getFullYear();
 
@@ -42,6 +44,12 @@ export default async function BoardReportPage() {
     grievancesOpen,
     recentCaps,
     criticalIR,
+    // New module stats
+    expiringLicenses90,
+    csDiscrepanciesOpen,
+    openHipaaBreaches,
+    activeHolds,
+    restraintDeathsYtd,
   ] = await Promise.all([
     prisma.facility.findUnique({
       where: { id: facilityId },
@@ -113,6 +121,12 @@ export default async function BoardReportPage() {
       },
       take: 10,
     }),
+    // New module queries
+    prisma.providerLicense.count({ where: { provider: { facilityId }, expiryDate: { lte: in90 }, status: 'ACTIVE' } }),
+    prisma.controlledSubstanceLog.count({ where: { facilityId, status: 'DISCREPANCY_OPEN' } }),
+    prisma.hipaaBreachLog.count({ where: { facilityId, status: { notIn: ['CLOSED', 'REPORTED_TO_HHS'] } } }),
+    prisma.involuntaryHoldLog.count({ where: { facilityId, status: 'ACTIVE' } }),
+    prisma.restraintEvent.count({ where: { facilityId, deathOccurred: true, eventDate: { gte: yearStart } } }),
   ]);
 
   const trainingPct = trainingAll > 0 ? Math.round((trainingCompleted / trainingAll) * 100) : 100;
@@ -430,6 +444,38 @@ export default async function BoardReportPage() {
             </table>
           </ReportSection>
         )}
+
+        {/* ── Section 7: Credentialing ───────────────────── */}
+        <ReportSection icon={<Shield className="w-4 h-4 text-violet-500" />} title="Section 7 — Credentialing &amp; Licensure">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <StatBox label="Licenses Expiring (90d)" value={expiringLicenses90} highlight={expiringLicenses90 > 0} />
+          </div>
+          {expiringLicenses90 > 0 && (
+            <p className="text-xs text-amber-700 mt-3 flex items-center gap-1">
+              <AlertTriangle className="w-3 h-3" /> {expiringLicenses90} provider license(s) expire within 90 days. Initiate renewal to maintain compliance with TJC MS.06 and CMS CoP requirements.
+            </p>
+          )}
+          {expiringLicenses90 === 0 && (
+            <p className="text-sm text-emerald-700 mt-2 flex items-center gap-1"><CheckCircle2 className="w-4 h-4" /> No licenses expiring within 90 days.</p>
+          )}
+        </ReportSection>
+
+        {/* ── Section 8: Patient Safety ─────────────────────── */}
+        <ReportSection icon={<AlertTriangle className="w-4 h-4 text-red-500" />} title="Section 8 — Patient Safety Indicators">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <StatBox label="CS Discrepancies Open"      value={csDiscrepanciesOpen}  highlight={csDiscrepanciesOpen > 0} />
+            <StatBox label="Open HIPAA Breaches"        value={openHipaaBreaches}    highlight={openHipaaBreaches > 0} />
+            <StatBox label="Active Involuntary Holds"   value={activeHolds}          highlight={activeHolds > 0} />
+            <StatBox label="Restraint Deaths YTD"       value={restraintDeathsYtd}   highlight={restraintDeathsYtd > 0} />
+          </div>
+          {(csDiscrepanciesOpen > 0 || openHipaaBreaches > 0 || restraintDeathsYtd > 0) && (
+            <div className="mt-3 space-y-1">
+              {csDiscrepanciesOpen > 0 && <p className="text-xs text-red-700 flex items-center gap-1"><AlertTriangle className="w-3 h-3" /> {csDiscrepanciesOpen} controlled substance discrepanc{csDiscrepanciesOpen > 1 ? 'ies' : 'y'} unresolved — DEA-auditable, immediate investigation required.</p>}
+              {openHipaaBreaches > 0 && <p className="text-xs text-red-700 flex items-center gap-1"><AlertTriangle className="w-3 h-3" /> {openHipaaBreaches} open HIPAA breach(es) — OCR notification deadlines apply.</p>}
+              {restraintDeathsYtd > 0 && <p className="text-xs text-red-700 flex items-center gap-1"><AlertTriangle className="w-3 h-3" /> {restraintDeathsYtd} death(s) in restraint/seclusion YTD — CMS 24-hour reporting obligation.</p>}
+            </div>
+          )}
+        </ReportSection>
 
         {/* Closing Statement */}
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">

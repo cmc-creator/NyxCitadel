@@ -1,51 +1,47 @@
-'use client';
-
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { Pill, AlertTriangle, ChevronRight, CheckCircle, Clipboard } from 'lucide-react';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
-const subModules = [
-  {
-    href: '/pharmacy/controlled-substances',
-    title: 'Controlled Substance Log',
-    description: 'Shift count verification, waste reconciliation, discrepancy tracking, and DEA reporting.',
-    icon: '💊',
-    badge: 'DEA Schedule II–V',
-    badgeColor: 'bg-red-100 text-red-700',
-    stat: '0 Open Discrepancies',
-    statColor: 'text-emerald-400',
-  },
-  {
-    href: '/pharmacy/high-alert',
-    title: 'High-Alert Med Audits',
-    description: 'ISMP high-alert medications — storage, labeling, double-check compliance audits.',
-    icon: '⚠️',
-    badge: 'ISMP / TJC MM',
-    badgeColor: 'bg-amber-100 text-amber-700',
-    stat: '1 Action Required',
-    statColor: 'text-amber-400',
-  },
-  {
-    href: '/pharmacy/pdmp',
-    title: 'PDMP Check Log',
-    description: 'Prescription Drug Monitoring Program — compliance log for Arizona mandatory PDMP checks.',
-    icon: '🔍',
-    badge: 'ARS §36-2606',
-    badgeColor: 'bg-blue-100 text-blue-700',
-    stat: 'Compliant',
-    statColor: 'text-emerald-400',
-  },
-];
+export default async function PharmacyPage() {
+  const session = await auth();
+  const facilityId = session!.user.facilityId;
+  const now = new Date();
+  const firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-const ptMeetings = [
-  { date: '2026-02-20', chair: 'Dr. Kim, PharmD', attendees: 6, formularyChanges: 2, medErrors: 3, quorum: true },
-  { date: '2025-11-20', chair: 'Dr. Kim, PharmD', attendees: 5, formularyChanges: 0, medErrors: 5, quorum: true },
-  { date: '2025-08-21', chair: 'Dr. Kim, PharmD', attendees: 7, formularyChanges: 1, medErrors: 4, quorum: true },
-];
+  const [csDiscrepancies, highAlertThisMonth, pdmpThisMonth] = await Promise.all([
+    prisma.controlledSubstanceLog.count({ where: { facilityId, status: 'DISCREPANCY_OPEN' } }),
+    prisma.highAlertMedAudit.count({ where: { facilityId, auditDate: { gte: firstOfMonth } } }),
+    prisma.pdmpCheck.count({ where: { facilityId, checkDate: { gte: firstOfMonth } } }),
+  ]);
 
-export default function PharmacyPage() {
+  const subModules = [
+    {
+      href: '/pharmacy/controlled-substances',
+      title: 'Controlled Substance Log',
+      description: 'Shift count verification, waste reconciliation, discrepancy tracking, and DEA reporting.',
+      icon: 'ðŸ’Š', badge: 'DEA Schedule IIâ€“V', badgeColor: 'bg-red-100 text-red-700',
+      stat: csDiscrepancies > 0 ? `${csDiscrepancies} Open Discrepancies` : '0 Open Discrepancies',
+      statColor: csDiscrepancies > 0 ? 'text-red-400' : 'text-emerald-400',
+    },
+    {
+      href: '/pharmacy/high-alert',
+      title: 'High-Alert Med Audits',
+      description: 'ISMP high-alert medications â€” storage, labeling, double-check compliance audits.',
+      icon: 'âš ï¸', badge: 'ISMP / TJC MM', badgeColor: 'bg-amber-100 text-amber-700',
+      stat: `${highAlertThisMonth} Audits This Month`, statColor: 'text-amber-400',
+    },
+    {
+      href: '/pharmacy/pdmp',
+      title: 'PDMP Check Log',
+      description: 'Prescription Drug Monitoring Program â€” compliance log for Arizona mandatory PDMP checks.',
+      icon: 'ðŸ”', badge: 'ARS Â§36-2606', badgeColor: 'bg-blue-100 text-blue-700',
+      stat: `${pdmpThisMonth} Checks This Month`, statColor: 'text-emerald-400',
+    },
+  ];
+
   return (
     <div className="p-6 space-y-6">
-      {/* Header */}
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-3 mb-1">
@@ -58,13 +54,12 @@ export default function PharmacyPage() {
         </div>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'CS Discrepancies YTD', value: 0, icon: Clipboard, color: 'text-emerald-400' },
-          { label: 'High-Alert Audits This Month', value: 6, icon: AlertTriangle, color: 'text-amber-400' },
-          { label: 'PDMP Checks This Month', value: 18, icon: CheckCircle, color: 'text-blue-400' },
-          { label: 'Next P&T Meeting', value: 'May 2026', icon: Pill, color: 'text-emerald-400' },
+          { label: 'CS Discrepancies Open',        value: csDiscrepancies,    icon: Clipboard,    color: csDiscrepancies > 0 ? 'text-red-400' : 'text-emerald-400' },
+          { label: 'High-Alert Audits This Month',  value: highAlertThisMonth, icon: AlertTriangle, color: 'text-amber-400' },
+          { label: 'PDMP Checks This Month',        value: pdmpThisMonth,      icon: CheckCircle,  color: 'text-blue-400' },
+          { label: 'Formulary Reviews',             value: 'â€”',                icon: Pill,         color: 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-2">
@@ -76,7 +71,6 @@ export default function PharmacyPage() {
         ))}
       </div>
 
-      {/* Sub-modules */}
       <div className="grid md:grid-cols-3 gap-4">
         {subModules.map(m => (
           <Link key={m.href} href={m.href}
@@ -95,37 +89,6 @@ export default function PharmacyPage() {
             <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>
           </Link>
         ))}
-      </div>
-
-      {/* P&T Meeting Log */}
-      <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
-          <p className="font-semibold text-white text-sm">Pharmacy & Therapeutics Committee Meetings</p>
-          <span className="text-xs text-slate-400">Quarterly — Next: May 2026</span>
-        </div>
-        <table className="w-full text-sm">
-          <thead className="bg-slate-900/40">
-            <tr>
-              {['Date', 'Chair', 'Attendees', 'Quorum', 'Formulary Changes', 'Med Errors Trended'].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-2.5">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-white/5">
-            {ptMeetings.map(m => (
-              <tr key={m.date} className="hover:bg-white/5">
-                <td className="px-4 py-3 text-slate-300 text-xs font-semibold">{m.date}</td>
-                <td className="px-4 py-3 text-slate-400 text-xs">{m.chair}</td>
-                <td className="px-4 py-3 text-slate-300 text-xs">{m.attendees}</td>
-                <td className="px-4 py-3">
-                  {m.quorum ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <AlertTriangle className="w-4 h-4 text-red-400" />}
-                </td>
-                <td className="px-4 py-3 text-slate-300 text-xs">{m.formularyChanges}</td>
-                <td className="px-4 py-3 text-slate-300 text-xs">{m.medErrors}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   );

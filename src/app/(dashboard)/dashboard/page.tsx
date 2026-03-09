@@ -29,6 +29,7 @@ async function getDashboardStats(facilityId: string) {
   const now = new Date();
   const in30Days = addDays(now, 30);
   const in60Days = addDays(now, 60);
+  const in90Days = addDays(now, 90);
   const in2Days  = addDays(now, 2);
   const currentYear = now.getFullYear();
   const yearStart = new Date(currentYear, 0, 1);
@@ -49,6 +50,11 @@ async function getDashboardStats(facilityId: string) {
     recentQapiMetrics,
     sentinelIncidents,
     overdueCapCount,
+    expiringLicenses,
+    csDiscrepancies,
+    tbOverdue,
+    openHipaaBreaches,
+    restraintDeathsYtd,
   ] = await Promise.all([
     prisma.calendarEvent.count({ where: { facilityId, dueDate: { lt: now }, completedDate: null, status: { not: 'COMPLETED' } } }),
     prisma.calendarEvent.count({ where: { facilityId, dueDate: { gte: now, lte: in30Days }, status: { notIn: ['COMPLETED', 'NA', 'WAIVED'] } } }),
@@ -86,6 +92,12 @@ async function getDashboardStats(facilityId: string) {
     }),
     prisma.incident.count({ where: { facilityId, severity: 'SENTINEL', status: { not: 'CLOSED' } } }),
     prisma.correctiveActionPlan.count({ where: { facilityId, targetDate: { lt: now }, status: { notIn: ['COMPLETED', 'VERIFIED'] } } }),
+    // New module stats
+    prisma.providerLicense.count({ where: { provider: { facilityId }, expiryDate: { lte: in90Days }, status: 'ACTIVE' } }),
+    prisma.controlledSubstanceLog.count({ where: { facilityId, status: 'DISCREPANCY_OPEN' } }),
+    prisma.employeeHealthRecord.count({ where: { facilityId, tbNextDueDate: { lt: now } } }),
+    prisma.hipaaBreachLog.count({ where: { facilityId, status: { notIn: ['CLOSED', 'REPORTED_TO_HHS'] } } }),
+    prisma.restraintEvent.count({ where: { facilityId, deathOccurred: true, eventDate: { gte: yearStart } } }),
   ]);
 
   const trainingCompliancePct = totalRequiredTraining > 0
@@ -113,6 +125,11 @@ async function getDashboardStats(facilityId: string) {
     latestMetrics,
     totalSentinels: sentinelIrIad + sentinelIncidents,
     overdueCapCount,
+    expiringLicenses,
+    csDiscrepancies,
+    tbOverdue,
+    openHipaaBreaches,
+    restraintDeathsYtd,
   };
 }
 
@@ -149,8 +166,8 @@ export default async function DashboardPage() {
   const facilityId = session!.user.facilityId;
   const s = await getDashboardStats(facilityId);
 
-  const urgentCount = s.totalSentinels + s.adhsOverdue + s.qocImmediateJeopardy + s.grievanceOverdueAck + s.grievanceOverdueRes + s.qocOverdueResponse + s.overdueCapCount;
-  const watchCount  = s.iadUrgent + s.pendingIad + s.openIrIad + s.openQoc + s.openGrievances + s.overduePolicies;
+  const urgentCount = s.totalSentinels + s.adhsOverdue + s.qocImmediateJeopardy + s.grievanceOverdueAck + s.grievanceOverdueRes + s.qocOverdueResponse + s.overdueCapCount + s.restraintDeathsYtd + s.csDiscrepancies;
+  const watchCount  = s.iadUrgent + s.pendingIad + s.openIrIad + s.openQoc + s.openGrievances + s.overduePolicies + s.openHipaaBreaches + s.tbOverdue + s.expiringLicenses;
 
   return (
     <div className="space-y-6">
@@ -185,6 +202,8 @@ export default async function DashboardPage() {
             {s.grievanceOverdueAck > 0 && <UrgentChip href="/trackers/grievances" label={`${s.grievanceOverdueAck} grievance ack${s.grievanceOverdueAck > 1 ? 's' : ''} overdue`} subtitle="CMS 482.13(e) — 7-day window" />}
             {s.grievanceOverdueRes > 0 && <UrgentChip href="/trackers/grievances" label={`${s.grievanceOverdueRes} grievance resolution${s.grievanceOverdueRes > 1 ? 's' : ''} overdue`} subtitle="CMS 482.13(e) — 30-day window" />}
             {s.overdueCapCount > 0 && <UrgentChip href="/trackers/caps" label={`${s.overdueCapCount} CAP${s.overdueCapCount > 1 ? 's' : ''} past target date`} subtitle="Corrective action overdue" />}
+            {s.restraintDeathsYtd > 0 && <UrgentChip href="/restraint-seclusion" label={`${s.restraintDeathsYtd} restraint/seclusion death${s.restraintDeathsYtd > 1 ? 's' : ''} YTD`} subtitle="CMS reporting required within 24 hrs" />}
+            {s.csDiscrepancies > 0 && <UrgentChip href="/pharmacy/controlled-substances" label={`${s.csDiscrepancies} CS discrepanc${s.csDiscrepancies > 1 ? 'ies' : 'y'} open`} subtitle="DEA-auditable — resolve immediately" />}
           </div>
         </div>
       )}
@@ -203,6 +222,9 @@ export default async function DashboardPage() {
             {s.openQoc > 0 && <WatchChip href="/trackers/qoc" label={`${s.openQoc} open QOC/LOI complaint${s.openQoc > 1 ? 's' : ''}`} />}
             {s.openGrievances > 0 && <WatchChip href="/trackers/grievances" label={`${s.openGrievances} open grievance${s.openGrievances > 1 ? 's' : ''}`} />}
             {s.overduePolicies > 0 && <WatchChip href="/trackers/policies?filter=overdue" label={`${s.overduePolicies} policy review${s.overduePolicies > 1 ? 's' : ''} overdue`} />}
+            {s.openHipaaBreaches > 0 && <WatchChip href="/hipaa/breaches" label={`${s.openHipaaBreaches} open HIPAA breach${s.openHipaaBreaches > 1 ? 'es' : ''}`} />}
+            {s.tbOverdue > 0 && <WatchChip href="/workforce-health/employee-health" label={`${s.tbOverdue} TB screening${s.tbOverdue > 1 ? 's' : ''} overdue`} />}
+            {s.expiringLicenses > 0 && <WatchChip href="/credentialing/licenses" label={`${s.expiringLicenses} license${s.expiringLicenses > 1 ? 's' : ''} expiring (90d)`} />}
           </div>
         </div>
       )}
