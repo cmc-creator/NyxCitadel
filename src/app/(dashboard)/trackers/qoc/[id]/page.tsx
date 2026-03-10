@@ -1,209 +1,176 @@
-﻿import { auth } from '@/lib/auth';
+﻿import { notFound, redirect } from 'next/navigation';
+import Link from 'next/link';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
-import { Scale, ArrowLeft, AlertTriangle, Clock, CheckCircle2, FileSearch, Link2 } from 'lucide-react';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { ArrowLeft, ClipboardCheck, AlertTriangle, Clock } from 'lucide-react';
+import StatusUpdater from '@/components/trackers/StatusUpdater';
+import PrintButton from '@/components/ui/PrintButton';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata = { title: 'QOC / LOI Complaint' };
+const STATUS_OPTIONS = [
+  { value: 'OPEN', label: 'Open', color: 'bg-blue-100 text-blue-700' },
+  { value: 'LOI_RECEIVED', label: 'LOI Received', color: 'bg-orange-100 text-orange-700' },
+  { value: 'RESPONSE_SUBMITTED', label: 'Response Submitted', color: 'bg-teal-100 text-teal-700' },
+  { value: 'UNDER_INVESTIGATION', label: 'Under Investigation', color: 'bg-yellow-100 text-yellow-700' },
+  { value: 'FINDINGS_ISSUED', label: 'Findings Issued', color: 'bg-purple-100 text-purple-700' },
+  { value: 'SUBSTANTIATED', label: 'Substantiated', color: 'bg-red-100 text-red-700' },
+  { value: 'UNSUBSTANTIATED', label: 'Unsubstantiated', color: 'bg-green-100 text-green-700' },
+  { value: 'CLOSED', label: 'Closed', color: 'bg-slate-100 text-slate-500' },
+];
 
-const STATUS_COLOR: Record<string, string> = {
-  OPEN:               'bg-red-100 text-red-700',
-  LOI_RECEIVED:       'bg-orange-100 text-orange-700',
-  RESPONSE_SUBMITTED: 'bg-blue-100 text-blue-700',
-  UNDER_INVESTIGATION:'bg-yellow-100 text-yellow-700',
-  FINDINGS_ISSUED:    'bg-purple-100 text-purple-700',
-  SUBSTANTIATED:      'bg-red-200 text-red-800',
-  UNSUBSTANTIATED:    'bg-green-100 text-green-700',
-  CLOSED:             'bg-slate-100 text-slate-500',
-};
-
-const INV_COLOR: Record<string, string> = {
-  STANDARD:           'bg-slate-100 text-slate-600',
-  IMMEDIATE_JEOPARDY: 'bg-red-100 text-red-700',
-  EXPANDED:           'bg-orange-100 text-orange-700',
-  REVISIT:            'bg-yellow-100 text-yellow-700',
-  FOLLOW_UP:          'bg-blue-100 text-blue-700',
-};
+interface Citation { tag: string; description?: string; poC?: string }
 
 export default async function QocDetailPage({ params }: { params: { id: string } }) {
   const session = await auth();
+  if (!session) redirect('/login');
 
-  const complaint = await prisma.qocComplaint.findFirst({
-    where: { id: params.id, facilityId: session!.user.facilityId },
-  });
-  if (!complaint) notFound();
+  const qoc = await prisma.qocComplaint.findUnique({ where: { id: params.id } });
+  if (!qoc || qoc.facilityId !== session.user.facilityId) notFound();
 
   const now = new Date();
-  const responseOverdue = complaint.responseDueDate && complaint.responseDueDate < now && !complaint.responseSubmittedDate;
-  const daysUntilResponse = complaint.responseDueDate
-    ? Math.ceil((complaint.responseDueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
-    : null;
+  const responseOverdue = qoc.responseDueDate && !qoc.responseSubmittedDate && qoc.responseDueDate < now;
+  function daysLeft(d: Date) { return Math.ceil((d.getTime() - now.getTime()) / 86400000); }
 
-  const citations = Array.isArray(complaint.citationsIssued)
-    ? (complaint.citationsIssued as string[])
-    : [];
-  const allegationCategories = Array.isArray(complaint.allegationCategories)
-    ? (complaint.allegationCategories as string[])
-    : [];
+  const citations = qoc.citationsIssued as Citation[] | null;
+  const allegations = qoc.allegationCategories as string[] | null;
 
   return (
-    <div className="max-w-3xl space-y-6">
-      {/* Header */}
-      <div>
-        <Link href="/trackers/qoc" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to QOC / LOI Tracker
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <Link href="/trackers/qoc" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+          <ArrowLeft className="w-4 h-4" /> Back to QoC Complaints
         </Link>
-        <div className="flex flex-wrap items-center gap-2 mb-1">
-          <span className="text-xs font-mono text-slate-500">{complaint.qocNumber}</span>
-          <span className={`text-xs font-medium px-2 py-0.5 rounded ${STATUS_COLOR[complaint.status] ?? 'bg-slate-100'}`}>
-            {complaint.status.replace(/_/g, ' ')}
-          </span>
-          <span className={`text-xs font-medium px-2 py-0.5 rounded ${INV_COLOR[complaint.investigationType] ?? 'bg-slate-100'}`}>
-            {complaint.investigationType.replace(/_/g, ' ')}
-          </span>
-          {complaint.deficienciesFound && (
-            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-red-100 text-red-700">Deficiencies Found</span>
-          )}
-        </div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Scale className="w-6 h-6 text-purple-600" />
-          QOC / LOI Complaint
-        </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Received {formatDate(complaint.dateReceived)} · Complainant: {complaint.complainantType.replace(/_/g, ' ')}</p>
+        <PrintButton />
       </div>
 
-      {/* Response deadline alert */}
-      {responseOverdue && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
-          <AlertTriangle className="w-4 h-4 shrink-0" />
-          <span><strong>Response overdue</strong> — 10 business-day window expired {formatDate(complaint.responseDueDate!)}.</span>
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <ClipboardCheck className="w-5 h-5 text-purple-600" />
+              <span className="text-xs font-mono text-slate-400">{qoc.qocNumber}</span>
+              {qoc.cmsComplaintNumber && <span className="text-xs text-slate-500">CMS: {qoc.cmsComplaintNumber}</span>}
+              <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2.5 py-0.5">
+                {qoc.complainantType.replace(/_/g, ' ')}
+              </span>
+            </div>
+            <h1 className="text-xl font-bold text-slate-900 line-clamp-2">{qoc.allegationSummary}</h1>
+            <p className="text-sm text-slate-500 mt-1">Received: <strong>{formatDate(qoc.dateReceived)}</strong></p>
+          </div>
+          <StatusUpdater apiPath={`/api/qoc/${qoc.id}`} currentStatus={qoc.status} options={STATUS_OPTIONS} />
         </div>
-      )}
-      {!responseOverdue && daysUntilResponse !== null && daysUntilResponse >= 0 && daysUntilResponse <= 3 && (
-        <div className="flex items-center gap-2 bg-orange-50 border border-orange-200 text-orange-700 rounded-lg px-4 py-3 text-sm">
-          <Clock className="w-4 h-4 shrink-0" />
-          <span><strong>{daysUntilResponse} day{daysUntilResponse !== 1 ? 's' : ''} remaining</strong> to submit response by {formatDate(complaint.responseDueDate!)}.</span>
+      </div>
+
+      {qoc.investigationType === 'IMMEDIATE_JEOPARDY' && (
+        <div className="bg-red-50 border border-red-300 rounded-xl p-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+          <p className="text-sm text-red-800"><strong>Immediate Jeopardy Investigation</strong> &mdash; this complaint has been classified as an Immediate Jeopardy matter.</p>
         </div>
       )}
 
-      {/* Complaint Intake */}
-      <div className="bg-white rounded-xl border border-slate-200">
-        <div className="px-5 py-4 border-b border-slate-100">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Complaint Intake</h2>
+      {qoc.loiReceivedDate && qoc.responseDueDate && (
+        <div className={`rounded-xl border p-4 flex items-start justify-between gap-4 ${responseOverdue ? 'bg-red-50 border-red-200' : qoc.responseSubmittedDate ? 'bg-green-50 border-green-200' : 'bg-orange-50 border-orange-200'}`}>
+          <div>
+            <p className="text-sm font-semibold text-slate-800">LOI Response Deadline</p>
+            <p className="text-xs text-slate-500 mt-0.5">LOI received {formatDate(qoc.loiReceivedDate)} &middot; 10 business days to respond</p>
+          </div>
+          {qoc.responseSubmittedDate ? (
+            <span className="text-xs bg-green-100 text-green-700 rounded-full px-2.5 py-1 font-medium whitespace-nowrap">Submitted {formatDate(qoc.responseSubmittedDate)}</span>
+          ) : (
+            <span className={`inline-flex items-center gap-1 text-xs rounded-full px-2.5 py-1 font-medium whitespace-nowrap ${responseOverdue ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'}`}>
+              <Clock className="w-3 h-3" />
+              {responseOverdue ? `OVERDUE ${Math.abs(daysLeft(qoc.responseDueDate))}d` : `Due ${formatDate(qoc.responseDueDate)}`}
+            </span>
+          )}
         </div>
-        <div className="px-5 py-4 space-y-4">
-          <dl className="grid grid-cols-2 gap-4 text-sm">
-            <div><dt className="text-xs text-slate-400">Date Received</dt><dd className="text-slate-800 font-medium">{formatDate(complaint.dateReceived)}</dd></div>
-            <div><dt className="text-xs text-slate-400">Complainant Type</dt><dd className="text-slate-800">{complaint.complainantType.replace(/_/g, ' ')}</dd></div>
-            {complaint.cmsComplaintNumber && <div><dt className="text-xs text-slate-400">CMS Complaint #</dt><dd className="text-slate-800 font-mono">{complaint.cmsComplaintNumber}</dd></div>}
-            {complaint.stateReferenceNumber && <div><dt className="text-xs text-slate-400">State Reference #</dt><dd className="text-slate-800 font-mono">{complaint.stateReferenceNumber}</dd></div>}
-            {complaint.assignedTo && <div><dt className="text-xs text-slate-400">Assigned To</dt><dd className="text-slate-800">{complaint.assignedTo}</dd></div>}
-            {complaint.closedDate && <div><dt className="text-xs text-slate-400">Closed Date</dt><dd className="text-slate-800">{formatDate(complaint.closedDate)}</dd></div>}
-          </dl>
-          {allegationCategories.length > 0 && (
-            <div>
-              <dt className="text-xs text-slate-400 mb-1.5">Allegation Categories</dt>
-              <div className="flex flex-wrap gap-1.5">
-                {allegationCategories.map((cat, i) => (
-                  <span key={i} className="text-xs bg-orange-50 text-orange-700 border border-orange-200 px-2 py-0.5 rounded-full">{cat}</span>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2 space-y-5">
+          <Section title="Allegation Summary">
+            <p className="text-sm text-slate-700 whitespace-pre-wrap">{qoc.allegationSummary}</p>
+            {allegations && allegations.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {allegations.map((a, i) => (
+                  <span key={i} className="text-xs bg-orange-50 text-orange-700 rounded px-2 py-0.5">{a}</span>
                 ))}
               </div>
-            </div>
+            )}
+          </Section>
+
+          {qoc.findingsSummary && (
+            <Section title="Findings Summary">
+              <p className="text-sm text-slate-700 whitespace-pre-wrap">{qoc.findingsSummary}</p>
+              {qoc.deficienciesFound !== null && (
+                <p className="mt-2 text-xs text-slate-500">Deficiencies found: <strong className={qoc.deficienciesFound ? 'text-red-600' : 'text-green-600'}>{qoc.deficienciesFound ? 'Yes' : 'No'}</strong></p>
+              )}
+            </Section>
           )}
-          <div>
-            <dt className="text-xs text-slate-400 mb-1">Allegation Summary</dt>
-            <p className="text-sm text-slate-700 whitespace-pre-wrap bg-slate-50 rounded-lg p-3">{complaint.allegationSummary}</p>
-          </div>
+
+          {citations && citations.length > 0 && (
+            <Section title="Citations Issued">
+              <div className="space-y-2">
+                {citations.map((c, i) => (
+                  <div key={i} className="rounded-lg bg-red-50 border border-red-100 p-3">
+                    <p className="text-xs font-bold text-red-700">{c.tag}</p>
+                    {c.description && <p className="text-xs text-slate-600 mt-0.5">{c.description}</p>}
+                    {c.poC && <p className="text-xs text-slate-500 mt-1">PoC: {c.poC}</p>}
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )}
+
+          {qoc.notes && (
+            <Section title="Notes">
+              <p className="text-sm text-slate-700 whitespace-pre-wrap">{qoc.notes}</p>
+            </Section>
+          )}
+        </div>
+
+        <div className="space-y-5">
+          <Section title="Complaint Details">
+            <dl className="space-y-2">
+              <Row label="QoC #" value={qoc.qocNumber} />
+              {qoc.cmsComplaintNumber && <Row label="CMS #" value={qoc.cmsComplaintNumber} />}
+              {qoc.stateReferenceNumber && <Row label="State Ref #" value={qoc.stateReferenceNumber} />}
+              <Row label="Complainant Type" value={qoc.complainantType.replace(/_/g, ' ')} />
+              <Row label="Date Received" value={formatDate(qoc.dateReceived)} />
+              {qoc.investigationType && <Row label="Investigation Type" value={qoc.investigationType.replace(/_/g, ' ')} />}
+              {qoc.investigatorName && <Row label="Investigator" value={qoc.investigatorName} />}
+              {qoc.surveyDate && <Row label="Survey Date" value={formatDate(qoc.surveyDate)} />}
+              {qoc.closedDate && <Row label="Closed Date" value={formatDate(qoc.closedDate)} />}
+            </dl>
+          </Section>
+
+          {(qoc.linkedGrievanceId || qoc.linkedPocId || qoc.linkedRcaId) && (
+            <Section title="Linked Records">
+              {qoc.linkedGrievanceId && <Link href={`/trackers/grievances/${qoc.linkedGrievanceId}`} className="block text-xs text-purple-700 hover:underline mb-1">&#x2192; Linked Grievance</Link>}
+              {qoc.linkedRcaId && <Link href={`/trackers/rca/${qoc.linkedRcaId}`} className="block text-xs text-purple-700 hover:underline">&#x2192; Linked RCA</Link>}
+            </Section>
+          )}
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* LOI & Investigation */}
-      {complaint.loiReceivedDate && (
-        <div className="bg-white rounded-xl border border-slate-200">
-          <div className="px-5 py-4 border-b border-slate-100">
-            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Letter of Investigation</h2>
-          </div>
-          <div className="px-5 py-4">
-            <dl className="grid grid-cols-2 gap-4 text-sm">
-              <div><dt className="text-xs text-slate-400">LOI Received</dt><dd className="text-slate-800 font-medium">{formatDate(complaint.loiReceivedDate)}</dd></div>
-              {complaint.responseDueDate && (
-                <div>
-                  <dt className="text-xs text-slate-400">Response Due</dt>
-                  <dd className={`font-medium ${responseOverdue ? 'text-red-600' : 'text-slate-800'}`}>
-                    {formatDate(complaint.responseDueDate)}
-                    {complaint.responseSubmittedDate && (
-                      <span className="ml-2 text-xs text-green-600 font-normal">
-                        <CheckCircle2 className="w-3 h-3 inline mb-0.5" /> Submitted {formatDate(complaint.responseSubmittedDate)}
-                      </span>
-                    )}
-                  </dd>
-                </div>
-              )}
-              {complaint.investigatorName && <div><dt className="text-xs text-slate-400">Investigator</dt><dd className="text-slate-800">{complaint.investigatorName}</dd></div>}
-              {complaint.surveyDate && <div><dt className="text-xs text-slate-400">On-Site Survey</dt><dd className="text-slate-800">{formatDate(complaint.surveyDate)}</dd></div>}
-            </dl>
-          </div>
-        </div>
-      )}
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">{title}</h3>
+      {children}
+    </div>
+  );
+}
 
-      {/* Findings */}
-      {(complaint.findingsSummary || citations.length > 0) && (
-        <div className="bg-white rounded-xl border border-slate-200">
-          <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2">
-            <FileSearch className="w-4 h-4 text-slate-400" />
-            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Findings</h2>
-          </div>
-          <div className="px-5 py-4 space-y-4">
-            {citations.length > 0 && (
-              <div>
-                <dt className="text-xs text-slate-400 mb-1.5">Citations Issued</dt>
-                <div className="flex flex-wrap gap-1.5">
-                  {citations.map((c, i) => (
-                    <span key={i} className="text-xs bg-red-50 text-red-700 border border-red-200 px-2.5 py-0.5 rounded font-mono">{c}</span>
-                  ))}
-                </div>
-              </div>
-            )}
-            {complaint.findingsSummary && (
-              <div>
-                <dt className="text-xs text-slate-400 mb-1">Findings Summary</dt>
-                <p className="text-sm text-slate-700 whitespace-pre-wrap">{complaint.findingsSummary}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Linked Records */}
-      {(complaint.linkedGrievanceId || complaint.linkedPocId || complaint.linkedRcaId) && (
-        <div className="bg-white rounded-xl border border-slate-200 px-5 py-4">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-            <Link2 className="w-3.5 h-3.5" /> Linked Records
-          </h2>
-          <div className="flex flex-wrap gap-3">
-            {complaint.linkedGrievanceId && (
-              <Link href="/trackers/grievances" className="text-sm text-purple-600 hover:underline">→ View Grievance</Link>
-            )}
-            {complaint.linkedPocId && (
-              <Link href={`/quality/poc/${complaint.linkedPocId}`} className="text-sm text-purple-600 hover:underline">→ View Plan of Correction</Link>
-            )}
-            {complaint.linkedRcaId && (
-              <Link href={`/trackers/rca/${complaint.linkedRcaId}`} className="text-sm text-purple-600 hover:underline">→ View RCA</Link>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Notes */}
-      {complaint.notes && (
-        <div className="bg-white rounded-xl border border-slate-200 px-5 py-4">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Notes</h2>
-          <p className="text-sm text-slate-700 whitespace-pre-wrap">{complaint.notes}</p>
-        </div>
-      )}
+function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+  return (
+    <div className="flex justify-between gap-2">
+      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
+      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
     </div>
   );
 }

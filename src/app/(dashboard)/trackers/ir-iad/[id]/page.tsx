@@ -1,390 +1,223 @@
-﻿import { auth } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { notFound } from 'next/navigation';
+﻿import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
-import {
-  FileWarning, ArrowLeft, Calendar, User, MapPin, AlertTriangle,
-  CheckCircle2, Clock, ShieldAlert, Activity, FileText, Info,
-} from 'lucide-react';
-import { isPast } from 'date-fns';
+import { ArrowLeft, FileWarning, AlertTriangle, Brain } from 'lucide-react';
+import StatusUpdater from '@/components/trackers/StatusUpdater';
+import PrintButton from '@/components/ui/PrintButton';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata = { title: 'Incident Report Detail' };
+const STATUS_OPTIONS = [
+  { value: 'OPEN', label: 'Open', color: 'bg-blue-100 text-blue-700' },
+  { value: 'INVESTIGATING', label: 'Investigating', color: 'bg-yellow-100 text-yellow-700' },
+  { value: 'PENDING_REVIEW', label: 'Pending Review', color: 'bg-orange-100 text-orange-700' },
+  { value: 'REPORTED_TO_STATE', label: 'Reported to State', color: 'bg-purple-100 text-purple-700' },
+  { value: 'CLOSED', label: 'Closed', color: 'bg-slate-100 text-slate-500' },
+  { value: 'REOPENED', label: 'Reopened', color: 'bg-red-100 text-red-700' },
+];
 
-const STATUS_COLORS: Record<string, string> = {
-  OPEN:              'bg-red-100 text-red-700',
-  INVESTIGATING:     'bg-yellow-100 text-yellow-700',
-  PENDING_REVIEW:    'bg-blue-100 text-blue-700',
-  REPORTED_TO_STATE: 'bg-purple-100 text-purple-700',
-  CLOSED:            'bg-slate-100 text-slate-500',
-  REOPENED:          'bg-orange-100 text-orange-700',
-};
-
-const SEVERITY_COLORS: Record<string, string> = {
+const SEVERITY_COLOR: Record<string, string> = {
   NEAR_MISS: 'bg-slate-100 text-slate-600',
-  MINOR:     'bg-green-100 text-green-700',
-  MODERATE:  'bg-yellow-100 text-yellow-700',
-  SERIOUS:   'bg-orange-100 text-orange-700',
-  SENTINEL:  'bg-red-200 text-red-800 font-bold',
-};
-
-const AI_SEVERITY_COLORS: Record<string, string> = {
-  CRITICAL: 'bg-red-100 text-red-700',
-  HIGH:     'bg-orange-100 text-orange-700',
+  MINOR: 'bg-green-100 text-green-700',
   MODERATE: 'bg-yellow-100 text-yellow-700',
-  LOW:      'bg-green-100 text-green-700',
+  SERIOUS: 'bg-orange-100 text-orange-700',
+  SENTINEL: 'bg-red-600 text-white',
 };
 
 export default async function IrIadDetailPage({ params }: { params: { id: string } }) {
   const session = await auth();
-  const facilityId = session!.user.facilityId;
+  if (!session) redirect('/login');
 
-  const r = await prisma.incidentReport.findFirst({
-    where: { id: params.id, facilityId },
-  });
-  if (!r) notFound();
+  const ir = await prisma.incidentReport.findUnique({ where: { id: params.id } });
+  if (!ir || ir.facilityId !== session.user.facilityId) notFound();
 
-  const adhsOverdue = r.adhsReportDue && !r.adhsReported && isPast(r.adhsReportDue);
+  const aiTags = ir.aiTriageTags as string[] | null;
 
   return (
-    <div className="space-y-6 max-w-5xl">
-      {/* Back + header */}
-      <div>
-        <Link
-          href="/trackers/ir-iad"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 mb-4"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to IR / IAD Tracker
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <Link href="/trackers/ir-iad" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+          <ArrowLeft className="w-4 h-4" /> Back to IR / IAD Reports
         </Link>
-        <div className="flex items-start justify-between gap-4 flex-wrap">
-          <div className="flex items-center gap-3 flex-wrap">
-            <FileWarning className="w-6 h-6 text-red-600 flex-shrink-0" />
-            <h1 className="text-2xl font-bold text-slate-900">{r.irNumber}</h1>
-            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${STATUS_COLORS[r.status] ?? 'bg-slate-100 text-slate-600'}`}>
-              {r.status.replace(/_/g, ' ')}
-            </span>
-            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${SEVERITY_COLORS[r.severity] ?? 'bg-slate-100 text-slate-600'}`}>
-              {r.severity.replace(/_/g, ' ')}
-            </span>
-          </div>
-          <div className="flex gap-2">
-            {r.linkedRcaId && (
-              <Link href="/trackers/rca" className="inline-flex items-center gap-1 text-sm text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-lg hover:bg-indigo-100">
-                <CheckCircle2 className="w-3.5 h-3.5" /> View RCA
-              </Link>
-            )}
-            {!r.linkedRcaId && (r.severity === 'SENTINEL' || r.iadRequired) && r.status !== 'CLOSED' && (
-              <Link
-                href={`/trackers/rca/new?fromIr=${r.id}&type=${encodeURIComponent(r.incidentType)}&date=${r.incidentDate.toISOString()}&desc=${encodeURIComponent(r.briefDescription?.slice(0, 200) ?? '')}`}
-                className="inline-flex items-center gap-1 text-sm text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-lg hover:bg-indigo-100"
-              >
-                → Start RCA
-              </Link>
-            )}
-          </div>
-        </div>
-        <p className="text-sm text-slate-500 mt-1 ml-9">
-          {r.incidentType.replace(/_/g, ' ')} · {formatDate(r.incidentDate)}
-          {r.incidentTime && ` at ${r.incidentTime}`}
-          {r.location && ` · ${r.location}`}
-        </p>
+        <PrintButton />
       </div>
 
-      {/* ADHS overdue alert */}
-      {adhsOverdue && (
-        <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-start gap-2">
-          <AlertTriangle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold text-red-700">ADHS Report Overdue</p>
-            <p className="text-xs text-red-600">Was due {formatDate(r.adhsReportDue!)}. Report to ADHS immediately.</p>
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <FileWarning className="w-5 h-5 text-red-500" />
+              <span className="text-xs font-mono text-slate-400">{ir.irNumber}</span>
+              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${SEVERITY_COLOR[ir.severity]}`}>
+                {ir.severity.replace(/_/g, ' ')}
+              </span>
+            </div>
+            <h1 className="text-xl font-bold text-slate-900">{ir.incidentType.replace(/_/g, ' ')}</h1>
+            <p className="text-sm text-slate-500 mt-1">
+              Incident date: <strong>{formatDate(ir.incidentDate)}</strong>
+              {ir.location && <> &middot; <strong>{ir.location}</strong></>}
+            </p>
+          </div>
+          <StatusUpdater apiPath={`/api/incident-reports/${ir.id}`} currentStatus={ir.status} options={STATUS_OPTIONS} />
+        </div>
+      </div>
+
+      {/* Regulatory Alert Bar */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <ReportingBadge label="ADHS" reportable={ir.adhsReportable} reported={ir.adhsReported}
+          dueDate={ir.adhsReportDue} confirmationNum={ir.adhsConfirmationNumber} />
+        <ReportingBadge label="AHCCCS" reportable={ir.ahcccsReportable} reported={ir.ahcccsReported} />
+        <ReportingBadge label="Joint Commission" reportable={ir.jcReportable} reported={ir.jcReported} />
+      </div>
+
+      {/* IAD Status */}
+      {ir.iadRequired && (
+        <div className={`rounded-xl border p-4 flex items-start gap-3 ${ir.iadSubmitted ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'}`}>
+          <AlertTriangle className={`w-5 h-5 shrink-0 mt-0.5 ${ir.iadSubmitted ? 'text-green-600' : 'text-yellow-600'}`} />
+          <div>
+            <p className="text-sm font-semibold text-slate-800">IAD Required</p>
+            {ir.iadSubmitted
+              ? <p className="text-xs text-green-700 mt-0.5">Submitted {ir.iadSubmittedDate ? formatDate(ir.iadSubmittedDate) : ''}{ir.iadPeriod && ` · Period: ${ir.iadPeriod}`}</p>
+              : <p className="text-xs text-yellow-700 mt-0.5">IAD has not been submitted yet.{ir.iadPeriod && ` Period: ${ir.iadPeriod}`}</p>
+            }
           </div>
         </div>
       )}
 
       {/* AI Triage */}
-      {r.aiTriageSeverity && (
-        <div className={`rounded-xl border px-4 py-3 ${r.aiTriageSeverity === 'CRITICAL' ? 'bg-red-50 border-red-200' : 'bg-amber-50 border-amber-200'}`}>
-          <div className="flex items-center gap-2 mb-1">
-            <Activity className="w-4 h-4 text-amber-700" />
-            <p className="text-sm font-semibold text-slate-800">AI Triage Assessment</p>
-            <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${AI_SEVERITY_COLORS[r.aiTriageSeverity] ?? ''}`}>
-              {r.aiTriageSeverity}
-            </span>
-            {r.aiCascadeTriggered && (
-              <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Auto-RCA Triggered</span>
+      {ir.aiTriageSeverity && (
+        <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4 flex items-start gap-3">
+          <Brain className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-semibold text-indigo-800">AI Triage &mdash; {ir.aiTriageSeverity}</p>
+            {ir.aiTriageReason && <p className="text-xs text-indigo-700 mt-0.5">{ir.aiTriageReason}</p>}
+            {aiTags && aiTags.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {aiTags.map((t, i) => <span key={i} className="text-xs bg-indigo-100 text-indigo-700 rounded px-2 py-0.5">{t}</span>)}
+              </div>
             )}
+            {ir.aiCascadeTriggered && <p className="text-xs text-red-600 font-semibold mt-1">&#9888; AI Cascade Protocol Triggered</p>}
           </div>
-          {r.aiTriageReason && <p className="text-xs text-slate-600">{r.aiTriageReason}</p>}
-          {r.aiTriageTags && (
-            <div className="flex gap-1.5 flex-wrap mt-1.5">
-              {r.aiTriageTags.split(',').map(tag => (
-                <span key={tag.trim()} className="text-xs bg-white border border-slate-200 px-2 py-0.5 rounded-full text-slate-600">
-                  {tag.trim().replace(/_/g, ' ')}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main details */}
-        <div className="lg:col-span-2 space-y-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2 space-y-5">
+          <Section title="Incident Description">
+            <p className="text-sm text-slate-700 whitespace-pre-wrap">{ir.briefDescription}</p>
+          </Section>
 
-          {/* Incident Details */}
-          <div className="bg-white rounded-xl border border-slate-200 p-5">
-            <h2 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
-              <Info className="w-4 h-4 text-slate-400" /> Incident Details
-            </h2>
-            <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
-              <div>
-                <dt className="text-xs font-medium text-slate-500">Incident Type</dt>
-                <dd className="text-slate-800 mt-0.5">{r.incidentType.replace(/_/g, ' ')}</dd>
-              </div>
-              <div>
-                <dt className="text-xs font-medium text-slate-500">Severity</dt>
-                <dd className="mt-0.5">
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${SEVERITY_COLORS[r.severity] ?? ''}`}>
-                    {r.severity.replace(/_/g, ' ')}
-                  </span>
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs font-medium text-slate-500 flex items-center gap-1"><Calendar className="w-3 h-3" /> Incident Date</dt>
-                <dd className="text-slate-800 mt-0.5">{formatDate(r.incidentDate)}{r.incidentTime && ` at ${r.incidentTime}`}</dd>
-              </div>
-              <div>
-                <dt className="text-xs font-medium text-slate-500">Reported Date</dt>
-                <dd className="text-slate-800 mt-0.5">{formatDate(r.reportedDate)}</dd>
-              </div>
-              {r.location && (
-                <div>
-                  <dt className="text-xs font-medium text-slate-500 flex items-center gap-1"><MapPin className="w-3 h-3" /> Location</dt>
-                  <dd className="text-slate-800 mt-0.5">{r.location}{r.unitName && ` · ${r.unitName}`}</dd>
-                </div>
-              )}
-              {r.assignedTo && (
-                <div>
-                  <dt className="text-xs font-medium text-slate-500 flex items-center gap-1"><User className="w-3 h-3" /> Assigned To</dt>
-                  <dd className="text-slate-800 mt-0.5">{r.assignedTo}</dd>
-                </div>
-              )}
-              {r.closedDate && (
-                <div>
-                  <dt className="text-xs font-medium text-slate-500">Closed Date</dt>
-                  <dd className="text-slate-800 mt-0.5">{formatDate(r.closedDate)}</dd>
-                </div>
-              )}
-            </dl>
-          </div>
-
-          {/* Narrative */}
-          <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-            <h2 className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-              <FileText className="w-4 h-4 text-slate-400" /> Narrative
-            </h2>
-            <div>
-              <p className="text-xs font-medium text-slate-500 mb-1">Brief Description</p>
-              <p className="text-sm text-slate-700 bg-slate-50 rounded-lg p-3 whitespace-pre-wrap">{r.briefDescription}</p>
-            </div>
-            {r.injuryDescription && (
-              <div>
-                <p className="text-xs font-medium text-slate-500 mb-1">Injury Description</p>
-                <p className="text-sm text-slate-700 bg-slate-50 rounded-lg p-3 whitespace-pre-wrap">{r.injuryDescription}</p>
-              </div>
-            )}
-            {r.immediateActions && (
-              <div>
-                <p className="text-xs font-medium text-slate-500 mb-1">Immediate Actions Taken</p>
-                <p className="text-sm text-slate-700 bg-slate-50 rounded-lg p-3 whitespace-pre-wrap">{r.immediateActions}</p>
-              </div>
-            )}
-          </div>
-
-          {/* Investigation */}
-          {(r.investigationFindings || r.preventiveActions || r.rootCauseIdentified) && (
-            <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-              <h2 className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-                <ShieldAlert className="w-4 h-4 text-slate-400" /> Investigation
-              </h2>
-              <div className="flex items-center gap-2">
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${r.rootCauseIdentified ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'}`}>
-                  {r.rootCauseIdentified ? '✓ Root Cause Identified' : 'Root Cause Pending'}
-                </span>
-              </div>
-              {r.investigationFindings && (
-                <div>
-                  <p className="text-xs font-medium text-slate-500 mb-1">Investigation Findings</p>
-                  <p className="text-sm text-slate-700 bg-slate-50 rounded-lg p-3 whitespace-pre-wrap">{r.investigationFindings}</p>
-                </div>
-              )}
-              {r.preventiveActions && (
-                <div>
-                  <p className="text-xs font-medium text-slate-500 mb-1">Preventive Actions</p>
-                  <p className="text-sm text-slate-700 bg-slate-50 rounded-lg p-3 whitespace-pre-wrap">{r.preventiveActions}</p>
-                </div>
-              )}
-              {r.linkedCapId && (
-                <Link
-                  href={`/trackers/caps/${r.linkedCapId}`}
-                  className="inline-flex items-center gap-1 text-sm text-purple-700 hover:underline"
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5" /> Linked CAP
-                </Link>
-              )}
-            </div>
+          {ir.injuryDescription && (
+            <Section title="Injury / Harm Description">
+              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ir.injuryDescription}</p>
+            </Section>
           )}
 
-          {r.notes && (
-            <div className="bg-white rounded-xl border border-slate-200 p-5">
-              <h2 className="text-sm font-semibold text-slate-700 mb-2">Notes</h2>
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{r.notes}</p>
-            </div>
+          {ir.immediateActions && (
+            <Section title="Immediate Actions Taken">
+              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ir.immediateActions}</p>
+            </Section>
+          )}
+
+          {ir.investigationFindings && (
+            <Section title="Investigation Findings">
+              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ir.investigationFindings}</p>
+              {ir.rootCauseIdentified && (
+                <p className="mt-2 text-xs text-slate-500">Root cause identified: <strong className="text-slate-800">{ir.rootCauseIdentified}</strong></p>
+              )}
+            </Section>
+          )}
+
+          {ir.preventiveActions && (
+            <Section title="Preventive Actions">
+              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ir.preventiveActions}</p>
+            </Section>
           )}
         </div>
 
-        {/* Right column */}
         <div className="space-y-5">
-          {/* Patient info */}
-          {(r.patientName || r.patientMRN) && (
-            <div className="bg-white rounded-xl border border-slate-200 p-4">
-              <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Patient</h3>
-              <dl className="space-y-2 text-sm">
-                {r.patientName && <div><dt className="text-xs text-slate-500">Name</dt><dd className="font-medium text-slate-800">{r.patientName}</dd></div>}
-                {r.patientMRN && <div><dt className="text-xs text-slate-500">MRN</dt><dd className="font-mono text-slate-700">{r.patientMRN}</dd></div>}
-                {r.patientAge && <div><dt className="text-xs text-slate-500">Age</dt><dd className="text-slate-700">{r.patientAge}</dd></div>}
-                {r.patientDOB && <div><dt className="text-xs text-slate-500">DOB</dt><dd className="text-slate-700">{formatDate(r.patientDOB)}</dd></div>}
+          <Section title="Report Details">
+            <dl className="space-y-2">
+              <Row label="IR #" value={ir.irNumber} />
+              <Row label="Type" value={ir.incidentType.replace(/_/g, ' ')} />
+              <Row label="Severity" value={ir.severity.replace(/_/g, ' ')} />
+              <Row label="Incident Date" value={formatDate(ir.incidentDate)} />
+              {ir.incidentTime && <Row label="Time" value={ir.incidentTime} />}
+              <Row label="Reported Date" value={formatDate(ir.reportedDate)} />
+              {ir.location && <Row label="Location" value={ir.location} />}
+              {ir.unitName && <Row label="Unit" value={ir.unitName} />}
+            </dl>
+          </Section>
+
+          {(ir.patientName || ir.patientMRN) && (
+            <Section title="Patient">
+              <dl className="space-y-2">
+                {ir.patientName && <Row label="Name" value={ir.patientName} />}
+                {ir.patientMRN && <Row label="MRN" value={ir.patientMRN} />}
+                {ir.patientDOB && <Row label="DOB" value={formatDate(ir.patientDOB)} />}
               </dl>
-            </div>
+            </Section>
           )}
 
-          {/* Notifications */}
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Notifications</h3>
-            <dl className="space-y-2 text-sm">
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-600">Physician</span>
-                <span className={`text-xs font-medium ${r.physicianNotified ? 'text-green-600' : 'text-slate-400'}`}>
-                  {r.physicianNotified ? `✓ ${r.physicianNotifiedTime ?? 'Notified'}` : 'Not notified'}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-600">Supervisor</span>
-                <span className={`text-xs font-medium ${r.supervisorNotified ? 'text-green-600' : 'text-slate-400'}`}>
-                  {r.supervisorNotified ? `✓ ${r.supervisorNotifiedTime ?? 'Notified'}` : 'Not notified'}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-600">Family</span>
-                <span className={`text-xs font-medium ${r.familyNotified ? 'text-green-600' : 'text-slate-400'}`}>
-                  {r.familyNotified ? `✓ ${r.familyNotifiedDate ? formatDate(r.familyNotifiedDate) : 'Notified'}` : 'Not notified'}
-                </span>
-              </div>
+          <Section title="Notifications">
+            <dl className="space-y-2">
+              <Row label="Physician Notified" value={ir.physicianNotified ? 'Yes' : 'No'} />
+              <Row label="Supervisor Notified" value={ir.supervisorNotified ? 'Yes' : 'No'} />
+              <Row label="Family Notified" value={ir.familyNotified ? 'Yes' : 'No'} />
+              {ir.familyNotifiedDate && <Row label="Family Notified Date" value={formatDate(ir.familyNotifiedDate)} />}
             </dl>
-          </div>
+          </Section>
 
-          {/* Regulatory Reporting */}
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Regulatory Reporting</h3>
-            <div className="space-y-3">
-              {/* ADHS */}
-              <div className={`rounded-lg p-3 ${r.adhsReportable ? (r.adhsReported ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200') : 'bg-slate-50 border border-slate-100'}`}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-semibold text-slate-700">ADHS</span>
-                  {r.adhsReportable ? (
-                    r.adhsReported ? (
-                      <span className="text-xs text-green-600 font-medium flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Reported</span>
-                    ) : (
-                      <span className="text-xs text-red-600 font-medium flex items-center gap-1"><Clock className="w-3 h-3" /> Pending</span>
-                    )
-                  ) : (
-                    <span className="text-xs text-slate-400">Not required</span>
-                  )}
-                </div>
-                {r.adhsReportable && (
-                  <div className="text-xs text-slate-600 space-y-0.5">
-                    {r.adhsReportableCategory && <p>Category: {r.adhsReportableCategory}</p>}
-                    {r.adhsReportDue && <p>Due: {formatDate(r.adhsReportDue)}</p>}
-                    {r.adhsReportDate && <p>Reported: {formatDate(r.adhsReportDate)}</p>}
-                    {r.adhsConfirmationNumber && <p className="font-mono">Conf #: {r.adhsConfirmationNumber}</p>}
-                  </div>
-                )}
-              </div>
-
-              {/* AHCCCS */}
-              <div className={`rounded-lg p-3 ${r.ahcccsReportable ? (r.ahcccsReported ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200') : 'bg-slate-50 border border-slate-100'}`}>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-slate-700">AHCCCS</span>
-                  {r.ahcccsReportable ? (
-                    r.ahcccsReported ? (
-                      <span className="text-xs text-green-600 font-medium flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Reported {r.ahcccsReportDate ? formatDate(r.ahcccsReportDate) : ''}</span>
-                    ) : (
-                      <span className="text-xs text-amber-600 font-medium">Pending</span>
-                    )
-                  ) : <span className="text-xs text-slate-400">Not required</span>}
-                </div>
-              </div>
-
-              {/* JC */}
-              <div className={`rounded-lg p-3 ${r.jcReportable ? (r.jcReported ? 'bg-green-50 border border-green-200' : 'bg-purple-50 border border-purple-200') : 'bg-slate-50 border border-slate-100'}`}>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-slate-700">Joint Commission</span>
-                  {r.jcReportable ? (
-                    r.jcReported ? (
-                      <span className="text-xs text-green-600 font-medium flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Reported</span>
-                    ) : (
-                      <span className="text-xs text-purple-600 font-medium">Pending</span>
-                    )
-                  ) : <span className="text-xs text-slate-400">Not required</span>}
-                </div>
-              </div>
-
-              {/* IAD */}
-              <div className={`rounded-lg p-3 ${r.iadRequired ? (r.iadSubmitted ? 'bg-green-50 border border-green-200' : 'bg-blue-50 border border-blue-200') : 'bg-slate-50 border border-slate-100'}`}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-semibold text-slate-700">IAD Submission</span>
-                  {r.iadRequired ? (
-                    r.iadSubmitted ? (
-                      <span className="text-xs text-green-600 font-medium flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Submitted</span>
-                    ) : (
-                      <span className="text-xs text-blue-600 font-medium">Pending</span>
-                    )
-                  ) : <span className="text-xs text-slate-400">Not required</span>}
-                </div>
-                {r.iadRequired && (
-                  <div className="text-xs text-slate-600 space-y-0.5">
-                    {r.iadPeriod && <p>Period: {r.iadPeriod}</p>}
-                    {r.iadSubmittedDate && <p>Submitted: {formatDate(r.iadSubmittedDate)}</p>}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Staff / witnesses */}
-          {(r.staffInvolvedNames || r.witnessNames) && (
-            <div className="bg-white rounded-xl border border-slate-200 p-4">
-              <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Personnel</h3>
-              <dl className="space-y-2 text-sm">
-                {r.staffInvolvedNames && (
-                  <div>
-                    <dt className="text-xs text-slate-500">Staff Involved</dt>
-                    <dd className="text-slate-700 text-xs mt-0.5 whitespace-pre-wrap">{r.staffInvolvedNames}</dd>
-                  </div>
-                )}
-                {r.witnessNames && (
-                  <div>
-                    <dt className="text-xs text-slate-500">Witnesses</dt>
-                    <dd className="text-slate-700 text-xs mt-0.5 whitespace-pre-wrap">{r.witnessNames}</dd>
-                  </div>
-                )}
-              </dl>
-            </div>
+          {(ir.linkedRcaId || ir.linkedCapId) && (
+            <Section title="Linked Records">
+              {ir.linkedRcaId && <Link href={`/trackers/rca/${ir.linkedRcaId}`} className="block text-xs text-purple-700 hover:underline mb-1">&#x2192; Linked RCA</Link>}
+              {ir.linkedCapId && <Link href={`/trackers/caps/${ir.linkedCapId}`} className="block text-xs text-purple-700 hover:underline">&#x2192; Linked CAP</Link>}
+            </Section>
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+function ReportingBadge({ label, reportable, reported, dueDate, confirmationNum }: {
+  label: string; reportable: boolean; reported: boolean; dueDate?: Date | null; confirmationNum?: string | null;
+}) {
+  if (!reportable) {
+    return (
+      <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 text-center">
+        <p className="text-xs font-semibold text-slate-400">{label}</p>
+        <p className="text-xs text-slate-400 mt-0.5">Not Reportable</p>
+      </div>
+    );
+  }
+  return (
+    <div className={`rounded-xl border p-3 text-center ${reported ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+      <p className={`text-xs font-semibold ${reported ? 'text-green-700' : 'text-red-700'}`}>{label}</p>
+      <p className={`text-xs mt-0.5 ${reported ? 'text-green-600' : 'text-red-600 font-bold'}`}>
+        {reported ? (confirmationNum ? `Reported (${confirmationNum})` : 'Reported') : '⚠ Not Yet Reported'}
+      </p>
+      {dueDate && !reported && <p className="text-xs text-slate-500 mt-0.5">Due {formatDate(dueDate)}</p>}
+    </div>
+  );
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">{title}</h3>
+      {children}
+    </div>
+  );
+}
+
+function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+  return (
+    <div className="flex justify-between gap-2">
+      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
+      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
     </div>
   );
 }

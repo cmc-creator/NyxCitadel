@@ -1,175 +1,171 @@
-﻿import { auth } from '@/lib/auth';
+﻿import { notFound, redirect } from 'next/navigation';
+import Link from 'next/link';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
-import { FileText, ArrowLeft, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { isPast, differenceInCalendarDays } from 'date-fns';
+import { ArrowLeft, BookOpen, AlertTriangle, ExternalLink } from 'lucide-react';
+import StatusUpdater from '@/components/trackers/StatusUpdater';
+import PrintButton from '@/components/ui/PrintButton';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata = { title: 'Policy & Procedure' };
+const STATUS_OPTIONS = [
+  { value: 'DRAFT', label: 'Draft', color: 'bg-slate-100 text-slate-600' },
+  { value: 'UNDER_REVIEW', label: 'Under Review', color: 'bg-yellow-100 text-yellow-700' },
+  { value: 'ACTIVE', label: 'Active', color: 'bg-green-100 text-green-700' },
+  { value: 'ARCHIVED', label: 'Archived', color: 'bg-slate-100 text-slate-400' },
+  { value: 'OVERDUE_REVIEW', label: 'Overdue Review', color: 'bg-red-100 text-red-700' },
+];
 
-const STATUS_COLOR: Record<string, string> = {
-  DRAFT:          'bg-slate-100 text-slate-600',
-  UNDER_REVIEW:   'bg-yellow-100 text-yellow-700',
-  ACTIVE:         'bg-green-100 text-green-700',
-  ARCHIVED:       'bg-gray-100 text-gray-500',
-  OVERDUE_REVIEW: 'bg-red-100 text-red-700',
-};
-
-const CAT_COLOR: Record<string, string> = {
-  ADMINISTRATIVE:       'bg-slate-100 text-slate-700',
-  CLINICAL:             'bg-blue-100 text-blue-700',
-  EMERGENCY_MANAGEMENT: 'bg-orange-100 text-orange-700',
-  ENVIRONMENT_OF_CARE:  'bg-teal-100 text-teal-700',
-  HUMAN_RESOURCES:      'bg-purple-100 text-purple-700',
-  INFECTION_CONTROL:    'bg-red-100 text-red-700',
-  MEDICATION_MANAGEMENT:'bg-yellow-100 text-yellow-700',
-  PATIENT_RIGHTS:       'bg-indigo-100 text-indigo-700',
-  LIFE_SAFETY:          'bg-red-100 text-red-800',
-};
+interface RevisionEntry { version: string; date: string; changedBy: string; summary: string }
 
 export default async function PolicyDetailPage({ params }: { params: { id: string } }) {
   const session = await auth();
+  if (!session) redirect('/login');
 
-  const policy = await prisma.policy.findFirst({
-    where: { id: params.id, facilityId: session!.user.facilityId },
-  });
-  if (!policy) notFound();
+  const policy = await prisma.policy.findUnique({ where: { id: params.id } });
+  if (!policy || policy.facilityId !== session.user.facilityId) notFound();
 
-  const reviewOverdue = isPast(policy.nextReviewDate) && !['ARCHIVED'].includes(policy.status);
-  const daysUntilReview = differenceInCalendarDays(policy.nextReviewDate, new Date());
-
-  const revisionHistory = Array.isArray(policy.revisionHistory)
-    ? (policy.revisionHistory as Array<{ version: string; date: string; changedBy?: string; summary?: string }>)
-    : [];
-
-  const regulatoryBodies = Array.isArray(policy.regulatoryBody)
-    ? (policy.regulatoryBody as string[])
-    : [];
+  const now = new Date();
+  const reviewOverdue = policy.nextReviewDate && policy.nextReviewDate < now && policy.status !== 'ARCHIVED';
+  const daysToReview = policy.nextReviewDate ? Math.ceil((policy.nextReviewDate.getTime() - now.getTime()) / 86400000) : null;
+  const revisions = policy.revisionHistory as RevisionEntry[] | null;
+  const regulatoryBodies = policy.regulatoryBody as string[] | null;
 
   return (
-    <div className="max-w-3xl space-y-6">
-      {/* Header */}
-      <div>
-        <Link href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Policy Tracker
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <Link href="/trackers/policies" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+          <ArrowLeft className="w-4 h-4" /> Back to Policies
         </Link>
-        <div className="flex flex-wrap items-center gap-2 mb-1">
-          <span className="text-xs font-mono text-slate-500">{policy.policyNumber}</span>
-          <span className={`text-xs font-medium px-2 py-0.5 rounded ${STATUS_COLOR[policy.status] ?? 'bg-slate-100'}`}>
-            {policy.status.replace(/_/g, ' ')}
-          </span>
-          <span className={`text-xs font-medium px-2 py-0.5 rounded ${CAT_COLOR[policy.category] ?? 'bg-slate-100 text-slate-600'}`}>
-            {policy.category.replace(/_/g, ' ')}
-          </span>
-          <span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">v{policy.version}</span>
-        </div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <FileText className="w-6 h-6 text-purple-600" />
-          {policy.title}
-        </h1>
-        {policy.owner && <p className="text-sm text-slate-500 mt-0.5">Owner: {policy.owner}</p>}
+        <PrintButton />
       </div>
 
-      {/* Review overdue alert */}
-      {reviewOverdue && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
-          <AlertTriangle className="w-4 h-4 shrink-0" />
-          <span>This policy is <strong>overdue for review</strong> — next review was due {formatDate(policy.nextReviewDate)}.</span>
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <BookOpen className="w-5 h-5 text-blue-600" />
+              <span className="text-xs font-mono text-slate-400">{policy.policyNumber}</span>
+              <span className="text-xs text-slate-400">v{policy.version}</span>
+              {policy.category && (
+                <span className="text-xs bg-blue-50 text-blue-700 rounded-full px-2.5 py-0.5">{policy.category.replace(/_/g, ' ')}</span>
+              )}
+            </div>
+            <h1 className="text-xl font-bold text-slate-900">{policy.title}</h1>
+            <p className="text-sm text-slate-500 mt-1">
+              Effective: <strong>{formatDate(policy.effectiveDate)}</strong>
+              {policy.owner && <> &middot; Owner: <strong>{policy.owner}</strong></>}
+            </p>
+          </div>
+          <StatusUpdater apiPath={`/api/policies/${policy.id}`} currentStatus={policy.status} options={STATUS_OPTIONS} />
         </div>
-      )}
-      {!reviewOverdue && daysUntilReview >= 0 && daysUntilReview <= 30 && (
-        <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 rounded-lg px-4 py-3 text-sm">
-          <Clock className="w-4 h-4 shrink-0" />
-          <span>Review due in <strong>{daysUntilReview} days</strong> — {formatDate(policy.nextReviewDate)}.</span>
+      </div>
+
+      {reviewOverdue && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+          <p className="text-sm text-red-800">
+            <strong>Review Overdue</strong> &mdash; this policy was due for review on {formatDate(policy.nextReviewDate!)}. {Math.abs(daysToReview!)} days overdue.
+          </p>
         </div>
       )}
 
-      {/* Key Info */}
-      <div className="bg-white rounded-xl border border-slate-200">
-        <div className="px-5 py-4 border-b border-slate-100">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Policy Information</h2>
-        </div>
-        <div className="px-5 py-4">
-          <dl className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
-            <div><dt className="text-xs text-slate-400">Effective Date</dt><dd className="text-slate-800 font-medium">{formatDate(policy.effectiveDate)}</dd></div>
-            <div>
-              <dt className="text-xs text-slate-400">Next Review</dt>
-              <dd className={`font-medium ${reviewOverdue ? 'text-red-600' : 'text-slate-800'}`}>
-                {formatDate(policy.nextReviewDate)}
-              </dd>
-            </div>
-            {policy.lastReviewedDate && (
-              <div>
-                <dt className="text-xs text-slate-400">Last Reviewed</dt>
-                <dd className="text-slate-800 flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-                  {formatDate(policy.lastReviewedDate)}
-                </dd>
-              </div>
-            )}
-            <div><dt className="text-xs text-slate-400">Review Frequency</dt><dd className="text-slate-800">{policy.reviewFrequency.replace(/_/g, ' ')}</dd></div>
-            {policy.standardRef && <div className="col-span-2"><dt className="text-xs text-slate-400">Standard / Reference</dt><dd className="text-slate-800 font-mono text-xs">{policy.standardRef}</dd></div>}
-          </dl>
-          {regulatoryBodies.length > 0 && (
-            <div className="mt-3">
-              <dt className="text-xs text-slate-400 mb-1.5">Regulatory Bodies</dt>
-              <div className="flex flex-wrap gap-1.5">
-                {regulatoryBodies.map(b => (
-                  <span key={b} className="text-xs bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded-full">{b.replace(/_/g, ' ')}</span>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2 space-y-5">
+          {policy.summary && (
+            <Section title="Summary">
+              <p className="text-sm text-slate-700 whitespace-pre-wrap">{policy.summary}</p>
+            </Section>
+          )}
+
+          {policy.documentUrl && (
+            <Section title="Policy Document">
+              <a href={policy.documentUrl} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-blue-700 hover:text-blue-900 transition">
+                <ExternalLink className="w-4 h-4" />
+                View / Download Policy Document
+              </a>
+            </Section>
+          )}
+
+          {revisions && revisions.length > 0 && (
+            <Section title="Revision History">
+              <div className="space-y-3">
+                {[...revisions].reverse().map((r, i) => (
+                  <div key={i} className="flex gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-1.5" />
+                      {i < revisions.length - 1 && <div className="w-px flex-1 bg-slate-200 mt-1" />}
+                    </div>
+                    <div className="pb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-semibold text-slate-700">v{r.version}</span>
+                        <span className="text-xs text-slate-400">{r.date}</span>
+                        <span className="text-xs text-slate-500">&mdash; {r.changedBy}</span>
+                      </div>
+                      <p className="text-xs text-slate-600 mt-0.5">{r.summary}</p>
+                    </div>
+                  </div>
                 ))}
               </div>
-            </div>
+            </Section>
           )}
-          {policy.documentUrl && (
-            <div className="mt-3">
-              <a href={policy.documentUrl} target="_blank" rel="noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm text-purple-600 hover:underline">
-                <FileText className="w-3.5 h-3.5" /> View Document
-              </a>
-            </div>
+        </div>
+
+        <div className="space-y-5">
+          <Section title="Policy Details">
+            <dl className="space-y-2">
+              <Row label="Policy #" value={policy.policyNumber} />
+              <Row label="Version" value={`v${policy.version}`} />
+              <Row label="Effective Date" value={formatDate(policy.effectiveDate)} />
+              {policy.lastReviewedDate && <Row label="Last Reviewed" value={formatDate(policy.lastReviewedDate)} />}
+              {policy.nextReviewDate && (
+                <Row label="Next Review" value={formatDate(policy.nextReviewDate)}
+                  highlight={!!reviewOverdue} />
+              )}
+              {policy.reviewFrequency && <Row label="Review Frequency" value={policy.reviewFrequency.replace(/_/g, ' ')} />}
+              {policy.owner && <Row label="Owner" value={policy.owner} />}
+              {policy.standardRef && <Row label="Standard Ref" value={policy.standardRef} />}
+            </dl>
+          </Section>
+
+          {regulatoryBodies && regulatoryBodies.length > 0 && (
+            <Section title="Regulatory Bodies">
+              <div className="flex flex-wrap gap-1.5">
+                {regulatoryBodies.map((b, i) => (
+                  <span key={i} className="text-xs bg-blue-50 text-blue-700 rounded px-2 py-0.5">{b.replace(/_/g, ' ')}</span>
+                ))}
+              </div>
+            </Section>
+          )}
+
+          {daysToReview !== null && !reviewOverdue && (
+            <Section title="Review Countdown">
+              <p className="text-2xl font-bold text-slate-800 text-center">{daysToReview}</p>
+              <p className="text-xs text-slate-400 text-center mt-0.5">days until next review</p>
+            </Section>
           )}
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* Summary */}
-      {policy.summary && (
-        <div className="bg-white rounded-xl border border-slate-200 px-5 py-4">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Summary</h2>
-          <p className="text-sm text-slate-700 whitespace-pre-wrap">{policy.summary}</p>
-        </div>
-      )}
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">{title}</h3>
+      {children}
+    </div>
+  );
+}
 
-      {/* Revision History */}
-      {revisionHistory.length > 0 && (
-        <div className="bg-white rounded-xl border border-slate-200">
-          <div className="px-5 py-4 border-b border-slate-100">
-            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Revision History</h2>
-          </div>
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-slate-100">
-                <th className="px-5 py-2 text-left text-xs font-medium text-slate-500">Version</th>
-                <th className="px-5 py-2 text-left text-xs font-medium text-slate-500">Date</th>
-                <th className="px-5 py-2 text-left text-xs font-medium text-slate-500">Changed By</th>
-                <th className="px-5 py-2 text-left text-xs font-medium text-slate-500">Summary</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {revisionHistory.map((rev, i) => (
-                <tr key={i} className="hover:bg-slate-50">
-                  <td className="px-5 py-3 font-mono text-xs text-slate-700">{rev.version}</td>
-                  <td className="px-5 py-3 text-slate-600">{rev.date ? formatDate(new Date(rev.date)) : '—'}</td>
-                  <td className="px-5 py-3 text-slate-600">{rev.changedBy ?? '—'}</td>
-                  <td className="px-5 py-3 text-slate-600">{rev.summary ?? '—'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+  return (
+    <div className="flex justify-between gap-2">
+      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
+      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
     </div>
   );
 }
