@@ -1,4 +1,4 @@
-﻿import { Shield, Plus, AlertTriangle } from 'lucide-react';
+import { Shield, Plus, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -30,9 +30,9 @@ export default async function OshaLogPage() {
           </div>
           <p className="text-slate-400 text-sm">Recordable work-related injuries and illnesses per OSHA 300/300A requirements.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-sm font-medium transition-colors">
+        <a href="/workforce-health/osha/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Add Entry
-        </button>
+        </a>
       </div>
 
       <div className="grid grid-cols-4 gap-4">

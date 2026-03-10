@@ -1,4 +1,4 @@
-﻿import { Users, Plus, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Users, Plus, CheckCircle, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -27,9 +27,9 @@ export default async function CommitteeMeetingsPage() {
           </div>
           <p className="text-slate-400 text-sm">Track committee quorum, minutes approval, and action items.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors">
+        <a href="/governance/committees/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Log Meeting
-        </button>
+        </a>
       </div>
 
       <div className="grid grid-cols-3 gap-4">

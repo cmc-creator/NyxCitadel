@@ -1,4 +1,4 @@
-﻿import { UserCheck, Plus, AlertTriangle, Search } from 'lucide-react';
+import { UserCheck, Plus, AlertTriangle, Search } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -59,9 +59,9 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
           </div>
           <p className="text-slate-400 text-sm">Active medical staff — credentials, privileges, license expiry, and OPPE/FPPE status.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
+        <a href="/credentialing/providers/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Add Provider
-        </button>
+        </a>
       </div>
 
       {expiringSoon.length > 0 && (

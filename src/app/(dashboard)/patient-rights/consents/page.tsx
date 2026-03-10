@@ -1,4 +1,4 @@
-﻿import { FileText, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
+import { FileText, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -46,9 +46,9 @@ export default async function ConsentsPage() {
           </div>
           <p className="text-slate-400 text-sm">Informed consent documentation — treatment, medications, ECT, and capacity determination.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium transition-colors">
+        <a href="/patient-rights/consents/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Consent
-        </button>
+        </a>
       </div>
 
       {pending > 0 && (
@@ -143,9 +143,9 @@ export default function ConsentsPage() {
           </div>
           <p className="text-slate-400 text-sm">Informed consent documentation — treatment, medications, ECT, and capacity determination.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium transition-colors">
+        <a href="/patient-rights/consents/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Consent
-        </button>
+        </a>
       </div>
 
       {pending > 0 && (

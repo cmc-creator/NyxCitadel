@@ -1,4 +1,4 @@
-﻿import { Activity, TrendingDown, TrendingUp, Plus, AlertTriangle } from 'lucide-react';
+import { Activity, TrendingDown, TrendingUp, Plus, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -42,9 +42,9 @@ export default async function HaiPage() {
           </div>
           <p className="text-slate-400 text-sm">Monthly healthcare-associated infection rates tracked against NHSN national benchmarks.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
+        <a href="/infection-control/hai/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Enter Monthly Data
-        </button>
+        </a>
       </div>
 
       {aboveCount > 0 && (
@@ -132,9 +132,9 @@ export default function HaiPage() {
           </div>
           <p className="text-slate-400 text-sm">Monthly healthcare-associated infection rates tracked against NHSN national benchmarks.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
+        <a href="/infection-control/hai/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Enter Monthly Data
-        </button>
+        </a>
       </div>
     </div>
   );

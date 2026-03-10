@@ -1,4 +1,4 @@
-﻿import { AlertTriangle, Plus, CheckCircle } from 'lucide-react';
+import { AlertTriangle, Plus, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -27,9 +27,9 @@ export default async function HighAlertMedsPage() {
           </div>
           <p className="text-slate-400 text-sm">Storage, labeling, access restriction, and double-check compliance audits for ISMP high-alert medications.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-sm font-medium transition-colors">
+        <a href="/pharmacy/high-alert/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Audit
-        </button>
+        </a>
       </div>
 
       {actions > 0 && (

@@ -1,4 +1,4 @@
-﻿import { LogOut, Plus, AlertTriangle } from 'lucide-react';
+import { LogOut, Plus, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -38,9 +38,9 @@ export default async function DischargePlanningPage() {
           </div>
           <p className="text-slate-400 text-sm">Transition-of-care coordination, barrier tracking, and estimated discharge timelines.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
+        <a href="/discharge-planning/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Plan
-        </button>
+        </a>
       </div>
 
       <div className="grid grid-cols-4 gap-4">

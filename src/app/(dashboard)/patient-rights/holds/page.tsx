@@ -1,4 +1,4 @@
-﻿import { Shield, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Shield, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -37,9 +37,9 @@ export default async function InvoluntaryHoldsPage() {
           </div>
           <p className="text-slate-400 text-sm">72-hour emergency holds, court orders, legal counsel notification, and hearing dates.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
+        <a href="/patient-rights/holds/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Hold
-        </button>
+        </a>
       </div>
 
       {noLegal > 0 && (
@@ -150,9 +150,9 @@ export default function InvoluntaryHoldsPage() {
           </div>
           <p className="text-slate-400 text-sm">72-hour emergency holds, court orders, legal counsel notification, and hearing dates.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
+        <a href="/patient-rights/holds/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Hold
-        </button>
+        </a>
       </div>
 
       {noLegal > 0 && (

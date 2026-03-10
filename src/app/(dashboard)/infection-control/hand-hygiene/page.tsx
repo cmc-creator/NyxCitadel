@@ -1,4 +1,4 @@
-﻿import { Droplets, Plus, TrendingUp, TrendingDown, AlertTriangle } from 'lucide-react';
+import { Droplets, Plus, TrendingUp, TrendingDown, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -46,9 +46,9 @@ export default async function HandHygienePage({ searchParams }: { searchParams: 
           </div>
           <p className="text-slate-400 text-sm">Unit-level direct observation audits — compliance rate vs. 90% facility goal.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
+        <a href="/infection-control/hand-hygiene/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Enter Audit
-        </button>
+        </a>
       </div>
 
       {avgRate != null && avgRate < 90 && (

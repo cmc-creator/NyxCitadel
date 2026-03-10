@@ -1,4 +1,4 @@
-﻿import { Biohazard, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Biohazard, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -33,9 +33,9 @@ export default async function OutbreaksPage() {
           </div>
           <p className="text-slate-400 text-sm">Track active and resolved outbreaks, containment measures, and health department notification.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
+        <a href="/infection-control/outbreaks/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Log Outbreak
-        </button>
+        </a>
       </div>
 
       {active === 0 ? (

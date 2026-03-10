@@ -1,4 +1,4 @@
-﻿import { AlertTriangle, Plus, CheckCircle } from 'lucide-react';
+import { AlertTriangle, Plus, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -37,9 +37,9 @@ export default async function RestraintSeclusionPage() {
           </div>
           <p className="text-slate-400 text-sm">Track restraint and seclusion events with death reporting and CMS compliance.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
+        <a href="/restraint-seclusion/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Log Event
-        </button>
+        </a>
       </div>
 
       <div className="grid grid-cols-4 gap-4">

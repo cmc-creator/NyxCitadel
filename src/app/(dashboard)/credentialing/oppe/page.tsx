@@ -1,4 +1,4 @@
-﻿import { Award, Plus, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Award, Plus, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -41,9 +41,9 @@ export default async function OppePage() {
           </div>
           <p className="text-slate-400 text-sm">Ongoing Professional Practice Evaluation — quarterly performance data reviewed by Medical Executive Committee.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
+        <a href="/credentialing/oppe/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New OPPE Record
-        </button>
+        </a>
       </div>
 
       {needsImprovement > 0 && (
@@ -170,9 +170,9 @@ export default function OppePage() {
           </div>
           <p className="text-slate-400 text-sm">Ongoing Professional Practice Evaluation — quarterly performance data reviewed by Medical Executive Committee.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
+        <a href="/credentialing/oppe/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New OPPE Record
-        </button>
+        </a>
       </div>
 
       {needsImprovement > 0 && (

@@ -1,4 +1,4 @@
-﻿import { Clipboard, Plus, AlertTriangle } from 'lucide-react';
+import { Clipboard, Plus, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -36,9 +36,9 @@ export default async function ControlledSubstancesPage() {
           </div>
           <p className="text-slate-400 text-sm">Shift count verification, waste reconciliation, and discrepancy tracking for controlled substances.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium transition-colors">
+        <a href="/pharmacy/controlled-substances/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Enter Count
-        </button>
+        </a>
       </div>
 
       {discrepancies > 0 && (
@@ -134,9 +134,9 @@ export default function ControlledSubstancesPage() {
           </div>
           <p className="text-slate-400 text-sm">Shift count verification, waste reconciliation, and discrepancy tracking for controlled substances.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium transition-colors">
+        <a href="/pharmacy/controlled-substances/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Enter Count
-        </button>
+        </a>
       </div>
 
       {discrepancies > 0 && (

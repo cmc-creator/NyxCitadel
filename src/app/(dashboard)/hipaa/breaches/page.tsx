@@ -1,4 +1,4 @@
-﻿import { Lock, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Lock, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -55,9 +55,9 @@ export default async function BreachLogPage({ searchParams }: { searchParams: { 
           </div>
           <p className="text-slate-400 text-sm">Privacy incidents and confirmed breaches. Reportable breaches require HHS notification within 60 days.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors">
+        <a href="/hipaa/breaches/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Log Incident
-        </button>
+        </a>
       </div>
 
       <div className="rounded-xl border border-blue-500/20 bg-blue-500/8 p-4">
@@ -181,9 +181,9 @@ export default function BreachLogPage() {
           </div>
           <p className="text-slate-400 text-sm">Privacy incidents and confirmed breaches. Reportable breaches require HHS notification within 60 days (or 24 hours if media notification required).</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors">
+        <a href="/hipaa/breaches/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Log Incident
-        </button>
+        </a>
       </div>
 
       {/* Reporting Requirements */}
