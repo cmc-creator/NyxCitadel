@@ -12,6 +12,7 @@ import {
   Circle,
   AlertTriangle,
   Clock,
+  Pencil,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -70,6 +71,9 @@ export default async function PocDetailPage({ params }: { params: { id: string }
           <p className="text-sm text-slate-500 mt-0.5">{poc.title}</p>
         </div>
         <div className="flex items-center gap-2">
+          <Link href={`/quality/poc/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+            <Pencil className="w-3.5 h-3.5" /> Edit
+          </Link>
           <span className="text-xs font-medium px-3 py-1 rounded-full bg-slate-100 text-slate-700">
             {poc.regulatoryBody.replace(/_/g, ' ')}
           </span>

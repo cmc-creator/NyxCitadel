@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
 import {
   Target, ArrowLeft, Calendar, User, AlertTriangle,
-  CheckCircle2, Clock, Activity, FileText, Users,
+  CheckCircle2, Clock, Activity, FileText, Users, Pencil,
 } from 'lucide-react';
 import { isPast } from 'date-fns';
 
@@ -69,6 +69,9 @@ export default async function QapiProjectDetailPage({ params }: { params: { id: 
             </div>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
+            <Link href={`/quality/projects/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+              <Pencil className="w-3.5 h-3.5" /> Edit
+            </Link>
             <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${CATEGORY_COLORS[p.category] ?? 'bg-slate-100 text-slate-600'}`}>
               {p.category.replace(/_/g, ' ')}
             </span>

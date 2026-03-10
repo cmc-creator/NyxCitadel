@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   Clock,
   Sparkles,
+  Pencil,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -66,9 +67,14 @@ export default async function ResponseDetailPage({ params }: { params: { id: str
             {response.aiGenerated && <span className="ml-2 inline-flex items-center gap-0.5 text-xs text-indigo-600"><Sparkles className="w-3 h-3" /> AI Generated</span>}
           </p>
         </div>
-        <span className={`text-xs font-medium px-3 py-1 rounded-full self-start ${STATUS_STYLES[response.status] ?? 'bg-slate-100 text-slate-600'}`}>
-          {response.status}
-        </span>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <Link href={`/quality/responses/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+            <Pencil className="w-3.5 h-3.5" /> Edit
+          </Link>
+          <span className={`text-xs font-medium px-3 py-1 rounded-full self-start ${STATUS_STYLES[response.status] ?? 'bg-slate-100 text-slate-600'}`}>
+            {response.status}
+          </span>
+        </div>
       </div>
 
       {isOverdue && (

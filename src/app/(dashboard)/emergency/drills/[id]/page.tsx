@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   AlertTriangle,
   ChevronLeft,
+  Pencil,
 } from 'lucide-react';
 import DrillWarRoomClient from '@/components/drills/DrillWarRoomClient';
 import { formatDate } from '@/lib/utils';
@@ -104,6 +105,9 @@ export default async function DrillDetailPage({
           <p className="text-sm text-slate-500 mt-0.5">{drill.drillType.replace(/_/g, ' ')}</p>
         </div>
         <div className="flex items-center gap-2">
+          <Link href={`/emergency/drills/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+            <Pencil className="w-3.5 h-3.5" /> Edit
+          </Link>
           <span
             className={`inline-block text-xs font-medium px-3 py-1 rounded-full ${STATUS_STYLES[drill.status] ?? 'bg-slate-100 text-slate-500'}`}
           >

@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   FileText, Download, Tag, Calendar, AlertTriangle,
-  User, HardDrive, ArrowLeft, Trash2, ExternalLink,
+  User, HardDrive, ArrowLeft, Trash2, ExternalLink, Pencil,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -90,13 +91,18 @@ export default function DocumentDetailPage() {
   return (
     <div className="space-y-6 max-w-3xl">
       {/* Back */}
-      <button
-        onClick={() => router.push('/documents')}
-        className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Documents
-      </button>
+      <div className="flex items-center justify-between gap-2">
+        <button
+          onClick={() => router.push('/documents')}
+          className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Documents
+        </button>
+        <Link href={`/documents/${id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Pencil className="w-3.5 h-3.5" /> Edit
+        </Link>
+      </div>
 
       {/* Header */}
       <div className="bg-white border border-slate-200 rounded-xl p-6">

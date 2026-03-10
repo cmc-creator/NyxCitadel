@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
-import { ArrowLeft, HardHat } from 'lucide-react';
+import { ArrowLeft, HardHat , Pencil } from 'lucide-react';
 import { PrintButton } from '@/components/ui/PrintButton';
 
 export const dynamic = 'force-dynamic';
@@ -49,7 +49,12 @@ export default async function OshaLogDetailPage({ params }: { params: { id: stri
         <Link href="/workforce-health/osha" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
           <ArrowLeft className="w-4 h-4" /> Back to OSHA 300 Log
         </Link>
-        <PrintButton />
+        <div className="flex items-center gap-2">
+          <Link href={`/workforce-health/osha/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+            <Pencil className="w-3.5 h-3.5" /> Edit
+          </Link>
+          <PrintButton />
+        </div>
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
