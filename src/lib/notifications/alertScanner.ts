@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import { NotificationType } from '@prisma/client';
 
 interface AlertInput {
   userId: string;
@@ -135,7 +136,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     const existing = await prisma.notification.findFirst({
       where: {
         userId,
-        type: alert.type,
+        type: alert.type as NotificationType,
         title: alert.title,
         createdAt: { gte: dedupWindow },
       },
@@ -145,9 +146,10 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
       await prisma.notification.create({
         data: {
           userId,
+          facilityId,
           title: alert.title,
           message: alert.message,
-          type: alert.type,
+          type: alert.type as NotificationType,
           linkUrl: alert.linkUrl,
           isRead: false,
         },

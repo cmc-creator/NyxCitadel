@@ -106,7 +106,7 @@ export default async function OutbreakDetailPage({ params }: { params: { id: str
               <Field label="Unit Affected" value={outbreak.unitAffected} />
               <div>
                 <dt className="text-xs text-slate-400">Case Count</dt>
-                <dd className="text-sm font-bold text-slate-800 mt-0.5 text-lg">{outbreak.caseCount}</dd>
+                <dd className="text-lg font-bold text-slate-800 mt-0.5">{outbreak.caseCount}</dd>
               </div>
               <Field label="Start Date" value={formatDate(outbreak.startDate)} />
               {outbreak.endDate && <Field label="End Date" value={formatDate(outbreak.endDate)} />}
