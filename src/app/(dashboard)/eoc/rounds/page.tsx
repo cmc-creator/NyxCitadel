@@ -127,9 +127,9 @@ export default function EocRoundsPage() {
           <h1 className="text-2xl font-bold text-foreground mt-1">Life Safety Rounds</h1>
           <p className="text-sm text-slate-400 mt-0.5">Monthly environment-of-care rounds, fire safety inspections, and ligature surveys</p>
         </div>
-        <button className="px-3 py-1.5 text-sm rounded-md bg-sky-600 hover:bg-sky-500 text-white font-medium transition-colors">
+        <a href="/eoc/rounds/new" className="px-3 py-1.5 text-sm rounded-md bg-sky-600 hover:bg-sky-500 text-white font-medium transition-colors">
           + Start New Round
-        </button>
+        </a>
       </div>
 
       {/* Stats row */}

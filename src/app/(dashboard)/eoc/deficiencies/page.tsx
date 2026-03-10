@@ -86,9 +86,9 @@ export default function DeficienciesPage() {
           <h1 className="text-2xl font-bold text-foreground mt-1">Deficiency Tracker</h1>
           <p className="text-sm text-slate-400 mt-0.5">All environment-of-care findings from rounds, surveys, and ad-hoc observations</p>
         </div>
-        <button className="px-3 py-1.5 text-sm rounded-md bg-red-700 hover:bg-red-600 text-white font-medium transition-colors">
+        <a href="/eoc/deficiencies/new" className="px-3 py-1.5 text-sm rounded-md bg-red-700 hover:bg-red-600 text-white font-medium transition-colors">
           + Log Deficiency
-        </button>
+        </a>
       </div>
 
       {/* Stats */}
