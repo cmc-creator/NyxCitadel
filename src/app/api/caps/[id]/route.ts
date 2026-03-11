@@ -69,3 +69,17 @@ export async function PATCH(
 
   return NextResponse.json(cap);
 }
+
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const session = await auth();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const existing = await prisma.correctiveActionPlan.findFirst({
+    where: { id: params.id, facilityId: session.user.facilityId },
+  });
+  if (!existing) return NextResponse.json({ error: 'Not found.' }, { status: 404 });
+  await prisma.correctiveActionPlan.delete({ where: { id: params.id } });
+  return new NextResponse(null, { status: 204 });
+}

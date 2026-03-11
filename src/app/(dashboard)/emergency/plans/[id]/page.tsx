@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 import {
   BookOpen, ArrowLeft, Calendar, User, AlertTriangle,
   CheckCircle2, Clock, ExternalLink, FileText, RefreshCw, Pencil,
@@ -64,6 +65,7 @@ export default async function EmergencyPlanDetailPage({ params }: { params: { id
           <Link href={`/emergency/plans/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
+          <DeleteButton apiPath={`/api/emergency-plans/${params.id}`} redirectPath="/emergency/plans" label="emergency plan" />
           {plan.documentUrl && (
             <a href={plan.documentUrl} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-sm text-blue-600 border border-blue-200 bg-blue-50 px-3 py-1.5 rounded-lg hover:bg-blue-100">
