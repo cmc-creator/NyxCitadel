@@ -4,9 +4,6 @@ import {
   AlertTriangle,
   Wrench,
   ClipboardList,
-  CheckCircle2,
-  Clock,
-  TrendingDown,
   Flame,
   Zap,
   Lock,
@@ -15,112 +12,12 @@ import {
   ChevronRight,
   CircleAlert,
 } from 'lucide-react';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
-const statCards = [
-  {
-    label: 'Open Deficiencies',
-    value: '7',
-    sub: '2 immediate / high severity',
-    color: 'text-red-400',
-    bg: 'bg-red-950/40',
-    border: 'border-red-700/40',
-    icon: AlertTriangle,
-    href: '/eoc/deficiencies',
-  },
-  {
-    label: 'Ligature Items Open',
-    value: '4',
-    sub: '1 HIGH · 3 MEDIUM',
-    color: 'text-amber-400',
-    bg: 'bg-amber-950/40',
-    border: 'border-amber-700/40',
-    icon: CircleAlert,
-    href: '/eoc/ligature',
-  },
-  {
-    label: 'Equipment PM Due',
-    value: '3',
-    sub: '1 overdue · 2 due this month',
-    color: 'text-orange-400',
-    bg: 'bg-orange-950/40',
-    border: 'border-orange-700/40',
-    icon: Wrench,
-    href: '/eoc/equipment',
-  },
-  {
-    label: 'Days Since Last Round',
-    value: '12',
-    sub: 'Monthly round due Mar 28',
-    color: 'text-emerald-400',
-    bg: 'bg-emerald-950/40',
-    border: 'border-emerald-700/40',
-    icon: ClipboardList,
-    href: '/eoc/rounds',
-  },
-];
+export const dynamic = 'force-dynamic';
 
-const modules = [
-  {
-    href: '/eoc/ligature',
-    icon: CircleAlert,
-    color: 'text-amber-400',
-    bg: 'bg-amber-950/40',
-    border: 'border-amber-700/40',
-    label: 'Ligature Risk',
-    desc: 'Room-by-room anchor point tracking and mitigation plans',
-    badge: 'TJC EC.02.06.01',
-    badgeColor: 'bg-amber-950/60 text-amber-300 border border-amber-700/40',
-  },
-  {
-    href: '/eoc/rounds',
-    icon: ClipboardList,
-    color: 'text-sky-400',
-    bg: 'bg-sky-950/40',
-    border: 'border-sky-700/40',
-    label: 'Safety Rounds',
-    desc: 'Scheduled life safety and environment rounds with findings log',
-    badge: 'Monthly',
-    badgeColor: 'bg-sky-950/60 text-sky-300 border border-sky-700/40',
-  },
-  {
-    href: '/eoc/deficiencies',
-    icon: AlertTriangle,
-    color: 'text-red-400',
-    bg: 'bg-red-950/40',
-    border: 'border-red-700/40',
-    label: 'Deficiency Tracker',
-    desc: 'Log, assign, and resolve all environment-of-care findings',
-    badge: '7 Open',
-    badgeColor: 'bg-red-950/60 text-red-300 border border-red-700/40',
-  },
-  {
-    href: '/eoc/equipment',
-    icon: Wrench,
-    color: 'text-purple-400',
-    bg: 'bg-purple-950/40',
-    border: 'border-purple-700/40',
-    label: 'Equipment PM',
-    desc: 'Preventive maintenance schedules for fire, HVAC, utilities',
-    badge: '3 Due Soon',
-    badgeColor: 'bg-purple-950/60 text-purple-300 border border-purple-700/40',
-  },
-];
-
-const recentDeficiencies = [
-  { id: 'DEF-2026-007', location: 'Room 118 – Bathroom', category: 'LIGATURE_RISK', severity: 'HIGH', status: 'OPEN', desc: 'Door hinge plates non-ligature-resistant', daysOpen: 3 },
-  { id: 'DEF-2026-006', location: 'Seclusion Room 1', category: 'LIFE_SAFETY', severity: 'HIGH', status: 'IN_PROGRESS', desc: 'Emergency ligature cutter not mounted at door', daysOpen: 8 },
-  { id: 'DEF-2026-005', location: 'Nurses Station – Wing B', category: 'FIRE_SAFETY', severity: 'MEDIUM', status: 'IN_PROGRESS', desc: 'Fire door closer inoperable – does not latch', daysOpen: 14 },
-  { id: 'DEF-2026-004', location: 'Medication Room', category: 'INFECTION_CONTROL', severity: 'MEDIUM', status: 'OPEN', desc: 'Hand hygiene dispenser empty – bracket corroded', daysOpen: 5 },
-  { id: 'DEF-2026-003', location: 'Janitor Closet – 1st Floor', category: 'SECURITY', severity: 'LOW', status: 'RESOLVED', desc: 'Unsecured chemical storage – lock installed', daysOpen: 21 },
-];
-
-const upcomingPm = [
-  { name: 'Fire Panel Main – Notifier NFS2-3030', category: 'FIRE_ALARM', due: '2026-03-18', status: 'DUE_SOON', vendor: 'Arizona Fire Systems' },
-  { name: 'Emergency Generator – Cummins 500kW', category: 'GENERATOR', due: '2026-03-22', status: 'DUE_SOON', vendor: 'Cummins Power Systems' },
-  { name: 'Kitchen Hood Suppression System', category: 'FIRE_SUPPRESSION', due: '2026-03-05', status: 'OVERDUE', vendor: 'Ansul Service AZ' },
-  { name: 'Elevator – Kone MiniSpace (Wing A)', category: 'ELEVATOR', due: '2026-04-01', status: 'UPCOMING', vendor: 'KONE Americas' },
-];
-
+// Program health scores — no direct DB source yet; hardcoded pending analytics
 const eocProgramStatus = [
   { label: 'Fire Safety', icon: Flame, score: 92, color: 'bg-emerald-500' },
   { label: 'Life Safety Rounds', icon: ActivitySquare, score: 78, color: 'bg-amber-500' },
@@ -153,7 +50,123 @@ const pmStatusBadge: Record<string, string> = {
   COMPLETED: 'bg-emerald-950/40 text-emerald-400',
 };
 
-export default function EocOverviewPage() {
+const modules = [
+  {
+    href: '/eoc/ligature',
+    icon: CircleAlert,
+    color: 'text-amber-400',
+    bg: 'bg-amber-950/40',
+    border: 'border-amber-700/40',
+    label: 'Ligature Risk',
+    desc: 'Room-by-room anchor point tracking and mitigation plans',
+    badge: 'TJC EC.02.06.01',
+    badgeColor: 'bg-amber-950/60 text-amber-300 border border-amber-700/40',
+  },
+  {
+    href: '/eoc/rounds',
+    icon: ClipboardList,
+    color: 'text-sky-400',
+    bg: 'bg-sky-950/40',
+    border: 'border-sky-700/40',
+    label: 'Safety Rounds',
+    desc: 'Scheduled life safety and environment rounds with findings log',
+    badge: 'Monthly',
+    badgeColor: 'bg-sky-950/60 text-sky-300 border border-sky-700/40',
+  },
+  {
+    href: '/eoc/deficiencies',
+    icon: AlertTriangle,
+    color: 'text-red-400',
+    bg: 'bg-red-950/40',
+    border: 'border-red-700/40',
+    label: 'Deficiency Tracker',
+    desc: 'Log, assign, and resolve all environment-of-care findings',
+    badge: 'View Open',
+    badgeColor: 'bg-red-950/60 text-red-300 border border-red-700/40',
+  },
+  {
+    href: '/eoc/equipment',
+    icon: Wrench,
+    color: 'text-purple-400',
+    bg: 'bg-purple-950/40',
+    border: 'border-purple-700/40',
+    label: 'Equipment PM',
+    desc: 'Preventive maintenance schedules for fire, HVAC, utilities',
+    badge: 'View Schedule',
+    badgeColor: 'bg-purple-950/60 text-purple-300 border border-purple-700/40',
+  },
+];
+
+export default async function EocOverviewPage() {
+  const session = await auth();
+  const facilityId = session?.user?.facilityId ?? '';
+  const now = new Date();
+
+  const [
+    openDefs,
+    immediateDefs,
+    ligatureOpen,
+    pmDue,
+    lastRound,
+    recentDefs,
+    upcomingPm,
+  ] = await Promise.all([
+    prisma.eocDeficiency.count({
+      where: { facilityId, status: { in: ['OPEN', 'IN_PROGRESS'] } },
+    }),
+    prisma.eocDeficiency.count({
+      where: {
+        facilityId,
+        status: { in: ['OPEN', 'IN_PROGRESS'] },
+        severity: { in: ['IMMEDIATE_JEOPARDY', 'HIGH'] },
+      },
+    }),
+    prisma.ligatureRiskItem.count({
+      where: { facilityId, status: { in: ['OPEN', 'IN_MITIGATION'] } },
+    }),
+    prisma.equipmentPm.count({
+      where: { facilityId, status: { in: ['OVERDUE', 'DUE_SOON'] } },
+    }),
+    prisma.eocRound.findFirst({
+      where: { facilityId },
+      orderBy: { conductedDate: 'desc' },
+    }),
+    prisma.eocDeficiency.findMany({
+      where: { facilityId, status: { in: ['OPEN', 'IN_PROGRESS'] } },
+      orderBy: { createdAt: 'desc' },
+      take: 5,
+      select: {
+        id: true,
+        defNumber: true,
+        location: true,
+        severity: true,
+        status: true,
+        dueDate: true,
+        assignedTo: true,
+        description: true,
+        createdAt: true,
+      },
+    }),
+    prisma.equipmentPm.findMany({
+      where: { facilityId, status: { in: ['OVERDUE', 'DUE_SOON', 'UPCOMING'] } },
+      orderBy: { nextServiceDate: 'asc' },
+      take: 5,
+      select: {
+        id: true,
+        equipmentName: true,
+        location: true,
+        status: true,
+        nextServiceDate: true,
+        vendor: true,
+        category: true,
+      },
+    }),
+  ]);
+
+  const daysSinceRound = lastRound
+    ? Math.floor((now.getTime() - new Date(lastRound.conductedDate).getTime()) / 86_400_000)
+    : null;
+
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
@@ -193,22 +206,65 @@ export default function EocOverviewPage() {
 
       {/* Stat cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {statCards.map((s) => (
-          <Link
-            key={s.label}
-            href={s.href}
-            className={`p-4 rounded-xl border ${s.border} ${s.bg} hover:brightness-110 transition-all group`}
-          >
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-xs text-slate-400 mb-1">{s.label}</p>
-                <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
-                <p className="text-xs text-slate-500 mt-1">{s.sub}</p>
-              </div>
-              <s.icon className={`w-5 h-5 ${s.color} opacity-80`} />
+        <Link
+          href="/eoc/deficiencies"
+          className="p-4 rounded-xl border border-red-700/40 bg-red-950/40 hover:brightness-110 transition-all group"
+        >
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-xs text-slate-400 mb-1">Open Deficiencies</p>
+              <p className="text-3xl font-bold text-red-400">{openDefs}</p>
+              <p className="text-xs text-slate-500 mt-1">{immediateDefs} immediate / high severity</p>
             </div>
-          </Link>
-        ))}
+            <AlertTriangle className="w-5 h-5 text-red-400 opacity-80" />
+          </div>
+        </Link>
+
+        <Link
+          href="/eoc/ligature"
+          className="p-4 rounded-xl border border-amber-700/40 bg-amber-950/40 hover:brightness-110 transition-all group"
+        >
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-xs text-slate-400 mb-1">Ligature Items Open</p>
+              <p className="text-3xl font-bold text-amber-400">{ligatureOpen}</p>
+              <p className="text-xs text-slate-500 mt-1">open or in mitigation</p>
+            </div>
+            <CircleAlert className="w-5 h-5 text-amber-400 opacity-80" />
+          </div>
+        </Link>
+
+        <Link
+          href="/eoc/equipment"
+          className="p-4 rounded-xl border border-orange-700/40 bg-orange-950/40 hover:brightness-110 transition-all group"
+        >
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-xs text-slate-400 mb-1">Equipment PM Due</p>
+              <p className="text-3xl font-bold text-orange-400">{pmDue}</p>
+              <p className="text-xs text-slate-500 mt-1">overdue or due soon</p>
+            </div>
+            <Wrench className="w-5 h-5 text-orange-400 opacity-80" />
+          </div>
+        </Link>
+
+        <Link
+          href="/eoc/rounds"
+          className="p-4 rounded-xl border border-emerald-700/40 bg-emerald-950/40 hover:brightness-110 transition-all group"
+        >
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-xs text-slate-400 mb-1">Days Since Last Round</p>
+              <p className="text-3xl font-bold text-emerald-400">
+                {daysSinceRound !== null ? daysSinceRound : '—'}
+              </p>
+              <p className="text-xs text-slate-500 mt-1">
+                {lastRound ? `Last: ${new Date(lastRound.conductedDate).toLocaleDateString()}` : 'No rounds recorded'}
+              </p>
+            </div>
+            <ClipboardList className="w-5 h-5 text-emerald-400 opacity-80" />
+          </div>
+        </Link>
       </div>
 
       {/* Module cards */}
@@ -284,29 +340,38 @@ export default function EocOverviewPage() {
             </Link>
           </div>
           <div className="space-y-2">
-            {recentDeficiencies.map((d) => (
-              <div
-                key={d.id}
-                className="flex items-start justify-between p-3 rounded-lg bg-slate-900/60 border border-border/50 hover:border-border transition-colors"
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs font-mono text-slate-500">{d.id}</span>
-                    <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${severityBadge[d.severity]}`}>
-                      {d.severity}
-                    </span>
+            {recentDefs.length === 0 ? (
+              <p className="text-xs text-slate-500 py-4 text-center">No open deficiencies — great work!</p>
+            ) : (
+              recentDefs.map((d) => {
+                const daysOpen = Math.floor(
+                  (now.getTime() - new Date(d.createdAt).getTime()) / 86_400_000
+                );
+                return (
+                  <div
+                    key={d.id}
+                    className="flex items-start justify-between p-3 rounded-lg bg-slate-900/60 border border-border/50 hover:border-border transition-colors"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-xs font-mono text-slate-500">{d.defNumber}</span>
+                        <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${severityBadge[d.severity] ?? ''}`}>
+                          {d.severity.replace('_', ' ')}
+                        </span>
+                      </div>
+                      <p className="text-sm text-foreground mt-0.5 truncate">{d.description}</p>
+                      <p className="text-xs text-slate-500">{d.location}</p>
+                    </div>
+                    <div className="flex flex-col items-end gap-1 ml-3 shrink-0">
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusBadge[d.status] ?? ''}`}>
+                        {d.status.replace('_', ' ')}
+                      </span>
+                      <span className="text-xs text-slate-600">{daysOpen}d open</span>
+                    </div>
                   </div>
-                  <p className="text-sm text-foreground mt-0.5 truncate">{d.desc}</p>
-                  <p className="text-xs text-slate-500">{d.location}</p>
-                </div>
-                <div className="flex flex-col items-end gap-1 ml-3 shrink-0">
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusBadge[d.status]}`}>
-                    {d.status.replace('_', ' ')}
-                  </span>
-                  <span className="text-xs text-slate-600">{d.daysOpen}d open</span>
-                </div>
-              </div>
-            ))}
+                );
+              })
+            )}
           </div>
         </div>
       </div>
@@ -331,29 +396,45 @@ export default function EocOverviewPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border/30">
-              {upcomingPm.map((e) => (
-                <tr key={e.name} className="hover:bg-white/5 transition-colors">
-                  <td className="py-2.5 pr-4">
-                    <p className="text-foreground font-medium text-xs">{e.name}</p>
-                  </td>
-                  <td className="py-2.5 pr-4">
-                    <span className="text-xs text-slate-400">{e.category.replace('_', ' ')}</span>
-                  </td>
-                  <td className="py-2.5 pr-4">
-                    <span className={`text-xs font-medium ${e.status === 'OVERDUE' ? 'text-red-400' : e.status === 'DUE_SOON' ? 'text-amber-400' : 'text-slate-300'}`}>
-                      {e.due}
-                    </span>
-                  </td>
-                  <td className="py-2.5 pr-4">
-                    <span className="text-xs text-slate-500">{e.vendor}</span>
-                  </td>
-                  <td className="py-2.5">
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${pmStatusBadge[e.status]}`}>
-                      {e.status.replace('_', ' ')}
-                    </span>
+              {upcomingPm.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="py-6 text-center text-xs text-slate-500">
+                    No upcoming PM items
                   </td>
                 </tr>
-              ))}
+              ) : (
+                upcomingPm.map((e) => (
+                  <tr key={e.id} className="hover:bg-white/5 transition-colors">
+                    <td className="py-2.5 pr-4">
+                      <p className="text-foreground font-medium text-xs">{e.equipmentName}</p>
+                    </td>
+                    <td className="py-2.5 pr-4">
+                      <span className="text-xs text-slate-400">{e.category.replace(/_/g, ' ')}</span>
+                    </td>
+                    <td className="py-2.5 pr-4">
+                      <span
+                        className={`text-xs font-medium ${
+                          e.status === 'OVERDUE'
+                            ? 'text-red-400'
+                            : e.status === 'DUE_SOON'
+                            ? 'text-amber-400'
+                            : 'text-slate-300'
+                        }`}
+                      >
+                        {new Date(e.nextServiceDate).toLocaleDateString()}
+                      </span>
+                    </td>
+                    <td className="py-2.5 pr-4">
+                      <span className="text-xs text-slate-500">{e.vendor ?? '—'}</span>
+                    </td>
+                    <td className="py-2.5">
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${pmStatusBadge[e.status] ?? ''}`}>
+                        {e.status.replace(/_/g, ' ')}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
