@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Scale, ArrowLeft } from 'lucide-react';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const ALLEGATION_CATEGORIES = [
   'Quality of Care',
@@ -243,17 +244,20 @@ export default function EditQocPage() {
             className="input-field w-full resize-none" />
         </div>
 
-        <div className="flex gap-3 pb-8">
-          <button
-            type="submit"
-            disabled={saving}
-            className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition-colors disabled:opacity-50"
-          >
-            {saving ? 'Saving...' : 'Save Changes'}
-          </button>
-          <a href={`/trackers/qoc/${id}`} className="px-4 py-2.5 text-sm text-slate-600 hover:text-slate-800 rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
-            Cancel
-          </a>
+        <div className="flex items-center justify-between gap-3 pb-8">
+          <DeleteButton apiPath={`/api/qoc/${id}`} redirectPath="/trackers/qoc" label="QOC complaint" />
+          <div className="flex gap-3">
+            <a href={`/trackers/qoc/${id}`} className="px-4 py-2.5 text-sm text-slate-600 hover:text-slate-800 rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
+              Cancel
+            </a>
+            <button
+              type="submit"
+              disabled={saving}
+              className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition-colors disabled:opacity-50"
+            >
+              {saving ? 'Saving...' : 'Save Changes'}
+            </button>
+          </div>
         </div>
       </form>
     </div>

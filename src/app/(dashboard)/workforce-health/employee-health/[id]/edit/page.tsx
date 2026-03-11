@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft, HeartPulse } from 'lucide-react';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const TB_METHODS = ['IGRA', 'TST', 'CXR'];
 const TB_RESULTS = ['Negative', 'Positive', 'Indeterminate'];
@@ -201,11 +202,18 @@ export default function EditEmployeeHealthPage() {
           <textarea name="notes" rows={2} className="form-input w-full" defaultValue={data.notes ?? ''} />
         </div>
 
-        <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/workforce-health/employee-health/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
-          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
-            {saving ? 'Saving…' : 'Save Changes'}
-          </button>
+        <div className="px-6 py-4 flex items-center justify-between gap-3">
+          <DeleteButton
+            apiPath={`/api/workforce-health/employee-health/${id}`}
+            redirectPath="/workforce-health/employee-health"
+            label="employee health record"
+          />
+          <div className="flex gap-3">
+            <a href={`/workforce-health/employee-health/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+            <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+              {saving ? 'Saving…' : 'Save Changes'}
+            </button>
+          </div>
         </div>
       </form>
     </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft, Pill } from 'lucide-react';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const SCHEDULES = ['SCHEDULE_II', 'SCHEDULE_III', 'SCHEDULE_IV', 'SCHEDULE_V'];
 const SHIFTS = ['Day', 'Evening', 'Night'];
@@ -186,11 +187,14 @@ export default function EditControlledSubstancePage() {
           </div>
         </div>
 
-        <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/pharmacy/controlled-substances/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
-          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
-            {saving ? 'Saving…' : 'Save Changes'}
-          </button>
+        <div className="px-6 py-4 flex items-center justify-between gap-3">
+          <DeleteButton apiPath={`/api/pharmacy/controlled-substances/${id}`} redirectPath="/pharmacy/controlled-substances" label="CS count record" />
+          <div className="flex gap-3">
+            <a href={`/pharmacy/controlled-substances/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
+            <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+              {saving ? 'Saving…' : 'Save Changes'}
+            </button>
+          </div>
         </div>
       </form>
     </div>
