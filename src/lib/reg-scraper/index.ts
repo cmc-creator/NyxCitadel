@@ -190,7 +190,7 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
     userId: string;
     title: string;
     message: string;
-    type: 'REG_ALERT';
+    type: 'SYSTEM';
     linkUrl: string;
     isRead: boolean;
   }[] = [];
@@ -215,7 +215,7 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
         userId:     user.id,
         title:      `${impactLabel} Regulatory Alert: ${agencyLabel}${docLabel}`,
         message:    update.title.slice(0, 200),
-        type:       'REG_ALERT',
+        type:       'SYSTEM',
         linkUrl:    '/intelligence/updates',
         isRead:     false,
       });

@@ -1065,7 +1065,6 @@ enum NotificationType {
   TRAINING_EXPIRING
   INCIDENT_UPDATE
   SYSTEM
-  REG_ALERT
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
