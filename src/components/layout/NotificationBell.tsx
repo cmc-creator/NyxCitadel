@@ -32,6 +32,8 @@ const TYPE_COLORS: Record<string, string> = {
   MOON_MISSING:           'bg-yellow-500/15 text-yellow-400',
   GOVERNANCE_DOC_OVERDUE: 'bg-indigo-500/15 text-indigo-400',
   BREACH_REPORTABLE:      'bg-red-600/20   text-red-300',
+  // Regulatory Intelligence
+  REG_ALERT:              'bg-rose-600/20  text-rose-300 font-bold',
 };
 
 function timeAgo(dateStr: string): string {
