@@ -17,15 +17,25 @@ import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
-// Program health scores — no direct DB source yet; hardcoded pending analytics
-const eocProgramStatus = [
-  { label: 'Fire Safety', icon: Flame, score: 92, color: 'bg-emerald-500' },
-  { label: 'Life Safety Rounds', icon: ActivitySquare, score: 78, color: 'bg-amber-500' },
-  { label: 'Utilities Management', icon: Zap, score: 88, color: 'bg-sky-500' },
-  { label: 'Security Program', icon: Lock, score: 95, color: 'bg-purple-500' },
-  { label: 'Ligature Risk', icon: CircleAlert, score: 64, color: 'bg-red-500' },
-  { label: 'HVAC / Air Quality', icon: Wind, score: 90, color: 'bg-teal-500' },
-];
+/** Penalise score for each open deficiency by severity; subtract 10pts per overdue equipment PM. */
+function calcScore(defs: any[], overdueEquip: number): number {
+  let score = 100;
+  for (const d of defs) {
+    switch (d.severity) {
+      case 'IMMEDIATE_JEOPARDY': score -= 25; break;
+      case 'HIGH':               score -= 12; break;
+      case 'MEDIUM':             score -= 6;  break;
+      case 'LOW':                score -= 3;  break;
+      default:                   score -= 1;
+    }
+  }
+  score -= overdueEquip * 10;
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+function scoreBar(s: number) {
+  return s >= 85 ? 'bg-emerald-500' : s >= 70 ? 'bg-amber-500' : 'bg-red-500';
+}
 
 const severityBadge: Record<string, string> = {
   IMMEDIATE_JEOPARDY: 'bg-red-950/60 text-red-300 border border-red-600/40',
@@ -166,6 +176,69 @@ export default async function EocOverviewPage() {
   const daysSinceRound = lastRound
     ? Math.floor((now.getTime() - new Date(lastRound.conductedDate).getTime()) / 86_400_000)
     : null;
+
+  // ── Program health: live DB queries ─────────────────────────────────────────
+  const [
+    fireDefs, utilDefs, secDefs, ligDefs,
+    fireEquipOvd, hvacEquipOvd, utilEquipOvd, secEquipOvd,
+    ligatureTotal, roundsLast90,
+  ] = await Promise.all([
+    prisma.eocDeficiency.findMany({
+      where: { facilityId, category: 'FIRE_SAFETY', status: { in: ['OPEN', 'IN_PROGRESS'] } },
+      select: { severity: true },
+    }),
+    prisma.eocDeficiency.findMany({
+      where: { facilityId, category: 'UTILITIES', status: { in: ['OPEN', 'IN_PROGRESS'] } },
+      select: { severity: true },
+    }),
+    prisma.eocDeficiency.findMany({
+      where: { facilityId, category: 'SECURITY', status: { in: ['OPEN', 'IN_PROGRESS'] } },
+      select: { severity: true },
+    }),
+    prisma.eocDeficiency.findMany({
+      where: { facilityId, category: 'LIGATURE_RISK', status: { in: ['OPEN', 'IN_PROGRESS'] } },
+      select: { severity: true },
+    }),
+    prisma.equipmentPm.count({
+      where: { facilityId, category: { in: ['FIRE_SUPPRESSION', 'FIRE_ALARM'] as any }, status: 'OVERDUE' },
+    }),
+    prisma.equipmentPm.count({
+      where: { facilityId, category: 'HVAC' as any, status: 'OVERDUE' },
+    }),
+    prisma.equipmentPm.count({
+      where: { facilityId, category: { in: ['GENERATOR', 'ELECTRICAL', 'PLUMBING', 'MEDICAL_GAS', 'ELEVATOR'] as any }, status: 'OVERDUE' },
+    }),
+    prisma.equipmentPm.count({
+      where: { facilityId, category: 'SECURITY_SYSTEM' as any, status: 'OVERDUE' },
+    }),
+    prisma.ligatureRiskItem.count({ where: { facilityId } }),
+    prisma.eocRound.count({
+      where: {
+        facilityId,
+        conductedDate: { gte: new Date(now.getTime() - 90 * 86_400_000) },
+        status: { in: ['COMPLETED', 'REVIEWED', 'APPROVED'] },
+      },
+    }),
+  ]);
+
+  const fireSc  = calcScore(fireDefs, fireEquipOvd);
+  const roundSc = roundsLast90 >= 3 ? 100 : roundsLast90 === 2 ? 82 : roundsLast90 === 1 ? 58 : 20;
+  const utilSc  = calcScore(utilDefs, utilEquipOvd);
+  const secSc   = calcScore(secDefs, secEquipOvd);
+  const ligSc   = ligatureTotal === 0 ? 100 : Math.max(0, Math.round((1 - ligatureOpen / ligatureTotal) * 100));
+  const hvacSc  = calcScore([], hvacEquipOvd);
+
+  const eocProgramStatus = [
+    { label: 'Fire Safety',          icon: Flame,          score: fireSc,  color: scoreBar(fireSc) },
+    { label: 'Life Safety Rounds',   icon: ActivitySquare, score: roundSc, color: scoreBar(roundSc) },
+    { label: 'Utilities Management', icon: Zap,            score: utilSc,  color: scoreBar(utilSc) },
+    { label: 'Security Program',     icon: Lock,           score: secSc,   color: scoreBar(secSc) },
+    { label: 'Ligature Risk',        icon: CircleAlert,    score: ligSc,   color: scoreBar(ligSc) },
+    { label: 'HVAC / Air Quality',   icon: Wind,           score: hvacSc,  color: scoreBar(hvacSc) },
+  ];
+  const overallScore = Math.round(eocProgramStatus.reduce((a, p) => a + p.score, 0) / eocProgramStatus.length);
+  const lowestCat    = eocProgramStatus.reduce((a, b) => (b.score < a.score ? b : a), eocProgramStatus[0]);
+  // ────────────────────────────────────────────────────────────────────────────
 
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
@@ -325,9 +398,13 @@ export default async function EocOverviewPage() {
           <div className="mt-4 pt-4 border-t border-border">
             <div className="flex items-center justify-between">
               <span className="text-xs text-slate-400">Overall EOC Score</span>
-              <span className="text-sm font-bold text-amber-400">84.5%</span>
+              <span className={`text-sm font-bold ${
+                overallScore >= 85 ? 'text-emerald-400' : overallScore >= 70 ? 'text-amber-400' : 'text-red-400'
+              }`}>{overallScore}%</span>
             </div>
-            <p className="text-xs text-slate-600 mt-1">Ligature risk deficiencies are dragging the overall score. Target: 95%</p>
+            <p className="text-xs text-slate-600 mt-1">
+              {lowestCat.score < 85 ? `${lowestCat.label} is pulling the score down.` : 'All programs performing well.'} Target: 95%
+            </p>
           </div>
         </div>
 
