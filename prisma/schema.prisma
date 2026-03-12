@@ -118,6 +118,9 @@ model Facility {
   // Regulatory Reference Library (custom / facility-specific entries)
   regulatoryReferences RegulatoryReference[]
 
+  // Regulatory Intelligence Feed (scraped updates)
+  regulatoryUpdates    RegulatoryUpdate[]
+
   @@map("facilities")
 }
 
@@ -2942,4 +2945,29 @@ model RegulatoryReference {
   updatedAt       DateTime  @updatedAt
 
   @@map("regulatory_references")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REGULATORY INTELLIGENCE FEED — Scraped updates from regulatory bodies
+// ─────────────────────────────────────────────────────────────────────────────
+
+model RegulatoryUpdate {
+  id           String    @id @default(cuid())
+  source       String    // "FEDERAL_REGISTER" | "CMS_RSS" | "AZ_ADHS" | "JC"
+  sourceId     String    // unique ID from the source (prevents duplicates)
+  title        String
+  summary      String?   @db.Text
+  url          String
+  publishedAt  DateTime
+  agency       String    // "CMS" | "OSHA" | "HHS_OCR" | "DEA" | "AZ_ADHS" | "JC"
+  docType      String?   // "Rule" | "Proposed Rule" | "Notice" | "Press Release"
+  impactLevel  String    @default("INFO") // "CRITICAL" | "HIGH" | "MEDIUM" | "LOW" | "INFO"
+  isRead       Boolean   @default(false)
+  isGlobal     Boolean   @default(true)  // true = shown to all facilities
+  facilityId   String?
+  facility     Facility? @relation(fields: [facilityId], references: [id])
+  createdAt    DateTime  @default(now())
+
+  @@unique([source, sourceId])
+  @@map("regulatory_updates")
 }

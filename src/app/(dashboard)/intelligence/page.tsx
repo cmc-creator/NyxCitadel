@@ -2,11 +2,11 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
+  BarChart2, Shield, FileBarChart, TrendingUp,
+  AlertTriangle, CheckCircle2, ClipboardList, Activity, Radio,
+} from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
-  BarChart2, Shield, FileBarChart, TrendingUp,
-  AlertTriangle, CheckCircle2, ClipboardList, Activity,
-} from 'lucide-react';
 
 export const metadata = { title: 'Intelligence' };
 
@@ -25,6 +25,7 @@ export default async function IntelligencePage() {
     openGrievances,
     activeProjects,
     upcomingSurveys,
+    unreadRegUpdates,
   ] = await Promise.all([
     prisma.incident.count({ where: { facilityId, status: { not: 'CLOSED' } } }),
     prisma.correctiveActionPlan.count({ where: { facilityId, status: { in: ['OPEN', 'IN_PROGRESS'] } } }),
@@ -33,6 +34,7 @@ export default async function IntelligencePage() {
     prisma.grievanceRecord.count({ where: { facilityId, status: { not: 'CLOSED' } } }),
     prisma.qapiProject.count({ where: { facilityId, status: { in: ['ACTIVE', 'MONITORING'] } } }),
     prisma.survey.count({ where: { facilityId, status: { in: ['SCHEDULED', 'IN_PROGRESS'] } } }),
+    prisma.regulatoryUpdate.count({ where: { isRead: false } }),
   ]);
 
   const stats = [
@@ -62,6 +64,15 @@ export default async function IntelligencePage() {
       badge: 'EXEC',
       color: 'border-emerald-700/40 hover:border-emerald-500',
       iconBg: 'bg-emerald-950/40 text-emerald-400',
+    },
+    {
+      href: '/intelligence/updates',
+      title: 'Regulatory Intelligence Feed',
+      description: 'Live scraped updates from CMS, OSHA, DEA, HHS/OCR, AZ ADHS, and The Joint Commission — new rules, final regulations, enforcement notices, and more.',
+      icon: Radio,
+      badge: unreadRegUpdates > 0 ? `${unreadRegUpdates} new` : null,
+      color: 'border-rose-700/40 hover:border-rose-500',
+      iconBg: 'bg-rose-950/40 text-rose-400',
     },
   ];
 
