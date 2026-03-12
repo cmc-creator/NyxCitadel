@@ -1,4 +1,6 @@
-import { Settings } from 'lucide-react';
+import { Settings, Radio } from 'lucide-react';
+import { auth } from '@/lib/auth';
+import ScrapeButton from '@/components/intelligence/ScrapeButton';
 
 export const metadata = { title: 'Settings' };
 
@@ -25,7 +27,9 @@ const sections: { href: string; title: string; description: string; soon?: boole
   },
 ];
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const session = await auth();
+  const canScrape = ['ADMIN', 'COMPLIANCE_OFFICER'].includes(session?.user?.role ?? '');
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
@@ -57,6 +61,24 @@ export default function SettingsPage() {
           </a>
         ))}
       </div>
+
+      {/* Regulatory Intelligence — sync button for admins */}
+      {canScrape && (
+        <div className="bg-card border border-rose-700/30 rounded-xl px-5 py-5 space-y-3">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-rose-950/40 flex items-center justify-center">
+              <Radio className="w-4 h-4 text-rose-400" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground">Regulatory Intelligence Feed</p>
+              <p className="text-xs text-muted-foreground">
+                Fetch the latest rules, notices, and guidance from CMS, OSHA, DEA, HHS/OCR, AZ ADHS, and The Joint Commission.
+              </p>
+            </div>
+          </div>
+          <ScrapeButton variant="primary" />
+        </div>
+      )}
     </div>
   );
 }

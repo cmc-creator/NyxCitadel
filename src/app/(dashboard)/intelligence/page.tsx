@@ -5,6 +5,7 @@ import {
   BarChart2, Shield, FileBarChart, TrendingUp,
   AlertTriangle, CheckCircle2, ClipboardList, Activity, Radio,
 } from 'lucide-react';
+import ScrapeButton from '@/components/intelligence/ScrapeButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,7 +13,10 @@ export const metadata = { title: 'Intelligence' };
 
 export default async function IntelligencePage() {
   const session = await auth();
-  const facilityId = session!.user.facilityId;
+  if (!session?.user) return null;
+  const facilityId = session.user.facilityId;
+  const userRole   = session.user.role;
+  const canScrape  = ['ADMIN', 'COMPLIANCE_OFFICER'].includes(userRole);
 
   const since30 = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
   const since90 = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
@@ -137,6 +141,29 @@ export default async function IntelligencePage() {
           ))}
         </div>
       </div>
+
+      {/* Regulatory intelligence tools — admins only */}
+      {canScrape && (
+        <div className="bg-card border border-rose-700/30 rounded-xl px-5 py-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-foreground flex items-center gap-1.5">
+                <Radio className="w-4 h-4 text-rose-400" />
+                Regulatory Intelligence Feed
+              </p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Pull the latest rules, notices, and guidance from CMS, OSHA, DEA, HHS/OCR, AZ&nbsp;ADHS, and The Joint Commission.
+                {unreadRegUpdates > 0 && (
+                  <span className="ml-1.5 inline-flex items-center gap-0.5 bg-rose-950/40 text-rose-400 text-xs font-semibold rounded-full px-2 py-0.5">
+                    {unreadRegUpdates} unread
+                  </span>
+                )}
+              </p>
+            </div>
+            <ScrapeButton variant="primary" />
+          </div>
+        </div>
+      )}
 
       {/* Upcoming surveys reminder */}
       {upcomingSurveys > 0 && (
