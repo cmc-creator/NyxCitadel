@@ -1,11 +1,11 @@
-/**
+﻿/**
  * RSS-based regulatory scrapers
  * Covers: CMS Newsroom, AZ ADHS, and The Joint Commission.
  *
  * All use parseFeed() which calls our zero-dependency rss-parser.
  */
 
-import { parseRss, stripHtml } from '../rss-parser';
+import { parseRss, stripHtml } from './rss-parser';
 import type { ScrapedUpdate } from '../index';
 
 // ─── Source definitions ───────────────────────────────────────────────────────
