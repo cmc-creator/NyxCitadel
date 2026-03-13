@@ -245,38 +245,6 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     }
   }
 
-  // ── 7. Unnotified regulatory updates ────────────────────────────────────
-  // Find updates published after the last REGULATORY_UPDATE notification for this user.
-  const lastRegNotif = await prisma.notification.findFirst({
-    where: { userId, type: NotificationType.REGULATORY_UPDATE },
-    orderBy: { createdAt: 'desc' },
-    select: { createdAt: true },
-  });
-
-  const newUpdates = await prisma.regulatoryUpdate.findMany({
-    where: {
-      isActive: true,
-      createdAt: lastRegNotif ? { gt: lastRegNotif.createdAt } : undefined,
-    },
-    orderBy: { createdAt: 'asc' },
-  });
-
-  const urgencyLabel: Record<string, string> = {
-    CRITICAL:      '🚨 Critical',
-    HIGH:          '⚠️ High Priority',
-    MEDIUM:        'ℹ️ Medium',
-    INFORMATIONAL: '📋 Informational',
-  };
-
-  for (const upd of newUpdates) {
-    alerts.push({
-      type: 'REGULATORY_UPDATE',
-      title: `Regulatory Update: ${upd.title}`,
-      message: `${urgencyLabel[upd.urgency] ?? upd.urgency} · ${upd.regulatoryBody}${upd.standardRef ? ` (${upd.standardRef})` : ''} — ${upd.summary.slice(0, 120)}${upd.summary.length > 120 ? '…' : ''}`,
-      linkUrl: `/regulatory-updates/${upd.id}`,
-    });
-  }
-
   // ── Upsert (deduplicate within 3-day window) ────────────────────────────
   for (const alert of alerts) {
     const existing = await prisma.notification.findFirst({
