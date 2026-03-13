@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -98,8 +98,8 @@ export async function GET(req: NextRequest) {
     }),
     // HIPAA Breaches
     prisma.hipaaBreachLog.findMany({
-      where: { facilityId, OR: [{ breachNumber: search }, { briefDescription: search }, { affectedIndividuals: search }] },
-      select: { id: true, breachNumber: true, breachDate: true, status: true },
+      where: { facilityId, OR: [{ incidentNumber: search }, { description: search }] },
+      select: { id: true, incidentNumber: true, discoveryDate: true, status: true },
       take: 5,
     }),
     // Governance Documents
@@ -291,8 +291,8 @@ export async function GET(req: NextRequest) {
     items: hipaaBreaches.map(b => ({
       id: b.id,
       href: `/hipaa/breaches`,
-      title: b.breachNumber,
-      meta: `${b.status} · ${new Date(b.breachDate).toLocaleDateString()}`,
+      title: b.incidentNumber,
+      meta: `${b.status} · ${new Date(b.discoveryDate).toLocaleDateString()}`,
     })),
   });
 

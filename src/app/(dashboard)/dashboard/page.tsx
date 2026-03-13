@@ -18,6 +18,7 @@ import {
   Zap,
   Activity,
   Minus,
+  ShieldCheck,
 } from 'lucide-react';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
 import Link from 'next/link';
@@ -57,6 +58,10 @@ async function getDashboardStats(facilityId: string) {
     tbOverdue,
     openHipaaBreaches,
     restraintDeathsYtd,
+    eocOpenDeficiencies,
+    eocHighSeverity,
+    eocOverdueDeficiencies,
+    lastEocRound,
   ] = await Promise.all([
     prisma.calendarEvent.count({ where: { facilityId, dueDate: { lt: now }, completedDate: null, status: { not: 'COMPLETED' } } }),
     prisma.calendarEvent.count({ where: { facilityId, dueDate: { gte: now, lte: in30Days }, status: { notIn: ['COMPLETED', 'NA', 'WAIVED'] } } }),
@@ -100,6 +105,15 @@ async function getDashboardStats(facilityId: string) {
     prisma.employeeHealthRecord.count({ where: { facilityId, tbNextDueDate: { lt: now } } }),
     prisma.hipaaBreachLog.count({ where: { facilityId, status: { notIn: ['CLOSED', 'REPORTED_TO_HHS'] } } }),
     prisma.restraintEvent.count({ where: { facilityId, deathOccurred: true, eventDate: { gte: yearStart } } }),
+    // EOC
+    prisma.eocDeficiency.count({ where: { facilityId, status: 'OPEN' } }),
+    prisma.eocDeficiency.count({ where: { facilityId, status: 'OPEN', severity: { in: ['CRITICAL', 'HIGH'] } } }),
+    prisma.eocDeficiency.count({ where: { facilityId, status: 'OPEN', dueDate: { lt: now } } }),
+    prisma.eocRound.findFirst({
+      where: { facilityId },
+      orderBy: { conductedDate: 'desc' },
+      select: { conductedDate: true, totalItems: true, openItems: true, status: true, roundType: true },
+    }),
   ]);
 
   const trainingCompliancePct = totalRequiredTraining > 0
@@ -132,6 +146,10 @@ async function getDashboardStats(facilityId: string) {
     tbOverdue,
     openHipaaBreaches,
     restraintDeathsYtd,
+    eocOpenDeficiencies,
+    eocHighSeverity,
+    eocOverdueDeficiencies,
+    lastEocRound,
   };
 }
 
@@ -166,10 +184,14 @@ function ProgressBar({ value, max, label, sublabel }: { value: number; max: numb
 export default async function DashboardPage() {
   const session = await auth();
   const facilityId = session!.user.facilityId;
-  const s = await getDashboardStats(facilityId);
+  const [s, facility] = await Promise.all([
+    getDashboardStats(facilityId),
+    prisma.facility.findUnique({ where: { id: facilityId }, select: { name: true } }),
+  ]);
+  const facilityName = facility?.name ?? 'Your Facility';
 
-  const urgentCount = s.totalSentinels + s.adhsOverdue + s.qocImmediateJeopardy + s.grievanceOverdueAck + s.grievanceOverdueRes + s.qocOverdueResponse + s.overdueCapCount + s.restraintDeathsYtd + s.csDiscrepancies;
-  const watchCount  = s.iadUrgent + s.pendingIad + s.openIrIad + s.openQoc + s.openGrievances + s.overduePolicies + s.openHipaaBreaches + s.tbOverdue + s.expiringLicenses;
+  const urgentCount = s.totalSentinels + s.adhsOverdue + s.qocImmediateJeopardy + s.grievanceOverdueAck + s.grievanceOverdueRes + s.qocOverdueResponse + s.overdueCapCount + s.restraintDeathsYtd + s.csDiscrepancies + s.eocOverdueDeficiencies;
+  const watchCount  = s.iadUrgent + s.pendingIad + s.openIrIad + s.openQoc + s.openGrievances + s.overduePolicies + s.openHipaaBreaches + s.tbOverdue + s.expiringLicenses + s.eocHighSeverity;
 
   return (
     <div className="space-y-6">
@@ -177,7 +199,7 @@ export default async function DashboardPage() {
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Compliance Command Center</h1>
-          <p className="text-sm text-muted-foreground mt-0.5">Destiny Springs Healthcare · {formatDate(new Date(), 'MMMM d, yyyy')}</p>
+          <p className="text-sm text-muted-foreground mt-0.5">{facilityName} · {formatDate(new Date(), 'MMMM d, yyyy')}</p>
         </div>
         <div className="flex items-center gap-2">
           <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-purple-400 border border-purple-800/50 bg-purple-950/30 hover:bg-purple-950/60 px-3 py-1.5 rounded-lg transition-colors">
@@ -206,6 +228,7 @@ export default async function DashboardPage() {
             {s.overdueCapCount > 0 && <UrgentChip href="/trackers/caps" label={`${s.overdueCapCount} CAP${s.overdueCapCount > 1 ? 's' : ''} past target date`} subtitle="Corrective action overdue" />}
             {s.restraintDeathsYtd > 0 && <UrgentChip href="/restraint-seclusion" label={`${s.restraintDeathsYtd} restraint/seclusion death${s.restraintDeathsYtd > 1 ? 's' : ''} YTD`} subtitle="CMS reporting required within 24 hrs" />}
             {s.csDiscrepancies > 0 && <UrgentChip href="/pharmacy/controlled-substances" label={`${s.csDiscrepancies} CS discrepanc${s.csDiscrepancies > 1 ? 'ies' : 'y'} open`} subtitle="DEA-auditable — resolve immediately" />}
+            {s.eocOverdueDeficiencies > 0 && <UrgentChip href="/emergency/map" label={`${s.eocOverdueDeficiencies} EOC deficienc${s.eocOverdueDeficiencies > 1 ? 'ies' : 'y'} past due date`} subtitle="Environment of Care — overdue fix" />}
           </div>
         </div>
       )}
@@ -227,6 +250,7 @@ export default async function DashboardPage() {
             {s.openHipaaBreaches > 0 && <WatchChip href="/hipaa/breaches" label={`${s.openHipaaBreaches} open HIPAA breach${s.openHipaaBreaches > 1 ? 'es' : ''}`} />}
             {s.tbOverdue > 0 && <WatchChip href="/workforce-health/employee-health" label={`${s.tbOverdue} TB screening${s.tbOverdue > 1 ? 's' : ''} overdue`} />}
             {s.expiringLicenses > 0 && <WatchChip href="/credentialing/licenses" label={`${s.expiringLicenses} license${s.expiringLicenses > 1 ? 's' : ''} expiring (90d)`} />}
+            {s.eocHighSeverity > 0 && <WatchChip href="/emergency/map" label={`${s.eocHighSeverity} high/critical EOC deficienc${s.eocHighSeverity > 1 ? 'ies' : 'y'}`} />}
           </div>
         </div>
       )}
@@ -278,6 +302,54 @@ export default async function DashboardPage() {
             <ProgressBar value={s.functional} max={1} label="Functional / Full-Scale" sublabel="Min. 1/year · JC EM.03.01.03" />
           </div>
         </div>
+      </div>
+
+      {/* EOC HEALTH PANEL */}
+      <div className="bg-card rounded-xl border border-border p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <ShieldCheck className="w-4 h-4 text-teal-400" />
+          <h3 className="text-sm font-semibold text-foreground">Environment of Care (EOC) Health</h3>
+          <Link href="/emergency/map" className="ml-auto text-xs text-purple-400 hover:underline">View rounds →</Link>
+        </div>
+        {s.eocOpenDeficiencies === 0 && !s.lastEocRound ? (
+          <p className="text-sm text-muted-foreground">No EOC data yet. <Link href="/emergency/map" className="text-purple-400 hover:underline">Start an EOC round</Link></p>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {/* Open deficiencies */}
+            <div className={`rounded-lg border p-3 text-center ${s.eocOpenDeficiencies === 0 ? 'bg-emerald-950/40 border-emerald-700/40' : 'bg-amber-950/40 border-amber-700/40'}`}>
+              <p className="text-xs font-medium text-muted-foreground">Open Deficiencies</p>
+              <p className={`text-2xl font-bold mt-1 ${s.eocOpenDeficiencies === 0 ? 'text-emerald-400' : 'text-amber-400'}`}>{s.eocOpenDeficiencies}</p>
+              <p className="text-xs text-muted-foreground/60">{s.eocOpenDeficiencies === 0 ? 'All clear' : 'Pending resolution'}</p>
+            </div>
+            {/* High/Critical severity */}
+            <div className={`rounded-lg border p-3 text-center ${s.eocHighSeverity === 0 ? 'bg-emerald-950/40 border-emerald-700/40' : 'bg-red-950/40 border-red-700/40'}`}>
+              <p className="text-xs font-medium text-muted-foreground">High / Critical</p>
+              <p className={`text-2xl font-bold mt-1 ${s.eocHighSeverity === 0 ? 'text-emerald-400' : 'text-red-400'}`}>{s.eocHighSeverity}</p>
+              <p className="text-xs text-muted-foreground/60">{s.eocHighSeverity === 0 ? 'None urgent' : 'Requires priority fix'}</p>
+            </div>
+            {/* Overdue deficiencies */}
+            <div className={`rounded-lg border p-3 text-center ${s.eocOverdueDeficiencies === 0 ? 'bg-emerald-950/40 border-emerald-700/40' : 'bg-red-950/40 border-red-700/40'}`}>
+              <p className="text-xs font-medium text-muted-foreground">Overdue Fixes</p>
+              <p className={`text-2xl font-bold mt-1 ${s.eocOverdueDeficiencies === 0 ? 'text-emerald-400' : 'text-red-400'}`}>{s.eocOverdueDeficiencies}</p>
+              <p className="text-xs text-muted-foreground/60">{s.eocOverdueDeficiencies === 0 ? 'On schedule' : 'Past due date'}</p>
+            </div>
+            {/* Last round info */}
+            <div className="rounded-lg border border-border/50 bg-muted/30 p-3 text-center">
+              <p className="text-xs font-medium text-muted-foreground">Last EOC Round</p>
+              {s.lastEocRound ? (
+                <>
+                  <p className="text-sm font-bold mt-1 text-foreground">{new Date(s.lastEocRound.conductedDate).toLocaleDateString()}</p>
+                  <p className="text-xs text-muted-foreground/70 mt-0.5 truncate">
+                    {s.lastEocRound.roundType.replace(/_/g, ' ')}
+                  </p>
+                  <p className="text-xs text-muted-foreground/50">{s.lastEocRound.openItems}/{s.lastEocRound.totalItems} items open</p>
+                </>
+              ) : (
+                <p className="text-xs text-muted-foreground/50 mt-1">No rounds yet</p>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* QAPI SNAPSHOT */}

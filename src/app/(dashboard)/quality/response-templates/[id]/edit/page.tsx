@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { FileText, ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const CATEGORIES = [
   { value: 'PATIENT_GRIEVANCE_ACKNOWLEDGMENT', label: 'Grievance Acknowledgment (7-day)' },
@@ -258,20 +259,23 @@ export default function EditResponseTemplatePage() {
           />
         </div>
 
-        <div className="flex gap-3">
-          <button
-            type="submit"
-            disabled={saving}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
-          >
-            {saving ? 'Saving…' : 'Save Changes'}
-          </button>
-          <a
-            href={`/quality/response-templates/${id}`}
-            className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-          >
-            Cancel
-          </a>
+        <div className="flex items-center justify-between gap-3">
+          <DeleteButton apiPath={`/api/response-templates/${id}`} redirectPath="/quality/response-templates" label="response template" />
+          <div className="flex gap-3">
+            <a
+              href={`/quality/response-templates/${id}`}
+              className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            >
+              Cancel
+            </a>
+            <button
+              type="submit"
+              disabled={saving}
+              className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
+            >
+              {saving ? 'Saving…' : 'Save Changes'}
+            </button>
+          </div>
         </div>
       </form>
     </div>

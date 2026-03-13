@@ -43,7 +43,7 @@ export default async function GovernanceDocumentsPage() {
       <div className="grid grid-cols-4 gap-4">
         {[
           { label: 'Total Documents', value: docs.length, color: 'text-blue-400' },
-          { label: 'Approved', value: docs.filter(d => d.status === 'APPROVED').length, color: 'text-emerald-400' },
+          { label: 'Approved', value: docs.filter(d => d.status === 'ACTIVE').length, color: 'text-emerald-400' },
           { label: 'Overdue Review', value: overdue, color: overdue > 0 ? 'text-red-400' : 'text-slate-400' },
           { label: 'Review Due (90d)', value: expiringSoon, color: expiringSoon > 0 ? 'text-amber-400' : 'text-slate-400' },
         ].map(s => (

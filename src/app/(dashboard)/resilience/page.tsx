@@ -3,8 +3,6 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { scoreToGrade5, incidentScore, capScore, grievanceScore, grade12ToScore } from '@/lib/grading';
 import {
-
-export const dynamic = 'force-dynamic';
   Shield,
   ShieldAlert,
   TrendingUp,
@@ -17,6 +15,8 @@ export const dynamic = 'force-dynamic';
   ClipboardList,
   MessageSquareWarning,
 } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Resilience Scorecard' };
 

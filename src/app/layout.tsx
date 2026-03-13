@@ -8,11 +8,11 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'Destiny Springs Healthcare | Compliance & Risk Management',
-    template: '%s | Destiny Springs Healthcare',
+    default: 'NyxCitadel | Compliance & Risk Management',
+    template: '%s | NyxCitadel',
   },
   description:
-    'Compliance, risk management, and emergency management platform for Destiny Springs Healthcare.',
+    'Compliance, risk management, and emergency management platform — NyxCitadel.',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',

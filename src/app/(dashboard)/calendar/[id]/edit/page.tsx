@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Calendar, ArrowLeft } from 'lucide-react';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const REGULATORY_BODIES = [
   'JOINT_COMMISSION', 'CMS', 'AZ_ADHS', 'AZ_BOMEX', 'AZ_BON',
@@ -130,12 +131,15 @@ export default function EditCalendarEventPage() {
             <textarea name="notes" rows={2} defaultValue={data.notes ?? ''} className="form-input w-full" />
           </div>
         </div>
-        <div className="px-6 py-4 flex items-center justify-end gap-3">
-          <a href={`/calendar/${id}`} className="text-sm text-slate-500 hover:text-slate-700">Cancel</a>
-          <button type="submit" disabled={saving}
-            className="px-5 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors">
-            {saving ? 'Saving…' : 'Save Changes'}
-          </button>
+        <div className="px-6 py-4 flex items-center justify-between gap-3">
+          <DeleteButton apiPath={`/api/calendar/${id}`} redirectPath="/calendar" label="calendar event" />
+          <div className="flex gap-3">
+            <a href={`/calendar/${id}`} className="text-sm text-slate-500 hover:text-slate-700">Cancel</a>
+            <button type="submit" disabled={saving}
+              className="px-5 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors">
+              {saving ? 'Saving…' : 'Save Changes'}
+            </button>
+          </div>
         </div>
       </form>
     </div>

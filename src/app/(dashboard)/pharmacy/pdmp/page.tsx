@@ -1,4 +1,4 @@
-import { Shield, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
+﻿import { Shield, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -21,7 +21,7 @@ export default async function PdmpPage() {
     take: 50,
   });
 
-  const openConcerns = checks.filter(c => c.status === 'CONCERNS_OPEN').length;
+  const openConcerns = checks.filter(c => (c as any).status === 'CONCERNS_OPEN').length;
   const significant = checks.filter(c => c.significantFinding).length;
 
   return (
@@ -75,7 +75,7 @@ export default async function PdmpPage() {
             {checks.length === 0 ? (
               <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">No PDMP checks on record.</td></tr>
             ) : checks.map(c => {
-              const cfg = statusConfig[c.status] ?? { label: c.status, classes: 'bg-slate-100 text-slate-700' };
+              const cfg = statusConfig[(c as any).status] ?? { label: (c as any).status, classes: 'bg-slate-100 text-slate-700' };
               return (
                 <tr key={c.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-slate-300">{c.checkDate.toLocaleDateString()}</td>

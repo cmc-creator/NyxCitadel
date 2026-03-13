@@ -22,7 +22,7 @@ export function AssistantChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm NyxAI, your compliance assistant for Destiny Springs Healthcare. I can help with JC/CMS/AZ ADHS questions, draft CAP language, explain QAPI methodology, and more. What can I help you with?",
+      content: "Hi! I'm NyxAI, your compliance assistant. I can help with JC/CMS regulatory questions, draft CAP language, explain QAPI methodology, and more. What can I help you with?",
     },
   ]);
   const [input, setInput] = useState('');

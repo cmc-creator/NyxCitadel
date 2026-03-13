@@ -51,7 +51,7 @@ export default function AssistantPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm NyxAI, your compliance assistant for Destiny Springs Healthcare.\n\nI can help with:\n• JC, CMS, and AZ ADHS regulatory questions\n• Drafting CAP, RCA, and policy language\n• Explaining QAPI methodology and PDSA cycles\n• Interpreting specific standards and requirements\n• Reviewing compliance workflows\n\nWhat would you like to work on today?",
+      content: "Hi! I'm NyxAI, your compliance assistant.\n\nI can help with:\n• JC, CMS, and state regulatory questions\n• Drafting CAP, RCA, and policy language\n• Explaining QAPI methodology and PDSA cycles\n• Interpreting specific standards and requirements\n• Reviewing compliance workflows\n\nWhat would you like to work on today?",
     },
   ]);
   const [input, setInput]       = useState('');

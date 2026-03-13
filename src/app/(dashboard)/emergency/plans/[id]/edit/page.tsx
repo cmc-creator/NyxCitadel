@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { BookOpen, ArrowLeft } from 'lucide-react';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const PLAN_TYPES = [
   ['EMERGENCY_OPERATIONS_PLAN',  'Emergency Operations Plan'],
@@ -143,13 +144,16 @@ export default function EditEmergencyPlanPage() {
           <textarea name="summary" rows={3} defaultValue={data.summary ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none" placeholder="Brief description of plan scope and purpose..." />
         </div>
 
-        <div className="flex gap-3 pt-2">
-          <button type="submit" disabled={saving} className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium py-2.5 rounded-lg transition-colors">
-            {saving ? 'Saving…' : 'Save Changes'}
-          </button>
-          <a href={`/emergency/plans/${id}`} className="px-4 py-2.5 text-sm font-medium text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
-            Cancel
-          </a>
+        <div className="flex items-center justify-between gap-3 pt-2">
+          <DeleteButton apiPath={`/api/emergency-plans/${id}`} redirectPath="/emergency/plans" label="emergency plan" />
+          <div className="flex gap-3">
+            <a href={`/emergency/plans/${id}`} className="px-4 py-2.5 text-sm font-medium text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
+              Cancel
+            </a>
+            <button type="submit" disabled={saving} className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium py-2.5 rounded-lg transition-colors">
+              {saving ? 'Saving…' : 'Save Changes'}
+            </button>
+          </div>
         </div>
       </form>
     </div>

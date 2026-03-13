@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft, Wrench } from 'lucide-react';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const CATEGORIES = [
   'FIRE_SUPPRESSION', 'FIRE_ALARM', 'EMERGENCY_LIGHTING', 'GENERATOR',
@@ -144,11 +145,14 @@ export default function EditEquipmentPmPage() {
           </div>
         </div>
 
-        <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/eoc/equipment/${id}`} className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">Cancel</a>
-          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium rounded-lg bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50">
-            {saving ? 'Saving…' : 'Save Changes'}
-          </button>
+        <div className="px-6 py-4 flex items-center justify-between gap-3">
+          <DeleteButton apiPath={`/api/eoc/equipment/${id}`} redirectPath="/eoc/equipment" label="equipment record" />
+          <div className="flex gap-3">
+            <a href={`/eoc/equipment/${id}`} className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">Cancel</a>
+            <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium rounded-lg bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50">
+              {saving ? 'Saving…' : 'Save Changes'}
+            </button>
+          </div>
         </div>
       </form>
     </div>

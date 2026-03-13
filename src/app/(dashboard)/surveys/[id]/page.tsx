@@ -4,6 +4,7 @@ import { formatDate } from '@/lib/utils';
 import { ClipboardList, ArrowLeft, AlertTriangle, CheckCircle2, Clock, ShieldCheck, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,6 +62,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
         <Link href={`/surveys/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
           <Pencil className="w-3.5 h-3.5" /> Edit
         </Link>
+        <DeleteButton apiPath={`/api/surveys/${params.id}`} redirectPath="/surveys" label="survey record" />
         </div>
         <div className="flex flex-wrap items-center gap-2 mb-1">
           <span className={`text-xs font-medium px-2 py-0.5 rounded ${STATUS_COLOR[survey.status] ?? 'bg-slate-100'}`}>

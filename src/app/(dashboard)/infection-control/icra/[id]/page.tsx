@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, ShieldCheck , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -55,6 +56,7 @@ export default async function IcraDetailPage({ params }: { params: { id: string 
           <Link href={`/infection-control/icra/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
+          <DeleteButton apiPath={`/api/infection-control/icra/${params.id}`} redirectPath="/infection-control/icra" label="ICRA assessment" />
           <PrintButton />
         </div>
       </div>

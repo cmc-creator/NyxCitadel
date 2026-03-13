@@ -1,14 +1,14 @@
 ﻿import { auth } from '@/lib/auth';
 import Link from 'next/link';
 import {
-
-export const dynamic = 'force-dynamic';
   Shield, AlertTriangle, BarChart3, CheckCircle, ArrowRight, Activity,
   Lock, Star, Zap, ChevronRight, ClipboardList, TrendingUp, Bell, Users,
   Radio, BookOpen, Newspaper, RefreshCw, Award, Target, HeartPulse,
   FileCheck, Siren, BrainCircuit, Sparkles, Globe, BadgeCheck,
   Check, X,
 } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
 
 const features = [
   {

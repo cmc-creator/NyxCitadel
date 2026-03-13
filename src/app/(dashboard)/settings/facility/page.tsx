@@ -169,7 +169,7 @@ export default function FacilitySettingsPage() {
             <Field label="Facility Name *">
               <input required type="text" value={form.name}
                 onChange={e => set('name', e.target.value)}
-                placeholder="Destiny Springs Behavioral Health"
+                placeholder="Sunrise Behavioral Health"
                 className="form-input w-full text-sm" />
             </Field>
             <Field label="Short Name / Abbreviation">

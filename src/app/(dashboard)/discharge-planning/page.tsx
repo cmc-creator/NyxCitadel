@@ -23,9 +23,9 @@ export default async function DischargePlanningPage() {
     take: 60,
   });
 
-  const barriers = plans.filter(p => p.status === 'BARRIERS').length;
-  const delayed = plans.filter(p => p.status === 'DELAYED').length;
-  const ready = plans.filter(p => p.status === 'READY').length;
+  const barriers = plans.filter(p => p.barrierNotes && p.barrierNotes.trim().length > 0).length;
+  const delayed = plans.filter(p => p.status === 'UPDATED').length;
+  const ready = plans.filter(p => p.status === 'DISCHARGED' || p.status === 'TRANSFERRED').length;
 
   return (
     <div className="p-6 space-y-6">

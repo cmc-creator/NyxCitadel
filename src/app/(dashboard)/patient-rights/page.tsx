@@ -23,7 +23,7 @@ export default async function PatientRightsPage() {
   const facilityId = session!.user.facilityId;
 
   const [activeConsents, activeHolds] = await Promise.all([
-    prisma.consentRecord.count({ where: { facilityId, status: { in: ['ACTIVE', 'SURROGATE_OBTAINED'] } } }),
+    prisma.consentRecord.count({ where: { facilityId, status: { in: ['ACTIVE', 'SURROGATE_OBTAINED'] as any } } }),
     prisma.involuntaryHoldLog.count({ where: { facilityId, status: 'ACTIVE' } }),
   ]);
 

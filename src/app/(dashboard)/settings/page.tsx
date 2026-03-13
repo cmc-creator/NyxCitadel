@@ -1,4 +1,7 @@
-import { Settings } from 'lucide-react';
+import { Settings, Radio, Inbox } from 'lucide-react';
+import { auth } from '@/lib/auth';
+import ScrapeButton from '@/components/intelligence/ScrapeButton';
+import Link from 'next/link';
 
 export const metadata = { title: 'Settings' };
 
@@ -25,7 +28,11 @@ const sections: { href: string; title: string; description: string; soon?: boole
   },
 ];
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const session = await auth();
+  const role = session?.user?.role ?? '';
+  const canScrape = ['ADMIN', 'COMPLIANCE_OFFICER'].includes(role);
+  const isAdmin   = ['ADMIN', 'SUPER_ADMIN'].includes(role);
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
@@ -57,6 +64,43 @@ export default function SettingsPage() {
           </a>
         ))}
       </div>
+
+      {/* Demo Requests — admin only */}
+      {isAdmin && (
+        <Link
+          href="/settings/demo-requests"
+          className="bg-card border border-amber-700/30 rounded-xl px-5 py-4 flex items-start justify-between hover:border-amber-500/50 transition-colors group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-amber-950/40 flex items-center justify-center shrink-0">
+              <Inbox className="w-4 h-4 text-amber-400" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground group-hover:text-amber-400">Demo / Access Requests</p>
+              <p className="text-xs text-muted-foreground">Review inbound facility demo requests submitted via the signup page.</p>
+            </div>
+          </div>
+          <span className="text-muted-foreground group-hover:text-amber-400 mt-0.5">→</span>
+        </Link>
+      )}
+
+      {/* Regulatory Intelligence — sync button for admins */}
+      {canScrape && (
+        <div className="bg-card border border-rose-700/30 rounded-xl px-5 py-5 space-y-3">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-rose-950/40 flex items-center justify-center">
+              <Radio className="w-4 h-4 text-rose-400" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground">Regulatory Intelligence Feed</p>
+              <p className="text-xs text-muted-foreground">
+                Fetch the latest rules, notices, and guidance from CMS, OSHA, DEA, HHS/OCR, AZ ADHS, and The Joint Commission.
+              </p>
+            </div>
+          </div>
+          <ScrapeButton variant="primary" />
+        </div>
+      )}
     </div>
   );
 }

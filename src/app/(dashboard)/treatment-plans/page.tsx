@@ -1,4 +1,4 @@
-import { ClipboardList, Plus } from 'lucide-react';
+﻿import { ClipboardList, Plus } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -23,8 +23,8 @@ export default async function TreatmentPlansPage() {
   });
 
   const active = plans.filter(p => p.status === 'ACTIVE').length;
-  const overdue = plans.filter(p => p.status === 'OVERDUE').length;
-  const pending = plans.filter(p => p.status === 'PENDING').length;
+  const overdue = plans.filter(p => (p.status as any) === 'OVERDUE').length;
+  const pending = plans.filter(p => (p.status as any) === 'PENDING').length;
 
   return (
     <div className="p-6 space-y-6">

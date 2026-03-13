@@ -48,6 +48,7 @@ import {
   Truck,
   TestTube2,
   Library,
+  Newspaper,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -258,8 +259,9 @@ const navItems: NavItem[] = [
     label: 'Intelligence',
     icon: BarChart2,
     children: [
-      { href: '/resilience',   label: 'Resilience Scorecard', icon: ResilienceIcon },
-      { href: '/board-report', label: 'Board Report',         icon: FileBarChart, badge: 'EXEC', badgeColor: 'bg-emerald-100 text-emerald-700' },
+      { href: '/resilience',          label: 'Resilience Scorecard', icon: ResilienceIcon },
+      { href: '/board-report',        label: 'Board Report',         icon: FileBarChart, badge: 'EXEC', badgeColor: 'bg-emerald-100 text-emerald-700' },
+      { href: '/regulatory-updates',  label: 'Regulatory Updates',   icon: Newspaper,    badge: 'NEW',  badgeColor: 'bg-purple-100 text-purple-700' },
     ],
   },
   {
@@ -358,7 +360,7 @@ export function Sidebar() {
         <Link href="/dashboard" className="block">
           <Image
             src="/logo-white.svg"
-            alt="Destiny Springs Healthcare"
+            alt="NyxCitadel"
             width={200}
             height={44}
             priority

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ShieldAlert, ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const ASSESSMENT_TYPES = [
   { value: 'ANNUAL_PROACTIVE', label: 'Annual Proactive Risk Assessment' },
@@ -374,15 +375,18 @@ export default function EditRiskAssessmentPage() {
           <textarea name="notes" rows={3} defaultValue={data.notes ?? ''} className="form-input w-full resize-none" />
         </div>
 
-        <div className="flex items-center justify-end gap-3">
-          <a href={`/trackers/risk-assessments/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
-          <button
-            type="submit"
-            disabled={saving}
-            className="px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
-          >
-            {saving ? 'Saving…' : 'Save Changes'}
-          </button>
+        <div className="flex items-center justify-between gap-3">
+          <DeleteButton apiPath={`/api/risk-assessments/${id}`} redirectPath="/trackers/risk-assessments" label="risk assessment" />
+          <div className="flex gap-3">
+            <a href={`/trackers/risk-assessments/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
+            <button
+              type="submit"
+              disabled={saving}
+              className="px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              {saving ? 'Saving…' : 'Save Changes'}
+            </button>
+          </div>
         </div>
       </form>
     </div>

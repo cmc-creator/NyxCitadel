@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import {
-  Shield, ArrowLeft, CheckCircle, Copy, CheckCheck,
+  Shield, ArrowLeft, CheckCircle,
   Building2, Mail, Phone, User, ChevronRight, Loader2,
-  Lock, Sparkles, BarChart2, ClipboardList, AlertTriangle,
+  Sparkles, BarChart2, ClipboardList, AlertTriangle,
   Star,
 } from 'lucide-react';
 
@@ -15,25 +15,7 @@ const PLAN_FEATURES = {
   enterprise: ['Unlimited Facilities', 'Unlimited Users', 'Everything in Professional', 'White-Label Option', 'SSO / SAML', 'Dedicated Consultant', 'SLA Guarantee', 'Custom Integrations'],
 };
 
-const DEMO_ACCOUNTS = [
-  { role: 'Administrator', email: 'admin@destinysprings.com', password: 'Admin@DSH2026!', color: 'purple' },
-  { role: 'Compliance Officer', email: 'compliance@destinysprings.com', password: 'Compliance@DSH2026!', color: 'blue' },
-  { role: 'EM Coordinator', email: 'emc@destinysprings.com', password: 'Emergency@DSH2026!', color: 'emerald' },
-];
 
-function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
-  const copy = async () => {
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-  return (
-    <button onClick={copy} className="ml-1 text-slate-500 hover:text-slate-300 transition-colors flex-shrink-0">
-      {copied ? <CheckCheck className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
-    </button>
-  );
-}
 
 export default function SignupPage() {
   const [tab, setTab] = useState<'demo' | 'request'>('demo');
@@ -46,10 +28,19 @@ export default function SignupPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call — hook up to your CRM/email service
-    await new Promise(r => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error('server error');
+      setSubmitted(true);
+    } catch {
+      alert('Something went wrong — please try again or email us directly.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -108,54 +99,6 @@ export default function SignupPage() {
 
         {tab === 'demo' && (
           <div className="w-full max-w-4xl space-y-6">
-            {/* Demo accounts */}
-            <div className="bg-slate-900/60 border border-white/8 rounded-2xl p-6 backdrop-blur-sm">
-              <div className="flex items-center gap-2 mb-5">
-                <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                  <Lock className="w-4 h-4 text-purple-400" />
-                </div>
-                <div>
-                  <h2 className="text-sm font-bold text-white">Demo Credentials</h2>
-                  <p className="text-xs text-slate-500">Click any credential to copy · Facility: Destiny Springs Healthcare (AZ Acute Psychiatric, 60 beds)</p>
-                </div>
-              </div>
-
-              <div className="grid sm:grid-cols-3 gap-4">
-                {DEMO_ACCOUNTS.map(acc => (
-                  <div key={acc.email} className={`rounded-xl border p-4 space-y-2.5 ${
-                    acc.color === 'purple' ? 'bg-purple-500/5 border-purple-500/20' :
-                    acc.color === 'blue'   ? 'bg-blue-500/5   border-blue-500/20'   :
-                                            'bg-emerald-500/5 border-emerald-500/20'
-                  }`}>
-                    <p className={`text-xs font-semibold uppercase tracking-wide ${
-                      acc.color === 'purple' ? 'text-purple-400' :
-                      acc.color === 'blue'   ? 'text-blue-400'   :
-                                              'text-emerald-400'
-                    }`}>{acc.role}</p>
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between bg-slate-800/60 rounded-lg px-3 py-2">
-                        <span className="text-xs text-slate-300 font-mono truncate">{acc.email}</span>
-                        <CopyButton text={acc.email} />
-                      </div>
-                      <div className="flex items-center justify-between bg-slate-800/60 rounded-lg px-3 py-2">
-                        <span className="text-xs text-slate-300 font-mono">{acc.password}</span>
-                        <CopyButton text={acc.password} />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-5 flex flex-col sm:flex-row items-center gap-3">
-                <Link
-                  href="/login"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm px-8 py-3 rounded-xl transition-all shadow-lg shadow-purple-500/25"
-                >
-                  Open Demo Environment <ChevronRight className="w-4 h-4" />
-                </Link>
-                <p className="text-xs text-slate-500">Read-only data · Resets periodically · No PHI</p>
-              </div>
-            </div>
 
             {/* What you'll see */}
             <div className="grid sm:grid-cols-3 gap-4">
@@ -219,11 +162,10 @@ export default function SignupPage() {
                 <p className="text-slate-400 text-sm leading-relaxed mb-6">
                   We'll be in touch within 1 business day to schedule your personalized demo and discuss your facility's needs.
                 </p>
-                <p className="text-xs text-slate-500 mb-6">In the meantime, try the live demo with the credentials on the other tab.</p>
                 <div className="flex gap-3 justify-center">
-                  <button onClick={() => setTab('demo')} className="text-sm text-purple-400 hover:text-purple-300 flex items-center gap-1">
-                    Try live demo <ChevronRight className="w-4 h-4" />
-                  </button>
+                  <Link href="/login" className="text-sm text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                    Sign in <ChevronRight className="w-4 h-4" />
+                  </Link>
                 </div>
               </div>
             ) : (

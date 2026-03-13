@@ -32,6 +32,7 @@ const TYPE_COLORS: Record<string, string> = {
   MOON_MISSING:           'bg-yellow-500/15 text-yellow-400',
   GOVERNANCE_DOC_OVERDUE: 'bg-indigo-500/15 text-indigo-400',
   BREACH_REPORTABLE:      'bg-red-600/20   text-red-300',
+  REGULATORY_UPDATE:      'bg-purple-500/15 text-purple-400',
 };
 
 function timeAgo(dateStr: string): string {
@@ -174,26 +175,28 @@ export function NotificationBell() {
                 <p className="text-sm">You&apos;re all caught up!</p>
               </div>
             ) : (
-              notifications.map(n => (
+              notifications.map(n => {
+                const isRegAlert = n.linkUrl === '/intelligence/updates';
+                return (
                 <div
                   key={n.id}
-                  className={`group px-4 py-3 hover:bg-muted/40 transition relative ${!n.isRead ? 'bg-brand/5' : ''}`}
+                  className={`group px-4 py-3 hover:bg-muted/40 transition relative ${!n.isRead ? (isRegAlert ? 'bg-rose-950/20' : 'bg-brand/5') : ''}`}
                 >
                   {/* Unread dot */}
                   {!n.isRead && (
-                    <span className="absolute left-1.5 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-purple-500" />
+                    <span className={`absolute left-1.5 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full ${isRegAlert ? 'bg-rose-500 animate-pulse' : 'bg-purple-500'}`} />
                   )}
 
                   <div className="flex items-start gap-3">
                     <div className="flex-1 min-w-0">
                       {/* Type badge + title */}
                       <div className="flex items-center gap-2 mb-0.5">
-                        <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full capitalize ${TYPE_COLORS[n.type] ?? 'bg-slate-100 text-slate-600'}`}>
-                          {n.type.replace(/_/g, ' ').toLowerCase()}
+                        <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full capitalize ${isRegAlert ? 'bg-rose-600/20 text-rose-300' : (TYPE_COLORS[n.type] ?? 'bg-slate-100 text-slate-600')}`}>
+                          {isRegAlert ? 'reg alert' : n.type.replace(/_/g, ' ').toLowerCase()}
                         </span>
                         <span className="text-[11px] text-muted-foreground ml-auto">{timeAgo(n.createdAt)}</span>
                       </div>
-                      <p className={`text-xs font-semibold truncate ${n.isRead ? 'text-muted-foreground' : 'text-foreground'}`}>{n.title}</p>
+                      <p className={`text-xs font-semibold truncate ${n.isRead ? 'text-muted-foreground' : (isRegAlert ? 'text-rose-200' : 'text-foreground')}`}>{n.title}</p>
                       <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">{n.message}</p>
 
                       {/* Actions */}
@@ -227,7 +230,7 @@ export function NotificationBell() {
                     </button>
                   </div>
                 </div>
-              ))
+              ); })
             )}
           </div>
 

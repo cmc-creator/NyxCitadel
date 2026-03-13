@@ -32,7 +32,7 @@ export function TopBar({ user }: TopBarProps) {
       <div className="lg:hidden flex-shrink-0">
         <Image
           src="/logo.svg"
-          alt="Destiny Springs Healthcare"
+          alt="NyxCitadel"
           width={160}
           height={36}
           className="h-9 w-auto"

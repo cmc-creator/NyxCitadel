@@ -2,8 +2,6 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
-
-export const dynamic = 'force-dynamic';
   Archive,
   FileWarning,
   MessageSquareWarning,
@@ -20,6 +18,8 @@ export const dynamic = 'force-dynamic';
   Minus,
   Printer,
 } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Compliance Archive' };
 
@@ -145,7 +145,11 @@ export default async function ArchivesPage({
   const availableYears = Array.from({ length: 6 }, (_, i) => currentYear - i);
   const isCurrent = year === currentYear;
 
-  const d = await getArchiveData(facilityId, year);
+  const [d, facility] = await Promise.all([
+    getArchiveData(facilityId, year),
+    prisma.facility.findUnique({ where: { id: facilityId }, select: { name: true } }),
+  ]);
+  const facilityName = facility?.name ?? 'Your Facility';
 
   // Compute readiness signals
   const irAdhs      = d.ir.adhsReportable === 0 ? 'none' : d.ir.adhsReported === d.ir.adhsReportable ? 'good' : 'flag';
@@ -171,7 +175,7 @@ export default async function ArchivesPage({
             Compliance Archive
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
-            Annual compliance record for regulatory &amp; provider audits · Destiny Springs Healthcare
+            Annual compliance record for regulatory &amp; provider audits · {facilityName}
           </p>
         </div>
         <div className="flex items-center gap-2">
