@@ -107,7 +107,7 @@ async function getDashboardStats(facilityId: string) {
     prisma.restraintEvent.count({ where: { facilityId, deathOccurred: true, eventDate: { gte: yearStart } } }),
     // EOC
     prisma.eocDeficiency.count({ where: { facilityId, status: 'OPEN' } }),
-    prisma.eocDeficiency.count({ where: { facilityId, status: 'OPEN', severity: { in: ['CRITICAL', 'HIGH'] } } }),
+    prisma.eocDeficiency.count({ where: { facilityId, status: 'OPEN', severity: { in: ['IMMEDIATE_JEOPARDY', 'HIGH'] } } }),
     prisma.eocDeficiency.count({ where: { facilityId, status: 'OPEN', dueDate: { lt: now } } }),
     prisma.eocRound.findFirst({
       where: { facilityId },
