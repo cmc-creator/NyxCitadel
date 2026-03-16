@@ -172,7 +172,7 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
 
   // Load all admin/compliance users with their facility state
   const staff = await prisma.user.findMany({
-    where: { role: { in: ['ADMIN', 'COMPLIANCE_OFFICER'] }, facilityId: { not: null } },
+    where: { role: { in: ['ADMIN', 'COMPLIANCE_OFFICER'] } },
     select: {
       id: true,
       facilityId: true,
