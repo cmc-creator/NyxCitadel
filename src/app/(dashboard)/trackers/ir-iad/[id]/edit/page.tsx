@@ -4,7 +4,6 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { FileWarning, ArrowLeft, ShieldAlert, Zap, AlertTriangle } from 'lucide-react';
 import { computeTriage, triageBadgeStyle } from '@/lib/aiTriage';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export default function EditIrIadPage() {
   const router = useRouter();
@@ -201,8 +200,8 @@ export default function EditIrIadPage() {
                 <option value="PATIENT_FALL">Patient Fall</option>
                 <option value="MEDICATION_ERROR">Medication Error</option>
                 <option value="ELOPEMENT">Elopement</option>
-                <option value="ASSAULT_PATIENT_TO_STAFF">Assault — Patient to Staff</option>
-                <option value="ASSAULT_PATIENT_TO_PATIENT">Assault — Patient to Patient</option>
+                <option value="ASSAULT_PATIENT_TO_STAFF">Assault - Patient to Staff</option>
+                <option value="ASSAULT_PATIENT_TO_PATIENT">Assault - Patient to Patient</option>
                 <option value="SELF_HARM">Self-Harm</option>
                 <option value="SUICIDE_ATTEMPT">Suicide Attempt</option>
                 <option value="SUICIDE_COMPLETION">Suicide Completion</option>
@@ -363,7 +362,7 @@ export default function EditIrIadPage() {
         <div className="bg-slate-900 border border-slate-700 rounded-xl p-5 space-y-3">
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-4 h-4 text-indigo-400" />
-            <span className="text-xs font-bold text-indigo-300 uppercase tracking-widest">NyxSentinel — AI Triage Assessment</span>
+            <span className="text-xs font-bold text-indigo-300 uppercase tracking-widest">NyxSentinel - AI Triage Assessment</span>
           </div>
           <div className="flex items-center gap-3">
             <span className={`text-sm font-bold px-3 py-1.5 rounded-lg ${triageBadgeStyle(triage.severity)}`}>
@@ -393,20 +392,17 @@ export default function EditIrIadPage() {
           )}
         </div>
 
-        <div className="flex items-center justify-between gap-3 pb-8">
-          <DeleteButton apiPath={`/api/incident-reports/${id}`} redirectPath="/trackers/ir-iad" label="incident report" />
-          <div className="flex gap-3">
-            <a href={`/trackers/ir-iad/${id}`} className="px-4 py-2.5 text-sm text-slate-600 hover:text-slate-800 rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
-              Cancel
-            </a>
-            <button
-              type="submit"
-              disabled={saving}
-              className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition-colors disabled:opacity-50"
-            >
-              {saving ? 'Saving...' : 'Save Changes'}
-            </button>
-          </div>
+        <div className="flex gap-3 pb-8">
+          <button
+            type="submit"
+            disabled={saving}
+            className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition-colors disabled:opacity-50"
+          >
+            {saving ? 'Saving...' : 'Save Changes'}
+          </button>
+          <a href={`/trackers/ir-iad/${id}`} className="px-4 py-2.5 text-sm text-slate-600 hover:text-slate-800 rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
+            Cancel
+          </a>
         </div>
       </form>
     </div>

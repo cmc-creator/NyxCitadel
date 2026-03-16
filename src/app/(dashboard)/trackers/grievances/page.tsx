@@ -93,7 +93,7 @@ export default async function GrievancesPage({
       {year && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
           <p className="text-sm text-amber-800">
-            <strong>{year} Archive View</strong> — showing grievances received within {year}.
+            <strong>{year} Archive View</strong> - showing grievances received within {year}.
           </p>
           <Link href="/trackers/grievances" className="text-xs text-amber-700 underline">Return to live view</Link>
         </div>

@@ -109,7 +109,7 @@ export async function fetchAllRss(days = 90): Promise<ScrapedUpdate[]> {
         const items = await fetchRssSource(src, since);
         results.push(...items);
       } catch {
-        // Silently skip — network/parse errors shouldn't abort the whole run
+        // Silently skip - network/parse errors shouldn't abort the whole run
       }
     }),
   );

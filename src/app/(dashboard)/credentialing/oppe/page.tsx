@@ -108,7 +108,7 @@ export default async function OppePage() {
                       ? <CheckCircle className="w-4 h-4 text-emerald-400" />
                       : <Clock className="w-4 h-4 text-amber-400" />}
                   </td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{r.approvedByMec ? r.updatedAt.toLocaleDateString() : '—'}</td>
+                  <td className="px-4 py-3 text-slate-400 text-xs">{r.approvedByMec ? r.updatedAt.toLocaleDateString() : '-'}</td>
                 </tr>
               );
             })}

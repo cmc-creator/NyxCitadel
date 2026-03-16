@@ -6,7 +6,6 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, BookOpen, AlertTriangle, ExternalLink , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,7 +42,6 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
           <Link href={`/trackers/policies/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/policies/${params.id}`} redirectPath="/trackers/policies" label="policy" />
           <PrintButton />
         </div>
       </div>
@@ -65,7 +63,7 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
               {policy.owner && <> &middot; Owner: <strong>{policy.owner}</strong></>}
             </p>
           </div>
-          <StatusUpdater apiPath={`/api/policies/${policy.id}`} currentStatus={policy.status} options={STATUS_OPTIONS} />
+          <StatusUpdater apiPath={`/api/policy-docs/${policy.id}`} currentStatus={policy.status} options={STATUS_OPTIONS} />
         </div>
       </div>
 

@@ -45,10 +45,10 @@ export default async function InfectionControlPage() {
   const aboveBenchCount = haiSnapshot.filter(h => h.nhsnBenchmark != null && h.rate != null && h.rate > h.nhsnBenchmark).length;
 
   const subModules = [
-    { href: '/infection-control/icra', title: 'IC Risk Assessment', description: 'Annual ICRA — risk identification, ratings, and mitigation goals per CMS §482.42.', icon: '📋', badge: 'Annual', badgeColor: 'bg-blue-100 text-blue-700', stat: icraActive ? `${icraActive.assessmentYear} ICRA Approved` : 'No active ICRA', statColor: icraActive ? 'text-emerald-400' : 'text-amber-400' },
-    { href: '/infection-control/hai', title: 'HAI Surveillance', description: 'Monthly HAI rate tracking — CAUTI, CLABSI, MRSA, CDI vs. NHSN benchmarks.', icon: '📊', badge: 'NHSN', badgeColor: 'bg-purple-100 text-purple-700', stat: `${recentHai.length} records`, statColor: 'text-blue-400' },
+    { href: '/infection-control/icra', title: 'IC Risk Assessment', description: 'Annual ICRA - risk identification, ratings, and mitigation goals per CMS §482.42.', icon: '📋', badge: 'Annual', badgeColor: 'bg-blue-100 text-blue-700', stat: icraActive ? `${icraActive.assessmentYear} ICRA Approved` : 'No active ICRA', statColor: icraActive ? 'text-emerald-400' : 'text-amber-400' },
+    { href: '/infection-control/hai', title: 'HAI Surveillance', description: 'Monthly HAI rate tracking - CAUTI, CLABSI, MRSA, CDI vs. NHSN benchmarks.', icon: '📊', badge: 'NHSN', badgeColor: 'bg-purple-100 text-purple-700', stat: `${recentHai.length} records`, statColor: 'text-blue-400' },
     { href: '/infection-control/outbreaks', title: 'Outbreak Log', description: 'Track active and resolved outbreaks, containment actions, and health department reporting.', icon: '🦠', badge: 'Reportable', badgeColor: 'bg-red-100 text-red-700', stat: `${activeOutbreaks} Active`, statColor: activeOutbreaks > 0 ? 'text-red-400' : 'text-emerald-400' },
-    { href: '/infection-control/hand-hygiene', title: 'Hand Hygiene Audits', description: 'Unit-level compliance audits — opportunities observed vs. compliant events.', icon: '🧴', badge: 'TJC NPSG 07.01', badgeColor: 'bg-amber-100 text-amber-700', stat: avgHhRate != null ? `${avgHhRate}% compliance` : 'No audits', statColor: avgHhRate != null && avgHhRate < 90 ? 'text-amber-400' : 'text-emerald-400' },
+    { href: '/infection-control/hand-hygiene', title: 'Hand Hygiene Audits', description: 'Unit-level compliance audits - opportunities observed vs. compliant events.', icon: '🧴', badge: 'TJC NPSG 07.01', badgeColor: 'bg-amber-100 text-amber-700', stat: avgHhRate != null ? `${avgHhRate}% compliance` : 'No audits', statColor: avgHhRate != null && avgHhRate < 90 ? 'text-amber-400' : 'text-emerald-400' },
   ];
   return (
     <div className="p-6 space-y-6">
@@ -95,7 +95,7 @@ export default async function InfectionControlPage() {
       {haiSnapshot.length > 0 && (
         <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
-            <p className="font-semibold text-white text-sm">HAI Snapshot — Latest Data</p>
+            <p className="font-semibold text-white text-sm">HAI Snapshot - Latest Data</p>
             <Link href="/infection-control/hai" className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1">
               Full Dashboard <ChevronRight className="w-3 h-3" />
             </Link>
@@ -117,11 +117,11 @@ export default async function InfectionControlPage() {
                     <td className="px-4 py-3 text-slate-400 text-xs">{h.reportMonth}/{h.reportYear}</td>
                     <td className="px-4 py-3 text-slate-300">{h.caseCount}</td>
                     <td className={`px-4 py-3 font-semibold ${aboveBench ? 'text-red-400' : 'text-emerald-400'}`}>
-                      {h.rate != null ? h.rate.toFixed(1) : '—'}
+                      {h.rate != null ? h.rate.toFixed(1) : '-'}
                     </td>
-                    <td className="px-4 py-3 text-slate-400">{h.nhsnBenchmark != null ? h.nhsnBenchmark.toFixed(1) : '—'}</td>
+                    <td className="px-4 py-3 text-slate-400">{h.nhsnBenchmark != null ? h.nhsnBenchmark.toFixed(1) : '-'}</td>
                     <td className={`px-4 py-3 font-semibold ${h.sir && h.sir > 1 ? 'text-red-400' : 'text-emerald-400'}`}>
-                      {h.sir ? h.sir.toFixed(2) : '—'}
+                      {h.sir ? h.sir.toFixed(2) : '-'}
                     </td>
                     <td className="px-4 py-3">
                       <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${aboveBench ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`}>

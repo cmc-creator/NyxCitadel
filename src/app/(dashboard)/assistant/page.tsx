@@ -75,7 +75,7 @@ export default function AssistantPage() {
 
     try {
       const history = messages.map(m => ({ role: m.role, content: m.content }));
-      const res = await fetch('/api/assistant', {
+      const res = await fetch('/api/ai-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: msg, history }),
@@ -134,7 +134,7 @@ export default function AssistantPage() {
         </button>
       </div>
 
-      {/* Suggested prompts — show only at start */}
+      {/* Suggested prompts - show only at start */}
       {isDefault && (
         <div className="grid grid-cols-2 gap-2 mb-4 flex-shrink-0">
           {SUGGESTED_PROMPTS.map(p => (

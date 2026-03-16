@@ -55,7 +55,7 @@ export default async function CommitteeMeetingsPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="font-semibold text-white">{m.committeeType}</p>
-                  <p className="text-xs text-slate-400 mt-0.5">{m.meetingDate.toLocaleDateString()} {m.chair ? `— Chair: ${m.chair}` : ''}</p>
+                  <p className="text-xs text-slate-400 mt-0.5">{m.meetingDate.toLocaleDateString()} {m.chair ? `- Chair: ${m.chair}` : ''}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   {m.quorumMet

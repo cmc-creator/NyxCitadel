@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { AlertTriangle, ArrowLeft } from 'lucide-react';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const INCIDENT_TYPES = [
   'FALL', 'MEDICATION_ERROR', 'ELOPEMENT', 'ASSAULT_PATIENT_ON_PATIENT',
@@ -26,7 +25,7 @@ export default function EditIncidentPage() {
   const [reportableToState, setReportableToState] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/incidents/${id}`)
+    fetch(`/api/incident-log/${id}`)
       .then(r => r.json())
       .then(d => {
         setData(d);
@@ -60,7 +59,7 @@ export default function EditIncidentPage() {
       reportableToState,
     };
 
-    const res = await fetch(`/api/incidents/${id}`, {
+    const res = await fetch(`/api/incident-log/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -170,14 +169,11 @@ export default function EditIncidentPage() {
           </label>
         </div>
 
-        <div className="px-6 py-4 flex items-center justify-between gap-3">
-          <DeleteButton apiPath={`/api/incidents/${id}`} redirectPath="/trackers/incidents" label="incident" />
-          <div className="flex gap-3">
-            <a href={`/trackers/incidents/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
-            <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
-              {saving ? 'Saving…' : 'Save Changes'}
-            </button>
-          </div>
+        <div className="px-6 py-4 flex justify-end gap-3">
+          <a href={`/trackers/incidents/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+            {saving ? 'Saving…' : 'Save Changes'}
+          </button>
         </div>
       </form>
     </div>

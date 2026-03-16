@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Regulatory Updates' };
 
 const IMPACT_STYLES: Record<string, { badge: string; icon: React.ElementType; bar: string; label: string }> = {
-  CRITICAL: { badge: 'bg-red-500/15 text-red-400 border border-red-500/30',         icon: AlertTriangle,  bar: 'bg-red-500',    label: 'Critical — Act Now' },
+  CRITICAL: { badge: 'bg-red-500/15 text-red-400 border border-red-500/30',         icon: AlertTriangle,  bar: 'bg-red-500',    label: 'Critical - Act Now' },
   HIGH:     { badge: 'bg-orange-500/15 text-orange-400 border border-orange-500/30', icon: ArrowUpCircle,  bar: 'bg-orange-500', label: 'High Priority' },
   MEDIUM:   { badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',    icon: Info,           bar: 'bg-amber-500',  label: 'Medium' },
   LOW:      { badge: 'bg-blue-500/15 text-blue-400 border border-blue-500/30',       icon: CheckCircle2,   bar: 'bg-blue-500',   label: 'Low Impact' },
@@ -57,7 +57,7 @@ export default async function RegulatoryUpdatesPage() {
       {critical.length > 0 && (
         <div className="bg-red-950/30 border border-red-700/40 rounded-xl p-4 space-y-3">
           <p className="text-xs font-bold text-red-400 uppercase tracking-widest flex items-center gap-1.5">
-            <AlertTriangle className="w-3.5 h-3.5" /> {critical.length} Critical Update{critical.length !== 1 ? 's' : ''} — Immediate Action Required
+            <AlertTriangle className="w-3.5 h-3.5" /> {critical.length} Critical Update{critical.length !== 1 ? 's' : ''} - Immediate Action Required
           </p>
           {critical.map(u => (
             <Link

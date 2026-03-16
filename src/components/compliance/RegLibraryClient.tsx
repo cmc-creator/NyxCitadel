@@ -84,7 +84,7 @@ function BodyBadge({ body }: { body: string }) {
 }
 
 function MonthChips({ months }: { months: number[] }) {
-  if (!months.length) return <span className="text-slate-400 text-xs">—</span>;
+  if (!months.length) return <span className="text-slate-400 text-xs">-</span>;
   return (
     <div className="flex flex-wrap gap-0.5">
       {months.map(m => (
@@ -423,7 +423,7 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
                   <td className="px-4 py-3 text-xs text-slate-400 whitespace-nowrap">
                     {entry.lastVerified
                       ? new Date(entry.lastVerified).toLocaleDateString()
-                      : '—'}
+                      : '-'}
                   </td>
                   {canManage && (
                     <td className="px-4 py-3 whitespace-nowrap" onClick={e => e.stopPropagation()}>
@@ -505,7 +505,7 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
             <div className="px-6 py-5 space-y-4">
               {modalMode === 'annotate' && (
                 <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 text-sm text-blue-700">
-                  <strong>Built-in reference</strong> — only Notes, Source URL, and Last Verified
+                  <strong>Built-in reference</strong> - only Notes, Source URL, and Last Verified
                   date can be updated. Core regulation text is managed in the compliance library.
                 </div>
               )}

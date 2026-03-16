@@ -9,11 +9,11 @@ const CATEGORIES = [
   'EQUIPMENT_FAILURE', 'CLEANLINESS', 'INFECTION_CONTROL', 'PATIENT_SAFETY', 'STRUCTURAL', 'OTHER',
 ];
 const SEVERITIES = [
-  { value: 'IMMEDIATE_JEOPARDY', label: 'Immediate Jeopardy — correct before patient occupancy' },
-  { value: 'HIGH', label: 'High — correct within 24 hours' },
-  { value: 'MEDIUM', label: 'Medium — correct within 30 days' },
-  { value: 'LOW', label: 'Low — correct within 90 days' },
-  { value: 'OBSERVATION', label: 'Observation — monitor only' },
+  { value: 'IMMEDIATE_JEOPARDY', label: 'Immediate Jeopardy - correct before patient occupancy' },
+  { value: 'HIGH', label: 'High - correct within 24 hours' },
+  { value: 'MEDIUM', label: 'Medium - correct within 30 days' },
+  { value: 'LOW', label: 'Low - correct within 90 days' },
+  { value: 'OBSERVATION', label: 'Observation - monitor only' },
 ];
 
 export default function NewEocDeficiencyPage() {
@@ -78,7 +78,7 @@ export default function NewEocDeficiencyPage() {
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Originating Round ID</label>
-              <input name="roundId" defaultValue={prefillRoundId} className="form-input w-full" placeholder="Optional — link to round" />
+              <input name="roundId" defaultValue={prefillRoundId} className="form-input w-full" placeholder="Optional - link to round" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">

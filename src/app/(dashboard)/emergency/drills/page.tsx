@@ -168,10 +168,10 @@ export default async function DrillsPage({
                       {formatDate(drill.scheduledDate)}
                     </td>
                     <td className="px-4 py-3 text-xs text-slate-600">
-                      {drill.conductedDate ? formatDate(drill.conductedDate) : '—'}
+                      {drill.conductedDate ? formatDate(drill.conductedDate) : '-'}
                     </td>
                     <td className="px-4 py-3 text-xs text-slate-600">
-                      {drill.participantCount ?? '—'}
+                      {drill.participantCount ?? '-'}
                     </td>
                     <td className="px-4 py-3 text-xs">
                       {aarDue ? (
@@ -179,7 +179,7 @@ export default async function DrillsPage({
                           {aarOverdue ? '⚠ ' : ''}{formatDate(aarDue)}
                         </span>
                       ) : (
-                        <span className="text-slate-400">—</span>
+                        <span className="text-slate-400">-</span>
                       )}
                     </td>
                     <td className="px-4 py-3">

@@ -49,7 +49,7 @@ export default async function RcaPage({
             Root Cause Analyses
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
-            JC LD.04.04.05 — Required for sentinel events and serious adverse events.
+            JC LD.04.04.05 - Required for sentinel events and serious adverse events.
           </p>
         </div>
         <Link
@@ -64,7 +64,7 @@ export default async function RcaPage({
       {year && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
           <p className="text-sm text-amber-800">
-            <strong>{year} Archive View</strong> — showing RCAs with event date within {year}.
+            <strong>{year} Archive View</strong> - showing RCAs with event date within {year}.
           </p>
           <Link href="/trackers/rca" className="text-xs text-amber-700 underline">Return to live view</Link>
         </div>
@@ -134,7 +134,7 @@ export default async function RcaPage({
                       <ClipboardList className="w-3.5 h-3.5" /> → Create CAP
                     </Link>
                   )}
-                  {/* PDSA cycle launch — for approved RCAs where system-level change is needed */}
+                  {/* PDSA cycle launch - for approved RCAs where system-level change is needed */}
                   {(rca.status === 'APPROVED' || rca.status === 'SUBMITTED_TO_JC' || rca.status === 'CLOSED') && (
                     <Link
                       href={`/trackers/caps/new?fromRca=${rca.id}&isPdsa=true&title=${encodeURIComponent(`PDSA: ${rca.eventType}`)}&source=INCIDENT&desc=${encodeURIComponent((rca.conclusion ?? '').slice(0, 200))}`}

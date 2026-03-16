@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(tasks);
 }
 
-// POST /api/drill-tasks — create a kill task
+// POST /api/drill-tasks - create a kill task
 export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

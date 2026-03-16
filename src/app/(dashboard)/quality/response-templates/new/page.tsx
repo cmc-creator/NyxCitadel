@@ -243,7 +243,7 @@ export default function NewResponseTemplatePage() {
           <textarea
             name="instructions"
             rows={3}
-            placeholder="Internal notes — when to use this template, who should review, etc."
+            placeholder="Internal notes - when to use this template, who should review, etc."
             className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
           />
         </div>

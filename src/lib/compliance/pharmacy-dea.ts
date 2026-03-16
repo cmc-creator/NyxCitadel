@@ -1,23 +1,23 @@
 /**
  * DEA / Pharmacy Compliance Requirements
- * For Hospital Pharmacy — Inpatient Psychiatric / Behavioral Health Facility
+ * For Hospital Pharmacy - Inpatient Psychiatric / Behavioral Health Facility
  *
  * Primary Sources:
- * - 21 CFR Part 1300–1321 — DEA Controlled Substances Regulations
- *   - 21 CFR 1301 — Registration
- *   - 21 CFR 1304 — Records & Reports
- *   - 21 CFR 1306 — Prescriptions
- *   - 21 CFR 1307 — Miscellaneous
- *   - 21 CFR 1317 — Disposal
- * - ARS § 32-1901 et seq. — Arizona Pharmacy Act
- * - Arizona Pharmacy Practice Act — A.A.C. R4-23 (Board of Pharmacy Rules)
- * - AZ BPPE (Board of Pharmacy and Pharmaceutical Examiners) — Hospital Rules R4-23-651 et seq.
- * - Arizona PDMP — RSAzPMP (Rx Monitoring Program) under A.R.S. § 36-2601 et seq.
- * - ISMP (Institute for Safe Medication Practices) — High Alert Medication Guidelines
- * - TJC CAMH — MM (Medication Management) Standards
- * - 42 CFR 482.25 — CMS Pharmaceutical Services CoP
+ * - 21 CFR Part 1300–1321 - DEA Controlled Substances Regulations
+ *   - 21 CFR 1301 - Registration
+ *   - 21 CFR 1304 - Records & Reports
+ *   - 21 CFR 1306 - Prescriptions
+ *   - 21 CFR 1307 - Miscellaneous
+ *   - 21 CFR 1317 - Disposal
+ * - ARS § 32-1901 et seq. - Arizona Pharmacy Act
+ * - Arizona Pharmacy Practice Act - A.A.C. R4-23 (Board of Pharmacy Rules)
+ * - AZ BPPE (Board of Pharmacy and Pharmaceutical Examiners) - Hospital Rules R4-23-651 et seq.
+ * - Arizona PDMP - RSAzPMP (Rx Monitoring Program) under A.R.S. § 36-2601 et seq.
+ * - ISMP (Institute for Safe Medication Practices) - High Alert Medication Guidelines
+ * - TJC CAMH - MM (Medication Management) Standards
+ * - 42 CFR 482.25 - CMS Pharmaceutical Services CoP
  *
- * Last verified against: DEA Diversion Control Division — 2025 Updates
+ * Last verified against: DEA Diversion Control Division - 2025 Updates
  * AZ BPPE Rules effective: July 1, 2024
  * RSAzPMP mandatory prescriber check requirements: effective 2024
  */
@@ -32,7 +32,7 @@ import {
 import type { ComplianceRequirement } from './arizona';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DEA REGISTRATION & RECORDS — 21 CFR 1301 / 1304
+// DEA REGISTRATION & RECORDS - 21 CFR 1301 / 1304
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const deaRegistrationRequirements: ComplianceRequirement[] = [
@@ -49,14 +49,14 @@ export const deaRegistrationRequirements: ComplianceRequirement[] = [
     priority: Priority.CRITICAL,
     responsibleRole: 'ADMIN',
     notes:
-      'Registration is facility-specific — not transferable. ' +
+      'Registration is facility-specific - not transferable. ' +
       'Renew at: https://www.deadiversion.usdoj.gov  ' +
       'Any significant change (address, schedule addition) requires amendment. ' +
       'Separate DEA registration required if facility has clinics at different locations.',
   },
   {
     id: 'dea-reg-002',
-    title: 'DEA Biennial Inventory — Controlled Substances',
+    title: 'DEA Biennial Inventory - Controlled Substances',
     description:
       'Complete physical inventory of all Schedule II-V controlled substances every 2 years ' +
       'per 21 CFR 1304.11. Inventory must be taken on a regular business day.',
@@ -72,7 +72,7 @@ export const deaRegistrationRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'dea-reg-003',
-    title: 'Schedule II CS Records — Maintenance & Audit',
+    title: 'Schedule II CS Records - Maintenance & Audit',
     description:
       'Maintain Schedule II controlled substance records in separately-bound or electronic ' +
       'form accessible to DEA inspectors. Conduct monthly internal audit.',
@@ -107,7 +107,7 @@ export const deaRegistrationRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'dea-reg-005',
-    title: 'Controlled Substance Disposal — DEA Form 41',
+    title: 'Controlled Substance Disposal - DEA Form 41',
     description:
       'Dispose of expired, damaged, or unwanted controlled substances using authorized DEA methods. ' +
       'Complete DEA Form 41 for waste/disposal per 21 CFR 1317.',
@@ -131,7 +131,7 @@ export const deaRegistrationRequirements: ComplianceRequirement[] = [
 export const csDiversionRequirements: ComplianceRequirement[] = [
   {
     id: 'dea-div-001',
-    title: 'Controlled Substance Discrepancy Reconciliation — Daily',
+    title: 'Controlled Substance Discrepancy Reconciliation - Daily',
     description:
       'Daily reconciliation of all controlled substance transactions: ' +
       'dispensed vs. administered vs. wasted. All discrepancies must be investigated same shift.',
@@ -143,12 +143,12 @@ export const csDiversionRequirements: ComplianceRequirement[] = [
     responsibleRole: 'QUALITY',
     notes:
       'Automated Dispensing Cabinets (ADCs): run daily reconciliation reports. ' +
-      'Document every discrepancy investigation — resolved or escalated to diversion officer. ' +
+      'Document every discrepancy investigation - resolved or escalated to diversion officer. ' +
       'Pattern of discrepancies by shift or individual must trigger formal investigation.',
   },
   {
     id: 'dea-div-002',
-    title: 'Diversion Monitoring Program Review — Quarterly',
+    title: 'Diversion Monitoring Program Review - Quarterly',
     description:
       'Quarterly review of diversion monitoring analytics: ADC data, naltrexone/naloxone usage, ' +
       'override patterns, waste witness compliance, anomaly reports.',
@@ -183,14 +183,14 @@ export const csDiversionRequirements: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ARIZONA PDMP — RSAzPMP (Prescription Drug Monitoring Program)
+// ARIZONA PDMP - RSAzPMP (Prescription Drug Monitoring Program)
 // A.R.S. § 36-2601 et seq.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const pdmpRequirements: ComplianceRequirement[] = [
   {
     id: 'az-pdmp-001',
-    title: 'PDMP Prescriber Check — Mandatory Before CS Prescription',
+    title: 'PDMP Prescriber Check - Mandatory Before CS Prescription',
     description:
       'Verify AZ RSAzPMP has been checked before prescribing controlled substances. ' +
       'AZ law requires checking RSAzPMP before prescribing Schedule II-IV drugs (with limited exceptions).',
@@ -208,7 +208,7 @@ export const pdmpRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'az-pdmp-002',
-    title: 'PDMP Data Submission — Pharmacy Reporting',
+    title: 'PDMP Data Submission - Pharmacy Reporting',
     description:
       'Hospital outpatient pharmacy must report all Schedule II-IV dispensing to RSAzPMP ' +
       'within 1 business day of dispensing per A.R.S. § 36-2603.',
@@ -225,7 +225,7 @@ export const pdmpRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'az-pdmp-003',
-    title: 'PDMP Compliance Policy Review — Annual',
+    title: 'PDMP Compliance Policy Review - Annual',
     description:
       'Annual review of PDMP policies, prescriber training documentation, and query log audits. ' +
       'Ensure all prescribers are registered users of RSAzPMP.',
@@ -242,7 +242,7 @@ export const pdmpRequirements: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ARIZONA BOARD OF PHARMACY — AZ BPPE Hospital Pharmacy
+// ARIZONA BOARD OF PHARMACY - AZ BPPE Hospital Pharmacy
 // A.A.C. R4-23-651 et seq.
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -266,7 +266,7 @@ export const azPharmacyRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'az-bppe-002',
-    title: 'Pharmacy Self-Inspection — Annual',
+    title: 'Pharmacy Self-Inspection - Annual',
     description:
       'Annual pharmacy self-inspection using AZ BPPE inspection checklist. ' +
       'Document findings and any corrective actions per A.A.C. R4-23-665.',
@@ -299,7 +299,7 @@ export const azPharmacyRequirements: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HIGH-ALERT MEDICATIONS — ISMP / JC NPSG
+// HIGH-ALERT MEDICATIONS - ISMP / JC NPSG
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const highAlertMedicationRequirements: ComplianceRequirement[] = [
@@ -322,7 +322,7 @@ export const highAlertMedicationRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'ismp-ha-002',
-    title: 'High-Alert Medication Audit — Monthly',
+    title: 'High-Alert Medication Audit - Monthly',
     description:
       'Monthly audit of high-alert medication storage, labeling, double-check compliance, ' +
       'and administration verification.',

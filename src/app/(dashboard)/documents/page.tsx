@@ -81,7 +81,7 @@ export default async function DocumentsPage() {
                       {doc.category.replace(/_/g, ' ')}
                     </span>
                   </td>
-                  <td className="data-table-td text-sm text-slate-600">{doc.uploadedBy ?? '—'}</td>
+                  <td className="data-table-td text-sm text-slate-600">{doc.uploadedBy ?? '-'}</td>
                   <td className="data-table-td text-sm text-slate-600">
                     {new Date(doc.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </td>

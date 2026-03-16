@@ -75,7 +75,7 @@ const navItems: NavItem[] = [
     badgeColor: 'bg-purple-100 text-purple-700',
   },
   {
-    href: '/search',
+    href: '/site-search',
     label: 'Search',
     icon: Search,
   },

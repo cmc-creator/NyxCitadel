@@ -162,7 +162,7 @@ export default async function IncidentsPage({
                         Create CAP
                       </Link>
                     ) : (
-                      <span className="text-slate-400">—</span>
+                      <span className="text-slate-400">-</span>
                     )}
                   </td>
                   <td className="px-4 py-3">

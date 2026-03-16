@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch {
-    // Non-fatal — CAP was saved, calendar event creation failed silently
+    // Non-fatal - CAP was saved, calendar event creation failed silently
   }
 
   return NextResponse.json(cap, { status: 201 });

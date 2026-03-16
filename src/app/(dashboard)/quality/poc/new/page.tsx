@@ -114,7 +114,7 @@ export default function NewPocPage() {
               <input
                 name="title"
                 required
-                placeholder="e.g., CMS Triennial Survey — November 2025 POC"
+                placeholder="e.g., CMS Triennial Survey - November 2025 POC"
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>

@@ -83,9 +83,9 @@ export default async function GovernanceDocumentsPage() {
                 <tr key={d.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-white font-medium">{d.title}</td>
                   <td className="px-4 py-3 text-slate-400">{d.docType}</td>
-                  <td className="px-4 py-3 text-slate-400">{d.version ?? '—'}</td>
-                  <td className="px-4 py-3 text-slate-300">{d.effectiveDate?.toLocaleDateString() ?? '—'}</td>
-                  <td className={`px-4 py-3 ${isOverdue ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{d.reviewDate?.toLocaleDateString() ?? '—'}</td>
+                  <td className="px-4 py-3 text-slate-400">{d.version ?? '-'}</td>
+                  <td className="px-4 py-3 text-slate-300">{d.effectiveDate?.toLocaleDateString() ?? '-'}</td>
+                  <td className={`px-4 py-3 ${isOverdue ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{d.reviewDate?.toLocaleDateString() ?? '-'}</td>
                   <td className="px-4 py-3"><span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cfg.classes}`}>{cfg.label}</span></td>
                 </tr>
               );

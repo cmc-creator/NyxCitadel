@@ -5,7 +5,6 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, AlertTriangle , Pencil } from 'lucide-react';
 import { PrintButton } from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,7 +47,6 @@ export default async function PdmpCheckDetailPage({ params }: { params: { id: st
           <Link href={`/pharmacy/pdmp/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/pharmacy/pdmp/${params.id}`} redirectPath="/pharmacy/pdmp" label="PDMP check" />
           <PrintButton />
         </div>
       </div>
@@ -57,7 +55,7 @@ export default async function PdmpCheckDetailPage({ params }: { params: { id: st
         <div className="flex items-start gap-3 bg-red-50 border border-red-300 text-red-800 rounded-2xl p-4">
           <AlertTriangle className="w-5 h-5 mt-0.5 flex-shrink-0" />
           <div>
-            <p className="font-semibold">Significant Finding — Action Required</p>
+            <p className="font-semibold">Significant Finding - Action Required</p>
             <p className="text-sm mt-0.5">
               This PDMP check returned a significant finding. Document the action taken before closing.
             </p>
@@ -73,7 +71,7 @@ export default async function PdmpCheckDetailPage({ params }: { params: { id: st
             <span className="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold bg-green-100 text-green-700">No Significant Finding</span>
           )}
         </div>
-        <h1 className="text-xl font-bold text-slate-900">PDMP Check — {check.prescriptionType}</h1>
+        <h1 className="text-xl font-bold text-slate-900">PDMP Check - {check.prescriptionType}</h1>
         <p className="text-sm text-slate-500 mt-1">
           Patient: {check.patientInitials} &middot; DOB: {formatDate(check.patientDob)} &middot; {formatDate(check.checkDate)}
         </p>

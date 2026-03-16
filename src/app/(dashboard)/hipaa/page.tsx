@@ -22,7 +22,7 @@ export default async function HipaaPage() {
     {
       href: '/hipaa/breaches',
       title: 'Breach Log',
-      description: 'Privacy incidents and confirmed breaches — required under HIPAA §164.400 Breach Notification Rule.',
+      description: 'Privacy incidents and confirmed breaches - required under HIPAA §164.400 Breach Notification Rule.',
       icon: '🔐', badge: 'HIPAA §164.400', badgeColor: 'bg-red-100 text-red-700',
       stat: openBreaches > 0 ? `${openBreaches} Under Review` : 'No open breaches',
       statColor: openBreaches > 0 ? 'text-amber-400' : 'text-emerald-400',
@@ -30,7 +30,7 @@ export default async function HipaaPage() {
     {
       href: '/hipaa/baa',
       title: 'BAA Tracker',
-      description: 'Business Associate Agreement tracking — all vendors with PHI access, expiry alerts, status.',
+      description: 'Business Associate Agreement tracking - all vendors with PHI access, expiry alerts, status.',
       icon: '📄', badge: 'HIPAA §164.308', badgeColor: 'bg-blue-100 text-blue-700',
       stat: `${totalBaas} Total BAAs`,
       statColor: 'text-emerald-400',

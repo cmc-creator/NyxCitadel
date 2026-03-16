@@ -17,7 +17,7 @@ function letterGrade(score: number): string {
   return 'F';
 }
 
-// POST /api/drills/[id]/end — end an active drill, compute full scorecard, auto-remediate
+// POST /api/drills/[id]/end - end an active drill, compute full scorecard, auto-remediate
 export async function POST(
   _req: NextRequest,
   { params }: { params: { id: string } }

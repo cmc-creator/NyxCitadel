@@ -105,7 +105,7 @@ export default async function ComplianceTrackerPage({
                       {item.regulatoryBody.replace(/_/g, ' ')}
                     </td>
                     <td className="px-4 py-3 text-muted-foreground/70 text-xs font-mono">
-                      {item.standardRef ?? '—'}
+                      {item.standardRef ?? '-'}
                     </td>
                     <td className="px-4 py-3 text-muted-foreground text-xs">
                       {item.frequency}
@@ -116,7 +116,7 @@ export default async function ComplianceTrackerPage({
                           {formatDate(item.nextDueDate)}
                         </span>
                       ) : (
-                        <span className="text-muted-foreground text-xs">—</span>
+                        <span className="text-muted-foreground text-xs">-</span>
                       )}
                     </td>
                     <td className="px-4 py-3">

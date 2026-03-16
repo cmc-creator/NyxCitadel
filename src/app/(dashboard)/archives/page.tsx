@@ -40,11 +40,11 @@ async function getArchiveData(facilityId: string, year: number) {
     rcaTotal, rcaApproved,
     // Training
     trainingCompleted, trainingRequired,
-    // Policies — reviewed during year
+    // Policies - reviewed during year
     policiesReviewed,
     // Drills
     drillsScheduled, drillsCompleted,
-    // QAPI — months with data
+    // QAPI - months with data
     qapiMonths,
     // HVA
     hvaAssessment,
@@ -90,7 +90,7 @@ async function getArchiveData(facilityId: string, year: number) {
     // Drills
     prisma.drill.count({ where: { facilityId, scheduledDate: { gte: yearStart, lt: yearEnd } } }),
     prisma.drill.count({ where: { facilityId, scheduledDate: { gte: yearStart, lt: yearEnd }, status: 'COMPLETED' } }),
-    // QAPI — distinct months with data
+    // QAPI - distinct months with data
     prisma.qapiMetric.findMany({
       where: { facilityId, year },
       select: { month: true },
@@ -295,7 +295,7 @@ export default async function ArchivesPage({
           rows={[
             { label: 'CAPs opened',                  value: d.caps.total },
             { label: 'Completed / Verified',         value: d.caps.completed, highlight: d.caps.completed === d.caps.total && d.caps.total > 0 ? 'green' : undefined },
-            { label: 'Completion rate',              value: d.caps.total > 0 ? `${Math.round(d.caps.completed / d.caps.total * 100)}%` : '—', highlight: d.caps.total > 0 && d.caps.completed / d.caps.total >= 0.8 ? 'green' : d.caps.total > 0 ? 'red' : undefined },
+            { label: 'Completion rate',              value: d.caps.total > 0 ? `${Math.round(d.caps.completed / d.caps.total * 100)}%` : '-', highlight: d.caps.total > 0 && d.caps.completed / d.caps.total >= 0.8 ? 'green' : d.caps.total > 0 ? 'red' : undefined },
           ]}
           note="JC LD.03.06.01 · CMS plans of correction"
         />
@@ -325,7 +325,7 @@ export default async function ArchivesPage({
           rows={[
             { label: 'Required completions (on file)', value: d.training.required },
             { label: `Completed in ${year}`,          value: d.training.completed },
-            { label: 'Compliance rate',               value: d.training.required > 0 ? `${Math.round(d.training.completed / d.training.required * 100)}%` : '—', highlight: d.training.required > 0 && d.training.completed / d.training.required >= 0.9 ? 'green' : 'warn' },
+            { label: 'Compliance rate',               value: d.training.required > 0 ? `${Math.round(d.training.completed / d.training.required * 100)}%` : '-', highlight: d.training.required > 0 && d.training.completed / d.training.required >= 0.9 ? 'green' : 'warn' },
           ]}
           note="JC HR.01.05.03 · ADHS Title 36 · OSHA 29 CFR 1910.1030"
         />

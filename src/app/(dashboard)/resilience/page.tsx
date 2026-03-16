@@ -121,7 +121,7 @@ export default async function ResilienceScorecardPage() {
   const facilityCapScore    = capScore(openCaps);
   const facilityGrvScore    = grievanceScore(openGrievances);
 
-  // Weighted composite — includes drill performance when data exists
+  // Weighted composite - includes drill performance when data exists
   // With drills: Training 35%, IR 25%, CAPs 20%, Grievances 10%, Drills 10%
   // Without drills: Training 40%, IR 30%, CAPs 20%, Grievances 10%
   const facilityScore = drillAvgScore != null
@@ -152,7 +152,7 @@ export default async function ResilienceScorecardPage() {
             Resilience Scorecard
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
-            Facility-wide compliance health — training gaps cascade into emergency readiness risk flags.
+            Facility-wide compliance health - training gaps cascade into emergency readiness risk flags.
           </p>
         </div>
         <div className="text-right">
@@ -203,7 +203,7 @@ export default async function ResilienceScorecardPage() {
           <div className="flex items-start gap-3">
             <ShieldAlert className="w-5 h-5 text-red-600 mt-0.5 shrink-0" />
             <div>
-              <p className="font-semibold text-red-800">Emergency Readiness Risk — Cascading Alert</p>
+              <p className="font-semibold text-red-800">Emergency Readiness Risk - Cascading Alert</p>
               <p className="text-sm text-red-700 mt-0.5">
                 The following departments have training compliance below 70%, which elevates risk during emergency activations:
               </p>
@@ -211,7 +211,7 @@ export default async function ResilienceScorecardPage() {
                 {cascadeDepts.map((d) => (
                   <li key={d.dept} className="text-sm text-red-700 flex items-center gap-2">
                     <XCircle className="w-3.5 h-3.5" />
-                    <strong>{d.dept}</strong> — {d.trainingPct}% training compliance
+                    <strong>{d.dept}</strong> - {d.trainingPct}% training compliance
                     ({d.completed}/{d.total} completed)
                   </li>
                 ))}

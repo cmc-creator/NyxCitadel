@@ -50,7 +50,7 @@ export default async function GovernancePage() {
 
       <div className={`rounded-xl border p-4 flex items-center gap-3 ${overallCompliant ? 'border-emerald-500/30 bg-emerald-500/10' : 'border-amber-500/30 bg-amber-500/10'}`}>
         {overallCompliant
-          ? <><CheckCircle className="w-5 h-5 text-emerald-400" /><p className="text-sm text-emerald-300">All governance documents are current — no overdue reviews.</p></>
+          ? <><CheckCircle className="w-5 h-5 text-emerald-400" /><p className="text-sm text-emerald-300">All governance documents are current - no overdue reviews.</p></>
           : <><AlertTriangle className="w-5 h-5 text-amber-400" /><p className="text-sm text-amber-300">{overdueDocuments} governance document(s) require review. Address before next board meeting.</p></>}
       </div>
 

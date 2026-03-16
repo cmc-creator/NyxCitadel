@@ -103,14 +103,14 @@ export default function NewEmployeeHealthPage() {
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Method</label>
               <select name="tbMethod" className="form-input w-full">
-                <option value="">—</option>
+                <option value="">-</option>
                 {TB_METHODS.map(m => <option key={m} value={m}>{m}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Result</label>
               <select name="tbResult" className="form-input w-full">
-                <option value="">—</option>
+                <option value="">-</option>
                 {TB_RESULTS.map(r => <option key={r} value={r}>{r}</option>)}
               </select>
             </div>
@@ -152,7 +152,7 @@ export default function NewEmployeeHealthPage() {
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">COVID Vax Status</label>
               <select name="covidVaxStatus" className="form-input w-full">
-                <option value="">—</option>
+                <option value="">-</option>
                 {COVID_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>

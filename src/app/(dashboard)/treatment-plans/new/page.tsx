@@ -103,7 +103,7 @@ export default function NewTreatmentPlanPage() {
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Treatment Team (one member per line) *</label>
             <textarea name="treatmentTeam" rows={4} required className="form-input w-full"
-              placeholder="Dr. Jane Smith, MD — Attending&#10;Bob Jones, RN — Primary Nurse&#10;Alice Lee, SW — Social Work" />
+              placeholder="Dr. Jane Smith, MD - Attending&#10;Bob Jones, RN - Primary Nurse&#10;Alice Lee, SW - Social Work" />
           </div>
         </div>
 

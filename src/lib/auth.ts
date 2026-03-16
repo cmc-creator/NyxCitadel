@@ -28,6 +28,7 @@ const loginSchema = z.object({
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  basePath: '/api/nyx-auth',
   ...authConfig,
   session: { strategy: 'jwt' },
   providers: [
@@ -37,7 +38,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
+      async authorize(credentials: Partial<Record<"email" | "password", unknown>>) {
         const parsed = loginSchema.safeParse(credentials);
         if (!parsed.success) return null;
 

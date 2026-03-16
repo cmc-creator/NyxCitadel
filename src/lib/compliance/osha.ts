@@ -1,17 +1,17 @@
 /**
  * OSHA & Workforce Health Compliance Requirements
- * For Healthcare Workers — Inpatient Psychiatric / Behavioral Health Facility
+ * For Healthcare Workers - Inpatient Psychiatric / Behavioral Health Facility
  *
  * Primary Sources:
- * - 29 CFR Part 1910 — OSHA General Industry Standards
- *   - 1910.1030 — Bloodborne Pathogens
- *   - 1910.134 — Respiratory Protection
- *   - 1910.1200 — Hazard Communication (HazCom / GHS)
- *   - 1910.147 — Lockout/Tagout (LOTO)
- *   - 1910.132-138 — Personal Protective Equipment (PPE)
- * - 29 CFR Part 1904 — OSHA Recordkeeping
- * - Arizona ADOSH (AZ Division of Occupational Safety and Health) — A.R.S. § 23-401 et seq.
- * - AZ Workers' Compensation — A.R.S. § 23-901 et seq.
+ * - 29 CFR Part 1910 - OSHA General Industry Standards
+ *   - 1910.1030 - Bloodborne Pathogens
+ *   - 1910.134 - Respiratory Protection
+ *   - 1910.1200 - Hazard Communication (HazCom / GHS)
+ *   - 1910.147 - Lockout/Tagout (LOTO)
+ *   - 1910.132-138 - Personal Protective Equipment (PPE)
+ * - 29 CFR Part 1904 - OSHA Recordkeeping
+ * - Arizona ADOSH (AZ Division of Occupational Safety and Health) - A.R.S. § 23-401 et seq.
+ * - AZ Workers' Compensation - A.R.S. § 23-901 et seq.
  * - CDC/NIOSH Healthcare Worker Guidelines
  * - OSHA Healthcare Worker Violence Prevention Guidelines (CPL 02-01-052)
  * - CDC TB Guidelines for Healthcare Settings (MMWR 2023)
@@ -32,13 +32,13 @@ import {
 import type { ComplianceRequirement } from './arizona';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// BLOODBORNE PATHOGENS — 29 CFR 1910.1030
+// BLOODBORNE PATHOGENS - 29 CFR 1910.1030
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const bloodbornePathogensRequirements: ComplianceRequirement[] = [
   {
     id: 'osha-bbp-001',
-    title: 'Exposure Control Plan — Annual Review & Update',
+    title: 'Exposure Control Plan - Annual Review & Update',
     description:
       'Annual review and update of the Bloodborne Pathogens Exposure Control Plan per 29 CFR 1910.1030(c). ' +
       'Must reflect changes in technology, procedures, and staff roles.',
@@ -56,7 +56,7 @@ export const bloodbornePathogensRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'osha-bbp-002',
-    title: 'Hepatitis B Vaccination Offer — New Employees',
+    title: 'Hepatitis B Vaccination Offer - New Employees',
     description:
       'Offer Hepatitis B vaccine series at no cost to all employees with occupational exposure ' +
       'within 10 working days of assignment per 29 CFR 1910.1030(f)(1).',
@@ -109,13 +109,13 @@ export const bloodbornePathogensRequirements: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// OSHA RECORDKEEPING — 29 CFR 1904
+// OSHA RECORDKEEPING - 29 CFR 1904
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const oshaRecordkeepingRequirements: ComplianceRequirement[] = [
   {
     id: 'osha-rk-001',
-    title: 'OSHA 300 Log — Maintain Throughout Year',
+    title: 'OSHA 300 Log - Maintain Throughout Year',
     description:
       'Maintain OSHA 300 Log of Work-Related Injuries and Illnesses throughout the year. ' +
       'Record within 7 calendar days of learning of a recordable incident per 29 CFR 1904.29.',
@@ -133,7 +133,7 @@ export const oshaRecordkeepingRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'osha-rk-002',
-    title: 'OSHA 300A Summary — Post February 1–April 30',
+    title: 'OSHA 300A Summary - Post February 1–April 30',
     description:
       'Complete and post OSHA 300A Annual Summary of Work-Related Injuries ' +
       'from February 1 through April 30 per 29 CFR 1904.32.',
@@ -151,7 +151,7 @@ export const oshaRecordkeepingRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'osha-rk-003',
-    title: 'OSHA 301 Incident Report — Per Recordable Event',
+    title: 'OSHA 301 Incident Report - Per Recordable Event',
     description:
       'Complete OSHA 301 Injury and Illness Incident Report (or equivalent) ' +
       'for each recordable work-related injury/illness within 7 days.',
@@ -180,7 +180,7 @@ export const oshaRecordkeepingRequirements: ComplianceRequirement[] = [
     notes:
       'Report via OSHA website, phone, or in-person to nearest OSHA office. ' +
       'AZ ADOSH: (602) 542-5795 for reporting in Arizona. ' +
-      'Do NOT wait for investigation — report immediately.',
+      'Do NOT wait for investigation - report immediately.',
   },
   {
     id: 'osha-rk-005',
@@ -209,7 +209,7 @@ export const oshaRecordkeepingRequirements: ComplianceRequirement[] = [
 export const workplaceViolenceRequirements: ComplianceRequirement[] = [
   {
     id: 'osha-wv-001',
-    title: 'Workplace Violence Prevention Program — Annual Review',
+    title: 'Workplace Violence Prevention Program - Annual Review',
     description:
       'Annual review of Workplace Violence Prevention Program per OSHA General Duty Clause ' +
       '(Section 5(a)(1)) and OSHA Workplace Violence in Healthcare Guidelines.',
@@ -227,7 +227,7 @@ export const workplaceViolenceRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'osha-wv-002',
-    title: 'Workplace Violence Incident Tracking — Monthly Review',
+    title: 'Workplace Violence Incident Tracking - Monthly Review',
     description:
       'Monthly review of all workplace violence incidents (physical assaults, threats, ' +
       'verbal abuse) involving staff. Identify trends and corrective actions.',
@@ -244,7 +244,7 @@ export const workplaceViolenceRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'osha-wv-003',
-    title: 'De-escalation / WPV Prevention Training — Annual',
+    title: 'De-escalation / WPV Prevention Training - Annual',
     description:
       'Annual workplace violence prevention and de-escalation training for all staff ' +
       'working in patient care areas.',
@@ -262,13 +262,13 @@ export const workplaceViolenceRequirements: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// RESPIRATORY PROTECTION — 29 CFR 1910.134
+// RESPIRATORY PROTECTION - 29 CFR 1910.134
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const respiratoryProtectionRequirements: ComplianceRequirement[] = [
   {
     id: 'osha-rp-001',
-    title: 'N95 Respirator Fit Testing — Annual',
+    title: 'N95 Respirator Fit Testing - Annual',
     description:
       'Annual qualitative or quantitative fit testing for all employees required to wear ' +
       'N95 or higher respirators per 29 CFR 1910.134(f).',
@@ -286,7 +286,7 @@ export const respiratoryProtectionRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'osha-rp-002',
-    title: 'Written Respiratory Protection Program — Annual Review',
+    title: 'Written Respiratory Protection Program - Annual Review',
     description:
       'Annual review of written Respiratory Protection Program covering: ' +
       'respirator selection, medical evaluation, fit testing, training, maintenance, storage.',
@@ -298,18 +298,18 @@ export const respiratoryProtectionRequirements: ComplianceRequirement[] = [
     responsibleRole: 'COMPLIANCE_OFFICER',
     notes:
       'Must designate a Program Administrator. ' +
-      'Surgical masks are NOT respirators — do not substitute for required N95 use.',
+      'Surgical masks are NOT respirators - do not substitute for required N95 use.',
   },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// EMPLOYEE HEALTH — TB / IMMUNIZATIONS
+// EMPLOYEE HEALTH - TB / IMMUNIZATIONS
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const employeeHealthRequirements: ComplianceRequirement[] = [
   {
     id: 'emp-health-001',
-    title: 'TB Screening — New Hire Pre-Employment',
+    title: 'TB Screening - New Hire Pre-Employment',
     description:
       'TB risk assessment and IGRA (preferred) or TST screening for all new healthcare workers ' +
       'per CDC 2023 TB Guidelines for Healthcare Settings and JC HR standards.',
@@ -327,7 +327,7 @@ export const employeeHealthRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'emp-health-002',
-    title: 'Annual TB Screening — High-Risk Staff',
+    title: 'Annual TB Screening - High-Risk Staff',
     description:
       'Annual TB screening (IGRA or symptom review) for staff in high-risk areas or with ' +
       'known exposure, per CDC 2023 TB healthcare guidelines.',
@@ -344,7 +344,7 @@ export const employeeHealthRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'emp-health-003',
-    title: 'Influenza Vaccination — Annual Offer',
+    title: 'Influenza Vaccination - Annual Offer',
     description:
       'Annual influenza vaccination offered to all healthcare personnel (HCP) at no cost. ' +
       'Document acceptance or declination per JC IC.02.04.01 and CMS CoP 482.42.',
@@ -358,12 +358,12 @@ export const employeeHealthRequirements: ComplianceRequirement[] = [
     notes:
       'Target: offer before October 31 (flu season onset). ' +
       'AZ: Does NOT currently mandate flu vaccine for HCP, but mandating is a JC expectation. ' +
-      'Track vaccination rates — JC expects published and improving rates. ' +
+      'Track vaccination rates - JC expects published and improving rates. ' +
       'Declination: must sign form acknowledging flu risks.',
   },
   {
     id: 'emp-health-004',
-    title: 'Healthcare Worker Immunization Status Review — Annual',
+    title: 'Healthcare Worker Immunization Status Review - Annual',
     description:
       'Annual review of all HCP immunization records: MMR, Varicella, HBV, Tdap, COVID-19. ' +
       'Follow ACIP Healthcare Personnel Immunization Schedule.',
@@ -380,7 +380,7 @@ export const employeeHealthRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'emp-health-005',
-    title: 'Post-Exposure Protocol — Biological/Chemical/Physical',
+    title: 'Post-Exposure Protocol - Biological/Chemical/Physical',
     description:
       'Annual review and drill of post-exposure protocols for: bloodborne pathogens, TB exposure, ' +
       'body fluid exposure, and workplace violence injury.',
@@ -398,13 +398,13 @@ export const employeeHealthRequirements: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HAZARD COMMUNICATION — 29 CFR 1910.1200
+// HAZARD COMMUNICATION - 29 CFR 1910.1200
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const hazcomRequirements: ComplianceRequirement[] = [
   {
     id: 'osha-hc-001',
-    title: 'SDS (Safety Data Sheets) Inventory — Annual Review',
+    title: 'SDS (Safety Data Sheets) Inventory - Annual Review',
     description:
       'Annual review of SDS binder/system to ensure current SDS for all hazardous chemicals ' +
       'are available and accessible to all employees per 29 CFR 1910.1200(g).',
@@ -415,13 +415,13 @@ export const hazcomRequirements: ComplianceRequirement[] = [
     priority: Priority.HIGH,
     responsibleRole: 'COMPLIANCE_OFFICER',
     notes:
-      'SDS must be immediately accessible during all work shifts — electronic OK if always available. ' +
+      'SDS must be immediately accessible during all work shifts - electronic OK if always available. ' +
       'Include all chemical products: disinfectants, cleaning agents, medications if applicable. ' +
       'Ensure GHS-format labels on all secondary containers.',
   },
   {
     id: 'osha-hc-002',
-    title: 'HazCom Training — At Hire & When New Hazards Introduced',
+    title: 'HazCom Training - At Hire & When New Hazards Introduced',
     description:
       'HazCom/GHS training for all workers who may be exposed to hazardous chemicals. ' +
       'Train at hire; retrain when new chemical hazards are introduced.',
@@ -446,7 +446,7 @@ export const hazcomRequirements: ComplianceRequirement[] = [
 export const arizonaWorkersCompRequirements: ComplianceRequirement[] = [
   {
     id: 'az-wc-001',
-    title: 'AZ Workers\' Comp Coverage Verification — Annual',
+    title: 'AZ Workers\' Comp Coverage Verification - Annual',
     description:
       'Annual verification that facility maintains required workers\' compensation insurance ' +
       'coverage per A.R.S. § 23-961. Verify all employees and volunteers are covered.',
@@ -463,7 +463,7 @@ export const arizonaWorkersCompRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'az-wc-002',
-    title: 'First Report of Injury (AZ ICA Form 101) — Per Injury',
+    title: 'First Report of Injury (AZ ICA Form 101) - Per Injury',
     description:
       'Submit AZ ICA Employer\'s Report of Industrial Injury (Form 101) within 10 days ' +
       'of learning of a reportable work injury per A.R.S. § 23-1061.',

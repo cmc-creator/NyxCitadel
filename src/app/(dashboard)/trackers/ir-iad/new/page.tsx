@@ -163,8 +163,8 @@ export default function NewIrIadPage() {
                 <option value="PATIENT_FALL">Patient Fall</option>
                 <option value="MEDICATION_ERROR">Medication Error</option>
                 <option value="ELOPEMENT">Elopement</option>
-                <option value="ASSAULT_PATIENT_TO_STAFF">Assault — Patient to Staff</option>
-                <option value="ASSAULT_PATIENT_TO_PATIENT">Assault — Patient to Patient</option>
+                <option value="ASSAULT_PATIENT_TO_STAFF">Assault - Patient to Staff</option>
+                <option value="ASSAULT_PATIENT_TO_PATIENT">Assault - Patient to Patient</option>
                 <option value="SELF_HARM">Self-Harm</option>
                 <option value="SUICIDE_ATTEMPT">Suicide Attempt</option>
                 <option value="SUICIDE_COMPLETION">Suicide Completion</option>
@@ -192,7 +192,7 @@ export default function NewIrIadPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Location</label>
-              <input type="text" placeholder="e.g. Unit A — Room 104" value={form.location} onChange={set('location')}
+              <input type="text" placeholder="e.g. Unit A - Room 104" value={form.location} onChange={set('location')}
                 className="input-field w-full" />
             </div>
             <div>
@@ -330,7 +330,7 @@ export default function NewIrIadPage() {
         <div className="bg-slate-900 border border-slate-700 rounded-xl p-5 space-y-3">
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-4 h-4 text-indigo-400" />
-            <span className="text-xs font-bold text-indigo-300 uppercase tracking-widest">NyxSentinel — AI Triage Assessment</span>
+            <span className="text-xs font-bold text-indigo-300 uppercase tracking-widest">NyxSentinel - AI Triage Assessment</span>
           </div>
           <div className="flex items-center gap-3">
             <span className={`text-sm font-bold px-3 py-1.5 rounded-lg ${triageBadgeStyle(triage.severity)}`}>

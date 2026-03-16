@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Home, ArrowLeft } from 'lucide-react';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const DISPOSITIONS = [
   'HOME_NO_SERVICES', 'HOME_WITH_SERVICES', 'HOME_HEALTH', 'SNF', 'LTAC',
@@ -25,7 +24,7 @@ export default function EditDischargePlanPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`/api/discharge-planning/${id}`)
+    fetch(`/api/discharge-plans/${id}`)
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false); })
       .catch(() => { setError('Failed to load.'); setLoading(false); });
@@ -53,7 +52,7 @@ export default function EditDischargePlanPage() {
       barrierNotes:           (form.elements.namedItem('barrierNotes') as HTMLTextAreaElement).value || null,
       moonRequired:           (form.elements.namedItem('moonRequired') as HTMLInputElement).checked,
     };
-    const res = await fetch(`/api/discharge-planning/${id}`, {
+    const res = await fetch(`/api/discharge-plans/${id}`, {
       method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
     });
     if (res.ok) { router.push(`/discharge-planning/${id}`); router.refresh(); }
@@ -156,14 +155,11 @@ export default function EditDischargePlanPage() {
           </div>
         </div>
 
-        <div className="px-6 py-4 flex items-center justify-between gap-3">
-          <DeleteButton apiPath={`/api/discharge-planning/${id}`} redirectPath="/discharge-planning" label="discharge plan" />
-          <div className="flex gap-3">
-            <a href={`/discharge-planning/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
-            <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
-              {saving ? 'Saving…' : 'Save Changes'}
-            </button>
-          </div>
+        <div className="px-6 py-4 flex justify-end gap-3">
+          <a href={`/discharge-planning/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+            {saving ? 'Saving…' : 'Save Changes'}
+          </button>
         </div>
       </form>
     </div>

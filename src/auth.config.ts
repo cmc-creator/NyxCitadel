@@ -1,6 +1,8 @@
-import type { NextAuthConfig } from 'next-auth';
+import type { NextAuthConfig, Session } from 'next-auth';
+import type { JWT } from 'next-auth/jwt';
+import type { User } from 'next-auth';
 
-// Lightweight auth config — no bcryptjs, no Prisma.
+// Lightweight auth config - no bcryptjs, no Prisma.
 // Used ONLY by middleware (Edge Runtime compatible).
 // The Credentials provider (which uses bcryptjs) is in src/lib/auth.ts.
 export const authConfig: NextAuthConfig = {
@@ -9,10 +11,10 @@ export const authConfig: NextAuthConfig = {
     error: '/login',
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
+    authorized({ auth, request: { nextUrl } }: { auth: Session | null; request: { nextUrl: URL } }) {
       const isLoggedIn = !!auth?.user;
       const isAuthPage = nextUrl.pathname.startsWith('/login');
-      const isApiAuth  = nextUrl.pathname.startsWith('/api/auth');
+      const isApiAuth  = nextUrl.pathname.startsWith('/api/nyx-auth');
       const isPublic   = nextUrl.pathname === '/' || nextUrl.pathname.startsWith('/signup') || isApiAuth;
 
       if (isPublic)   return true;
@@ -20,7 +22,7 @@ export const authConfig: NextAuthConfig = {
       if (!isLoggedIn) return false; // redirects to pages.signIn automatically
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: JWT; user?: User | null }) {
       if (user) {
         token.id         = user.id;
         token.role       = (user as any).role;
@@ -28,7 +30,7 @@ export const authConfig: NextAuthConfig = {
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       if (token) {
         session.user.id         = token.id as string;
         (session.user as any).role       = token.role;

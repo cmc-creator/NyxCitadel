@@ -44,7 +44,7 @@ export default async function HandHygienePage({ searchParams }: { searchParams: 
             <h1 className="text-xl font-bold text-white">Hand Hygiene Audits</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">TJC NPSG 07.01</span>
           </div>
-          <p className="text-slate-400 text-sm">Unit-level direct observation audits — compliance rate vs. 90% facility goal.</p>
+          <p className="text-slate-400 text-sm">Unit-level direct observation audits - compliance rate vs. 90% facility goal.</p>
         </div>
         <a href="/infection-control/hand-hygiene/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Enter Audit
@@ -115,7 +115,7 @@ export default async function HandHygienePage({ searchParams }: { searchParams: 
                 <tr key={a.id} className="hover:bg-white/5">
                   <td className="px-4 py-3 text-slate-400 text-xs">{new Date(a.auditDate).toLocaleDateString()}</td>
                   <td className="px-4 py-3 font-semibold text-white text-xs">{a.unit}</td>
-                  <td className="px-4 py-3 text-slate-300 text-xs">{a.staffType ?? '—'}</td>
+                  <td className="px-4 py-3 text-slate-300 text-xs">{a.staffType ?? '-'}</td>
                   <td className="px-4 py-3 text-slate-400 text-xs">{a.auditor}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{a.opportunities}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{a.compliant}</td>

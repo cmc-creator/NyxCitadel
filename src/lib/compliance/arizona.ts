@@ -3,12 +3,12 @@
  * For Acute Care Psychiatric / Behavioral Health Inpatient Facilities
  *
  * Governing Bodies:
- * - AZ ADHS (Dept. of Health Services) — A.A.C. R9-10 (Behavioral Health)
+ * - AZ ADHS (Dept. of Health Services) - A.A.C. R9-10 (Behavioral Health)
  * - AZ BOMEX (Board of Medical Examiners)
  * - AZ BON (Board of Nursing)
  * - AZ BPPE (Board of Pharmacy)
- * - CMS Conditions of Participation — 42 CFR 482 / 42 CFR 441 (Psychiatric)
- * - Joint Commission (CAMH — Comprehensive Accreditation for BH)
+ * - CMS Conditions of Participation - 42 CFR 482 / 42 CFR 441 (Psychiatric)
+ * - Joint Commission (CAMH - Comprehensive Accreditation for BH)
  */
 
 import {
@@ -45,7 +45,7 @@ export const emergencyManagementRequirements: ComplianceRequirement[] = [
     id: 'em-001',
     title: 'Emergency Management Program Review (Quarterly)',
     description:
-      'Quarterly review of EM program status, drill outcomes, plan updates, and upcoming exercises — typically rolled into the EOC/Safety committee meeting.',
+      'Quarterly review of EM program status, drill outcomes, plan updates, and upcoming exercises - typically rolled into the EOC/Safety committee meeting.',
     category: EventCategory.EM_COMMITTEE_MEETING,
     regulatoryBody: RegulatoryBody.JOINT_COMMISSION,
     standardRef: 'EM.01.01.01',
@@ -111,7 +111,7 @@ export const emergencyManagementRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'em-006',
-    title: 'Fire Evacuation Drill — All Shifts',
+    title: 'Fire Evacuation Drill - All Shifts',
     description:
       'Fire response / evacuation drills conducted on all shifts (days, evenings, nights) across all units.',
     category: EventCategory.FUNCTIONAL_DRILL,
@@ -171,7 +171,7 @@ export const lifeSafetyRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'ls-002',
-    title: 'Fire Alarm System Test — Annual',
+    title: 'Fire Alarm System Test - Annual',
     description: 'Annual inspection and test of fire alarm system per NFPA 72.',
     category: EventCategory.FIRE_ALARM_TEST,
     regulatoryBody: RegulatoryBody.JOINT_COMMISSION,
@@ -182,7 +182,7 @@ export const lifeSafetyRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'ls-003',
-    title: 'Fire Alarm System Test — Semi-Annual (Sprinkler Flow)',
+    title: 'Fire Alarm System Test - Semi-Annual (Sprinkler Flow)',
     description: 'Semi-annual testing of sprinkler flow alarms.',
     category: EventCategory.FIRE_ALARM_TEST,
     regulatoryBody: RegulatoryBody.JOINT_COMMISSION,
@@ -204,7 +204,7 @@ export const lifeSafetyRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'ls-005',
-    title: 'Emergency Generator Test — Monthly',
+    title: 'Emergency Generator Test - Monthly',
     description:
       'Monthly 30-minute load test of emergency generator(s). Annual load test under load.',
     category: EventCategory.GENERATOR_TEST,
@@ -217,7 +217,7 @@ export const lifeSafetyRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'ls-006',
-    title: 'Sprinkler System Inspection — Quarterly',
+    title: 'Sprinkler System Inspection - Quarterly',
     description: 'Quarterly inspection of sprinkler system components.',
     category: EventCategory.SPRINKLER_INSPECTION,
     regulatoryBody: RegulatoryBody.JOINT_COMMISSION,
@@ -251,7 +251,7 @@ export const lifeSafetyRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'ls-009',
-    title: 'Elevator Inspection — Annual',
+    title: 'Elevator Inspection - Annual',
     description:
       'Annual elevator inspection by AZ Dept. of Occupational Safety and Health (ICA).',
     category: EventCategory.ELEVATOR_INSPECTION,
@@ -266,7 +266,7 @@ export const lifeSafetyRequirements: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// JOINT COMMISSION — CAMH SPECIFIC
+// JOINT COMMISSION - CAMH SPECIFIC
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const jointCommissionRequirements: ComplianceRequirement[] = [
@@ -310,7 +310,7 @@ export const jointCommissionRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'jc-004',
-    title: 'JC Standards Review — Annual',
+    title: 'JC Standards Review - Annual',
     description:
       'Annual formal review of all applicable JC standards for changes and compliance gaps.',
     category: EventCategory.JC_STANDARDS_REVIEW,
@@ -319,12 +319,12 @@ export const jointCommissionRequirements: ComplianceRequirement[] = [
     frequency: Frequency.ANNUAL,
     priority: Priority.HIGH,
     responsibleRole: 'COMPLIANCE_OFFICER',
-    month: [1],  // January — new standards typically take effect Jan 1
+    month: [1],  // January - new standards typically take effect Jan 1
   },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ARIZONA ADHS — BEHAVIORAL HEALTH LICENSURE
+// ARIZONA ADHS - BEHAVIORAL HEALTH LICENSURE
 // Rules: A.A.C. R9-10-101 through R9-10-1018
 // License type: Inpatient Behavioral Health (IPB)
 // ─────────────────────────────────────────────────────────────────────────────
@@ -362,7 +362,7 @@ export const arizonaCompliance: ComplianceRequirement[] = [
     id: 'az-003',
     title: 'AZ ADHS Behavioral Health Survey',
     description:
-      'ADHS licensing survey — required upon initial licensure, renewal, and complaint investigations.',
+      'ADHS licensing survey - required upon initial licensure, renewal, and complaint investigations.',
     category: EventCategory.AZ_ADHS_SURVEY,
     regulatoryBody: RegulatoryBody.AZ_ADHS,
     standardRef: 'A.A.C. R9-10-108',
@@ -372,7 +372,7 @@ export const arizonaCompliance: ComplianceRequirement[] = [
   },
   {
     id: 'az-004',
-    title: 'AZ Adverse Event Reporting — DCS/DES',
+    title: 'AZ Adverse Event Reporting - DCS/DES',
     description:
       'Mandatory reporting of certain adverse events to ADHS, DCS, and other AZ agencies within required timeframes.',
     category: EventCategory.AZ_REPORT_SUBMISSION,
@@ -386,7 +386,7 @@ export const arizonaCompliance: ComplianceRequirement[] = [
   },
   {
     id: 'az-005',
-    title: 'AZ Behavioral Health Review — Policy Updates',
+    title: 'AZ Behavioral Health Review - Policy Updates',
     description:
       'Review all P&Ps against updated A.A.C. R9-10 rules annually.',
     category: EventCategory.AZ_BEHAVIORAL_HEALTH_REVIEW,
@@ -398,7 +398,7 @@ export const arizonaCompliance: ComplianceRequirement[] = [
   },
   {
     id: 'az-006',
-    title: 'CMS Conditions of Participation — Psych Hospital (IPF)',
+    title: 'CMS Conditions of Participation - Psych Hospital (IPF)',
     description:
       'Annual internal review of CMS CoPs for Inpatient Psychiatric Facilities.',
     category: EventCategory.CMS_CONDITIONS_REVIEW,

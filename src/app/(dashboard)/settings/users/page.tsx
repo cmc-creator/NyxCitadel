@@ -46,7 +46,7 @@ const EMPTY_FORM = {
 };
 
 function fmtDate(s: string | null) {
-  if (!s) return '—';
+  if (!s) return '-';
   return new Date(s).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
@@ -251,7 +251,7 @@ export default function UsersSettingsPage() {
                   {active.map(u => (
                     <tr key={u.id} className="hover:bg-slate-50 transition">
                       <td className="px-4 py-3">
-                        <p className="font-medium text-slate-900">{u.name ?? '—'}</p>
+                        <p className="font-medium text-slate-900">{u.name ?? '-'}</p>
                         <p className="text-xs text-slate-400">{u.email}</p>
                         {u.title && <p className="text-xs text-slate-500 mt-0.5">{u.title}</p>}
                       </td>
@@ -260,7 +260,7 @@ export default function UsersSettingsPage() {
                           {ROLES.find(r => r.value === u.role)?.label ?? u.role}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-xs text-slate-600">{u.department ?? '—'}</td>
+                      <td className="px-4 py-3 text-xs text-slate-600">{u.department ?? '-'}</td>
                       <td className="px-4 py-3 text-xs text-slate-500">{fmtDate(u.lastLoginAt)}</td>
                       <td className="px-4 py-3 text-xs text-slate-500">{fmtDate(u.createdAt)}</td>
                       <td className="px-4 py-3">
@@ -297,7 +297,7 @@ export default function UsersSettingsPage() {
                     {inactive.map(u => (
                       <tr key={u.id} className="hover:bg-slate-50">
                         <td className="px-4 py-3">
-                          <p className="font-medium text-slate-500">{u.name ?? '—'}</p>
+                          <p className="font-medium text-slate-500">{u.name ?? '-'}</p>
                           <p className="text-xs text-slate-400">{u.email}</p>
                         </td>
                         <td className="px-4 py-3">
@@ -305,7 +305,7 @@ export default function UsersSettingsPage() {
                             {ROLES.find(r => r.value === u.role)?.label ?? u.role}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-xs text-slate-400">{u.department ?? '—'}</td>
+                        <td className="px-4 py-3 text-xs text-slate-400">{u.department ?? '-'}</td>
                         <td className="px-4 py-3">
                           <button onClick={() => void toggleActive(u)} className="p-1.5 rounded hover:bg-green-100 text-slate-400 hover:text-green-700 transition" title="Reactivate">
                             <ShieldCheck className="w-3.5 h-3.5" />

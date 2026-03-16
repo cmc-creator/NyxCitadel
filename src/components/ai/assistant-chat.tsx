@@ -48,7 +48,7 @@ export function AssistantChat() {
 
     try {
       const history = messages.map(m => ({ role: m.role, content: m.content }));
-      const res = await fetch('/api/assistant', {
+      const res = await fetch('/api/ai-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: msg, history }),
@@ -132,7 +132,7 @@ export function AssistantChat() {
             </div>
           )}
 
-          {/* Suggested prompts — show only when just greeting */}
+          {/* Suggested prompts - show only when just greeting */}
           {messages.length === 1 && !loading && (
             <div className="space-y-1.5 pt-1">
               <p className="text-xs text-slate-400 font-medium">Try asking:</p>

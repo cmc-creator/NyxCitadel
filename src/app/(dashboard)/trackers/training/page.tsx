@@ -98,7 +98,7 @@ export default async function TrainingPage({
       {year && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
           <p className="text-sm text-amber-800">
-            <strong>{year} Archive View</strong> — showing training records completed within {year}.
+            <strong>{year} Archive View</strong> - showing training records completed within {year}.
           </p>
           <Link href="/trackers/training" className="text-xs text-amber-700 underline">Return to live view</Link>
         </div>
@@ -207,7 +207,7 @@ export default async function TrainingPage({
                     <td className="px-4 py-3 font-medium text-slate-800">
                       <Link href={`/trackers/training/${record.id}`} className="hover:underline">{record.staffName}</Link>
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-500">{record.department ?? '—'}</td>
+                    <td className="px-4 py-3 text-xs text-slate-500">{record.department ?? '-'}</td>
                     <td className="px-4 py-3">
                       <p className="font-medium text-slate-700">{record.trainingName}</p>
                       {record.provider && (
@@ -218,7 +218,7 @@ export default async function TrainingPage({
                       {record.category.replace(/_/g, ' ')}
                     </td>
                     <td className="px-4 py-3 text-xs text-slate-600">
-                      {record.completedDate ? formatDate(record.completedDate) : '—'}
+                      {record.completedDate ? formatDate(record.completedDate) : '-'}
                     </td>
                     <td className="px-4 py-3 text-xs">
                       {record.expiryDate ? (

@@ -193,7 +193,7 @@ export default function QapiMetricsPage() {
             <BarChart2 className="w-6 h-6 text-purple-600" />
             QAPI Metrics
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">Enter raw counts — rates calculate automatically · CMS 42 CFR 482.21</p>
+          <p className="text-sm text-slate-500 mt-0.5">Enter raw counts - rates calculate automatically · CMS 42 CFR 482.21</p>
         </div>
         <div className="flex items-center gap-2">
           <select value={month} onChange={e => setMonth(Number(e.target.value))} className="form-input text-sm py-1.5">
@@ -209,7 +209,7 @@ export default function QapiMetricsPage() {
       <div className="bg-purple-50 border border-purple-200 rounded-xl p-5 space-y-4">
         <div className="flex items-center gap-2">
           <Zap className="w-4 h-4 text-purple-600" />
-          <h2 className="font-semibold text-purple-900 text-sm">Step 1 — Enter monthly context (shared denominators)</h2>
+          <h2 className="font-semibold text-purple-900 text-sm">Step 1 - Enter monthly context (shared denominators)</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -255,7 +255,7 @@ export default function QapiMetricsPage() {
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-center gap-3">
           <Zap className="w-4 h-4 text-amber-600 shrink-0" />
           <p className="text-sm text-amber-800">
-            <strong>Auto-pulled from IR/IAD tracker:</strong> {autoElopements} elopement{autoElopements !== 1 ? 's' : ''} in {MONTH_NAMES[month - 1]} {year} — pre-filled below.
+            <strong>Auto-pulled from IR/IAD tracker:</strong> {autoElopements} elopement{autoElopements !== 1 ? 's' : ''} in {MONTH_NAMES[month - 1]} {year} - pre-filled below.
           </p>
         </div>
       )}
@@ -263,7 +263,7 @@ export default function QapiMetricsPage() {
       {/* Step 2: Metrics grid */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="font-semibold text-slate-800 text-sm">Step 2 — Enter raw counts below</h2>
+          <h2 className="font-semibold text-slate-800 text-sm">Step 2 - Enter raw counts below</h2>
           <span className="text-xs text-slate-400">Calculated rates appear instantly</span>
         </div>
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden divide-y divide-slate-100">
@@ -352,7 +352,7 @@ export default function QapiMetricsPage() {
                       ) : (
                         <span className="text-xs text-slate-300 italic">
                           {ind.calcType === 'per1kDays'  && !ptDaysNum ? 'enter pt-days ↑' :
-                           ind.calcType === 'per1kDoses' && !dosesNum  ? 'enter doses ↑' : '—'}
+                           ind.calcType === 'per1kDoses' && !dosesNum  ? 'enter doses ↑' : '-'}
                         </span>
                       )}
                     </div>
@@ -368,7 +368,7 @@ export default function QapiMetricsPage() {
                       >
                         {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
                         <TrendingUp className="w-3 h-3" />
-                        {trendData.length} month{trendData.length !== 1 ? 's' : ''} of data — {isExpanded ? 'hide' : 'view'} trend
+                        {trendData.length} month{trendData.length !== 1 ? 's' : ''} of data - {isExpanded ? 'hide' : 'view'} trend
                       </button>
                       {isExpanded && (
                         <div className="px-4 pb-4">

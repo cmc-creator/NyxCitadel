@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import DrillWarRoomClient from '@/components/drills/DrillWarRoomClient';
 import { formatDate } from '@/lib/utils';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -109,7 +108,6 @@ export default async function DrillDetailPage({
           <Link href={`/emergency/drills/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/drills/${params.id}`} redirectPath="/emergency/drills" label="drill" />
           <span
             className={`inline-block text-xs font-medium px-3 py-1 rounded-full ${STATUS_STYLES[drill.status] ?? 'bg-slate-100 text-slate-500'}`}
           >
@@ -207,7 +205,7 @@ export default async function DrillDetailPage({
       <div>
         <h2 className="text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
           <Siren className="w-5 h-5 text-red-500" />
-          War Room — Live Action Log
+          War Room - Live Action Log
           {drill.status !== 'CANCELLED' && (
             <span className="text-xs font-normal text-slate-400">
               (log events in real-time during the drill)

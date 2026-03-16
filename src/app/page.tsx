@@ -15,7 +15,7 @@ const features = [
     icon: Radio,
     title: 'Live Regulatory Intelligence',
     description:
-      'NyxCitadel monitors CMS, Joint Commission, AHCA, OSHA, and State DOH rule changes in real time — and instantly alerts your team before a deadline hits.',
+      'NyxCitadel monitors CMS, Joint Commission, AHCA, OSHA, and State DOH rule changes in real time - and instantly alerts your team before a deadline hits.',
     color: 'from-rose-500 to-pink-500',
     badge: 'Always Current',
   },
@@ -23,7 +23,7 @@ const features = [
     icon: Shield,
     title: 'Compliance Command Center',
     description:
-      'Policies, procedures, audit calendars, and compliance obligations all in one place. Know your status across every regulatory domain at a glance — 24/7.',
+      'Policies, procedures, audit calendars, and compliance obligations all in one place. Know your status across every regulatory domain at a glance - 24/7.',
     color: 'from-blue-500 to-cyan-500',
     badge: '360° Coverage',
   },
@@ -55,7 +55,7 @@ const features = [
     icon: HeartPulse,
     title: 'Incident & Root Cause Analysis',
     description:
-      'Capture incidents, drive thorough RCAs, and close the loop with corrective action plans — turning every adverse event into a lasting quality improvement.',
+      'Capture incidents, drive thorough RCAs, and close the loop with corrective action plans - turning every adverse event into a lasting quality improvement.',
     color: 'from-red-500 to-rose-500',
     badge: 'Zero Miss',
   },
@@ -63,7 +63,7 @@ const features = [
     icon: Users,
     title: 'Staff Training & Competency',
     description:
-      'Track every required training, competency validation, and credential expiry. Auto-alerts fire before someone falls out of compliance — no spreadsheets needed.',
+      'Track every required training, competency validation, and credential expiry. Auto-alerts fire before someone falls out of compliance - no spreadsheets needed.',
     color: 'from-pink-500 to-rose-500',
     badge: 'HR Integrated',
   },
@@ -79,15 +79,15 @@ const features = [
     icon: Siren,
     title: 'Emergency Preparedness',
     description:
-      'HVAs, emergency plans, drill scheduling, and after-action reviews — all documented, tracked, and NIMS/HICS-compliant for any survey.',
+      'HVAs, emergency plans, drill scheduling, and after-action reviews - all documented, tracked, and NIMS/HICS-compliant for any survey.',
     color: 'from-yellow-500 to-orange-500',
     badge: 'Always Ready',
   },
 ];
 
 const regulatoryFeeds = [
-  { agency: 'CMS', text: 'New F-Tag interpretive guidance update detected — F0600 revised', time: 'Just now', color: 'text-red-400', dot: 'bg-red-400' },
-  { agency: 'OSHA', text: 'Bloodborne pathogen standard training window reminder — 30 days', time: '1h ago', color: 'text-orange-400', dot: 'bg-orange-400' },
+  { agency: 'CMS', text: 'New F-Tag interpretive guidance update detected - F0600 revised', time: 'Just now', color: 'text-red-400', dot: 'bg-red-400' },
+  { agency: 'OSHA', text: 'Bloodborne pathogen standard training window reminder - 30 days', time: '1h ago', color: 'text-orange-400', dot: 'bg-orange-400' },
   { agency: 'Joint Commission', text: 'NPSG.07.01 hand hygiene compliance threshold updated', time: '3h ago', color: 'text-yellow-400', dot: 'bg-yellow-400' },
   { agency: 'State DOH', text: 'State survey protocol for infection control revised statewide', time: '1d ago', color: 'text-blue-400', dot: 'bg-blue-400' },
   { agency: 'AHCA', text: 'PDPM billing guidance clarification memo published', time: '2d ago', color: 'text-purple-400', dot: 'bg-purple-400' },
@@ -147,7 +147,7 @@ const pricingTiers = [
   },
   {
     name: 'Professional',
-    tagline: 'The full platform — built for quality teams.',
+    tagline: 'The full platform - built for quality teams.',
     price: '$799',
     period: '/mo, billed annually',
     badge: 'Most Popular',
@@ -197,17 +197,17 @@ const painPoints = [
   {
     icon: Newspaper,
     title: 'Standards Change. We Track Them.',
-    body: "CMS rewrites F-Tags. The Joint Commission revises NPSGs. OSHA updates HAZMAT rules. State DOH shifts infection protocols overnight. Most facilities find out from surveyors — NyxCitadel tells you first, with context and action steps built in.",
+    body: "CMS rewrites F-Tags. The Joint Commission revises NPSGs. OSHA updates HAZMAT rules. State DOH shifts infection protocols overnight. Most facilities find out from surveyors - NyxCitadel tells you first, with context and action steps built in.",
   },
   {
     icon: BrainCircuit,
     title: 'Turn Complexity Into Clarity.',
-    body: "Healthcare compliance isn't one regulation — it's hundreds, overlapping, constantly evolving. NyxCitadel maps every obligation to every department, every deadline to every owner, and every gap to an automated alert.",
+    body: "Healthcare compliance isn't one regulation - it's hundreds, overlapping, constantly evolving. NyxCitadel maps every obligation to every department, every deadline to every owner, and every gap to an automated alert.",
   },
   {
     icon: Target,
     title: "Quality Isn't Optional. Neither Is Proof.",
-    body: "QAPI isn't a checkbox — it's the engine of patient safety. NyxCitadel gives your Quality team real data, real PIPs, and real evidence that your facility is not just meeting standards but exceeding them.",
+    body: "QAPI isn't a checkbox - it's the engine of patient safety. NyxCitadel gives your Quality team real data, real PIPs, and real evidence that your facility is not just meeting standards but exceeding them.",
   },
 ];
 
@@ -298,7 +298,7 @@ export default async function RootPage() {
               Every CMS update. Every Joint Commission revision. Every OSHA rule change.
               Every State DOH memo.{' '}
               <strong className="text-white">
-                NyxCitadel tracks them all — automatically — and tells your team exactly what
+                NyxCitadel tracks them all - automatically - and tells your team exactly what
                 to do before a surveyor ever walks through your door.
               </strong>
             </p>
@@ -346,7 +346,7 @@ export default async function RootPage() {
             </div>
           </div>
 
-          {/* Right — live dashboard mockup */}
+          {/* Right - live dashboard mockup */}
           <div className="hidden lg:block relative mt-4">
             <div className="relative bg-slate-900/90 backdrop-blur-sm border border-white/10 rounded-2xl p-5 shadow-2xl shadow-black/60">
               <div className="flex items-center justify-between mb-5">
@@ -475,14 +475,14 @@ export default async function RootPage() {
             <p className="text-lg text-slate-300 leading-relaxed mb-6">
               Healthcare regulations don&apos;t sit still. CMS rewrites interpretive guidelines.
               The Joint Commission shifts National Patient Safety Goals. OSHA updates exposure
-              standards. State surveyors change what they&apos;re looking for — sometimes overnight.
+              standards. State surveyors change what they&apos;re looking for - sometimes overnight.
             </p>
             <p className="text-base text-slate-400 leading-relaxed mb-8">
               <strong className="text-white">
                 NyxCitadel&apos;s regulatory intelligence engine monitors every major governing body
                 and delivers actionable change notifications directly to your compliance team
               </strong>{' '}
-              — complete with impact assessments, affected policies, and recommended response deadlines.
+              - complete with impact assessments, affected policies, and recommended response deadlines.
             </p>
             <div className="space-y-3">
               {[
@@ -553,7 +553,7 @@ export default async function RootPage() {
               </span>
             </h2>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              Healthcare compliance is a team sport — and right now, most facilities are playing it
+              Healthcare compliance is a team sport - and right now, most facilities are playing it
               with spreadsheets, sticky notes, and crossed fingers. NyxCitadel changes that entirely.
             </p>
           </div>
@@ -583,7 +583,7 @@ export default async function RootPage() {
             </span>
           </h2>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-            Nine fully-integrated modules covering every corner of healthcare compliance —
+            Nine fully-integrated modules covering every corner of healthcare compliance -
             from the exam room to the boardroom.
           </p>
         </div>
@@ -627,13 +627,13 @@ export default async function RootPage() {
                 We help you build it.
               </h2>
               <p className="text-slate-300 text-lg leading-relaxed mb-6">
-                NyxCitadel&apos;s QAPI module isn&apos;t a form — it&apos;s a full continuous quality improvement
+                NyxCitadel&apos;s QAPI module isn&apos;t a form - it&apos;s a full continuous quality improvement
                 engine. Identify root causes. Launch targeted PIPs. Measure outcomes. Close the loop.
-                Repeat. Every quarter, your metrics improve — and you have the data to prove it.
+                Repeat. Every quarter, your metrics improve - and you have the data to prove it.
               </p>
               <p className="text-slate-400 leading-relaxed mb-8">
                 On the risk side, our enterprise risk management module gives you a living, breathing
-                risk register — with automated likelihood/severity scoring, mitigation tracking, and
+                risk register - with automated likelihood/severity scoring, mitigation tracking, and
                 real-time risk posture across every department. Stop finding out about risks from
                 incidents. Start eliminating them before they happen.
               </p>
@@ -718,7 +718,7 @@ export default async function RootPage() {
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"> Every time.</span>
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto mb-12 text-lg">
-            NyxCitadel isn&apos;t built around one regulation — it&apos;s built around the entire
+            NyxCitadel isn&apos;t built around one regulation - it&apos;s built around the entire
             regulatory universe your facility operates within. If it affects your survey
             readiness, we cover it.
           </p>
@@ -748,7 +748,7 @@ export default async function RootPage() {
           </div>
           <div className="inline-flex items-center gap-2 text-sm text-slate-500">
             <RefreshCw className="w-4 h-4" />
-            All standards monitored for updates automatically — no manual tracking required
+            All standards monitored for updates automatically - no manual tracking required
           </div>
         </div>
       </section>
@@ -870,7 +870,7 @@ export default async function RootPage() {
             <p className="text-slate-300 max-w-2xl mx-auto mb-4 text-lg leading-relaxed">
               Surveyors don&apos;t telegraph their visits. Regulations don&apos;t wait for a convenient time.
               Incidents don&apos;t schedule themselves. But with NyxCitadel, your facility is always
-              prepared — because preparation is built into every single day.
+              prepared - because preparation is built into every single day.
             </p>
             <p className="text-slate-400 max-w-xl mx-auto mb-10">
               Join the healthcare facilities that have turned compliance from a crisis response

@@ -37,7 +37,7 @@ export default function NewGovernanceDocumentPage() {
       notes:        (form.elements.namedItem('notes') as HTMLTextAreaElement).value || null,
     };
 
-    const res = await fetch('/api/governance/documents', {
+    const res = await fetch('/api/governance/gov-docs', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data),
     });
 

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-// GET /api/drill-tasks/[token] — get task info for QR scan page (no auth, token is the secret)
+// GET /api/drill-tasks/[token] - get task info for QR scan page (no auth, token is the secret)
 export async function GET(
   _req: NextRequest,
   { params }: { params: { token: string } }
@@ -30,7 +30,7 @@ export async function GET(
   });
 }
 
-// POST /api/drill-tasks/[token] — mark task complete via QR scan
+// POST /api/drill-tasks/[token] - mark task complete via QR scan
 export async function POST(
   req: NextRequest,
   { params }: { params: { token: string } }

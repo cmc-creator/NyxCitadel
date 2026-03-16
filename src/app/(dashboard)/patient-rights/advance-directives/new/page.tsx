@@ -31,7 +31,7 @@ export default function NewAdvanceDirectivePage() {
       notes:               (form.elements.namedItem('notes') as HTMLTextAreaElement).value || null,
     };
 
-    const res = await fetch('/api/patient-rights/advance-directives', {
+    const res = await fetch('/api/patient-rights/adv-directives', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data),
     });
 
@@ -53,7 +53,7 @@ export default function NewAdvanceDirectivePage() {
           <ScrollText className="w-6 h-6 text-teal-600" />
           Document Advance Directive Status
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">CMS §482.13(b)(3) — advance directive status must be documented at admission.</p>
+        <p className="text-sm text-slate-500 mt-0.5">CMS §482.13(b)(3) - advance directive status must be documented at admission.</p>
       </div>
 
       {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -140,3 +140,4 @@ export default function NewAdvanceDirectivePage() {
     </div>
   );
 }
+

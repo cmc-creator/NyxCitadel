@@ -41,7 +41,7 @@ export default function NewDischargePlanPage() {
       moonRequired:          (form.elements.namedItem('moonRequired') as HTMLInputElement).checked,
     };
 
-    const res = await fetch('/api/discharge-planning', {
+    const res = await fetch('/api/discharge-plans', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data),
     });
 

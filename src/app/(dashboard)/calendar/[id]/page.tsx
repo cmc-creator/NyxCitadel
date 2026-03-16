@@ -70,7 +70,7 @@ const EVENT_CATEGORIES = [
 
 function fmtCat(s: string) { return s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); }
 function fmtDate(s: string | null) {
-  if (!s) return '—';
+  if (!s) return '-';
   return new Date(s).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 }
 function isOverdue(ev: CalendarEvent) {
@@ -146,7 +146,7 @@ export default function CalendarEventDetailPage() {
       method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
     });
     if (res.ok) { setEditing(false); setFlash('Changes saved.'); await load(); }
-    else { setFlash('Save failed — please try again.'); }
+    else { setFlash('Save failed - please try again.'); }
     setSaving(false);
   }
 
@@ -300,7 +300,7 @@ export default function CalendarEventDetailPage() {
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
               <select className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.regulatoryBody} onChange={e => setForm(f => ({ ...f, regulatoryBody: e.target.value }))}>
-                {REGULATORY_BODIES.map(b => <option key={b} value={b}>{b ? b.replace(/_/g, ' ') : '— None —'}</option>)}
+                {REGULATORY_BODIES.map(b => <option key={b} value={b}>{b ? b.replace(/_/g, ' ') : '- None -'}</option>)}
               </select>
             </div>
             <div>

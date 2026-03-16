@@ -31,10 +31,10 @@ const CATEGORIES = [
 ];
 
 const SEVERITIES = [
-  { value: 'STANDARD',   label: 'Standard — routine grievance' },
-  { value: 'EXPEDITED',  label: 'Expedited — clinical condition requires faster response' },
-  { value: 'REGULATORY', label: 'Regulatory — potential regulatory violation' },
-  { value: 'SENTINEL',   label: 'Sentinel — linked to sentinel event / serious harm' },
+  { value: 'STANDARD',   label: 'Standard - routine grievance' },
+  { value: 'EXPEDITED',  label: 'Expedited - clinical condition requires faster response' },
+  { value: 'REGULATORY', label: 'Regulatory - potential regulatory violation' },
+  { value: 'SENTINEL',   label: 'Sentinel - linked to sentinel event / serious harm' },
 ];
 
 export default function NewGrievancePage() {
@@ -98,7 +98,7 @@ export default function NewGrievancePage() {
       <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 flex gap-3">
         <Info className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
         <div className="text-xs text-blue-800">
-          <strong>Deadlines are automatically calculated</strong> — 7-day acknowledgment and 30-day resolution
+          <strong>Deadlines are automatically calculated</strong> - 7-day acknowledgment and 30-day resolution
           deadlines will be set from the date received. Overdue items show on the tracker with red alerts.
         </div>
       </div>
@@ -167,7 +167,7 @@ export default function NewGrievancePage() {
               name="summary"
               required
               rows={4}
-              placeholder="Describe the grievance — what is the complaint, what happened, and what outcome is the complainant seeking?"
+              placeholder="Describe the grievance - what is the complaint, what happened, and what outcome is the complainant seeking?"
               className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
             />
           </div>

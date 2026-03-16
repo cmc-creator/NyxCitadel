@@ -6,7 +6,6 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, AlertTriangle, ClipboardList , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,7 +47,6 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
           <Link href={`/trackers/incidents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/incidents/${params.id}`} redirectPath="/trackers/incidents" label="incident" />
           <PrintButton />
         </div>
       </div>
@@ -69,7 +67,7 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
               {incident.location && <> &middot; <strong>{incident.location}</strong></>}
             </p>
           </div>
-          <StatusUpdater apiPath={`/api/incidents/${incident.id}`} currentStatus={incident.status} options={STATUS_OPTIONS} />
+          <StatusUpdater apiPath={`/api/incident-log/${incident.id}`} currentStatus={incident.status} options={STATUS_OPTIONS} />
         </div>
       </div>
 

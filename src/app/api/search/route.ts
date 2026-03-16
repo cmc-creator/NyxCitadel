@@ -181,7 +181,7 @@ export async function GET(req: NextRequest) {
     items: incidents.map(i => ({
       id: i.id,
       href: `/trackers/incidents/${i.id}`,
-      title: `${i.incidentNumber} — ${i.incidentType.replace(/_/g, ' ')}`,
+      title: `${i.incidentNumber} - ${i.incidentType.replace(/_/g, ' ')}`,
       meta: `${i.severity} · ${i.status}`,
     })),
   });
@@ -192,7 +192,7 @@ export async function GET(req: NextRequest) {
     items: caps.map(c => ({
       id: c.id,
       href: `/trackers/caps/${c.id}`,
-      title: `${c.capNumber} — ${c.title}`,
+      title: `${c.capNumber} - ${c.title}`,
       meta: `${c.priority} · ${c.status}`,
     })),
   });
@@ -203,7 +203,7 @@ export async function GET(req: NextRequest) {
     items: grievances.map(g => ({
       id: g.id,
       href: `/trackers/grievances/${g.id}`,
-      title: `${g.grievanceNumber} — ${g.complainantName}`,
+      title: `${g.grievanceNumber} - ${g.complainantName}`,
       meta: `${g.category.replace(/_/g, ' ')} · ${g.status}`,
     })),
   });
@@ -214,7 +214,7 @@ export async function GET(req: NextRequest) {
     items: surveys.map(s => ({
       id: s.id,
       href: `/surveys/${s.id}`,
-      title: `${s.surveyType.replace(/_/g, ' ')} — ${s.regulatoryBody.replace(/_/g, ' ')}`,
+      title: `${s.surveyType.replace(/_/g, ' ')} - ${s.regulatoryBody.replace(/_/g, ' ')}`,
       meta: `${s.status}${s.conductedDate ? ` · ${new Date(s.conductedDate).toLocaleDateString()}` : ''}`,
     })),
   });
@@ -225,7 +225,7 @@ export async function GET(req: NextRequest) {
     items: iriad.map(i => ({
       id: i.id,
       href: `/trackers/ir-iad/${i.id}`,
-      title: `${i.irNumber} — ${i.incidentType.replace(/_/g, ' ')}`,
+      title: `${i.irNumber} - ${i.incidentType.replace(/_/g, ' ')}`,
       meta: `${i.severity} · ${i.status}`,
     })),
   });
@@ -236,7 +236,7 @@ export async function GET(req: NextRequest) {
     items: rca.map(r => ({
       id: r.id,
       href: `/trackers/rca/${r.id}`,
-      title: `${r.rcaNumber} — ${r.eventType}`,
+      title: `${r.rcaNumber} - ${r.eventType}`,
       meta: `${r.status}${r.eventDate ? ` · ${new Date(r.eventDate).toLocaleDateString()}` : ''}`,
     })),
   });
@@ -324,7 +324,7 @@ export async function GET(req: NextRequest) {
     items: oshaEntries.map(o => ({
       id: o.id,
       href: `/workforce-health/osha`,
-      title: `${o.caseNumber} — ${o.employeeName}`,
+      title: `${o.caseNumber} - ${o.employeeName}`,
       meta: `${o.injuryType ?? 'Injury'} · ${o.recordable ? 'Recordable' : 'Non-recordable'}`,
     })),
   });
@@ -335,7 +335,7 @@ export async function GET(req: NextRequest) {
     items: treatmentPlans.map(t => ({
       id: t.id,
       href: `/treatment-plans`,
-      title: `${t.patientInitials} — ${t.primaryDx ?? 'No Dx'}`,
+      title: `${t.patientInitials} - ${t.primaryDx ?? 'No Dx'}`,
       meta: t.status,
     })),
   });
@@ -346,7 +346,7 @@ export async function GET(req: NextRequest) {
     items: dischargePlans.map(d => ({
       id: d.id,
       href: `/discharge-planning`,
-      title: `${d.patientInitials} — ${d.expectedDisposition ?? 'TBD'}`,
+      title: `${d.patientInitials} - ${d.expectedDisposition ?? 'TBD'}`,
       meta: d.status,
     })),
   });
@@ -357,7 +357,7 @@ export async function GET(req: NextRequest) {
     items: restraintEvents.map(r => ({
       id: r.id,
       href: `/restraint-seclusion`,
-      title: `${r.eventNumber} — ${r.patientInitials}`,
+      title: `${r.eventNumber} - ${r.patientInitials}`,
       meta: `${r.status}${r.deathOccurred ? ' · DEATH REPORTED' : ''}`,
     })),
   });

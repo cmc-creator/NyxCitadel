@@ -74,10 +74,10 @@ export default async function EmployeeHealthPage() {
               return (
                 <tr key={r.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-white font-medium">{r.employeeName}</td>
-                  <td className="px-4 py-3 text-slate-400">{r.department ?? '—'}</td>
-                  <td className="px-4 py-3 text-slate-300">{r.tbScreenDate?.toLocaleDateString() ?? '—'}</td>
-                  <td className="px-4 py-3 text-slate-400">{r.tbResult ?? '—'}</td>
-                  <td className={`px-4 py-3 ${tbPast ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{r.tbNextDueDate?.toLocaleDateString() ?? '—'}</td>
+                  <td className="px-4 py-3 text-slate-400">{r.department ?? '-'}</td>
+                  <td className="px-4 py-3 text-slate-300">{r.tbScreenDate?.toLocaleDateString() ?? '-'}</td>
+                  <td className="px-4 py-3 text-slate-400">{r.tbResult ?? '-'}</td>
+                  <td className={`px-4 py-3 ${tbPast ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{r.tbNextDueDate?.toLocaleDateString() ?? '-'}</td>
                   <td className="px-4 py-3">
                     {r.fluVaxDeclined
                       ? <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Declined</span>

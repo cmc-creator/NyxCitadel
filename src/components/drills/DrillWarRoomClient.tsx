@@ -112,7 +112,7 @@ export default function DrillWarRoomClient({
   useEffect(() => { killTasksRef.current = killTasks; }, [killTasks]);
   useEffect(() => { musterRef.current = muster; }, [muster]);
 
-  // Live polling — 10-second interval while drill is IN_PROGRESS
+  // Live polling - 10-second interval while drill is IN_PROGRESS
   useEffect(() => {
     if (drillStatus !== 'IN_PROGRESS') return;
 
@@ -154,7 +154,7 @@ export default function DrillWarRoomClient({
 
         setLastSynced(new Date());
       } catch {
-        // Network error — silently skip this poll cycle
+        // Network error - silently skip this poll cycle
       } finally {
         setSyncing(false);
       }

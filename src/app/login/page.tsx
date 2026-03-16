@@ -68,7 +68,7 @@ function LoginForm() {
       </div>
 
       {/* ══════════════════════════════════════════════
-          LEFT PANEL — Branding
+          LEFT PANEL - Branding
       ══════════════════════════════════════════════ */}
       <div className="hidden lg:flex lg:w-[52%] relative flex-col justify-between p-12 overflow-hidden">
         {/* Subtle grid pattern */}
@@ -106,7 +106,7 @@ function LoginForm() {
           </h1>
           <p className="text-slate-400 text-lg leading-relaxed max-w-md">
             Everything your team needs to stay survey-ready, reduce risk,
-            and drive quality improvement — in one platform.
+            and drive quality improvement - in one platform.
           </p>
         </div>
 
@@ -141,7 +141,7 @@ function LoginForm() {
       </div>
 
       {/* ══════════════════════════════════════════════
-          RIGHT PANEL — Login Form
+          RIGHT PANEL - Login Form
       ══════════════════════════════════════════════ */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 relative z-10">
         {/* Mobile logo */}

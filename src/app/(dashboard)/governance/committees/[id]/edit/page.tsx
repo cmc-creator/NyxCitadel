@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft, Users } from 'lucide-react';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const COMMITTEE_TYPES = [
   'GOVERNING_BODY', 'MEDICAL_EXECUTIVE', 'QUALITY_PATIENT_SAFETY', 'IC',
@@ -135,18 +134,11 @@ export default function EditCommitteeMeetingPage() {
           <textarea name="notes" rows={3} className="form-input w-full" defaultValue={data.notes ?? ''} />
         </div>
 
-        <div className="px-6 py-4 flex items-center justify-between gap-3">
-          <DeleteButton
-            apiPath={`/api/governance/committees/${id}`}
-            redirectPath="/governance/committees"
-            label="committee meeting"
-          />
-          <div className="flex gap-3">
-            <a href={`/governance/committees/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
-            <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
-              {saving ? 'Saving…' : 'Save Changes'}
-            </button>
-          </div>
+        <div className="px-6 py-4 flex justify-end gap-3">
+          <a href={`/governance/committees/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+            {saving ? 'Saving…' : 'Save Changes'}
+          </button>
         </div>
       </form>
     </div>

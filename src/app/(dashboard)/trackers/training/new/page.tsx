@@ -32,7 +32,7 @@ const STATUSES = [
 ];
 
 const REGULATORY_BODIES = [
-  ['', '— None —'],
+  ['', '- None -'],
   ['JOINT_COMMISSION', 'The Joint Commission'],
   ['CMS', 'CMS'],
   ['AZ_ADHS', 'AZ ADHS'],
@@ -139,7 +139,7 @@ export default function NewTrainingPage() {
           <h2 className="text-sm font-semibold text-slate-800">Training Details</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Training Name *</label>
-            <input name="trainingName" required className="form-input w-full" placeholder="e.g., CPI Nonviolent Crisis Intervention — Annual Recertification" />
+            <input name="trainingName" required className="form-input w-full" placeholder="e.g., CPI Nonviolent Crisis Intervention - Annual Recertification" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>

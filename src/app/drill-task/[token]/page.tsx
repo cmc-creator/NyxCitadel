@@ -70,8 +70,8 @@ export default async function OshaLogPage() {
                 <td className="px-4 py-3 text-slate-300">{l.caseNumber}</td>
                 <td className="px-4 py-3 text-slate-300">{l.injuryDate.toLocaleDateString()}</td>
                 <td className="px-4 py-3 text-white font-medium">{l.employeeName}</td>
-                <td className="px-4 py-3 text-slate-400">{l.jobTitle ?? '—'} {l.department ? `/ ${l.department}` : ''}</td>
-                <td className="px-4 py-3 text-slate-400">{l.injuryType ?? '—'}</td>
+                <td className="px-4 py-3 text-slate-400">{l.jobTitle ?? '-'} {l.department ? `/ ${l.department}` : ''}</td>
+                <td className="px-4 py-3 text-slate-400">{l.injuryType ?? '-'}</td>
                 <td className="px-4 py-3 text-slate-300">{l.daysAway ?? 0}</td>
                 <td className="px-4 py-3">
                   {l.recordable

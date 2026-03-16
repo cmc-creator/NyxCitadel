@@ -3,7 +3,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 
-// PATCH /api/users/[id] — update a user
+// PATCH /api/users/[id] - update a user
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -61,7 +61,7 @@ export async function PATCH(
   return NextResponse.json(updated);
 }
 
-// DELETE /api/users/[id] — deactivate (soft delete) a user
+// DELETE /api/users/[id] - deactivate (soft delete) a user
 export async function DELETE(
   _req: NextRequest,
   { params }: { params: { id: string } }
@@ -85,7 +85,7 @@ export async function DELETE(
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
 
-  // Soft delete — just deactivate
+  // Soft delete - just deactivate
   await prisma.user.update({
     where: { id: params.id },
     data: { isActive: false },

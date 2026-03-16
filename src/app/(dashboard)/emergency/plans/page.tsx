@@ -142,7 +142,7 @@ export default async function EmergencyPlansPage() {
                       {formatDate(plan.effectiveDate)}
                     </td>
                     <td className="px-4 py-3 text-xs text-slate-600">
-                      {plan.lastReviewedDate ? formatDate(plan.lastReviewedDate) : '—'}
+                      {plan.lastReviewedDate ? formatDate(plan.lastReviewedDate) : '-'}
                     </td>
                     <td className="px-4 py-3">
                       <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${
@@ -173,7 +173,7 @@ export default async function EmergencyPlansPage() {
                           View
                         </a>
                       ) : (
-                        <span className="text-slate-400">—</span>
+                        <span className="text-slate-400">-</span>
                       )}
                     </td>
                   </tr>

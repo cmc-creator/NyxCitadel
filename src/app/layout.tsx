@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: '%s | NyxCitadel',
   },
   description:
-    'Compliance, risk management, and emergency management platform — NyxCitadel.',
+    'Compliance, risk management, and emergency management platform - NyxCitadel.',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',

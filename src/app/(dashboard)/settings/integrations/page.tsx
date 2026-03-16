@@ -98,7 +98,7 @@ const STATUS_CONFIG = {
     bg: 'bg-emerald-50 border-emerald-200',
   },
   available: {
-    label: 'Available — Configure',
+    label: 'Available - Configure',
     icon: Clock,
     color: 'text-blue-600',
     bg: 'bg-blue-50 border-blue-200',

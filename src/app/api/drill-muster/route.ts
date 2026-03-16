@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(entries);
 }
 
-// POST /api/drill-muster — add a staff member to the muster roster
+// POST /api/drill-muster - add a staff member to the muster roster
 export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json(entry, { status: 201 });
 }
 
-// DELETE /api/drill-muster?id=xxx — remove a roster entry
+// DELETE /api/drill-muster?id=xxx - remove a roster entry
 export async function DELETE(req: NextRequest) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

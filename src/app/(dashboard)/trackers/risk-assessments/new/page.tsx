@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation';
 import { ShieldAlert, ArrowLeft, Plus, Trash2, AlertTriangle } from 'lucide-react';
 
 const ASSESSMENT_TYPES = [
-  { value: 'ANNUAL_PROACTIVE', label: 'Annual Proactive Risk Assessment', ref: 'JC LD.04.04.01', desc: 'Required annually — broad facility-wide risk identification' },
+  { value: 'ANNUAL_PROACTIVE', label: 'Annual Proactive Risk Assessment', ref: 'JC LD.04.04.01', desc: 'Required annually - broad facility-wide risk identification' },
   { value: 'INFECTION_CONTROL', label: 'Infection Control Risk Assessment (ICRA)', ref: 'JC IC.01.01.01 EP4', desc: 'Annual assessment of infection risks for the patient population' },
   { value: 'SECURITY', label: 'Workplace Violence / Security Risk Assessment', ref: 'TJC CAMH / OSHA', desc: 'Physical security, workplace violence risk for staff and patients' },
-  { value: 'IT_SECURITY', label: 'IT / HIPAA Security Risk Analysis', ref: '45 CFR 164.308(a)(1)', desc: 'Required by HIPAA Security Rule — annual SRA' },
+  { value: 'IT_SECURITY', label: 'IT / HIPAA Security Risk Analysis', ref: '45 CFR 164.308(a)(1)', desc: 'Required by HIPAA Security Rule - annual SRA' },
   { value: 'MEDICATION', label: 'Medication Management Risk Assessment', ref: 'JC MM.01.01.03', desc: 'High-alert medications, look-alike/sound-alike risks' },
   { value: 'CLINICAL_PROCESS', label: 'Clinical Process Failure Mode Analysis (FMEA)', ref: 'JC NPSG', desc: 'Proactive analysis of a specific high-risk clinical process' },
-  { value: 'EMERGENCY_MANAGEMENT', label: 'Emergency Management Risk Factors', ref: 'JC EM.01.01.01', desc: 'Complement to HVA — process/people EM risks' },
+  { value: 'EMERGENCY_MANAGEMENT', label: 'Emergency Management Risk Factors', ref: 'JC EM.01.01.01', desc: 'Complement to HVA - process/people EM risks' },
   { value: 'ENVIRONMENT_OF_CARE', label: 'Environment of Care Risk Assessment', ref: 'JC EC.04.01.01', desc: 'Physical environment hazards discovered during EOC rounds' },
   { value: 'CONSTRUCTION', label: 'Construction / Renovation ICRA', ref: 'JC EC.02.06.01', desc: 'Required before any construction or renovation project' },
   { value: 'OTHER', label: 'Other / Ad Hoc Assessment', ref: '', desc: '' },
@@ -230,7 +230,7 @@ export default function NewRiskAssessmentPage() {
                     </div>
                     {score > 0 && (
                       <span className={`text-xs font-bold px-2 py-1 rounded-full ${level.color}`}>
-                        {score} — {level.label}
+                        {score} - {level.label}
                       </span>
                     )}
                     <button
@@ -260,11 +260,11 @@ export default function NewRiskAssessmentPage() {
                         onChange={e => updateItem(item.id, 'likelihood', Number(e.target.value))}
                         className="form-input w-full text-xs"
                       >
-                        <option value={1}>1 — Rare</option>
-                        <option value={2}>2 — Unlikely</option>
-                        <option value={3}>3 — Possible</option>
-                        <option value={4}>4 — Likely</option>
-                        <option value={5}>5 — Almost Certain</option>
+                        <option value={1}>1 - Rare</option>
+                        <option value={2}>2 - Unlikely</option>
+                        <option value={3}>3 - Possible</option>
+                        <option value={4}>4 - Likely</option>
+                        <option value={5}>5 - Almost Certain</option>
                       </select>
                     </div>
                     <div>
@@ -274,11 +274,11 @@ export default function NewRiskAssessmentPage() {
                         onChange={e => updateItem(item.id, 'severity', Number(e.target.value))}
                         className="form-input w-full text-xs"
                       >
-                        <option value={1}>1 — Negligible</option>
-                        <option value={2}>2 — Minor</option>
-                        <option value={3}>3 — Moderate</option>
-                        <option value={4}>4 — Major</option>
-                        <option value={5}>5 — Catastrophic</option>
+                        <option value={1}>1 - Negligible</option>
+                        <option value={2}>2 - Minor</option>
+                        <option value={3}>3 - Moderate</option>
+                        <option value={4}>4 - Major</option>
+                        <option value={5}>5 - Catastrophic</option>
                       </select>
                     </div>
                     <div>

@@ -106,7 +106,7 @@ export default function FacilityMapPage() {
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
             <Map className="w-6 h-6 text-indigo-600" />
-            Facility Map — Digital Twin
+            Facility Map - Digital Twin
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
             Upload floor plans and zone maps for emergency overlay and drill activation.
@@ -192,7 +192,7 @@ export default function FacilityMapPage() {
       )}
 
       <div className="grid md:grid-cols-4 gap-5">
-        {/* Sidebar — Floor List */}
+        {/* Sidebar - Floor List */}
         <div className="md:col-span-1 space-y-3">
           <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Floor Plans</h3>
           {loading ? (
@@ -236,7 +236,7 @@ export default function FacilityMapPage() {
           )}
         </div>
 
-        {/* Main — Floor Plan Viewer */}
+        {/* Main - Floor Plan Viewer */}
         <div className="md:col-span-3 bg-white border border-slate-200 rounded-xl overflow-hidden">
           {selected ? (
             <>

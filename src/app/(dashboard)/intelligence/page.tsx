@@ -1,11 +1,11 @@
-﻿import { auth } from '@/lib/auth';
+﻿import React from 'react';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
   BarChart2, Shield, FileBarChart, TrendingUp,
-  AlertTriangle, CheckCircle2, ClipboardList, Activity, Radio,
+  AlertTriangle, CheckCircle2, ClipboardList, Activity, Newspaper,
 } from 'lucide-react';
-import ScrapeButton from '@/components/intelligence/ScrapeButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,10 +13,7 @@ export const metadata = { title: 'Intelligence' };
 
 export default async function IntelligencePage() {
   const session = await auth();
-  if (!session?.user) return null;
-  const facilityId = session.user.facilityId;
-  const userRole   = session.user.role;
-  const canScrape  = ['ADMIN', 'COMPLIANCE_OFFICER'].includes(userRole);
+  const facilityId = session!.user.facilityId;
 
   const since30 = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
   const since90 = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
@@ -29,7 +26,6 @@ export default async function IntelligencePage() {
     openGrievances,
     activeProjects,
     upcomingSurveys,
-    unreadRegUpdates,
   ] = await Promise.all([
     prisma.incident.count({ where: { facilityId, status: { not: 'CLOSED' } } }),
     prisma.correctiveActionPlan.count({ where: { facilityId, status: { in: ['OPEN', 'IN_PROGRESS'] } } }),
@@ -38,8 +34,14 @@ export default async function IntelligencePage() {
     prisma.grievanceRecord.count({ where: { facilityId, status: { not: 'CLOSED' } } }),
     prisma.qapiProject.count({ where: { facilityId, status: { in: ['ACTIVE', 'MONITORING'] } } }),
     prisma.survey.count({ where: { facilityId, status: { in: ['SCHEDULED', 'IN_PROGRESS'] } } }),
-    prisma.regulatoryUpdate.count({ where: { isRead: false } }),
   ]);
+
+  const recentRegUpdates = await prisma.regulatoryUpdate.findMany({
+    where: { isActive: true },
+    orderBy: [{ urgency: 'asc' }, { createdAt: 'desc' }],
+    take: 3,
+    select: { id: true, title: true, urgency: true, regulatoryBody: true, createdAt: true },
+  });
 
   const stats = [
     { label: 'Open Incidents', value: openIncidents, icon: AlertTriangle, color: 'text-orange-400 bg-orange-950/40', href: '/trackers/incidents' },
@@ -50,13 +52,21 @@ export default async function IntelligencePage() {
     { label: 'Active QAPI Projects', value: activeProjects, icon: TrendingUp, color: 'text-teal-400 bg-teal-950/40', href: '/quality/projects' },
   ];
 
-  const views = [
+  const URGENCY_COLOR: Record<string, string> = {
+    CRITICAL: 'bg-red-950/40 text-red-400',
+    HIGH: 'bg-orange-950/40 text-orange-400',
+    MEDIUM: 'bg-amber-950/40 text-amber-400',
+    INFORMATIONAL: 'bg-slate-800/40 text-slate-400',
+  };
+
+  const views: { href: string; title: string; description: string; icon: React.ElementType; badge: string | null; badgeColor: string; color: string; iconBg: string }[] = [
     {
       href: '/resilience',
       title: 'Resilience Scorecard',
       description: 'Multi-domain compliance health scorecard with letter grades across incidents, CAPs, training, grievances, and surveys. Real-time risk intelligence.',
       icon: Shield,
       badge: null,
+      badgeColor: '',
       color: 'border-purple-700/40 hover:border-purple-500',
       iconBg: 'bg-purple-950/40 text-purple-400',
     },
@@ -66,17 +76,19 @@ export default async function IntelligencePage() {
       description: 'Executive-level print-ready compliance summary for governing board presentations. 90-day rollup with incident trends, CAP status, and regulatory readiness.',
       icon: FileBarChart,
       badge: 'EXEC',
+      badgeColor: 'bg-emerald-950/40 text-emerald-400',
       color: 'border-emerald-700/40 hover:border-emerald-500',
       iconBg: 'bg-emerald-950/40 text-emerald-400',
     },
     {
-      href: '/intelligence/updates',
-      title: 'Regulatory Intelligence Feed',
-      description: 'Live scraped updates from CMS, OSHA, DEA, HHS/OCR, AZ ADHS, and The Joint Commission — new rules, final regulations, enforcement notices, and more.',
-      icon: Radio,
-      badge: unreadRegUpdates > 0 ? `${unreadRegUpdates} new` : null,
-      color: 'border-rose-700/40 hover:border-rose-500',
-      iconBg: 'bg-rose-950/40 text-rose-400',
+      href: '/regulatory-updates',
+      title: 'Regulatory Updates',
+      description: 'Admin-curated feed of regulatory changes, new CMS/JC/state guidance, and compliance mandates. Notifies all users instantly on publish.',
+      icon: Newspaper,
+      badge: 'LIVE',
+      badgeColor: 'bg-purple-950/40 text-purple-400',
+      color: 'border-purple-700/40 hover:border-purple-500',
+      iconBg: 'bg-purple-950/40 text-purple-400',
     },
   ];
 
@@ -116,7 +128,7 @@ export default async function IntelligencePage() {
       <div>
         <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">Reports & Scorecards</h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          {views.map(({ href, title, description, icon: Icon, badge, color, iconBg }) => (
+          {views.map(({ href, title, description, icon: Icon, badge, badgeColor, color, iconBg }) => (
             <Link
               key={href}
               href={href}
@@ -129,7 +141,7 @@ export default async function IntelligencePage() {
                 <div className="flex items-center gap-2 mb-1">
                   <p className="text-base font-semibold text-foreground">{title}</p>
                   {badge && (
-                    <span className="text-xs font-medium bg-emerald-950/40 text-emerald-400 rounded-full px-2 py-0.5">
+                    <span className={`text-xs font-medium rounded-full px-2 py-0.5 ${badgeColor}`}>
                       {badge}
                     </span>
                   )}
@@ -142,25 +154,29 @@ export default async function IntelligencePage() {
         </div>
       </div>
 
-      {/* Regulatory intelligence tools — admins only */}
-      {canScrape && (
-        <div className="bg-card border border-rose-700/30 rounded-xl px-5 py-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <p className="text-sm font-semibold text-foreground flex items-center gap-1.5">
-                <Radio className="w-4 h-4 text-rose-400" />
-                Regulatory Intelligence Feed
-              </p>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Pull the latest rules, notices, and guidance from CMS, OSHA, DEA, HHS/OCR, AZ&nbsp;ADHS, and The Joint Commission.
-                {unreadRegUpdates > 0 && (
-                  <span className="ml-1.5 inline-flex items-center gap-0.5 bg-rose-950/40 text-rose-400 text-xs font-semibold rounded-full px-2 py-0.5">
-                    {unreadRegUpdates} unread
-                  </span>
-                )}
-              </p>
-            </div>
-            <ScrapeButton variant="primary" />
+      {/* Recent Regulatory Updates */}
+      {recentRegUpdates.length > 0 && (
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">Recent Regulatory Updates</h2>
+            <Link href="/regulatory-updates" className="text-xs text-purple-400 hover:text-purple-300 transition-colors">
+              View all →
+            </Link>
+          </div>
+          <div className="space-y-2">
+            {recentRegUpdates.map((upd) => (
+              <Link
+                key={upd.id}
+                href={`/regulatory-updates/${upd.id}`}
+                className="flex items-center gap-3 bg-card border border-border rounded-xl px-4 py-3 hover:border-purple-500 transition-colors group"
+              >
+                <span className={`text-xs font-semibold rounded-full px-2 py-0.5 flex-shrink-0 ${URGENCY_COLOR[upd.urgency] ?? 'bg-slate-800/40 text-slate-400'}`}>
+                  {upd.urgency}
+                </span>
+                <span className="text-sm text-foreground group-hover:text-purple-400 transition-colors truncate flex-1">{upd.title}</span>
+                <span className="text-xs text-slate-500 flex-shrink-0">{upd.regulatoryBody}</span>
+              </Link>
+            ))}
           </div>
         </div>
       )}
@@ -186,7 +202,7 @@ export default async function IntelligencePage() {
         <div className="bg-emerald-950/30 border border-emerald-700/40 rounded-xl px-5 py-4 flex items-center gap-3">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
           <p className="text-sm text-emerald-300 font-medium">
-            No overdue CAPs, open incidents, or critical risks — compliance standing is strong.
+            No overdue CAPs, open incidents, or critical risks - compliance standing is strong.
           </p>
         </div>
       )}

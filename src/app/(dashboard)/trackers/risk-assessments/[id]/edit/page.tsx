@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ShieldAlert, ArrowLeft, Plus, Trash2 } from 'lucide-react';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const ASSESSMENT_TYPES = [
   { value: 'ANNUAL_PROACTIVE', label: 'Annual Proactive Risk Assessment' },
@@ -261,7 +260,7 @@ export default function EditRiskAssessmentPage() {
                     </div>
                     {score > 0 && (
                       <span className={`text-xs font-bold px-2 py-1 rounded-full ${level.color}`}>
-                        {score} — {level.label}
+                        {score} - {level.label}
                       </span>
                     )}
                     <button
@@ -291,11 +290,11 @@ export default function EditRiskAssessmentPage() {
                         onChange={e => updateItem(item.id, 'likelihood', Number(e.target.value))}
                         className="form-input w-full text-xs"
                       >
-                        <option value={1}>1 — Rare</option>
-                        <option value={2}>2 — Unlikely</option>
-                        <option value={3}>3 — Possible</option>
-                        <option value={4}>4 — Likely</option>
-                        <option value={5}>5 — Almost Certain</option>
+                        <option value={1}>1 - Rare</option>
+                        <option value={2}>2 - Unlikely</option>
+                        <option value={3}>3 - Possible</option>
+                        <option value={4}>4 - Likely</option>
+                        <option value={5}>5 - Almost Certain</option>
                       </select>
                     </div>
                     <div>
@@ -305,11 +304,11 @@ export default function EditRiskAssessmentPage() {
                         onChange={e => updateItem(item.id, 'severity', Number(e.target.value))}
                         className="form-input w-full text-xs"
                       >
-                        <option value={1}>1 — Negligible</option>
-                        <option value={2}>2 — Minor</option>
-                        <option value={3}>3 — Moderate</option>
-                        <option value={4}>4 — Major</option>
-                        <option value={5}>5 — Catastrophic</option>
+                        <option value={1}>1 - Negligible</option>
+                        <option value={2}>2 - Minor</option>
+                        <option value={3}>3 - Moderate</option>
+                        <option value={4}>4 - Major</option>
+                        <option value={5}>5 - Catastrophic</option>
                       </select>
                     </div>
                     <div>
@@ -375,18 +374,15 @@ export default function EditRiskAssessmentPage() {
           <textarea name="notes" rows={3} defaultValue={data.notes ?? ''} className="form-input w-full resize-none" />
         </div>
 
-        <div className="flex items-center justify-between gap-3">
-          <DeleteButton apiPath={`/api/risk-assessments/${id}`} redirectPath="/trackers/risk-assessments" label="risk assessment" />
-          <div className="flex gap-3">
-            <a href={`/trackers/risk-assessments/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
-            <button
-              type="submit"
-              disabled={saving}
-              className="px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
-            >
-              {saving ? 'Saving…' : 'Save Changes'}
-            </button>
-          </div>
+        <div className="flex items-center justify-end gap-3">
+          <a href={`/trackers/risk-assessments/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
+          <button
+            type="submit"
+            disabled={saving}
+            className="px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
+          >
+            {saving ? 'Saving…' : 'Save Changes'}
+          </button>
         </div>
       </form>
     </div>

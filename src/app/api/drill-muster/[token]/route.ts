@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-// GET /api/drill-muster/[token] — get entry info for QR scan page
+// GET /api/drill-muster/[token] - get entry info for QR scan page
 export async function GET(
   _req: NextRequest,
   { params }: { params: { token: string } }
@@ -28,7 +28,7 @@ export async function GET(
   });
 }
 
-// POST /api/drill-muster/[token] — staff checks in at muster point
+// POST /api/drill-muster/[token] - staff checks in at muster point
 export async function POST(
   _req: NextRequest,
   { params }: { params: { token: string } }

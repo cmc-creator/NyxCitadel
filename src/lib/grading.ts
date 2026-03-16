@@ -1,5 +1,5 @@
 /**
- * Shared grading utility — single source of truth for all grade logic in NyxCitadel.
+ * Shared grading utility - single source of truth for all grade logic in NyxCitadel.
  * Used by: drill scorecard, resilience scorecard, board report.
  */
 

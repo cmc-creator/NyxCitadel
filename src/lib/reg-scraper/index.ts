@@ -1,5 +1,5 @@
 /**
- * Regulatory Intelligence Scraper — Main Orchestrator
+ * Regulatory Intelligence Scraper - Main Orchestrator
  *
  * Pulls live regulatory updates from:
  *   1. Federal Register JSON API (CMS, OSHA, DEA, HHS-OCR, HRSA, SAMHSA)
@@ -8,7 +8,7 @@
  *   4. Joint Commission news feed
  *
  * All results are upserted into the `regulatory_updates` table using
- * (source, sourceId) as the unique key — safe to run repeatedly.
+ * (source, sourceId) as the unique key - safe to run repeatedly.
  *
  * Agencies that are state-specific (AZ_ADHS) only notify facilities in AZ.
  * Federal agencies notify all facilities.
@@ -207,7 +207,7 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
 
     const impactLabel = update.impactLevel === 'CRITICAL' ? '🔴 CRITICAL' : '🟠 HIGH';
     const agencyLabel = update.agency.replace('_', '/');
-    const docLabel    = update.docType ? ` — ${update.docType}` : '';
+    const docLabel    = update.docType ? ` - ${update.docType}` : '';
 
     for (const user of targetUsers) {
       notifData.push({
@@ -224,7 +224,7 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
 
   if (notifData.length === 0) return;
 
-  // Batch insert — no skipDuplicates since Notification has no unique constraint
+  // Batch insert - no skipDuplicates since Notification has no unique constraint
   // but caller guarantees these are only called for genuinely new updates
   await prisma.notification.createMany({ data: notifData });
 }

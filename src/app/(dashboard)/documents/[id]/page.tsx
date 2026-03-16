@@ -159,7 +159,7 @@ export default function DocumentDetailPage() {
           <div className="mt-4 flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2.5">
             <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0" />
             <p className="text-sm text-amber-700 font-medium">
-              Expires {formatDate(new Date(doc.expiryDate!), 'MMM d, yyyy')} — review soon.
+              Expires {formatDate(new Date(doc.expiryDate!), 'MMM d, yyyy')} - review soon.
             </p>
           </div>
         )}

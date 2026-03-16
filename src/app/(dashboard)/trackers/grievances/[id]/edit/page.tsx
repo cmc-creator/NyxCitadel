@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { MessageSquareWarning, ArrowLeft } from 'lucide-react';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const COMPLAINANT_TYPES = [
   { value: 'PATIENT',              label: 'Patient' },
@@ -32,10 +31,10 @@ const CATEGORIES = [
 ];
 
 const SEVERITIES = [
-  { value: 'STANDARD',   label: 'Standard — routine grievance' },
-  { value: 'EXPEDITED',  label: 'Expedited — clinical condition requires faster response' },
-  { value: 'REGULATORY', label: 'Regulatory — potential regulatory violation' },
-  { value: 'SENTINEL',   label: 'Sentinel — linked to sentinel event / serious harm' },
+  { value: 'STANDARD',   label: 'Standard - routine grievance' },
+  { value: 'EXPEDITED',  label: 'Expedited - clinical condition requires faster response' },
+  { value: 'REGULATORY', label: 'Regulatory - potential regulatory violation' },
+  { value: 'SENTINEL',   label: 'Sentinel - linked to sentinel event / serious harm' },
 ];
 
 export default function EditGrievancePage() {
@@ -291,16 +290,13 @@ export default function EditGrievancePage() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between gap-3">
-          <DeleteButton apiPath={`/api/grievances/${id}`} redirectPath="/trackers/grievances" label="grievance" />
-          <div className="flex gap-3">
-            <a href={`/trackers/grievances/${id}`} className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
-              Cancel
-            </a>
-            <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
-              {saving ? 'Saving…' : 'Save Changes'}
-            </button>
-          </div>
+        <div className="flex gap-3">
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+            {saving ? 'Saving…' : 'Save Changes'}
+          </button>
+          <a href={`/trackers/grievances/${id}`} className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+            Cancel
+          </a>
         </div>
       </form>
     </div>

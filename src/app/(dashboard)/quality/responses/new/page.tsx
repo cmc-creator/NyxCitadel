@@ -233,7 +233,7 @@ export default function NewResponsePage() {
                 name="sourceType"
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
-                <option value="">—</option>
+                <option value="">-</option>
                 <option value="INCIDENT">Incident</option>
                 <option value="GRIEVANCE">Grievance</option>
                 <option value="SURVEY">Survey</option>

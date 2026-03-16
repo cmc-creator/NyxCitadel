@@ -104,7 +104,7 @@ export default async function SurveysPage() {
                     <td className="data-table-td text-slate-600">
                       {survey.conductedDate
                         ? new Date(survey.conductedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-                        : '—'}
+                        : '-'}
                     </td>
                     <td className="data-table-td">
                       <span className={cn('status-badge', cfg.class)}>{cfg.label}</span>
@@ -113,7 +113,7 @@ export default async function SurveysPage() {
                     <td className="data-table-td text-slate-600">
                       {survey.responseDeadline
                         ? new Date(survey.responseDeadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-                        : '—'}
+                        : '-'}
                     </td>
                     <td className="data-table-td">
                       <div className="flex gap-1 flex-wrap">

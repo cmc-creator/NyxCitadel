@@ -87,10 +87,10 @@ export default async function DischargePlanningPage() {
                 <tr key={p.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-white font-medium">{p.patientInitials}</td>
                   <td className="px-4 py-3 text-slate-300">{p.admitDate.toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-slate-400">{p.unit ?? '—'}</td>
-                  <td className="px-4 py-3 text-slate-400">{p.expectedDisposition ?? '—'}</td>
-                  <td className={`px-4 py-3 ${isPast ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{p.estimatedDischargeDate?.toLocaleDateString() ?? '—'}</td>
-                  <td className="px-4 py-3 text-slate-400">{p.careCoordinator ?? '—'}</td>
+                  <td className="px-4 py-3 text-slate-400">{p.unit ?? '-'}</td>
+                  <td className="px-4 py-3 text-slate-400">{p.expectedDisposition ?? '-'}</td>
+                  <td className={`px-4 py-3 ${isPast ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{p.estimatedDischargeDate?.toLocaleDateString() ?? '-'}</td>
+                  <td className="px-4 py-3 text-slate-400">{p.careCoordinator ?? '-'}</td>
                   <td className="px-4 py-3"><span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cfg.classes}`}>{cfg.label}</span></td>
                 </tr>
               );

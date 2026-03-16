@@ -82,7 +82,7 @@ export function computeTriage(params: {
   // Step 3: Repeat-offense escalation
   if (recentSameTypeCount >= 2) {
     tags.push('repeat_offense');
-    reasons.push(`${recentSameTypeCount} same-type incidents in the same unit within 60 days — repeat pattern detected.`);
+    reasons.push(`${recentSameTypeCount} same-type incidents in the same unit within 60 days - repeat pattern detected.`);
     if (level === 'MODERATE') level = 'HIGH';
     else if (level === 'LOW') level = 'MODERATE';
   }
@@ -90,7 +90,7 @@ export function computeTriage(params: {
   // Step 4: Regulatory-exposure tags
   if (adhsReportable) {
     tags.push('regulatory_exposure');
-    reasons.push('ADHS-reportable event — state reporting obligation triggered.');
+    reasons.push('ADHS-reportable event - state reporting obligation triggered.');
   }
   if (jcReportable) {
     tags.push('jc_reviewable');
@@ -109,7 +109,7 @@ export function computeTriage(params: {
   const cascadeTriggered = level === 'CRITICAL' || tags.includes('sentinel_class') || (level === 'HIGH' && jcReportable === true);
 
   if (cascadeTriggered) {
-    reasons.push('Severity and event class meet threshold — RCA workflow auto-triggered.');
+    reasons.push('Severity and event class meet threshold - RCA workflow auto-triggered.');
   }
 
   return {

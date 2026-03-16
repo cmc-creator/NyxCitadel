@@ -41,7 +41,7 @@ const STATUSES = [
 ];
 
 const RESPONSIBLE_ROLES = [
-  ['', '— Not specified —'],
+  ['', '- Not specified -'],
   ['COMPLIANCE_OFFICER', 'Compliance Officer'],
   ['EM_COORDINATOR', 'EM Coordinator'],
   ['NURSING_DIRECTOR', 'Nursing Director'],

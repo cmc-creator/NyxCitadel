@@ -1,13 +1,19 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
-import { AlertTriangle, Filter } from 'lucide-react';
-import { auth } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { redirect } from 'next/navigation';
+import { AlertTriangle, Filter, CheckCircle2, Clock } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
-
-const fmt = (d: Date | string | null): string =>
-  d ? new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—';
+const deficiencies = [
+  { id: 'DEF-2026-001', location: 'Seclusion Room 1 – Bathroom', unit: 'Acute Adult', category: 'LIGATURE_RISK', severity: 'IMMEDIATE_JEOPARDY', status: 'RESOLVED', desc: 'Shower curtain rod – standard, not breakaway', assignedTo: 'Carlos Vega', dueDate: '2026-01-16', resolvedDate: '2026-01-15', resolvedBy: 'Carlos Vega', roundId: 'EOC-ROUND-2026-LIG-01', notes: 'Rod removed same day. Curtain-less design pending plumber (scheduled 1/20). Room cleared for occupancy after verification.' },
+  { id: 'DEF-2026-002', location: 'Main Hallway – North Wing', unit: 'All Units', category: 'LIGATURE_RISK', severity: 'HIGH', status: 'IN_PROGRESS', desc: 'Overhead data conduit accessible from common area ceiling tile', assignedTo: 'Facilities Manager', dueDate: '2026-02-28', resolvedDate: null, resolvedBy: null, roundId: 'EOC-ROUND-2026-LIG-01', notes: 'Chase enclosure in progress. 70% complete as of 3/1/2026.' },
+  { id: 'DEF-2026-003', location: 'Janitor Closet – 1st Floor', unit: 'Main Floor', category: 'SECURITY', severity: 'LOW', status: 'RESOLVED', desc: 'Unsecured chemical storage - lock missing', assignedTo: 'Facilities Manager', dueDate: '2026-02-01', resolvedDate: '2026-01-21', resolvedBy: 'Facilities Manager', roundId: 'EOC-ROUND-2026-02', notes: 'Lock installed and keyed to master.' },
+  { id: 'DEF-2026-004', location: 'Medication Room', unit: 'Acute Adult', category: 'INFECTION_CONTROL', severity: 'MEDIUM', status: 'OPEN', desc: 'Hand hygiene dispenser empty – bracket corroded and inoperable', assignedTo: 'Maria Santos RN', dueDate: '2026-03-12', resolvedDate: null, resolvedBy: null, roundId: 'EOC-ROUND-2026-03', notes: 'New dispenser ordered. Temporary soap pump placed.' },
+  { id: 'DEF-2026-005', location: 'Nurses Station – Wing B', unit: 'Acute Adult', category: 'FIRE_SAFETY', severity: 'MEDIUM', status: 'IN_PROGRESS', desc: 'Fire door closer inoperable – door does not fully latch', assignedTo: 'Facilities Manager', dueDate: '2026-03-21', resolvedDate: null, resolvedBy: null, roundId: 'EOC-ROUND-2026-03', notes: 'Door closer on order. Interim: door wedge removed; staff instructed to manually close.' },
+  { id: 'DEF-2026-006', location: 'Seclusion Room 1', unit: 'Acute Adult', category: 'LIGATURE_RISK', severity: 'HIGH', status: 'IN_PROGRESS', desc: 'Emergency ligature cutter not mounted at door', assignedTo: 'Carlos Vega', dueDate: '2026-03-10', resolvedDate: null, resolvedBy: null, roundId: 'EOC-ROUND-2026-03', notes: 'Cutter ordered - standard hook-and-blade mount kit. ETA 3/10.' },
+  { id: 'DEF-2026-007', location: 'Room 118 – Bathroom', unit: 'Acute Adult', category: 'LIGATURE_RISK', severity: 'HIGH', status: 'OPEN', desc: 'Door hinge plates non-ligature-resistant (standard exposed knuckle)', assignedTo: 'Facilities Manager', dueDate: '2026-03-20', resolvedDate: null, resolvedBy: null, roundId: 'EOC-ROUND-2026-LIG-01', notes: 'Anti-ligature piano hinge vendor quote requested.' },
+  { id: 'DEF-2026-008', location: 'Kitchen Hood – Dietary Dept.', unit: 'Dietary', category: 'FIRE_SAFETY', severity: 'HIGH', status: 'IN_PROGRESS', desc: 'Hood suppression system PM overdue by 3 weeks - inspection tag expired', assignedTo: 'Facilities Manager', dueDate: '2026-03-05', resolvedDate: null, resolvedBy: null, roundId: 'EOC-ROUND-2026-FIRE-01', notes: 'Ansul service scheduled 3/20. Area in use under risk-managed monitoring.' },
+];
 
 const categoryBadge: Record<string, string> = {
   LIFE_SAFETY: 'bg-sky-950/50 text-sky-300 border border-sky-700/40',
@@ -39,48 +45,33 @@ const statusBadge: Record<string, string> = {
   ACCEPTED: 'bg-slate-700/40 text-slate-400',
 };
 
-const daysPastDue = (dueDate: Date | null, resolvedDate: Date | null) => {
-  if (!dueDate || resolvedDate) return null;
-  const now = new Date();
-  const diff = Math.ceil((now.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24));
+const daysPastDue = (dueDate: string, resolvedDate: string | null) => {
+  if (resolvedDate) return null;
+  const due = new Date(dueDate);
+  const now = new Date('2026-03-07');
+  const diff = Math.ceil((now.getTime() - due.getTime()) / (1000 * 60 * 60 * 24));
   return diff > 0 ? diff : null;
 };
 
-export default async function DeficienciesPage({
-  searchParams,
-}: {
-  searchParams: { cat?: string; status?: string };
-}) {
-  const session = await auth();
-  if (!session?.user?.facilityId) redirect('/login');
-  const { facilityId } = session.user;
+type CategoryFilter = 'ALL' | string;
+type StatusFilter = 'ALL' | 'OPEN' | 'IN_PROGRESS' | 'RESOLVED' | 'VERIFIED';
 
-  const catFilter = searchParams?.cat ?? 'ALL';
-  const statusFilter = searchParams?.status ?? 'ALL';
+export default function DeficienciesPage() {
+  const [catFilter, setCatFilter] = useState<CategoryFilter>('ALL');
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('ALL');
 
-  const where: Record<string, unknown> = { facilityId };
-  if (catFilter !== 'ALL') where.category = catFilter;
-  if (statusFilter !== 'ALL') where.status = statusFilter;
+  const categories = ['ALL', ...Array.from(new Set(deficiencies.map(d => d.category)))];
 
-  const [allDeficiencies, filtered] = await Promise.all([
-    prisma.eocDeficiency.findMany({ where: { facilityId }, orderBy: { createdAt: 'desc' } }),
-    prisma.eocDeficiency.findMany({ where, orderBy: { createdAt: 'desc' } }),
-  ]);
+  const filtered = deficiencies.filter(d => {
+    if (catFilter !== 'ALL' && d.category !== catFilter) return false;
+    if (statusFilter !== 'ALL' && d.status !== statusFilter) return false;
+    return true;
+  });
 
-  const usedCategories = ['ALL', ...Array.from(new Set(allDeficiencies.map(d => d.category as string)))];
-
-  const openCount = allDeficiencies.filter(d => d.status === 'OPEN').length;
-  const inProgressCount = allDeficiencies.filter(d => d.status === 'IN_PROGRESS').length;
-  const resolvedCount = allDeficiencies.filter(d => d.status === 'RESOLVED').length;
-  const overdueCount = allDeficiencies.filter(d => daysPastDue(d.dueDate, d.resolvedDate) !== null).length;
-
-  const buildUrl = (newCat: string, newStatus: string) => {
-    const p = new URLSearchParams();
-    if (newCat !== 'ALL') p.set('cat', newCat);
-    if (newStatus !== 'ALL') p.set('status', newStatus);
-    const qs = p.toString();
-    return `/eoc/deficiencies${qs ? '?' + qs : ''}`;
-  };
+  const openCount = deficiencies.filter(d => d.status === 'OPEN').length;
+  const inProgressCount = deficiencies.filter(d => d.status === 'IN_PROGRESS').length;
+  const resolvedCount = deficiencies.filter(d => d.status === 'RESOLVED').length;
+  const overdueCount = deficiencies.filter(d => daysPastDue(d.dueDate, d.resolvedDate) !== null).length;
 
   return (
     <div className="p-6 space-y-6 max-w-6xl mx-auto">
@@ -127,25 +118,25 @@ export default async function DeficienciesPage({
           <span>Category:</span>
         </div>
         <div className="flex gap-1 flex-wrap">
-          {usedCategories.map(c => (
-            <a
+          {categories.map(c => (
+            <button
               key={c}
-              href={buildUrl(c, statusFilter)}
+              onClick={() => setCatFilter(c)}
               className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${catFilter === c ? 'bg-sky-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
             >
-              {c === 'ALL' ? 'All' : c.replace(/_/g, ' ')}
-            </a>
+              {c === 'ALL' ? 'All' : c.replace('_', ' ')}
+            </button>
           ))}
         </div>
         <div className="flex gap-1 flex-wrap ml-2">
-          {(['ALL', 'OPEN', 'IN_PROGRESS', 'RESOLVED', 'VERIFIED'] as const).map(s => (
-            <a
+          {(['ALL','OPEN','IN_PROGRESS','RESOLVED'] as StatusFilter[]).map(s => (
+            <button
               key={s}
-              href={buildUrl(catFilter, s)}
+              onClick={() => setStatusFilter(s)}
               className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-purple-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
             >
-              {s === 'ALL' ? 'All Statuses' : s.replace(/_/g, ' ')}
-            </a>
+              {s === 'ALL' ? 'All Statuses' : s.replace('_', ' ')}
+            </button>
           ))}
         </div>
         <span className="ml-auto text-xs text-slate-500">{filtered.length} deficiencies</span>
@@ -172,11 +163,11 @@ export default async function DeficienciesPage({
                 return (
                   <tr key={d.id} className="hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
-                      <p className="text-xs font-mono text-slate-400">{d.defNumber}</p>
+                      <p className="text-xs font-mono text-slate-400">{d.id}</p>
                       <p className="text-xs text-slate-600 mt-0.5">{d.unit}</p>
                     </td>
                     <td className="px-4 py-3 max-w-xs">
-                      <p className="text-sm text-foreground leading-snug">{d.description}</p>
+                      <p className="text-sm text-foreground leading-snug">{d.desc}</p>
                       <p className="text-xs text-slate-500 mt-0.5">{d.location}</p>
                     </td>
                     <td className="px-4 py-3">
@@ -190,11 +181,11 @@ export default async function DeficienciesPage({
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-xs text-slate-400">{d.assignedTo ?? '—'}</span>
+                      <span className="text-xs text-slate-400">{d.assignedTo}</span>
                     </td>
                     <td className="px-4 py-3">
                       <p className={`text-xs font-medium ${overdue ? 'text-red-400' : 'text-slate-300'}`}>
-                        {d.resolvedDate ? fmt(d.resolvedDate) : fmt(d.dueDate)}
+                        {d.resolvedDate ?? d.dueDate}
                       </p>
                       {overdue && (
                         <p className="text-xs text-red-500 mt-0.5">{overdue}d overdue</p>
@@ -213,11 +204,6 @@ export default async function DeficienciesPage({
                   </tr>
                 );
               })}
-              {filtered.length === 0 && (
-                <tr>
-                  <td colSpan={7} className="px-4 py-10 text-center text-sm text-slate-500">No deficiencies found.</td>
-                </tr>
-              )}
             </tbody>
           </table>
         </div>

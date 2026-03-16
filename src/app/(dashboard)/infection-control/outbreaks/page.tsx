@@ -41,12 +41,12 @@ export default async function OutbreaksPage() {
       {active === 0 ? (
         <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 flex items-center gap-3">
           <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
-          <p className="text-sm font-semibold text-emerald-300">No active outbreaks — facility is clear</p>
+          <p className="text-sm font-semibold text-emerald-300">No active outbreaks - facility is clear</p>
         </div>
       ) : (
         <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 flex items-center gap-3">
           <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
-          <p className="text-sm font-semibold text-red-300">{active} Active Outbreak{active > 1 ? 's' : ''} — immediate containment required</p>
+          <p className="text-sm font-semibold text-red-300">{active} Active Outbreak{active > 1 ? 's' : ''} - immediate containment required</p>
         </div>
       )}
 
@@ -65,7 +65,7 @@ export default async function OutbreaksPage() {
                       <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">DOH Reported</span>
                     )}
                   </div>
-                  <h3 className="text-white font-bold">{o.organism} — {o.unitAffected}</h3>
+                  <h3 className="text-white font-bold">{o.organism} - {o.unitAffected}</h3>
                 </div>
                 <div className="text-right text-xs text-slate-400">
                   <p>Start: {new Date(o.startDate).toLocaleDateString()}</p>

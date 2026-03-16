@@ -8,13 +8,13 @@ export function cn(...inputs: ClassValue[]) {
 
 /** Human-friendly date display */
 export function formatDate(date: Date | string | null, fmt = 'MMM d, yyyy'): string {
-  if (!date) return '—';
+  if (!date) return '-';
   return format(new Date(date), fmt);
 }
 
 /** How long ago or until a date */
 export function fromNow(date: Date | string | null): string {
-  if (!date) return '—';
+  if (!date) return '-';
   return formatDistanceToNow(new Date(date), { addSuffix: true });
 }
 

@@ -73,7 +73,7 @@ export default async function PoliciesPage({
       {year && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
           <p className="text-sm text-amber-800">
-            <strong>{year} Archive View</strong> — showing policies with review date within {year}.
+            <strong>{year} Archive View</strong> - showing policies with review date within {year}.
           </p>
           <Link href="/trackers/policies" className="text-xs text-amber-700 underline">Return to live view</Link>
         </div>
@@ -176,7 +176,7 @@ export default async function PoliciesPage({
                             {overdue ? `${Math.abs(days)}d overdue` : days === 0 ? 'Due today' : `Due in ${days}d`}
                           </span>
                         );
-                      })() : <span className="text-xs text-slate-400">—</span>}
+                      })() : <span className="text-xs text-slate-400">-</span>}
                     </td>
                     <td className="px-4 py-3">
                       <span className={`text-xs font-medium px-2 py-0.5 rounded border ${statusColor[policy.status] ?? ''}`}>

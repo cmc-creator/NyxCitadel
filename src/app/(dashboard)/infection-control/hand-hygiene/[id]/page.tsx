@@ -5,7 +5,6 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, HandMetal , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -50,7 +49,6 @@ export default async function HandHygieneDetailPage({ params }: { params: { id: 
           <Link href={`/infection-control/hand-hygiene/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/infection-control/hand-hygiene/${params.id}`} redirectPath="/infection-control/hand-hygiene" label="hand hygiene audit" />
           <PrintButton />
         </div>
       </div>
@@ -61,7 +59,7 @@ export default async function HandHygieneDetailPage({ params }: { params: { id: 
             <div className="flex items-center gap-2 mb-1">
               <HandMetal className="w-5 h-5 text-teal-600" />
             </div>
-            <h1 className="text-xl font-bold text-slate-900">Hand Hygiene Audit — {audit.unit}</h1>
+            <h1 className="text-xl font-bold text-slate-900">Hand Hygiene Audit - {audit.unit}</h1>
             <p className="text-sm text-slate-500 mt-1">
               {formatDate(audit.auditDate)} &middot; Auditor: <strong>{audit.auditor}</strong>
               {audit.staffType && <> &middot; Staff: <strong>{audit.staffType}</strong></>}

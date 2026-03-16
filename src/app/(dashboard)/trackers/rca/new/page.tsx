@@ -133,7 +133,7 @@ export default function NewRcaPage() {
           New Root Cause Analysis
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">
-          JC LD.04.04.05 — Complete RCA for sentinel events using the 5-Whys methodology.
+          JC LD.04.04.05 - Complete RCA for sentinel events using the 5-Whys methodology.
         </p>
       </div>
 
@@ -231,7 +231,7 @@ export default function NewRcaPage() {
                 required
                 rows={4}
                 defaultValue={prefillDesc}
-                placeholder="Describe what happened — what was the adverse event or sentinel event?"
+                placeholder="Describe what happened - what was the adverse event or sentinel event?"
                 className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
               />
             </div>

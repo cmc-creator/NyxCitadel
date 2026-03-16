@@ -104,10 +104,10 @@ export default async function ResponseTemplatesPage() {
       <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3">
         <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-1">CMS / Regulatory Deadlines</p>
         <div className="flex flex-wrap gap-4 text-xs text-blue-800">
-          <span><strong>7 days</strong> — Patient Grievance Acknowledgment (42 CFR 482.13(e))</span>
-          <span><strong>30 days</strong> — Patient Grievance Resolution (42 CFR 482.13(e))</span>
-          <span><strong>24 hours</strong> — Sentinel Event Family Notification (JC)</span>
-          <span><strong>24 hours</strong> — AZ ADHS Adverse Event (R9-10-211)</span>
+          <span><strong>7 days</strong> - Patient Grievance Acknowledgment (42 CFR 482.13(e))</span>
+          <span><strong>30 days</strong> - Patient Grievance Resolution (42 CFR 482.13(e))</span>
+          <span><strong>24 hours</strong> - Sentinel Event Family Notification (JC)</span>
+          <span><strong>24 hours</strong> - AZ ADHS Adverse Event (R9-10-211)</span>
         </div>
       </div>
 

@@ -89,9 +89,9 @@ export default async function RestraintSeclusionPage() {
                     {e.patientInitials}
                     {e.deathOccurred && <span className="ml-1 text-xs text-red-400 font-semibold">[DEATH]</span>}
                   </td>
-                  <td className="px-4 py-3 text-slate-400">{e.unit ?? '—'}</td>
-                  <td className="px-4 py-3 text-slate-400">{e.rsType ?? '—'}</td>
-                  <td className="px-4 py-3 text-slate-300">{e.durationMinutes ? `${e.durationMinutes} min` : '—'}</td>
+                  <td className="px-4 py-3 text-slate-400">{e.unit ?? '-'}</td>
+                  <td className="px-4 py-3 text-slate-400">{e.rsType ?? '-'}</td>
+                  <td className="px-4 py-3 text-slate-300">{e.durationMinutes ? `${e.durationMinutes} min` : '-'}</td>
                   <td className="px-4 py-3"><span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cfg.classes}`}>{cfg.label}</span></td>
                 </tr>
               );

@@ -6,7 +6,6 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, LogOut , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -55,7 +54,6 @@ export default async function DischargePlanDetailPage({ params }: { params: { id
           <Link href={`/discharge-planning/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/discharge-planning/${params.id}`} redirectPath="/discharge-planning" label="discharge plan" />
           <PrintButton />
         </div>
       </div>
@@ -72,7 +70,7 @@ export default async function DischargePlanDetailPage({ params }: { params: { id
               {plan.patientMrn && <> &middot; MRN: <strong>{plan.patientMrn}</strong></>}
             </p>
           </div>
-          <StatusUpdater apiPath={`/api/discharge-planning/${plan.id}`} currentStatus={plan.status} options={STATUS_OPTIONS} />
+          <StatusUpdater apiPath={`/api/discharge-plans/${plan.id}`} currentStatus={plan.status} options={STATUS_OPTIONS} />
         </div>
       </div>
 
@@ -88,14 +86,14 @@ export default async function DischargePlanDetailPage({ params }: { params: { id
             <dl className="space-y-4">
               {plan.followUpCall1Date && (
                 <div>
-                  <dt className="text-xs text-slate-400">Call 1 — {formatDate(plan.followUpCall1Date)}</dt>
+                  <dt className="text-xs text-slate-400">Call 1 - {formatDate(plan.followUpCall1Date)}</dt>
                   <dd className="text-sm font-medium text-slate-800 mt-0.5">{plan.followUpCall1By}</dd>
                   {plan.followUpCall1Notes && <p className="text-xs text-slate-500 mt-1">{plan.followUpCall1Notes}</p>}
                 </div>
               )}
               {plan.followUpCall2Date && (
                 <div>
-                  <dt className="text-xs text-slate-400">Call 2 — {formatDate(plan.followUpCall2Date)}</dt>
+                  <dt className="text-xs text-slate-400">Call 2 - {formatDate(plan.followUpCall2Date)}</dt>
                   <dd className="text-sm font-medium text-slate-800 mt-0.5">{plan.followUpCall2By}</dd>
                 </div>
               )}

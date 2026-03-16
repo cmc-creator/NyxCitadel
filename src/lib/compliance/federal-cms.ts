@@ -3,14 +3,14 @@
  * For Inpatient Psychiatric Facilities (IPF) / Acute Psychiatric Hospitals
  *
  * Primary Sources:
- * - 42 CFR Part 482 — Conditions of Participation for Hospitals
- * - 42 CFR Part 482, Subpart E (§ 482.60–482.62) — Special Requirements for
+ * - 42 CFR Part 482 - Conditions of Participation for Hospitals
+ * - 42 CFR Part 482, Subpart E (§ 482.60–482.62) - Special Requirements for
  *   Psychiatric Hospitals (IPF CoPs)
- * - 42 CFR Part 441 Subpart D — IMD (Institutions for Mental Disease) Medicaid
- * - CMS State Operations Manual (SOM) — Appendix A (hospitals), Appendix AA (psych)
+ * - 42 CFR Part 441 Subpart D - IMD (Institutions for Mental Disease) Medicaid
+ * - CMS State Operations Manual (SOM) - Appendix A (hospitals), Appendix AA (psych)
  * - CMS Interpretive Guidelines for Restraint/Seclusion (482.13(e)(f))
  *
- * Last verified against: CMS SOM Update — January 2025
+ * Last verified against: CMS SOM Update - January 2025
  * Note: Review annually for CoP revisions. CMS publishes SOM updates at:
  * https://www.cms.gov/Regulations-and-Guidance/Guidance/Manuals/Internet-Only-Manuals-IOMs
  */
@@ -25,7 +25,7 @@ import {
 import type { ComplianceRequirement } from './arizona';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PATIENT RIGHTS — 42 CFR 482.13
+// PATIENT RIGHTS - 42 CFR 482.13
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const patientRightsCoP: ComplianceRequirement[] = [
@@ -49,7 +49,7 @@ export const patientRightsCoP: ComplianceRequirement[] = [
     id: 'cms-pr-002',
     title: 'Informed Consent Process Audit',
     description:
-      'Monthly audit of informed consent documentation — treatment, medications, ' +
+      'Monthly audit of informed consent documentation - treatment, medications, ' +
       'procedures, and research participation per 42 CFR 482.13(b).',
     category: EventCategory.INFORMED_CONSENT_AUDIT,
     regulatoryBody: RegulatoryBody.CMS,
@@ -121,13 +121,13 @@ export const patientRightsCoP: ComplianceRequirement[] = [
     priority: Priority.CRITICAL,
     responsibleRole: 'COMPLIANCE_OFFICER',
     notes:
-      'AZ Title 36 Involuntary Evaluation (IEA) — maximum 72 hrs without court order. ' +
+      'AZ Title 36 Involuntary Evaluation (IEA) - maximum 72 hrs without court order. ' +
       'Court-ordered evaluation (COE) extends to hearing. Patient has right to counsel.',
   },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// RESTRAINT & SECLUSION — 42 CFR 482.13(e)(f)
+// RESTRAINT & SECLUSION - 42 CFR 482.13(e)(f)
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const restraintSeclusionCoP: ComplianceRequirement[] = [
@@ -181,7 +181,7 @@ export const restraintSeclusionCoP: ComplianceRequirement[] = [
   },
   {
     id: 'cms-rs-004',
-    title: 'Restraint/Seclusion Staff Training — Initial & Annual',
+    title: 'Restraint/Seclusion Staff Training - Initial & Annual',
     description:
       'Verify all staff authorized to apply restraints or place in seclusion have completed ' +
       'required initial and annual training per 42 CFR 482.13(f)(2).',
@@ -198,7 +198,7 @@ export const restraintSeclusionCoP: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PSYCHIATRIC HOSPITAL SPECIAL CONDITIONS — 42 CFR 482.60–482.62
+// PSYCHIATRIC HOSPITAL SPECIAL CONDITIONS - 42 CFR 482.60–482.62
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const psychiatricHospitalCoP: ComplianceRequirement[] = [
@@ -222,7 +222,7 @@ export const psychiatricHospitalCoP: ComplianceRequirement[] = [
   },
   {
     id: 'cms-phc-002',
-    title: 'Medical Records — Psychiatric Special Requirements Audit',
+    title: 'Medical Records - Psychiatric Special Requirements Audit',
     description:
       'Annual audit of psychiatric hospital medical record requirements per 42 CFR 482.61(d): ' +
       'legal status, psychosocial history, summary of findings, condition on discharge.',
@@ -274,7 +274,7 @@ export const psychiatricHospitalCoP: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DISCHARGE PLANNING — 42 CFR 482.43
+// DISCHARGE PLANNING - 42 CFR 482.43
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const dischargePlanningCoP: ComplianceRequirement[] = [
@@ -314,7 +314,7 @@ export const dischargePlanningCoP: ComplianceRequirement[] = [
   },
   {
     id: 'cms-dp-003',
-    title: 'Readmission Review — Discharge Planning Effectiveness',
+    title: 'Readmission Review - Discharge Planning Effectiveness',
     description:
       'Monthly review of 30-day readmissions to assess discharge planning effectiveness. ' +
       'Identify barriers, incomplete discharge plans, and failed referrals.',
@@ -331,7 +331,7 @@ export const dischargePlanningCoP: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// QAPI — 42 CFR 482.21
+// QAPI - 42 CFR 482.21
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const qapiCoP: ComplianceRequirement[] = [
@@ -389,7 +389,7 @@ export const qapiCoP: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// INFECTION CONTROL CoP — 42 CFR 482.42
+// INFECTION CONTROL CoP - 42 CFR 482.42
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const infectionControlCoP: ComplianceRequirement[] = [
@@ -411,7 +411,7 @@ export const infectionControlCoP: ComplianceRequirement[] = [
   },
   {
     id: 'cms-ic-002',
-    title: 'Infection Control Surveillance — Ongoing',
+    title: 'Infection Control Surveillance - Ongoing',
     description:
       'Ongoing surveillance of healthcare-associated infections (HAIs). ' +
       'Monthly reporting of HAI rates: SSI, CLABSI, CAUTI, CDI, MRSA.',
@@ -428,7 +428,7 @@ export const infectionControlCoP: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PHARMACEUTICAL SERVICES CoP — 42 CFR 482.25
+// PHARMACEUTICAL SERVICES CoP - 42 CFR 482.25
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const pharmaceuticalServicesCoP: ComplianceRequirement[] = [
@@ -480,7 +480,7 @@ export const pharmaceuticalServicesCoP: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MEDICAL STAFF CoP — 42 CFR 482.22
+// MEDICAL STAFF CoP - 42 CFR 482.22
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const medicalStaffCoP: ComplianceRequirement[] = [
@@ -568,13 +568,13 @@ export const medicalStaffCoP: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// GOVERNING BODY CoP — 42 CFR 482.12
+// GOVERNING BODY CoP - 42 CFR 482.12
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const governingBodyCoP: ComplianceRequirement[] = [
   {
     id: 'cms-gb-001',
-    title: 'Governing Body Meeting — Quarterly',
+    title: 'Governing Body Meeting - Quarterly',
     description:
       'Governing Body / Board of Directors quarterly meeting. Agenda must include: ' +
       'quality and patient safety data, QAPI program report, credentialing actions, ' +

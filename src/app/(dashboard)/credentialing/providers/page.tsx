@@ -57,7 +57,7 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
             <h1 className="text-xl font-bold text-white">Provider Directory</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
           </div>
-          <p className="text-slate-400 text-sm">Active medical staff — credentials, privileges, license expiry, and OPPE/FPPE status.</p>
+          <p className="text-slate-400 text-sm">Active medical staff - credentials, privileges, license expiry, and OPPE/FPPE status.</p>
         </div>
         <a href="/credentialing/providers/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Add Provider
@@ -107,9 +107,9 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
                     </span>
                   </td>
                   <td className="px-3 py-3 text-slate-400 text-xs">{p.specialty}</td>
-                  <td className="px-3 py-3 text-slate-500 text-xs font-mono">{p.npi ?? '—'}</td>
+                  <td className="px-3 py-3 text-slate-500 text-xs font-mono">{p.npi ?? '-'}</td>
                   <td className={`px-3 py-3 text-xs font-semibold ${isExpired ? 'text-red-400' : isExpiringSoon ? 'text-amber-400' : 'text-slate-400'}`}>
-                    {licExpiry ? licExpiry.toLocaleDateString() : '—'}
+                    {licExpiry ? licExpiry.toLocaleDateString() : '-'}
                     {(isExpiringSoon || isExpired) && <span className="ml-1">⚠️</span>}
                   </td>
                   <td className="px-3 py-3">
@@ -123,7 +123,7 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
                       : <span className="text-emerald-400">Current</span>}
                   </td>
                   <td className="px-3 py-3 text-slate-400 text-xs">
-                    {p.reappointmentDate ? p.reappointmentDate.toLocaleDateString() : '—'}
+                    {p.reappointmentDate ? p.reappointmentDate.toLocaleDateString() : '-'}
                   </td>
                 </tr>
               );

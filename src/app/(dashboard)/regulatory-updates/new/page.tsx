@@ -19,10 +19,10 @@ const REGULATORY_BODIES = [
 ];
 
 const URGENCY_OPTIONS = [
-  { value: 'CRITICAL',      label: '🚨 Critical — Immediate action required',     desc: 'Regulatory mandate enforcement, immediate threat to compliance' },
-  { value: 'HIGH',          label: '⚠️ High Priority — Review within 7 days',    desc: 'Change affects current practice or survey readiness' },
-  { value: 'MEDIUM',        label: 'ℹ️ Medium — Review within 30 days',          desc: 'Guidance update, clarification, or upcoming deadline' },
-  { value: 'INFORMATIONAL', label: '📋 Informational — Awareness only',           desc: 'New resource, best practice revision, no immediate action' },
+  { value: 'CRITICAL',      label: '🚨 Critical - Immediate action required',     desc: 'Regulatory mandate enforcement, immediate threat to compliance' },
+  { value: 'HIGH',          label: '⚠️ High Priority - Review within 7 days',    desc: 'Change affects current practice or survey readiness' },
+  { value: 'MEDIUM',        label: 'ℹ️ Medium - Review within 30 days',          desc: 'Guidance update, clarification, or upcoming deadline' },
+  { value: 'INFORMATIONAL', label: '📋 Informational - Awareness only',           desc: 'New resource, best practice revision, no immediate action' },
 ];
 
 export default function NewRegulatoryUpdatePage() {
@@ -53,7 +53,7 @@ export default function NewRegulatoryUpdatePage() {
     }
     setSaving(true);
     try {
-      const res = await fetch('/api/regulatory-updates', {
+      const res = await fetch('/api/reg-updates', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -66,7 +66,7 @@ export default function NewRegulatoryUpdatePage() {
       const update = await res.json();
       router.push(`/regulatory-updates/${update.id}`);
     } catch {
-      setError('Network error — please try again.');
+      setError('Network error - please try again.');
     } finally {
       setSaving(false);
     }
@@ -147,7 +147,7 @@ export default function NewRegulatoryUpdatePage() {
             value={form.title}
             onChange={e => set('title', e.target.value)}
             required
-            placeholder="e.g. CMS Updated Discharge Planning Requirements — Effective July 2026"
+            placeholder="e.g. CMS Updated Discharge Planning Requirements - Effective July 2026"
             className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition"
           />
         </div>

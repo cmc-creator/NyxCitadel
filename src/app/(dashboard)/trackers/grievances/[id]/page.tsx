@@ -6,7 +6,6 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, MessageSquareWarning, Clock, AlertTriangle , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -49,7 +48,6 @@ export default async function GrievanceDetailPage({ params }: { params: { id: st
           <Link href={`/trackers/grievances/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/grievances/${params.id}`} redirectPath="/trackers/grievances" label="grievance" />
           <PrintButton />
         </div>
       </div>
@@ -75,10 +73,10 @@ export default async function GrievanceDetailPage({ params }: { params: { id: st
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <DeadlineCard title="Acknowledgment" subtitle="CMS 482.13(e) — 7 calendar days"
+        <DeadlineCard title="Acknowledgment" subtitle="CMS 482.13(e) - 7 calendar days"
           dueDate={g.acknowledgmentDueDate} completedDate={g.acknowledgmentDate}
           completedBy={g.acknowledgmentSentBy} daysLeft={daysLeft(g.acknowledgmentDueDate)} overdue={ackOverdue} />
-        <DeadlineCard title="Resolution" subtitle="CMS 482.13(e) — 30 calendar days"
+        <DeadlineCard title="Resolution" subtitle="CMS 482.13(e) - 30 calendar days"
           dueDate={g.resolutionDueDate} completedDate={g.resolutionDate}
           completedBy={g.resolutionSentBy} daysLeft={daysLeft(g.resolutionDueDate)} overdue={resOverdue} />
       </div>

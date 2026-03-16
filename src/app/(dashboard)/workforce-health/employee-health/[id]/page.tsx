@@ -5,7 +5,6 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, HeartPulse , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -59,7 +58,6 @@ export default async function EmployeeHealthDetailPage({ params }: { params: { i
           <Link href={`/workforce-health/employee-health/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/workforce-health/employee-health/${params.id}`} redirectPath="/workforce-health/employee-health" label="employee health record" />
           <PrintButton />
         </div>
       </div>
@@ -80,7 +78,7 @@ export default async function EmployeeHealthDetailPage({ params }: { params: { i
 
       {tbDue && (
         <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-          <p className="text-sm font-semibold text-orange-800">TB Screening Overdue — Last due: {record.tbNextDueDate ? formatDate(record.tbNextDueDate) : 'Unknown'}</p>
+          <p className="text-sm font-semibold text-orange-800">TB Screening Overdue - Last due: {record.tbNextDueDate ? formatDate(record.tbNextDueDate) : 'Unknown'}</p>
         </div>
       )}
 
@@ -109,7 +107,7 @@ export default async function EmployeeHealthDetailPage({ params }: { params: { i
               <>
                 <div>
                   <dt className="text-xs text-slate-400">Declined</dt>
-                  <dd className="text-sm font-semibold text-yellow-600 mt-0.5">Yes — Declined</dd>
+                  <dd className="text-sm font-semibold text-yellow-600 mt-0.5">Yes - Declined</dd>
                 </div>
                 <Field label="Decline Reason" value={record.fluDeclineReason} />
               </>

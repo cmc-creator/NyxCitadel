@@ -98,7 +98,7 @@ export default async function IrIadPage({
         <div className="bg-red-50 border border-red-300 rounded-xl px-4 py-3 flex items-center gap-3">
           <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />
           <p className="text-sm text-red-700 font-semibold">
-            {sentinel.length} open Sentinel Event{sentinel.length > 1 ? 's' : ''} — JC reporting and RCA required within 45 days.
+            {sentinel.length} open Sentinel Event{sentinel.length > 1 ? 's' : ''} - JC reporting and RCA required within 45 days.
           </p>
         </div>
       )}
@@ -185,7 +185,7 @@ export default async function IrIadPage({
                           {r.patientMRN && <span className="text-slate-400"> · {r.patientMRN}</span>}
                         </span>
                       ) : (
-                        <span className="text-slate-400">—</span>
+                        <span className="text-slate-400">-</span>
                       )}
                     </td>
                     <td className="px-4 py-3">

@@ -102,9 +102,9 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
                   <td className="px-4 py-3 font-semibold text-white text-xs">{b.vendorName}</td>
                   <td className="px-4 py-3 text-slate-400 text-xs">{b.serviceDescription}</td>
                   <td className="px-4 py-3 text-slate-400 text-xs">{b.agreementDate.toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-slate-300 text-xs">{b.expiryDate ? b.expiryDate.toLocaleDateString() : '—'}</td>
+                  <td className="px-4 py-3 text-slate-300 text-xs">{b.expiryDate ? b.expiryDate.toLocaleDateString() : '-'}</td>
                   <td className={`px-4 py-3 font-bold text-xs ${daysLeft === null ? 'text-slate-400' : daysLeft <= 0 ? 'text-red-400' : daysLeft <= 90 ? 'text-amber-400' : 'text-slate-400'}`}>
-                    {daysLeft === null ? '—' : daysLeft <= 0 ? `${Math.abs(daysLeft)}d overdue` : `${daysLeft}d`}
+                    {daysLeft === null ? '-' : daysLeft <= 0 ? `${Math.abs(daysLeft)}d overdue` : `${daysLeft}d`}
                   </td>
                   <td className="px-4 py-3">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[b.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>

@@ -28,19 +28,10 @@ export default function SignupPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    try {
-      const res = await fetch('/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      if (!res.ok) throw new Error('server error');
-      setSubmitted(true);
-    } catch {
-      alert('Something went wrong — please try again or email us directly.');
-    } finally {
-      setLoading(false);
-    }
+    // Simulate API call - hook up to your CRM/email service
+    await new Promise(r => setTimeout(r, 1200));
+    setLoading(false);
+    setSubmitted(true);
   }
 
   return (
@@ -77,7 +68,7 @@ export default function SignupPage() {
             </span>
           </h1>
           <p className="text-slate-400 text-base leading-relaxed">
-            Explore the live demo instantly, or request access for your facility. Full platform, real data — no credit card required to evaluate.
+            Explore the live demo instantly, or request access for your facility. Full platform, real data - no credit card required to evaluate.
           </p>
         </div>
 

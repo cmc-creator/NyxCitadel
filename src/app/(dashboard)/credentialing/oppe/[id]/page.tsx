@@ -5,7 +5,6 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, BarChart3 , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -60,7 +59,6 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
           <Link href={`/credentialing/oppe/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/credentialing/oppe/${params.id}`} redirectPath="/credentialing/oppe" label="OPPE review" />
           <PrintButton />
         </div>
       </div>
@@ -76,7 +74,7 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
               </span>
             </div>
             <h1 className="text-xl font-bold text-slate-900">
-              OPPE — {oppe.provider.firstName} {oppe.provider.lastName}, {oppe.provider.credentials}
+              OPPE - {oppe.provider.firstName} {oppe.provider.lastName}, {oppe.provider.credentials}
             </h1>
             <p className="text-sm text-slate-500 mt-1">
               {oppe.provider.specialty} &middot; {formatDate(oppe.periodStart)} – {formatDate(oppe.periodEnd)}
@@ -107,7 +105,7 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
                         <td className="py-2 text-right text-slate-600">{m.numerator}</td>
                         <td className="py-2 text-right text-slate-600">{m.denominator}</td>
                         <td className="py-2 text-right text-slate-600">{m.rate?.toFixed(1)}%</td>
-                        <td className="py-2 text-right text-slate-400">{m.benchmark != null ? `${m.benchmark}%` : '—'}</td>
+                        <td className="py-2 text-right text-slate-400">{m.benchmark != null ? `${m.benchmark}%` : '-'}</td>
                       </tr>
                     ))}
                   </tbody>

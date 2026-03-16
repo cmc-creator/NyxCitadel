@@ -71,7 +71,7 @@ export default function NewPolicyPage() {
       regulatoryBodies: selectedBodies,
     };
 
-    const res = await fetch('/api/policies', {
+    const res = await fetch('/api/policy-docs', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

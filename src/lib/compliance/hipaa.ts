@@ -1,23 +1,23 @@
 /**
  * HIPAA Compliance Requirements
- * For Covered Entities — Inpatient Psychiatric / Behavioral Health Hospitals
+ * For Covered Entities - Inpatient Psychiatric / Behavioral Health Hospitals
  *
  * Primary Sources:
- * - 45 CFR Part 164 Subpart A — General Administrative Requirements
- * - 45 CFR Part 164 Subpart C — Security Rule (§ 164.302–164.318)
- * - 45 CFR Part 164 Subpart D — Notification in the Case of Breach (§ 164.400–164.414)
- * - 45 CFR Part 164 Subpart E — Privacy Rule (§ 164.500–164.534)
+ * - 45 CFR Part 164 Subpart A - General Administrative Requirements
+ * - 45 CFR Part 164 Subpart C - Security Rule (§ 164.302–164.318)
+ * - 45 CFR Part 164 Subpart D - Notification in the Case of Breach (§ 164.400–164.414)
+ * - 45 CFR Part 164 Subpart E - Privacy Rule (§ 164.500–164.534)
  * - HHS Office for Civil Rights (OCR) Guidance Documents
- * - 42 CFR Part 2 — Substance Use Disorder Patient Records (SUD-specific)
+ * - 42 CFR Part 2 - Substance Use Disorder Patient Records (SUD-specific)
  *
- * Last verified against: HHS OCR HIPAA Guidance — 2024 Final Rules
+ * Last verified against: HHS OCR HIPAA Guidance - 2024 Final Rules
  * Note: Review annually. Key updates tracked at:
  * https://www.hhs.gov/hipaa/for-professionals/compliance-enforcement/index.html
  *
  * BEHAVIORAL HEALTH NOTE:
  * Psychiatric notes receive HEIGHTENED protection under 45 CFR 164.524(a)(1)(i).
  * Patients may request restriction on disclosure to health plan for self-pay services.
- * 42 CFR Part 2 applies if facility provides SUD treatment — stricter consent requirements.
+ * 42 CFR Part 2 applies if facility provides SUD treatment - stricter consent requirements.
  */
 
 import {
@@ -30,18 +30,18 @@ import {
 import type { ComplianceRequirement } from './arizona';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PRIVACY RULE — 45 CFR 164 Subpart E
+// PRIVACY RULE - 45 CFR 164 Subpart E
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const hipaaPrivacyRequirements: ComplianceRequirement[] = [
   {
     id: 'hipaa-pr-001',
-    title: 'Notice of Privacy Practices (NPP) — Annual Review',
+    title: 'Notice of Privacy Practices (NPP) - Annual Review',
     description:
       'Annual review and update of the Notice of Privacy Practices (NPP) to reflect current ' +
       'privacy practices, legal requirements, and any policy changes per 45 CFR 164.520.',
     category: EventCategory.PATIENT_RIGHTS_REVIEW,
-    regulatoryBody: RegulatoryBody.OTHER, // HHS/OCR — use OTHER as closest
+    regulatoryBody: RegulatoryBody.OTHER, // HHS/OCR - use OTHER as closest
     standardRef: '45 CFR 164.520',
     frequency: Frequency.ANNUAL,
     priority: Priority.HIGH,
@@ -72,7 +72,7 @@ export const hipaaPrivacyRequirements: ComplianceRequirement[] = [
     id: 'hipaa-pr-003',
     title: 'Minimum Necessary Standard Compliance',
     description:
-      'Semi-annual review of minimum necessary policies — ensuring PHI access is limited ' +
+      'Semi-annual review of minimum necessary policies - ensuring PHI access is limited ' +
       'to least amount necessary to accomplish the intended purpose per 45 CFR 164.502(b).',
     category: EventCategory.PATIENT_RIGHTS_REVIEW,
     regulatoryBody: RegulatoryBody.OTHER,
@@ -115,20 +115,20 @@ export const hipaaPrivacyRequirements: ComplianceRequirement[] = [
     priority: Priority.CRITICAL,
     responsibleRole: 'COMPLIANCE_OFFICER',
     notes:
-      '42 CFR Part 2 was significantly updated in 2024 — now allows disclosure with written consent ' +
+      '42 CFR Part 2 was significantly updated in 2024 - now allows disclosure with written consent ' +
       'to covered entities for TPO (Treatment, Payment, Operations), but prohibition on use in ' +
       'criminal investigations remains stronger than HIPAA. Verify consent forms comply with Part 2 format.',
   },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SECURITY RULE — 45 CFR 164 Subpart C
+// SECURITY RULE - 45 CFR 164 Subpart C
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const hipaaSecurityRequirements: ComplianceRequirement[] = [
   {
     id: 'hipaa-sec-001',
-    title: 'Security Risk Analysis (SRA) — Annual',
+    title: 'Security Risk Analysis (SRA) - Annual',
     description:
       'Annual comprehensive Security Risk Analysis identifying threats and vulnerabilities ' +
       'to ePHI per 45 CFR 164.308(a)(1). Must cover all ePHI systems and locations.',
@@ -149,7 +149,7 @@ export const hipaaSecurityRequirements: ComplianceRequirement[] = [
     id: 'hipaa-sec-002',
     title: 'Security Risk Management Plan Review',
     description:
-      'Annual review and update of the Security Risk Management plan — documenting how ' +
+      'Annual review and update of the Security Risk Management plan - documenting how ' +
       'identified risks will be reduced to reasonable and appropriate levels per 45 CFR 164.308(a)(1)(ii)(B).',
     category: EventCategory.CMS_CONDITIONS_REVIEW,
     regulatoryBody: RegulatoryBody.OTHER,
@@ -163,7 +163,7 @@ export const hipaaSecurityRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'hipaa-sec-003',
-    title: 'Workforce Security Training — Annual',
+    title: 'Workforce Security Training - Annual',
     description:
       'Annual security awareness training for all workforce members who access ePHI. ' +
       'Must cover: phishing, password security, device management, reporting incidents.',
@@ -179,7 +179,7 @@ export const hipaaSecurityRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'hipaa-sec-004',
-    title: 'Access Control Review — User Access Audit',
+    title: 'Access Control Review - User Access Audit',
     description:
       'Quarterly review of ePHI system user accounts: add/remove users, verify access levels ' +
       'remain appropriate, audit terminated employee access removal per 45 CFR 164.312(a).',
@@ -195,7 +195,7 @@ export const hipaaSecurityRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'hipaa-sec-005',
-    title: 'Contingency Plan Testing — Annual',
+    title: 'Contingency Plan Testing - Annual',
     description:
       'Annual testing of data backup and disaster recovery plan for ePHI systems per 45 CFR 164.308(a)(7). ' +
       'Includes restore test from backup.',
@@ -211,7 +211,7 @@ export const hipaaSecurityRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'hipaa-sec-006',
-    title: 'Physical Safeguards Audit — Workstation/Device',
+    title: 'Physical Safeguards Audit - Workstation/Device',
     description:
       'Annual audit of physical safeguards for workstations, mobile devices, and media ' +
       'containing ePHI per 45 CFR 164.310.',
@@ -228,7 +228,7 @@ export const hipaaSecurityRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'hipaa-sec-007',
-    title: 'Audit Log Review — Monthly',
+    title: 'Audit Log Review - Monthly',
     description:
       'Monthly review of EHR/ePHI system audit logs for inappropriate access to PHI, ' +
       'bulk exports, access to VIP/staff records, and after-hours activity.',
@@ -245,7 +245,7 @@ export const hipaaSecurityRequirements: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// BREACH NOTIFICATION RULE — 45 CFR 164 Subpart D
+// BREACH NOTIFICATION RULE - 45 CFR 164 Subpart D
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const hipaaBreachNotificationRequirements: ComplianceRequirement[] = [
@@ -299,7 +299,7 @@ export const hipaaBreachNotificationRequirements: ComplianceRequirement[] = [
     notes:
       'Report via HHS OCR Breach Reporting Portal: https://ocrportal.hhs.gov/ocr/breach/wizard_breach_add.jsf ' +
       'For breaches ≥500: report within 60 days of discovery (no annual batch). ' +
-      'For AZ: ADHS requires reporting certain health data breaches — verify current AZ law.',
+      'For AZ: ADHS requires reporting certain health data breaches - verify current AZ law.',
   },
   {
     id: 'hipaa-bn-004',
@@ -342,7 +342,7 @@ export const hipaaWorkforceRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'hipaa-wf-002',
-    title: 'HIPAA Privacy/Security Training — New Hire',
+    title: 'HIPAA Privacy/Security Training - New Hire',
     description:
       'Ensure all new workforce members receive HIPAA privacy and security training ' +
       'within 30 days of hire per 45 CFR 164.530(b) / 164.308(a)(5).',
@@ -354,11 +354,11 @@ export const hipaaWorkforceRequirements: ComplianceRequirement[] = [
     responsibleRole: 'COMPLIANCE_OFFICER',
     notes:
       'Train within 30 days of hire, before any access to PHI. ' +
-      'Document training completion — retain records 6 years.',
+      'Document training completion - retain records 6 years.',
   },
   {
     id: 'hipaa-wf-003',
-    title: 'HIPAA Annual Refresher Training — All Staff',
+    title: 'HIPAA Annual Refresher Training - All Staff',
     description:
       'Annual HIPAA privacy and security refresher training for all workforce members ' +
       'with access to PHI per 45 CFR 164.530(b) / 164.308(a)(5).',

@@ -5,7 +5,6 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, AlertTriangle, Shield , Pencil } from 'lucide-react';
 import { PrintButton } from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 
 export const dynamic = 'force-dynamic';
@@ -65,7 +64,6 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
           <Link href={`/pharmacy/controlled-substances/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/pharmacy/controlled-substances/${params.id}`} redirectPath="/pharmacy/controlled-substances" label="CS count record" />
           <PrintButton />
         </div>
       </div>
@@ -74,7 +72,7 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
         <div className="flex items-start gap-3 bg-red-50 border border-red-300 text-red-800 rounded-2xl p-4">
           <AlertTriangle className="w-5 h-5 mt-0.5 flex-shrink-0" />
           <div>
-            <p className="font-semibold">Open Discrepancy — Action Required</p>
+            <p className="font-semibold">Open Discrepancy - Action Required</p>
             <p className="text-sm mt-0.5">
               A count discrepancy of <strong>{log.countDifference ?? 0}</strong> remains unresolved.
               Investigate, document explanation, and report to DEA if theft or significant loss is suspected.
@@ -145,7 +143,7 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
               <div>
                 <dt className="text-xs text-slate-400">Reported to Pharmacy</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${log.reportedToPharmacy ? 'text-orange-600' : 'text-slate-400'}`}>
-                  {log.reportedToPharmacy ? `Yes — ${log.reportedDate ? formatDate(log.reportedDate) : ''}` : 'No'}
+                  {log.reportedToPharmacy ? `Yes - ${log.reportedDate ? formatDate(log.reportedDate) : ''}` : 'No'}
                 </dd>
               </div>
             </dl>

@@ -66,7 +66,7 @@ export default function NewEquipmentPmPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Equipment Name *</label>
-              <input name="equipmentName" required className="form-input w-full" placeholder="e.g. Fire Suppression System — Kitchen" />
+              <input name="equipmentName" required className="form-input w-full" placeholder="e.g. Fire Suppression System - Kitchen" />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Asset Tag / Serial #</label>

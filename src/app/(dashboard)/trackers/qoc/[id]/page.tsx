@@ -6,7 +6,6 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, ClipboardCheck, AlertTriangle, Clock , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,7 +46,6 @@ export default async function QocDetailPage({ params }: { params: { id: string }
           <Link href={`/trackers/qoc/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/qoc/${params.id}`} redirectPath="/trackers/qoc" label="QOC complaint" />
           <PrintButton />
         </div>
       </div>
@@ -66,7 +64,7 @@ export default async function QocDetailPage({ params }: { params: { id: string }
             <h1 className="text-xl font-bold text-slate-900 line-clamp-2">{qoc.allegationSummary}</h1>
             <p className="text-sm text-slate-500 mt-1">Received: <strong>{formatDate(qoc.dateReceived)}</strong></p>
           </div>
-          <StatusUpdater apiPath={`/api/qoc/${qoc.id}`} currentStatus={qoc.status} options={STATUS_OPTIONS} />
+          <StatusUpdater apiPath={`/api/qoc-complaints/${qoc.id}`} currentStatus={qoc.status} options={STATUS_OPTIONS} />
         </div>
       </div>
 

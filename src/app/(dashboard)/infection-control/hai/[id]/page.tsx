@@ -5,7 +5,6 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, Activity , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -63,7 +62,6 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
           <Link href={`/infection-control/hai/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/infection-control/hai/${params.id}`} redirectPath="/infection-control/hai" label="HAI report" />
           <PrintButton />
         </div>
       </div>
@@ -83,7 +81,7 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
 
       {aboveBenchmark && (
         <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-          <p className="text-sm font-semibold text-orange-800">SIR Above NHSN Benchmark — Review required and consider QAPI project.</p>
+          <p className="text-sm font-semibold text-orange-800">SIR Above NHSN Benchmark - Review required and consider QAPI project.</p>
         </div>
       )}
 

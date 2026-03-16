@@ -136,13 +136,13 @@ export default function NewQapiProjectPage() {
 
         {/* PDSA content */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Problem Statement & Aim (PDSA — Plan)</h2>
+          <h2 className="text-sm font-semibold text-slate-800">Problem Statement & Aim (PDSA - Plan)</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Problem Statement *</label>
             <textarea name="problemStatement" required rows={3} placeholder="Describe the problem using data. e.g., 'Restraint use rate has averaged 8.2 per 1,000 pt-days in Q1 2026, exceeding the facility target of 5.0 and national benchmark.'" className="form-input w-full resize-none" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Aim Statement * — SMART goal</label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Aim Statement * - SMART goal</label>
             <textarea name="aim" required rows={2} placeholder="e.g., 'Reduce the restraint use rate from 8.2 to ≤5.0 per 1,000 pt-days by December 31, 2026 through enhanced de-escalation training and environmental modifications.'" className="form-input w-full resize-none" />
           </div>
           <div className="grid grid-cols-3 gap-3">
@@ -160,14 +160,14 @@ export default function NewQapiProjectPage() {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Measure — How will success be measured?</label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Measure - How will success be measured?</label>
             <input name="measure" placeholder="e.g., Monthly restraint rate per 1,000 patient-days from incident reporting system" className="form-input w-full" />
           </div>
         </div>
 
         {/* Interventions */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Planned Interventions (PDSA — Do)</h2>
+          <h2 className="text-sm font-semibold text-slate-800">Planned Interventions (PDSA - Do)</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Interventions</label>
             <textarea name="interventions" rows={4} placeholder="List specific interventions to be tested. e.g.:&#10;1. Implement CPI refresher training for all direct care staff by March 2026&#10;2. Establish sensory room on Unit A by April 2026&#10;3. Daily restraint review huddle with charge nurses&#10;4. Root cause analysis for each restraint event" className="form-input w-full resize-none" />

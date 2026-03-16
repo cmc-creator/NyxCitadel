@@ -61,7 +61,7 @@ export default function NewQocPage() {
     setSaving(true);
     setError('');
     try {
-      const res = await fetch('/api/qoc', {
+      const res = await fetch('/api/qoc-complaints', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -96,7 +96,7 @@ export default function NewQocPage() {
           Log QOC / LOI Complaint
         </h1>
         <p className="text-sm text-slate-500 mt-1">
-          CMS 42 CFR 488 — Quality of Care complaint or Letter of Investigation received
+          CMS 42 CFR 488 - Quality of Care complaint or Letter of Investigation received
         </p>
       </div>
 

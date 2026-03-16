@@ -136,7 +136,7 @@ function ProjectRow({ project }: { project: any }) {
           </div>
           <p className="text-xs text-slate-600 mt-1 line-clamp-2">{project.problemStatement}</p>
           <div className="flex items-center gap-3 mt-1.5 text-xs text-slate-400">
-            <span>Owner: {project.owner ?? '—'}</span>
+            <span>Owner: {project.owner ?? '-'}</span>
             <span>Target: {formatDate(new Date(project.targetDate), 'MMM d, yyyy')}</span>
             {project.baselineValue !== null && <span>Baseline: {project.baselineValue}{project.targetUnit ?? ''}</span>}
             {project.targetValue !== null && <span>Goal: {project.targetValue}{project.targetUnit ?? ''}</span>}

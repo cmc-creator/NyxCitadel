@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ShieldOff, ArrowLeft } from 'lucide-react';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const RS_TYPES = [
   'PHYSICAL_RESTRAINT', 'MECHANICAL_RESTRAINT', 'CHEMICAL_RESTRAINT', 'SECLUSION', 'PHYSICAL_HOLD',
@@ -149,14 +148,11 @@ export default function EditRestraintEventPage() {
           </div>
         </div>
 
-        <div className="px-6 py-4 flex items-center justify-between gap-3">
-          <DeleteButton apiPath={`/api/restraint-seclusion/${id}`} redirectPath="/restraint-seclusion" label="restraint/seclusion event" />
-          <div className="flex gap-3">
-            <a href={`/restraint-seclusion/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
-            <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
-              {saving ? 'Saving…' : 'Save Changes'}
-            </button>
-          </div>
+        <div className="px-6 py-4 flex justify-end gap-3">
+          <a href={`/restraint-seclusion/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+            {saving ? 'Saving…' : 'Save Changes'}
+          </button>
         </div>
       </form>
     </div>

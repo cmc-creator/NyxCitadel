@@ -85,7 +85,7 @@ export default async function DrillScorecardPage({ params }: { params: { id: str
       goal: '< 4:00',
       actual: formatTime(drill.evacuationSeconds ?? null),
       rawScore: evacuationScore,
-      grade: evacuationScore != null ? scoreToGrade(evacuationScore) : '—',
+      grade: evacuationScore != null ? scoreToGrade(evacuationScore) : '-',
     },
     {
       metric: 'Staff Accountability',
@@ -93,7 +93,7 @@ export default async function DrillScorecardPage({ params }: { params: { id: str
       goal: '100%',
       actual: drill.accountabilityPct != null ? `${drill.accountabilityPct.toFixed(1)}%` : 'N/A',
       rawScore: drill.accountabilityPct ?? null,
-      grade: drill.accountabilityPct != null ? scoreToGrade(drill.accountabilityPct) : '—',
+      grade: drill.accountabilityPct != null ? scoreToGrade(drill.accountabilityPct) : '-',
     },
     {
       metric: 'Critical Task Mastery',
@@ -101,7 +101,7 @@ export default async function DrillScorecardPage({ params }: { params: { id: str
       goal: '100%',
       actual: drill.taskMasteryPct != null ? `${drill.taskMasteryPct.toFixed(1)}%` : 'N/A',
       rawScore: drill.taskMasteryPct ?? null,
-      grade: drill.taskMasteryPct != null ? scoreToGrade(drill.taskMasteryPct) : '—',
+      grade: drill.taskMasteryPct != null ? scoreToGrade(drill.taskMasteryPct) : '-',
     },
     {
       metric: 'Comm Response Lag',
@@ -109,11 +109,11 @@ export default async function DrillScorecardPage({ params }: { params: { id: str
       goal: '< 30s',
       actual: drill.commLagSeconds != null ? `${drill.commLagSeconds}s` : 'N/A',
       rawScore: commScore,
-      grade: commScore != null ? scoreToGrade(commScore) : '—',
+      grade: commScore != null ? scoreToGrade(commScore) : '-',
     },
   ];
 
-  const finalGrade = drill.resilienceGrade ?? '—';
+  const finalGrade = drill.resilienceGrade ?? '-';
 
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-6 print:p-0">
@@ -132,7 +132,7 @@ export default async function DrillScorecardPage({ params }: { params: { id: str
             Resilience Report Card
           </h1>
           <p className="text-slate-500 text-sm mt-1">
-            {drill.drillType} — {drill.facility.name} —{' '}
+            {drill.drillType} - {drill.facility.name} -{' '}
             {drill.drillEndedAt
               ? new Date(drill.drillEndedAt).toLocaleDateString('en-US', {
                   month: 'long', day: 'numeric', year: 'numeric',
@@ -300,7 +300,7 @@ function Chip({ label, pct, weight }: { label: string; pct: number | null; weigh
     <div className="bg-slate-800 rounded-lg px-3 py-1.5 flex justify-between items-center gap-2">
       <span className="text-slate-400 text-xs truncate">{label}</span>
       <span className="text-white font-bold text-xs whitespace-nowrap">
-        {pct != null ? `${pct.toFixed(0)}%` : '—'} <span className="text-slate-500">·{weight}%</span>
+        {pct != null ? `${pct.toFixed(0)}%` : '-'} <span className="text-slate-500">·{weight}%</span>
       </span>
     </div>
   );

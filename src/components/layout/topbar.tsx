@@ -23,12 +23,12 @@ export function TopBar({ user }: TopBarProps) {
   function handleSearch(e: FormEvent) {
     e.preventDefault();
     const q = query.trim();
-    if (q) router.push(`/search?q=${encodeURIComponent(q)}`);
+    if (q) router.push(`/site-search?q=${encodeURIComponent(q)}`);
   }
 
   return (
     <header className="h-14 bg-background/95 backdrop-blur-sm border-b border-border flex items-center px-6 gap-4 sticky top-0 z-20">
-      {/* Mobile logo — hidden on desktop (sidebar shows it there) */}
+      {/* Mobile logo - hidden on desktop (sidebar shows it there) */}
       <div className="lg:hidden flex-shrink-0">
         <Image
           src="/logo.svg"
@@ -78,3 +78,4 @@ export function TopBar({ user }: TopBarProps) {
     </header>
   );
 }
+

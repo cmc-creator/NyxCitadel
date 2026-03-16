@@ -220,15 +220,15 @@ export default async function DashboardPage() {
           </div>
           <div className="flex flex-wrap gap-2">
             {s.totalSentinels > 0 && <UrgentChip href="/trackers/ir-iad" label={`${s.totalSentinels} open sentinel event${s.totalSentinels > 1 ? 's' : ''}`} subtitle="JC RCA required within 45d" />}
-            {s.adhsOverdue > 0 && <UrgentChip href="/trackers/ir-iad" label={`${s.adhsOverdue} ADHS report${s.adhsOverdue > 1 ? 's' : ''} overdue`} subtitle="ARS 36-2402 — past deadline" />}
+            {s.adhsOverdue > 0 && <UrgentChip href="/trackers/ir-iad" label={`${s.adhsOverdue} ADHS report${s.adhsOverdue > 1 ? 's' : ''} overdue`} subtitle="ARS 36-2402 - past deadline" />}
             {s.qocOverdueResponse > 0 && <UrgentChip href="/trackers/qoc" label={`${s.qocOverdueResponse} QOC/LOI response${s.qocOverdueResponse > 1 ? 's' : ''} overdue`} subtitle="CMS 10-business-day window" />}
-            {s.qocImmediateJeopardy > 0 && <UrgentChip href="/trackers/qoc" label={`${s.qocImmediateJeopardy} Immediate Jeopardy complaint${s.qocImmediateJeopardy > 1 ? 's' : ''}`} subtitle="CMS IJ — expedited response required" />}
-            {s.grievanceOverdueAck > 0 && <UrgentChip href="/trackers/grievances" label={`${s.grievanceOverdueAck} grievance ack${s.grievanceOverdueAck > 1 ? 's' : ''} overdue`} subtitle="CMS 482.13(e) — 7-day window" />}
-            {s.grievanceOverdueRes > 0 && <UrgentChip href="/trackers/grievances" label={`${s.grievanceOverdueRes} grievance resolution${s.grievanceOverdueRes > 1 ? 's' : ''} overdue`} subtitle="CMS 482.13(e) — 30-day window" />}
+            {s.qocImmediateJeopardy > 0 && <UrgentChip href="/trackers/qoc" label={`${s.qocImmediateJeopardy} Immediate Jeopardy complaint${s.qocImmediateJeopardy > 1 ? 's' : ''}`} subtitle="CMS IJ - expedited response required" />}
+            {s.grievanceOverdueAck > 0 && <UrgentChip href="/trackers/grievances" label={`${s.grievanceOverdueAck} grievance ack${s.grievanceOverdueAck > 1 ? 's' : ''} overdue`} subtitle="CMS 482.13(e) - 7-day window" />}
+            {s.grievanceOverdueRes > 0 && <UrgentChip href="/trackers/grievances" label={`${s.grievanceOverdueRes} grievance resolution${s.grievanceOverdueRes > 1 ? 's' : ''} overdue`} subtitle="CMS 482.13(e) - 30-day window" />}
             {s.overdueCapCount > 0 && <UrgentChip href="/trackers/caps" label={`${s.overdueCapCount} CAP${s.overdueCapCount > 1 ? 's' : ''} past target date`} subtitle="Corrective action overdue" />}
             {s.restraintDeathsYtd > 0 && <UrgentChip href="/restraint-seclusion" label={`${s.restraintDeathsYtd} restraint/seclusion death${s.restraintDeathsYtd > 1 ? 's' : ''} YTD`} subtitle="CMS reporting required within 24 hrs" />}
-            {s.csDiscrepancies > 0 && <UrgentChip href="/pharmacy/controlled-substances" label={`${s.csDiscrepancies} CS discrepanc${s.csDiscrepancies > 1 ? 'ies' : 'y'} open`} subtitle="DEA-auditable — resolve immediately" />}
-            {s.eocOverdueDeficiencies > 0 && <UrgentChip href="/emergency/map" label={`${s.eocOverdueDeficiencies} EOC deficienc${s.eocOverdueDeficiencies > 1 ? 'ies' : 'y'} past due date`} subtitle="Environment of Care — overdue fix" />}
+            {s.csDiscrepancies > 0 && <UrgentChip href="/pharmacy/controlled-substances" label={`${s.csDiscrepancies} CS discrepanc${s.csDiscrepancies > 1 ? 'ies' : 'y'} open`} subtitle="DEA-auditable - resolve immediately" />}
+            {s.eocOverdueDeficiencies > 0 && <UrgentChip href="/emergency/map" label={`${s.eocOverdueDeficiencies} EOC deficienc${s.eocOverdueDeficiencies > 1 ? 'ies' : 'y'} past due date`} subtitle="Environment of Care - overdue fix" />}
           </div>
         </div>
       )}

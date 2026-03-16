@@ -85,7 +85,7 @@ export default async function EmergencyManagementPage() {
               {currentHva
                 ? currentHva.status === 'APPROVED'
                   ? '✅ Complete'
-                  : `In Progress — ${currentHva.hazards.length} hazards`
+                  : `In Progress - ${currentHva.hazards.length} hazards`
                 : `Not started for ${now.getFullYear()}`}
             </p>
           </div>

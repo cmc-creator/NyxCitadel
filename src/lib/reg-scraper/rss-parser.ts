@@ -1,5 +1,5 @@
 /**
- * Lightweight RSS 2.0 / Atom parser — no external dependencies.
+ * Lightweight RSS 2.0 / Atom parser - no external dependencies.
  * Parses raw XML text and returns a normalized array of feed items.
  */
 
@@ -28,7 +28,7 @@ function extractTag(xml: string, tag: string): string {
   return '';
 }
 
-/** Parse a date string — handles RFC 822 (RSS) and ISO formats. */
+/** Parse a date string - handles RFC 822 (RSS) and ISO formats. */
 function parseDate(raw: string): Date | null {
   if (!raw) return null;
   const d = new Date(raw);

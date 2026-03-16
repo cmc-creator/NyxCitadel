@@ -17,7 +17,7 @@ export function QapiOverviewCharts({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="bg-white rounded-xl border border-slate-200 p-5">
-        <h3 className="text-sm font-semibold text-slate-800 mb-3">Incidents — Last 6 Months</h3>
+        <h3 className="text-sm font-semibold text-slate-800 mb-3">Incidents - Last 6 Months</h3>
         <IncidentBarChart data={incidentChartData} />
       </div>
       <div className="bg-white rounded-xl border border-slate-200 p-5">

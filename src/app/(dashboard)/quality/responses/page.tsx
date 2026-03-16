@@ -124,7 +124,7 @@ export default async function ResponsesPage() {
                       <div className="font-medium text-slate-800">{r.title}</div>
                       {r.aiGenerated && <span className="text-xs text-purple-500">✦ AI drafted</span>}
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-500">{r.template?.name ?? '—'}</td>
+                    <td className="px-4 py-3 text-xs text-slate-500">{r.template?.name ?? '-'}</td>
                     <td className="px-4 py-3">
                       {r.recipientName && <div className="text-slate-700">{r.recipientName}</div>}
                       {r.recipientRole && <div className="text-xs text-slate-500">{r.recipientRole}</div>}
@@ -141,7 +141,7 @@ export default async function ResponsesPage() {
                         <span className={isOverdue ? 'text-red-600 font-semibold' : 'text-slate-500'}>
                           {isOverdue ? '⚠ OVERDUE' : 'Due'} {formatDate(r.dueDate)}
                         </span>
-                      ) : <span className="text-slate-400">—</span>}
+                      ) : <span className="text-slate-400">-</span>}
                     </td>
                     <td className="px-4 py-3 text-xs text-slate-500">{formatDate(r.createdAt)}</td>
                     <td className="px-4 py-3">

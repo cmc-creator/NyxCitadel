@@ -44,9 +44,9 @@ export async function POST(req: NextRequest) {
 
   const received = new Date(dateReceived);
   const acknowledgmentDueDate = new Date(received);
-  acknowledgmentDueDate.setDate(acknowledgmentDueDate.getDate() + 7);  // CMS 482.13(e) — 7 days
+  acknowledgmentDueDate.setDate(acknowledgmentDueDate.getDate() + 7);  // CMS 482.13(e) - 7 days
   const resolutionDueDate = new Date(received);
-  resolutionDueDate.setDate(resolutionDueDate.getDate() + 30);         // CMS 482.13(e) — 30 days
+  resolutionDueDate.setDate(resolutionDueDate.getDate() + 30);         // CMS 482.13(e) - 30 days
 
   const grievanceNumber = await generateGrievanceNumber(session.user.facilityId);
 

@@ -5,7 +5,6 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, IdCard , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -60,7 +59,6 @@ export default async function LicenseDetailPage({ params }: { params: { id: stri
           <Link href={`/credentialing/licenses/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/credentialing/licenses/${params.id}`} redirectPath="/credentialing/licenses" label="license" />
           <PrintButton />
         </div>
       </div>
@@ -101,7 +99,7 @@ export default async function LicenseDetailPage({ params }: { params: { id: stri
             <div>
               <dt className="text-xs text-slate-400">Verified</dt>
               <dd className={`text-sm font-semibold mt-0.5 ${license.isVerified ? 'text-green-600' : 'text-yellow-600'}`}>
-                {license.isVerified ? 'Yes — Primary Source Verified' : 'Not Yet Verified'}
+                {license.isVerified ? 'Yes - Primary Source Verified' : 'Not Yet Verified'}
               </dd>
             </div>
             {license.verifiedDate && <Field label="Verification Date" value={formatDate(license.verifiedDate)} />}

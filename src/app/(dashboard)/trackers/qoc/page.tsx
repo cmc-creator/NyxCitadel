@@ -100,7 +100,7 @@ export default async function QocPage({
       {year && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
           <p className="text-sm text-amber-800">
-            <strong>{year} Archive View</strong> — showing QOC complaints received within {year}.
+            <strong>{year} Archive View</strong> - showing QOC complaints received within {year}.
           </p>
           <Link href="/trackers/qoc" className="text-xs text-amber-700 underline">Return to live view</Link>
         </div>
@@ -111,7 +111,7 @@ export default async function QocPage({
         <div className="bg-red-50 border border-red-300 rounded-xl px-4 py-3 flex items-center gap-3">
           <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />
           <p className="text-sm text-red-700 font-semibold">
-            {ij.length} active Immediate Jeopardy investigation{ij.length > 1 ? 's' : ''} — requires immediate executive action.
+            {ij.length} active Immediate Jeopardy investigation{ij.length > 1 ? 's' : ''} - requires immediate executive action.
           </p>
         </div>
       )}

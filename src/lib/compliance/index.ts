@@ -1,5 +1,5 @@
 /**
- * NyxCitadel Compliance Library — Master Index
+ * NyxCitadel Compliance Library - Master Index
  *
  * Comprehensive regulatory reference for:
  * Arizona Acute Care Inpatient Psychiatric / Behavioral Health Facility
@@ -27,15 +27,15 @@
  * └─────────────────────────────────────────────────────────────┘
  *
  * File Organization:
- *   arizona.ts        — AZ ADHS, life safety, EM, JC CAMH, IC, staff
- *   federal-cms.ts    — CMS CoPs (42 CFR 482), patient rights, R/S, psych CoPs
- *   hipaa.ts          — HIPAA Privacy, Security, Breach Notification (45 CFR 164)
- *   pharmacy-dea.ts   — DEA (21 CFR 1300+), AZ BPPE, PDMP, ISMP high-alert meds
- *   osha.ts           — OSHA (29 CFR 1910/1904), employee health, WPV, TB, AZ WC
+ *   arizona.ts        - AZ ADHS, life safety, EM, JC CAMH, IC, staff
+ *   federal-cms.ts    - CMS CoPs (42 CFR 482), patient rights, R/S, psych CoPs
+ *   hipaa.ts          - HIPAA Privacy, Security, Breach Notification (45 CFR 164)
+ *   pharmacy-dea.ts   - DEA (21 CFR 1300+), AZ BPPE, PDMP, ISMP high-alert meds
+ *   osha.ts           - OSHA (29 CFR 1910/1904), employee health, WPV, TB, AZ WC
  */
 
 // ─────────────────────────────────────────────────────────────────────────────
-// RE-EXPORTS — Interface & Types
+// RE-EXPORTS - Interface & Types
 // ─────────────────────────────────────────────────────────────────────────────
 
 export type { ComplianceRequirement } from './arizona';
@@ -93,7 +93,7 @@ export {
 } from './osha';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MASTER COMBINED LIST — All requirements across all regulatory sources
+// MASTER COMBINED LIST - All requirements across all regulatory sources
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { allArizonaComplianceRequirements } from './arizona';

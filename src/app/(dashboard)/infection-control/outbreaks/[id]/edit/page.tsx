@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft, Biohazard } from 'lucide-react';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export default function EditIcOutbreakPage() {
   const router = useRouter();
@@ -118,14 +117,11 @@ export default function EditIcOutbreakPage() {
           </div>
         </div>
 
-        <div className="px-6 py-4 flex items-center justify-between gap-3">
-          <DeleteButton apiPath={`/api/infection-control/outbreaks/${id}`} redirectPath="/infection-control/outbreaks" label="outbreak" />
-          <div className="flex gap-3">
-            <a href={`/infection-control/outbreaks/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
-            <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
-              {saving ? 'Saving…' : 'Save Changes'}
-            </button>
-          </div>
+        <div className="px-6 py-4 flex justify-end gap-3">
+          <a href={`/infection-control/outbreaks/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+            {saving ? 'Saving…' : 'Save Changes'}
+          </button>
         </div>
       </form>
     </div>

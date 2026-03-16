@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
-// PATCH /api/notifications/[id] — mark a single notification as read
+// PATCH /api/notifications/[id] - mark a single notification as read
 export async function PATCH(
   _req: NextRequest,
   { params }: { params: { id: string } }
@@ -28,7 +28,7 @@ export async function PATCH(
   return NextResponse.json(updated);
 }
 
-// DELETE /api/notifications/[id] — delete a notification
+// DELETE /api/notifications/[id] - delete a notification
 export async function DELETE(
   _req: NextRequest,
   { params }: { params: { id: string } }

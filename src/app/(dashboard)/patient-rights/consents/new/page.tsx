@@ -57,7 +57,7 @@ export default function NewConsentRecordPage() {
           <FileText className="w-6 h-6 text-blue-600" />
           New Consent Record
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">CMS §482.13(b) — patients have the right to informed consent.</p>
+        <p className="text-sm text-slate-500 mt-0.5">CMS §482.13(b) - patients have the right to informed consent.</p>
       </div>
 
       {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}

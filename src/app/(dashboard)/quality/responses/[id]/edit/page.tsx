@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { BookOpen, ArrowLeft } from 'lucide-react';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 const CATEGORIES = [
   'PATIENT_GRIEVANCE_ACKNOWLEDGMENT', 'PATIENT_GRIEVANCE_RESOLUTION',
@@ -142,7 +141,7 @@ export default function EditResponsePage() {
                 defaultValue={data.sourceType ?? ''}
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
-                <option value="">—</option>
+                <option value="">-</option>
                 <option value="INCIDENT">Incident</option>
                 <option value="GRIEVANCE">Grievance</option>
                 <option value="SURVEY">Survey</option>
@@ -234,23 +233,20 @@ export default function EditResponsePage() {
           />
         </div>
 
-        <div className="flex items-center justify-between gap-3">
-          <DeleteButton apiPath={`/api/responses/${id}`} redirectPath="/quality/responses" label="generated response" />
-          <div className="flex gap-3">
-            <a
-              href={`/quality/responses/${id}`}
-              className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-            >
-              Cancel
-            </a>
-            <button
-              type="submit"
-              disabled={saving}
-              className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
-            >
-              {saving ? 'Saving…' : 'Save Changes'}
-            </button>
-          </div>
+        <div className="flex gap-3">
+          <button
+            type="submit"
+            disabled={saving}
+            className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
+          >
+            {saving ? 'Saving…' : 'Save Changes'}
+          </button>
+          <a
+            href={`/quality/responses/${id}`}
+            className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+          >
+            Cancel
+          </a>
         </div>
       </form>
     </div>

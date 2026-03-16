@@ -84,13 +84,13 @@ export default async function DrillAARPage({
               </div>
               <h1 className="text-2xl font-bold text-slate-900">After-Action Report (AAR)</h1>
               <p className="text-slate-600 mt-1">{drill.drillName}</p>
-              <p className="text-sm text-slate-500 mt-0.5">{drill.drillType.replace(/_/g, ' ')} — {facility?.name ?? ''}, {facility?.city}, {facility?.state}</p>
+              <p className="text-sm text-slate-500 mt-0.5">{drill.drillType.replace(/_/g, ' ')} - {facility?.name ?? ''}, {facility?.city}, {facility?.state}</p>
             </div>
             <div className="text-right text-sm text-slate-500 space-y-0.5">
               <p>Report Generated: {formatDate(generatedDate)}</p>
               <p>Drill Date: {formatDate(drill.conductedDate ?? drill.scheduledDate)}</p>
               {drill.observer && <p>Observer: {drill.observer}</p>}
-              <p className="text-xs text-slate-400">CONFIDENTIAL — FOR INTERNAL QI USE</p>
+              <p className="text-xs text-slate-400">CONFIDENTIAL - FOR INTERNAL QI USE</p>
             </div>
           </div>
         </div>
@@ -188,7 +188,7 @@ export default async function DrillAARPage({
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-xs font-bold text-red-700">Issue #{i + 1}</span>
                     <span className="text-xs text-slate-500">
-                      {new Date(issue.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} — {issue.actor}
+                      {new Date(issue.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} - {issue.actor}
                     </span>
                   </div>
                   <p className="text-sm text-slate-800 font-medium">{issue.description}</p>

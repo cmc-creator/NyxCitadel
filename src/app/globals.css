@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   CITADEL DESIGN SYSTEM — Strong · Fortified · Metallic · Glass
+   CITADEL DESIGN SYSTEM - Strong · Fortified · Metallic · Glass
 ═══════════════════════════════════════════════════════════════════════════ */
 @layer base {
   :root {
@@ -37,7 +37,7 @@
     --sidebar-border: 230 25% 14%;
   }
 
-  /* CITADEL DARK — deep charcoal, metallic, glass */
+  /* CITADEL DARK - deep charcoal, metallic, glass */
   .dark {
     --background: 224 22% 5%;
     --foreground: 214 20% 90%;
@@ -198,7 +198,7 @@
   .dark .border-indigo-200         { border-color: rgb(99 102 241 / 0.25); }
 }
 
-/* Table dark override — outside @layer for specificity */
+/* Table dark override - outside @layer for specificity */
 .dark table thead tr  { background-color: hsl(224 20% 10%) !important; }
 .dark tbody tr:hover  { background-color: hsl(224 18% 12%) !important; }
 
@@ -215,7 +215,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SIDEBAR — fortified wall
+   SIDEBAR - fortified wall
 ═══════════════════════════════════════════════════════════════════════════ */
 .sidebar {
   background: linear-gradient(180deg, hsl(var(--sidebar-bg)) 0%, hsl(222 28% 3%) 100%);

@@ -34,7 +34,7 @@ export default function NewIncidentPage() {
       reportableToState: (form.elements.namedItem('reportableToState') as HTMLInputElement).checked,
     };
 
-    const res = await fetch('/api/incidents', {
+    const res = await fetch('/api/incident-log', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

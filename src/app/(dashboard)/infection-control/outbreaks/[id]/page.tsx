@@ -6,7 +6,6 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, AlertTriangle, Bug , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
-import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,7 +53,6 @@ export default async function OutbreakDetailPage({ params }: { params: { id: str
           <Link href={`/infection-control/outbreaks/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <DeleteButton apiPath={`/api/infection-control/outbreaks/${params.id}`} redirectPath="/infection-control/outbreaks" label="outbreak" />
           <PrintButton />
         </div>
       </div>
@@ -125,7 +123,7 @@ export default async function OutbreakDetailPage({ params }: { params: { id: str
               <div>
                 <dt className="text-xs text-slate-400">Reported to Health Dept</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${outbreak.reportedToHealth ? 'text-green-600' : 'text-yellow-600'}`}>
-                  {outbreak.reportedToHealth ? `Yes — ${outbreak.reportDate ? formatDate(outbreak.reportDate) : ''}` : 'Not Yet Reported'}
+                  {outbreak.reportedToHealth ? `Yes - ${outbreak.reportDate ? formatDate(outbreak.reportDate) : ''}` : 'Not Yet Reported'}
                 </dd>
               </div>
             </dl>
