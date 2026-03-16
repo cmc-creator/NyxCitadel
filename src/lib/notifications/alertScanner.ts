@@ -195,8 +195,8 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
       const daysLeft = Math.floor((tr.expiryDate!.getTime() - now.getTime()) / 86400000);
       alerts.push({
         type: NotificationType.TRAINING_EXPIRING,
-        title: `Training Expiring: ${tr.trainingTitle}`,
-        message: `"${tr.trainingTitle}" for ${tr.employeeName} expires in ${daysLeft} day${daysLeft !== 1 ? 's' : ''} on ${tr.expiryDate!.toLocaleDateString()}.`,
+        title: `Training Expiring: ${tr.trainingName}`,
+        message: `"${tr.trainingName}" for ${tr.staffName} expires in ${daysLeft} day${daysLeft !== 1 ? 's' : ''} on ${tr.expiryDate!.toLocaleDateString()}.`,
         linkUrl: '/trackers/training',
       });
     }
