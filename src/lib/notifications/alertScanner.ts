@@ -142,14 +142,14 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     const overdueCaps = await prisma.correctiveActionPlan.findMany({
       where: {
         facilityId,
-        targetCompletionDate: { lt: now },
+        targetDate: { lt: now },
         status: { notIn: ['COMPLETED', 'VERIFIED'] },
       },
       take: 10,
-      orderBy: { targetCompletionDate: 'asc' },
+      orderBy: { targetDate: 'asc' },
     });
     for (const cap of overdueCaps) {
-      const daysOverdue = Math.floor((now.getTime() - (cap.targetCompletionDate?.getTime() ?? 0)) / 86400000);
+      const daysOverdue = Math.floor((now.getTime() - (cap.targetDate?.getTime() ?? 0)) / 86400000);
       alerts.push({
         type: NotificationType.CAP_OVERDUE,
         title: `CAP Overdue: ${cap.title}`,
