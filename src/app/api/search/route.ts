@@ -104,7 +104,7 @@ export async function GET(req: NextRequest) {
     }),
     // Governance Documents
     prisma.governanceDocument.findMany({
-      where: { facilityId, OR: [{ title: search }, { docType: search }, { approvedBy: search }] },
+      where: { facilityId, OR: [{ title: search }, { approvedBy: search }] },
       select: { id: true, title: true, docType: true, status: true },
       take: 5,
     }),
@@ -116,7 +116,7 @@ export async function GET(req: NextRequest) {
     }),
     // OSHA Log
     prisma.oshaLog.findMany({
-      where: { facilityId, OR: [{ caseNumber: search }, { employeeName: search }, { injuryType: search }] },
+      where: { facilityId, OR: [{ caseNumber: search }, { employeeName: search }] },
       select: { id: true, caseNumber: true, employeeName: true, injuryType: true, recordable: true },
       take: 5,
     }),
@@ -128,7 +128,7 @@ export async function GET(req: NextRequest) {
     }),
     // Discharge Plans
     prisma.dischargePlan.findMany({
-      where: { facilityId, OR: [{ patientInitials: search }, { expectedDisposition: search }, { unit: search }] },
+      where: { facilityId, OR: [{ patientInitials: search }, { unit: search }] },
       select: { id: true, patientInitials: true, expectedDisposition: true, status: true },
       take: 5,
     }),
