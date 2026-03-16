@@ -6,7 +6,7 @@
  * Returns new rules, proposed rules, and notices affecting healthcare.
  */
 
-import type { ScrapedUpdate } from '../index';
+import type { ScrapedUpdate } from './index';
 
 const FR_API = 'https://www.federalregister.gov/api/v1/articles.json';
 

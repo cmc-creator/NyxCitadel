@@ -6,7 +6,7 @@
  */
 
 import { parseRss, stripHtml } from './rss-parser';
-import type { ScrapedUpdate } from '../index';
+import type { ScrapedUpdate } from './index';
 
 // ─── Source definitions ───────────────────────────────────────────────────────
 
