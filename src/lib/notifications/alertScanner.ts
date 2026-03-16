@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+﻿import { prisma } from '@/lib/prisma';
 import { NotificationType } from '@prisma/client';
 
 interface AlertInput {
@@ -9,7 +9,7 @@ interface AlertInput {
 /**
  * Scans the database for compliance alert conditions and upserts
  * Notification records for the given user. Safe to call on every
- * polling interval — deduplication prevents duplicate alerts within 3 days.
+ * polling interval ΓÇö deduplication prevents duplicate alerts within 3 days.
  * Respects the user's notificationPrefs JSON settings.
  */
 export async function generateComplianceAlerts({ userId, facilityId }: AlertInput): Promise<void> {
@@ -18,7 +18,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
   const in30Days  = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
   const dedupWindow = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000); // 3-day dedupe window
 
-  // Load user prefs — absence of a key means enabled by default
+  // Load user prefs ΓÇö absence of a key means enabled by default
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: { notificationPrefs: true },
@@ -30,7 +30,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
 
   const alerts: { type: NotificationType; title: string; message: string; linkUrl: string }[] = [];
 
-  // ── 1. Expiring provider licenses (within 90 days) ─────────────────────
+  // ΓöÇΓöÇ 1. Expiring provider licenses (within 90 days) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('LICENSE_EXPIRING')) {
     const expiringLicenses = await prisma.providerLicense.findMany({
       where: {
@@ -52,7 +52,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     }
   }
 
-  // ── 2. Open CS discrepancies ────────────────────────────────────────────
+  // ΓöÇΓöÇ 2. Open CS discrepancies ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('CS_DISCREPANCY')) {
     const openDiscrepancies = await prisma.controlledSubstanceLog.findMany({
       where: { facilityId, status: 'DISCREPANCY_OPEN' },
@@ -63,13 +63,13 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
       alerts.push({
         type: NotificationType.CS_DISCREPANCY,
         title: `CS Discrepancy: ${cs.medicationName}`,
-        message: `Open controlled substance discrepancy (${cs.countDifference > 0 ? '+' : ''}${cs.countDifference}) reported on ${cs.logDate.toLocaleDateString()} — not yet resolved.`,
+        message: `Open controlled substance discrepancy (${cs.countDifference > 0 ? '+' : ''}${cs.countDifference}) reported on ${cs.logDate.toLocaleDateString()} ΓÇö not yet resolved.`,
         linkUrl: '/trackers/compliance',
       });
     }
   }
 
-  // ── 3. Overdue TB screenings ────────────────────────────────────────────
+  // ΓöÇΓöÇ 3. Overdue TB screenings ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('TB_OVERDUE')) {
     const overdueTb = await prisma.employeeHealthRecord.findMany({
       where: { facilityId, tbNextDueDate: { lt: now } },
@@ -85,7 +85,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     }
   }
 
-  // ── 4. Pending MOON notices ─────────────────────────────────────────────
+  // ΓöÇΓöÇ 4. Pending MOON notices ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('MOON_MISSING')) {
     const pendingMoon = await prisma.moonNotice.findMany({
       where: { facilityId, status: 'PENDING' },
@@ -95,13 +95,13 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
       alerts.push({
         type: NotificationType.MOON_MISSING,
         title: `MOON Notice Pending: Patient ${moon.patientInitials}`,
-        message: `Patient ${moon.patientInitials} has been on observation status for ${hoursInObs} hours. MOON notice required within 36 hours — not yet issued.`,
+        message: `Patient ${moon.patientInitials} has been on observation status for ${hoursInObs} hours. MOON notice required within 36 hours ΓÇö not yet issued.`,
         linkUrl: '/trackers/compliance',
       });
     }
   }
 
-  // ── 5. Overdue governance document reviews ─────────────────────────────
+  // ΓöÇΓöÇ 5. Overdue governance document reviews ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('GOVERNANCE_DOC_OVERDUE')) {
     const overdueGovDocs = await prisma.governanceDocument.findMany({
       where: { facilityId, reviewDate: { lt: now }, status: 'ACTIVE' },
@@ -117,7 +117,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     }
   }
 
-  // ── 6. High-risk HIPAA breaches not yet resolved ────────────────────────
+  // ΓöÇΓöÇ 6. High-risk HIPAA breaches not yet resolved ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('BREACH_REPORTABLE')) {
     const highRiskBreaches = await prisma.hipaaBreachLog.findMany({
       where: {
@@ -131,19 +131,19 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
       alerts.push({
         type: NotificationType.BREACH_REPORTABLE,
         title: `HIPAA Breach Requires Action: ${breach.incidentNumber}`,
-        message: `${breach.incidentNumber} (${breach.breachType.replace(/_/g, ' ')}) has been open for ${daysSince} day${daysSince !== 1 ? 's' : ''} — potential 60-day HHS notification deadline.`,
+        message: `${breach.incidentNumber} (${breach.breachType.replace(/_/g, ' ')}) has been open for ${daysSince} day${daysSince !== 1 ? 's' : ''} ΓÇö potential 60-day HHS notification deadline.`,
         linkUrl: '/hipaa/breaches',
       });
     }
   }
 
-  // ── 7. Overdue corrective action plans ─────────────────────────────────
+  // ΓöÇΓöÇ 7. Overdue corrective action plans ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('CAP_OVERDUE')) {
     const overdueCaps = await prisma.correctiveActionPlan.findMany({
       where: {
         facilityId,
         targetCompletionDate: { lt: now },
-        status: { notIn: ['COMPLETED', 'VERIFIED', 'CANCELLED'] },
+        status: { notIn: ['COMPLETED', 'VERIFIED'] },
       },
       take: 10,
       orderBy: { targetCompletionDate: 'asc' },
@@ -159,7 +159,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     }
   }
 
-  // ── 8. Policies overdue for review ─────────────────────────────────────
+  // ΓöÇΓöÇ 8. Policies overdue for review ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('POLICY_OVERDUE')) {
     const overduePolicies = await prisma.policy.findMany({
       where: {
@@ -181,7 +181,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     }
   }
 
-  // ── 9. Expiring training records (within 30 days) ──────────────────────
+  // ΓöÇΓöÇ 9. Expiring training records (within 30 days) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('TRAINING_EXPIRING')) {
     const expiringTraining = await prisma.trainingRecord.findMany({
       where: {
@@ -202,7 +202,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     }
   }
 
-  // ── 10. Open sentinel / serious safety events ──────────────────────────
+  // ΓöÇΓöÇ 10. Open sentinel / serious safety events ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('SENTINEL_EVENT')) {
     const sentinels = await prisma.incidentReport.findMany({
       where: {
@@ -222,7 +222,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     }
   }
 
-  // ── 11. Overdue calendar events ────────────────────────────────────────
+  // ΓöÇΓöÇ 11. Overdue calendar events ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('OVERDUE_ALERT')) {
     const overdueEvents = await prisma.calendarEvent.findMany({
       where: {
@@ -245,7 +245,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     }
   }
 
-  // ── Upsert (deduplicate within 3-day window) ────────────────────────────
+  // ΓöÇΓöÇ Upsert (deduplicate within 3-day window) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   for (const alert of alerts) {
     const existing = await prisma.notification.findFirst({
       where: {
