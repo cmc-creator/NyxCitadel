@@ -215,8 +215,8 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     for (const ir of sentinels) {
       alerts.push({
         type: NotificationType.SENTINEL_EVENT,
-        title: `Open Sentinel Event: ${ir.reportNumber}`,
-        message: `Sentinel event ${ir.reportNumber} (${ir.incidentType.replace(/_/g, ' ')}) on ${ir.incidentDate.toLocaleDateString()} is still open.`,
+        title: `Open Sentinel Event: ${ir.irNumber}`,
+        message: `Sentinel event ${ir.irNumber} (${ir.incidentType.replace(/_/g, ' ')}) on ${ir.incidentDate.toLocaleDateString()} is still open.`,
         linkUrl: '/trackers/ir-iad',
       });
     }
