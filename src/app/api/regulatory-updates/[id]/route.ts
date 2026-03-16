@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -9,15 +9,13 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
 
   const update = await prisma.regulatoryUpdate.findUnique({
     where: { id: params.id },
-    include: { publishedBy: { select: { name: true } } },
   });
 
-  if (!update || !update.isActive) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-
+  if (!update) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   return NextResponse.json(update);
 }
 
-// PATCH /api/regulatory-updates/[id] — admin can edit or archive
+// PATCH /api/regulatory-updates/[id] - mark read/unread, change impactLevel, toggle global
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -31,22 +29,16 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   const update = await prisma.regulatoryUpdate.update({
     where: { id: params.id },
     data: {
-      ...(body.title        != null ? { title:          body.title.trim()        } : {}),
-      ...(body.summary      != null ? { summary:        body.summary.trim()      } : {}),
-      ...(body.body         != null ? { body:           body.body.trim()         } : {}),
-      ...(body.urgency      != null ? { urgency:        body.urgency             } : {}),
-      ...(body.regulatoryBody != null ? { regulatoryBody: body.regulatoryBody.trim() } : {}),
-      ...(body.standardRef  != null ? { standardRef:    body.standardRef.trim()  } : {}),
-      ...(body.effectiveDate != null ? { effectiveDate: new Date(body.effectiveDate) } : {}),
-      ...(body.sourceUrl    != null ? { sourceUrl:      body.sourceUrl.trim()    } : {}),
-      ...(body.isActive     != null ? { isActive:       body.isActive            } : {}),
+      ...(body.isRead      != null ? { isRead:      body.isRead      } : {}),
+      ...(body.isGlobal    != null ? { isGlobal:    body.isGlobal    } : {}),
+      ...(body.impactLevel != null ? { impactLevel: body.impactLevel } : {}),
     },
   });
 
   return NextResponse.json(update);
 }
 
-// DELETE /api/regulatory-updates/[id] — soft-delete (isActive = false)
+// DELETE /api/regulatory-updates/[id]
 export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -56,10 +48,6 @@ export async function DELETE(_req: NextRequest, { params }: { params: { id: stri
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
-  await prisma.regulatoryUpdate.update({
-    where: { id: params.id },
-    data: { isActive: false },
-  });
-
+  await prisma.regulatoryUpdate.delete({ where: { id: params.id } });
   return NextResponse.json({ ok: true });
 }

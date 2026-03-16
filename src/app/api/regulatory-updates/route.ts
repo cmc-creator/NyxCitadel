@@ -1,40 +1,39 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { NotificationType } from '@prisma/client';
 
-// GET /api/regulatory-updates — paginated list (all authenticated users)
+// GET /api/regulatory-updates - paginated list (all authenticated users)
 export async function GET(req: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { searchParams } = new URL(req.url);
-  const page  = Math.max(1, parseInt(searchParams.get('page') ?? '1', 10));
-  const limit = Math.min(50, parseInt(searchParams.get('limit') ?? '20', 10));
-  const urgency = searchParams.get('urgency');
+  const page        = Math.max(1, parseInt(searchParams.get('page') ?? '1', 10));
+  const limit       = Math.min(50, parseInt(searchParams.get('limit') ?? '20', 10));
+  const impactLevel = searchParams.get('impactLevel');
 
   const where = {
-    isActive: true,
-    ...(urgency ? { urgency: urgency as any } : {}),
+    ...(impactLevel ? { impactLevel } : {}),
   };
 
   const [updates, total] = await Promise.all([
     prisma.regulatoryUpdate.findMany({
       where,
-      orderBy: { createdAt: 'desc' },
+      orderBy: { publishedAt: 'desc' },
       skip: (page - 1) * limit,
       take: limit,
       select: {
-        id: true,
-        title: true,
-        summary: true,
-        urgency: true,
-        regulatoryBody: true,
-        standardRef: true,
-        effectiveDate: true,
-        sourceUrl: true,
-        createdAt: true,
-        publishedBy: { select: { name: true } },
+        id:          true,
+        title:       true,
+        summary:     true,
+        impactLevel: true,
+        agency:      true,
+        source:      true,
+        url:         true,
+        publishedAt: true,
+        isRead:      true,
+        isGlobal:    true,
+        createdAt:   true,
       },
     }),
     prisma.regulatoryUpdate.count({ where }),
@@ -43,64 +42,45 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ updates, total, page, limit });
 }
 
-// POST /api/regulatory-updates — publish a new update (admin only)
+// POST /api/regulatory-updates - upsert from scraper (admin/service only)
 export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const role = (session.user as any).role as string;
   if (!['ADMIN', 'SUPER_ADMIN'].includes(role)) {
-    return NextResponse.json({ error: 'Forbidden — admin only' }, { status: 403 });
+    return NextResponse.json({ error: 'Forbidden - admin only' }, { status: 403 });
   }
 
   const body = await req.json();
-  const { title, summary, body: detail, urgency, regulatoryBody, standardRef, effectiveDate, sourceUrl } = body;
+  const { source, sourceId, title, summary, url, publishedAt, agency, docType, impactLevel } = body;
 
-  if (!title?.trim() || !summary?.trim() || !regulatoryBody?.trim()) {
+  if (!source?.trim() || !sourceId?.trim() || !title?.trim() || !url?.trim()) {
     return NextResponse.json(
-      { error: 'Missing required fields: title, summary, regulatoryBody' },
+      { error: 'Missing required fields: source, sourceId, title, url' },
       { status: 400 }
     );
   }
 
-  const update = await prisma.regulatoryUpdate.create({
-    data: {
-      title:          title.trim(),
-      summary:        summary.trim(),
-      body:           detail?.trim() ?? null,
-      urgency:        urgency ?? 'INFORMATIONAL',
-      regulatoryBody: regulatoryBody.trim(),
-      standardRef:    standardRef?.trim() ?? null,
-      effectiveDate:  effectiveDate ? new Date(effectiveDate) : null,
-      sourceUrl:      sourceUrl?.trim() ?? null,
-      publishedById:  session.user.id as string,
+  const update = await prisma.regulatoryUpdate.upsert({
+    where: { source_sourceId: { source: source.trim(), sourceId: sourceId.trim() } },
+    create: {
+      source:      source.trim(),
+      sourceId:    sourceId.trim(),
+      title:       title.trim(),
+      summary:     summary?.trim() ?? null,
+      url:         url.trim(),
+      publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
+      agency:      agency?.trim() ?? null,
+      docType:     docType?.trim() ?? null,
+      impactLevel: impactLevel ?? 'INFO',
+      isGlobal:    true,
     },
-  });
-
-  // Broadcast notification to all active users across all active facilities
-  const users = await prisma.user.findMany({
-    where: { isActive: true },
-    select: { id: true, facilityId: true },
-  });
-
-  const urgencyLabel: Record<string, string> = {
-    CRITICAL:      '🚨 Critical',
-    HIGH:          '⚠️ High Priority',
-    MEDIUM:        'ℹ️ Medium',
-    INFORMATIONAL: '📋 Informational',
-  };
-
-  await prisma.notification.createMany({
-    data: users.map((u: { id: string; facilityId: string }) => ({
-      userId:     u.id,
-      facilityId: u.facilityId,
-      title:      `Regulatory Update: ${update.title}`,
-      message:    `${urgencyLabel[update.urgency] ?? update.urgency} · ${update.regulatoryBody}${update.standardRef ? ` (${update.standardRef})` : ''} — ${update.summary.slice(0, 120)}${update.summary.length > 120 ? '…' : ''}`,
-      type:       NotificationType.REGULATORY_UPDATE,
-      linkUrl:    `/regulatory-updates/${update.id}`,
-      isRead:     false,
-    })),
-    skipDuplicates: true,
+    update: {
+      title:       title.trim(),
+      summary:     summary?.trim() ?? null,
+      impactLevel: impactLevel ?? 'INFO',
+    },
   });
 
   return NextResponse.json(update, { status: 201 });
