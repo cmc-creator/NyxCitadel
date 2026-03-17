@@ -92,7 +92,7 @@ export default function UsersSettingsPage() {
     try {
       let res: Response;
       if (editUser) {
-        const body: Record<string, string> = { name: form.name, role: form.role, title: form.title, department: form.department };
+        const body: Record<string, string> = { name: form.name, email: form.email, role: form.role, title: form.title, department: form.department };
         if (form.password) body.password = form.password;
         res = await fetch(`/api/users/${editUser.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       } else {
@@ -167,12 +167,11 @@ export default function UsersSettingsPage() {
               <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Jane Smith" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Email {!editUser && <span className="text-red-500">*</span>}</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Email <span className="text-red-500">*</span></label>
               <input
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-slate-50 disabled:text-slate-400"
+                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                 value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                disabled={!!editUser}
                 type="email"
                 placeholder="jane@hospital.org"
               />

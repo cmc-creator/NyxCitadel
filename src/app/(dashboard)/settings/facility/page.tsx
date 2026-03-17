@@ -30,6 +30,17 @@ const TIMEZONES = [
   { value: 'Pacific/Honolulu',    label: 'Hawaii' },
 ];
 
+function Field({ label, note, children }: { label: string; note?: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="block text-xs font-medium text-slate-500 mb-1">
+        {label}{note && <span className="font-normal text-slate-400 ml-1">{note}</span>}
+      </label>
+      {children}
+    </div>
+  );
+}
+
 interface FacilityForm {
   name: string; shortName: string; facilityType: string; bedCount: string;
   address: string; city: string; state: string; zip: string;
@@ -119,15 +130,6 @@ export default function FacilitySettingsPage() {
       </div>
     );
   }
-
-  const Field = ({ label, note, children }: { label: string; note?: string; children: React.ReactNode }) => (
-    <div>
-      <label className="block text-xs font-medium text-slate-500 mb-1">
-        {label}{note && <span className="font-normal text-slate-400 ml-1">{note}</span>}
-      </label>
-      {children}
-    </div>
-  );
 
   return (
     <form onSubmit={handleSave} className="space-y-6 max-w-3xl">

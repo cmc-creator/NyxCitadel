@@ -28,6 +28,7 @@ export async function PATCH(
 
   const body = await req.json() as {
     name?: string;
+    email?: string;
     role?: string;
     title?: string;
     department?: string;
@@ -39,8 +40,16 @@ export async function PATCH(
   if (body.name !== undefined)       data.name       = body.name;
   if (body.title !== undefined)      data.title      = body.title;
   if (body.department !== undefined) data.department = body.department;
-  // Only admins can change role and isActive
+  // Only admins can change email, role, and isActive
   if (isAdmin) {
+    if (body.email !== undefined) {
+      // Check uniqueness before accepting
+      const existing = await prisma.user.findUnique({ where: { email: body.email }, select: { id: true } });
+      if (existing && existing.id !== params.id) {
+        return NextResponse.json({ error: 'That email address is already in use.' }, { status: 409 });
+      }
+      data.email = body.email;
+    }
     if (body.role !== undefined)     data.role     = body.role;
     if (body.isActive !== undefined) data.isActive = body.isActive;
   }
