@@ -124,6 +124,7 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
   const [filterPri, setFilterPri]     = useState('');
   const [filterFreq, setFilterFreq]   = useState('');
   const [filterBuiltin, setFilterBuiltin] = useState<'all' | 'builtin' | 'custom'>('all');
+  const [filterCategory, setFilterCategory] = useState('');
   const [expandedId, setExpandedId]   = useState<string | null>(null);
 
   // ── Modal state
@@ -152,20 +153,38 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
     [initialData]
   );
 
+  const allCategories = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const e of initialData) {
+      const cat = e.category || 'OTHER';
+      counts[cat] = (counts[cat] ?? 0) + 1;
+    }
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  }, [initialData]);
+
   // ── Filtered data
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
     return initialData.filter(e => {
       if (filterBuiltin === 'builtin' && !e.isBuiltIn) return false;
       if (filterBuiltin === 'custom'  && e.isBuiltIn)  return false;
-      if (filterBody && e.regulatoryBody !== filterBody) return false;
-      if (filterPri  && e.priority !== filterPri)        return false;
-      if (filterFreq && e.frequency !== filterFreq)      return false;
-      if (q && ![e.title, e.standardRef, e.description, e.notes ?? '', e.regulatoryBody, e.category]
-                   .some(s => s.toLowerCase().includes(q))) return false;
+      if (filterBody    && e.regulatoryBody !== filterBody)   return false;
+      if (filterPri     && e.priority !== filterPri)          return false;
+      if (filterFreq    && e.frequency !== filterFreq)        return false;
+      if (filterCategory && (e.category || 'OTHER') !== filterCategory) return false;
+      if (q && ![
+        e.title ?? '',
+        e.standardRef ?? '',
+        e.description ?? '',
+        e.notes ?? '',
+        e.regulatoryBody ?? '',
+        e.category ?? '',
+        e.refId ?? '',
+        e.responsibleRole ?? '',
+      ].some(s => s.toLowerCase().includes(q))) return false;
       return true;
     });
-  }, [initialData, search, filterBody, filterPri, filterFreq, filterBuiltin]);
+  }, [initialData, search, filterBody, filterPri, filterFreq, filterBuiltin, filterCategory]);
 
   // ── Export CSV
   const exportCsv = useCallback(() => {
@@ -302,6 +321,48 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
             <StatCard key={body} label={body.replace('_', ' ')} value={cnt} accent="border-slate-300" />
           ))}
       </div>
+
+      {/* ── Category Cards ────────────────────────────────────────────────── */}
+      {allCategories.length > 0 && (
+        <div>
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Browse by Category</p>
+          <div className="flex gap-2 flex-wrap">
+            <button
+              onClick={() => setFilterCategory('')}
+              className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition whitespace-nowrap ${
+                !filterCategory
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-blue-300 hover:bg-blue-50'
+              }`}
+            >
+              All
+              <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+                !filterCategory ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'
+              }`}>
+                {initialData.length}
+              </span>
+            </button>
+            {allCategories.map(([cat, count]) => {
+              const isActive = filterCategory === cat;
+              const colorCls = isActive ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : getCategoryColor(cat);
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setFilterCategory(isActive ? '' : cat)}
+                  className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition whitespace-nowrap ${colorCls}`}
+                >
+                  {fmtCategory(cat)}
+                  <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+                    isActive ? 'bg-white/20 text-white' : 'bg-black/5'
+                  }`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* ── Toolbar ───────────────────────────────────────────────────────── */}
       <div className="flex flex-col md:flex-row gap-3 items-start md:items-center justify-between">
@@ -637,6 +698,33 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
 }
 
 // ─── Small sub-components ─────────────────────────────────────────────────────
+
+function fmtCategory(cat: string): string {
+  return cat
+    .split('_')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
+}
+
+function getCategoryColor(cat: string): string {
+  if (/^CMS|^CREDENTIALING|^QAPI|^JC_PI|^MEDICAL_STAFF|^BOARD|^BYLAWS/.test(cat))
+    return 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100';
+  if (/^IC_|^HAND_HYGIENE/.test(cat))
+    return 'bg-teal-50 text-teal-700 border-teal-200 hover:bg-teal-100';
+  if (/^FIRE|^LIFE_|^ELEVATOR|^GENERATOR|^SPRINKLER|^BACKFLOW|^EOC/.test(cat))
+    return 'bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100';
+  if (/^EM_|^HVA|^FUNCTIONAL|^TABLETOP|^AFTER_ACTION/.test(cat))
+    return 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100';
+  if (/^PATIENT_RIGHTS|^INFORMED_CONSENT/.test(cat))
+    return 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100';
+  if (/^MEDIC|^PHARM|^FORMULA|^CONTROLLED/.test(cat))
+    return 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100';
+  if (/^AZ_|^JC_MOCK|^JC_STANDARDS/.test(cat))
+    return 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100';
+  if (/^POLICY|^STAFF_TRAIN|^MANDATORY|^COMPETENCY|^ANNUAL_EVAL/.test(cat))
+    return 'bg-slate-100 text-slate-600 border-slate-300 hover:bg-slate-200';
+  return 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100';
+}
 
 function StatCard({ label, value, accent }: { label: string; value: number; accent: string }) {
   return (
