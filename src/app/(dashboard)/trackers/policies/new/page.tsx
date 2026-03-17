@@ -282,7 +282,7 @@ export default function NewPolicyPage() {
                 key={v}
                 type="button"
                 onClick={() => toggleBody(v)}
-                className={px-3 py-1 text-xs rounded-full border transition-colors }
+                className={`px-3 py-1 text-xs rounded-full border transition-colors ${selectedBodies.includes(v) ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-600 border-slate-200 hover:border-purple-300'}`}
               >
                 {REG_LABELS[v] ?? v}
               </button>
