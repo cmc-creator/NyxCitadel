@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { FileText, ArrowLeft } from 'lucide-react';
+import { FileText, ArrowLeft, Upload, X, FileCheck, ExternalLink } from 'lucide-react';
 
 const CATEGORIES = [
   ['ADMINISTRATIVE', 'Administrative'],
@@ -41,22 +41,36 @@ const REG_LABELS: Record<string, string> = {
   HIPAA: 'HIPAA', SAMHSA: 'SAMHSA', INTERNAL: 'Internal', OTHER: 'Other',
 };
 
+function toDateInput(iso: string | null | undefined) {
+  if (!iso) return '';
+  return iso.slice(0, 10);
+}
+
 export default function EditPolicyPage() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
+
   const [data, setData] = useState<Record<string, any> | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [selectedBodies, setSelectedBodies] = useState<string[]>([]);
 
+  // File upload
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [documentUrl, setDocumentUrl] = useState('');
+  const [uploadError, setUploadError] = useState('');
+  const fileRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
-    fetch(`/api/policy-docs/${id}`)
+    fetch(`/api/policies/${id}`)
       .then(r => r.json())
       .then(d => {
         setData(d);
-        setSelectedBodies(d.regulatoryBodies ?? []);
+        setSelectedBodies(d.regulatoryBody ?? []);
+        setDocumentUrl(d.documentUrl ?? '');
         setLoading(false);
       })
       .catch(() => {
@@ -69,7 +83,41 @@ export default function EditPolicyPage() {
     setSelectedBodies(prev => prev.includes(v) ? prev.filter(b => b !== v) : [...prev, v]);
   }
 
-  if (loading) return <div className="text-slate-400 p-8">Loading…</div>;
+  async function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadFile(file);
+    setUploadError('');
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      const res = await fetch('/api/upload', { method: 'POST', body: fd });
+      if (res.ok) {
+        const data = await res.json();
+        setDocumentUrl(data.url);
+      } else {
+        const err = await res.json();
+        setUploadError(err.error ?? 'Upload failed.');
+        setUploadFile(null);
+      }
+    } catch {
+      setUploadError('Upload failed. Please try again.');
+      setUploadFile(null);
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  function clearFile() {
+    setUploadFile(null);
+    setUploadError('');
+    if (fileRef.current) fileRef.current.value = '';
+    // Restore original URL if removing newly uploaded file
+    setDocumentUrl(data?.documentUrl ?? '');
+  }
+
+  if (loading) return <div className="text-slate-400 p-8">Loading...</div>;
   if (!data) return <div className="text-red-400 p-8">{error || 'Record not found.'}</div>;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -77,33 +125,36 @@ export default function EditPolicyPage() {
     setSaving(true);
     setError('');
     const form = e.currentTarget;
-    const get = (name: string) => (form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement).value;
+    const get = (name: string) => (form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)?.value ?? '';
 
     const payload = {
-      title:           get('title'),
-      category:        get('category'),
-      version:         get('version') || '1.0',
-      effectiveDate:   get('effectiveDate'),
-      nextReviewDate:  get('nextReviewDate'),
-      reviewFrequency: get('reviewFrequency'),
-      owner:           get('owner') || null,
-      standardRef:     get('standardRef') || null,
-      description:     get('description') || null,
+      title:            get('title'),
+      policyNumber:     get('policyNumber'),
+      category:         get('category'),
+      version:          get('version') || '1.0',
+      effectiveDate:    get('effectiveDate'),
+      nextReviewDate:   get('nextReviewDate'),
+      reviewFrequency:  get('reviewFrequency'),
+      owner:            get('owner') || null,
+      standardRef:      get('standardRef') || null,
+      summary:          get('description') || null,
+      documentUrl:      documentUrl || null,
+      status:           get('status'),
       regulatoryBodies: selectedBodies,
     };
 
-    const res = await fetch(`/api/policy-docs/${id}`, {
+    const res = await fetch(`/api/policies/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
     if (res.ok) {
-      router.push(`/trackers/policies/${id}`);
+      router.push('/trackers/policies');
       router.refresh();
     } else {
       const body = await res.json();
-      setError(body.error ?? 'Failed to update.');
+      setError(body.error ?? 'Failed to save policy.');
       setSaving(false);
     }
   }
@@ -111,21 +162,21 @@ export default function EditPolicyPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/trackers/policies/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
+        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+          <ArrowLeft className="w-3.5 h-3.5" /> Back to Policy Tracker
         </a>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
           <FileText className="w-6 h-6 text-purple-600" />
           Edit Policy / Procedure
         </h1>
+        <p className="text-xs text-slate-400 mt-1 font-mono">{data.policyNumber}</p>
       </div>
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <form key={data.id} onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
-
+      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
         {/* Core Info */}
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-slate-800">Policy Information</h2>
@@ -135,17 +186,29 @@ export default function EditPolicyPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
-              <select name="category" required defaultValue={data.category} className="form-input w-full">
-                <option value="">Select category…</option>
-                {CATEGORIES.map(([v, l]) => (
-                  <option key={v} value={v}>{l}</option>
-                ))}
-              </select>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Policy #</label>
+              <input name="policyNumber" defaultValue={data.policyNumber} className="form-input w-full" />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Version</label>
-              <input name="version" defaultValue={data.version ?? '1.0'} className="form-input w-full" />
+              <input name="version" defaultValue={data.version} className="form-input w-full" />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
+              <select name="category" required defaultValue={data.category} className="form-input w-full">
+                {CATEGORIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Status</label>
+              <select name="status" defaultValue={data.status} className="form-input w-full">
+                <option value="DRAFT">Draft</option>
+                <option value="UNDER_REVIEW">Under Review</option>
+                <option value="ACTIVE">Active</option>
+                <option value="ARCHIVED">Archived</option>
+              </select>
             </div>
           </div>
           <div>
@@ -161,23 +224,21 @@ export default function EditPolicyPage() {
         {/* Dates */}
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-slate-800">Review Schedule</h2>
+          <div>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Review Frequency</label>
+            <select name="reviewFrequency" defaultValue={data.reviewFrequency} className="form-input w-full">
+              {REVIEW_FREQUENCIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            </select>
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Effective Date *</label>
-              <input type="date" name="effectiveDate" required defaultValue={data.effectiveDate ? data.effectiveDate.split('T')[0] : ''} className="form-input w-full" />
+              <input type="date" name="effectiveDate" required defaultValue={toDateInput(data.effectiveDate)} className="form-input w-full" />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Next Review Date *</label>
-              <input type="date" name="nextReviewDate" required defaultValue={data.nextReviewDate ? data.nextReviewDate.split('T')[0] : ''} className="form-input w-full" />
+              <input type="date" name="nextReviewDate" required defaultValue={toDateInput(data.nextReviewDate)} className="form-input w-full" />
             </div>
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Review Frequency</label>
-            <select name="reviewFrequency" defaultValue={data.reviewFrequency ?? 'ANNUAL'} className="form-input w-full">
-              {REVIEW_FREQUENCIES.map(([v, l]) => (
-                <option key={v} value={v}>{l}</option>
-              ))}
-            </select>
           </div>
         </div>
 
@@ -202,16 +263,59 @@ export default function EditPolicyPage() {
           </div>
         </div>
 
+        {/* Document Upload */}
+        <div className="px-6 py-5 space-y-3">
+          <h2 className="text-sm font-semibold text-slate-800">
+            Policy Document <span className="font-normal text-slate-400">(PDF or Word)</span>
+          </h2>
+          {documentUrl && !uploadFile ? (
+            <div className="flex items-center gap-3 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
+              <FileCheck className="w-5 h-5 text-blue-600 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-blue-800">Document attached</p>
+                <a href={documentUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline inline-flex items-center gap-1">
+                  <ExternalLink className="w-3 h-3" /> View document
+                </a>
+              </div>
+              <label className="text-xs text-slate-500 hover:text-purple-600 cursor-pointer underline">
+                Replace
+                <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileSelect} />
+              </label>
+            </div>
+          ) : uploadFile ? (
+            <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+              <FileCheck className="w-5 h-5 text-green-600 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-green-800 truncate">{uploadFile.name}</p>
+                {uploading && <p className="text-xs text-slate-500">Uploading...</p>}
+                {!uploading && documentUrl && <p className="text-xs text-green-600">Uploaded successfully</p>}
+                {uploadError && <p className="text-xs text-red-600">{uploadError}</p>}
+              </div>
+              <button type="button" onClick={clearFile} className="p-1 rounded text-slate-400 hover:text-red-500">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-purple-300 hover:bg-purple-50 transition-colors">
+              <Upload className="w-5 h-5 text-slate-400 mb-1.5" />
+              <span className="text-sm text-slate-500">Click to upload PDF or Word document</span>
+              <span className="text-xs text-slate-400 mt-0.5">Max 20 MB</span>
+              <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileSelect} />
+            </label>
+          )}
+        </div>
+
         {/* Description */}
         <div className="px-6 py-5 space-y-3">
           <h2 className="text-sm font-semibold text-slate-800">Summary / Description <span className="font-normal text-slate-400">(optional)</span></h2>
-          <textarea name="description" rows={3} defaultValue={data.description ?? ''} className="form-input w-full resize-none" />
+          <textarea name="description" rows={3} defaultValue={data.summary ?? ''} className="form-input w-full resize-none" />
         </div>
 
-        <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/trackers/policies/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
-          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
-            {saving ? 'Saving…' : 'Save Changes'}
+        {/* Actions */}
+        <div className="px-6 py-4 flex items-center justify-end gap-3">
+          <a href="/trackers/policies" className="btn-secondary text-sm">Cancel</a>
+          <button type="submit" disabled={saving || uploading} className="btn-primary text-sm">
+            {saving ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       </form>

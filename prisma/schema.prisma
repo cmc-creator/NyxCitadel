@@ -118,9 +118,6 @@ model Facility {
   // Regulatory Reference Library (custom / facility-specific entries)
   regulatoryReferences RegulatoryReference[]
 
-  // Regulatory Intelligence Feed (scraped updates)
-  regulatoryUpdates    RegulatoryUpdate[]
-
   @@map("facilities")
 }
 
@@ -159,15 +156,13 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  // Notification preferences — JSON blob, e.g. {"DEADLINE_REMINDER":{"enabled":true,"daysAhead":14}}
-  notificationPrefs Json?
-
   // App relations
-  assignedItems    TrackerItem[]       @relation("AssignedTo")
-  createdItems     TrackerItem[]       @relation("CreatedBy")
-  assignedCaps     CorrectiveActionPlan[] @relation("CAPAssignee")
-  notifications    Notification[]
-  auditLogs        AuditLog[]
+  assignedItems       TrackerItem[]          @relation("AssignedTo")
+  createdItems        TrackerItem[]          @relation("CreatedBy")
+  assignedCaps        CorrectiveActionPlan[] @relation("CAPAssignee")
+  notifications       Notification[]
+  auditLogs           AuditLog[]
+  publishedUpdates    RegulatoryUpdate[]     @relation("PublishedBy")
 
   @@map("users")
 }
@@ -1068,17 +1063,14 @@ enum NotificationType {
   TRAINING_EXPIRING
   INCIDENT_UPDATE
   SYSTEM
-  // Extended alert types
-  LICENSE_EXPIRING
-  CS_DISCREPANCY
-  TB_OVERDUE
-  MOON_MISSING
-  GOVERNANCE_DOC_OVERDUE
-  BREACH_REPORTABLE
-  CAP_OVERDUE
-  POLICY_OVERDUE
-  EOC_DEFICIENCY
-  SENTINEL_EVENT
+  REGULATORY_UPDATE
+}
+
+enum UpdateUrgency {
+  CRITICAL       // Immediate action required — regulatory mandate enforcement
+  HIGH           // Review within 7 days — change affects current practice
+  MEDIUM         // Review within 30 days — guidance update or clarification
+  INFORMATIONAL  // Awareness only — new resource, best practice revision
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -2962,42 +2954,27 @@ model RegulatoryReference {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// REGULATORY INTELLIGENCE FEED — Scraped updates from regulatory bodies
+// REGULATORY UPDATES
+// Admin-curated feed of regulatory changes, guidance updates, and new mandates.
+// Publishing an update broadcasts in-app notifications to all facility users.
 // ─────────────────────────────────────────────────────────────────────────────
 
 model RegulatoryUpdate {
-  id           String    @id @default(cuid())
-  source       String    // "FEDERAL_REGISTER" | "CMS_RSS" | "AZ_ADHS" | "JC"
-  sourceId     String    // unique ID from the source (prevents duplicates)
-  title        String
-  summary      String?   @db.Text
-  url          String
-  publishedAt  DateTime
-  agency       String    // "CMS" | "OSHA" | "HHS_OCR" | "DEA" | "AZ_ADHS" | "JC"
-  docType      String?   // "Rule" | "Proposed Rule" | "Notice" | "Press Release"
-  impactLevel  String    @default("INFO") // "CRITICAL" | "HIGH" | "MEDIUM" | "LOW" | "INFO"
-  isRead       Boolean   @default(false)
-  isGlobal     Boolean   @default(true)  // true = shown to all facilities
-  facilityId   String?
-  facility     Facility? @relation(fields: [facilityId], references: [id])
-  createdAt    DateTime  @default(now())
+  id             String        @id @default(cuid())
+  title          String
+  summary        String        @db.Text
+  body           String?       @db.Text  // Full rich text / markdown detail
+  urgency        UpdateUrgency @default(INFORMATIONAL)
+  regulatoryBody String        // "CMS", "Joint Commission", "AZ ADHS", etc.
+  standardRef    String?       // e.g. "42 CFR 482.13(e)(1)"
+  effectiveDate  DateTime?     // When the change takes effect
+  sourceUrl      String?       // Link to official rule/guidance
+  isGlobal       Boolean       @default(true)  // true = applies to all facilities
+  publishedById  String
+  publishedBy    User          @relation("PublishedBy", fields: [publishedById], references: [id])
+  isActive       Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 
-  @@unique([source, sourceId])
   @@map("regulatory_updates")
-}
-
-// Inbound demo / trial access requests submitted via the /signup page
-model DemoRequest {
-  id           String   @id @default(cuid())
-  name         String
-  email        String
-  facilityName String
-  phone        String?
-  facilityType String?
-  beds         Int?
-  message      String?  @db.Text
-  reviewed     Boolean  @default(false)
-  createdAt    DateTime @default(now())
-
-  @@map("demo_requests")
 }

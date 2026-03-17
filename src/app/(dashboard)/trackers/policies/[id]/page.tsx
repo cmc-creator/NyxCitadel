@@ -63,7 +63,7 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
               {policy.owner && <> &middot; Owner: <strong>{policy.owner}</strong></>}
             </p>
           </div>
-          <StatusUpdater apiPath={`/api/policy-docs/${policy.id}`} currentStatus={policy.status} options={STATUS_OPTIONS} />
+          <StatusUpdater apiPath={`/api/policies/${policy.id}`} currentStatus={policy.status} options={STATUS_OPTIONS} />
         </div>
       </div>
 
