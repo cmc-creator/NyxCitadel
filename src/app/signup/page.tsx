@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
-  Shield, ArrowLeft, CheckCircle,
+  ArrowLeft, CheckCircle,
   Building2, Mail, Phone, User, ChevronRight, Loader2,
   Sparkles, BarChart2, ClipboardList, AlertTriangle,
   Star,
@@ -45,9 +46,13 @@ export default function SignupPage() {
       {/* Nav */}
       <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/5">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-md shadow-purple-500/30">
-            <Shield className="w-4.5 h-4.5 text-white w-[18px] h-[18px]" />
-          </div>
+          <Image
+            src="/citadellogo.png"
+            alt="NyxCitadel"
+            width={32}
+            height={32}
+            className="h-8 w-auto rounded-lg flex-shrink-0"
+          />
           <span className="font-bold text-white tracking-tight">NyxCitadel<sup className="text-[10px] align-super ml-0.5 font-normal text-purple-400">™</sup></span>
         </Link>
         <Link href="/login" className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">

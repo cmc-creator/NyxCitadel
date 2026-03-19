@@ -358,15 +358,16 @@ export function Sidebar() {
     <aside className="sidebar w-64 min-h-screen flex flex-col fixed left-0 top-0 bottom-0 z-30">
       {/* Branding */}
       <div className="flex items-center px-4 py-4 border-b border-white/10">
-        <Link href="/dashboard" className="block">
+        <Link href="/dashboard" className="flex items-center gap-2.5">
           <Image
-            src="/logo-white.svg"
+            src="/citadellogo.png"
             alt="NyxCitadel"
-            width={200}
-            height={44}
+            width={36}
+            height={36}
             priority
-            className="h-11 w-auto"
+            className="h-9 w-auto rounded-lg flex-shrink-0"
           />
+          <span className="font-bold text-white text-lg tracking-tight leading-none">NyxCitadel</span>
         </Link>
       </div>
 

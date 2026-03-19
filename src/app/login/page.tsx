@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -90,9 +91,13 @@ function LoginForm() {
             Back to site
           </Link>
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
-              <Shield className="w-6 h-6 text-white" />
-            </div>
+            <Image
+              src="/citadellogo.png"
+              alt="NyxCitadel"
+              width={44}
+              height={44}
+              className="h-11 w-auto rounded-xl flex-shrink-0"
+            />
             <div>
               <p className="font-bold text-xl text-white tracking-tight">NyxCitadel</p>
               <p className="text-xs text-slate-500">Compliance &amp; Risk Platform</p>
@@ -147,9 +152,13 @@ function LoginForm() {
         {/* Mobile logo */}
         <div className="lg:hidden mb-10 text-center">
           <div className="inline-flex items-center gap-2.5 mb-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-              <Shield className="w-5 h-5 text-white" />
-            </div>
+            <Image
+              src="/citadellogo.png"
+              alt="NyxCitadel"
+              width={36}
+              height={36}
+              className="h-9 w-auto rounded-xl flex-shrink-0"
+            />
             <span className="font-bold text-xl text-white">NyxCitadel</span>
           </div>
           <p className="text-slate-500 text-sm">Compliance &amp; Risk Management Platform</p>

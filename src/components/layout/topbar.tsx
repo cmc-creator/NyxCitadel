@@ -29,14 +29,15 @@ export function TopBar({ user }: TopBarProps) {
   return (
     <header className="h-14 bg-background/95 backdrop-blur-sm border-b border-border flex items-center px-6 gap-4 sticky top-0 z-20">
       {/* Mobile logo - hidden on desktop (sidebar shows it there) */}
-      <div className="lg:hidden flex-shrink-0">
+      <div className="lg:hidden flex-shrink-0 flex items-center gap-2">
         <Image
-          src="/logo.svg"
+          src="/citadellogo.png"
           alt="NyxCitadel"
-          width={160}
-          height={36}
-          className="h-9 w-auto"
+          width={32}
+          height={32}
+          className="h-8 w-auto rounded-md"
         />
+        <span className="font-bold text-foreground text-base tracking-tight">NyxCitadel</span>
       </div>
 
       {/* Search */}

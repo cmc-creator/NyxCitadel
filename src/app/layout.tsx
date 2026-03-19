@@ -14,9 +14,9 @@ export const metadata: Metadata = {
   description:
     'Compliance, risk management, and emergency management platform - NyxCitadel.',
   icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
+    icon: '/citadellogo.png',
+    shortcut: '/citadellogo.png',
+    apple: '/citadellogo.png',
   },
   robots: { index: false, follow: false }, // Private application
 };
