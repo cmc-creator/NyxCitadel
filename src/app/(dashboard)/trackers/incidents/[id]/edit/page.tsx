@@ -25,7 +25,7 @@ export default function EditIncidentPage() {
   const [reportableToState, setReportableToState] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/incident-log/${id}`)
+    fetch(`/api/incident-reports/${id}`)
       .then(r => r.json())
       .then(d => {
         setData(d);
@@ -59,7 +59,7 @@ export default function EditIncidentPage() {
       reportableToState,
     };
 
-    const res = await fetch(`/api/incident-log/${id}`, {
+    const res = await fetch(`/api/incident-reports/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),

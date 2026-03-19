@@ -53,7 +53,7 @@ export default function NewRegulatoryUpdatePage() {
     }
     setSaving(true);
     try {
-      const res = await fetch('/api/reg-updates', {
+      const res = await fetch('/api/regulatory-updates', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

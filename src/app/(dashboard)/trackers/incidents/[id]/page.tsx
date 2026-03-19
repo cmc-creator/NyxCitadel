@@ -67,7 +67,7 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
               {incident.location && <> &middot; <strong>{incident.location}</strong></>}
             </p>
           </div>
-          <StatusUpdater apiPath={`/api/incident-log/${incident.id}`} currentStatus={incident.status} options={STATUS_OPTIONS} />
+          <StatusUpdater apiPath={`/api/incident-reports/${incident.id}`} currentStatus={incident.status} options={STATUS_OPTIONS} />
         </div>
       </div>
 
