@@ -1,12 +1,136 @@
-﻿import { Shield, Plus, AlertTriangle } from 'lucide-react';
-import { auth } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+﻿'use client';
+import { useState, useEffect, use } from 'react';
+import Image from 'next/image';
+import { CheckCircle, AlertTriangle, Clock, Users, Loader2 } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+type Entry = {
+  staffName: string;
+  staffRole: string;
+  department: string;
+  musterPoint: string;
+  status: string;
+  checkedInAt: string | null;
+  drillName: string;
+  drillStatus: string;
+};
 
-export default async function OshaLogPage() {
-  const session = await auth();
-  const facilityId = session!.user.facilityId;
+export default function DrillMusterPage({ params }: { params: Promise<{ token: string }> }) {
+  const { token } = use(params);
+  const [entry, setEntry] = useState<Entry | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [result, setResult] = useState<{ success?: boolean; alreadyCheckedIn?: boolean; checkedInAt?: string; staffName?: string; musterPoint?: string; error?: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch(`/api/drill-muster/${token}`)
+      .then(r => r.json())
+      .then(d => { if (d.error) setError(d.error); else setEntry(d); })
+      .catch(() => setError('Failed to load muster entry.'))
+      .finally(() => setLoading(false));
+  }, [token]);
+
+  async function checkIn() {
+    setSubmitting(true);
+    try {
+      const r = await fetch(`/api/drill-muster/${token}`, { method: 'POST' });
+      const d = await r.json();
+      setResult(d);
+    } catch {
+      setResult({ error: 'Check-in failed. Please try again.' });
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  if (loading) return (
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <Loader2 className="w-8 h-8 text-indigo-400 animate-spin" />
+    </div>
+  );
+
+  if (error) return (
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6">
+      <div className="bg-red-900/30 border border-red-500/40 rounded-2xl p-8 max-w-sm w-full text-center">
+        <AlertTriangle className="w-12 h-12 text-red-400 mx-auto mb-3" />
+        <h2 className="text-white font-bold text-lg mb-2">Invalid QR Code</h2>
+        <p className="text-red-300 text-sm">{error}</p>
+      </div>
+    </div>
+  );
+
+  const alreadyIn = entry?.status === 'PRESENT' || result?.alreadyCheckedIn || result?.success;
+  const checkedAt = result?.checkedInAt ?? entry?.checkedInAt;
+
+  return (
+    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6">
+      <div className="w-full max-w-sm space-y-5">
+
+        {/* Header */}
+        <div className="text-center">
+          <Image src="/citadellogo.png" alt="NyxCitadel" width={48} height={48} className="mx-auto rounded-xl mb-3" />
+          <p className="text-xs text-slate-500 uppercase tracking-widest font-semibold">Drill Muster Check-In</p>
+          <h1 className="text-white font-bold text-xl mt-1">{entry?.drillName}</h1>
+          <span className={`inline-block mt-1 text-xs font-semibold px-2 py-0.5 rounded-full ${
+            entry?.drillStatus === 'IN_PROGRESS' ? 'bg-emerald-900/40 text-emerald-300' : 'bg-slate-700 text-slate-400'
+          }`}>{entry?.drillStatus?.replace('_', ' ')}</span>
+        </div>
+
+        {/* Staff card */}
+        <div className="bg-slate-800/60 border border-white/10 rounded-2xl p-5 space-y-3">
+          <div className="flex items-center gap-3">
+            <Users className="w-5 h-5 text-indigo-400 shrink-0" />
+            <div>
+              <p className="text-white font-semibold">{entry?.staffName}</p>
+              <p className="text-slate-400 text-xs">{entry?.staffRole} &middot; {entry?.department}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Clock className="w-5 h-5 text-indigo-400 shrink-0" />
+            <div>
+              <p className="text-xs text-slate-400">Muster Point</p>
+              <p className="text-white font-medium">{entry?.musterPoint}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Result / action */}
+        {alreadyIn ? (
+          <div className="bg-emerald-900/30 border border-emerald-500/30 rounded-2xl p-6 text-center">
+            <CheckCircle className="w-14 h-14 text-emerald-400 mx-auto mb-3" />
+            <p className="text-emerald-300 font-bold text-lg">Checked In!</p>
+            {checkedAt && (
+              <p className="text-emerald-400/70 text-sm mt-1">
+                {new Date(checkedAt).toLocaleTimeString()}
+              </p>
+            )}
+          </div>
+        ) : result?.error ? (
+          <div className="bg-red-900/20 border border-red-500/30 rounded-2xl p-4 text-center">
+            <AlertTriangle className="w-8 h-8 text-red-400 mx-auto mb-2" />
+            <p className="text-red-300 text-sm">{result.error}</p>
+          </div>
+        ) : (
+          <button
+            onClick={checkIn}
+            disabled={submitting || entry?.drillStatus !== 'IN_PROGRESS'}
+            className="w-full py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-lg transition-colors flex items-center justify-center gap-2"
+          >
+            {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5" />}
+            {submitting ? 'Checking In…' : 'Confirm I’m at Muster Point'}
+          </button>
+        )}
+
+        {entry?.drillStatus !== 'IN_PROGRESS' && !alreadyIn && (
+          <p className="text-center text-xs text-slate-500">Check-in is only available while the drill is active.</p>
+        )}
+
+        <p className="text-center text-xs text-slate-600">&copy; {new Date().getFullYear()} NyxCollective LLC</p>
+      </div>
+    </div>
+  );
+}
+
   const now = new Date();
   const yearStart = new Date(now.getFullYear(), 0, 1);
 

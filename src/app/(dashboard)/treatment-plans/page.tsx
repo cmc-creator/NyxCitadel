@@ -5,10 +5,10 @@ import { prisma } from '@/lib/prisma';
 export const dynamic = 'force-dynamic';
 
 const statusConfig: Record<string, { label: string; classes: string }> = {
-  ACTIVE:     { label: 'Active',    classes: 'bg-emerald-100 text-emerald-700' },
-  PENDING:    { label: 'Pending',   classes: 'bg-yellow-100 text-yellow-700' },
-  COMPLETED:  { label: 'Completed', classes: 'bg-blue-100 text-blue-700' },
-  OVERDUE:    { label: 'Overdue',   classes: 'bg-red-100 text-red-700' },
+  ACTIVE:     { label: 'Active',      classes: 'bg-emerald-100 text-emerald-700' },
+  UPDATED:    { label: 'Updated',     classes: 'bg-blue-100 text-blue-700' },
+  DISCHARGED: { label: 'Discharged',  classes: 'bg-slate-100 text-slate-600' },
+  TRANSFERRED:{ label: 'Transferred', classes: 'bg-purple-100 text-purple-700' },
 };
 
 export default async function TreatmentPlansPage() {
@@ -22,9 +22,9 @@ export default async function TreatmentPlansPage() {
     take: 60,
   });
 
-  const active = plans.filter(p => p.status === 'ACTIVE').length;
-  const overdue = plans.filter(p => (p.status as any) === 'OVERDUE').length;
-  const pending = plans.filter(p => (p.status as any) === 'PENDING').length;
+  const active     = plans.filter(p => p.status === 'ACTIVE').length;
+  const updated    = plans.filter(p => p.status === 'UPDATED').length;
+  const discharged = plans.filter(p => p.status === 'DISCHARGED' || p.status === 'TRANSFERRED').length;
 
   return (
     <div className="p-6 space-y-6">
@@ -44,10 +44,10 @@ export default async function TreatmentPlansPage() {
 
       <div className="grid grid-cols-4 gap-4">
         {[
-          { label: 'Total Plans', value: plans.length, color: 'text-blue-400' },
-          { label: 'Active', value: active, color: 'text-emerald-400' },
-          { label: 'Pending Creation', value: pending, color: pending > 0 ? 'text-amber-400' : 'text-slate-400' },
-          { label: 'Overdue', value: overdue, color: overdue > 0 ? 'text-red-400' : 'text-emerald-400' },
+          { label: 'Total Plans',      value: plans.length, color: 'text-blue-400' },
+          { label: 'Active',           value: active,       color: 'text-emerald-400' },
+          { label: 'Plan Updated',     value: updated,      color: updated > 0 ? 'text-blue-400' : 'text-slate-400' },
+          { label: 'Discharged/Trans', value: discharged,   color: 'text-slate-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
             <p className="text-xs text-slate-400 mb-1">{s.label}</p>

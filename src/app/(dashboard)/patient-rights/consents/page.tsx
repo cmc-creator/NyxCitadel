@@ -14,11 +14,11 @@ const typeLabels: Record<string, string> = {
 };
 
 const statusConfig: Record<string, { label: string; color: string }> = {
-  ACTIVE:             { label: 'Active',    color: 'bg-emerald-100 text-emerald-700' },
-  REVOKED:            { label: 'Revoked',   color: 'bg-red-100 text-red-700' },
-  EXPIRED:            { label: 'Expired',   color: 'bg-slate-100 text-slate-600' },
-  PENDING:            { label: 'Pending',   color: 'bg-amber-100 text-amber-700' },
-  SURROGATE_OBTAINED: { label: 'Surrogate', color: 'bg-blue-100 text-blue-700' },
+  SIGNED:         { label: 'Signed',          color: 'bg-emerald-100 text-emerald-700' },
+  VERBAL:         { label: 'Verbal',           color: 'bg-blue-100 text-blue-700' },
+  REFUSED:        { label: 'Refused',          color: 'bg-red-100 text-red-700' },
+  REVOKED:        { label: 'Revoked',          color: 'bg-slate-100 text-slate-600' },
+  UNABLE_CAPACITY:{ label: 'Unable/Surrogate', color: 'bg-amber-100 text-amber-700' },
 };
 
 export default async function ConsentsPage() {
@@ -31,9 +31,9 @@ export default async function ConsentsPage() {
     take: 100,
   });
 
-  const pending   = consents.filter(c => (c.status as any) === 'PENDING').length;
-  const active    = consents.filter(c => (c.status as any) === 'ACTIVE' || (c.status as any) === 'SURROGATE_OBTAINED').length;
-  const surrogate = consents.filter(c => (c.status as any) === 'SURROGATE_OBTAINED').length;
+  const pending   = consents.filter(c => c.status === 'UNABLE_CAPACITY').length;
+  const active    = consents.filter(c => c.status === 'SIGNED' || c.status === 'VERBAL').length;
+  const surrogate = consents.filter(c => c.status === 'UNABLE_CAPACITY').length;
 
   return (
     <div className="p-6 space-y-6">
@@ -54,10 +54,7 @@ export default async function ConsentsPage() {
       {pending > 0 && (
         <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
-          <p className="text-sm text-amber-300">{pending} consent(s) pending — capacity determination not yet documented for these patients.</p>
-        </div>
-      )}
-
+          <p className="text-sm text-amber-300">{pending} consent(s) require surrogate/guardian — capacity not established for these patients.</p>
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: 'Active Consents',         value: active,    color: 'text-emerald-400' },

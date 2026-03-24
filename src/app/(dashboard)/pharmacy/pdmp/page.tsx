@@ -21,8 +21,8 @@ export default async function PdmpPage() {
     take: 50,
   });
 
-  const openConcerns = checks.filter(c => (c as any).status === 'CONCERNS_OPEN').length;
-  const significant = checks.filter(c => c.significantFinding).length;
+  const openConcerns = checks.filter(c => c.significantFinding && !c.actionTaken).length;
+  const significant  = checks.filter(c => c.significantFinding).length;
 
   return (
     <div className="p-6 space-y-6">
@@ -75,7 +75,8 @@ export default async function PdmpPage() {
             {checks.length === 0 ? (
               <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">No PDMP checks on record.</td></tr>
             ) : checks.map(c => {
-              const cfg = statusConfig[(c as any).status] ?? { label: (c as any).status, classes: 'bg-slate-100 text-slate-700' };
+              const statusKey = !c.significantFinding ? 'COMPLIANT' : c.actionTaken ? 'ACTION_TAKEN' : 'CONCERNS_OPEN';
+              const cfg = statusConfig[statusKey];
               return (
                 <tr key={c.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-slate-300">{c.checkDate.toLocaleDateString()}</td>

@@ -80,9 +80,9 @@ export default async function DrillDetailPage({
     createdAt:    a.timestamp.toISOString(),
     actionType:   a.actionType,
     description:  a.description,
-    severity:     (a as any).severity ?? 'LOW',
+    severity:     a.issueFlag ? 'HIGH' : 'LOW',
     performedBy:  a.actor,
-    location:     (a as any).location ?? null,
+    location:     null,
   }));
 
   return (
