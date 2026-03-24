@@ -18,14 +18,9 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
   const in30Days  = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
   const dedupWindow = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000); // 3-day dedupe window
 
-  // Load user prefs ΓÇö absence of a key means enabled by default
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { notificationPrefs: true },
-  });
-  const prefs = (user?.notificationPrefs ?? {}) as Record<string, { enabled: boolean }>;
-  function prefEnabled(key: string): boolean {
-    return prefs[key]?.enabled !== false;
+  // notificationPrefs not on User model — all alert types enabled by default
+  function prefEnabled(_key: string): boolean {
+    return true;
   }
 
   const alerts: { type: NotificationType; title: string; message: string; linkUrl: string }[] = [];
@@ -44,7 +39,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
       const daysLeft = Math.floor((lic.expiryDate.getTime() - now.getTime()) / 86400000);
       const providerName = `${lic.provider.firstName} ${lic.provider.lastName}, ${lic.provider.credentials}`;
       alerts.push({
-        type: NotificationType.LICENSE_EXPIRING,
+        type: NotificationType.DEADLINE_REMINDER,
         title: `License Expiring: ${providerName}`,
         message: `${lic.licenseType} (${lic.licenseNumber}) expires in ${daysLeft} day${daysLeft !== 1 ? 's' : ''} on ${lic.expiryDate.toLocaleDateString()}.`,
         linkUrl: '/credentialing/licenses',
@@ -61,7 +56,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     });
     for (const cs of openDiscrepancies) {
       alerts.push({
-        type: NotificationType.CS_DISCREPANCY,
+        type: NotificationType.INCIDENT_UPDATE,
         title: `CS Discrepancy: ${cs.medicationName}`,
         message: `Open controlled substance discrepancy (${cs.countDifference > 0 ? '+' : ''}${cs.countDifference}) reported on ${cs.logDate.toLocaleDateString()} ΓÇö not yet resolved.`,
         linkUrl: '/trackers/compliance',
@@ -77,7 +72,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     for (const emp of overdueTb) {
       const daysOverdue = Math.floor((now.getTime() - (emp.tbNextDueDate?.getTime() ?? 0)) / 86400000);
       alerts.push({
-        type: NotificationType.TB_OVERDUE,
+        type: NotificationType.DEADLINE_REMINDER,
         title: `TB Screening Overdue: ${emp.employeeName}`,
         message: `Annual TB screening for ${emp.employeeName} (${emp.department}) is ${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} overdue.`,
         linkUrl: '/trackers/training',
@@ -93,7 +88,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     for (const moon of pendingMoon) {
       const hoursInObs = Math.floor((now.getTime() - moon.observationStartDate.getTime()) / 3600000);
       alerts.push({
-        type: NotificationType.MOON_MISSING,
+        type: NotificationType.DEADLINE_REMINDER,
         title: `MOON Notice Pending: Patient ${moon.patientInitials}`,
         message: `Patient ${moon.patientInitials} has been on observation status for ${hoursInObs} hours. MOON notice required within 36 hours ΓÇö not yet issued.`,
         linkUrl: '/trackers/compliance',
@@ -109,7 +104,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     for (const doc of overdueGovDocs) {
       const daysOverdue = Math.floor((now.getTime() - (doc.reviewDate?.getTime() ?? 0)) / 86400000);
       alerts.push({
-        type: NotificationType.GOVERNANCE_DOC_OVERDUE,
+        type: NotificationType.POLICY_REVIEW_DUE,
         title: `Governance Doc Review Overdue: ${doc.title}`,
         message: `${doc.title} (v${doc.version ?? 'N/A'}) review was due ${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} ago.`,
         linkUrl: '/governance/documents',
@@ -129,7 +124,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     for (const breach of highRiskBreaches) {
       const daysSince = Math.floor((now.getTime() - breach.discoveryDate.getTime()) / 86400000);
       alerts.push({
-        type: NotificationType.BREACH_REPORTABLE,
+        type: NotificationType.INCIDENT_UPDATE,
         title: `HIPAA Breach Requires Action: ${breach.incidentNumber}`,
         message: `${breach.incidentNumber} (${breach.breachType.replace(/_/g, ' ')}) has been open for ${daysSince} day${daysSince !== 1 ? 's' : ''} ΓÇö potential 60-day HHS notification deadline.`,
         linkUrl: '/hipaa/breaches',
@@ -151,7 +146,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     for (const cap of overdueCaps) {
       const daysOverdue = Math.floor((now.getTime() - (cap.targetDate?.getTime() ?? 0)) / 86400000);
       alerts.push({
-        type: NotificationType.CAP_OVERDUE,
+        type: NotificationType.CAP_UPDATE,
         title: `CAP Overdue: ${cap.title}`,
         message: `Corrective action plan "${cap.title}" was due ${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} ago and is still ${cap.status.replace(/_/g, ' ').toLowerCase()}.`,
         linkUrl: '/trackers/caps',
@@ -173,7 +168,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     for (const pol of overduePolicies) {
       const daysOverdue = Math.floor((now.getTime() - (pol.nextReviewDate?.getTime() ?? 0)) / 86400000);
       alerts.push({
-        type: NotificationType.POLICY_OVERDUE,
+        type: NotificationType.POLICY_REVIEW_DUE,
         title: `Policy Review Overdue: ${pol.title}`,
         message: `"${pol.title}" (${pol.policyNumber ?? 'no number'}) review was due ${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} ago.`,
         linkUrl: '/trackers/policies',
@@ -214,7 +209,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     });
     for (const ir of sentinels) {
       alerts.push({
-        type: NotificationType.SENTINEL_EVENT,
+        type: NotificationType.INCIDENT_UPDATE,
         title: `Open Sentinel Event: ${ir.irNumber}`,
         message: `Sentinel event ${ir.irNumber} (${ir.incidentType.replace(/_/g, ' ')}) on ${ir.incidentDate.toLocaleDateString()} is still open.`,
         linkUrl: '/trackers/ir-iad',
