@@ -225,8 +225,16 @@ Go to <https://vercel.com> and sign up (can link your GitHub account).
 
 ### Step 4 — Add Remaining Environment Variables in Vercel
 In Vercel project → **Settings → Environment Variables**, add:
-- `NEXTAUTH_SECRET` — a random secret: run `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` locally
-- `NEXTAUTH_URL` — your Vercel deployment URL (e.g. `https://nyxcitadel.vercel.app`)
+
+| Variable | Value |
+|---|---|
+| `NEXTAUTH_SECRET` | Random 32-byte hex — run `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
+| `NEXTAUTH_URL` | Your Vercel deployment URL, e.g. `https://nyxcitadel.vercel.app` |
+| `OPENAI_API_KEY` | **Required for AI Assistant** — get from [platform.openai.com/api-keys](https://platform.openai.com/api-keys). Uses `gpt-4o-mini`. |
+| `CRON_SECRET` | **Required for automated regulatory scraper** — any random string, e.g. `openssl rand -hex 32`. Vercel injects this automatically into scheduled cron calls. |
+
+> **Important:** Without `OPENAI_API_KEY` the AI compliance assistant returns an error for every message.  
+> Without `CRON_SECRET` the daily regulatory scraper cron job is unsecured — set this before going to production.
 
 ### Step 5 — Deploy
 Click **Deploy**. Vercel builds and deploys automatically.
