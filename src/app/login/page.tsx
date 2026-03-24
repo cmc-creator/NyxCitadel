@@ -249,7 +249,7 @@ function LoginForm() {
 
           {/* Footer */}
           <p className="text-center text-slate-700 text-xs mt-5">
-            © {new Date().getFullYear()} NyxCitadel · HIPAA-compliant platform
+            © {new Date().getFullYear()} <a href="https://nyxcollective.com" className="hover:text-slate-500 transition-colors">NyxCollective LLC</a> · NyxCitadel · HIPAA-compliant platform
           </p>
         </div>
       </div>

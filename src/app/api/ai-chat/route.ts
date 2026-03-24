@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
+import Anthropic from '@anthropic-ai/sdk';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,10 +26,10 @@ export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return NextResponse.json({
-      reply: "The AI assistant is not configured yet. Please ask your administrator to add an OpenAI API key to enable NyxAI.",
+      reply: "The AI assistant is not configured yet. Please ask your administrator to add an Anthropic API key to enable NyxAI.",
     });
   }
 
@@ -44,37 +45,31 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Message is required' }, { status: 400 });
   }
 
-  // Build message array: system + prior history (capped at last 20) + new user message
-  const messages: Message[] = [
-    { role: 'system', content: SYSTEM_PROMPT },
-    ...history.slice(-20).map((m) => ({ role: m.role, content: m.content })),
-    { role: 'user', content: message.trim() },
+  // Build message array from prior history (capped at last 20) + new user message.
+  // Filter out any system messages — Anthropic takes system as a top-level param.
+  const anthropicMessages = [
+    ...history.slice(-20).filter((m) => m.role !== 'system').map((m) => ({
+      role: m.role as 'user' | 'assistant',
+      content: m.content,
+    })),
+    { role: 'user' as const, content: message.trim() },
   ];
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      messages,
-      max_tokens: 1024,
-      temperature: 0.3,
-    }),
-  });
+  const client = new Anthropic({ apiKey });
 
-  if (!response.ok) {
-    const err = await response.json().catch(() => ({})) as { error?: { message?: string } };
-    const msg = err?.error?.message ?? 'OpenAI request failed';
+  try {
+    const response = await client.messages.create({
+      model: 'claude-3-5-haiku-20241022',
+      max_tokens: 1024,
+      system: SYSTEM_PROMPT,
+      messages: anthropicMessages,
+    });
+
+    const block = response.content[0];
+    const reply = block.type === 'text' ? block.text : 'No response received.';
+    return NextResponse.json({ reply });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Claude request failed';
     return NextResponse.json({ error: msg }, { status: 502 });
   }
-
-  const data = await response.json() as {
-    choices?: Array<{ message?: { content?: string } }>;
-  };
-
-  const reply = data.choices?.[0]?.message?.content ?? 'No response received.';
-  return NextResponse.json({ reply });
 }

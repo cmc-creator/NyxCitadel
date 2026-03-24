@@ -863,9 +863,7 @@ export default async function RootPage() {
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative z-10">
             <div className="flex justify-center mb-5">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-2xl shadow-purple-500/40">
-                <Shield className="w-8 h-8 text-white" />
-              </div>
+              <Image src="/citadellogo.png" alt="NyxCitadel" width={64} height={64} className="rounded-2xl shadow-2xl shadow-purple-500/40" />
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
               Your next survey is coming.{' '}
@@ -929,15 +927,13 @@ export default async function RootPage() {
       <footer className="relative z-10 border-t border-white/5 bg-slate-950">
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-              <Shield className="w-4 h-4 text-white" />
-            </div>
+            <Image src="/citadellogo.png" alt="NyxCitadel" width={28} height={28} className="rounded-lg" />
             <div>
               <span className="font-bold text-slate-400">NyxCitadel<sup className="text-[9px] font-normal">™</sup></span>
               <span className="text-slate-700 ml-2 hidden sm:inline">· Healthcare Compliance &amp; Risk Management Platform</span>
             </div>
           </div>
-          <p>© {new Date().getFullYear()} NyxCitadel™ · HIPAA-compliant · Survey-ready · Always current</p>
+          <p>© {new Date().getFullYear()} <a href="https://nyxcollective.com" className="hover:text-slate-400 transition-colors">NyxCollective LLC</a> · HIPAA-compliant · Survey-ready · Always current</p>
           <Link href={portalHref} className="text-slate-500 hover:text-white transition-colors font-medium">
             {portalLabel} →
           </Link>

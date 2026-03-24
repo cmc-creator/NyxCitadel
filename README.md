@@ -230,7 +230,7 @@ In Vercel project → **Settings → Environment Variables**, add:
 |---|---|
 | `NEXTAUTH_SECRET` | Random 32-byte hex — run `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
 | `NEXTAUTH_URL` | Your Vercel deployment URL, e.g. `https://nyxcitadel.vercel.app` |
-| `OPENAI_API_KEY` | **Required for AI Assistant** — get from [platform.openai.com/api-keys](https://platform.openai.com/api-keys). Uses `gpt-4o-mini`. |
+| `ANTHROPIC_API_KEY` | **Required for AI Assistant** — get from [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys). Uses `claude-3-5-haiku-20241022`. |
 | `CRON_SECRET` | **Required for automated regulatory scraper** — any random string, e.g. `openssl rand -hex 32`. Vercel injects this automatically into scheduled cron calls. |
 
 > **Important:** Without `OPENAI_API_KEY` the AI compliance assistant returns an error for every message.  
