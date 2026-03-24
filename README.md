@@ -233,7 +233,7 @@ In Vercel project → **Settings → Environment Variables**, add:
 | `ANTHROPIC_API_KEY` | **Required for AI Assistant** — get from [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys). Uses `claude-3-5-haiku-20241022`. |
 | `CRON_SECRET` | **Required for automated regulatory scraper** — any random string, e.g. `openssl rand -hex 32`. Vercel injects this automatically into scheduled cron calls. |
 
-> **Important:** Without `OPENAI_API_KEY` the AI compliance assistant returns an error for every message.  
+> **Important:** Without `ANTHROPIC_API_KEY` the AI compliance assistant (NyxAI) returns an error for every message.  
 > Without `CRON_SECRET` the daily regulatory scraper cron job is unsecured — set this before going to production.
 
 ### Step 5 — Deploy
