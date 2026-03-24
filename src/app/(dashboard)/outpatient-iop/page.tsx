@@ -40,8 +40,7 @@ const IMPACT_CONFIG: Record<string, { badge: string; icon: React.ElementType; ba
   CRITICAL: { badge: 'bg-red-500/15 text-red-400 border border-red-500/30',     icon: AlertTriangle,  bar: 'bg-red-500',    label: 'Critical' },
   HIGH:     { badge: 'bg-orange-500/15 text-orange-400 border border-orange-500/30', icon: ArrowUpCircle,  bar: 'bg-orange-500', label: 'High' },
   MEDIUM:   { badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',    icon: Info,           bar: 'bg-amber-500',  label: 'Medium' },
-  LOW:      { badge: 'bg-blue-500/15 text-blue-400 border border-blue-500/30',       icon: CheckCircle2,   bar: 'bg-blue-500',   label: 'Low' },
-  INFO:     { badge: 'bg-slate-500/15 text-slate-400 border border-slate-500/20',    icon: CheckCircle2,   bar: 'bg-slate-500',  label: 'Info' },
+  INFORMATIONAL: { badge: 'bg-slate-500/15 text-slate-400 border border-slate-500/20', icon: CheckCircle2, bar: 'bg-slate-500', label: 'Info' },
 };
 
 const AGENCY_COLORS: Record<string, string> = {
@@ -129,7 +128,7 @@ const IOP_REFERENCE: {
 ];
 
 function ImpactBadge({ level }: { level: string }) {
-  const cfg = IMPACT_CONFIG[level] ?? IMPACT_CONFIG.INFO;
+  const cfg = IMPACT_CONFIG[level] ?? IMPACT_CONFIG.INFORMATIONAL;
   const Icon = cfg.icon;
   return (
     <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full border ${cfg.badge}`}>
@@ -180,28 +179,28 @@ export default async function IopDashboardPage() {
     }),
   ]);
 
-  // Filter updates relevant to IOP - by agency or keyword match in title/summary
+  // Filter updates relevant to IOP - by regulatoryBody or keyword match in title/summary
   const iopUpdates = allUpdates.filter(u => {
-    const isRelevantAgency = IOP_AGENCIES.includes(u.agency);
+    const isRelevantAgency = IOP_AGENCIES.includes(u.regulatoryBody);
     const text = `${u.title} ${u.summary ?? ''}`.toLowerCase();
     const hasKeyword = IOP_KEYWORDS.some(k => text.includes(k));
     return isRelevantAgency || hasKeyword;
   });
 
-  // Sort by impact level then date
-  const IMPACT_ORDER = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'INFO'];
+  // Sort by urgency then date (schema urgency: CRITICAL > HIGH > MEDIUM > INFORMATIONAL)
+  const IMPACT_ORDER = ['CRITICAL', 'HIGH', 'MEDIUM', 'INFORMATIONAL'];
   const sorted = [...iopUpdates].sort((a, b) => {
-    const ai = IMPACT_ORDER.indexOf(a.impactLevel);
-    const bi = IMPACT_ORDER.indexOf(b.impactLevel);
+    const ai = IMPACT_ORDER.indexOf(a.urgency);
+    const bi = IMPACT_ORDER.indexOf(b.urgency);
     if (ai !== bi) return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
-  const critical = sorted.filter(u => u.impactLevel === 'CRITICAL');
-  const recentOther = sorted.filter(u => u.impactLevel !== 'CRITICAL').slice(0, 12);
+  const critical = sorted.filter(u => u.urgency === 'CRITICAL');
+  const recentOther = sorted.filter(u => u.urgency !== 'CRITICAL').slice(0, 12);
 
   // New since 90 days
-  const newCount = iopUpdates.filter(u => new Date(u.publishedAt) >= since90Days).length;
+  const newCount = iopUpdates.filter(u => new Date(u.createdAt) >= since90Days).length;
 
   return (
     <div className="space-y-8 max-w-6xl">
@@ -282,7 +281,7 @@ export default async function IopDashboardPage() {
           {critical.map(u => (
             <a
               key={u.id}
-              href={u.url}
+              href={u.sourceUrl ?? '#'}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-start justify-between gap-3 bg-red-950/40 hover:bg-red-950/60 border border-red-700/30 rounded-lg px-4 py-3 transition-colors group"
@@ -293,8 +292,8 @@ export default async function IopDashboardPage() {
                   <p className="text-xs text-red-400/80 mt-0.5 line-clamp-2">{u.summary}</p>
                 )}
                 <div className="flex items-center gap-2 mt-2">
-                  <AgencyBadge agency={u.agency} />
-                  <span className="text-xs text-red-500/60">{formatDate(u.publishedAt, 'MMM d, yyyy')}</span>
+                  <AgencyBadge agency={u.regulatoryBody} />
+                  <span className="text-xs text-red-500/60">{formatDate(u.createdAt, 'MMM d, yyyy')}</span>
                 </div>
               </div>
               <ExternalLink className="w-4 h-4 text-red-500/60 flex-shrink-0 mt-0.5" />
@@ -324,11 +323,11 @@ export default async function IopDashboardPage() {
           ) : (
             <div className="space-y-2">
               {recentOther.map(u => {
-                const cfg = IMPACT_CONFIG[u.impactLevel] ?? IMPACT_CONFIG.INFO;
+                const cfg = IMPACT_CONFIG[u.urgency] ?? IMPACT_CONFIG.INFORMATIONAL;
                 return (
                   <a
                     key={u.id}
-                    href={u.url}
+                    href={u.sourceUrl ?? '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-start gap-3 bg-card hover:bg-card/80 border border-border rounded-xl px-4 py-3 transition-colors group"
@@ -342,12 +341,9 @@ export default async function IopDashboardPage() {
                         <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{u.summary}</p>
                       )}
                       <div className="flex items-center flex-wrap gap-2 mt-1.5">
-                        <ImpactBadge level={u.impactLevel} />
-                        <AgencyBadge agency={u.agency} />
-                        <span className="text-xs text-muted-foreground">{formatDate(u.publishedAt, 'MMM d, yyyy')}</span>
-                        {u.docType && (
-                          <span className="text-xs text-muted-foreground italic">{u.docType}</span>
-                        )}
+                        <ImpactBadge level={u.urgency} />
+                        <AgencyBadge agency={u.regulatoryBody} />
+                        <span className="text-xs text-muted-foreground">{formatDate(u.createdAt, 'MMM d, yyyy')}</span>
                       </div>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0 mt-1" />
