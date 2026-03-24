@@ -10,30 +10,30 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const page        = Math.max(1, parseInt(searchParams.get('page') ?? '1', 10));
   const limit       = Math.min(50, parseInt(searchParams.get('limit') ?? '20', 10));
-  const impactLevel = searchParams.get('impactLevel');
+  const urgency     = searchParams.get('urgency');
 
   const where = {
-    ...(impactLevel ? { impactLevel } : {}),
+    ...(urgency ? { urgency: urgency as any } : {}),
   };
 
   const [updates, total] = await Promise.all([
     prisma.regulatoryUpdate.findMany({
       where,
-      orderBy: { publishedAt: 'desc' },
+      orderBy: { createdAt: 'desc' },
       skip: (page - 1) * limit,
       take: limit,
       select: {
-        id:          true,
-        title:       true,
-        summary:     true,
-        impactLevel: true,
-        agency:      true,
-        source:      true,
-        url:         true,
-        publishedAt: true,
-        isRead:      true,
-        isGlobal:    true,
-        createdAt:   true,
+        id:             true,
+        title:          true,
+        summary:        true,
+        urgency:        true,
+        regulatoryBody: true,
+        sourceUrl:      true,
+        standardRef:    true,
+        effectiveDate:  true,
+        isGlobal:       true,
+        isActive:       true,
+        createdAt:      true,
       },
     }),
     prisma.regulatoryUpdate.count({ where }),
@@ -53,33 +53,26 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { source, sourceId, title, summary, url, publishedAt, agency, docType, impactLevel } = body;
+  const { title, summary, regulatoryBody, urgency, standardRef, effectiveDate, sourceUrl, isGlobal } = body;
 
-  if (!source?.trim() || !sourceId?.trim() || !title?.trim() || !url?.trim()) {
+  if (!title?.trim() || !summary?.trim() || !regulatoryBody?.trim()) {
     return NextResponse.json(
-      { error: 'Missing required fields: source, sourceId, title, url' },
+      { error: 'Missing required fields: title, summary, regulatoryBody' },
       { status: 400 }
     );
   }
 
-  const update = await prisma.regulatoryUpdate.upsert({
-    where: { source_sourceId: { source: source.trim(), sourceId: sourceId.trim() } },
-    create: {
-      source:      source.trim(),
-      sourceId:    sourceId.trim(),
-      title:       title.trim(),
-      summary:     summary?.trim() ?? null,
-      url:         url.trim(),
-      publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
-      agency:      agency?.trim() ?? null,
-      docType:     docType?.trim() ?? null,
-      impactLevel: impactLevel ?? 'INFO',
-      isGlobal:    true,
-    },
-    update: {
-      title:       title.trim(),
-      summary:     summary?.trim() ?? null,
-      impactLevel: impactLevel ?? 'INFO',
+  const update = await prisma.regulatoryUpdate.create({
+    data: {
+      title:          title.trim(),
+      summary:        summary.trim(),
+      regulatoryBody: regulatoryBody.trim(),
+      urgency:        urgency ?? 'INFORMATIONAL',
+      standardRef:    standardRef?.trim() ?? null,
+      effectiveDate:  effectiveDate ? new Date(effectiveDate) : null,
+      sourceUrl:      sourceUrl?.trim() ?? null,
+      isGlobal:       isGlobal ?? true,
+      publishedById:  session.user.id,
     },
   });
 

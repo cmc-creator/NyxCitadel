@@ -15,7 +15,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
   return NextResponse.json(update);
 }
 
-// PATCH /api/regulatory-updates/[id] - mark read/unread, change impactLevel, toggle global
+// PATCH /api/regulatory-updates/[id] - change urgency, toggle global/active
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -29,9 +29,9 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   const update = await prisma.regulatoryUpdate.update({
     where: { id: params.id },
     data: {
-      ...(body.isRead      != null ? { isRead:      body.isRead      } : {}),
-      ...(body.isGlobal    != null ? { isGlobal:    body.isGlobal    } : {}),
-      ...(body.impactLevel != null ? { impactLevel: body.impactLevel } : {}),
+      ...(body.isGlobal != null ? { isGlobal: body.isGlobal } : {}),
+      ...(body.isActive != null ? { isActive: body.isActive } : {}),
+      ...(body.urgency  != null ? { urgency:  body.urgency  } : {}),
     },
   });
 

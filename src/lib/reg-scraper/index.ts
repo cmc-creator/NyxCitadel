@@ -45,6 +45,15 @@ export interface ScrapeResult {
   durationMs: number;
 }
 
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function mapImpactToUrgency(impactLevel: string): 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'INFORMATIONAL' {
+  if (impactLevel === 'CRITICAL') return 'CRITICAL';
+  if (impactLevel === 'HIGH')     return 'HIGH';
+  if (impactLevel === 'MEDIUM')   return 'MEDIUM';
+  return 'INFORMATIONAL';
+}
+
 // ─── Orchestrator ─────────────────────────────────────────────────────────────
 
 /**
@@ -75,38 +84,44 @@ export async function runScrape(days = 90): Promise<ScrapeResult> {
   const totalFetched = allUpdates.length;
   const sources = [...new Set(allUpdates.map(u => u.source))];
 
+  // Look up a system user to use as publishedById (required by schema)
+  const sysUser = await prisma.user.findFirst({
+    where: { role: { in: ['SUPER_ADMIN', 'ADMIN'] } },
+    orderBy: { createdAt: 'asc' },
+    select: { id: true },
+  });
+
+  if (!sysUser) {
+    errors.push('No admin user found — skipping DB write');
+    return { success: false, newCount: 0, totalFetched, sources, errors, durationMs: Date.now() - start };
+  }
+
   // 3. Identify which CRITICAL/HIGH items are actually new (not already in DB)
   const alertCandidates = allUpdates.filter(u => u.impactLevel === 'CRITICAL' || u.impactLevel === 'HIGH');
-  const existingSourceIds = alertCandidates.length > 0
+  const urlsToCheck = alertCandidates.map(u => u.url).filter(Boolean);
+  const existingSourceUrls = urlsToCheck.length > 0
     ? new Set(
         (await prisma.regulatoryUpdate.findMany({
-          where: {
-            source:   { in: alertCandidates.map(u => u.source) },
-            sourceId: { in: alertCandidates.map(u => u.sourceId) },
-          },
-          select: { sourceId: true },
-        })).map(r => r.sourceId),
+          where: { sourceUrl: { in: urlsToCheck } },
+          select: { sourceUrl: true },
+        })).map(r => r.sourceUrl).filter((x): x is string => x !== null),
       )
     : new Set<string>();
 
-  const newAlerts = alertCandidates.filter(u => !existingSourceIds.has(u.sourceId));
+  const newAlerts = alertCandidates.filter(u => !existingSourceUrls.has(u.url));
 
-  // 4. Insert new items, skipping any already in the DB (unique on source+sourceId)
+  // 4. Insert new items (sourceUrl used for soft-dedup via skipDuplicates on title)
   let newCount = 0;
   try {
     const result = await prisma.regulatoryUpdate.createMany({
       data: allUpdates.map(u => ({
-        source:      u.source,
-        sourceId:    u.sourceId,
-        title:       u.title.slice(0, 500), // guard against oversized titles
-        summary:     u.summary,
-        url:         u.url,
-        publishedAt: u.publishedAt,
-        agency:      u.agency,
-        docType:     u.docType,
-        impactLevel: u.impactLevel,
-        isRead:      false,
-        isGlobal:    true,
+        title:          u.title.slice(0, 500),
+        summary:        u.summary ?? '',
+        regulatoryBody: u.agency,
+        urgency:        mapImpactToUrgency(u.impactLevel),
+        sourceUrl:      u.url || null,
+        isGlobal:       true,
+        publishedById:  sysUser.id,
       })),
       skipDuplicates: true,
     });
@@ -137,25 +152,17 @@ export async function runScrape(days = 90): Promise<ScrapeResult> {
 }
 
 /**
- * Get a count of unread updates (for notification badges).
+ * Get a count of active updates.
  */
 export async function getUnreadCount(): Promise<number> {
-  return prisma.regulatoryUpdate.count({ where: { isRead: false } });
+  return prisma.regulatoryUpdate.count({ where: { isActive: true } });
 }
 
 /**
- * Mark a single update as read.
+ * No-op stubs (isRead does not exist on RegulatoryUpdate schema).
  */
-export async function markRead(id: string): Promise<void> {
-  await prisma.regulatoryUpdate.update({ where: { id }, data: { isRead: true } });
-}
-
-/**
- * Mark all updates as read.
- */
-export async function markAllRead(): Promise<void> {
-  await prisma.regulatoryUpdate.updateMany({ where: { isRead: false }, data: { isRead: true } });
-}
+export async function markRead(_id: string): Promise<void> { /* no-op */ }
+export async function markAllRead(): Promise<void> { /* no-op */ }
 
 // ─── Internal Helpers ─────────────────────────────────────────────────────────
 

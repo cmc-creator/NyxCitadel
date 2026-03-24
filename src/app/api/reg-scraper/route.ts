@@ -38,10 +38,10 @@ export async function GET() {
 
   const [updates, unreadCount] = await Promise.all([
     prisma.regulatoryUpdate.findMany({
-      orderBy: { publishedAt: 'desc' },
+      orderBy: { createdAt: 'desc' },
       take: 100,
     }),
-    prisma.regulatoryUpdate.count({ where: { isRead: false } }),
+    prisma.regulatoryUpdate.count({ where: { isActive: true } }),
   ]);
 
   return NextResponse.json({ updates, unreadCount });
