@@ -50,7 +50,7 @@ export default async function HighAlertMedsPage() {
                   <p className="font-bold text-white">{a.medication}</p>
                   {a.actionRequired && <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Action Required</span>}
                 </div>
-                <p className="text-xs text-slate-400">{a.unit} â€” {a.auditDate.toLocaleDateString()} â€” Auditor: {a.auditor}</p>
+                <p className="text-xs text-slate-400">{a.unit} — {a.auditDate.toLocaleDateString()} — Auditor: {a.auditor}</p>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-3 text-xs mt-2">

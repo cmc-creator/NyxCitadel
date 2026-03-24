@@ -47,7 +47,7 @@ export default async function InvoluntaryHoldsPage() {
           <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
           <div>
             <p className="text-sm font-semibold text-red-300">{noLegal} patient(s) missing legal counsel notification</p>
-            <p className="text-xs text-red-200/70 mt-0.5">ARS Â§36-520 requires notification of right to legal counsel at time of evaluation. Complete legal counsel notification immediately for outstanding holds.</p>
+            <p className="text-xs text-red-200/70 mt-0.5">ARS §36-520 requires notification of right to legal counsel at time of evaluation. Complete legal counsel notification immediately for outstanding holds.</p>
           </div>
         </div>
       )}
@@ -78,7 +78,7 @@ export default async function InvoluntaryHoldsPage() {
                     {statusConfig[h.status]?.label ?? h.status}
                   </span>
                   {!h.legalCounselNotified && h.status === 'ACTIVE' && (
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">âš ï¸ No Legal Counsel</span>
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">⚠️ No Legal Counsel</span>
                   )}
                 </div>
                 <p className="text-sm text-slate-300">{h.holdType}</p>
@@ -88,7 +88,7 @@ export default async function InvoluntaryHoldsPage() {
                 <p>Start: {h.holdStartDate.toLocaleDateString()}</p>
                 <p>Expiry: {h.holdExpiryDate.toLocaleDateString()}</p>
                 {h.courtHearingDate && <p className="text-blue-400">Hearing: {h.courtHearingDate.toLocaleDateString()}</p>}
-                {h.legalCounselNotified && <p className="text-emerald-400 mt-0.5">âœ“ Counsel Notified</p>}
+                {h.legalCounselNotified && <p className="text-emerald-400 mt-0.5">✓ Counsel Notified</p>}
               </div>
             </div>
           </div>

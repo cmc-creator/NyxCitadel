@@ -51,7 +51,7 @@ export default async function BreachLogPage({ searchParams }: { searchParams: { 
           <div className="flex items-center gap-3 mb-1">
             <Lock className="w-5 h-5 text-blue-400" />
             <h1 className="text-xl font-bold text-white">HIPAA Breach Log</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">Â§164.400 Breach Rule</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">§164.400 Breach Rule</span>
           </div>
           <p className="text-slate-400 text-sm">Privacy incidents and confirmed breaches. Reportable breaches require HHS notification within 60 days.</p>
         </div>
@@ -65,7 +65,7 @@ export default async function BreachLogPage({ searchParams }: { searchParams: { 
         <div className="grid md:grid-cols-3 gap-3 text-xs">
           {[
             { req: 'Individual notification',                   timing: 'Within 60 days of discovery' },
-            { req: 'HHS notification (â‰¥500 individuals)',       timing: 'Within 60 days; must also notify media' },
+            { req: 'HHS notification (≥500 individuals)',       timing: 'Within 60 days; must also notify media' },
             { req: 'Annual HHS report (<500 individuals)',      timing: 'By March 1 of following year' },
           ].map(r => (
             <div key={r.req} className="flex items-start gap-2">
@@ -110,7 +110,7 @@ export default async function BreachLogPage({ searchParams }: { searchParams: { 
               </div>
               <div className="text-right text-xs">
                 <p className="text-slate-400">Discovered: {b.discoveryDate.toLocaleDateString()}</p>
-                <p className={`font-bold mt-1 ${riskColor[b.riskAssessment ?? ''] ?? 'text-slate-400'}`}>Risk: {b.riskAssessment ?? 'â€”'}</p>
+                <p className={`font-bold mt-1 ${riskColor[b.riskAssessment ?? ''] ?? 'text-slate-400'}`}>Risk: {b.riskAssessment ?? '—'}</p>
               </div>
             </div>
             {b.description && <p className="text-xs text-slate-400 mb-3">{b.description}</p>}

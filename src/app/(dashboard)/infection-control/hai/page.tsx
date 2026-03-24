@@ -70,9 +70,9 @@ export default async function HaiPage() {
                 <p className="text-xs text-slate-500 mb-3">{m.reportMonth}/{m.reportYear}</p>
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-xs"><span className="text-slate-400">Cases</span><span className="font-semibold text-white">{m.caseCount}</span></div>
-                  <div className="flex justify-between text-xs"><span className="text-slate-400">Rate / 1000 pt-days</span><span className={`font-semibold ${above ? 'text-red-400' : 'text-emerald-400'}`}>{m.rate != null ? m.rate.toFixed(1) : 'â€”'}</span></div>
-                  <div className="flex justify-between text-xs"><span className="text-slate-400">NHSN Benchmark</span><span className="text-slate-300">{m.nhsnBenchmark != null ? m.nhsnBenchmark.toFixed(1) : 'â€”'}</span></div>
-                  <div className="flex justify-between text-xs"><span className="text-slate-400">SIR</span><span className={`font-bold ${m.sir && m.sir > 1 ? 'text-red-400' : 'text-emerald-400'}`}>{m.sir ? m.sir.toFixed(2) : 'â€”'}</span></div>
+                  <div className="flex justify-between text-xs"><span className="text-slate-400">Rate / 1000 pt-days</span><span className={`font-semibold ${above ? 'text-red-400' : 'text-emerald-400'}`}>{m.rate != null ? m.rate.toFixed(1) : '—'}</span></div>
+                  <div className="flex justify-between text-xs"><span className="text-slate-400">NHSN Benchmark</span><span className="text-slate-300">{m.nhsnBenchmark != null ? m.nhsnBenchmark.toFixed(1) : '—'}</span></div>
+                  <div className="flex justify-between text-xs"><span className="text-slate-400">SIR</span><span className={`font-bold ${m.sir && m.sir > 1 ? 'text-red-400' : 'text-emerald-400'}`}>{m.sir ? m.sir.toFixed(2) : '—'}</span></div>
                 </div>
               </div>
             );

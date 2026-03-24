@@ -33,22 +33,22 @@ export default async function PatientRightsPage() {
     {
       href: '/patient-rights/consents',
       title: 'Consent Records',
-      description: 'Informed consent tracking â€” treatment, medication, procedures, ECT. Capacity determination documented.',
-      icon: 'âœï¸', badge: 'CMS Â§482.13', badgeColor: 'bg-blue-100 text-blue-700',
+      description: 'Informed consent tracking — treatment, medication, procedures, ECT. Capacity determination documented.',
+      icon: '✏️', badge: 'CMS §482.13', badgeColor: 'bg-blue-100 text-blue-700',
       stat: `${activeConsents} Active Consents`, statColor: 'text-blue-400',
     },
     {
       href: '/patient-rights/advance-directives',
       title: 'Advance Directives',
-      description: 'AD status per encounter â€” existence, type, on file, and information offered per CMS CoP.',
-      icon: 'ðŸ“‹', badge: 'CMS Â§482.13(b)(3)', badgeColor: 'bg-emerald-100 text-emerald-700',
+      description: 'AD status per encounter — existence, type, on file, and information offered per CMS CoP.',
+      icon: '📋', badge: 'CMS §482.13(b)(3)', badgeColor: 'bg-emerald-100 text-emerald-700',
       stat: 'AD tracking per admission', statColor: 'text-emerald-400',
     },
     {
       href: '/patient-rights/holds',
       title: 'Involuntary Holds',
       description: 'Title 36 / 72-hour holds, court orders, legal counsel notification, and hearing dates.',
-      icon: 'âš–ï¸', badge: 'ARS Title 36', badgeColor: 'bg-red-100 text-red-700',
+      icon: '⚖️', badge: 'ARS Title 36', badgeColor: 'bg-red-100 text-red-700',
       stat: `${activeHolds} Active Holds`, statColor: activeHolds > 0 ? 'text-amber-400' : 'text-emerald-400',
     },
   ];
@@ -60,7 +60,7 @@ export default async function PatientRightsPage() {
           <div className="flex items-center gap-3 mb-1">
             <HeartHandshake className="w-6 h-6 text-rose-400" />
             <h1 className="text-2xl font-bold text-white">Patient Rights</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">CMS Â§482.13</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">CMS §482.13</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">ARS Title 36</span>
           </div>
           <p className="text-slate-400 text-sm">Informed consent, advance directives, MOON notices, and involuntary hold documentation.</p>
@@ -72,7 +72,7 @@ export default async function PatientRightsPage() {
           { label: 'Active Consents',  value: activeConsents, icon: HeartHandshake, color: 'text-rose-400' },
           { label: 'Active Holds',     value: activeHolds,    icon: Shield,         color: 'text-amber-400' },
           { label: 'Rights Issues',    value: gaps,           icon: AlertTriangle,  color: gaps > 0 ? 'text-amber-400' : 'text-emerald-400' },
-          { label: 'Consents Current', value: 'âœ“',            icon: CheckCircle,    color: 'text-emerald-400' },
+          { label: 'Consents Current', value: '✓',            icon: CheckCircle,    color: 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-2">

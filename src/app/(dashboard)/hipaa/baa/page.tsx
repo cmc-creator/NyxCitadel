@@ -38,9 +38,9 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
           <div className="flex items-center gap-3 mb-1">
             <FileText className="w-5 h-5 text-blue-400" />
             <h1 className="text-xl font-bold text-white">Business Associate Agreement Tracker</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">HIPAA Â§164.308</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">HIPAA §164.308</span>
           </div>
-          <p className="text-slate-400 text-sm">All vendors and contractors with access to PHI â€” BAA status, expiry tracking, and renewal workflow.</p>
+          <p className="text-slate-400 text-sm">All vendors and contractors with access to PHI — BAA status, expiry tracking, and renewal workflow.</p>
         </div>
         <a href="/hipaa/baa/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Add BAA
@@ -52,7 +52,7 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
           <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
           <div>
             <p className="text-sm font-semibold text-red-300">
-              {expired > 0 && `${expired} BAA(s) expired â€” immediate renewal required. `}
+              {expired > 0 && `${expired} BAA(s) expired — immediate renewal required. `}
               {expiringSoon > 0 && `${expiringSoon} BAA(s) expiring within 90 days.`}
             </p>
             <p className="text-xs text-red-200/70 mt-0.5">Expired BAAs mean PHI is shared outside of compliant agreement. HIPAA violation risk.</p>

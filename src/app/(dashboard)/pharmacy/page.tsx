@@ -22,22 +22,22 @@ export default async function PharmacyPage() {
       href: '/pharmacy/controlled-substances',
       title: 'Controlled Substance Log',
       description: 'Shift count verification, waste reconciliation, discrepancy tracking, and DEA reporting.',
-      icon: 'ðŸ’Š', badge: 'DEA Schedule IIâ€“V', badgeColor: 'bg-red-100 text-red-700',
+      icon: '💊', badge: 'DEA Schedule II–V', badgeColor: 'bg-red-100 text-red-700',
       stat: csDiscrepancies > 0 ? `${csDiscrepancies} Open Discrepancies` : '0 Open Discrepancies',
       statColor: csDiscrepancies > 0 ? 'text-red-400' : 'text-emerald-400',
     },
     {
       href: '/pharmacy/high-alert',
       title: 'High-Alert Med Audits',
-      description: 'ISMP high-alert medications â€” storage, labeling, double-check compliance audits.',
-      icon: 'âš ï¸', badge: 'ISMP / TJC MM', badgeColor: 'bg-amber-100 text-amber-700',
+      description: 'ISMP high-alert medications — storage, labeling, double-check compliance audits.',
+      icon: '⚠️', badge: 'ISMP / TJC MM', badgeColor: 'bg-amber-100 text-amber-700',
       stat: `${highAlertThisMonth} Audits This Month`, statColor: 'text-amber-400',
     },
     {
       href: '/pharmacy/pdmp',
       title: 'PDMP Check Log',
-      description: 'Prescription Drug Monitoring Program â€” compliance log for Arizona mandatory PDMP checks.',
-      icon: 'ðŸ”', badge: 'ARS Â§36-2606', badgeColor: 'bg-blue-100 text-blue-700',
+      description: 'Prescription Drug Monitoring Program — compliance log for Arizona mandatory PDMP checks.',
+      icon: '🔍', badge: 'ARS §36-2606', badgeColor: 'bg-blue-100 text-blue-700',
       stat: `${pdmpThisMonth} Checks This Month`, statColor: 'text-emerald-400',
     },
   ];
@@ -61,7 +61,7 @@ export default async function PharmacyPage() {
           { label: 'CS Discrepancies Open',        value: csDiscrepancies,    icon: Clipboard,    color: csDiscrepancies > 0 ? 'text-red-400' : 'text-emerald-400' },
           { label: 'High-Alert Audits This Month',  value: highAlertThisMonth, icon: AlertTriangle, color: 'text-amber-400' },
           { label: 'PDMP Checks This Month',        value: pdmpThisMonth,      icon: CheckCircle,  color: 'text-blue-400' },
-          { label: 'Formulary Reviews',             value: 'â€”',                icon: Pill,         color: 'text-emerald-400' },
+          { label: 'Formulary Reviews',             value: '—',                icon: Pill,         color: 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-2">

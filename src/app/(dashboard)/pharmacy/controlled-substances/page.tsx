@@ -32,7 +32,7 @@ export default async function ControlledSubstancesPage() {
           <div className="flex items-center gap-3 mb-1">
             <Clipboard className="w-5 h-5 text-emerald-400" />
             <h1 className="text-xl font-bold text-white">Controlled Substance Log</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">DEA Schedule IIâ€“V</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">DEA Schedule II–V</span>
           </div>
           <p className="text-slate-400 text-sm">Shift count verification, waste reconciliation, and discrepancy tracking for controlled substances.</p>
         </div>
@@ -88,7 +88,7 @@ export default async function ControlledSubstancesPage() {
                 <td className="px-3 py-3 text-slate-300 text-xs">{l.amountExpected}</td>
                 <td className="px-3 py-3 text-slate-300 text-xs">{l.amountCounted}</td>
                 <td className={`px-3 py-3 font-bold text-xs ${l.countDifference !== 0 ? 'text-red-400' : 'text-slate-500'}`}>
-                  {l.countDifference !== 0 ? `âˆ’${Math.abs(l.countDifference)}` : '0'}
+                  {l.countDifference !== 0 ? `−${Math.abs(l.countDifference)}` : '0'}
                 </td>
                 <td className="px-3 py-3">
                   <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[l.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>

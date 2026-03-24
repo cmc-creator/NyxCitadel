@@ -42,9 +42,9 @@ export default async function ConsentsPage() {
           <div className="flex items-center gap-3 mb-1">
             <FileText className="w-5 h-5 text-rose-400" />
             <h1 className="text-xl font-bold text-white">Consent Records</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">CMS Â§482.13(b)</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">CMS §482.13(b)</span>
           </div>
-          <p className="text-slate-400 text-sm">Informed consent documentation â€” treatment, medications, ECT, and capacity determination.</p>
+          <p className="text-slate-400 text-sm">Informed consent documentation — treatment, medications, ECT, and capacity determination.</p>
         </div>
         <a href="/patient-rights/consents/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Consent
@@ -54,7 +54,7 @@ export default async function ConsentsPage() {
       {pending > 0 && (
         <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
-          <p className="text-sm text-amber-300">{pending} consent(s) pending â€” capacity determination not yet documented for these patients.</p>
+          <p className="text-sm text-amber-300">{pending} consent(s) pending — capacity determination not yet documented for these patients.</p>
         </div>
       )}
 
@@ -87,8 +87,8 @@ export default async function ConsentsPage() {
               <tr key={c.id} className="hover:bg-white/5 transition-colors">
                 <td className="px-4 py-3 font-bold text-white">{c.patientInitials}</td>
                 <td className="px-4 py-3 text-slate-300 text-xs">{typeLabels[c.consentType] ?? c.consentType}</td>
-                <td className="px-4 py-3 text-slate-400 text-xs">{c.consentDate ? c.consentDate.toLocaleDateString() : 'â€”'}</td>
-                <td className="px-4 py-3 text-slate-400 text-xs">{c.obtainedBy ?? 'â€”'}</td>
+                <td className="px-4 py-3 text-slate-400 text-xs">{c.consentDate ? c.consentDate.toLocaleDateString() : '—'}</td>
+                <td className="px-4 py-3 text-slate-400 text-xs">{c.obtainedBy ?? '—'}</td>
                 <td className="px-4 py-3">
                   <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[c.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
                     {statusConfig[c.status]?.label ?? c.status}
