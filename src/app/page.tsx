@@ -1,4 +1,5 @@
-﻿import { auth } from '@/lib/auth';
+﻿import Image from 'next/image';
+import { auth } from '@/lib/auth';
 import Link from 'next/link';
 import {
   Shield, AlertTriangle, BarChart3, CheckCircle, ArrowRight, Activity,
@@ -239,9 +240,14 @@ export default async function RootPage() {
       <header className="z-20 border-b border-white/5 backdrop-blur-md sticky top-0">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
-              <Shield className="w-5 h-5 text-white" />
-            </div>
+            <Image
+              src="/citadellogo.png"
+              alt="NyxCitadel"
+              width={36}
+              height={36}
+              priority
+              className="h-9 w-auto rounded-xl flex-shrink-0"
+            />
             <div>
               <span className="font-extrabold text-lg tracking-tight">NyxCitadel<sup className="text-[10px] font-normal align-super ml-0.5">™</sup></span>
               <span className="hidden sm:inline text-slate-600 text-xs ml-2">Healthcare Compliance Platform</span>
