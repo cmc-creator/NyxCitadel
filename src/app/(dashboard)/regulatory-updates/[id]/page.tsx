@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
 import {
   ArrowLeft, ExternalLink, AlertTriangle, Info,
-  ArrowUpCircle, CheckCircle2, Tag,
+  ArrowUpCircle, CheckCircle2,
 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -14,8 +14,7 @@ const IMPACT_STYLES: Record<string, { badge: string; bg: string; icon: React.Ele
   CRITICAL:      { badge: 'bg-red-500/15 text-red-400 border border-red-500/30',          bg: 'bg-red-950/30 border-red-700/40',       icon: AlertTriangle,  label: 'Critical - Immediate Action Required' },
   HIGH:          { badge: 'bg-orange-500/15 text-orange-400 border border-orange-500/30',  bg: 'bg-orange-950/30 border-orange-700/40', icon: ArrowUpCircle,  label: 'High Priority - Review Within 7 Days' },
   MEDIUM:        { badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',     bg: 'bg-amber-950/20 border-amber-700/40',   icon: Info,           label: 'Medium - Review Within 30 Days' },
-  LOW:           { badge: 'bg-blue-500/15 text-blue-400 border border-blue-500/30',        bg: 'bg-blue-950/20 border-blue-700/40',     icon: CheckCircle2,   label: 'Low Impact - Informational' },
-  INFO:          { badge: 'bg-slate-500/15 text-slate-400 border border-slate-500/20',     bg: 'bg-slate-800/30 border-slate-700/30',   icon: CheckCircle2,   label: 'Informational - Awareness Only' },
+  INFORMATIONAL: { badge: 'bg-slate-500/15 text-slate-400 border border-slate-500/20',     bg: 'bg-slate-800/30 border-slate-700/30',   icon: CheckCircle2,   label: 'Informational - Awareness Only' },
 };
 
 export default async function RegulatoryUpdateDetailPage({ params }: { params: { id: string } }) {
@@ -25,7 +24,7 @@ export default async function RegulatoryUpdateDetailPage({ params }: { params: {
 
   if (!update) notFound();
 
-  const style = IMPACT_STYLES[update.impactLevel] ?? IMPACT_STYLES.INFO;
+  const style = IMPACT_STYLES[update.urgency] ?? IMPACT_STYLES.INFORMATIONAL;
   const Icon  = style.icon;
 
   return (
@@ -47,32 +46,28 @@ export default async function RegulatoryUpdateDetailPage({ params }: { params: {
         <div className="px-6 py-5 border-b border-border">
           <div className="flex items-center gap-2 flex-wrap mb-3">
             <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${style.badge}`}>
-              {update.impactLevel}
+              {update.urgency}
             </span>
             <span className="text-xs font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
-              {update.agency}
+              {update.regulatoryBody}
             </span>
-            {update.docType && (
-              <span className="text-xs font-mono text-muted-foreground bg-muted px-2.5 py-1 rounded-full flex items-center gap-1">
-                <Tag className="w-3 h-3" /> {update.docType}
-              </span>
-            )}
           </div>
           <h1 className="text-xl font-bold text-foreground leading-snug">{update.title}</h1>
         </div>
 
         {/* Meta row */}
         <div className="px-6 py-3 border-b border-border bg-muted/30 flex flex-wrap gap-4 text-xs text-muted-foreground">
-          <span>Published {formatDate(update.publishedAt, 'MMMM d, yyyy')}</span>
-          <span>Source: {update.source.replace(/_/g, ' ')}</span>
-          <a
-            href={update.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-purple-400 hover:text-purple-300 transition-colors"
-          >
-            <ExternalLink className="w-3.5 h-3.5" /> Official Source
-          </a>
+          <span>Published {formatDate(update.createdAt, 'MMMM d, yyyy')}</span>
+          {update.sourceUrl && (
+            <a
+              href={update.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-purple-400 hover:text-purple-300 transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5" /> Official Source
+            </a>
+          )}
         </div>
 
         {/* Summary */}

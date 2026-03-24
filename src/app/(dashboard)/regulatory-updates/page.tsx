@@ -14,29 +14,28 @@ const IMPACT_STYLES: Record<string, { badge: string; icon: React.ElementType; ba
   CRITICAL: { badge: 'bg-red-500/15 text-red-400 border border-red-500/30',         icon: AlertTriangle,  bar: 'bg-red-500',    label: 'Critical - Act Now' },
   HIGH:     { badge: 'bg-orange-500/15 text-orange-400 border border-orange-500/30', icon: ArrowUpCircle,  bar: 'bg-orange-500', label: 'High Priority' },
   MEDIUM:   { badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',    icon: Info,           bar: 'bg-amber-500',  label: 'Medium' },
-  LOW:      { badge: 'bg-blue-500/15 text-blue-400 border border-blue-500/30',       icon: CheckCircle2,   bar: 'bg-blue-500',   label: 'Low Impact' },
-  INFO:     { badge: 'bg-slate-500/15 text-slate-400 border border-slate-500/20',    icon: CheckCircle2,   bar: 'bg-slate-500',  label: 'Informational' },
+  INFORMATIONAL: { badge: 'bg-slate-500/15 text-slate-400 border border-slate-500/20',    icon: CheckCircle2,   bar: 'bg-slate-500',  label: 'Informational' },
 };
 
-const IMPACT_ORDER = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'INFO'];
+const IMPACT_ORDER = ['CRITICAL', 'HIGH', 'MEDIUM', 'INFORMATIONAL'];
 
 export default async function RegulatoryUpdatesPage() {
   const updates = await prisma.regulatoryUpdate.findMany({
     where: { isGlobal: true },
-    orderBy: [{ publishedAt: 'desc' }],
+    orderBy: [{ createdAt: 'desc' }],
     take: 100,
   });
 
   // Sort client-side by impact level priority
   const sorted = [...updates].sort((a, b) => {
-    const ai = IMPACT_ORDER.indexOf(a.impactLevel);
-    const bi = IMPACT_ORDER.indexOf(b.impactLevel);
+    const ai = IMPACT_ORDER.indexOf(a.urgency);
+    const bi = IMPACT_ORDER.indexOf(b.urgency);
     if (ai !== bi) return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
-  const critical = sorted.filter(u => u.impactLevel === 'CRITICAL');
-  const rest     = sorted.filter(u => u.impactLevel !== 'CRITICAL');
+  const critical = sorted.filter(u => u.urgency === 'CRITICAL');
+  const rest     = sorted.filter(u => u.urgency !== 'CRITICAL');
 
   return (
     <div className="space-y-6 max-w-4xl">
@@ -72,7 +71,7 @@ export default async function RegulatoryUpdatesPage() {
                     <p className="text-xs text-red-400/80 mt-0.5">{u.summary.slice(0, 160)}{u.summary.length > 160 ? '…' : ''}</p>
                   )}
                 </div>
-                <span className="text-xs text-red-500/60 whitespace-nowrap mt-0.5">{formatDate(u.publishedAt, 'MMM d, yyyy')}</span>
+                <span className="text-xs text-red-500/60 whitespace-nowrap mt-0.5">{formatDate(u.createdAt, 'MMM d, yyyy')}</span>
               </div>
             </Link>
           ))}
@@ -88,7 +87,7 @@ export default async function RegulatoryUpdatesPage() {
       ) : (
         <div className="space-y-3">
           {rest.map(u => {
-            const style = IMPACT_STYLES[u.impactLevel] ?? IMPACT_STYLES.INFO;
+            const style = IMPACT_STYLES[u.urgency] ?? IMPACT_STYLES.INFORMATIONAL;
             const Icon  = style.icon;
             return (
               <Link
@@ -107,11 +106,8 @@ export default async function RegulatoryUpdatesPage() {
                         {style.label}
                       </span>
                       <span className="text-[10px] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
-                        {u.agency}
+                        {u.regulatoryBody}
                       </span>
-                      {u.docType && (
-                        <span className="text-[10px] text-muted-foreground font-mono">{u.docType}</span>
-                      )}
                     </div>
                     <p className="text-sm font-semibold text-foreground group-hover:text-purple-300 transition-colors truncate">
                       {u.title}
@@ -121,8 +117,7 @@ export default async function RegulatoryUpdatesPage() {
                     )}
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-xs text-muted-foreground">{formatDate(u.publishedAt, 'MMM d, yyyy')}</p>
-                    <p className="text-[10px] text-muted-foreground/60 mt-0.5">{u.source.replace(/_/g, ' ')}</p>
+                    <p className="text-xs text-muted-foreground">{formatDate(u.createdAt, 'MMM d, yyyy')}</p>
                   </div>
                 </div>
               </Link>
