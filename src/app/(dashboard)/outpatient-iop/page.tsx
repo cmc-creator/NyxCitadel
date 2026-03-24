@@ -161,7 +161,7 @@ export default async function IopDashboardPage() {
   const [allUpdates, upcomingTraining, overduePolicies, openCaps, upcomingEvents] = await Promise.all([
     prisma.regulatoryUpdate.findMany({
       where: { isGlobal: true },
-      orderBy: [{ publishedAt: 'desc' }],
+      orderBy: [{ createdAt: 'desc' }],
       take: 200,
     }),
     prisma.trainingRecord.count({
