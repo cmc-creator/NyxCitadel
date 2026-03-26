@@ -1,4 +1,4 @@
-﻿import { FileText, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
+import { FileText, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -6,19 +6,22 @@ export const dynamic = 'force-dynamic';
 
 const typeLabels: Record<string, string> = {
   GENERAL_TREATMENT:       'General Treatment',
-  PSYCHOTROPIC_MEDICATION: 'Psychotropic Medication',
+  MEDICATION:              'Medication',
+  PROCEDURE:               'Procedure',
+  TELEHEALTH:              'Telehealth',
   ECT:                     'Electroconvulsive Therapy',
-  RESEARCH_PARTICIPATION:  'Research Participation',
-  PHOTOGRAPHY:             'Photography / Recording',
-  RELEASE_OF_INFORMATION:  'Release of Information',
+  PARTICIPATION_IN_RESEARCH:'Research Participation',
+  PHOTOGRAPHY_RECORDING:   'Photography / Recording',
+  RELEASE_OF_INFO:         'Release of Information',
+  SPECIALIZED_TREATMENT:   'Specialized Treatment',
 };
 
 const statusConfig: Record<string, { label: string; color: string }> = {
-  SIGNED:         { label: 'Signed',          color: 'bg-emerald-100 text-emerald-700' },
-  VERBAL:         { label: 'Verbal',           color: 'bg-blue-100 text-blue-700' },
-  REFUSED:        { label: 'Refused',          color: 'bg-red-100 text-red-700' },
-  REVOKED:        { label: 'Revoked',          color: 'bg-slate-100 text-slate-600' },
-  UNABLE_CAPACITY:{ label: 'Unable/Surrogate', color: 'bg-amber-100 text-amber-700' },
+  SIGNED:           { label: 'Signed',           color: 'bg-emerald-100 text-emerald-700' },
+  VERBAL:           { label: 'Verbal',           color: 'bg-blue-100 text-blue-700' },
+  REFUSED:          { label: 'Refused',          color: 'bg-amber-100 text-amber-700' },
+  REVOKED:          { label: 'Revoked',          color: 'bg-red-100 text-red-700' },
+  UNABLE_CAPACITY:  { label: 'Unable Capacity',  color: 'bg-purple-100 text-purple-700' },
 };
 
 export default async function ConsentsPage() {
@@ -31,9 +34,9 @@ export default async function ConsentsPage() {
     take: 100,
   });
 
-  const pending   = consents.filter(c => c.status === 'UNABLE_CAPACITY').length;
-  const active    = consents.filter(c => c.status === 'SIGNED' || c.status === 'VERBAL').length;
-  const surrogate = consents.filter(c => c.status === 'UNABLE_CAPACITY').length;
+  const pending = consents.filter(c => !c.patientCapacityDetermined).length;
+  const active = consents.filter(c => c.status === 'SIGNED' || c.status === 'VERBAL').length;
+  const surrogate = consents.filter(c => Boolean(c.legalRepresentative)).length;
 
   return (
     <div className="p-6 space-y-6">
@@ -54,12 +57,15 @@ export default async function ConsentsPage() {
       {pending > 0 && (
         <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
-          <p className="text-sm text-amber-300">{pending} consent(s) require surrogate/guardian — capacity not established for these patients.</p>
+          <p className="text-sm text-amber-300">{pending} consent record(s) are missing capacity determination documentation.</p>
+        </div>
+      )}
+
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: 'Active Consents',         value: active,    color: 'text-emerald-400' },
           { label: 'Surrogate/Guardian',       value: surrogate, color: 'text-purple-400' },
-          { label: 'Pending',                  value: pending,   color: pending > 0 ? 'text-amber-400' : 'text-emerald-400' },
+          { label: 'Capacity Undocumented',    value: pending,   color: pending > 0 ? 'text-amber-400' : 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4 text-center">
             <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
@@ -99,3 +105,5 @@ export default async function ConsentsPage() {
     </div>
   );
 }
+
+

@@ -1,6 +1,7 @@
-﻿import { FileText, Plus, AlertTriangle } from 'lucide-react';
+import { FileText, Plus, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import type { BaaStatus } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,11 +19,13 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
   const now = new Date();
   const in90 = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
   const filter = searchParams.filter ?? 'ALL';
+  const allowedStatuses: readonly BaaStatus[] = ['ACTIVE', 'EXPIRED', 'PENDING_RENEWAL', 'TERMINATED', 'UNDER_NEGOTIATION'];
+  const statusFilter = allowedStatuses.includes(filter as BaaStatus) ? (filter as BaaStatus) : undefined;
 
   const baas = await prisma.baaTracker.findMany({
     where: {
       facilityId,
-      ...(filter !== 'ALL' ? { status: filter as any } : {}),
+      ...(statusFilter ? { status: statusFilter } : {}),
     },
     orderBy: { expiryDate: 'asc' },
   });
@@ -96,15 +99,17 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
             {baas.length === 0 ? (
               <tr><td colSpan={6} className="text-center py-8 text-slate-500 text-sm">No BAAs on record.</td></tr>
             ) : baas.map(b => {
-              const daysLeft = b.expiryDate ? Math.ceil((b.expiryDate.getTime() - now.getTime()) / 86400000) : null;
+              const daysLeft = b.expiryDate
+                ? Math.ceil((b.expiryDate.getTime() - now.getTime()) / 86400000)
+                : null;
               return (
                 <tr key={b.id} className={`hover:bg-white/5 transition-colors ${b.status === 'EXPIRED' ? 'bg-red-500/5' : ''}`}>
                   <td className="px-4 py-3 font-semibold text-white text-xs">{b.vendorName}</td>
                   <td className="px-4 py-3 text-slate-400 text-xs">{b.serviceDescription}</td>
                   <td className="px-4 py-3 text-slate-400 text-xs">{b.agreementDate.toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-slate-300 text-xs">{b.expiryDate ? b.expiryDate.toLocaleDateString() : '-'}</td>
-                  <td className={`px-4 py-3 font-bold text-xs ${daysLeft === null ? 'text-slate-400' : daysLeft <= 0 ? 'text-red-400' : daysLeft <= 90 ? 'text-amber-400' : 'text-slate-400'}`}>
-                    {daysLeft === null ? '-' : daysLeft <= 0 ? `${Math.abs(daysLeft)}d overdue` : `${daysLeft}d`}
+                  <td className="px-4 py-3 text-slate-300 text-xs">{b.expiryDate ? b.expiryDate.toLocaleDateString() : '—'}</td>
+                  <td className={`px-4 py-3 font-bold text-xs ${daysLeft == null ? 'text-slate-500' : daysLeft <= 0 ? 'text-red-400' : daysLeft <= 90 ? 'text-amber-400' : 'text-slate-400'}`}>
+                    {daysLeft == null ? '—' : daysLeft <= 0 ? `${Math.abs(daysLeft)}d overdue` : `${daysLeft}d`}
                   </td>
                   <td className="px-4 py-3">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[b.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
@@ -120,3 +125,5 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
     </div>
   );
 }
+
+

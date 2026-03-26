@@ -8,6 +8,8 @@ import {
   User, HardDrive, ArrowLeft, Trash2, ExternalLink, Pencil,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 interface DocumentRecord {
   id: string;
@@ -22,6 +24,27 @@ interface DocumentRecord {
   tags: string[];
   createdAt: string;
   updatedAt: string;
+}
+
+interface AttachmentRecord {
+  id: string;
+  title: string;
+  description: string | null;
+  kind: string;
+  mimeType?: string | null;
+  fileName: string;
+  fileUrl: string;
+  thumbnailUrl: string | null;
+  fileSizeBytes?: number | null;
+  durationSeconds?: number | null;
+  sourceLabel?: string | null;
+  category: string | null;
+  tags: string[];
+  isEvidence: boolean;
+  isPublic: boolean;
+  capturedAt?: string | null;
+  uploadedBy: string | null;
+  createdAt: Date;
 }
 
 function formatBytes(bytes: number): string {
@@ -44,15 +67,25 @@ export default function DocumentDetailPage() {
   const router = useRouter();
 
   const [doc, setDoc] = useState<DocumentRecord | null>(null);
+  const [attachments, setAttachments] = useState<AttachmentRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`/api/documents/${id}`)
-      .then(r => r.json())
-      .then(data => { setDoc(data); setLoading(false); })
-      .catch(() => { setError('Failed to load document.'); setLoading(false); });
+    Promise.all([
+      fetch(`/api/documents/${id}`).then(r => r.json()),
+      fetch(`/api/attachments?sourceType=DOCUMENT&sourceId=${id}`).then(r => r.json()),
+    ])
+      .then(([docData, attachmentData]) => {
+        setDoc(docData);
+        setAttachments(Array.isArray(attachmentData) ? attachmentData : []);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError('Failed to load document.');
+        setLoading(false);
+      });
   }, [id]);
 
   async function handleDelete() {
@@ -234,6 +267,19 @@ export default function DocumentDetailPage() {
         </div>
       )}
 
+      <AttachmentPanel
+        title="Related Evidence & Media"
+        attachments={attachments}
+        emptyLabel="No related media or supporting evidence has been attached to this document yet."
+      />
+
+      <AttachmentComposer
+        sourceType="DOCUMENT"
+        sourceId={doc.id}
+        sourceLabel={doc.name}
+        title="Add Related Evidence"
+      />
+
       {/* File link */}
       <div className="bg-white border border-slate-200 rounded-xl px-5 py-4 flex items-center justify-between gap-4">
         <div>
@@ -244,6 +290,8 @@ export default function DocumentDetailPage() {
           href={doc.fileUrl}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Open document file"
+          title="Open document file"
           className="shrink-0 text-purple-600 hover:text-purple-800 transition"
         >
           <ExternalLink className="w-5 h-5" />

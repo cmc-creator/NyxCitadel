@@ -144,7 +144,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
       orderBy: { targetDate: 'asc' },
     });
     for (const cap of overdueCaps) {
-      const daysOverdue = Math.floor((now.getTime() - (cap.targetDate?.getTime() ?? 0)) / 86400000);
+  const daysOverdue = Math.floor((now.getTime() - (cap.targetDate?.getTime() ?? 0)) / 86400000);
       alerts.push({
         type: NotificationType.CAP_UPDATE,
         title: `CAP Overdue: ${cap.title}`,
@@ -209,7 +209,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
     });
     for (const ir of sentinels) {
       alerts.push({
-        type: NotificationType.INCIDENT_UPDATE,
+  type: NotificationType.INCIDENT_UPDATE,
         title: `Open Sentinel Event: ${ir.irNumber}`,
         message: `Sentinel event ${ir.irNumber} (${ir.incidentType.replace(/_/g, ' ')}) on ${ir.incidentDate.toLocaleDateString()} is still open.`,
         linkUrl: '/trackers/ir-iad',

@@ -118,6 +118,10 @@ model Facility {
   // Regulatory Reference Library (custom / facility-specific entries)
   regulatoryReferences RegulatoryReference[]
 
+  // Regulatory Intelligence Feed (scraped updates)
+  regulatoryUpdates    RegulatoryUpdate[]
+  attachments          Attachment[]
+
   @@map("facilities")
 }
 
@@ -544,6 +548,10 @@ model TrainingRecord {
   passingScore    Float?
   provider        String?       // Who delivered the training
   certificateUrl  String?
+  sourceType      String?
+  sourceId        String?
+  assignedBy      String?
+  assignedReason  String?
   notes           String?
   regulatoryBody  RegulatoryBody?
   createdAt       DateTime      @default(now())
@@ -1030,6 +1038,92 @@ model Document {
   updatedAt   DateTime @updatedAt
 
   @@map("documents")
+}
+
+model Attachment {
+  id              String               @id @default(cuid())
+  facilityId      String
+  facility        Facility             @relation(fields: [facilityId], references: [id])
+  title           String
+  description     String?              @db.Text
+  kind            AttachmentKind
+  mimeType        String?
+  fileName        String
+  fileUrl         String
+  thumbnailUrl    String?
+  fileSizeBytes   Int?
+  durationSeconds Int?
+  checksum        String?
+  sourceType      AttachmentSourceType
+  sourceId        String
+  sourceLabel     String?
+  category        AttachmentCategory?
+  tags            String[]             @default([])
+  isEvidence      Boolean              @default(true)
+  isPublic        Boolean              @default(false)
+  capturedAt      DateTime?
+  uploadedBy      String?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  @@index([facilityId, sourceType, sourceId])
+  @@index([facilityId, kind])
+  @@index([facilityId, category])
+  @@map("attachments")
+}
+
+enum AttachmentKind {
+  IMAGE
+  VIDEO
+  PDF
+  DOCUMENT
+  SPREADSHEET
+  AUDIO
+  ARCHIVE
+  LINK
+  OTHER
+}
+
+enum AttachmentSourceType {
+  DOCUMENT
+  TRAINING_RECORD
+  DRILL
+  DRILL_ACTION
+  INCIDENT
+  INCIDENT_REPORT
+  CORRECTIVE_ACTION_PLAN
+  POLICY
+  EOC_ROUND
+  EOC_DEFICIENCY
+  IC_OUTBREAK
+  HAI_SURVEILLANCE
+  HAND_HYGIENE_AUDIT
+  PROVIDER
+  OPPE_RECORD
+  TREATMENT_PLAN
+  HIPAA_BREACH
+  BAA
+  GOVERNANCE_DOCUMENT
+  COMMITTEE_MEETING
+  SURVEY
+  RISK_ASSESSMENT
+  OTHER
+}
+
+enum AttachmentCategory {
+  EVIDENCE
+  CERTIFICATE
+  ROSTER
+  PHOTO
+  VIDEO
+  FLOOR_PLAN
+  AAR
+  TRAINING_MATERIAL
+  POLICY_EXHIBIT
+  REGULATORY_PROOF
+  SIGNED_FORM
+  SCREENSHOT
+  OTHER
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

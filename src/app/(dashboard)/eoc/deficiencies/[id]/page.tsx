@@ -6,6 +6,9 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, AlertCircle , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import { DeleteButton } from '@/components/ui/DeleteButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,10 +40,10 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
-    <div>
+    <>
       <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
-    </div>
+      <dd className="text-sm font-medium text-slate-800 mt-0.5 mb-3">{value}</dd>
+    </>
   );
 }
 
@@ -48,10 +51,20 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
   const session = await auth();
   if (!session) redirect('/login');
 
-  const def = await prisma.eocDeficiency.findUnique({
-    where: { id: params.id },
-    include: { round: { select: { id: true, roundNumber: true, roundType: true } } },
-  });
+  const [def, attachments] = await Promise.all([
+    prisma.eocDeficiency.findUnique({
+      where: { id: params.id },
+      include: { round: { select: { id: true, roundNumber: true, roundType: true } } },
+    }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'EOC_DEFICIENCY',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!def || def.facilityId !== session.user.facilityId) notFound();
 
@@ -65,6 +78,7 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
           <Link href={`/eoc/deficiencies/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
+          <DeleteButton apiPath={`/api/eoc/deficiencies/${params.id}`} redirectPath="/eoc/deficiencies" label="deficiency" />
           <PrintButton />
         </div>
       </div>
@@ -99,6 +113,19 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
               <p className="text-sm text-slate-700 whitespace-pre-wrap">{def.notes}</p>
             </Section>
           )}
+
+          <AttachmentPanel
+            title="Deficiency Evidence & Remediation Proof"
+            attachments={attachments}
+            emptyLabel="No photos, documentation, or remediation evidence has been attached yet."
+          />
+
+          <AttachmentComposer
+            sourceType="EOC_DEFICIENCY"
+            sourceId={def.id}
+            sourceLabel={def.defNumber}
+            title="Add Deficiency Evidence"
+          />
         </div>
 
         <div className="space-y-5">
@@ -120,7 +147,7 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
           {def.round && (
             <Section title="Originating Round">
               <Link href={`/eoc/rounds/${def.round.id}`} className="text-sm text-indigo-600 hover:underline">
-                {def.round.roundNumber} - {def.round.roundType.replace(/_/g, ' ')} →
+                {def.round.roundNumber} — {def.round.roundType.replace(/_/g, ' ')} →
               </Link>
             </Section>
           )}

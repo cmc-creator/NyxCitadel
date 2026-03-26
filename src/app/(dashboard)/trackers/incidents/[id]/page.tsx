@@ -6,6 +6,9 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, AlertTriangle, ClipboardList , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import { DeleteButton } from '@/components/ui/DeleteButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,10 +33,20 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
   const session = await auth();
   if (!session) redirect('/login');
 
-  const incident = await prisma.incident.findUnique({
-    where: { id: params.id },
-    include: { cap: { select: { id: true, capNumber: true, status: true, title: true } } },
-  });
+  const [incident, attachments] = await Promise.all([
+    prisma.incident.findUnique({
+      where: { id: params.id },
+      include: { cap: { select: { id: true, capNumber: true, status: true, title: true } } },
+    }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'INCIDENT',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!incident || incident.facilityId !== session.user.facilityId) notFound();
 
@@ -47,6 +60,7 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
           <Link href={`/trackers/incidents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
+          <DeleteButton apiPath={`/api/incidents/${params.id}`} redirectPath="/trackers/incidents" label="incident" />
           <PrintButton />
         </div>
       </div>
@@ -67,7 +81,7 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
               {incident.location && <> &middot; <strong>{incident.location}</strong></>}
             </p>
           </div>
-          <StatusUpdater apiPath={`/api/incident-reports/${incident.id}`} currentStatus={incident.status} options={STATUS_OPTIONS} />
+          <StatusUpdater apiPath={`/api/incidents/${incident.id}`} currentStatus={incident.status} options={STATUS_OPTIONS} />
         </div>
       </div>
 
@@ -93,6 +107,13 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
               <p className="text-sm text-slate-700 whitespace-pre-wrap">{incident.rootCauseAnalysis}</p>
             </Section>
           )}
+          <AttachmentPanel title="Incident Evidence & Media" attachments={attachments} emptyLabel="No incident evidence or supporting media has been attached yet." />
+          <AttachmentComposer
+            sourceType="INCIDENT"
+            sourceId={incident.id}
+            sourceLabel={incident.incidentNumber}
+            title="Add Incident Evidence"
+          />
         </div>
 
         <div className="space-y-5">
@@ -151,10 +172,10 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
-    <div className="flex justify-between gap-2">
+    <>
       <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
-      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
-    </div>
+      <dd className={`text-xs font-medium text-right mb-2 ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
+    </>
   );
 }
 

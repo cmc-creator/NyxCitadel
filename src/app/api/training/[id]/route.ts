@@ -32,7 +32,7 @@ export async function PATCH(
   const body = await req.json();
   const {
     status, completedDate, expiryDate, score, passingScore,
-    provider, notes, certificateUrl,
+    provider, notes, certificateUrl, sourceType, sourceId, assignedBy, assignedReason,
   } = body;
 
   const record = await prisma.trainingRecord.update({
@@ -44,6 +44,10 @@ export async function PATCH(
       ...(score          != null && { score: Number(score) }),
       ...(passingScore   != null && { passingScore: Number(passingScore) }),
       ...(provider       != null && { provider }),
+      ...(sourceType     != null && { sourceType }),
+      ...(sourceId       != null && { sourceId }),
+      ...(assignedBy     != null && { assignedBy }),
+      ...(assignedReason != null && { assignedReason }),
       ...(notes          != null && { notes }),
       ...(certificateUrl != null && { certificateUrl }),
     },

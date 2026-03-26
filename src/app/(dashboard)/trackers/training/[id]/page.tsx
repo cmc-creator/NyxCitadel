@@ -6,6 +6,9 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, GraduationCap, AlertTriangle, ExternalLink , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import { DeleteButton } from '@/components/ui/DeleteButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposerClient from './AttachmentComposerClient';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,6 +28,15 @@ export default async function TrainingDetailPage({ params }: { params: { id: str
   const record = await prisma.trainingRecord.findUnique({ where: { id: params.id } });
   if (!record || record.facilityId !== session.user.facilityId) notFound();
 
+  const attachments = await prisma.attachment.findMany({
+    where: {
+      facilityId: session.user.facilityId,
+      sourceType: 'TRAINING_RECORD',
+      sourceId: params.id,
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
   const now = new Date();
   const isExpired = record.expiryDate && record.expiryDate < now;
   const daysToExpiry = record.expiryDate ? Math.ceil((record.expiryDate.getTime() - now.getTime()) / 86400000) : null;
@@ -40,6 +52,7 @@ export default async function TrainingDetailPage({ params }: { params: { id: str
           <Link href={`/trackers/training/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
+          <DeleteButton apiPath={`/api/training/${params.id}`} redirectPath="/trackers/training" label="training record" />
           <PrintButton />
         </div>
       </div>
@@ -112,6 +125,10 @@ export default async function TrainingDetailPage({ params }: { params: { id: str
               <Row label="Training Name" value={record.trainingName} />
               <Row label="Category" value={record.category.replace(/_/g, ' ')} />
               {record.provider && <Row label="Provider" value={record.provider} />}
+              {record.assignedReason && <Row label="Assigned Reason" value={record.assignedReason} />}
+              {record.assignedBy && <Row label="Assigned By" value={record.assignedBy} />}
+              {record.sourceType && <Row label="Source Type" value={record.sourceType.replace(/_/g, ' ')} />}
+              {record.sourceId && <Row label="Source Ref" value={record.sourceId} />}
               {record.completedDate && <Row label="Completed" value={formatDate(record.completedDate)} />}
               {record.expiryDate && <Row label="Expires" value={formatDate(record.expiryDate)} highlight={!!isExpired} />}
               <Row label="Required" value={record.isRequired ? 'Yes' : 'No'} />
@@ -136,6 +153,14 @@ export default async function TrainingDetailPage({ params }: { params: { id: str
           )}
         </div>
       </div>
+
+      <AttachmentPanel
+        title="Training Evidence & Materials"
+        emptyLabel="No certificates, videos, handouts, sign-in sheets, or supporting evidence attached yet."
+        attachments={attachments}
+      />
+
+      <AttachmentComposerClient recordId={record.id} trainingName={record.trainingName} />
     </div>
   );
 }
@@ -151,9 +176,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
-    <div className="flex justify-between gap-2">
+    <>
       <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
-      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
-    </div>
+      <dd className={`text-xs font-medium text-right mb-2 ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
+    </>
   );
 }

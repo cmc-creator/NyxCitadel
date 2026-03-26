@@ -5,6 +5,9 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, Users2 , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
+import { DeleteButton } from '@/components/ui/DeleteButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,10 +23,10 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
-    <div>
+    <>
       <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
-    </div>
+      <dd className="text-sm font-medium text-slate-800 mt-0.5 mb-3">{value}</dd>
+    </>
   );
 }
 
@@ -31,7 +34,17 @@ export default async function CommitteeMeetingDetailPage({ params }: { params: {
   const session = await auth();
   if (!session) redirect('/login');
 
-  const meeting = await prisma.committeeMeeting.findUnique({ where: { id: params.id } });
+  const [meeting, attachments] = await Promise.all([
+    prisma.committeeMeeting.findUnique({ where: { id: params.id } }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'COMMITTEE_MEETING',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!meeting || meeting.facilityId !== session.user.facilityId) notFound();
 
@@ -47,6 +60,7 @@ export default async function CommitteeMeetingDetailPage({ params }: { params: {
           <Link href={`/governance/committees/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
+          <DeleteButton apiPath={`/api/governance/committees/${params.id}`} redirectPath="/governance/committees" label="committee meeting" />
           <PrintButton />
         </div>
       </div>
@@ -113,6 +127,19 @@ export default async function CommitteeMeetingDetailPage({ params }: { params: {
               <p className="text-sm text-slate-700 whitespace-pre-wrap">{meeting.notes}</p>
             </Section>
           )}
+
+          <AttachmentPanel
+            title="Meeting Minutes & Attachments"
+            attachments={attachments}
+            emptyLabel="No signed minutes, exhibits, or supporting materials have been attached yet."
+          />
+
+          <AttachmentComposer
+            sourceType="COMMITTEE_MEETING"
+            sourceId={meeting.id}
+            sourceLabel={`${meeting.committeeType.replace(/_/g, ' ')} — ${meeting.meetingDate.toLocaleDateString()}`}
+            title="Add Meeting Attachment"
+          />
         </div>
 
         <div className="space-y-5">

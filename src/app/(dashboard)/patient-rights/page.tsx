@@ -23,7 +23,7 @@ export default async function PatientRightsPage() {
   const facilityId = session!.user.facilityId;
 
   const [activeConsents, activeHolds] = await Promise.all([
-    prisma.consentRecord.count({ where: { facilityId, status: { in: ['SIGNED', 'VERBAL', 'UNABLE_CAPACITY'] } } }),
+    prisma.consentRecord.count({ where: { facilityId, status: { in: ['SIGNED', 'VERBAL'] } } }),
     prisma.involuntaryHoldLog.count({ where: { facilityId, status: 'ACTIVE' } }),
   ]);
 
@@ -33,22 +33,22 @@ export default async function PatientRightsPage() {
     {
       href: '/patient-rights/consents',
       title: 'Consent Records',
-      description: 'Informed consent tracking — treatment, medication, procedures, ECT. Capacity determination documented.',
-      icon: '✏️', badge: 'CMS §482.13', badgeColor: 'bg-blue-100 text-blue-700',
+      description: 'Informed consent tracking - treatment, medication, procedures, ECT. Capacity determination documented.',
+      icon: 'Pen', badge: 'CMS §482.13', badgeColor: 'bg-blue-100 text-blue-700',
       stat: `${activeConsents} Active Consents`, statColor: 'text-blue-400',
     },
     {
       href: '/patient-rights/advance-directives',
       title: 'Advance Directives',
-      description: 'AD status per encounter — existence, type, on file, and information offered per CMS CoP.',
-      icon: '📋', badge: 'CMS §482.13(b)(3)', badgeColor: 'bg-emerald-100 text-emerald-700',
+      description: 'AD status per encounter - existence, type, on file, and information offered per CMS CoP.',
+      icon: 'Clipboard', badge: 'CMS §482.13(b)(3)', badgeColor: 'bg-emerald-100 text-emerald-700',
       stat: 'AD tracking per admission', statColor: 'text-emerald-400',
     },
     {
       href: '/patient-rights/holds',
       title: 'Involuntary Holds',
       description: 'Title 36 / 72-hour holds, court orders, legal counsel notification, and hearing dates.',
-      icon: '⚖️', badge: 'ARS Title 36', badgeColor: 'bg-red-100 text-red-700',
+      icon: 'Scale', badge: 'ARS Title 36', badgeColor: 'bg-red-100 text-red-700',
       stat: `${activeHolds} Active Holds`, statColor: activeHolds > 0 ? 'text-amber-400' : 'text-emerald-400',
     },
   ];
@@ -72,7 +72,7 @@ export default async function PatientRightsPage() {
           { label: 'Active Consents',  value: activeConsents, icon: HeartHandshake, color: 'text-rose-400' },
           { label: 'Active Holds',     value: activeHolds,    icon: Shield,         color: 'text-amber-400' },
           { label: 'Rights Issues',    value: gaps,           icon: AlertTriangle,  color: gaps > 0 ? 'text-amber-400' : 'text-emerald-400' },
-          { label: 'Consents Current', value: '✓',            icon: CheckCircle,    color: 'text-emerald-400' },
+          { label: 'Consents Current', value: 'Yes',            icon: CheckCircle,    color: 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-2">

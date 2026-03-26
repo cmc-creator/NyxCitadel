@@ -5,6 +5,9 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, FileText , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
+import { DeleteButton } from '@/components/ui/DeleteButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,10 +30,10 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
-    <div>
+    <>
       <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
-    </div>
+      <dd className="text-sm font-medium text-slate-800 mt-0.5 mb-3">{value}</dd>
+    </>
   );
 }
 
@@ -38,7 +41,17 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
   const session = await auth();
   if (!session) redirect('/login');
 
-  const doc = await prisma.governanceDocument.findUnique({ where: { id: params.id } });
+  const [doc, attachments] = await Promise.all([
+    prisma.governanceDocument.findUnique({ where: { id: params.id } }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'GOVERNANCE_DOCUMENT',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!doc || doc.facilityId !== session.user.facilityId) notFound();
 
@@ -54,6 +67,7 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
           <Link href={`/governance/documents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
+          <DeleteButton apiPath={`/api/governance/documents/${params.id}`} redirectPath="/governance/documents" label="governance document" />
           <PrintButton />
         </div>
       </div>
@@ -114,6 +128,19 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
           <p className="text-sm text-slate-700 whitespace-pre-wrap">{doc.notes}</p>
         </Section>
       )}
+
+      <AttachmentPanel
+        title="Document Exhibits & Supporting Files"
+        attachments={attachments}
+        emptyLabel="No exhibit files, signed approvals, or supporting materials have been attached yet."
+      />
+
+      <AttachmentComposer
+        sourceType="GOVERNANCE_DOCUMENT"
+        sourceId={doc.id}
+        sourceLabel={doc.title}
+        title="Add Document Exhibit"
+      />
     </div>
   );
 }

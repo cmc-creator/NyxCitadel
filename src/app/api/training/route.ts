@@ -34,6 +34,10 @@ export async function POST(req: NextRequest) {
     provider,
     notes,
     regulatoryBody,
+    sourceType,
+    sourceId,
+    assignedBy,
+    assignedReason,
   } = body;
 
   if (!staffName || !trainingName || !category) {
@@ -59,6 +63,10 @@ export async function POST(req: NextRequest) {
       score:         score != null ? Number(score) : null,
       passingScore:  passingScore != null ? Number(passingScore) : null,
       provider:      provider ?? null,
+      sourceType:    sourceType ?? null,
+      sourceId:      sourceId ?? null,
+      assignedBy:    assignedBy ?? null,
+      assignedReason: assignedReason ?? null,
       notes:         notes ?? null,
       regulatoryBody: regulatoryBody || null,
     },

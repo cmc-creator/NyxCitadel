@@ -5,6 +5,9 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, ShieldAlert, AlertTriangle , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
+import { DeleteButton } from '@/components/ui/DeleteButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,10 +38,10 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
-    <div>
+    <>
       <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
-    </div>
+      <dd className="text-sm font-medium text-slate-800 mt-0.5 mb-3">{value}</dd>
+    </>
   );
 }
 
@@ -46,7 +49,17 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
   const session = await auth();
   if (!session) redirect('/login');
 
-  const breach = await prisma.hipaaBreachLog.findUnique({ where: { id: params.id } });
+  const [breach, attachments] = await Promise.all([
+    prisma.hipaaBreachLog.findUnique({ where: { id: params.id } }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'HIPAA_BREACH',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!breach || breach.facilityId !== session.user.facilityId) notFound();
 
@@ -63,6 +76,7 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
           <Link href={`/hipaa/breaches/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
+          <DeleteButton apiPath={`/api/hipaa/breaches/${params.id}`} redirectPath="/hipaa/breaches" label="breach record" />
           <PrintButton />
         </div>
       </div>
@@ -114,6 +128,19 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
               <p className="text-sm text-slate-700 whitespace-pre-wrap">{breach.notes}</p>
             </Section>
           )}
+
+          <AttachmentPanel
+            title="Breach Evidence & Notification Records"
+            attachments={attachments}
+            emptyLabel="No forensic evidence, correspondence, or notification records have been attached yet."
+          />
+
+          <AttachmentComposer
+            sourceType="HIPAA_BREACH"
+            sourceId={breach.id}
+            sourceLabel={breach.incidentNumber}
+            title="Add Breach Evidence"
+          />
         </div>
 
         <div className="space-y-5">
@@ -133,7 +160,7 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
               <div>
                 <dt className="text-xs text-slate-400">Reportable Breach</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${isReportable ? 'text-red-600' : 'text-green-600'}`}>
-                  {isReportable ? 'Yes - Reportable' : 'No / Under Review'}
+                  {isReportable ? 'Yes — Reportable' : 'No / Under Review'}
                 </dd>
               </div>
               {hhsDue && <Field label="HHS Notify By" value={formatDate(hhsDue)} />}

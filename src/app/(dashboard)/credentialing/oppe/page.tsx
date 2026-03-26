@@ -1,4 +1,4 @@
-﻿import { Award, Plus, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Award, Plus, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -80,14 +80,14 @@ export default async function OppePage() {
         <table className="w-full text-sm">
           <thead className="bg-slate-900/40">
             <tr>
-              {['Provider', 'Period', 'Cases Reviewed', 'Compliance Rate', 'Overall Rating', 'MEC Approved', 'Review Date'].map(h => (
+              {['Provider', 'Period', 'Cases Reviewed', 'Compliance Rate', 'Overall Rating', 'MEC Approved'].map(h => (
                 <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-3">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
             {records.length === 0 ? (
-              <tr><td colSpan={7} className="text-center py-8 text-slate-500 text-sm">No OPPE records on file.</td></tr>
+              <tr><td colSpan={6} className="text-center py-8 text-slate-500 text-sm">No OPPE records on file.</td></tr>
             ) : records.map(r => {
               const rate = r.totalCases > 0 ? (r.compliantCases / r.totalCases) * 100 : 0;
               return (
@@ -108,7 +108,6 @@ export default async function OppePage() {
                       ? <CheckCircle className="w-4 h-4 text-emerald-400" />
                       : <Clock className="w-4 h-4 text-amber-400" />}
                   </td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{r.approvedByMec ? r.updatedAt.toLocaleDateString() : '-'}</td>
                 </tr>
               );
             })}
@@ -118,3 +117,5 @@ export default async function OppePage() {
     </div>
   );
 }
+
+

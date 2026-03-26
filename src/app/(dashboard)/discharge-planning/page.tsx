@@ -5,11 +5,11 @@ import { prisma } from '@/lib/prisma';
 export const dynamic = 'force-dynamic';
 
 const statusConfig: Record<string, { label: string; classes: string }> = {
-  IN_PROGRESS: { label: 'In Progress', classes: 'bg-blue-100 text-blue-700' },
-  READY:       { label: 'Ready',       classes: 'bg-emerald-100 text-emerald-700' },
+  ACTIVE:      { label: 'Active',      classes: 'bg-blue-100 text-blue-700' },
+  UPDATED:     { label: 'Updated',     classes: 'bg-emerald-100 text-emerald-700' },
   DISCHARGED:  { label: 'Discharged',  classes: 'bg-slate-100 text-slate-700' },
-  DELAYED:     { label: 'Delayed',     classes: 'bg-amber-100 text-amber-700' },
-  BARRIERS:    { label: 'Barriers',    classes: 'bg-red-100 text-red-700' },
+  TRANSFERRED: { label: 'Transferred', classes: 'bg-amber-100 text-amber-700' },
+  AMA:         { label: 'AMA',         classes: 'bg-red-100 text-red-700' },
 };
 
 export default async function DischargePlanningPage() {
@@ -23,9 +23,9 @@ export default async function DischargePlanningPage() {
     take: 60,
   });
 
-  const barriers = plans.filter(p => p.barrierNotes && p.barrierNotes.trim().length > 0).length;
-  const delayed = plans.filter(p => p.status === 'UPDATED').length;
-  const ready = plans.filter(p => p.status === 'DISCHARGED' || p.status === 'TRANSFERRED').length;
+  const barriers = plans.filter(p => Boolean(p.barrierNotes?.trim())).length;
+  const delayed = plans.filter(p => p.estimatedDischargeDate && p.estimatedDischargeDate < now && p.status !== 'DISCHARGED').length;
+  const ready = plans.filter(p => p.status === 'UPDATED').length;
 
   return (
     <div className="p-6 space-y-6">
@@ -87,10 +87,10 @@ export default async function DischargePlanningPage() {
                 <tr key={p.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-white font-medium">{p.patientInitials}</td>
                   <td className="px-4 py-3 text-slate-300">{p.admitDate.toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-slate-400">{p.unit ?? '-'}</td>
-                  <td className="px-4 py-3 text-slate-400">{p.expectedDisposition ?? '-'}</td>
-                  <td className={`px-4 py-3 ${isPast ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{p.estimatedDischargeDate?.toLocaleDateString() ?? '-'}</td>
-                  <td className="px-4 py-3 text-slate-400">{p.careCoordinator ?? '-'}</td>
+                  <td className="px-4 py-3 text-slate-400">{p.unit ?? '—'}</td>
+                  <td className="px-4 py-3 text-slate-400">{p.expectedDisposition ?? '—'}</td>
+                  <td className={`px-4 py-3 ${isPast ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{p.estimatedDischargeDate?.toLocaleDateString() ?? '—'}</td>
+                  <td className="px-4 py-3 text-slate-400">{p.careCoordinator ?? '—'}</td>
                   <td className="px-4 py-3"><span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cfg.classes}`}>{cfg.label}</span></td>
                 </tr>
               );

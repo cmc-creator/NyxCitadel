@@ -1,4 +1,4 @@
-﻿import { Shield, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Shield, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -7,7 +7,6 @@ export const dynamic = 'force-dynamic';
 const statusConfig: Record<string, { label: string; classes: string }> = {
   COMPLIANT:      { label: 'Compliant',      classes: 'bg-emerald-100 text-emerald-700' },
   ACTION_TAKEN:   { label: 'Action Taken',   classes: 'bg-blue-100 text-blue-700' },
-  PENDING:        { label: 'Pending',         classes: 'bg-yellow-100 text-yellow-700' },
   CONCERNS_OPEN:  { label: 'Concerns Open',  classes: 'bg-red-100 text-red-700' },
 };
 
@@ -22,7 +21,7 @@ export default async function PdmpPage() {
   });
 
   const openConcerns = checks.filter(c => c.significantFinding && !c.actionTaken).length;
-  const significant  = checks.filter(c => c.significantFinding).length;
+  const significant = checks.filter(c => c.significantFinding).length;
 
   return (
     <div className="p-6 space-y-6">
@@ -75,8 +74,10 @@ export default async function PdmpPage() {
             {checks.length === 0 ? (
               <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">No PDMP checks on record.</td></tr>
             ) : checks.map(c => {
-              const statusKey = !c.significantFinding ? 'COMPLIANT' : c.actionTaken ? 'ACTION_TAKEN' : 'CONCERNS_OPEN';
-              const cfg = statusConfig[statusKey];
+              const derivedStatus = c.significantFinding
+                ? (c.actionTaken ? 'ACTION_TAKEN' : 'CONCERNS_OPEN')
+                : 'COMPLIANT';
+              const cfg = statusConfig[derivedStatus];
               return (
                 <tr key={c.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-slate-300">{c.checkDate.toLocaleDateString()}</td>

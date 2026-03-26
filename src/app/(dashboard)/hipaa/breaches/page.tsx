@@ -1,4 +1,4 @@
-﻿import { Lock, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Lock, Plus, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -123,3 +123,5 @@ export default async function BreachLogPage({ searchParams }: { searchParams: { 
     </div>
   );
 }
+
+

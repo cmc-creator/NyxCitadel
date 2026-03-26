@@ -1,4 +1,4 @@
-﻿import { notFound, redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -6,6 +6,7 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, ShieldAlert, ExternalLink , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -64,6 +65,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
           <Link href={`/trackers/risk-assessments/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
+          <DeleteButton apiPath={`/api/risk-assessments/${params.id}`} redirectPath="/trackers/risk-assessments" label="risk assessment" />
           <PrintButton />
         </div>
       </div>
@@ -128,7 +130,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                           <p className="truncate" title={item.riskDescription}>{item.riskDescription}</p>
                           {item.currentControls && <p className="text-xs text-slate-400 truncate">Controls: {item.currentControls}</p>}
                         </td>
-                        <td className="py-2 pr-2 text-slate-500">{(item.category ?? '').replace(/_/g, ' ')}</td>
+                        <td className="py-2 pr-2 text-slate-500">{item.category ? item.category.replace(/_/g, ' ') : '—'}</td>
                         <td className="py-2 pr-2 text-center font-medium">{item.likelihood}</td>
                         <td className="py-2 pr-2 text-center font-medium">{item.severity}</td>
                         <td className="py-2 pr-2 text-center">
@@ -139,7 +141,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                             {item.riskLevel}
                           </span>
                         </td>
-                        <td className="py-2 pr-2 text-slate-500">{item.assignedTo ?? 'ΓÇö'}</td>
+                        <td className="py-2 pr-2 text-slate-500">{item.assignedTo ?? '—'}</td>
                         <td className="py-2">
                           <span className={`px-1.5 py-0.5 rounded text-xs ${ITEM_STATUS_COLOR[item.status]}`}>{item.status}</span>
                         </td>
@@ -148,7 +150,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-slate-400 mt-3">L = Likelihood (1ΓÇô5) &middot; S = Severity (1ΓÇô5) &middot; Score = L &times; S</p>
+              <p className="text-xs text-slate-400 mt-3">L = Likelihood (1–5) &middot; S = Severity (1–5) &middot; Score = L &times; S</p>
             </Section>
           )}
 

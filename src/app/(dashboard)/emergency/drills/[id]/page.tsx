@@ -16,6 +16,8 @@ import {
   Pencil,
 } from 'lucide-react';
 import DrillWarRoomClient from '@/components/drills/DrillWarRoomClient';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 import { formatDate } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
@@ -43,6 +45,15 @@ export default async function DrillDetailPage({
       killTasks: { orderBy: { taskName: 'asc' } },
       musterEntries: { orderBy: { staffName: 'asc' } },
     },
+  });
+
+  const attachments = await prisma.attachment.findMany({
+    where: {
+      facilityId,
+      sourceType: 'DRILL',
+      sourceId: params.id,
+    },
+    orderBy: { createdAt: 'desc' },
   });
 
   if (!drill) notFound();
@@ -178,6 +189,19 @@ export default async function DrillDetailPage({
           )}
         </div>
       )}
+
+      <AttachmentPanel
+        title="Evidence & Media"
+        emptyLabel="No drill evidence or media attached yet. Add photos, video links, rosters, AAR files, or supporting proof to strengthen survey readiness."
+        attachments={attachments}
+      />
+
+      <AttachmentComposer
+        sourceType="DRILL"
+        sourceId={drill.id}
+        sourceLabel={drill.drillName}
+        title="Add Drill Evidence"
+      />
 
       {/* Completed findings */}
       {drill.status === 'COMPLETED' && (drill.strengths || drill.improvements) && (

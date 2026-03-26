@@ -5,9 +5,10 @@ import { prisma } from '@/lib/prisma';
 export const dynamic = 'force-dynamic';
 
 const statusConfig: Record<string, { label: string; classes: string }> = {
-  APPROVED:  { label: 'Approved',  classes: 'bg-emerald-100 text-emerald-700' },
+  ACTIVE:    { label: 'Active',    classes: 'bg-emerald-100 text-emerald-700' },
   DRAFT:     { label: 'Draft',     classes: 'bg-blue-100 text-blue-700' },
   UNDER_REVIEW: { label: 'Under Review', classes: 'bg-yellow-100 text-yellow-700' },
+  SUPERSEDED: { label: 'Superseded', classes: 'bg-slate-200 text-slate-700' },
   ARCHIVED:  { label: 'Archived',  classes: 'bg-slate-100 text-slate-700' },
 };
 
@@ -43,7 +44,7 @@ export default async function GovernanceDocumentsPage() {
       <div className="grid grid-cols-4 gap-4">
         {[
           { label: 'Total Documents', value: docs.length, color: 'text-blue-400' },
-          { label: 'Approved', value: docs.filter(d => d.status === 'ACTIVE').length, color: 'text-emerald-400' },
+          { label: 'Active', value: docs.filter(d => d.status === 'ACTIVE').length, color: 'text-emerald-400' },
           { label: 'Overdue Review', value: overdue, color: overdue > 0 ? 'text-red-400' : 'text-slate-400' },
           { label: 'Review Due (90d)', value: expiringSoon, color: expiringSoon > 0 ? 'text-amber-400' : 'text-slate-400' },
         ].map(s => (
@@ -83,9 +84,9 @@ export default async function GovernanceDocumentsPage() {
                 <tr key={d.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-white font-medium">{d.title}</td>
                   <td className="px-4 py-3 text-slate-400">{d.docType}</td>
-                  <td className="px-4 py-3 text-slate-400">{d.version ?? '-'}</td>
-                  <td className="px-4 py-3 text-slate-300">{d.effectiveDate?.toLocaleDateString() ?? '-'}</td>
-                  <td className={`px-4 py-3 ${isOverdue ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{d.reviewDate?.toLocaleDateString() ?? '-'}</td>
+                  <td className="px-4 py-3 text-slate-400">{d.version ?? '—'}</td>
+                  <td className="px-4 py-3 text-slate-300">{d.effectiveDate?.toLocaleDateString() ?? '—'}</td>
+                  <td className={`px-4 py-3 ${isOverdue ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{d.reviewDate?.toLocaleDateString() ?? '—'}</td>
                   <td className="px-4 py-3"><span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cfg.classes}`}>{cfg.label}</span></td>
                 </tr>
               );

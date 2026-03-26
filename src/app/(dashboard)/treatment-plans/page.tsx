@@ -1,14 +1,14 @@
-﻿import { ClipboardList, Plus } from 'lucide-react';
+import { ClipboardList, Plus } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
 const statusConfig: Record<string, { label: string; classes: string }> = {
-  ACTIVE:     { label: 'Active',      classes: 'bg-emerald-100 text-emerald-700' },
-  UPDATED:    { label: 'Updated',     classes: 'bg-blue-100 text-blue-700' },
-  DISCHARGED: { label: 'Discharged',  classes: 'bg-slate-100 text-slate-600' },
-  TRANSFERRED:{ label: 'Transferred', classes: 'bg-purple-100 text-purple-700' },
+  ACTIVE:      { label: 'Active',      classes: 'bg-emerald-100 text-emerald-700' },
+  UPDATED:     { label: 'Updated',     classes: 'bg-blue-100 text-blue-700' },
+  DISCHARGED:  { label: 'Discharged',  classes: 'bg-slate-100 text-slate-700' },
+  TRANSFERRED: { label: 'Transferred', classes: 'bg-amber-100 text-amber-700' },
 };
 
 export default async function TreatmentPlansPage() {
@@ -22,9 +22,9 @@ export default async function TreatmentPlansPage() {
     take: 60,
   });
 
-  const active     = plans.filter(p => p.status === 'ACTIVE').length;
-  const updated    = plans.filter(p => p.status === 'UPDATED').length;
-  const discharged = plans.filter(p => p.status === 'DISCHARGED' || p.status === 'TRANSFERRED').length;
+  const active = plans.filter(p => p.status === 'ACTIVE' || p.status === 'UPDATED').length;
+  const pending = plans.filter(p => !p.planCreatedDate).length;
+  const overdue = plans.filter(p => !p.planCreatedDate && p.admitDate < now).length;
 
   return (
     <div className="p-6 space-y-6">
@@ -44,10 +44,10 @@ export default async function TreatmentPlansPage() {
 
       <div className="grid grid-cols-4 gap-4">
         {[
-          { label: 'Total Plans',      value: plans.length, color: 'text-blue-400' },
-          { label: 'Active',           value: active,       color: 'text-emerald-400' },
-          { label: 'Plan Updated',     value: updated,      color: updated > 0 ? 'text-blue-400' : 'text-slate-400' },
-          { label: 'Discharged/Trans', value: discharged,   color: 'text-slate-400' },
+          { label: 'Total Plans', value: plans.length, color: 'text-blue-400' },
+          { label: 'Active', value: active, color: 'text-emerald-400' },
+          { label: 'Pending Creation', value: pending, color: pending > 0 ? 'text-amber-400' : 'text-slate-400' },
+          { label: 'Overdue', value: overdue, color: overdue > 0 ? 'text-red-400' : 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
             <p className="text-xs text-slate-400 mb-1">{s.label}</p>
@@ -78,10 +78,10 @@ export default async function TreatmentPlansPage() {
                 <tr key={p.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-white font-medium">{p.patientInitials}</td>
                   <td className="px-4 py-3 text-slate-300">{p.admitDate.toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-slate-400">{p.unit ?? '-'}</td>
-                  <td className="px-4 py-3 text-slate-400">{p.primaryDx ?? '-'}</td>
-                  <td className="px-4 py-3 text-slate-300">{p.planCreatedDate?.toLocaleDateString() ?? '-'}</td>
-                  <td className="px-4 py-3 text-slate-300">{p.estimatedLos ? `${p.estimatedLos}d` : '-'}</td>
+                  <td className="px-4 py-3 text-slate-400">{p.unit ?? '—'}</td>
+                  <td className="px-4 py-3 text-slate-400">{p.primaryDx ?? '—'}</td>
+                  <td className="px-4 py-3 text-slate-300">{p.planCreatedDate?.toLocaleDateString() ?? '—'}</td>
+                  <td className="px-4 py-3 text-slate-300">{p.estimatedLos ? `${p.estimatedLos}d` : '—'}</td>
                   <td className="px-4 py-3"><span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cfg.classes}`}>{cfg.label}</span></td>
                 </tr>
               );

@@ -6,6 +6,9 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, ClipboardList, AlertTriangle , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import { DeleteButton } from '@/components/ui/DeleteButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,13 +32,23 @@ export default async function CapDetailPage({ params }: { params: { id: string }
   const session = await auth();
   if (!session) redirect('/login');
 
-  const cap = await prisma.correctiveActionPlan.findUnique({
-    where: { id: params.id },
-    include: {
-      assignee: { select: { name: true, email: true, title: true } },
-      incidents: { select: { id: true, incidentNumber: true, incidentType: true, dateOccurred: true } },
-    },
-  });
+  const [cap, attachments] = await Promise.all([
+    prisma.correctiveActionPlan.findUnique({
+      where: { id: params.id },
+      include: {
+        assignee: { select: { name: true, email: true, title: true } },
+        incidents: { select: { id: true, incidentNumber: true, incidentType: true, dateOccurred: true } },
+      },
+    }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'CORRECTIVE_ACTION_PLAN',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!cap || cap.facilityId !== session.user.facilityId) notFound();
 
@@ -52,6 +65,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
           <Link href={`/trackers/caps/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
+          <DeleteButton apiPath={`/api/caps/${params.id}`} redirectPath="/trackers/caps" label="CAP" />
           <PrintButton />
         </div>
       </div>
@@ -131,6 +145,19 @@ export default async function CapDetailPage({ params }: { params: { id: string }
               <p className="text-sm text-slate-700 whitespace-pre-wrap">{cap.followUpNotes}</p>
             </Section>
           )}
+
+          <AttachmentPanel
+            title="CAP Evidence & Deliverables"
+            attachments={attachments}
+            emptyLabel="No supporting evidence, validation artifacts, or deliverables have been attached yet."
+          />
+
+          <AttachmentComposer
+            sourceType="CORRECTIVE_ACTION_PLAN"
+            sourceId={cap.id}
+            sourceLabel={cap.capNumber}
+            title="Add CAP Evidence"
+          />
         </div>
 
         <div className="space-y-5">
@@ -204,9 +231,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
-    <div className="flex justify-between gap-2">
+    <>
       <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
-      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
-    </div>
+      <dd className={`text-xs font-medium text-right mb-2 ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
+    </>
   );
 }

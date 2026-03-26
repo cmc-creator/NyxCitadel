@@ -1,4 +1,4 @@
-﻿import { Activity, TrendingDown, TrendingUp, Plus, AlertTriangle } from 'lucide-react';
+import { Activity, TrendingDown, TrendingUp, Plus, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -116,3 +116,5 @@ export default async function HaiPage() {
     </div>
   );
 }
+
+

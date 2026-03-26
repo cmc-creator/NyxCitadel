@@ -4,6 +4,9 @@ import { formatDate } from '@/lib/utils';
 import { ClipboardList, ArrowLeft, AlertTriangle, CheckCircle2, Clock, ShieldCheck, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { DeleteButton } from '@/components/ui/DeleteButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,16 +35,26 @@ const SURVEY_TYPE_LABELS: Record<string, string> = {
 export default async function SurveyDetailPage({ params }: { params: { id: string } }) {
   const session = await auth();
 
-  const survey = await prisma.survey.findFirst({
-    where: { id: params.id, facilityId: session!.user.facilityId },
-    include: {
-      cap: { select: { id: true, capNumber: true, title: true, status: true } },
-      plansOfCorrection: {
-        select: { id: true, status: true, createdAt: true, findings: { select: { status: true } } },
-        orderBy: { createdAt: 'desc' },
+  const [survey, attachments] = await Promise.all([
+    prisma.survey.findFirst({
+      where: { id: params.id, facilityId: session!.user.facilityId },
+      include: {
+        cap: { select: { id: true, capNumber: true, title: true, status: true } },
+        plansOfCorrection: {
+          select: { id: true, status: true, createdAt: true, findings: { select: { status: true } } },
+          orderBy: { createdAt: 'desc' },
+        },
       },
-    },
-  });
+    }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session!.user.facilityId,
+        sourceType: 'SURVEY',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
   if (!survey) notFound();
 
   const now = new Date();
@@ -61,6 +74,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
         <Link href={`/surveys/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
           <Pencil className="w-3.5 h-3.5" /> Edit
         </Link>
+        <DeleteButton apiPath={`/api/surveys/${params.id}`} redirectPath="/surveys" label="survey record" />
         </div>
         <div className="flex flex-wrap items-center gap-2 mb-1">
           <span className={`text-xs font-medium px-2 py-0.5 rounded ${STATUS_COLOR[survey.status] ?? 'bg-slate-100'}`}>
@@ -89,13 +103,13 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
       {responseOverdue && (
         <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
           <AlertTriangle className="w-4 h-4 shrink-0" />
-          <span><strong>Response overdue</strong> - deadline was {formatDate(survey.responseDeadline!)}.</span>
+          <span><strong>Response overdue</strong> — deadline was {formatDate(survey.responseDeadline!)}.</span>
         </div>
       )}
       {!responseOverdue && daysLeft !== null && daysLeft >= 0 && daysLeft <= 7 && !survey.responseSubmitted && (
         <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 rounded-lg px-4 py-3 text-sm">
           <Clock className="w-4 h-4 shrink-0" />
-          <span>Response due in <strong>{daysLeft} day{daysLeft !== 1 ? 's' : ''}</strong> - {formatDate(survey.responseDeadline!)}.</span>
+          <span>Response due in <strong>{daysLeft} day{daysLeft !== 1 ? 's' : ''}</strong> — {formatDate(survey.responseDeadline!)}.</span>
         </div>
       )}
       {survey.responseSubmitted && (
@@ -185,6 +199,19 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
           <p className="text-sm text-slate-700 whitespace-pre-wrap">{survey.notes}</p>
         </div>
       )}
+
+      <AttachmentPanel
+        title="Survey Evidence & Response Materials"
+        attachments={attachments}
+        emptyLabel="No survey reports, findings packets, response drafts, or evidence files have been attached yet."
+      />
+
+      <AttachmentComposer
+        sourceType="SURVEY"
+        sourceId={survey.id}
+        sourceLabel={SURVEY_TYPE_LABELS[survey.surveyType] ?? survey.surveyType.replace(/_/g, ' ')}
+        title="Add Survey Evidence"
+      />
 
       {/* Actions */}
       <div className="flex gap-3 flex-wrap">
