@@ -2,18 +2,12 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, Loader2, Sparkles, RefreshCw, Copy, CheckCheck } from 'lucide-react';
+import { ActionSuggestion, DraftActionType, buildActionPreview } from '@/lib/ai/sentry-actions';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
-
-type DraftActionType = 'CREATE_CAP_DRAFT' | 'CREATE_INCIDENT_DRAFT' | 'CREATE_CALENDAR_DRAFT';
-
-type ActionSuggestion = {
-  type: DraftActionType;
-  payload: Record<string, unknown>;
-};
 
 const SUGGESTED_PROMPTS = [
   { label: 'What is overdue?',              text: "Summarize what's currently overdue in my compliance calendar and top priorities I should address first." },
@@ -228,6 +222,15 @@ export default function AssistantPage() {
         {pendingAction && (
           <div className="rounded-xl border border-purple-200 bg-purple-50 px-4 py-3">
             <p className="text-xs font-semibold text-purple-700 mb-2">Sentry prepared a safe draft action</p>
+            <p className="text-xs text-purple-700/80 mb-2">Please review this summary, then confirm to create the draft record.</p>
+            <div className="rounded-lg border border-purple-200 bg-white px-3 py-2 mb-3 space-y-1">
+              {buildActionPreview(pendingAction).map((item) => (
+                <div key={item.key} className="grid grid-cols-[120px_1fr] gap-2 text-xs">
+                  <span className="font-semibold text-purple-900">{item.label}</span>
+                  <span className="text-slate-700 truncate">{item.value}</span>
+                </div>
+              ))}
+            </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => void runDraftAction()}

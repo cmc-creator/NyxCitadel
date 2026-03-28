@@ -4,6 +4,14 @@ import Anthropic from '@anthropic-ai/sdk';
 import { prisma } from '@/lib/prisma';
 import { generateCapNumber } from '@/lib/utils';
 import { logAudit } from '@/lib/audit';
+import {
+  ActionSuggestion,
+  DraftActionRequest,
+  DraftActionType,
+  buildActionAuditChanges,
+  canRunSentryDraftAction,
+  normalizeDraftActionRequest,
+} from '@/lib/ai/sentry-actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,18 +32,6 @@ interface Message {
   role: 'user' | 'assistant' | 'system';
   content: string;
 }
-
-type DraftActionType = 'CREATE_CAP_DRAFT' | 'CREATE_INCIDENT_DRAFT' | 'CREATE_CALENDAR_DRAFT';
-
-type DraftActionRequest = {
-  type: DraftActionType;
-  payload?: Record<string, unknown>;
-};
-
-type ActionSuggestion = {
-  type: DraftActionType;
-  payload: Record<string, unknown>;
-};
 
 function stripActionTag(text: string) {
   return text.replace(/<sentry_action>[\s\S]*?<\/sentry_action>/i, '').trim();
@@ -64,7 +60,7 @@ async function executeDraftAction(
   facilityId: string,
   actionRequest: DraftActionRequest
 ) {
-  const payload = actionRequest.payload ?? {};
+  const payload = actionRequest.payload;
 
   if (actionRequest.type === 'CREATE_CAP_DRAFT') {
     const title = asString(payload.title, 'Untitled CAP draft').slice(0, 180);
@@ -92,7 +88,7 @@ async function executeDraftAction(
       action: 'CREATE_CAP_DRAFT_BY_SENTRY',
       entityType: 'CorrectiveActionPlan',
       entityId: cap.id,
-      changes: payload,
+      changes: buildActionAuditChanges(actionRequest),
       req,
     });
 
@@ -138,7 +134,7 @@ async function executeDraftAction(
       action: 'CREATE_INCIDENT_DRAFT_BY_SENTRY',
       entityType: 'IncidentReport',
       entityId: item.id,
-      changes: payload,
+      changes: buildActionAuditChanges(actionRequest),
       req,
     });
 
@@ -177,7 +173,7 @@ async function executeDraftAction(
       action: 'CREATE_CALENDAR_DRAFT_BY_SENTRY',
       entityType: 'CalendarEvent',
       entityId: event.id,
-      changes: payload,
+      changes: buildActionAuditChanges(actionRequest),
       req,
     });
 
@@ -251,7 +247,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  let body: { message?: string; history?: Message[]; actionRequest?: DraftActionRequest };
+  let body: { message?: string; history?: Message[]; actionRequest?: unknown };
   try {
     body = await req.json();
   } catch {
@@ -259,8 +255,17 @@ export async function POST(req: NextRequest) {
   }
 
   if (body.actionRequest) {
+    if (!canRunSentryDraftAction(session.user.role)) {
+      return NextResponse.json({ ok: false, error: 'Your role cannot create draft records via Sentry.' }, { status: 403 });
+    }
+
+    const actionRequest = normalizeDraftActionRequest(body.actionRequest);
+    if (!actionRequest) {
+      return NextResponse.json({ ok: false, error: 'Invalid action request payload.' }, { status: 400 });
+    }
+
     try {
-      const result = await executeDraftAction(req, session.user.id, session.user.facilityId, body.actionRequest);
+      const result = await executeDraftAction(req, session.user.id, session.user.facilityId, actionRequest);
       return NextResponse.json(result);
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Failed to execute action.';
