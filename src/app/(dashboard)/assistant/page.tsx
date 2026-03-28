@@ -59,9 +59,23 @@ export default function AssistantPage() {
   const [loading, setLoading]   = useState(false);
   const [copied, setCopied]     = useState(false);
   const [pendingAction, setPendingAction] = useState<ActionSuggestion | null>(null);
+  const [actionEdits, setActionEdits] = useState<Record<string, string>>({});
   const [runningAction, setRunningAction] = useState(false);
   const bottomRef               = useRef<HTMLDivElement>(null);
   const inputRef                = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (!pendingAction) {
+      setActionEdits({});
+      return;
+    }
+
+    const nextEdits: Record<string, string> = {};
+    for (const field of buildActionPreview(pendingAction)) {
+      nextEdits[field.key] = field.value === 'Not provided' ? '' : field.value;
+    }
+    setActionEdits(nextEdits);
+  }, [pendingAction]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -113,16 +127,24 @@ export default function AssistantPage() {
     }]);
     setInput('');
     setPendingAction(null);
+    setActionEdits({});
   }
 
   async function runDraftAction() {
     if (!pendingAction || runningAction) return;
     setRunningAction(true);
     try {
+      const updatedPayload = {
+        ...pendingAction.payload,
+        ...Object.fromEntries(
+          Object.entries(actionEdits).map(([key, value]) => [key, value.trim()])
+        ),
+      };
+
       const res = await fetch('/api/ai-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ actionRequest: pendingAction }),
+        body: JSON.stringify({ actionRequest: { ...pendingAction, payload: updatedPayload } }),
       });
       const data = await res.json() as {
         ok?: boolean;
@@ -146,6 +168,7 @@ export default function AssistantPage() {
         ]);
       }
       setPendingAction(null);
+      setActionEdits({});
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -222,12 +245,17 @@ export default function AssistantPage() {
         {pendingAction && (
           <div className="rounded-xl border border-purple-200 bg-purple-50 px-4 py-3">
             <p className="text-xs font-semibold text-purple-700 mb-2">Sentry prepared a safe draft action</p>
-            <p className="text-xs text-purple-700/80 mb-2">Please review this summary, then confirm to create the draft record.</p>
-            <div className="rounded-lg border border-purple-200 bg-white px-3 py-2 mb-3 space-y-1">
+            <p className="text-xs text-purple-700/80 mb-2">Review and edit these fields before creating the draft record.</p>
+            <div className="rounded-lg border border-purple-200 bg-white px-3 py-2 mb-3 space-y-2">
               {buildActionPreview(pendingAction).map((item) => (
-                <div key={item.key} className="grid grid-cols-[120px_1fr] gap-2 text-xs">
-                  <span className="font-semibold text-purple-900">{item.label}</span>
-                  <span className="text-slate-700 truncate">{item.value}</span>
+                <div key={item.key} className="grid grid-cols-[120px_1fr] gap-2 items-center text-xs">
+                  <label className="font-semibold text-purple-900" htmlFor={`action-${item.key}`}>{item.label}</label>
+                  <input
+                    id={`action-${item.key}`}
+                    value={actionEdits[item.key] ?? ''}
+                    onChange={(e) => setActionEdits((prev) => ({ ...prev, [item.key]: e.target.value }))}
+                    className="w-full rounded-md border border-purple-100 bg-purple-50/40 px-2 py-1.5 text-slate-700 outline-none focus:ring-2 focus:ring-purple-300"
+                  />
                 </div>
               ))}
             </div>
