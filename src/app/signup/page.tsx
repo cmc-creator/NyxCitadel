@@ -12,7 +12,7 @@ import {
 
 const PLAN_FEATURES = {
   starter: ['1 Facility', '5 Users', 'Compliance Calendar', 'Policy Manager', 'Incident Tracker', 'CAP Tracker', 'Email Support'],
-  professional: ['3 Facilities', '20 Users', 'Everything in Starter', 'NyxAI™ Assistant', 'Emergency Management', 'QAPI / Board Reports', 'Resilience Scorecard', 'Priority Support'],
+  professional: ['3 Facilities', '20 Users', 'Everything in Starter', 'Sentry™ Assistant', 'Emergency Management', 'QAPI / Board Reports', 'Resilience Scorecard', 'Priority Support'],
   enterprise: ['Unlimited Facilities', 'Unlimited Users', 'Everything in Professional', 'White-Label Option', 'SSO / SAML', 'Dedicated Consultant', 'SLA Guarantee', 'Custom Integrations'],
 };
 
@@ -75,6 +75,10 @@ export default function SignupPage() {
           <p className="text-slate-400 text-base leading-relaxed">
             Explore the live demo instantly, or request access for your facility. Full platform, real data - no credit card required to evaluate.
           </p>
+          <div className="mt-5 flex items-center justify-center gap-4 text-sm">
+            <Link href="/guide" className="text-slate-400 hover:text-white transition-colors">Read the user guide</Link>
+            <Link href="/walkthrough" className="text-purple-300 hover:text-purple-200 transition-colors">Watch the walkthrough</Link>
+          </div>
         </div>
 
         {/* Tabs */}
@@ -101,7 +105,7 @@ export default function SignupPage() {
               {[
                 { icon: BarChart2, title: 'Compliance Command Center', desc: 'Live dashboard with overdue events, watch-list alerts, training compliance bars, and real-time QAPI metrics.', color: 'text-purple-400 bg-purple-500/10 border-purple-500/15' },
                 { icon: ClipboardList, title: '10+ Tracking Modules', desc: 'Incidents, CAPs, grievances, QOC/LOI, IR/IAD, policies, training, risk assessments, and more.', color: 'text-blue-400 bg-blue-500/10 border-blue-500/15' },
-                { icon: AlertTriangle, title: 'AI-Powered Triage', desc: 'NyxAI™ assistant answers CMS/JC/ADHS questions, drafts CAP language, and interprets regulatory standards.', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/15' },
+                { icon: AlertTriangle, title: 'AI-Powered Triage', desc: 'Sentry™ assistant answers CMS/JC/ADHS questions, drafts CAP language, and interprets regulatory standards.', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/15' },
               ].map(({ icon: Icon, title, desc, color }) => (
                 <div key={title} className={`rounded-xl border p-5 ${color}`}>
                   <div className={`w-9 h-9 rounded-lg ${color} flex items-center justify-center mb-3 border`}>

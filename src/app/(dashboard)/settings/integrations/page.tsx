@@ -18,7 +18,7 @@ const INTEGRATIONS: Integration[] = [
   {
     key: 'openai',
     name: 'OpenAI (GPT-4o)',
-    description: 'Powers NyxAI Assistant for plain-language compliance guidance, document drafting, and RCA assistance.',
+    description: 'Powers Sentry Assistant for plain-language compliance guidance, document drafting, and RCA assistance.',
     category: 'AI',
     status: 'connected',
     logoText: 'AI',

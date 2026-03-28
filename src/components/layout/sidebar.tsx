@@ -49,6 +49,7 @@ import {
   TestTube2,
   Library,
   Newspaper,
+  PlayCircle,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -69,7 +70,7 @@ const navItems: NavItem[] = [
   },
   {
     href: '/assistant',
-    label: 'NyxAI Assistant',
+    label: 'Sentry Assistant 🤖',
     icon: Sparkles,
     badge: 'AI',
     badgeColor: 'bg-purple-100 text-purple-700',
@@ -273,6 +274,8 @@ const navItems: NavItem[] = [
 ];
 
 const bottomNavItems: NavItem[] = [
+  { href: '/guide', label: 'User Guide', icon: BookOpen },
+  { href: '/walkthrough', label: 'Feature Walkthrough', icon: PlayCircle },
   { href: '/settings', label: 'Settings', icon: Settings },
   { href: '/settings/facility', label: 'Facility Config', icon: Building2 },
 ];

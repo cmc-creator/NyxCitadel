@@ -244,6 +244,10 @@ function LoginForm() {
                 Need access?{' '}
                 <a href="/signup" className="text-purple-500 hover:text-purple-400 transition-colors">Request a demo</a>
               </p>
+              <div className="mt-4 flex items-center justify-center gap-4 text-xs">
+                <Link href="/guide" className="text-slate-500 hover:text-white transition-colors">User Guide</Link>
+                <Link href="/walkthrough" className="text-slate-500 hover:text-white transition-colors">Feature Walkthrough</Link>
+              </div>
             </div>
           </div>
 

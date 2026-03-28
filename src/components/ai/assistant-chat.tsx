@@ -22,7 +22,7 @@ export function AssistantChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm NyxAI, your compliance assistant. I can help with JC/CMS regulatory questions, draft CAP language, explain QAPI methodology, and more. What can I help you with?",
+      content: "Hi! I'm Sentry 🤖, your compliance assistant. I can help with JC/CMS regulatory questions, draft CAP language, explain QAPI methodology, and more. What can I help you with?",
     },
   ]);
   const [input, setInput] = useState('');
@@ -54,7 +54,7 @@ export function AssistantChat() {
         body: JSON.stringify({ message: msg, history }),
       });
 
-      const data = await res.json();
+      const data = await res.json() as { reply?: string; error?: string };
       const reply = data.reply ?? data.error ?? 'No response.';
       setMessages(prev => [...prev, { role: 'assistant', content: reply }]);
     } catch {
@@ -88,7 +88,7 @@ export function AssistantChat() {
             <Bot className="w-4 h-4 text-white" />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-semibold text-white leading-none">NyxAI</p>
+            <p className="text-sm font-semibold text-white leading-none">Sentry 🤖</p>
             <p className="text-xs text-purple-200 leading-none mt-0.5">Compliance Assistant</p>
           </div>
           <button

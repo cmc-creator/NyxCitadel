@@ -142,7 +142,7 @@ const pricingTiers = [
       { label: 'Email regulatory alerts', included: true },
       { label: 'QAPI & quality modules', included: false },
       { label: 'Emergency preparedness suite', included: false },
-      { label: 'NyxAI™ Assistant', included: false },
+      { label: 'Sentry™ Assistant', included: false },
       { label: 'Executive & board dashboards', included: false },
     ],
   },
@@ -161,7 +161,7 @@ const pricingTiers = [
       { label: 'QAPI & performance improvement', included: true },
       { label: 'Emergency preparedness suite', included: true },
       { label: 'Survey management & POCs', included: true },
-      { label: 'NyxAI™ Assistant', included: true },
+      { label: 'Sentry™ Assistant', included: true },
       { label: 'Executive & board dashboards', included: true },
       { label: 'Risk assessment module', included: true },
       { label: 'Phone & email support', included: true },
@@ -258,6 +258,7 @@ export default async function RootPage() {
             <a href="#features" className="hover:text-white transition-colors">Features</a>
             <a href="#quality" className="hover:text-white transition-colors">Quality &amp; Risk</a>
             <a href="#compliance" className="hover:text-white transition-colors">Standards</a>
+            <Link href="/guide" className="hover:text-white transition-colors">Guide</Link>
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
           </nav>
           <div className="flex items-center gap-2">
@@ -333,6 +334,12 @@ export default async function RootPage() {
                     className="flex items-center gap-2 px-7 py-3.5 border border-white/10 hover:border-purple-500/50 rounded-xl font-semibold text-slate-300 hover:text-white transition-all hover:-translate-y-0.5"
                   >
                     Try Live Demo
+                  </Link>
+                  <Link
+                    href="/walkthrough"
+                    className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-sky-400/20 bg-sky-400/10 hover:bg-sky-400/15 font-semibold text-sky-100 transition-all"
+                  >
+                    Watch The Walkthrough
                   </Link>
                 </>
               )}

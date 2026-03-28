@@ -8,6 +8,13 @@ interface Message {
   content: string;
 }
 
+type DraftActionType = 'CREATE_CAP_DRAFT' | 'CREATE_INCIDENT_DRAFT' | 'CREATE_CALENDAR_DRAFT';
+
+type ActionSuggestion = {
+  type: DraftActionType;
+  payload: Record<string, unknown>;
+};
+
 const SUGGESTED_PROMPTS = [
   { label: 'What is overdue?',              text: "Summarize what's currently overdue in my compliance calendar and top priorities I should address first." },
   { label: 'Draft CAP language',            text: 'Help me write a corrective action plan for a medication administration error involving a wrong dose.' },
@@ -51,12 +58,14 @@ export default function AssistantPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm NyxAI, your compliance assistant.\n\nI can help with:\n• JC, CMS, and state regulatory questions\n• Drafting CAP, RCA, and policy language\n• Explaining QAPI methodology and PDSA cycles\n• Interpreting specific standards and requirements\n• Reviewing compliance workflows\n\nWhat would you like to work on today?",
+      content: "Hi! I'm Sentry 🤖, your compliance assistant.\n\nI can help with:\n• JC, CMS, and state regulatory questions\n• Drafting CAP, RCA, and policy language\n• Explaining QAPI methodology and PDSA cycles\n• Interpreting specific standards and requirements\n• Reviewing compliance workflows\n\nI can also prepare safe draft records for CAPs, incident reports, and calendar events when you ask.\n\nWhat would you like to work on today?",
     },
   ]);
   const [input, setInput]       = useState('');
   const [loading, setLoading]   = useState(false);
   const [copied, setCopied]     = useState(false);
+  const [pendingAction, setPendingAction] = useState<ActionSuggestion | null>(null);
+  const [runningAction, setRunningAction] = useState(false);
   const bottomRef               = useRef<HTMLDivElement>(null);
   const inputRef                = useRef<HTMLTextAreaElement>(null);
 
@@ -80,8 +89,9 @@ export default function AssistantPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: msg, history }),
       });
-      const data = await res.json() as { reply?: string; error?: string };
+      const data = await res.json() as { reply?: string; error?: string; actionSuggestion?: ActionSuggestion | null };
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply ?? data.error ?? 'No response.' }]);
+      setPendingAction(data.actionSuggestion ?? null);
     } catch {
       setMessages(prev => [...prev, { role: 'assistant', content: 'Connection error. Please try again.' }]);
     } finally {
@@ -105,9 +115,57 @@ export default function AssistantPage() {
   function reset() {
     setMessages([{
       role: 'assistant',
-      content: "Hi! I'm NyxAI, your compliance assistant. What would you like to work on?",
+      content: "Hi! I'm Sentry 🤖, your compliance assistant. What would you like to work on?",
     }]);
     setInput('');
+    setPendingAction(null);
+  }
+
+  async function runDraftAction() {
+    if (!pendingAction || runningAction) return;
+    setRunningAction(true);
+    try {
+      const res = await fetch('/api/ai-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ actionRequest: pendingAction }),
+      });
+      const data = await res.json() as {
+        ok?: boolean;
+        error?: string;
+        created?: { type: string; id: string; label: string; href: string };
+      };
+
+      const created = data.created;
+      if (data.ok && created) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: `Done. I created a draft ${created.type} record (${created.label}). Open it here: ${created.href}`,
+          },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          { role: 'assistant', content: data.error ?? 'I could not create that draft record.' },
+        ]);
+      }
+      setPendingAction(null);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: 'assistant', content: 'I hit an error while creating the draft record. Please try again.' },
+      ]);
+    } finally {
+      setRunningAction(false);
+    }
+  }
+
+  function actionLabel(type: DraftActionType) {
+    if (type === 'CREATE_CAP_DRAFT') return 'Create draft CAP';
+    if (type === 'CREATE_INCIDENT_DRAFT') return 'Create draft incident report';
+    return 'Create draft calendar event';
   }
 
   const isDefault = messages.length === 1;
@@ -121,8 +179,8 @@ export default function AssistantPage() {
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-slate-900">NyxAI Compliance Assistant</h1>
-            <p className="text-xs text-slate-500">Powered by GPT-4o mini · JC / CMS / AZ ADHS · Acute Psychiatric</p>
+            <h1 className="text-xl font-bold text-slate-900">Sentry 🤖 Compliance Assistant</h1>
+            <p className="text-xs text-slate-500">Powered by Claude 3.5 Haiku · JC / CMS / AZ ADHS · Acute Psychiatric</p>
           </div>
         </div>
         <button
@@ -162,10 +220,33 @@ export default function AssistantPage() {
             </div>
             <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm flex items-center gap-2">
               <Loader2 className="w-3.5 h-3.5 text-purple-500 animate-spin" />
-              <span className="text-xs text-slate-400">NyxAI is thinking…</span>
+              <span className="text-xs text-slate-400">Sentry is thinking…</span>
             </div>
           </div>
         )}
+
+        {pendingAction && (
+          <div className="rounded-xl border border-purple-200 bg-purple-50 px-4 py-3">
+            <p className="text-xs font-semibold text-purple-700 mb-2">Sentry prepared a safe draft action</p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => void runDraftAction()}
+                disabled={runningAction}
+                className="inline-flex items-center gap-2 rounded-lg bg-purple-600 hover:bg-purple-700 disabled:opacity-60 px-3 py-2 text-xs font-semibold text-white transition"
+              >
+                {runningAction ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
+                {actionLabel(pendingAction.type)}
+              </button>
+              <button
+                onClick={() => setPendingAction(null)}
+                className="rounded-lg border border-purple-200 bg-white px-3 py-2 text-xs font-medium text-purple-700 hover:bg-purple-100 transition"
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        )}
+
         <div ref={bottomRef} />
       </div>
 
@@ -189,6 +270,7 @@ export default function AssistantPage() {
         <button
           onClick={() => void sendMessage()}
           disabled={!input.trim() || loading}
+          title="Send message"
           className="p-2 rounded-lg bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white transition flex-shrink-0"
         >
           <Send className="w-4 h-4" />
