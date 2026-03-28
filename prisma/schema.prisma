@@ -118,8 +118,6 @@ model Facility {
   // Regulatory Reference Library (custom / facility-specific entries)
   regulatoryReferences RegulatoryReference[]
 
-  // Regulatory Intelligence Feed (scraped updates)
-  regulatoryUpdates    RegulatoryUpdate[]
   attachments          Attachment[]
 
   @@map("facilities")

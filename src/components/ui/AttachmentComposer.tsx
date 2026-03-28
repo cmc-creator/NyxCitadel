@@ -4,6 +4,29 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Plus, Paperclip } from 'lucide-react';
 
+function inferKindFromMimeType(mimeType: string): string {
+  if (!mimeType) return 'DOCUMENT';
+  if (mimeType.startsWith('image/')) return 'IMAGE';
+  if (mimeType.startsWith('video/')) return 'VIDEO';
+  if (mimeType.startsWith('audio/')) return 'AUDIO';
+  if (mimeType === 'application/pdf') return 'PDF';
+  if (
+    mimeType.includes('spreadsheet') ||
+    mimeType.includes('excel') ||
+    mimeType === 'text/csv'
+  ) {
+    return 'SPREADSHEET';
+  }
+  if (
+    mimeType.includes('word') ||
+    mimeType.includes('document') ||
+    mimeType === 'text/plain'
+  ) {
+    return 'DOCUMENT';
+  }
+  return 'OTHER';
+}
+
 const KIND_OPTIONS = [
   ['IMAGE', 'Image'],
   ['VIDEO', 'Video'],
@@ -47,6 +70,7 @@ export default function AttachmentComposer({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -57,25 +81,59 @@ export default function AttachmentComposer({
     const get = (name: string) =>
       (form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement).value;
 
-    const payload = {
-      title: get('title'),
-      description: get('description') || null,
-      kind: get('kind'),
-      fileName: get('fileName'),
-      fileUrl: get('fileUrl'),
-      mimeType: get('mimeType') || null,
-      thumbnailUrl: get('thumbnailUrl') || null,
-      category: get('category') || null,
-      tags: get('tags') ? get('tags').split(',').map((tag) => tag.trim()).filter(Boolean) : [],
-      isEvidence: (form.elements.namedItem('isEvidence') as HTMLInputElement).checked,
-      isPublic: (form.elements.namedItem('isPublic') as HTMLInputElement).checked,
-      capturedAt: get('capturedAt') || null,
-      sourceType,
-      sourceId,
-      sourceLabel: sourceLabel ?? null,
-    };
-
     try {
+      let uploadedFileUrl = get('fileUrl');
+      let uploadedFileName = get('fileName');
+      let uploadedMimeType = get('mimeType') || null;
+      let uploadedFileSizeBytes: number | null = null;
+      let kind = get('kind');
+
+      if (selectedFile) {
+        const uploadForm = new FormData();
+        uploadForm.append('file', selectedFile);
+        uploadForm.append('path', `attachments/${sourceType}/${sourceId}`);
+
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          body: uploadForm,
+        });
+
+        if (!uploadResponse.ok) {
+          const uploadBody = await uploadResponse.json();
+          throw new Error(uploadBody.error ?? 'Failed to upload file.');
+        }
+
+        const uploadBody = await uploadResponse.json();
+        uploadedFileUrl = uploadBody.url;
+        uploadedFileName = uploadBody.name ?? selectedFile.name;
+        uploadedMimeType = uploadBody.type ?? selectedFile.type ?? null;
+        uploadedFileSizeBytes = Number(uploadBody.size ?? selectedFile.size ?? 0) || null;
+        kind = inferKindFromMimeType(uploadedMimeType ?? '');
+      }
+
+      if (!uploadedFileUrl || !uploadedFileName) {
+        throw new Error('Provide a file upload or a file URL + file name.');
+      }
+
+      const payload = {
+        title: get('title'),
+        description: get('description') || null,
+        kind,
+        fileName: uploadedFileName,
+        fileUrl: uploadedFileUrl,
+        mimeType: uploadedMimeType,
+        fileSizeBytes: uploadedFileSizeBytes,
+        thumbnailUrl: get('thumbnailUrl') || null,
+        category: get('category') || null,
+        tags: get('tags') ? get('tags').split(',').map((tag) => tag.trim()).filter(Boolean) : [],
+        isEvidence: (form.elements.namedItem('isEvidence') as HTMLInputElement).checked,
+        isPublic: (form.elements.namedItem('isPublic') as HTMLInputElement).checked,
+        capturedAt: get('capturedAt') || null,
+        sourceType,
+        sourceId,
+        sourceLabel: sourceLabel ?? null,
+      };
+
       const response = await fetch('/api/attachments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -88,6 +146,7 @@ export default function AttachmentComposer({
       }
 
       form.reset();
+      setSelectedFile(null);
       setOpen(false);
       router.refresh();
     } catch (submitError: unknown) {
@@ -104,7 +163,7 @@ export default function AttachmentComposer({
       <div className="px-5 py-3 border-b border-slate-200 flex items-center justify-between gap-3">
         <div>
           <h3 className="text-sm font-semibold text-slate-800">{title}</h3>
-          <p className="text-xs text-slate-500 mt-0.5">Attach links to stored files, media, screenshots, certificates, or survey evidence.</p>
+          <p className="text-xs text-slate-500 mt-0.5">Upload a file directly, or paste an existing file URL for evidence, screenshots, certificates, or survey documentation.</p>
         </div>
         <button
           type="button"
@@ -139,10 +198,21 @@ export default function AttachmentComposer({
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-                <label htmlFor="attachment-file-name" className="block text-xs font-medium text-slate-600 mb-1">File Name</label>
-                <input id="attachment-file-name" name="fileName" required className="form-input w-full" placeholder="drill-aar-2026.pdf" />
+                <label htmlFor="attachment-file-upload" className="block text-xs font-medium text-slate-600 mb-1">Upload File</label>
+                <input
+                  id="attachment-file-upload"
+                  name="fileUpload"
+                  type="file"
+                  onChange={(event) => setSelectedFile(event.target.files?.[0] ?? null)}
+                  className="form-input w-full"
+                />
+                <p className="text-[11px] text-slate-500 mt-1">If selected, this upload is used instead of File URL/File Name.</p>
             </div>
             <div>
+                <label htmlFor="attachment-file-name" className="block text-xs font-medium text-slate-600 mb-1">File Name</label>
+                <input id="attachment-file-name" name="fileName" className="form-input w-full" placeholder="drill-aar-2026.pdf" />
+            </div>
+            <div className="md:col-span-2">
                 <label htmlFor="attachment-category" className="block text-xs font-medium text-slate-600 mb-1">Category</label>
                 <select id="attachment-category" name="category" defaultValue="" className="form-input w-full">
                 {CATEGORY_OPTIONS.map(([value, label]) => (
@@ -154,7 +224,7 @@ export default function AttachmentComposer({
 
           <div>
               <label htmlFor="attachment-file-url" className="block text-xs font-medium text-slate-600 mb-1">File URL</label>
-              <input id="attachment-file-url" name="fileUrl" type="url" required className="form-input w-full" placeholder="https://..." />
+              <input id="attachment-file-url" name="fileUrl" type="url" className="form-input w-full" placeholder="https://..." />
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
