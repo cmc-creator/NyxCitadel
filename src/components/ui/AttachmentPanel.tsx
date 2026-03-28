@@ -50,6 +50,9 @@ export default function AttachmentPanel({
         <div className="divide-y divide-slate-100">
           {attachments.map((attachment) => {
             const Icon = iconForKind(attachment.kind);
+            const isImage = attachment.kind === 'IMAGE';
+            const isVideo = attachment.kind === 'VIDEO';
+            const isPdf = attachment.kind === 'PDF';
             return (
               <div key={attachment.id} className="px-5 py-4 flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
@@ -75,6 +78,36 @@ export default function AttachmentPanel({
                     <span className="inline-flex items-center gap-1"><Clock3 className="w-3 h-3" /> {attachment.createdAt.toLocaleDateString()}</span>
                     {attachment.uploadedBy && <span>Uploaded by {attachment.uploadedBy}</span>}
                   </div>
+
+                  {isImage && (
+                    <div className="mt-3">
+                      <img
+                        src={attachment.thumbnailUrl || attachment.fileUrl}
+                        alt={attachment.title}
+                        className="max-h-44 rounded-lg border border-slate-200 object-contain bg-slate-50"
+                      />
+                    </div>
+                  )}
+
+                  {isVideo && (
+                    <div className="mt-3">
+                      <video
+                        controls
+                        className="max-h-44 rounded-lg border border-slate-200 bg-black/90"
+                        src={attachment.fileUrl}
+                      />
+                    </div>
+                  )}
+
+                  {isPdf && (
+                    <div className="mt-3">
+                      <iframe
+                        src={attachment.fileUrl}
+                        title={attachment.title}
+                        className="w-full h-56 rounded-lg border border-slate-200 bg-white"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="shrink-0 flex items-center gap-3">
                   <Link href={attachment.fileUrl} target="_blank" className="text-xs font-medium text-indigo-600 hover:text-indigo-800">

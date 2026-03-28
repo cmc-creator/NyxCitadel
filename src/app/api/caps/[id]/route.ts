@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 export async function GET(
   _req: NextRequest,
@@ -65,6 +66,15 @@ export async function PATCH(
       ...(vigilanceStatus   != null && { vigilanceStatus }),
       ...(vigilanceBreaches != null && { vigilanceBreaches: Number(vigilanceBreaches) }),
     },
+  });
+
+  await logAudit({
+    userId: session.user.id,
+    action: 'UPDATE_CAP',
+    entityType: 'CorrectiveActionPlan',
+    entityId: params.id,
+    changes: body,
+    req,
   });
 
   return NextResponse.json(cap);

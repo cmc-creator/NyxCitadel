@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 export async function GET(req: NextRequest) {
   const session = await auth();
@@ -82,6 +83,15 @@ export async function POST(req: NextRequest) {
       capturedAt: capturedAt ? new Date(capturedAt) : null,
       uploadedBy: uploadedBy ?? session.user.name ?? session.user.email ?? 'Unknown',
     },
+  });
+
+  await logAudit({
+    userId: session.user.id,
+    action: 'CREATE_ATTACHMENT',
+    entityType: 'Attachment',
+    entityId: attachment.id,
+    changes: { sourceType, sourceId, kind, category: category ?? null },
+    req,
   });
 
   return NextResponse.json(attachment, { status: 201 });

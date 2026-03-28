@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { generateCapNumber } from '@/lib/utils';
+import { logAudit } from '@/lib/audit';
 
 export async function GET() {
   const session = await auth();
@@ -38,6 +39,15 @@ export async function POST(req: NextRequest) {
       measureOfSuccess: measureOfSuccess ?? null,
       status:           'OPEN',
     },
+  });
+
+  await logAudit({
+    userId: session.user.id,
+    action: 'CREATE_CAP',
+    entityType: 'CorrectiveActionPlan',
+    entityId: cap.id,
+    changes: { capNumber: cap.capNumber, title, source, priority, targetDate },
+    req,
   });
 
   // Auto-create a calendar event for the CAP target date

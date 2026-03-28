@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 export async function DELETE(
   _req: NextRequest,
@@ -16,6 +17,15 @@ export async function DELETE(
   }
 
   await prisma.attachment.delete({ where: { id: params.id } });
+
+  await logAudit({
+    userId: session.user.id,
+    action: 'DELETE_ATTACHMENT',
+    entityType: 'Attachment',
+    entityId: params.id,
+    changes: { fileName: attachment.fileName, sourceType: attachment.sourceType, sourceId: attachment.sourceId },
+    req: _req,
+  });
 
   return NextResponse.json({ ok: true });
 }

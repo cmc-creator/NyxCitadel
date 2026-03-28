@@ -1,8 +1,9 @@
 ﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
-import { Siren, Plus, Info } from 'lucide-react';
+import { Siren, Plus, Info, Download } from 'lucide-react';
 import Link from 'next/link';
+import { PrintButton } from '@/components/ui/PrintButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -60,13 +61,23 @@ export default async function DrillsPage({
             Track all emergency drills, exercises, and after-action reviews
           </p>
         </div>
-        <Link
-          href="/emergency/drills/new"
-          className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          Schedule Drill
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/api/export/drills"
+            className="inline-flex items-center gap-1.5 text-sm bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Export CSV
+          </Link>
+          <PrintButton />
+          <Link
+            href="/emergency/drills/new"
+            className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            Schedule Drill
+          </Link>
+        </div>
       </div>
 
       {/* JC Requirements Progress */}

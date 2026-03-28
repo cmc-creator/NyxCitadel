@@ -1,8 +1,9 @@
 ﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
-import { AlertTriangle, Plus } from 'lucide-react';
+import { AlertTriangle, Plus, Download } from 'lucide-react';
 import Link from 'next/link';
+import { PrintButton } from '@/components/ui/PrintButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -60,13 +61,23 @@ export default async function IncidentsPage({
             {incidents.length} total · {openCount} open · {reportableCount} pending state report
           </p>
         </div>
-        <Link
-          href="/trackers/incidents/new"
-          className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          New Incident Report
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/api/export/incidents"
+            className="inline-flex items-center gap-1.5 text-sm bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Export CSV
+          </Link>
+          <PrintButton />
+          <Link
+            href="/trackers/incidents/new"
+            className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            New Incident Report
+          </Link>
+        </div>
       </div>
 
       {reportableCount > 0 && (

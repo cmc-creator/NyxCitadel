@@ -1,9 +1,10 @@
 ﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
-import { ClipboardList, Plus, AlertTriangle } from 'lucide-react';
+import { ClipboardList, Plus, AlertTriangle, Download } from 'lucide-react';
 import Link from 'next/link';
 import { isPast } from 'date-fns';
+import { PrintButton } from '@/components/ui/PrintButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -68,13 +69,23 @@ export default async function CapsPage({
             {caps.length} total · {overdueCount} overdue
           </p>
         </div>
-        <Link
-          href="/trackers/caps/new"
-          className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          New CAP
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/api/export/caps"
+            className="inline-flex items-center gap-1.5 text-sm bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Export CSV
+          </Link>
+          <PrintButton />
+          <Link
+            href="/trackers/caps/new"
+            className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            New CAP
+          </Link>
+        </div>
       </div>
 
       {/* Archive year banner */}

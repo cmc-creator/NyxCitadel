@@ -1,5 +1,6 @@
 ﻿import { prisma } from '@/lib/prisma';
 import { NotificationType } from '@prisma/client';
+import { sendNotificationEmail } from '@/lib/notifications/email';
 
 interface AlertInput {
   userId: string;
@@ -24,6 +25,7 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
   }
 
   const alerts: { type: NotificationType; title: string; message: string; linkUrl: string }[] = [];
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true } });
 
   // ΓöÇΓöÇ 1. Expiring provider licenses (within 90 days) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('LICENSE_EXPIRING')) {
@@ -263,6 +265,14 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
           isRead:  false,
         },
       });
+
+      if (user?.email) {
+        await sendNotificationEmail({
+          to: user.email,
+          subject: `[NyxCitadel] ${alert.title}`,
+          text: `${alert.message}\n\nOpen in NyxCitadel: ${alert.linkUrl}`,
+        });
+      }
     }
   }
 }

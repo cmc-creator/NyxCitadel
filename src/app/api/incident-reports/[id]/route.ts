@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 export async function GET(
   req: NextRequest,
@@ -22,6 +23,10 @@ export async function PATCH(
 ) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const existing = await prisma.incidentReport.findFirst({
+    where: { id: params.id, facilityId: session.user.facilityId },
+  });
+  if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
   const body = await req.json();
 
@@ -39,6 +44,16 @@ export async function PATCH(
       closedDate:        body.closedDate    ? new Date(body.closedDate)    : undefined,
     },
   });
+
+  await logAudit({
+    userId: session.user.id,
+    action: 'UPDATE_INCIDENT_REPORT',
+    entityType: 'IncidentReport',
+    entityId: params.id,
+    changes: body,
+    req,
+  });
+
   return NextResponse.json(updated);
 }
 
@@ -48,7 +63,21 @@ export async function DELETE(
 ) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const existing = await prisma.incidentReport.findFirst({
+    where: { id: params.id, facilityId: session.user.facilityId },
+  });
+  if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
   await prisma.incidentReport.delete({ where: { id: params.id } });
+
+  await logAudit({
+    userId: session.user.id,
+    action: 'DELETE_INCIDENT_REPORT',
+    entityType: 'IncidentReport',
+    entityId: params.id,
+    changes: { irNumber: existing.irNumber, incidentType: existing.incidentType, severity: existing.severity },
+    req,
+  });
+
   return NextResponse.json({ success: true });
 }

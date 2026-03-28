@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { put } from '@vercel/blob';
+import { logAudit } from '@/lib/audit';
 
 const ALLOWED_TYPES = [
   'application/pdf',
@@ -60,6 +61,15 @@ export async function POST(req: NextRequest) {
   const safeName = `${basePath}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
   const blob = await put(safeName, file, { access: 'public' });
+
+  await logAudit({
+    userId: session.user.id,
+    action: 'UPLOAD_FILE',
+    entityType: 'BlobFile',
+    entityId: blob.pathname,
+    changes: { name: file.name, type: file.type, size: file.size, path: basePath },
+    req,
+  });
 
   return NextResponse.json({
     url:  blob.url,

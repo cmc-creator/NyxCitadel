@@ -1,9 +1,10 @@
 ﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
-import { GraduationCap, Plus, AlertTriangle } from 'lucide-react';
+import { GraduationCap, Plus, AlertTriangle, Download } from 'lucide-react';
 import Link from 'next/link';
 import { isPast, isWithinInterval, addDays } from 'date-fns';
+import { PrintButton } from '@/components/ui/PrintButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -85,13 +86,23 @@ export default async function TrainingPage({
             {records.length} records · {expiredCount} expired · {expiringCount} expiring in 30 days
           </p>
         </div>
-        <Link
-          href="/trackers/training/new"
-          className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          Add Record
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/api/export/training"
+            className="inline-flex items-center gap-1.5 text-sm bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Export CSV
+          </Link>
+          <PrintButton />
+          <Link
+            href="/trackers/training/new"
+            className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            Add Record
+          </Link>
+        </div>
       </div>
 
       {/* Archive year banner */}

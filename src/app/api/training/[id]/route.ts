@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 export async function GET(
   _req: NextRequest,
@@ -51,6 +52,15 @@ export async function PATCH(
       ...(notes          != null && { notes }),
       ...(certificateUrl != null && { certificateUrl }),
     },
+  });
+
+  await logAudit({
+    userId: session.user.id,
+    action: 'UPDATE_TRAINING_RECORD',
+    entityType: 'TrainingRecord',
+    entityId: params.id,
+    changes: body,
+    req,
   });
 
   return NextResponse.json(record);

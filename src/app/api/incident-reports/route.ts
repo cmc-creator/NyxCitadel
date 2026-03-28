@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 async function generateIrNumber(facilityId: string): Promise<string> {
   const year = new Date().getFullYear();
@@ -119,6 +120,15 @@ export async function POST(req: NextRequest) {
       notes:                 notes ?? null,
       status:                'OPEN',
     },
+  });
+
+  await logAudit({
+    userId: session.user.id,
+    action: 'CREATE_INCIDENT_REPORT',
+    entityType: 'IncidentReport',
+    entityId: item.id,
+    changes: { irNumber: item.irNumber, incidentType, severity, incidentDate },
+    req,
   });
 
   return NextResponse.json(item, { status: 201 });
