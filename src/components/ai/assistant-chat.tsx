@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User, Loader2, Sparkles } from 'lucide-react';
+import { X, Send, Bot, User, Loader2 } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -72,7 +72,7 @@ export function AssistantChat() {
         className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-purple-600 hover:bg-purple-700 shadow-lg hover:shadow-xl flex items-center justify-center text-white transition-all ${open ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
         aria-label="Open compliance assistant"
       >
-        <Sparkles className="w-6 h-6" />
+        <Bot className="w-6 h-6" />
       </button>
 
       {/* Chat panel */}
