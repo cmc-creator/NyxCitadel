@@ -241,12 +241,12 @@ export default async function RootPage() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Image
-              src="/citadellogo.png"
+              src="/logo.svg"
               alt="NyxCitadel"
               width={36}
               height={36}
               priority
-              className="h-9 w-auto rounded-xl flex-shrink-0"
+              className="h-9 w-auto flex-shrink-0"
             />
             <div>
               <span className="font-extrabold text-lg tracking-tight">NyxCitadel<sup className="text-[10px] font-normal align-super ml-0.5">™</sup></span>
@@ -254,12 +254,13 @@ export default async function RootPage() {
             </div>
           </div>
           <nav className="hidden md:flex items-center gap-7 text-sm text-slate-400">
-            <a href="#intel" className="hover:text-white transition-colors">Reg. Intelligence</a>
-            <a href="#features" className="hover:text-white transition-colors">Features</a>
-            <a href="#quality" className="hover:text-white transition-colors">Quality &amp; Risk</a>
-            <a href="#compliance" className="hover:text-white transition-colors">Standards</a>
-            <Link href="/guide" className="hover:text-white transition-colors">Guide</Link>
-            <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+            <a href="#intel" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Reg. Intelligence</a>
+            <a href="#features" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Features</a>
+            <a href="#quality" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Quality &amp; Risk</a>
+            <a href="#compliance" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Standards</a>
+            <Link href="/guide" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Guide</Link>
+            <a href="#sentry" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Sentry AI</a>
+            <a href="#pricing" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Pricing</a>
           </nav>
           <div className="flex items-center gap-2">
             {!isLoggedIn && (
@@ -870,7 +871,7 @@ export default async function RootPage() {
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative z-10">
             <div className="flex justify-center mb-5">
-              <Image src="/citadellogo.png" alt="NyxCitadel" width={64} height={64} className="rounded-2xl shadow-2xl shadow-purple-500/40" />
+              <Image src="/logo.svg" alt="NyxCitadel" width={64} height={64} className="shadow-2xl shadow-purple-500/40" />
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
               Your next survey is coming.{' '}
@@ -930,11 +931,85 @@ export default async function RootPage() {
         </div>
       </section>
 
+      {/* ══════════════════════════════
+          SENTRY AI ASSISTANT
+      ══════════════════════════════ */}
+      <section id="sentry" className="relative z-10 max-w-7xl mx-auto px-6 py-28 scroll-mt-20">
+        <div className="grid lg:grid-cols-2 gap-14 items-center">
+          <div className="text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 text-xs font-semibold mb-6">
+              <span className="text-lg">🤖</span>
+              AI Assistant
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
+              Meet{' '}
+              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                Sentry
+              </span>
+            </h2>
+            <p className="text-slate-300 text-lg leading-relaxed mb-6 max-w-2xl">
+              Your AI compliance assistant that drafts CAPs, incident reports, and calendar events instantly. Review, edit, and confirm - Sentry handles the busy work so your team focuses on strategy.
+            </p>
+            <ul className="space-y-3 mb-8 max-w-md">
+              <li className="flex items-start gap-3 group">
+                <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-emerald-500/30 transition-colors duration-200">
+                  <Check className="w-3 h-3 text-emerald-400" />
+                </div>
+                <span className="text-slate-300">Draft CAPs with full context awareness</span>
+              </li>
+              <li className="flex items-start gap-3 group">
+                <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-emerald-500/30 transition-colors duration-200">
+                  <Check className="w-3 h-3 text-emerald-400" />
+                </div>
+                <span className="text-slate-300">Generate incident reports from natural language</span>
+              </li>
+              <li className="flex items-start gap-3 group">
+                <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-emerald-500/30 transition-colors duration-200">
+                  <Check className="w-3 h-3 text-emerald-400" />
+                </div>
+                <span className="text-slate-300">Edit all fields before creating records</span>
+              </li>
+              <li className="flex items-start gap-3 group">
+                <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-emerald-500/30 transition-colors duration-200">
+                  <Check className="w-3 h-3 text-emerald-400" />
+                </div>
+                <span className="text-slate-300">HIPAA-compliant, facility context-aware</span>
+              </li>
+            </ul>
+          </div>
+          <div className="relative hidden lg:flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/20 to-teal-600/10 rounded-3xl blur-3xl" />
+            <div className="relative bg-gradient-to-br from-slate-900/80 via-slate-800/80 to-slate-900/80 border border-emerald-500/30 rounded-2xl p-8 w-full max-w-md shadow-2xl shadow-emerald-900/30 hover:shadow-emerald-900/50 transition-all duration-300 hover:-translate-y-2">
+              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-emerald-500/10">
+                <span className="text-3xl">🤖</span>
+                <div>
+                  <p className="font-bold text-white text-lg">Sentry Assistant</p>
+                  <p className="text-xs text-slate-500">AI Compliance Copilot</p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="bg-slate-700/50 rounded-lg p-3 border border-slate-600/50">
+                  <p className="text-xs text-slate-400 mb-1.5">You ask:</p>
+                  <p className="text-sm text-slate-100">"Draft a CAP for the F-835 deficiency about documentation"</p>
+                </div>
+                <div className="flex justify-center">
+                  <Zap className="w-4 h-4 text-emerald-400" />
+                </div>
+                <div className="bg-emerald-900/30 rounded-lg p-3 border border-emerald-500/20">
+                  <p className="text-xs text-emerald-300 mb-1.5">Sentry generates:</p>
+                  <p className="text-sm text-emerald-100 font-medium">• Title • Deficiency explanation • Root cause • Corrective action steps • Timeline</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Footer ── */}
       <footer className="relative z-10 border-t border-white/5 bg-slate-950">
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
           <div className="flex items-center gap-2.5">
-            <Image src="/citadellogo.png" alt="NyxCitadel" width={28} height={28} className="rounded-lg" />
+            <Image src="/logo.svg" alt="NyxCitadel" width={28} height={28} />
             <div>
               <span className="font-bold text-slate-400">NyxCitadel<sup className="text-[9px] font-normal">™</sup></span>
               <span className="text-slate-700 ml-2 hidden sm:inline">· Healthcare Compliance &amp; Risk Management Platform</span>

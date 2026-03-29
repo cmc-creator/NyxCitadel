@@ -27,6 +27,11 @@ const leftFeatures = [
     title: 'Risk & QAPI',
     desc: 'Proactive risk tracking and quality improvement projects.',
   },
+  {
+    icon: () => <span className="text-xl">🤖</span>,
+    title: 'Sentry AI Assistant',
+    desc: 'Draft CAPs and incidents instantly with AI assistance.',
+  },
 ];
 
 function LoginForm() {
@@ -92,11 +97,11 @@ function LoginForm() {
           </Link>
           <div className="flex items-center gap-3 mb-8">
             <Image
-              src="/citadellogo.png"
+              src="/logo.svg"
               alt="NyxCitadel"
               width={44}
               height={44}
-              className="h-11 w-auto rounded-xl flex-shrink-0"
+              className="h-11 w-auto flex-shrink-0"
             />
             <div>
               <p className="font-bold text-xl text-white tracking-tight">NyxCitadel</p>
@@ -115,12 +120,12 @@ function LoginForm() {
           </p>
         </div>
 
-        {/* Feature bullets */}
+        {/* Feature bullets - with hover animations */}
         <div className="relative z-10 space-y-4">
           {leftFeatures.map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="flex items-start gap-4 p-4 rounded-xl bg-white/4 border border-white/5 backdrop-blur-sm">
-              <div className="w-9 h-9 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Icon className="w-4.5 h-4.5 text-purple-400 w-[18px] h-[18px]" />
+            <div key={title} className="flex items-start gap-4 p-4 rounded-xl bg-white/4 border border-white/5 backdrop-blur-sm hover:bg-white/8 hover:border-white/10 hover:-translate-x-1 transition-all duration-200 cursor-default">
+              <div className="w-9 h-9 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-purple-500/40 transition-colors duration-200">
+                <Icon className="w-4.5 h-4.5 text-purple-400" />
               </div>
               <div>
                 <p className="font-semibold text-white text-sm">{title}</p>
@@ -153,11 +158,11 @@ function LoginForm() {
         <div className="lg:hidden mb-10 text-center">
           <div className="inline-flex items-center gap-2.5 mb-3">
             <Image
-              src="/citadellogo.png"
+              src="/logo.svg"
               alt="NyxCitadel"
               width={36}
               height={36}
-              className="h-9 w-auto rounded-xl flex-shrink-0"
+              className="h-9 w-auto flex-shrink-0"
             />
             <span className="font-bold text-xl text-white">NyxCitadel</span>
           </div>
