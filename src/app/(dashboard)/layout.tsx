@@ -4,6 +4,7 @@ import { Sidebar } from '@/components/layout/sidebar';
 import { TopBar } from '@/components/layout/topbar';
 import { AssistantChat } from '@/components/ai/assistant-chat';
 import { WelcomeOnboarding } from '@/components/layout/WelcomeOnboarding';
+import { WhatsNew } from '@/components/layout/WhatsNew';
 
 export default async function DashboardLayout({
   children,
@@ -23,6 +24,7 @@ export default async function DashboardLayout({
         </main>
       </div>
       <WelcomeOnboarding userName={session.user.name} />
+      <WhatsNew />
       <AssistantChat />
     </div>
   );
