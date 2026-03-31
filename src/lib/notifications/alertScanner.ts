@@ -1,10 +1,12 @@
 ﻿import { prisma } from '@/lib/prisma';
 import { NotificationType } from '@prisma/client';
 import { sendNotificationEmail } from '@/lib/notifications/email';
+import { getNotificationPreferences } from '@/lib/notifications/preferences';
 
 interface AlertInput {
   userId: string;
   facilityId: string;
+  deliverEmail?: boolean;
 }
 
 /**
@@ -13,15 +15,19 @@ interface AlertInput {
  * polling interval ΓÇö deduplication prevents duplicate alerts within 3 days.
  * Respects the user's notificationPrefs JSON settings.
  */
-export async function generateComplianceAlerts({ userId, facilityId }: AlertInput): Promise<void> {
+export async function generateComplianceAlerts({ userId, facilityId, deliverEmail = true }: AlertInput): Promise<number> {
   const now = new Date();
-  const in90Days = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
-  const in30Days  = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
   const dedupWindow = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000); // 3-day dedupe window
+  const prefs = await getNotificationPreferences(userId, facilityId);
 
-  // notificationPrefs not on User model — all alert types enabled by default
-  function prefEnabled(_key: string): boolean {
-    return true;
+  function prefEnabled(key: string): boolean {
+    return prefs.rules[key]?.enabled ?? true;
+  }
+
+  function prefDaysAhead(key: string, fallback: number): number {
+    const configured = prefs.rules[key]?.daysAhead;
+    if (typeof configured !== 'number') return fallback;
+    return Math.max(0, Math.floor(configured));
   }
 
   const alerts: { type: NotificationType; title: string; message: string; linkUrl: string }[] = [];
@@ -29,10 +35,11 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
 
   // ΓöÇΓöÇ 1. Expiring provider licenses (within 90 days) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('LICENSE_EXPIRING')) {
+    const inDays = new Date(now.getTime() + prefDaysAhead('LICENSE_EXPIRING', 90) * 24 * 60 * 60 * 1000);
     const expiringLicenses = await prisma.providerLicense.findMany({
       where: {
         provider: { facilityId },
-        expiryDate: { lte: in90Days },
+        expiryDate: { lte: inDays },
         status: { in: ['ACTIVE', 'PENDING_RENEWAL'] },
       },
       include: { provider: { select: { firstName: true, lastName: true, credentials: true } } },
@@ -180,10 +187,11 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
 
   // ΓöÇΓöÇ 9. Expiring training records (within 30 days) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('TRAINING_EXPIRING')) {
+    const inDays = new Date(now.getTime() + prefDaysAhead('TRAINING_EXPIRING', 30) * 24 * 60 * 60 * 1000);
     const expiringTraining = await prisma.trainingRecord.findMany({
       where: {
         facilityId,
-        expiryDate: { gte: now, lte: in30Days },
+        expiryDate: { gte: now, lte: inDays },
         status: { not: 'EXEMPT' },
       },
       take: 10,
@@ -243,6 +251,8 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
   }
 
   // ΓöÇΓöÇ Upsert (deduplicate within 3-day window) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+  let createdCount = 0;
+
   for (const alert of alerts) {
     const existing = await prisma.notification.findFirst({
       where: {
@@ -266,7 +276,9 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
         },
       });
 
-      if (user?.email) {
+      createdCount += 1;
+
+      if (deliverEmail && user?.email) {
         await sendNotificationEmail({
           to: user.email,
           subject: `[NyxCitadel] ${alert.title}`,
@@ -275,4 +287,6 @@ export async function generateComplianceAlerts({ userId, facilityId }: AlertInpu
       }
     }
   }
+
+  return createdCount;
 }

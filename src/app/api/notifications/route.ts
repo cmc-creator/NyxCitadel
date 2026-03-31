@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { generateComplianceAlerts } from '@/lib/notifications/alertScanner';
+import { SYSTEM_NOTIFICATION_TITLES } from '@/lib/notifications/preferences';
 
 // GET /api/notifications - current user's notifications (most recent 30)
 // Also triggers compliance alert generation so the bell stays current.
@@ -14,13 +15,16 @@ export async function GET() {
 
   // Scan for new compliance alerts (deduped - safe on every poll)
   try {
-    await generateComplianceAlerts({ userId, facilityId });
+    await generateComplianceAlerts({ userId, facilityId, deliverEmail: false });
   } catch {
     // Non-fatal - don't block notification delivery if alert scan fails
   }
 
   const notifications = await prisma.notification.findMany({
-    where: { userId },
+    where: {
+      userId,
+      title: { notIn: [...SYSTEM_NOTIFICATION_TITLES] },
+    },
     orderBy: { createdAt: 'desc' },
     take: 30,
     select: {
@@ -52,13 +56,22 @@ export async function PATCH(req: NextRequest) {
   if (body.ids && Array.isArray(body.ids)) {
     // Mark specific IDs as read
     await prisma.notification.updateMany({
-      where: { userId, id: { in: body.ids }, isRead: false },
+      where: {
+        userId,
+        id: { in: body.ids },
+        isRead: false,
+        title: { notIn: [...SYSTEM_NOTIFICATION_TITLES] },
+      },
       data: { isRead: true, readAt: new Date() },
     });
   } else {
     // Mark all unread as read
     await prisma.notification.updateMany({
-      where: { userId, isRead: false },
+      where: {
+        userId,
+        isRead: false,
+        title: { notIn: [...SYSTEM_NOTIFICATION_TITLES] },
+      },
       data: { isRead: true, readAt: new Date() },
     });
   }

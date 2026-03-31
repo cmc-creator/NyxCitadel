@@ -2,6 +2,14 @@
 
 import { useState } from 'react';
 import { Bell, Save, CheckCircle } from 'lucide-react';
+import {
+  buildDefaultNotificationPreferences,
+  NOTIFICATION_RULE_DEFS,
+  type ExportEmailFrequency,
+  type NotificationDigestMode,
+} from '@/lib/notifications/preferences-schema';
+
+import { useEffect } from 'react';
 
 interface AlertRule {
   key: string;
@@ -11,64 +19,75 @@ interface AlertRule {
   daysAhead: number;
 }
 
-const DEFAULT_RULES: AlertRule[] = [
-  {
-    key: 'DEADLINE_REMINDER',
-    label: 'Deadline Reminders',
-    description: 'Notify before compliance items or corrective actions are due.',
-    enabled: true,
-    daysAhead: 14,
-  },
-  {
-    key: 'OVERDUE_ALERT',
-    label: 'Overdue Alerts',
-    description: 'Alert when an item passes its due date without resolution.',
-    enabled: true,
-    daysAhead: 0,
-  },
-  {
-    key: 'TRAINING_EXPIRING',
-    label: 'Training / Competency Expiring',
-    description: 'Remind staff before training certifications lapse.',
-    enabled: true,
-    daysAhead: 30,
-  },
-  {
-    key: 'INCIDENT_UPDATE',
-    label: 'Incident Report Updates',
-    description: 'Alert on status changes to IR / IAD incident reports.',
-    enabled: true,
-    daysAhead: 0,
-  },
-  {
-    key: 'POLICY_REVIEW_DUE',
-    label: 'Policy Review Due',
-    description: 'Remind reviewers before policies reach their next review date.',
-    enabled: true,
-    daysAhead: 60,
-  },
-  {
-    key: 'SURVEY_UPCOMING',
-    label: 'Upcoming Surveys',
-    description: 'Alert when a regulatory survey is approaching.',
-    enabled: false,
-    daysAhead: 30,
-  },
-  {
-    key: 'CAP_MILESTONE',
-    label: 'CAP Milestone Reminders',
-    description: 'Prompt assignees when a Corrective Action Plan milestone is near.',
-    enabled: false,
-    daysAhead: 7,
-  },
-];
+const DEFAULT_PREFS = buildDefaultNotificationPreferences();
+const DEFAULT_RULES: AlertRule[] = NOTIFICATION_RULE_DEFS.map((rule) => ({
+  key: rule.key,
+  label: rule.label,
+  description: rule.description,
+  enabled: rule.defaultEnabled,
+  daysAhead: rule.defaultDaysAhead,
+}));
 
 const DAY_OPTIONS = [0, 3, 7, 14, 21, 30, 45, 60, 90];
 
 export default function NotificationPreferencesPage() {
   const [rules, setRules] = useState<AlertRule[]>(DEFAULT_RULES);
+  const [digestMode, setDigestMode] = useState<NotificationDigestMode>('immediate');
+  const [suppressWeekends, setSuppressWeekends] = useState(false);
+  const [quietEnabled, setQuietEnabled] = useState(false);
+  const [quietStartHour, setQuietStartHour] = useState(20);
+  const [quietEndHour, setQuietEndHour] = useState(7);
+  const [exportEmailEnabled, setExportEmailEnabled] = useState(true);
+  const [exportFrequency, setExportFrequency] = useState<ExportEmailFrequency>('weekly');
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadPrefs() {
+      try {
+        const res = await fetch('/api/settings/notifications');
+        if (!res.ok) return;
+        const data = (await res.json()) as {
+          preferences?: {
+            digestMode?: NotificationDigestMode;
+            suppressWeekends?: boolean;
+            quietHours?: {
+              enabled?: boolean;
+              startHour?: number;
+              endHour?: number;
+              timezone?: string;
+            };
+            exportEmails?: {
+              enabled?: boolean;
+              frequency?: ExportEmailFrequency;
+            };
+            rules?: Record<string, { enabled?: boolean; daysAhead?: number }>;
+          };
+        };
+
+        const prefs = data.preferences;
+        if (!prefs) return;
+
+        setDigestMode(prefs.digestMode === 'daily' ? 'daily' : 'immediate');
+        setSuppressWeekends(Boolean(prefs.suppressWeekends));
+        setQuietEnabled(Boolean(prefs.quietHours?.enabled));
+        setQuietStartHour(typeof prefs.quietHours?.startHour === 'number' ? prefs.quietHours.startHour : 20);
+        setQuietEndHour(typeof prefs.quietHours?.endHour === 'number' ? prefs.quietHours.endHour : 7);
+        setExportEmailEnabled(prefs.exportEmails?.enabled ?? true);
+        setExportFrequency(prefs.exportEmails?.frequency === 'daily' ? 'daily' : 'weekly');
+        setRules(DEFAULT_RULES.map((rule) => ({
+          ...rule,
+          enabled: prefs.rules?.[rule.key]?.enabled ?? rule.enabled,
+          daysAhead: prefs.rules?.[rule.key]?.daysAhead ?? rule.daysAhead,
+        })));
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    void loadPrefs();
+  }, []);
 
   function toggleRule(key: string) {
     setRules(prev =>
@@ -86,12 +105,38 @@ export default function NotificationPreferencesPage() {
 
   async function handleSave() {
     setSaving(true);
-    // In a full implementation this would persist to the DB via /api/settings/notifications
-    // For now simulate a save delay
-    await new Promise(res => setTimeout(res, 600));
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    const payload = {
+      digestMode,
+      suppressWeekends,
+      quietHours: {
+        enabled: quietEnabled,
+        startHour: quietStartHour,
+        endHour: quietEndHour,
+        timezone: DEFAULT_PREFS.quietHours.timezone,
+      },
+      exportEmails: {
+        enabled: exportEmailEnabled,
+        frequency: exportFrequency,
+      },
+      rules: {
+        ...DEFAULT_PREFS.rules,
+        ...Object.fromEntries(rules.map((r) => [r.key, { enabled: r.enabled, daysAhead: r.daysAhead }])),
+      },
+    };
+
+    try {
+      const res = await fetch('/api/settings/notifications', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3000);
+      }
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -126,8 +171,126 @@ export default function NotificationPreferencesPage() {
         </button>
       </div>
 
+      {/* Suppression Windows */}
+      <div className="bg-white border border-slate-200 rounded-xl px-5 py-4 space-y-3">
+        <p className="text-sm font-semibold text-slate-900">Alert Suppression Windows</p>
+        <label className="flex items-center gap-2 text-xs text-slate-700">
+          <input
+            type="checkbox"
+            checked={suppressWeekends}
+            onChange={(e) => {
+              setSuppressWeekends(e.target.checked);
+              setSaved(false);
+            }}
+          />
+          Suppress alert emails on weekends
+        </label>
+        <label className="flex items-center gap-2 text-xs text-slate-700">
+          <input
+            type="checkbox"
+            checked={quietEnabled}
+            onChange={(e) => {
+              setQuietEnabled(e.target.checked);
+              setSaved(false);
+            }}
+          />
+          Enable quiet hours
+        </label>
+        <div className="flex items-center gap-3 text-xs">
+          <div className="flex items-center gap-1.5">
+            <span className="text-slate-500">Start</span>
+            <select
+              value={quietStartHour}
+              disabled={!quietEnabled}
+              onChange={(e) => {
+                setQuietStartHour(Number(e.target.value));
+                setSaved(false);
+              }}
+              className="border border-slate-200 rounded-md px-2 py-1 bg-white disabled:opacity-40"
+            >
+              {Array.from({ length: 24 }, (_, h) => (
+                <option key={`start-${h}`} value={h}>{h.toString().padStart(2, '0')}:00</option>
+              ))}
+            </select>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-slate-500">End</span>
+            <select
+              value={quietEndHour}
+              disabled={!quietEnabled}
+              onChange={(e) => {
+                setQuietEndHour(Number(e.target.value));
+                setSaved(false);
+              }}
+              className="border border-slate-200 rounded-md px-2 py-1 bg-white disabled:opacity-40"
+            >
+              {Array.from({ length: 24 }, (_, h) => (
+                <option key={`end-${h}`} value={h}>{h.toString().padStart(2, '0')}:00</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* Leadership CSV Schedule */}
+      <div className="bg-white border border-slate-200 rounded-xl px-5 py-4 space-y-3">
+        <p className="text-sm font-semibold text-slate-900">Leadership CSV Email Schedule</p>
+        <label className="flex items-center gap-2 text-xs text-slate-700">
+          <input
+            type="checkbox"
+            checked={exportEmailEnabled}
+            onChange={(e) => {
+              setExportEmailEnabled(e.target.checked);
+              setSaved(false);
+            }}
+          />
+          Send scheduled export summary emails
+        </label>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => { setExportFrequency('daily'); setSaved(false); }}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${exportFrequency === 'daily' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
+          >
+            Daily
+          </button>
+          <button
+            type="button"
+            onClick={() => { setExportFrequency('weekly'); setSaved(false); }}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${exportFrequency === 'weekly' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
+          >
+            Weekly
+          </button>
+        </div>
+      </div>
+
+      {/* Digest Mode */}
+      <div className="bg-white border border-slate-200 rounded-xl px-5 py-4">
+        <p className="text-sm font-semibold text-slate-900">Email Delivery Mode</p>
+        <p className="text-xs text-slate-500 mt-0.5">Choose whether alert emails are sent immediately or grouped into one daily digest.</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => { setDigestMode('immediate'); setSaved(false); }}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${digestMode === 'immediate' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
+          >
+            Immediate Emails
+          </button>
+          <button
+            type="button"
+            onClick={() => { setDigestMode('daily'); setSaved(false); }}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${digestMode === 'daily' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
+          >
+            Daily Digest
+          </button>
+        </div>
+      </div>
+
       {/* Alert Rules */}
       <div className="bg-white border border-slate-200 rounded-xl divide-y divide-slate-100">
+        {loading && (
+          <div className="px-5 py-4 text-xs text-slate-500">Loading your saved preferences...</div>
+        )}
         {rules.map(rule => (
           <div key={rule.key} className="flex items-start gap-4 px-5 py-4">
             {/* Toggle */}
@@ -153,7 +316,7 @@ export default function NotificationPreferencesPage() {
             </div>
 
             {/* Days-ahead selector */}
-            {rule.key !== 'OVERDUE_ALERT' && rule.key !== 'INCIDENT_UPDATE' && (
+            {rule.daysAhead > 0 && (
               <div className="shrink-0 flex items-center gap-2">
                 <label className="text-xs text-slate-500 whitespace-nowrap">Days before</label>
                 <select

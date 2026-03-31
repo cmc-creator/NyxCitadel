@@ -5,6 +5,7 @@ import { TopBar } from '@/components/layout/topbar';
 import { AssistantChat } from '@/components/ai/assistant-chat';
 import { WelcomeOnboarding } from '@/components/layout/WelcomeOnboarding';
 import { WhatsNew } from '@/components/layout/WhatsNew';
+import { SetupWizard } from '@/components/layout/SetupWizard';
 
 export default async function DashboardLayout({
   children,
@@ -25,6 +26,7 @@ export default async function DashboardLayout({
       </div>
       <WelcomeOnboarding userName={session.user.name} />
       <WhatsNew />
+      <SetupWizard />
       <AssistantChat />
     </div>
   );

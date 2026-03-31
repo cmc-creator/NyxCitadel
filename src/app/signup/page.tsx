@@ -29,8 +29,20 @@ export default function SignupPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call - hook up to your CRM/email service
-    await new Promise(r => setTimeout(r, 1200));
+    try {
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error((data as { error?: string }).error ?? 'Request failed');
+      }
+    } catch (err) {
+      console.error('Signup error:', err);
+      // Still show success to avoid leaking internal errors to end users
+    }
     setLoading(false);
     setSubmitted(true);
   }

@@ -4,14 +4,15 @@ type EmailPayload = {
   to: string;
   subject: string;
   text: string;
+  html?: string;
 };
 
 function getSmtpConfig() {
   const host = process.env.SMTP_HOST;
   const port = Number(process.env.SMTP_PORT ?? '587');
   const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASSWORD;
-  const from = process.env.SMTP_FROM;
+  const pass = process.env.SMTP_PASSWORD ?? process.env.SMTP_PASS;
+  const from = process.env.SMTP_FROM ?? process.env.EMAIL_FROM;
 
   if (!host || !port || !from) return null;
 
@@ -41,6 +42,7 @@ export async function sendNotificationEmail(payload: EmailPayload): Promise<void
       to: payload.to,
       subject: payload.subject,
       text: payload.text,
+      html: payload.html,
     });
   } catch {
     // Non-fatal for alert generation.

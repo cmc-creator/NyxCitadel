@@ -3,6 +3,14 @@
     {
       "path": "/api/cron/scrape",
       "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/compliance-alerts",
+      "schedule": "30 6 * * *"
+    },
+    {
+      "path": "/api/cron/export-summaries",
+      "schedule": "0 7 * * *"
     }
   ]
 }

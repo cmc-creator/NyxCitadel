@@ -50,6 +50,7 @@ import {
   Library,
   Newspaper,
   PlayCircle,
+  Download,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -274,6 +275,8 @@ const navItems: NavItem[] = [
 ];
 
 const bottomNavItems: NavItem[] = [
+  { href: '/admin', label: 'Admin Panel', icon: ShieldCheck },
+  { href: '/export', label: 'Export Center', icon: Download },
   { href: '/guide', label: 'User Guide', icon: BookOpen },
   { href: '/walkthrough', label: 'Feature Walkthrough', icon: PlayCircle },
   { href: '/settings', label: 'Settings', icon: Settings },

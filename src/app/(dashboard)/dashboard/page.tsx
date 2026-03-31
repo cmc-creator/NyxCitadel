@@ -1,5 +1,6 @@
 ﻿import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { calculateComplianceHealth, getHealthScoreColor } from '@/lib/compliance-health';
 import {
   AlertTriangle,
   CalendarDays,
@@ -19,6 +20,7 @@ import {
   Activity,
   Minus,
   ShieldCheck,
+  HeartPulse,
 } from 'lucide-react';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
 import Link from 'next/link';
@@ -184,9 +186,10 @@ function ProgressBar({ value, max, label, sublabel }: { value: number; max: numb
 export default async function DashboardPage() {
   const session = await auth();
   const facilityId = session!.user.facilityId;
-  const [s, facility] = await Promise.all([
+  const [s, facility, healthScore] = await Promise.all([
     getDashboardStats(facilityId),
     prisma.facility.findUnique({ where: { id: facilityId }, select: { name: true } }),
+    calculateComplianceHealth(facilityId),
   ]);
   const facilityName = facility?.name ?? 'Your Facility';
 
@@ -350,6 +353,62 @@ export default async function DashboardPage() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* COMPLIANCE HEALTH SCORE */}
+      <div className="bg-card rounded-xl border border-border p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <HeartPulse className="w-4 h-4 text-purple-400" />
+          <h3 className="text-sm font-semibold text-foreground">Facility Compliance Health Score</h3>
+          <span className={`ml-auto text-xs font-semibold px-2 py-0.5 rounded-full border ${getHealthScoreColor(healthScore.overallScore)}`}>
+            {healthScore.trend === 'improving' ? '↑ Improving' : healthScore.trend === 'declining' ? '↓ Declining' : '→ Stable'}
+          </span>
+        </div>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+          {/* Big score */}
+          <div className="flex-shrink-0 text-center min-w-[5rem]">
+            <p className={`text-5xl font-bold ${getHealthScoreColor(healthScore.overallScore).split(' ')[0]}`}>
+              {healthScore.overallScore}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">out of 100</p>
+          </div>
+          {/* Domain bars */}
+          <div className="flex-1 w-full space-y-2.5">
+            {Object.values(healthScore.domains).map((domain) => (
+              <div key={domain.label}>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-xs text-muted-foreground/80">{domain.label}</span>
+                  <span className={`text-xs font-semibold ${domain.color}`}>{domain.score}</span>
+                </div>
+                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all ${domain.score >= 80 ? 'bg-emerald-500' : domain.score >= 60 ? 'bg-amber-500' : 'bg-red-500'}`}
+                    style={{ width: `${domain.score}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Summary chips */}
+          <div className="flex-shrink-0 grid grid-cols-2 gap-2 text-center">
+            <div className="bg-muted/40 rounded-lg px-3 py-2">
+              <p className="text-lg font-bold text-foreground">{healthScore.summary.overdueItems}</p>
+              <p className="text-xs text-muted-foreground">Overdue</p>
+            </div>
+            <div className="bg-muted/40 rounded-lg px-3 py-2">
+              <p className="text-lg font-bold text-foreground">{healthScore.summary.openCaps}</p>
+              <p className="text-xs text-muted-foreground">Open CAPs</p>
+            </div>
+            <div className="bg-muted/40 rounded-lg px-3 py-2">
+              <p className="text-lg font-bold text-foreground">{healthScore.summary.incompleteTraining}</p>
+              <p className="text-xs text-muted-foreground">Training gaps</p>
+            </div>
+            <div className="bg-muted/40 rounded-lg px-3 py-2">
+              <p className="text-lg font-bold text-foreground">{healthScore.summary.expiredPolicies}</p>
+              <p className="text-xs text-muted-foreground">Expired policies</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* QAPI SNAPSHOT */}

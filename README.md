@@ -13,12 +13,13 @@
 5. [Environment Variables](#environment-variables)
 6. [Database Setup](#database-setup)
 7. [Running the App](#running-the-app)
-8. [Demo Login Credentials](#demo-login-credentials)
+8. [Initial Admin Account](#initial-admin-account)
 9. [GitHub Repository Setup](#github-repository-setup)
 10. [Deployment (Vercel)](#deployment-vercel)
 11. [Project Structure](#project-structure)
 12. [White-Label Configuration](#white-label-configuration)
 13. [Arizona Compliance Modules](#arizona-compliance-modules)
+14. [Optional Demo Tooling](#optional-demo-tooling)
 
 ---
 
@@ -105,6 +106,19 @@ NEXTAUTH_SECRET="REPLACE_WITH_RANDOM_64_CHAR_HEX_STRING"
 
 # Local development URL (leave as-is for local)
 NEXTAUTH_URL="http://localhost:3000"
+
+# Optional canonical app URL used in export summary emails and links
+APP_URL="http://localhost:3000"
+
+# SMTP configuration for signup mailers, alert digests, and scheduled export summaries
+SMTP_HOST="smtp.example.com"
+SMTP_PORT="587"
+SMTP_USER="smtp-user"
+SMTP_PASS="smtp-password"
+SMTP_FROM="NyxCitadel <alerts@example.com>"
+
+# Cron protection token for scrape, alert, and export automation endpoints
+CRON_SECRET="replace-with-random-string"
 ```
 
 > **Never commit `.env.local` to Git.** It is already in `.gitignore`.
@@ -117,7 +131,7 @@ NEXTAUTH_URL="http://localhost:3000"
 # Push schema to database (creates all tables)
 npm run db:push
 
-# Seed with Destiny Springs Healthcare demo data
+# Seed clean production-safe starter data (one facility + one admin)
 npm run db:seed
 ```
 
@@ -136,15 +150,32 @@ Open <http://localhost:3000> in your browser.
 
 ---
 
-## Demo Login Credentials
+## Optional Demo Tooling
 
-After seeding, three accounts are available:
+Demo tooling is disabled by default.
+
+If you need demo workflows later, explicitly enable them with `ENABLE_DEMO_TOOLS=true` and use:
+
+- `npm run db:seed:demo` for full sample data
+- `docs/DEMO_PLAYBOOK.md` for scripted demos
+- Admin "Reset Demo Data" (only visible when `ENABLE_DEMO_TOOLS=true`)
+
+---
+
+## Initial Admin Account
+
+After running clean seed, one admin account is available by default:
 
 | Role | Email | Password |
 |------|-------|----------|
-| System Admin | `admin@destinysprings.com` | `Admin@DSH2026!` |
-| Compliance Officer | `compliance@destinysprings.com` | `Compliance@DSH2026!` |
-| EM Coordinator | `emc@destinysprings.com` | `Emergency@DSH2026!` |
+| Admin | `admin@example.com` | `ChangeMe123!` |
+
+Set these values explicitly during seed with environment variables:
+
+- `SEED_FACILITY_NAME`
+- `SEED_ADMIN_EMAIL`
+- `SEED_ADMIN_PASSWORD`
+- `SEED_ADMIN_NAME`
 
 ---
 
@@ -230,8 +261,11 @@ In Vercel project → **Settings → Environment Variables**, add:
 |---|---|
 | `NEXTAUTH_SECRET` | Random 32-byte hex — run `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
 | `NEXTAUTH_URL` | Your Vercel deployment URL, e.g. `https://nyxcitadel.vercel.app` |
+| `APP_URL` | Same as production base URL; used in export links and email templates |
 | `ANTHROPIC_API_KEY` | **Required for AI Assistant** — get from [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys). Uses `claude-3-5-haiku-20241022`. |
 | `CRON_SECRET` | **Required for automated regulatory scraper** — any random string, e.g. `openssl rand -hex 32`. Vercel injects this automatically into scheduled cron calls. |
+| `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` | Required for signup emails, alert digests, and scheduled export delivery |
+| `SMTP_FROM` | Branded sender identity for user-facing emails |
 
 > **Important:** Without `ANTHROPIC_API_KEY` the AI compliance assistant (NyxAI) returns an error for every message.  
 > Without `CRON_SECRET` the daily regulatory scraper cron job is unsecured — set this before going to production.
@@ -250,6 +284,43 @@ npx dotenv -e .env.production.local -- npx prisma db push
 
 # Seed production with Destiny Springs demo data (optional)
 npx dotenv -e .env.production.local -- npx tsx prisma/seed.ts
+```
+
+### Production Automation Checklist
+
+Before you call the deployment production-ready, verify these flows in the live environment:
+
+1. Sign up a new user and confirm the welcome email delivers.
+2. Open **Settings → Notification Preferences** and save alert/export preferences.
+3. Open **Admin Panel** and save at least one external export delivery address.
+4. Trigger **Run Alerts Now** and confirm the automation status card records a manual run.
+5. Trigger **Send Weekly Exports** and confirm email delivery plus automation history.
+6. Download the Board PDF from the Export Center and confirm the trend page renders.
+7. Hit the protected cron routes with `Authorization: Bearer <CRON_SECRET>` and verify `200 OK`:
+
+```powershell
+curl -H "Authorization: Bearer YOUR_CRON_SECRET" https://YOUR_APP_URL/api/cron/compliance-alerts
+curl -H "Authorization: Bearer YOUR_CRON_SECRET" https://YOUR_APP_URL/api/cron/export-summaries
+curl -H "Authorization: Bearer YOUR_CRON_SECRET" https://YOUR_APP_URL/api/cron/scrape
+```
+
+### Smoke Test Routine
+
+Use this short operator check before demos or after a deploy:
+
+1. `npm run build`
+2. Log in as an admin account.
+3. Confirm the Admin automation card shows the latest history.
+4. Confirm the Export Center can download a single CSV and a saved packet.
+5. Confirm bell notifications do not show hidden `SYSTEM` metadata records.
+
+### Windows Build Note
+
+On Windows, Next.js can occasionally fail on stale `.next` cleanup with an `EINVAL: invalid argument, readlink ... .next\package.json` error. If that happens, remove `.next` and rerun the build:
+
+```powershell
+Remove-Item -Recurse -Force .next
+npm run build
 ```
 
 ---
