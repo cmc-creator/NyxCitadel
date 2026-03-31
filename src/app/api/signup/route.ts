@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { sendEmail } from '@/lib/email';
 import { getOnboardingWelcomeEmail } from '@/lib/email-templates';
+import { enforceRateLimit } from '@/lib/security/rate-limit';
 
 const schema = z.object({
   name: z.string().min(1).max(100),
@@ -14,6 +15,14 @@ const schema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const limit = enforceRateLimit(req, 'signup', 10, 15 * 60 * 1000);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again shortly.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil((limit.resetAt - Date.now()) / 1000)) } },
+    );
+  }
+
   let body: unknown;
   try {
     body = await req.json();

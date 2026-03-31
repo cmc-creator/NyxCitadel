@@ -96,6 +96,9 @@ export default async function AdminPage() {
         <div className="flex flex-col items-end gap-3">
           <RunAlertsNowButton />
           <RunWeeklyExportsButton />
+          <Link href="/admin/pilot-kpis" className="inline-flex items-center gap-2 bg-cyan-700 hover:bg-cyan-800 text-white text-sm font-medium px-3 py-2 rounded-lg transition">
+            View Pilot KPIs
+          </Link>
           {demoToolsEnabled && <ResetDemoDataButton />}
         </div>
       </div>
