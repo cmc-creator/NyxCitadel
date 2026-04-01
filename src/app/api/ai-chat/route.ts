@@ -305,7 +305,7 @@ Only include that tag when explicitly useful. Keep payload minimal and valid.`;
 
   try {
     const response = await client.messages.create({
-      model: 'claude-3-5-haiku-20241022',
+      model: 'claude-3-5-haiku-latest',
       max_tokens: 1024,
       system: sentrySystemPrompt,
       messages: anthropicMessages,
