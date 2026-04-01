@@ -69,7 +69,7 @@ function LoginForm() {
 
       {/* ── Background glows ── */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-60 -left-40 w-[700px] h-[700px] bg-purple-700/20 rounded-full blur-[130px]" />
+        <div className="absolute -top-60 -left-40 w-[700px] h-[700px] bg-teal-700/12 rounded-full blur-[130px]" />
         <div className="absolute -bottom-40 right-0 w-[500px] h-[500px] bg-blue-700/15 rounded-full blur-[120px]" />
       </div>
 
@@ -87,7 +87,7 @@ function LoginForm() {
           }}
         />
         {/* Inner glow */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/25 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-600/15 rounded-full blur-[100px] pointer-events-none" />
 
         {/* Logo */}
         <div className="relative z-10">
@@ -97,7 +97,7 @@ function LoginForm() {
           </Link>
           <div className="flex items-center gap-3 mb-8">
             <Image
-              src="/logo.svg"
+              src="/citadellogo.png"
               alt="NyxCitadel"
               width={44}
               height={44}
@@ -110,7 +110,7 @@ function LoginForm() {
           </div>
           <h1 className="text-4xl xl:text-5xl font-extrabold text-white leading-tight mb-5">
             Your facility's{' '}
-            <span className="bg-gradient-to-r from-purple-400 via-violet-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
               compliance command center
             </span>
           </h1>
@@ -124,8 +124,8 @@ function LoginForm() {
         <div className="relative z-10 space-y-4">
           {leftFeatures.map(({ icon: Icon, title, desc }) => (
             <div key={title} className="flex items-start gap-4 p-4 rounded-xl bg-white/4 border border-white/5 backdrop-blur-sm hover:bg-white/8 hover:border-white/10 hover:-translate-x-1 transition-all duration-200 cursor-default">
-              <div className="w-9 h-9 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-purple-500/40 transition-colors duration-200">
-                <Icon className="w-4.5 h-4.5 text-purple-400" />
+              <div className="w-9 h-9 rounded-lg bg-teal-500/20 border border-teal-500/30 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-teal-500/40 transition-colors duration-200">
+                <Icon className="w-4.5 h-4.5 text-teal-400" />
               </div>
               <div>
                 <p className="font-semibold text-white text-sm">{title}</p>
@@ -158,7 +158,7 @@ function LoginForm() {
         <div className="lg:hidden mb-10 text-center">
           <div className="inline-flex items-center gap-2.5 mb-3">
             <Image
-              src="/logo.svg"
+              src="/citadellogo.png"
               alt="NyxCitadel"
               width={36}
               height={36}
@@ -197,11 +197,11 @@ function LoginForm() {
                   required
                   autoComplete="email"
                   placeholder="you@facility.com"
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-purple-500/60 focus:border-purple-500/60 transition text-sm"
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm"
                 />
               </div>
 
-              {/* Password */}
+              {/* Password */}}
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-1.5">
                   Password
@@ -214,7 +214,7 @@ function LoginForm() {
                     required
                     autoComplete="current-password"
                     placeholder="••••••••"
-                    className="w-full px-4 py-2.5 pr-11 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-purple-500/60 focus:border-purple-500/60 transition text-sm"
+                    className="w-full px-4 py-2.5 pr-11 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm"
                   />
                   <button
                     type="button"
@@ -231,7 +231,8 @@ function LoginForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 mt-2 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all shadow-lg shadow-purple-900/30 hover:shadow-purple-700/30"
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 mt-2 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all shadow-lg shadow-teal-900/30"
+                style={{background:'linear-gradient(135deg,#0d7377 0%,#14a4a8 100%)'}}
               >
                 {loading ? (
                   <>
@@ -247,7 +248,7 @@ function LoginForm() {
             <div className="mt-5 pt-5 border-t border-white/5">
               <p className="text-center text-slate-600 text-xs">
                 Need access?{' '}
-                <a href="/signup" className="text-purple-500 hover:text-purple-400 transition-colors">Request a demo</a>
+                <a href="/signup" className="text-teal-500 hover:text-teal-400 transition-colors">Request a demo</a>
               </p>
               <div className="mt-4 flex items-center justify-center gap-4 text-xs">
                 <Link href="/guide" className="text-slate-500 hover:text-white transition-colors">User Guide</Link>

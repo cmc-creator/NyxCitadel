@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   CITADEL DESIGN SYSTEM - Strong · Fortified · Metallic · Glass
+   CITADEL DESIGN SYSTEM - Luxury · Heraldic · Teal · Gold · Sapphire
+   Palette drawn from the NyxCitadel stained-glass crest:
+     Teal/Aqua  #0ea5a0  hsl(177 82% 35%)
+     Sapphire   #1d4ed8  hsl(221 74% 48%)
+     Gold       #c49a2a  hsl(43 65% 46%)
+     Midnight   #080d1c  hsl(228 42% 7%)
 ═══════════════════════════════════════════════════════════════════════════ */
 @layer base {
   :root {
@@ -13,59 +18,65 @@
     --card-foreground: 224 30% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 30% 10%;
-    --primary: 251 86% 60%;
+    --primary: 177 82% 32%;
     --primary-foreground: 0 0% 100%;
     --secondary: 220 14% 92%;
     --secondary-foreground: 224 25% 20%;
     --muted: 220 14% 92%;
     --muted-foreground: 220 10% 48%;
-    --accent: 251 80% 95%;
-    --accent-foreground: 251 60% 35%;
+    --accent: 43 65% 92%;
+    --accent-foreground: 43 65% 28%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     --border: 220 13% 86%;
     --input: 220 13% 88%;
-    --ring: 251 86% 60%;
+    --ring: 177 82% 32%;
     --radius: 0.75rem;
-    --brand: 251 86% 60%;
+    --brand: 177 82% 32%;
     --brand-foreground: 0 0% 100%;
-    --brand-light: 251 80% 95%;
-    --sidebar-bg: 230 35% 8%;
-    --sidebar-fg: 218 20% 94%;
-    --sidebar-muted: 218 15% 52%;
-    --sidebar-accent: 251 86% 63%;
-    --sidebar-border: 230 25% 14%;
+    --brand-light: 177 60% 92%;
+    --gold: 43 65% 46%;
+    --gold-light: 43 65% 88%;
+    --sidebar-bg: 228 42% 6%;
+    --sidebar-fg: 185 30% 92%;
+    --sidebar-muted: 210 15% 52%;
+    --sidebar-accent: 177 82% 42%;
+    --sidebar-gold: 43 65% 52%;
+    --sidebar-border: 228 32% 12%;
   }
 
-  /* CITADEL DARK - deep charcoal, metallic, glass */
+  /* CITADEL DARK - Midnight navy, teal glow, antique gold */
   .dark {
-    --background: 224 22% 5%;
-    --foreground: 214 20% 90%;
-    --card: 224 20% 8%;
-    --card-foreground: 214 20% 90%;
-    --popover: 224 18% 10%;
-    --popover-foreground: 214 20% 90%;
-    --primary: 251 86% 68%;
-    --primary-foreground: 224 30% 5%;
-    --secondary: 224 18% 13%;
-    --secondary-foreground: 214 18% 82%;
-    --muted: 224 18% 13%;
-    --muted-foreground: 218 14% 52%;
-    --accent: 251 30% 16%;
-    --accent-foreground: 251 80% 75%;
+    --background: 228 38% 5%;
+    --foreground: 185 20% 92%;
+    --card: 228 35% 8%;
+    --card-foreground: 185 20% 92%;
+    --popover: 228 32% 9%;
+    --popover-foreground: 185 20% 92%;
+    --primary: 177 82% 42%;
+    --primary-foreground: 228 42% 6%;
+    --secondary: 228 28% 12%;
+    --secondary-foreground: 185 18% 82%;
+    --muted: 228 28% 12%;
+    --muted-foreground: 210 14% 52%;
+    --accent: 43 50% 14%;
+    --accent-foreground: 43 65% 72%;
     --destructive: 0 60% 42%;
     --destructive-foreground: 0 0% 100%;
-    --border: 224 16% 15%;
-    --input: 224 18% 12%;
-    --ring: 251 86% 68%;
-    --brand: 251 86% 68%;
-    --brand-foreground: 224 30% 5%;
-    --brand-light: 251 30% 16%;
-    --sidebar-bg: 222 28% 4%;
-    --sidebar-fg: 214 20% 90%;
-    --sidebar-muted: 218 12% 48%;
-    --sidebar-accent: 251 86% 68%;
-    --sidebar-border: 222 20% 11%;
+    --border: 228 22% 14%;
+    --input: 228 28% 11%;
+    --ring: 177 82% 42%;
+    --brand: 177 82% 42%;
+    --brand-foreground: 228 42% 5%;
+    --brand-light: 177 40% 14%;
+    --gold: 43 65% 52%;
+    --gold-light: 43 50% 18%;
+    --sidebar-bg: 228 45% 4%;
+    --sidebar-fg: 185 22% 92%;
+    --sidebar-muted: 210 12% 48%;
+    --sidebar-accent: 177 82% 44%;
+    --sidebar-gold: 43 65% 54%;
+    --sidebar-border: 228 30% 10%;
   }
 
   [data-facility="destiny-springs"] {
@@ -257,24 +268,27 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SIDEBAR - fortified wall
+   SIDEBAR - heraldic fortress wall, midnight navy + teal/gold accents
 ═══════════════════════════════════════════════════════════════════════════ */
 .sidebar {
-  background: linear-gradient(180deg, hsl(var(--sidebar-bg)) 0%, hsl(222 28% 3%) 100%);
+  background: linear-gradient(180deg,
+    hsl(var(--sidebar-bg)) 0%,
+    hsl(228 48% 3%) 100%);
   color: hsl(var(--sidebar-fg));
   border-right: 1px solid hsl(var(--sidebar-border));
+  box-shadow: 4px 0 24px rgba(0,0,0,0.4);
 }
 .sidebar-link {
   @apply flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 relative;
   color: hsl(var(--sidebar-muted));
 }
 .sidebar-link:hover {
-  background-color: hsl(var(--sidebar-accent) / 0.1);
+  background-color: hsl(var(--sidebar-accent) / 0.08);
   color: hsl(var(--sidebar-fg));
 }
 .sidebar-link.active {
-  background: linear-gradient(90deg, hsl(var(--sidebar-accent) / 0.18) 0%, hsl(var(--sidebar-accent) / 0.04) 100%);
-  color: hsl(var(--sidebar-fg));
+  background: linear-gradient(90deg, hsl(var(--sidebar-accent) / 0.14) 0%, transparent 100%);
+  color: hsl(var(--sidebar-accent));
 }
 .sidebar-link.active::before {
   content: '';
@@ -284,8 +298,8 @@
   bottom: 15%;
   width: 2.5px;
   border-radius: 0 2px 2px 0;
-  background: hsl(var(--sidebar-accent));
-  box-shadow: 0 0 8px hsl(var(--sidebar-accent) / 0.55);
+  background: linear-gradient(180deg, hsl(var(--sidebar-gold)), hsl(var(--sidebar-accent)));
+  box-shadow: 0 0 10px hsl(var(--sidebar-accent) / 0.7), 0 0 3px hsl(var(--sidebar-gold) / 0.5);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -299,14 +313,16 @@
     border: 1px solid hsl(var(--border));
   }
   .dark .citadel-card {
-    background: linear-gradient(135deg, hsl(224 20% 9%) 0%, hsl(224 18% 10%) 100%);
-    border-color: hsl(224 16% 16%);
+    background: linear-gradient(135deg, hsl(228 35% 9%) 0%, hsl(228 32% 10%) 100%);
+    border-color: hsl(228 22% 16%);
+    box-shadow: 0 1px 0 0 hsl(43 65% 54% / 0.06) inset,
+                0 0 0 1px hsl(228 22% 16%);
   }
   .citadel-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+    background: linear-gradient(135deg, rgba(14,165,160,0.04) 0%, transparent 60%);
     pointer-events: none;
     border-radius: inherit;
   }

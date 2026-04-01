@@ -364,16 +364,20 @@ export function Sidebar() {
   return (
     <aside className="sidebar w-64 min-h-screen flex flex-col fixed left-0 top-0 bottom-0 z-30">
       {/* Branding */}
-      <div className="flex items-center px-4 py-4 border-b border-white/10">
-        <Link href="/dashboard" className="flex items-center gap-2.5">
+      <div className="flex items-center px-4 py-4 border-b border-white/8" style={{background: 'linear-gradient(135deg, hsl(228 45% 5%) 0%, hsl(228 42% 7%) 100%)'}}>
+        <Link href="/dashboard" className="flex items-center gap-3 group">
           <Image
-            src="/logo-white.svg"
+            src="/citadellogo.png"
             alt="NyxCitadel"
-            width={132}
-            height={30}
+            width={36}
+            height={36}
             priority
-            className="h-8 w-auto flex-shrink-0"
+            className="h-9 w-9 flex-shrink-0 drop-shadow-lg group-hover:drop-shadow-[0_0_8px_rgba(14,165,160,0.6)] transition-all duration-300"
           />
+          <div>
+            <p className="font-bold text-sm tracking-wide text-white leading-tight">NyxCitadel<sup className="text-[9px] font-normal align-super ml-0.5 opacity-70">™</sup></p>
+            <p className="text-[10px] leading-tight" style={{color: 'hsl(43 65% 54%)'}}>Compliance Intelligence</p>
+          </div>
         </Link>
       </div>
 

@@ -41,7 +41,7 @@ const features = [
     title: 'Survey & Plan of Correction',
     description:
       'From first citation to final closure. Track every deficiency, assign CAPs, manage POCs, and generate CMS-ready response documents in minutes.',
-    color: 'from-purple-500 to-violet-500',
+    color: 'from-teal-500 to-cyan-500',
     badge: 'Survey Ready',
   },
   {
@@ -91,7 +91,7 @@ const regulatoryFeeds = [
   { agency: 'OSHA', text: 'Bloodborne pathogen standard training window reminder - 30 days', time: '1h ago', color: 'text-orange-400', dot: 'bg-orange-400' },
   { agency: 'Joint Commission', text: 'NPSG.07.01 hand hygiene compliance threshold updated', time: '3h ago', color: 'text-yellow-400', dot: 'bg-yellow-400' },
   { agency: 'State DOH', text: 'State survey protocol for infection control revised statewide', time: '1d ago', color: 'text-blue-400', dot: 'bg-blue-400' },
-  { agency: 'AHCA', text: 'PDPM billing guidance clarification memo published', time: '2d ago', color: 'text-purple-400', dot: 'bg-purple-400' },
+  { agency: 'AHCA', text: 'PDPM billing guidance clarification memo published', time: '2d ago', color: 'text-violet-400', dot: 'bg-violet-400' },
 ];
 
 const stats = [
@@ -152,8 +152,9 @@ const pricingTiers = [
     price: '$799',
     period: '/mo, billed annually',
     badge: 'Most Popular',
-    color: 'border-purple-500/60',
-    buttonStyle: 'bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 text-white shadow-lg shadow-purple-900/40',
+    color: 'border-teal-500/60',
+    buttonStyle: 'text-white shadow-lg shadow-teal-900/40',
+    buttonInlineStyle: {background:'linear-gradient(135deg,#0d7377 0%,#14a4a8 100%)'},
     features: [
       { label: 'Up to 3 facilities', included: true },
       { label: 'Up to 20 users', included: true },
@@ -219,16 +220,16 @@ export default async function RootPage() {
   const portalLabel = isLoggedIn ? 'Go to Dashboard' : 'Sign In';
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#060b16] text-white overflow-x-hidden">
 
       {/* ── Multi-layer background ── */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-60 -right-60 w-[900px] h-[900px] bg-purple-700/20 rounded-full blur-[140px]" />
-        <div className="absolute top-1/3 -left-80 w-[700px] h-[700px] bg-blue-700/15 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-violet-700/15 rounded-full blur-[130px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-indigo-700/10 rounded-full blur-[100px]" />
+        <div className="absolute -top-60 -right-60 w-[900px] h-[900px] bg-teal-700/15 rounded-full blur-[140px]" />
+        <div className="absolute top-1/3 -left-80 w-[700px] h-[700px] bg-blue-800/12 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-teal-800/12 rounded-full blur-[130px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-amber-900/8 rounded-full blur-[100px]" />
         <div
-          className="absolute inset-0 opacity-[0.025]"
+          className="absolute inset-0 opacity-[0.018]"
           style={{
             backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)',
             backgroundSize: '32px 32px',
@@ -236,17 +237,16 @@ export default async function RootPage() {
         />
       </div>
 
-      {/* ── Navbar ── */}
-      <header className="z-20 border-b border-white/5 backdrop-blur-md sticky top-0">
+      <header className="z-20 border-b border-white/5 backdrop-blur-md sticky top-0" style={{background: 'rgba(6,11,22,0.85)'}}>
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Image
-              src="/logo.svg"
+              src="/citadellogo.png"
               alt="NyxCitadel"
               width={36}
               height={36}
               priority
-              className="h-9 w-auto flex-shrink-0"
+              className="h-9 w-9 flex-shrink-0 drop-shadow-lg"
             />
             <div>
               <span className="font-extrabold text-lg tracking-tight">NyxCitadel<sup className="text-[10px] font-normal align-super ml-0.5">™</sup></span>
@@ -266,14 +266,15 @@ export default async function RootPage() {
             {!isLoggedIn && (
               <Link
                 href="/signup"
-                className="flex items-center gap-2 px-4 py-2 border border-purple-500/50 hover:border-purple-400 hover:bg-purple-500/10 rounded-lg text-sm font-semibold text-purple-300 hover:text-purple-200 transition-all"
+                className="flex items-center gap-2 px-4 py-2 border border-teal-500/50 hover:border-teal-400 hover:bg-teal-500/10 rounded-lg text-sm font-semibold text-teal-300 hover:text-teal-200 transition-all"
               >
                 Get Started
               </Link>
             )}
             <Link
               href={portalHref}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-purple-900/40"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all shadow-lg"
+              style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.35)'}}
             >
               {portalLabel} <ChevronRight className="w-4 h-4" />
             </Link>
@@ -287,18 +288,18 @@ export default async function RootPage() {
       <section className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-12">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-purple-500/40 bg-purple-500/10 text-purple-300 text-xs font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/40 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6">
               <Sparkles className="w-3.5 h-3.5" />
               The Only Healthcare Compliance Platform That Never Sleeps
             </div>
             <h1 className="text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-6">
               Stop Chasing{' '}
-              <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
                 Regulations.
               </span>
               <br />
               Let NyxCitadel<sup className="text-2xl font-normal align-super">™</sup>{' '}
-              <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
                 Chase Them For You.
               </span>
             </h1>
@@ -318,7 +319,8 @@ export default async function RootPage() {
               {isLoggedIn ? (
                 <Link
                   href="/dashboard"
-                  className="flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-xl font-bold text-lg transition-all shadow-xl shadow-purple-900/40 hover:shadow-purple-700/40 hover:-translate-y-0.5"
+                  className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-lg transition-all hover:-translate-y-0.5"
+                  style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 8px 30px rgba(13,115,119,0.4)'}}
                 >
                   Go to Dashboard <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -326,19 +328,20 @@ export default async function RootPage() {
                 <>
                   <Link
                     href="/signup"
-                    className="flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-xl font-bold text-lg transition-all shadow-xl shadow-purple-900/40 hover:shadow-purple-700/40 hover:-translate-y-0.5"
+                    className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-lg transition-all hover:-translate-y-0.5"
+                    style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 8px 30px rgba(13,115,119,0.4)'}}
                   >
                     Get Started Free <ArrowRight className="w-5 h-5" />
                   </Link>
                   <Link
                     href="/signup#demo"
-                    className="flex items-center gap-2 px-7 py-3.5 border border-white/10 hover:border-purple-500/50 rounded-xl font-semibold text-slate-300 hover:text-white transition-all hover:-translate-y-0.5"
+                    className="flex items-center gap-2 px-7 py-3.5 border border-white/10 hover:border-teal-500/50 rounded-xl font-semibold text-slate-300 hover:text-white transition-all hover:-translate-y-0.5"
                   >
                     Try Live Demo
                   </Link>
                   <Link
                     href="/walkthrough"
-                    className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-sky-400/20 bg-sky-400/10 hover:bg-sky-400/15 font-semibold text-sky-100 transition-all"
+                    className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-amber-400/20 bg-amber-400/8 hover:bg-amber-400/12 font-semibold text-amber-100 transition-all"
                   >
                     Watch The Walkthrough
                   </Link>
@@ -375,7 +378,7 @@ export default async function RootPage() {
                   { label: 'Open Findings',   value: '3',   color: 'text-orange-400', bg: 'bg-orange-500/10 border-orange-500/20' },
                   { label: 'Policies Due',    value: '7',   color: 'text-yellow-400', bg: 'bg-yellow-500/10 border-yellow-500/20' },
                   { label: 'Training Comp.',  value: '96%', color: 'text-green-400',  bg: 'bg-green-500/10 border-green-500/20'  },
-                  { label: 'Compliance Score',value: '97',  color: 'text-purple-300', bg: 'bg-purple-500/10 border-purple-500/20' },
+                  { label: 'Compliance Score',value: '97',  color: 'text-teal-300', bg: 'bg-teal-500/10 border-teal-500/20' },
                 ].map(item => (
                   <div key={item.label} className={`rounded-xl p-3 border ${item.bg}`}>
                     <p className="text-xs text-slate-500 mb-1">{item.label}</p>
@@ -404,9 +407,9 @@ export default async function RootPage() {
               </div>
               <p className="text-[11px] text-slate-300">CMS updated F0880 infection control requirements</p>
             </div>
-            <div className="absolute -bottom-6 -left-6 bg-violet-500/10 border border-violet-500/30 backdrop-blur-sm rounded-xl p-3.5 shadow-2xl">
+            <div className="absolute -bottom-6 -left-6 bg-teal-500/10 border border-teal-500/30 backdrop-blur-sm rounded-xl p-3.5 shadow-2xl">
               <p className="text-xs text-slate-500 mb-0.5">Facility Risk Level</p>
-              <p className="text-3xl font-extrabold text-violet-300">Low <span className="text-base font-normal text-slate-500">Risk</span></p>
+              <p className="text-3xl font-extrabold text-teal-300">Low <span className="text-base font-normal text-slate-500">Risk</span></p>
               <p className="text-[11px] text-green-400 mt-0.5">↓ Improved this quarter</p>
             </div>
           </div>
@@ -416,11 +419,11 @@ export default async function RootPage() {
       {/* ══════════════════════════════
           STATS BAR
       ══════════════════════════════ */}
-      <section className="relative z-10 border-y border-white/5 bg-gradient-to-r from-slate-900/80 via-purple-950/30 to-slate-900/80 backdrop-blur-sm">
+      <section className="relative z-10 border-y border-white/5 bg-gradient-to-r from-slate-900/80 via-teal-950/20 to-slate-900/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map(s => (
             <div key={s.label} className="text-center px-2">
-              <p className="text-3xl lg:text-4xl font-extrabold bg-gradient-to-r from-purple-400 via-fuchsia-400 to-blue-400 bg-clip-text text-transparent mb-1">
+              <p className="text-3xl lg:text-4xl font-extrabold bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent mb-1">
                 {s.value}
               </p>
               <p className="text-sm font-semibold text-slate-300">{s.label}</p>
@@ -453,7 +456,7 @@ export default async function RootPage() {
         </div>
         <div className="grid md:grid-cols-3 gap-5">
           {testimonials.map((t, i) => (
-            <div key={i} className="bg-slate-900/50 border border-white/8 rounded-2xl p-7 hover:border-purple-500/25 transition-all">
+            <div key={i} className="bg-slate-900/50 border border-white/8 rounded-2xl p-7 hover:border-teal-500/25 transition-all">
               <div className="flex gap-0.5 mb-4">
                 {Array.from({ length: t.stars }).map((_, j) => (
                   <Star key={j} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
@@ -518,7 +521,7 @@ export default async function RootPage() {
           <div className="bg-slate-900/80 border border-white/8 rounded-2xl overflow-hidden shadow-2xl">
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/5 bg-white/2">
               <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-purple-400" />
+                <Globe className="w-4 h-4 text-teal-400" />
                 <span className="text-sm font-bold text-white">Regulatory Change Feed</span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-green-400">
@@ -537,14 +540,14 @@ export default async function RootPage() {
                   </div>
                   <p className="text-sm text-slate-300 leading-snug">{item.text}</p>
                   <div className="flex items-center gap-3 mt-2">
-                    <span className="text-xs text-purple-400 cursor-pointer hover:text-purple-300">View affected policies →</span>
+                    <span className="text-xs text-teal-400 cursor-pointer hover:text-teal-300">View affected policies →</span>
                     <span className="text-xs text-blue-400 cursor-pointer hover:text-blue-300">Create action item →</span>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="px-5 py-3 bg-purple-500/5 border-t border-purple-500/10 text-center">
-              <span className="text-xs text-purple-400 font-medium">+ 847 historical regulatory changes tracked this year</span>
+            <div className="px-5 py-3 bg-teal-500/5 border-t border-teal-500/10 text-center">
+              <span className="text-xs text-teal-400 font-medium">+ 847 historical regulatory changes tracked this year</span>
             </div>
           </div>
         </div>
@@ -553,16 +556,16 @@ export default async function RootPage() {
       {/* ══════════════════════════════
           WHY NYXCITADEL
       ══════════════════════════════ */}
-      <section id="quality" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-purple-950/20 to-transparent">
+      <section id="quality" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-teal-950/15 to-transparent">
         <div className="max-w-7xl mx-auto px-6 py-24">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6">
               <BrainCircuit className="w-3.5 h-3.5" />
               Built for Quality &amp; Risk Professionals
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
               The unfair advantage{' '}
-              <span className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
                 your facility deserves
               </span>
             </h2>
@@ -573,9 +576,9 @@ export default async function RootPage() {
           </div>
           <div className="grid lg:grid-cols-3 gap-8">
             {painPoints.map(p => (
-              <div key={p.title} className="relative bg-slate-900/60 border border-white/8 rounded-2xl p-8 hover:border-purple-500/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-purple-900/20">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 border border-white/10 flex items-center justify-center mb-5">
-                  <p.icon className="w-6 h-6 text-purple-300" />
+              <div key={p.title} className="relative bg-slate-900/60 border border-white/8 rounded-2xl p-8 hover:border-teal-500/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-teal-900/20">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-500/30 to-blue-500/30 border border-white/10 flex items-center justify-center mb-5">
+                  <p.icon className="w-6 h-6 text-teal-300" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{p.title}</h3>
                 <p className="text-slate-400 leading-relaxed">{p.body}</p>
@@ -592,7 +595,7 @@ export default async function RootPage() {
         <div className="text-center mb-14">
           <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
             Every tool your compliance team needs.{' '}
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
               Unified.
             </span>
           </h2>
@@ -721,7 +724,7 @@ export default async function RootPage() {
       {/* ══════════════════════════════
           STANDARDS SECTION
       ══════════════════════════════ */}
-      <section id="compliance" className="relative z-10 bg-gradient-to-r from-blue-950/30 via-violet-950/30 to-purple-950/30 border-y border-white/5">
+      <section id="compliance" className="relative z-10 bg-gradient-to-r from-blue-950/30 via-teal-950/20 to-blue-950/30 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-6 py-20 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-300 text-xs font-semibold mb-6">
             <Lock className="w-3.5 h-3.5" />
@@ -770,16 +773,16 @@ export default async function RootPage() {
       {/* ══════════════════════════════
           PRICING
       ══════════════════════════════ */}
-      <section id="pricing" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-purple-950/20 via-transparent to-transparent">
+      <section id="pricing" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-teal-950/15 via-transparent to-transparent">
         <div className="max-w-7xl mx-auto px-6 py-24">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6">
               <Sparkles className="w-3.5 h-3.5" />
               Simple, Transparent Pricing
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
               The right plan for{' '}
-              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
                 every facility.
               </span>
             </h2>
@@ -795,17 +798,18 @@ export default async function RootPage() {
                 key={tier.name}
                 className={`relative flex flex-col bg-slate-900/60 border ${
                   tier.badge === 'Most Popular'
-                    ? tier.color + ' ring-1 ring-purple-500/40 shadow-2xl shadow-purple-900/30'
+                    ? tier.color + ' ring-1 ring-teal-500/40 shadow-2xl shadow-teal-900/30'
                     : tier.color
                 } rounded-2xl p-7 hover:-translate-y-1 transition-all duration-200`}
               >
                 {tier.badge && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${
-                      tier.badge === 'Most Popular'
-                        ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-lg shadow-purple-900/40'
-                        : 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-900/40'
-                    }`}>
+                    <span
+                      className={`text-xs font-bold px-3 py-1 rounded-full text-white shadow-lg ${
+                        tier.badge === 'Most Popular' ? 'shadow-teal-900/40' : 'bg-gradient-to-r from-blue-600 to-cyan-600 shadow-blue-900/40'
+                      }`}
+                      style={tier.badge === 'Most Popular' ? {background:'linear-gradient(135deg,#0d7377 0%,#14a4a8 100%)'} : undefined}
+                    >
                       {tier.badge}
                     </span>
                   </div>
@@ -831,6 +835,7 @@ export default async function RootPage() {
                 <Link
                   href={tier.price === 'Custom' ? 'mailto:sales@nyxcitadel.com' : '/signup'}
                   className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all mb-7 ${tier.buttonStyle}`}
+                  style={'buttonInlineStyle' in tier ? (tier as {buttonInlineStyle: React.CSSProperties}).buttonInlineStyle : undefined}
                 >
                   {tier.price === 'Custom' ? 'Contact Sales' : 'Get Started'} <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -856,7 +861,7 @@ export default async function RootPage() {
           <p className="text-center text-sm text-slate-600 mt-8">
             All plans billed annually. Monthly billing available at a 20% premium.
             Need a custom quote?{' '}
-            <a href="mailto:sales@nyxcitadel.com" className="text-purple-400 hover:text-purple-300 underline underline-offset-2">Contact our sales team.</a>
+            <a href="mailto:sales@nyxcitadel.com" className="text-teal-400 hover:text-teal-300 underline underline-offset-2">Contact our sales team.</a>
           </p>
         </div>
       </section>
@@ -865,17 +870,17 @@ export default async function RootPage() {
           FINAL CTA
       ══════════════════════════════ */}
       <section id="about" className="relative z-10 max-w-7xl mx-auto px-6 py-28 text-center">
-        <div className="relative bg-gradient-to-br from-purple-900/60 via-violet-900/50 to-blue-900/60 border border-white/10 rounded-3xl p-14 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-transparent to-blue-600/10 pointer-events-none" />
-          <div className="absolute -top-20 -right-20 w-64 h-64 bg-purple-500/20 rounded-full blur-[80px] pointer-events-none" />
-          <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] pointer-events-none" />
+        <div className="relative bg-gradient-to-br from-teal-900/40 via-slate-900/70 to-blue-900/40 border border-teal-500/20 rounded-3xl p-14 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-600/8 via-transparent to-amber-600/6 pointer-events-none" />
+          <div className="absolute -top-20 -right-20 w-64 h-64 bg-teal-500/15 rounded-full blur-[80px] pointer-events-none" />
+          <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-500/15 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative z-10">
             <div className="flex justify-center mb-5">
-              <Image src="/logo.svg" alt="NyxCitadel" width={64} height={64} className="shadow-2xl shadow-purple-500/40" />
+              <Image src="/citadellogo.png" alt="NyxCitadel" width={72} height={72} className="shadow-2xl shadow-teal-500/30" />
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
               Your next survey is coming.{' '}
-              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
                 Are you ready?
               </span>
             </h2>
@@ -892,7 +897,8 @@ export default async function RootPage() {
               {isLoggedIn ? (
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-2xl font-bold text-xl transition-all shadow-2xl shadow-purple-900/50 hover:shadow-purple-700/50 hover:-translate-y-1"
+                  className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl font-bold text-xl transition-all hover:-translate-y-1"
+                  style={{background:'linear-gradient(135deg,#0d7377 0%,#14a4a8 100%)',boxShadow:'0 16px 40px rgba(13,115,119,0.45)'}}
                 >
                   Go to Your Dashboard <ArrowRight className="w-6 h-6" />
                 </Link>
@@ -900,13 +906,14 @@ export default async function RootPage() {
                 <>
                   <Link
                     href="/signup"
-                    className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 rounded-2xl font-bold text-xl transition-all shadow-2xl shadow-purple-900/50 hover:shadow-purple-700/50 hover:-translate-y-1"
+                    className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl font-bold text-xl transition-all hover:-translate-y-1"
+                    style={{background:'linear-gradient(135deg,#0d7377 0%,#14a4a8 100%)',boxShadow:'0 16px 40px rgba(13,115,119,0.45)'}}
                   >
                     Get Started Free <ArrowRight className="w-6 h-6" />
                   </Link>
                   <Link
                     href="/login"
-                    className="inline-flex items-center gap-3 px-8 py-4 border border-white/15 hover:border-purple-500/50 rounded-2xl font-semibold text-lg text-slate-300 hover:text-white transition-all hover:-translate-y-1"
+                    className="inline-flex items-center gap-3 px-8 py-4 border border-white/15 hover:border-teal-500/50 rounded-2xl font-semibold text-lg text-slate-300 hover:text-white transition-all hover:-translate-y-1"
                   >
                     Sign In
                   </Link>
@@ -1009,7 +1016,7 @@ export default async function RootPage() {
       <footer className="relative z-10 border-t border-white/5 bg-slate-950">
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
           <div className="flex items-center gap-2.5">
-            <Image src="/logo.svg" alt="NyxCitadel" width={28} height={28} />
+            <Image src="/citadellogo.png" alt="NyxCitadel" width={28} height={28} />
             <div>
               <span className="font-bold text-slate-400">NyxCitadel<sup className="text-[9px] font-normal">™</sup></span>
               <span className="text-slate-700 ml-2 hidden sm:inline">· Healthcare Compliance &amp; Risk Management Platform</span>
