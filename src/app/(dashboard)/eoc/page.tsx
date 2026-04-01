@@ -96,13 +96,13 @@ const modules = [
   {
     href: '/eoc/equipment',
     icon: Wrench,
-    color: 'text-purple-400',
-    bg: 'bg-purple-950/40',
-    border: 'border-purple-700/40',
+    color: 'text-teal-400',
+    bg: 'bg-teal-950/40',
+    border: 'border-teal-700/40',
     label: 'Equipment PM',
     desc: 'Preventive maintenance schedules for fire, HVAC, utilities',
     badge: '3 Due Soon',
-    badgeColor: 'bg-purple-950/60 text-purple-300 border border-purple-700/40',
+    badgeColor: 'bg-teal-950/60 text-teal-300 border border-teal-700/40',
   },
 ];
 
@@ -125,7 +125,7 @@ const eocProgramStatus = [
   { label: 'Fire Safety', icon: Flame, score: 92, color: 'bg-emerald-500' },
   { label: 'Life Safety Rounds', icon: ActivitySquare, score: 78, color: 'bg-amber-500' },
   { label: 'Utilities Management', icon: Zap, score: 88, color: 'bg-sky-500' },
-  { label: 'Security Program', icon: Lock, score: 95, color: 'bg-purple-500' },
+  { label: 'Security Program', icon: Lock, score: 95, color: 'bg-teal-500' },
   { label: 'Ligature Risk', icon: CircleAlert, score: 64, color: 'bg-red-500' },
   { label: 'HVAC / Air Quality', icon: Wind, score: 90, color: 'bg-teal-500' },
 ];
@@ -149,7 +149,7 @@ const pmStatusBadge: Record<string, string> = {
   OVERDUE: 'bg-red-950/40 text-red-400',
   DUE_SOON: 'bg-amber-950/40 text-amber-400',
   UPCOMING: 'bg-sky-950/40 text-sky-400',
-  IN_PROGRESS: 'bg-purple-950/40 text-purple-400',
+  IN_PROGRESS: 'bg-teal-950/40 text-teal-400',
   COMPLETED: 'bg-emerald-950/40 text-emerald-400',
 };
 
@@ -279,7 +279,7 @@ export default function EocOverviewPage() {
         <div className="xl:col-span-3 bg-card rounded-xl border border-border p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-semibold text-foreground">Recent Deficiencies</h2>
-            <Link href="/eoc/deficiencies" className="text-xs text-purple-400 hover:text-purple-300">
+            <Link href="/eoc/deficiencies" className="text-xs text-teal-400 hover:text-teal-300">
               View all →
             </Link>
           </div>
@@ -315,7 +315,7 @@ export default function EocOverviewPage() {
       <div className="bg-card rounded-xl border border-border p-5">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-semibold text-foreground">Upcoming Equipment PM</h2>
-          <Link href="/eoc/equipment" className="text-xs text-purple-400 hover:text-purple-300">
+          <Link href="/eoc/equipment" className="text-xs text-teal-400 hover:text-teal-300">
             View all →
           </Link>
         </div>
@@ -368,7 +368,7 @@ export default function EocOverviewPage() {
           { std: 'EC.02.05.01', desc: 'Utilities Management' },
         ].map((r) => (
           <div key={r.std} className="p-3 rounded-lg bg-slate-900/40 border border-border/50">
-            <p className="text-xs font-mono font-semibold text-purple-400">{r.std}</p>
+            <p className="text-xs font-mono font-semibold text-teal-400">{r.std}</p>
             <p className="text-xs text-slate-500 mt-0.5">{r.desc}</p>
           </div>
         ))}

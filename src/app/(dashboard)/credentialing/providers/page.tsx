@@ -8,7 +8,7 @@ const typeConfig: Record<string, { label: string; color: string }> = {
   PHYSICIAN:    { label: 'MD/DO',   color: 'bg-indigo-100 text-indigo-700' },
   APRN:         { label: 'APRN/NP', color: 'bg-violet-100 text-violet-700' },
   PA:           { label: 'PA',      color: 'bg-blue-100 text-blue-700' },
-  PSYCHOLOGIST: { label: 'PhD',     color: 'bg-purple-100 text-purple-700' },
+  PSYCHOLOGIST: { label: 'PhD',     color: 'bg-teal-100 text-teal-700' },
 };
 
 const privilegeConfig: Record<string, { label: string; color: string }> = {

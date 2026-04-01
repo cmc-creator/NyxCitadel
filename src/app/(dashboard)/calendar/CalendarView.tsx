@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
@@ -36,14 +36,14 @@ export interface CalEvent {
 const PRIORITY_CHIP: Record<Priority, string> = {
   CRITICAL: 'bg-red-600 text-white',
   HIGH:     'bg-orange-500 text-white',
-  MEDIUM:   'bg-purple-500 text-white',
+  MEDIUM:   'bg-teal-500 text-white',
   LOW:      'bg-slate-400 text-white',
 };
 
 const PRIORITY_BAR: Record<Priority, string> = {
   CRITICAL: 'bg-red-600',
   HIGH:     'bg-orange-400',
-  MEDIUM:   'bg-purple-500',
+  MEDIUM:   'bg-teal-500',
   LOW:      'bg-slate-300',
 };
 
@@ -54,7 +54,7 @@ function fmtCat(c: string) {
 function StatusIcon({ status }: { status: EventStatus }) {
   if (status === 'COMPLETED') return <CheckCircle2 className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />;
   if (status === 'OVERDUE') return <AlertCircle className="w-3.5 h-3.5 text-red-500 flex-shrink-0" />;
-  return <Clock className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />;
+  return <Clock className="w-3.5 h-3.5 text-teal-400 flex-shrink-0" />;
 }
 
 export default function CalendarView({ initialEvents }: { initialEvents: CalEvent[] }) {
@@ -178,17 +178,17 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                   onDrop={() => handleDrop(day)}
                   className={`min-h-[110px] border-b border-r border-slate-100 p-1.5 relative group/cell transition-colors ${
                     !inMonth ? 'bg-slate-50/70' : ''
-                  } ${isDragOver ? 'bg-purple-50 ring-2 ring-inset ring-purple-300' : ''}`}
+                  } ${isDragOver ? 'bg-teal-50 ring-2 ring-inset ring-teal-300' : ''}`}
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span className={`text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full ${
-                      today ? 'bg-purple-600 text-white' : inMonth ? 'text-slate-700' : 'text-slate-300'
+                      today ? 'bg-teal-600 text-white' : inMonth ? 'text-slate-700' : 'text-slate-300'
                     }`}>
                       {format(day, 'd')}
                     </span>
                     <Link
                       href={`/calendar/new?date=${format(day,'yyyy-MM-dd')}`}
-                      className="opacity-0 group-hover/cell:opacity-100 w-5 h-5 flex items-center justify-center rounded hover:bg-purple-100 text-purple-500 transition-all text-xs font-bold"
+                      className="opacity-0 group-hover/cell:opacity-100 w-5 h-5 flex items-center justify-center rounded hover:bg-teal-100 text-teal-500 transition-all text-xs font-bold"
                       title={`Add event on ${format(day,'MMM d')}`}
                     >+</Link>
                   </div>
@@ -249,7 +249,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                 onDragLeave={() => setDragOverDay(null)}
                 onDrop={() => handleDrop(day)}
                 className={`min-h-[360px] p-2 hover:bg-slate-50/50 group/cell transition-colors ${
-                  isDragOver ? 'bg-purple-50 ring-2 ring-inset ring-purple-300' : ''
+                  isDragOver ? 'bg-teal-50 ring-2 ring-inset ring-teal-300' : ''
                 }`}
               >
                 {/* Column header */}
@@ -258,13 +258,13 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                     {format(day, 'EEE')}
                   </div>
                   <div className={`text-lg font-bold mt-0.5 w-8 h-8 rounded-full flex items-center justify-center mx-auto ${
-                    today ? 'bg-purple-600 text-white' : 'text-slate-700'
+                    today ? 'bg-teal-600 text-white' : 'text-slate-700'
                   }`}>
                     {format(day, 'd')}
                   </div>
                   <Link
                     href={`/calendar/new?date=${format(day,'yyyy-MM-dd')}`}
-                    className="opacity-0 group-hover/cell:opacity-100 text-[10px] text-purple-500 hover:text-purple-700 font-medium transition-all"
+                    className="opacity-0 group-hover/cell:opacity-100 text-[10px] text-teal-500 hover:text-teal-700 font-medium transition-all"
                   >+ add</Link>
                 </div>
                 <div className="space-y-1.5">
@@ -311,7 +311,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
         <CalendarDays className="w-12 h-12 mx-auto mb-3 text-slate-200" />
         <p className="font-medium">No events match this filter.</p>
         <p className="text-sm mt-1">
-          <Link href="/calendar/new" className="text-purple-600 hover:underline">Add an event</Link>
+          <Link href="/calendar/new" className="text-teal-600 hover:underline">Add an event</Link>
           {' '}or try a different filter.
         </p>
       </div>
@@ -332,9 +332,9 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                   <div key={ev.id} className="flex items-center gap-4 px-5 py-3 hover:bg-slate-50 transition-colors group">
                     {/* Date bubble */}
                     <div className={`w-11 h-11 rounded-xl flex flex-col items-center justify-center flex-shrink-0 border ${
-                      isToday(due)  ? 'bg-purple-600 border-purple-600 text-white' :
+                      isToday(due)  ? 'bg-teal-600 border-teal-600 text-white' :
                       overdue       ? 'bg-red-50 border-red-200 text-red-700' :
-                      'bg-purple-50 border-purple-100 text-purple-700'
+                      'bg-teal-50 border-teal-100 text-teal-700'
                     }`}>
                       <span className="text-sm font-bold leading-none">{format(due,'d')}</span>
                       <span className="text-[10px] uppercase leading-none mt-0.5">{format(due,'MMM')}</span>
@@ -344,7 +344,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                       <div className="flex items-center gap-1.5 flex-wrap min-w-0">
                         <StatusIcon status={ev.status} />
                         <Link href={`/calendar/${ev.id}/edit`}
-                          className="text-sm font-medium text-slate-800 hover:text-purple-700 truncate">
+                          className="text-sm font-medium text-slate-800 hover:text-teal-700 truncate">
                           {ev.title}
                         </Link>
                         <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded uppercase flex-shrink-0 ${PRIORITY_CHIP[ev.priority]}`}>
@@ -401,7 +401,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
       <div className="flex flex-col sm:flex-row sm:items-center gap-3">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <CalendarDays className="w-6 h-6 text-purple-600" />
+            <CalendarDays className="w-6 h-6 text-teal-600" />
             Compliance Calendar
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">{events.length} events loaded</p>
@@ -412,7 +412,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
             <RefreshCw className="w-3.5 h-3.5" />Auto-Generate {new Date().getFullYear() + 1}
           </Link>
           <Link href="/calendar/new"
-            className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors">
+            className="inline-flex items-center gap-1.5 text-sm bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors">
             <Plus className="w-3.5 h-3.5" />Add Event
           </Link>
         </div>
@@ -438,7 +438,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
         {FILTER_OPTS.map(o => (
           <button key={o.value} onClick={() => setFilter(o.value)}
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
-              filter === o.value ? 'bg-purple-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              filter === o.value ? 'bg-teal-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}>
             {o.label}
           </button>
@@ -454,7 +454,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
           {(['month','week','list'] as ViewMode[]).map(v => (
             <button key={v} onClick={() => setView(v)}
               className={`px-3 py-1.5 text-xs font-semibold rounded transition-colors ${
-                view === v ? 'bg-white shadow-sm text-purple-700' : 'text-slate-500 hover:text-slate-700'
+                view === v ? 'bg-white shadow-sm text-teal-700' : 'text-slate-500 hover:text-slate-700'
               }`}>
               {v === 'month' ? '📅 Month' : v === 'week' ? '🗓 Week' : '📋 List'}
             </button>
@@ -471,13 +471,13 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
               <ChevronRight className="w-4 h-4" />
             </button>
             <button onClick={() => setCurrent(new Date())}
-              className="ml-1 text-xs text-purple-600 border border-purple-200 rounded px-2 py-1 hover:bg-purple-50 transition-colors">
+              className="ml-1 text-xs text-teal-600 border border-teal-200 rounded px-2 py-1 hover:bg-teal-50 transition-colors">
               Today
             </button>
           </div>
         )}
         {dragId && (
-          <span className="text-xs text-purple-600 italic bg-purple-50 px-2 py-1 rounded ml-2">
+          <span className="text-xs text-teal-600 italic bg-teal-50 px-2 py-1 rounded ml-2">
             Drag to a new date to reschedule
           </span>
         )}

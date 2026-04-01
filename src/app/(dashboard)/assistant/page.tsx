@@ -24,13 +24,13 @@ function MessageBubble({ msg, onCopy }: { msg: Message; onCopy: (text: string) =
   const isUser = msg.role === 'user';
   return (
     <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
-      <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${isUser ? 'bg-purple-600' : 'bg-gradient-to-br from-purple-600 to-indigo-600'}`}>
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${isUser ? 'bg-teal-600' : 'bg-gradient-to-br from-teal-600 to-cyan-600'}`}>
         {isUser ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-white" />}
       </div>
       <div className={`group max-w-[80%] ${isUser ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
         <div className={`rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
           isUser
-            ? 'bg-purple-600 text-white rounded-tr-sm'
+            ? 'bg-teal-600 text-white rounded-tr-sm'
             : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm shadow-sm'
         }`}>
           {msg.content}
@@ -192,7 +192,7 @@ export default function AssistantPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center shadow">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-600 to-cyan-600 flex items-center justify-center shadow">
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -202,7 +202,7 @@ export default function AssistantPage() {
         </div>
         <button
           onClick={reset}
-          className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-purple-700 hover:bg-purple-50 px-3 py-1.5 rounded-lg border border-slate-200 transition"
+          className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-teal-700 hover:bg-teal-50 px-3 py-1.5 rounded-lg border border-slate-200 transition"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           New chat
@@ -216,9 +216,9 @@ export default function AssistantPage() {
             <button
               key={p.label}
               onClick={() => void sendMessage(p.text)}
-              className="text-left text-xs bg-white border border-slate-200 rounded-xl px-4 py-3 hover:border-purple-300 hover:bg-purple-50 transition-colors group"
+              className="text-left text-xs bg-white border border-slate-200 rounded-xl px-4 py-3 hover:border-teal-300 hover:bg-teal-50 transition-colors group"
             >
-              <p className="font-semibold text-slate-700 group-hover:text-purple-700">{p.label}</p>
+              <p className="font-semibold text-slate-700 group-hover:text-teal-700">{p.label}</p>
               <p className="text-slate-400 mt-0.5 line-clamp-2">{p.text}</p>
             </button>
           ))}
@@ -232,29 +232,29 @@ export default function AssistantPage() {
         ))}
         {loading && (
           <div className="flex gap-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-600 to-cyan-600 flex items-center justify-center flex-shrink-0 mt-1">
               <Bot className="w-4 h-4 text-white" />
             </div>
             <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm flex items-center gap-2">
-              <Loader2 className="w-3.5 h-3.5 text-purple-500 animate-spin" />
+              <Loader2 className="w-3.5 h-3.5 text-teal-500 animate-spin" />
               <span className="text-xs text-slate-400">Sentry is thinking…</span>
             </div>
           </div>
         )}
 
         {pendingAction && (
-          <div className="rounded-xl border border-purple-200 bg-purple-50 px-4 py-3">
-            <p className="text-xs font-semibold text-purple-700 mb-2">Sentry prepared a safe draft action</p>
-            <p className="text-xs text-purple-700/80 mb-2">Review and edit these fields before creating the draft record.</p>
-            <div className="rounded-lg border border-purple-200 bg-white px-3 py-2 mb-3 space-y-2">
+          <div className="rounded-xl border border-teal-200 bg-teal-50 px-4 py-3">
+            <p className="text-xs font-semibold text-teal-700 mb-2">Sentry prepared a safe draft action</p>
+            <p className="text-xs text-teal-700/80 mb-2">Review and edit these fields before creating the draft record.</p>
+            <div className="rounded-lg border border-teal-200 bg-white px-3 py-2 mb-3 space-y-2">
               {buildActionPreview(pendingAction).map((item) => (
                 <div key={item.key} className="grid grid-cols-[120px_1fr] gap-2 items-center text-xs">
-                  <label className="font-semibold text-purple-900" htmlFor={`action-${item.key}`}>{item.label}</label>
+                  <label className="font-semibold text-teal-900" htmlFor={`action-${item.key}`}>{item.label}</label>
                   <input
                     id={`action-${item.key}`}
                     value={actionEdits[item.key] ?? ''}
                     onChange={(e) => setActionEdits((prev) => ({ ...prev, [item.key]: e.target.value }))}
-                    className="w-full rounded-md border border-purple-100 bg-purple-50/40 px-2 py-1.5 text-slate-700 outline-none focus:ring-2 focus:ring-purple-300"
+                    className="w-full rounded-md border border-teal-100 bg-teal-50/40 px-2 py-1.5 text-slate-700 outline-none focus:ring-2 focus:ring-teal-300"
                   />
                 </div>
               ))}
@@ -263,14 +263,14 @@ export default function AssistantPage() {
               <button
                 onClick={() => void runDraftAction()}
                 disabled={runningAction}
-                className="inline-flex items-center gap-2 rounded-lg bg-purple-600 hover:bg-purple-700 disabled:opacity-60 px-3 py-2 text-xs font-semibold text-white transition"
+                className="inline-flex items-center gap-2 rounded-lg bg-teal-600 hover:bg-teal-700 disabled:opacity-60 px-3 py-2 text-xs font-semibold text-white transition"
               >
                 {runningAction ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
                 {actionLabel(pendingAction.type)}
               </button>
               <button
                 onClick={() => setPendingAction(null)}
-                className="rounded-lg border border-purple-200 bg-white px-3 py-2 text-xs font-medium text-purple-700 hover:bg-purple-100 transition"
+                className="rounded-lg border border-teal-200 bg-white px-3 py-2 text-xs font-medium text-teal-700 hover:bg-teal-100 transition"
               >
                 Dismiss
               </button>
@@ -302,7 +302,7 @@ export default function AssistantPage() {
           onClick={() => void sendMessage()}
           disabled={!input.trim() || loading}
           title="Send message"
-          className="p-2 rounded-lg bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white transition flex-shrink-0"
+          className="p-2 rounded-lg bg-teal-600 hover:bg-teal-700 disabled:opacity-40 disabled:cursor-not-allowed text-white transition flex-shrink-0"
         >
           <Send className="w-4 h-4" />
         </button>

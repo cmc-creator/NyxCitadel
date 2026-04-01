@@ -32,7 +32,7 @@ const TYPE_COLORS: Record<string, string> = {
   MOON_MISSING:           'bg-yellow-500/15 text-yellow-400',
   GOVERNANCE_DOC_OVERDUE: 'bg-indigo-500/15 text-indigo-400',
   BREACH_REPORTABLE:      'bg-red-600/20   text-red-300',
-  REGULATORY_UPDATE:      'bg-purple-500/15 text-purple-400',
+  REGULATORY_UPDATE:      'bg-teal-500/15 text-teal-400',
 };
 
 function timeAgo(dateStr: string): string {
@@ -182,7 +182,7 @@ export function NotificationBell() {
                 >
                   {/* Unread dot */}
                   {!n.isRead && (
-                    <span className="absolute left-1.5 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-purple-500" />
+                    <span className="absolute left-1.5 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-teal-500" />
                   )}
 
                   <div className="flex items-start gap-3">

@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { MessageSquareWarning, Plus, Clock, AlertCircle, CheckCircle2 } from 'lucide-react';
@@ -83,7 +83,7 @@ export default async function GrievancesPage({
         </div>
         <Link
           href="/trackers/grievances/new"
-          className="inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg transition-colors"
         >
           <Plus className="w-4 h-4" /> Log Grievance
         </Link>
@@ -146,7 +146,7 @@ export default async function GrievancesPage({
           <p className="text-slate-500 font-medium">No grievances logged yet</p>
           <Link
             href="/trackers/grievances/new"
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" /> Log First Grievance
           </Link>
@@ -201,7 +201,7 @@ export default async function GrievancesPage({
                     </td>
                     <td className="px-4 py-3 text-xs text-slate-500">{formatDate(g.dateReceived)}</td>
                     <td className="px-4 py-3">
-                      <Link href={`/trackers/grievances/${g.id}`} className="text-xs text-purple-600 hover:text-purple-700 font-medium">
+                      <Link href={`/trackers/grievances/${g.id}`} className="text-xs text-teal-600 hover:text-teal-700 font-medium">
                         View →
                       </Link>
                     </td>

@@ -264,11 +264,11 @@ export default function ImportPoliciesPage() {
   return (
     <div className="max-w-4xl space-y-6">
       <div>
-        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Policy Tracker
         </a>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Upload className="w-6 h-6 text-purple-600" />
+          <Upload className="w-6 h-6 text-teal-600" />
           Bulk Import Policies
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">
@@ -299,7 +299,7 @@ export default function ImportPoliciesPage() {
       <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
         <h2 className="text-sm font-semibold text-slate-800">Upload CSV File</h2>
         {!fileName ? (
-          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-purple-300 hover:bg-purple-50 transition-colors">
+          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-teal-300 hover:bg-teal-50 transition-colors">
             <Upload className="w-6 h-6 text-slate-400 mb-2" />
             <span className="text-sm text-slate-500">Click to upload your policies CSV</span>
             <span className="text-xs text-slate-400 mt-1">CSV files only</span>
@@ -307,7 +307,7 @@ export default function ImportPoliciesPage() {
           </label>
         ) : (
           <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-lg px-4 py-3">
-            <FileText className="w-5 h-5 text-purple-600 shrink-0" />
+            <FileText className="w-5 h-5 text-teal-600 shrink-0" />
             <div className="flex-1">
               <p className="text-sm font-medium text-slate-800">{fileName}</p>
               <p className="text-xs text-slate-500">{rows.length} rows parsed &mdash; {validRows.length} valid, {invalidRows.length} with errors</p>
@@ -344,7 +344,7 @@ export default function ImportPoliciesPage() {
             <button
               onClick={handleImport}
               disabled={importing}
-              className="inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white px-4 py-1.5 rounded-lg transition"
+              className="inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white px-4 py-1.5 rounded-lg transition"
             >
               {importing ? 'Importing...' : `Import ${validRows.length} Policies`}
             </button>

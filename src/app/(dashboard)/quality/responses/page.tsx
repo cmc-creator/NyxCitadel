@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { BookOpen, Plus, Clock, Send, CheckCircle2, FileEdit } from 'lucide-react';
@@ -13,7 +13,7 @@ const STATUS_COLORS: Record<string, string> = {
   UNDER_REVIEW: 'bg-yellow-100 text-yellow-700',
   APPROVED:     'bg-blue-100 text-blue-700',
   SENT:         'bg-green-100 text-green-700',
-  FILED:        'bg-purple-100 text-purple-700',
+  FILED:        'bg-teal-100 text-teal-700',
 };
 
 const STATUS_ICONS: Record<string, React.ElementType> = {
@@ -45,7 +45,7 @@ export default async function ResponsesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <BookOpen className="w-6 h-6 text-purple-600" />
+            <BookOpen className="w-6 h-6 text-teal-600" />
             Generated Responses
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -61,7 +61,7 @@ export default async function ResponsesPage() {
           </Link>
           <Link
             href="/quality/responses/new"
-            className="inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" /> New Response
           </Link>
@@ -95,7 +95,7 @@ export default async function ResponsesPage() {
           <p className="text-slate-500 font-medium">No responses generated yet</p>
           <Link
             href="/quality/response-templates"
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             Browse Templates
           </Link>
@@ -122,7 +122,7 @@ export default async function ResponsesPage() {
                   <tr key={r.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-4 py-3">
                       <div className="font-medium text-slate-800">{r.title}</div>
-                      {r.aiGenerated && <span className="text-xs text-purple-500">✦ AI drafted</span>}
+                      {r.aiGenerated && <span className="text-xs text-teal-500">✦ AI drafted</span>}
                     </td>
                     <td className="px-4 py-3 text-xs text-slate-500">{r.template?.name ?? '-'}</td>
                     <td className="px-4 py-3">
@@ -145,7 +145,7 @@ export default async function ResponsesPage() {
                     </td>
                     <td className="px-4 py-3 text-xs text-slate-500">{formatDate(r.createdAt)}</td>
                     <td className="px-4 py-3">
-                      <Link href={`/quality/responses/${r.id}`} className="text-xs text-purple-600 hover:text-purple-700 font-medium">
+                      <Link href={`/quality/responses/${r.id}`} className="text-xs text-teal-600 hover:text-teal-700 font-medium">
                         View →
                       </Link>
                     </td>

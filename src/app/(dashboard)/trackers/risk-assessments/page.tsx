@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { ShieldAlert, Plus, ClipboardCheck, Clock, CheckCircle2, AlertTriangle } from 'lucide-react';
@@ -31,7 +31,7 @@ const LEVEL_COLORS: Record<string, string> = {
 const STATUS_COLORS: Record<string, string> = {
   IN_PROGRESS: 'bg-blue-50 text-blue-700',
   COMPLETED: 'bg-green-50 text-green-700',
-  REVIEWED: 'bg-purple-50 text-purple-700',
+  REVIEWED: 'bg-teal-50 text-teal-700',
   APPROVED: 'bg-emerald-50 text-emerald-700',
   ARCHIVED: 'bg-slate-100 text-slate-500',
 };
@@ -63,7 +63,7 @@ export default async function RiskAssessmentsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <ShieldAlert className="w-6 h-6 text-purple-600" />
+            <ShieldAlert className="w-6 h-6 text-teal-600" />
             Risk Assessments
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -72,7 +72,7 @@ export default async function RiskAssessmentsPage() {
         </div>
         <Link
           href="/trackers/risk-assessments/new"
-          className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
         >
           <Plus className="w-4 h-4" />
           New Assessment
@@ -129,7 +129,7 @@ export default async function RiskAssessmentsPage() {
             <ClipboardCheck className="w-12 h-12 mb-3 text-slate-300" />
             <p className="text-sm font-medium">No risk assessments yet</p>
             <p className="text-xs mt-1">Create your first annual proactive risk assessment</p>
-            <Link href="/trackers/risk-assessments/new" className="mt-4 text-sm text-purple-600 hover:underline font-medium">
+            <Link href="/trackers/risk-assessments/new" className="mt-4 text-sm text-teal-600 hover:underline font-medium">
               + New Assessment
             </Link>
           </div>

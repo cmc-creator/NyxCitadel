@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { Scale, Plus, Clock, AlertCircle, CheckCircle2, FileSearch } from 'lucide-react';
@@ -13,7 +13,7 @@ const STATUS_COLORS: Record<string, string> = {
   LOI_RECEIVED:       'bg-orange-100 text-orange-700',
   RESPONSE_SUBMITTED: 'bg-blue-100 text-blue-700',
   UNDER_INVESTIGATION:'bg-yellow-100 text-yellow-700',
-  FINDINGS_ISSUED:    'bg-purple-100 text-purple-700',
+  FINDINGS_ISSUED:    'bg-teal-100 text-teal-700',
   SUBSTANTIATED:      'bg-red-200 text-red-800 font-semibold',
   UNSUBSTANTIATED:    'bg-green-100 text-green-700',
   CLOSED:             'bg-slate-100 text-slate-500',
@@ -81,7 +81,7 @@ export default async function QocPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <Scale className="w-6 h-6 text-purple-600" />
+            <Scale className="w-6 h-6 text-teal-600" />
             QOC / LOI Complaint Tracker
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -90,7 +90,7 @@ export default async function QocPage({
         </div>
         <Link
           href="/trackers/qoc/new"
-          className="inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg transition-colors"
         >
           <Plus className="w-4 h-4" /> Log QOC Complaint
         </Link>
@@ -172,7 +172,7 @@ export default async function QocPage({
               ) : (
                 complaints.map(c => (
                   <tr key={c.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
-                    <td className="px-4 py-3 font-mono text-xs font-semibold text-purple-700">
+                    <td className="px-4 py-3 font-mono text-xs font-semibold text-teal-700">
                       <Link href={`/trackers/qoc/${c.id}`} className="hover:underline">{c.qocNumber}</Link>
                     </td>
                     <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{formatDate(c.dateReceived)}</td>

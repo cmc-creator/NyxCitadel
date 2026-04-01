@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { UserCheck, Award, FileCheck, AlertTriangle, ChevronRight, Clock } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -32,7 +32,7 @@ export default async function CredentialingPage() {
   const subModules = [
     { href: '/credentialing/providers', title: 'Provider Directory', description: 'All credentialed providers — status, specialty, privileges, and reappointment dates.', icon: '👩‍⚕️', badge: 'CVO', badgeColor: 'bg-blue-100 text-blue-700', stat: `${totalActive} Active Providers`, statColor: 'text-emerald-400' },
     { href: '/credentialing/licenses', title: 'License Tracking', description: 'Medical, DEA, APRN, and state licenses — expiry alerts, verification, and renewal workflow.', icon: '📜', badge: 'Auto-Alert', badgeColor: 'bg-amber-100 text-amber-700', stat: expiringLicenses.length > 0 ? `${expiringLicenses.length} Expiring <90 days` : 'All licenses current', statColor: expiringLicenses.length > 0 ? 'text-amber-400' : 'text-emerald-400' },
-    { href: '/credentialing/oppe', title: 'OPPE Records', description: 'Ongoing Professional Practice Evaluation — quarterly metrics per provider reviewed by MEC.', icon: '📊', badge: 'TJC MS.06', badgeColor: 'bg-purple-100 text-purple-700', stat: 'OPPE tracking', statColor: 'text-blue-400' },
+    { href: '/credentialing/oppe', title: 'OPPE Records', description: 'Ongoing Professional Practice Evaluation — quarterly metrics per provider reviewed by MEC.', icon: '📊', badge: 'TJC MS.06', badgeColor: 'bg-teal-100 text-teal-700', stat: 'OPPE tracking', statColor: 'text-blue-400' },
   ];
 
   const statusConfig: Record<string, { label: string; color: string }> = {
@@ -52,7 +52,7 @@ export default async function CredentialingPage() {
             <UserCheck className="w-6 h-6 text-indigo-400" />
             <h1 className="text-2xl font-bold text-white">Credentialing &amp; Privileging</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">CMS CoP</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700">CMS CoP</span>
           </div>
           <p className="text-slate-400 text-sm">Provider licenses, clinical privileges, OPPE/FPPE, and medical staff committee records.</p>
         </div>

@@ -98,7 +98,7 @@ const REPORT_PACKS = [
 ] as const;
 
 const colorClasses = {
-  purple: { bg: 'bg-purple-50 border-purple-200 hover:bg-purple-100', text: 'text-purple-600' },
+  purple: { bg: 'bg-teal-50 border-teal-200 hover:bg-teal-100', text: 'text-teal-600' },
   blue: { bg: 'bg-blue-50 border-blue-200 hover:bg-blue-100', text: 'text-blue-600' },
   red: { bg: 'bg-red-50 border-red-200 hover:bg-red-100', text: 'text-red-600' },
   green: { bg: 'bg-green-50 border-green-200 hover:bg-green-100', text: 'text-green-600' },
@@ -107,7 +107,7 @@ const colorClasses = {
 };
 
 const badgeClasses = {
-  purple: 'bg-purple-100 text-purple-800',
+  purple: 'bg-teal-100 text-teal-800',
   blue: 'bg-blue-100 text-blue-800',
   red: 'bg-red-100 text-red-800',
   green: 'bg-green-100 text-green-800',
@@ -192,7 +192,7 @@ export default function ExportPage() {
           <div className="text-sm text-gray-400">Export Reports</div>
         </div>
         <div className="bg-card border border-border rounded-lg p-6">
-          <div className="text-2xl font-bold text-purple-400">CSV</div>
+          <div className="text-2xl font-bold text-teal-400">CSV</div>
           <div className="text-sm text-gray-400">Format</div>
         </div>
         <div className="bg-card border border-border rounded-lg p-6">
@@ -249,7 +249,7 @@ export default function ExportPage() {
                 <button
                   onClick={() => handleDownload(item.endpoint, item.id)}
                   disabled={downloading === item.id}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white text-sm font-medium rounded transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 disabled:bg-gray-400 text-white text-sm font-medium rounded transition-colors"
                 >
                   <Download className="w-4 h-4" />
                   {downloading === item.id ? 'Downloading...' : `Download ${item.fileType === 'pdf' ? 'PDF' : 'CSV'}`}

@@ -190,7 +190,7 @@ export default function QapiMetricsPage() {
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <BarChart2 className="w-6 h-6 text-purple-600" />
+            <BarChart2 className="w-6 h-6 text-teal-600" />
             QAPI Metrics
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">Enter raw counts - rates calculate automatically · CMS 42 CFR 482.21</p>
@@ -206,15 +206,15 @@ export default function QapiMetricsPage() {
       </div>
 
       {/* Step 1: Context */}
-      <div className="bg-purple-50 border border-purple-200 rounded-xl p-5 space-y-4">
+      <div className="bg-teal-50 border border-teal-200 rounded-xl p-5 space-y-4">
         <div className="flex items-center gap-2">
-          <Zap className="w-4 h-4 text-purple-600" />
-          <h2 className="font-semibold text-purple-900 text-sm">Step 1 - Enter monthly context (shared denominators)</h2>
+          <Zap className="w-4 h-4 text-teal-600" />
+          <h2 className="font-semibold text-teal-900 text-sm">Step 1 - Enter monthly context (shared denominators)</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-purple-800 mb-1">
-              Total Patient-Days <span className="font-normal text-purple-400">(used for restraint, seclusion, fall, HAI rates)</span>
+            <label className="block text-xs font-semibold text-teal-800 mb-1">
+              Total Patient-Days <span className="font-normal text-teal-400">(used for restraint, seclusion, fall, HAI rates)</span>
             </label>
             <div className="flex gap-2">
               <input
@@ -226,18 +226,18 @@ export default function QapiMetricsPage() {
               />
               {!patientDays && (
                 <button type="button" onClick={() => setPatientDays(String(suggestedDays))}
-                  className="text-xs text-purple-700 bg-purple-100 hover:bg-purple-200 px-2 py-1 rounded-lg whitespace-nowrap transition-colors">
+                  className="text-xs text-teal-700 bg-teal-100 hover:bg-teal-200 px-2 py-1 rounded-lg whitespace-nowrap transition-colors">
                   Use {suggestedDays}
                 </button>
               )}
             </div>
             {ptDaysNum > 0 && (
-              <p className="text-xs text-purple-600 mt-1">Avg census: <strong>{(ptDaysNum / daysInMonth(month, year)).toFixed(1)}</strong> beds/day</p>
+              <p className="text-xs text-teal-600 mt-1">Avg census: <strong>{(ptDaysNum / daysInMonth(month, year)).toFixed(1)}</strong> beds/day</p>
             )}
           </div>
           <div>
-            <label className="block text-xs font-semibold text-purple-800 mb-1">
-              Total Medication Doses <span className="font-normal text-purple-400">(for medication error rate)</span>
+            <label className="block text-xs font-semibold text-teal-800 mb-1">
+              Total Medication Doses <span className="font-normal text-teal-400">(for medication error rate)</span>
             </label>
             <input
               type="number" min={0}
@@ -289,7 +289,7 @@ export default function QapiMetricsPage() {
                         </div>
                         <div className="text-xs text-slate-400 mt-0.5">
                           {ind.numeratorLabel}
-                          {ind.calcType === 'per1kDays'  && <span className="text-purple-400"> ÷ patient-days × 1k</span>}
+                          {ind.calcType === 'per1kDays'  && <span className="text-teal-400"> ÷ patient-days × 1k</span>}
                           {ind.calcType === 'per1kDoses' && <span className="text-orange-400"> ÷ doses × 1k</span>}
                         </div>
                       </div>
@@ -364,7 +364,7 @@ export default function QapiMetricsPage() {
                       <button
                         type="button"
                         onClick={() => setExpandedTrend(isExpanded ? null : ind.key)}
-                        className="w-full flex items-center gap-1.5 px-4 py-1.5 text-xs text-slate-400 hover:text-purple-600 hover:bg-purple-50 transition-colors"
+                        className="w-full flex items-center gap-1.5 px-4 py-1.5 text-xs text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition-colors"
                       >
                         {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
                         <TrendingUp className="w-3 h-3" />
@@ -395,7 +395,7 @@ export default function QapiMetricsPage() {
           <button
             onClick={saveAll}
             disabled={saving || readyCount === 0}
-            className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors shadow"
+            className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-40 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors shadow"
           >
             {saving ? 'Saving…' : savedAll ? '✓ All Saved!' : 'Save All Metrics'}
           </button>

@@ -44,7 +44,7 @@ const categoryColor: Record<string, string> = {
   EMERGENCY_LIGHTING: 'text-amber-400',
   GENERATOR: 'text-orange-400',
   HVAC: 'text-sky-400',
-  SECURITY_SYSTEM: 'text-purple-400',
+  SECURITY_SYSTEM: 'text-teal-400',
   PLUMBING: 'text-teal-400',
   ELECTRICAL: 'text-yellow-400',
   NURSE_CALL: 'text-blue-400',
@@ -56,7 +56,7 @@ const statusConfig: Record<string, { label: string; color: string; icon: React.E
   OVERDUE: { label: 'OVERDUE', color: 'bg-red-950/40 text-red-400 border border-red-700/40', icon: AlertTriangle },
   DUE_SOON: { label: 'DUE SOON', color: 'bg-amber-950/40 text-amber-400 border border-amber-700/40', icon: Clock },
   UPCOMING: { label: 'UPCOMING', color: 'bg-sky-950/40 text-sky-400 border border-sky-700/40', icon: Clock },
-  IN_PROGRESS: { label: 'IN PROGRESS', color: 'bg-purple-950/40 text-purple-400 border border-purple-700/40', icon: Wrench },
+  IN_PROGRESS: { label: 'IN PROGRESS', color: 'bg-teal-950/40 text-teal-400 border border-teal-700/40', icon: Wrench },
   COMPLETED: { label: 'COMPLETED', color: 'bg-emerald-950/40 text-emerald-400 border border-emerald-700/40', icon: CheckCircle2 },
 };
 
@@ -87,7 +87,7 @@ export default function EquipmentPmPage() {
           <h1 className="text-2xl font-bold text-foreground mt-1">Equipment Preventive Maintenance</h1>
           <p className="text-sm text-slate-400 mt-0.5">Fire systems, utilities, HVAC, elevators, and clinical support equipment schedules</p>
         </div>
-        <a href="/eoc/equipment/new" className="px-3 py-1.5 text-sm rounded-md bg-purple-600 hover:bg-purple-500 text-white font-medium transition-colors">
+        <a href="/eoc/equipment/new" className="px-3 py-1.5 text-sm rounded-md bg-teal-600 hover:bg-teal-500 text-white font-medium transition-colors">
           + Add Equipment
         </a>
       </div>
@@ -98,7 +98,7 @@ export default function EquipmentPmPage() {
           { label: 'Overdue', key: 'OVERDUE', color: 'text-red-400', bg: 'border-red-700/40 bg-red-950/30' },
           { label: 'Due Soon', key: 'DUE_SOON', color: 'text-amber-400', bg: 'border-amber-700/40 bg-amber-950/30' },
           { label: 'Upcoming', key: 'UPCOMING', color: 'text-sky-400', bg: 'border-sky-700/40 bg-sky-950/30' },
-          { label: 'In Progress', key: 'IN_PROGRESS', color: 'text-purple-400', bg: 'border-purple-700/40 bg-purple-950/30' },
+          { label: 'In Progress', key: 'IN_PROGRESS', color: 'text-teal-400', bg: 'border-teal-700/40 bg-teal-950/30' },
           { label: 'Completed', key: 'COMPLETED', color: 'text-emerald-400', bg: 'border-emerald-700/40 bg-emerald-950/30' },
         ].map(s => (
           <div key={s.key} className={`p-3 rounded-lg border text-center ${s.bg}`}>
@@ -115,7 +115,7 @@ export default function EquipmentPmPage() {
           <button
             key={s}
             onClick={() => setStatusFilter(s)}
-            className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-purple-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+            className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-teal-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
           >
             {s === 'ALL' ? 'All' : s.replace('_', ' ')}
           </button>

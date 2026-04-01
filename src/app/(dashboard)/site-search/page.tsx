@@ -92,7 +92,7 @@ export default function SiteSearchPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <FileSearch className="w-6 h-6 text-purple-600" />
+          <FileSearch className="w-6 h-6 text-teal-600" />
           Site Search
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Search records across compliance modules, trackers, governance, and operations.</p>
@@ -106,7 +106,7 @@ export default function SiteSearchPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search incidents, CAPs, policies, training, surveys..."
-            className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
       </form>

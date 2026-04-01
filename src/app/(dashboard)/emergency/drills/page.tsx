@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { Siren, Plus, Info, Download } from 'lucide-react';
@@ -72,7 +72,7 @@ export default async function DrillsPage({
           <PrintButton />
           <Link
             href="/emergency/drills/new"
-            className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             Schedule Drill
@@ -122,7 +122,7 @@ export default async function DrillsPage({
             href={tab.href}
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
               tab.active
-                ? 'bg-purple-600 text-white'
+                ? 'bg-teal-600 text-white'
                 : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
             }`}
           >
@@ -150,7 +150,7 @@ export default async function DrillsPage({
               <tr>
                 <td colSpan={7} className="text-center py-12 text-slate-400">
                   No drills found.{' '}
-                  <Link href="/emergency/drills/new" className="text-purple-600 hover:underline">
+                  <Link href="/emergency/drills/new" className="text-teal-600 hover:underline">
                     Schedule your first drill
                   </Link>
                 </td>

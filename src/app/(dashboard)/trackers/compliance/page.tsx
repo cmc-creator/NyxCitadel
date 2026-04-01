@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
 import { ShieldCheck, Plus, Filter } from 'lucide-react';
@@ -43,7 +43,7 @@ export default async function ComplianceTrackerPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <ShieldCheck className="w-6 h-6 text-purple-400" />
+            <ShieldCheck className="w-6 h-6 text-teal-400" />
             Compliance Requirements
           </h1>
           <p className="text-sm text-muted-foreground mt-0.5">
@@ -52,7 +52,7 @@ export default async function ComplianceTrackerPage({
         </div>
         <Link
           href="/trackers/compliance/new"
-          className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm bg-teal-600 hover:bg-teal-500 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
         >
           <Plus className="w-3.5 h-3.5" />
           Add Requirement
@@ -87,7 +87,7 @@ export default async function ComplianceTrackerPage({
               <tr>
                 <td colSpan={6} className="text-center py-12 text-muted-foreground">
                   No compliance items found.{' '}
-                  <Link href="/trackers/compliance/new" className="text-purple-400 hover:underline">
+                  <Link href="/trackers/compliance/new" className="text-teal-400 hover:underline">
                     Add your first requirement
                   </Link>
                 </td>
@@ -98,7 +98,7 @@ export default async function ComplianceTrackerPage({
                 return (
                   <tr key={item.id} className="hover:bg-muted/30 transition-colors cursor-pointer">
                     <td className="px-4 py-3">
-                      <Link href={`/trackers/compliance/${item.id}`} className="font-medium text-foreground/90 hover:underline hover:text-purple-400">{item.title}</Link>
+                      <Link href={`/trackers/compliance/${item.id}`} className="font-medium text-foreground/90 hover:underline hover:text-teal-400">{item.title}</Link>
                       <p className="text-xs text-muted-foreground/60">{item.category}</p>
                     </td>
                     <td className="px-4 py-3 text-muted-foreground text-xs">

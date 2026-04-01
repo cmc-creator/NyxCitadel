@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ShieldAlert, Plus, Info, Calendar } from 'lucide-react';
@@ -176,7 +176,7 @@ export default async function HvaPage() {
                 <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                   assessment.status === 'APPROVED'   ? 'bg-green-100 text-green-800' :
                   assessment.status === 'COMPLETED'  ? 'bg-blue-100 text-blue-800' :
-                  assessment.status === 'REVIEWED'   ? 'bg-purple-100 text-purple-800' :
+                  assessment.status === 'REVIEWED'   ? 'bg-teal-100 text-teal-800' :
                   'bg-yellow-100 text-yellow-800'
                 }`}>
                   {assessment.status.replace('_',' ')}

@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { Activity, Plus, Target, CheckCircle2, Clock, AlertTriangle } from 'lucide-react';
@@ -10,7 +10,7 @@ export const metadata = { title: 'QAPI Projects' };
 
 const STATUS_COLORS: Record<string, string> = {
   ACTIVE: 'bg-blue-50 text-blue-700',
-  MONITORING: 'bg-purple-50 text-purple-700',
+  MONITORING: 'bg-teal-50 text-teal-700',
   COMPLETED: 'bg-green-50 text-green-700',
   SUSPENDED: 'bg-yellow-50 text-yellow-700',
   CANCELLED: 'bg-slate-100 text-slate-500',
@@ -23,7 +23,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   CLINICAL_CARE: 'bg-blue-100 text-blue-700',
   INFECTION_PREVENTION: 'bg-teal-100 text-teal-700',
   PATIENT_EXPERIENCE: 'bg-green-100 text-green-700',
-  STAFF_SAFETY: 'bg-purple-100 text-purple-700',
+  STAFF_SAFETY: 'bg-teal-100 text-teal-700',
   READMISSIONS: 'bg-indigo-100 text-indigo-700',
   COMPLIANCE: 'bg-violet-100 text-violet-700',
   WORKFORCE: 'bg-pink-100 text-pink-700',
@@ -48,14 +48,14 @@ export default async function QapiProjectsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <Target className="w-6 h-6 text-purple-600" />
+            <Target className="w-6 h-6 text-teal-600" />
             QAPI Projects
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">CMS 42 CFR 482.21 · Performance Improvement Projects (PIPs)</p>
         </div>
         <Link
           href="/quality/projects/new"
-          className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
         >
           <Plus className="w-4 h-4" /> New QAPI Project
         </Link>
@@ -110,7 +110,7 @@ export default async function QapiProjectsPage() {
           <Target className="w-12 h-12 mb-3 text-slate-300" />
           <p className="text-sm font-medium">No QAPI projects yet</p>
           <p className="text-xs mt-1">CMS requires at least 2 active PIPs annually</p>
-          <Link href="/quality/projects/new" className="mt-4 text-sm text-purple-600 hover:underline font-medium">
+          <Link href="/quality/projects/new" className="mt-4 text-sm text-teal-600 hover:underline font-medium">
             + Start your first project
           </Link>
         </div>

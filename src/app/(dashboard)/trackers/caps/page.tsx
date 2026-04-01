@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
 import { ClipboardList, Plus, AlertTriangle, Download } from 'lucide-react';
@@ -62,7 +62,7 @@ export default async function CapsPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <ClipboardList className="w-6 h-6 text-purple-600" />
+            <ClipboardList className="w-6 h-6 text-teal-600" />
             Corrective Action Plans
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -80,7 +80,7 @@ export default async function CapsPage({
           <PrintButton />
           <Link
             href="/trackers/caps/new"
-            className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             New CAP
@@ -120,7 +120,7 @@ export default async function CapsPage({
             href={tab.href}
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
               tab.active
-                ? 'bg-purple-600 text-white'
+                ? 'bg-teal-600 text-white'
                 : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
             }`}
           >
@@ -136,7 +136,7 @@ export default async function CapsPage({
             <ClipboardList className="w-12 h-12 mx-auto mb-3 text-slate-200" />
             <p className="font-medium">No corrective action plans found.</p>
             <p className="text-sm mt-1">
-              <Link href="/trackers/caps/new" className="text-purple-600 hover:underline">
+              <Link href="/trackers/caps/new" className="text-teal-600 hover:underline">
                 Create your first CAP
               </Link>
             </p>
@@ -149,7 +149,7 @@ export default async function CapsPage({
               <Link
                 key={cap.id}
                 href={`/trackers/caps/${cap.id}`}
-                className="block bg-white rounded-xl border border-slate-200 p-5 hover:shadow-md hover:border-purple-300 transition-all"
+                className="block bg-white rounded-xl border border-slate-200 p-5 hover:shadow-md hover:border-teal-300 transition-all"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">

@@ -60,7 +60,7 @@ export default function GuidePage() {
     <div className="min-h-screen bg-slate-950 text-white">
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1.5 text-xs font-semibold text-purple-200 mb-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-teal-500/30 bg-teal-500/10 px-3 py-1.5 text-xs font-semibold text-teal-200 mb-6">
             <BookOpen className="w-3.5 h-3.5" />
             Strong User Guide
           </div>
@@ -78,7 +78,7 @@ export default function GuidePage() {
                 <div className="space-y-3">
                   {section.items.map((item) => (
                     <div key={item} className="flex items-start gap-3">
-                      <span className="mt-2 w-2 h-2 rounded-full bg-purple-400 flex-shrink-0" />
+                      <span className="mt-2 w-2 h-2 rounded-full bg-teal-400 flex-shrink-0" />
                       <p className="text-sm text-slate-300 leading-relaxed">{item}</p>
                     </div>
                   ))}
@@ -94,7 +94,7 @@ export default function GuidePage() {
                 {quickLinks.map(({ href, label, icon: Icon }) => (
                   <Link key={href} href={href} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 hover:bg-white/10 transition">
                     <div className="flex items-center gap-3">
-                      <Icon className="w-4 h-4 text-purple-300" />
+                      <Icon className="w-4 h-4 text-teal-300" />
                       <span className="text-sm font-medium text-slate-100">{label}</span>
                     </div>
                     <ChevronRight className="w-4 h-4 text-slate-500" />

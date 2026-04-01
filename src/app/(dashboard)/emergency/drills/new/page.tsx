@@ -65,7 +65,7 @@ export default function NewDrillPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/emergency/drills" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/emergency/drills" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Drills
         </a>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
@@ -126,7 +126,7 @@ export default function NewDrillPage() {
         <div className="px-6 py-4 flex items-center justify-end gap-3">
           <a href="/emergency/drills" className="text-sm text-slate-500 hover:text-slate-700">Cancel</a>
           <button type="submit" disabled={saving}
-            className="px-5 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors">
+            className="px-5 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 disabled:opacity-50 transition-colors">
             {saving ? 'Saving…' : 'Schedule Drill'}
           </button>
         </div>

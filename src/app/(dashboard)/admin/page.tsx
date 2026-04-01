@@ -86,7 +86,7 @@ export default async function AdminPage() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <ShieldCheck className="w-6 h-6 text-purple-400" />
+            <ShieldCheck className="w-6 h-6 text-teal-400" />
             Admin Control Panel
           </h1>
           <p className="text-sm text-muted-foreground mt-0.5">
@@ -114,11 +114,10 @@ export default async function AdminPage() {
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Total Users</p>
-              <p className="text-3xl font-bold text-purple-400 mt-1">{users.length}</p>
+              <p className="text-3xl font-bold text-teal-400 mt-1">{users.length}</p>
               <p className="text-xs text-muted-foreground/60 mt-0.5">{activeUsers} active</p>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-purple-950/40 ring-1 ring-purple-800/40 flex items-center justify-center">
-              <Users className="w-5 h-5 text-purple-400" />
+            <div className="w-10 h-10 rounded-xl bg-teal-950/40 ring-1 ring-teal-800/40 flex items-center justify-center">`n              <Users className="w-5 h-5 text-teal-400" />
             </div>
           </div>
         </div>
@@ -212,11 +211,11 @@ export default async function AdminPage() {
       {/* Users table */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="flex items-center gap-2 px-5 py-4 border-b border-border/50">
-          <Users className="w-4 h-4 text-purple-400" />
+          <Users className="w-4 h-4 text-teal-400" />
           <h2 className="text-sm font-semibold text-foreground">
             {isSuperAdmin ? 'All Users' : 'Facility Users'}
           </h2>
-          <Link href="/settings/users" className="ml-auto text-xs text-purple-400 hover:underline">
+          <Link href="/settings/users" className="ml-auto text-xs text-teal-400 hover:underline">
             Manage users →
           </Link>
         </div>
@@ -241,7 +240,7 @@ export default async function AdminPage() {
                     <td className="px-3 py-3 text-xs text-muted-foreground">{u.facility.name}</td>
                   )}
                   <td className="px-3 py-3">
-                    <span className="text-xs bg-purple-950/40 text-purple-300 border border-purple-800/40 px-2 py-0.5 rounded-full">
+                    <span className="text-xs bg-teal-950/40 text-teal-300 border border-teal-800/40 px-2 py-0.5 rounded-full">
                       {ROLE_LABELS[u.role] ?? u.role}
                     </span>
                   </td>
@@ -271,7 +270,7 @@ export default async function AdminPage() {
         </div>
         <p className="text-xs text-muted-foreground">
           Detailed audit logs are tracked per user. Visit{' '}
-          <Link href="/settings" className="text-purple-400 hover:underline">Settings</Link>{' '}
+          <Link href="/settings" className="text-teal-400 hover:underline">Settings</Link>{' '}
           to manage notification preferences and integrations.
         </p>
       </div>

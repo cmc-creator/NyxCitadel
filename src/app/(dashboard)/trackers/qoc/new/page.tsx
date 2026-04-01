@@ -92,7 +92,7 @@ export default function NewQocPage() {
           <ArrowLeft className="w-4 h-4" /> Back to QOC Tracker
         </Link>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Scale className="w-6 h-6 text-purple-600" />
+          <Scale className="w-6 h-6 text-teal-600" />
           Log QOC / LOI Complaint
         </h1>
         <p className="text-sm text-slate-500 mt-1">
@@ -154,8 +154,8 @@ export default function NewQocPage() {
                   onClick={() => toggleCategory(cat)}
                   className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
                     form.allegationCategories.includes(cat)
-                      ? 'bg-purple-600 text-white border-purple-600'
-                      : 'bg-white text-slate-600 border-slate-300 hover:border-purple-400'
+                      ? 'bg-teal-600 text-white border-teal-600'
+                      : 'bg-white text-slate-600 border-slate-300 hover:border-teal-400'
                   }`}
                 >
                   {cat}
@@ -220,7 +220,7 @@ export default function NewQocPage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition-colors disabled:opacity-50"
+            className="flex-1 sm:flex-none bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition-colors disabled:opacity-50"
           >
             {saving ? 'Saving...' : 'Log Complaint'}
           </button>

@@ -93,7 +93,7 @@ const typeBadge: Record<string, { label: string; color: string }> = {
   LIGATURE_RISK: { label: 'Ligature Risk', color: 'bg-amber-950/50 text-amber-300 border border-amber-700/40' },
   FIRE_SAFETY: { label: 'Fire Safety', color: 'bg-red-950/50 text-red-300 border border-red-700/40' },
   INFECTION_CONTROL: { label: 'Infection Control', color: 'bg-teal-950/50 text-teal-300 border border-teal-700/40' },
-  SECURITY: { label: 'Security', color: 'bg-purple-950/50 text-purple-300 border border-purple-700/40' },
+  SECURITY: { label: 'Security', color: 'bg-teal-950/50 text-teal-300 border border-teal-700/40' },
   UTILITIES: { label: 'Utilities', color: 'bg-orange-950/50 text-orange-300 border border-orange-700/40' },
   PATIENT_ENVIRONMENT: { label: 'Patient Environment', color: 'bg-emerald-950/50 text-emerald-300 border border-emerald-700/40' },
   EOC_COMMITTEE: { label: 'EOC Committee', color: 'bg-violet-950/50 text-violet-300 border border-violet-700/40' },
@@ -103,7 +103,7 @@ const statusBadge: Record<string, string> = {
   IN_PROGRESS: 'bg-amber-950/40 text-amber-400',
   COMPLETED: 'bg-sky-950/40 text-sky-400',
   REVIEWED: 'bg-emerald-950/40 text-emerald-400',
-  APPROVED: 'bg-purple-950/40 text-purple-400',
+  APPROVED: 'bg-teal-950/40 text-teal-400',
 };
 
 const statusIcon: Record<string, React.ElementType> = {
@@ -198,7 +198,7 @@ export default function EocRoundsPage() {
                   )}
                   <Link
                     href={`/eoc/rounds/${round.id}`}
-                    className="flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300"
+                    className="flex items-center gap-1 text-xs text-teal-400 hover:text-teal-300"
                   >
                     View details <ChevronRight className="w-3 h-3" />
                   </Link>

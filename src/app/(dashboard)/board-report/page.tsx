@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
@@ -257,7 +257,7 @@ export default async function BoardReportPage() {
         </ReportSection>
 
         {/* ── Section 2: RCA & QI Intervention ─────────────── */}
-        <ReportSection icon={<ClipboardList className="w-4 h-4 text-purple-500" />} title="Section 2 - Root Cause Analysis & QI Intervention">
+        <ReportSection icon={<ClipboardList className="w-4 h-4 text-teal-500" />} title="Section 2 - Root Cause Analysis & QI Intervention">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
             <StatBox label="Approved RCAs"    value={rcaApproved} />
             <StatBox label="CAPs Completed"   value={capsCompleted} />

@@ -44,7 +44,7 @@ export default function NewIcOutbreakPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/infection-control/outbreaks" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/infection-control/outbreaks" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Outbreaks
         </a>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">

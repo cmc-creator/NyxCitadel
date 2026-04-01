@@ -67,7 +67,7 @@ export default function DocumentUploadPage() {
           <ArrowLeft className="w-4 h-4" /> Back to Documents
         </Link>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Upload className="w-6 h-6 text-purple-600" /> Add Document
+          <Upload className="w-6 h-6 text-teal-600" /> Add Document
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Register a document in the library by providing its URL and metadata.</p>
       </div>
@@ -79,12 +79,12 @@ export default function DocumentUploadPage() {
       <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 p-6 space-y-5">
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">Document Name <span className="text-red-500">*</span></label>
-          <input name="name" required className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="e.g. Infection Control Policy v3.0" />
+          <input name="name" required className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="e.g. Infection Control Policy v3.0" />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">Category <span className="text-red-500">*</span></label>
-          <select name="category" required className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+          <select name="category" required className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
             <option value="">- Select category -</option>
             {CATEGORIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
@@ -92,28 +92,28 @@ export default function DocumentUploadPage() {
 
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">Document URL <span className="text-red-500">*</span></label>
-          <input type="url" name="fileUrl" required className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="https://sharepoint.com/... or storage URL" />
+          <input type="url" name="fileUrl" required className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="https://sharepoint.com/... or storage URL" />
           <p className="text-xs text-slate-400 mt-1">Link to where the document is stored (SharePoint, OneDrive, Google Drive, etc.)</p>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
-          <textarea name="description" rows={2} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none" placeholder="Brief description of this document…" />
+          <textarea name="description" rows={2} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none" placeholder="Brief description of this document…" />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Expiry / Review Date</label>
-            <input type="date" name="expiryDate" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+            <input type="date" name="expiryDate" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Tags</label>
-            <input name="tags" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="policy, infection, 2026 (comma-separated)" />
+            <input name="tags" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="policy, infection, 2026 (comma-separated)" />
           </div>
         </div>
 
         <div className="flex gap-3 pt-2">
-          <button type="submit" disabled={saving} className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium py-2.5 rounded-lg transition-colors">
+          <button type="submit" disabled={saving} className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-medium py-2.5 rounded-lg transition-colors">
             {saving ? 'Saving…' : 'Add Document'}
           </button>
           <Link href="/documents" className="px-4 py-2.5 text-sm font-medium text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">

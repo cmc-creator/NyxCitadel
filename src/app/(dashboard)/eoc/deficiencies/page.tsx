@@ -20,7 +20,7 @@ const categoryBadge: Record<string, string> = {
   LIGATURE_RISK: 'bg-amber-950/50 text-amber-300 border border-amber-700/40',
   FIRE_SAFETY: 'bg-red-950/50 text-red-300 border border-red-700/40',
   INFECTION_CONTROL: 'bg-teal-950/50 text-teal-300 border border-teal-700/40',
-  SECURITY: 'bg-purple-950/50 text-purple-300 border border-purple-700/40',
+  SECURITY: 'bg-teal-950/50 text-teal-300 border border-teal-700/40',
   UTILITIES: 'bg-orange-950/50 text-orange-300 border border-orange-700/40',
   EQUIPMENT_FAILURE: 'bg-slate-700/50 text-slate-300 border border-slate-600/40',
   CLEANLINESS: 'bg-green-950/50 text-green-300 border border-green-700/40',
@@ -133,7 +133,7 @@ export default function DeficienciesPage() {
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
-              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-purple-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-teal-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
             >
               {s === 'ALL' ? 'All Statuses' : s.replace('_', ' ')}
             </button>

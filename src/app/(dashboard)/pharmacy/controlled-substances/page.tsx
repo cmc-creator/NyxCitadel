@@ -1,4 +1,4 @@
-﻿import { Clipboard, Plus, AlertTriangle } from 'lucide-react';
+import { Clipboard, Plus, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -8,7 +8,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
   RECONCILED:            { label: 'Reconciled',          color: 'bg-emerald-100 text-emerald-700' },
   DISCREPANCY_OPEN:      { label: 'Discrepancy Open',    color: 'bg-red-100 text-red-700' },
   DISCREPANCY_EXPLAINED: { label: 'Explained',           color: 'bg-amber-100 text-amber-700' },
-  REPORTED_DEA:          { label: 'Reported to DEA',     color: 'bg-purple-100 text-purple-700' },
+  REPORTED_DEA:          { label: 'Reported to DEA',     color: 'bg-teal-100 text-teal-700' },
   INVESTIGATION:         { label: 'Under Investigation', color: 'bg-orange-100 text-orange-700' },
 };
 

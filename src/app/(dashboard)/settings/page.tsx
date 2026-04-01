@@ -30,7 +30,7 @@ export default function SettingsPage() {
     <div className="space-y-6 max-w-2xl">
       <div>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <Settings className="w-6 h-6 text-purple-400" />
+          <Settings className="w-6 h-6 text-teal-400" />
           Settings
         </h1>
         <p className="text-sm text-muted-foreground mt-0.5">Manage your facility configuration and application preferences.</p>
@@ -41,10 +41,10 @@ export default function SettingsPage() {
           <a
             key={s.href}
             href={s.soon ? '#' : s.href}
-            className="bg-card border border-border rounded-xl px-5 py-4 flex items-start justify-between hover:border-purple-600/50 transition-colors group"
+            className="bg-card border border-border rounded-xl px-5 py-4 flex items-start justify-between hover:border-teal-600/50 transition-colors group"
           >
             <div>
-              <p className="text-sm font-semibold text-foreground group-hover:text-purple-400">{s.title}</p>
+              <p className="text-sm font-semibold text-foreground group-hover:text-teal-400">{s.title}</p>
               <p className="text-xs text-muted-foreground mt-0.5">{s.description}</p>
             </div>
             {s.soon ? (
@@ -52,7 +52,7 @@ export default function SettingsPage() {
                 Coming Soon
               </span>
             ) : (
-              <span className="text-muted-foreground group-hover:text-purple-400 mt-0.5">→</span>
+              <span className="text-muted-foreground group-hover:text-teal-400 mt-0.5">→</span>
             )}
           </a>
         ))}

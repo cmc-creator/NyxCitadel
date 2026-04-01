@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { FileWarning, Plus, Clock, AlertCircle, CheckCircle2 } from 'lucide-react';
@@ -12,7 +12,7 @@ const STATUS_COLORS: Record<string, string> = {
   OPEN:              'bg-red-100 text-red-700',
   INVESTIGATING:     'bg-yellow-100 text-yellow-700',
   PENDING_REVIEW:    'bg-blue-100 text-blue-700',
-  REPORTED_TO_STATE: 'bg-purple-100 text-purple-700',
+  REPORTED_TO_STATE: 'bg-teal-100 text-teal-700',
   CLOSED:            'bg-slate-100 text-slate-500',
   REOPENED:          'bg-orange-100 text-orange-700',
 };
@@ -82,7 +82,7 @@ export default async function IrIadPage({
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
             Incident Reports & Adverse Data · ADHS ARS 36-2402 · AHCCCS ACOM · JC Sentinel Event Policy
-            {year && <span className="ml-2 font-semibold text-purple-700">· {year} Archive</span>}
+            {year && <span className="ml-2 font-semibold text-teal-700">· {year} Archive</span>}
           </p>
         </div>
         <Link
@@ -198,7 +198,7 @@ export default async function IrIadPage({
                           </span>
                         ) : null}
                         {r.jcReportable && !r.jcReported && (
-                          <span className="text-xs text-purple-600 font-medium">JC pending</span>
+                          <span className="text-xs text-teal-600 font-medium">JC pending</span>
                         )}
                         {r.iadRequired && !r.iadSubmitted && (
                           <span className="text-xs text-blue-600 font-medium">IAD pending</span>

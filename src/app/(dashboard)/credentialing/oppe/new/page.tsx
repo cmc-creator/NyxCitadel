@@ -51,11 +51,11 @@ export default function NewOppeRecordPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/credentialing/oppe" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/credentialing/oppe" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to OPPE
         </a>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <BarChart2 className="w-6 h-6 text-purple-600" />
+          <BarChart2 className="w-6 h-6 text-teal-600" />
           New OPPE Record
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Ongoing Professional Practice Evaluation - TJC MS.08.01.01. Metrics can be added after creation.</p>
@@ -123,7 +123,7 @@ export default function NewOppeRecordPage() {
 
         <div className="px-6 py-4 flex justify-end gap-3">
           <a href="/credentialing/oppe" className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">Cancel</a>
-          <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50">
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-teal-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Create OPPE Record'}
           </button>
         </div>

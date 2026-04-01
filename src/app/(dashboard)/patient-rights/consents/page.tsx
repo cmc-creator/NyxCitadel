@@ -21,7 +21,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
   VERBAL:           { label: 'Verbal',           color: 'bg-blue-100 text-blue-700' },
   REFUSED:          { label: 'Refused',          color: 'bg-amber-100 text-amber-700' },
   REVOKED:          { label: 'Revoked',          color: 'bg-red-100 text-red-700' },
-  UNABLE_CAPACITY:  { label: 'Unable Capacity',  color: 'bg-purple-100 text-purple-700' },
+  UNABLE_CAPACITY:  { label: 'Unable Capacity',  color: 'bg-teal-100 text-teal-700' },
 };
 
 export default async function ConsentsPage() {
@@ -64,7 +64,7 @@ export default async function ConsentsPage() {
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: 'Active Consents',         value: active,    color: 'text-emerald-400' },
-          { label: 'Surrogate/Guardian',       value: surrogate, color: 'text-purple-400' },
+          { label: 'Surrogate/Guardian',       value: surrogate, color: 'text-teal-400' },
           { label: 'Capacity Undocumented',    value: pending,   color: pending > 0 ? 'text-amber-400' : 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4 text-center">

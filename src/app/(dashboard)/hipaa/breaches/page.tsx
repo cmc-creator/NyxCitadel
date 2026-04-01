@@ -20,7 +20,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
   INVESTIGATION:   { label: 'Investigation', color: 'bg-red-100 text-red-700' },
   NOTIFIED:        { label: 'Notified',      color: 'bg-blue-100 text-blue-700' },
   CLOSED:          { label: 'Closed',        color: 'bg-emerald-100 text-emerald-700' },
-  REPORTED_TO_HHS: { label: 'Reported HHS', color: 'bg-purple-100 text-purple-700' },
+  REPORTED_TO_HHS: { label: 'Reported HHS', color: 'bg-teal-100 text-teal-700' },
 };
 
 const riskColor: Record<string, string> = {

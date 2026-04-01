@@ -74,7 +74,7 @@ const navItems: NavItem[] = [
     label: 'Sentry Assistant 🤖',
     icon: Sparkles,
     badge: 'AI',
-    badgeColor: 'bg-purple-100 text-purple-700',
+    badgeColor: 'bg-teal-100 text-teal-700',
   },
   {
     href: '/site-search',
@@ -105,7 +105,7 @@ const navItems: NavItem[] = [
       { href: '/trackers/caps', label: 'Corrective Action Plans', icon: ClipboardList },
       { href: '/trackers/risk-assessments', label: 'Risk Assessments', icon: ShieldAlert },
       { href: '/trackers/grievances', label: 'Patient Grievances', icon: MessageSquareWarning, badge: 'CMS', badgeColor: 'bg-orange-100 text-orange-700' },
-      { href: '/trackers/qoc', label: 'QOC / LOI Complaints', icon: Scale, badge: 'CMS', badgeColor: 'bg-purple-100 text-purple-700' },
+      { href: '/trackers/qoc', label: 'QOC / LOI Complaints', icon: Scale, badge: 'CMS', badgeColor: 'bg-teal-100 text-teal-700' },
       { href: '/trackers/ir-iad', label: 'IR / IAD Incidents', icon: FileWarning, badge: 'ADHS', badgeColor: 'bg-red-100 text-red-700' },
       { href: '/trackers/rca', label: 'Root Cause Analyses', icon: Search },
     ],
@@ -263,7 +263,7 @@ const navItems: NavItem[] = [
     children: [
       { href: '/resilience',          label: 'Resilience Scorecard', icon: ResilienceIcon },
       { href: '/board-report',        label: 'Board Report',         icon: FileBarChart, badge: 'EXEC', badgeColor: 'bg-emerald-100 text-emerald-700' },
-      { href: '/regulatory-updates',  label: 'Regulatory Updates',   icon: Newspaper,    badge: 'NEW',  badgeColor: 'bg-purple-100 text-purple-700' },
+      { href: '/regulatory-updates',  label: 'Regulatory Updates',   icon: Newspaper,    badge: 'NEW',  badgeColor: 'bg-teal-100 text-teal-700' },
       { href: '/outpatient-iop',      label: 'Outpatient / IOP',      icon: HeartHandshake, badge: 'IOP', badgeColor: 'bg-emerald-100 text-emerald-700' },
     ],
   },

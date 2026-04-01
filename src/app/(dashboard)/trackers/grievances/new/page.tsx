@@ -83,7 +83,7 @@ export default function NewGrievancePage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/grievances" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/trackers/grievances" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Grievances
         </a>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
@@ -120,7 +120,7 @@ export default function NewGrievancePage() {
                 type="date"
                 required
                 defaultValue={new Date().toISOString().split('T')[0]}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -129,7 +129,7 @@ export default function NewGrievancePage() {
               <select
                 name="severity"
                 required
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 {SEVERITIES.map(s => (
                   <option key={s.value} value={s.value}>{s.label}</option>
@@ -142,7 +142,7 @@ export default function NewGrievancePage() {
               <select
                 name="category"
                 required
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select category...</option>
                 {CATEGORIES.map(c => (
@@ -156,7 +156,7 @@ export default function NewGrievancePage() {
               <input
                 name="assignedTo"
                 placeholder="Staff member name or role"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function NewGrievancePage() {
               required
               rows={4}
               placeholder="Describe the grievance - what is the complaint, what happened, and what outcome is the complainant seeking?"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
             />
           </div>
         </div>
@@ -184,7 +184,7 @@ export default function NewGrievancePage() {
                 name="complainantName"
                 required
                 placeholder="Full name"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -193,7 +193,7 @@ export default function NewGrievancePage() {
               <select
                 name="complainantType"
                 required
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select type...</option>
                 {COMPLAINANT_TYPES.map(t => (
@@ -208,7 +208,7 @@ export default function NewGrievancePage() {
                 name="complainantPhone"
                 type="tel"
                 placeholder="(xxx) xxx-xxxx"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -218,7 +218,7 @@ export default function NewGrievancePage() {
                 name="complainantEmail"
                 type="email"
                 placeholder="email@example.com"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -234,7 +234,7 @@ export default function NewGrievancePage() {
               <input
                 name="patientName"
                 placeholder="Full name"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -243,7 +243,7 @@ export default function NewGrievancePage() {
               <input
                 name="patientMRN"
                 placeholder="Medical record number"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -257,7 +257,7 @@ export default function NewGrievancePage() {
             <input
               name="reportableToAdhs"
               type="checkbox"
-              className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+              className="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
             />
             <span className="text-sm text-slate-700">
               Reportable to AZ ADHS (R9-10-211 adverse event or patient rights violation)
@@ -270,7 +270,7 @@ export default function NewGrievancePage() {
               name="notes"
               rows={2}
               placeholder="Any additional notes..."
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
             />
           </div>
         </div>
@@ -279,7 +279,7 @@ export default function NewGrievancePage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
+            className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
           >
             {saving ? 'Logging...' : 'Log Grievance'}
           </button>

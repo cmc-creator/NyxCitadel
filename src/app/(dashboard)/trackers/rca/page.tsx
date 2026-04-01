@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { Search, Plus, Clock, ClipboardList, Repeat } from 'lucide-react';
@@ -13,7 +13,7 @@ const STATUS_COLORS: Record<string, string> = {
   DRAFT_COMPLETE:  'bg-blue-100 text-blue-700',
   UNDER_REVIEW:    'bg-orange-100 text-orange-700',
   APPROVED:        'bg-green-100 text-green-700',
-  SUBMITTED_TO_JC: 'bg-purple-100 text-purple-700',
+  SUBMITTED_TO_JC: 'bg-teal-100 text-teal-700',
   CLOSED:          'bg-slate-100 text-slate-500',
 };
 
@@ -54,7 +54,7 @@ export default async function RcaPage({
         </div>
         <Link
           href="/trackers/rca/new"
-          className="inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg transition-colors"
         >
           <Plus className="w-4 h-4" /> New RCA
         </Link>
@@ -81,7 +81,7 @@ export default async function RcaPage({
           <div className="text-sm text-slate-500">Approved / Closed</div>
         </div>
         <div className="bg-white rounded-xl border border-slate-200 p-4">
-          <div className="text-2xl font-bold text-purple-600">
+          <div className="text-2xl font-bold text-teal-600">
             {rcas.filter(r => r.status === 'SUBMITTED_TO_JC').length}
           </div>
           <div className="text-sm text-slate-500">Submitted to JC</div>
@@ -95,7 +95,7 @@ export default async function RcaPage({
           <p className="text-slate-500 font-medium">No root cause analyses yet</p>
           <Link
             href="/trackers/rca/new"
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" /> Start First RCA
           </Link>
@@ -138,7 +138,7 @@ export default async function RcaPage({
                   {(rca.status === 'APPROVED' || rca.status === 'SUBMITTED_TO_JC' || rca.status === 'CLOSED') && (
                     <Link
                       href={`/trackers/caps/new?fromRca=${rca.id}&isPdsa=true&title=${encodeURIComponent(`PDSA: ${rca.eventType}`)}&source=INCIDENT&desc=${encodeURIComponent((rca.conclusion ?? '').slice(0, 200))}`}
-                      className="inline-flex items-center gap-1 text-xs font-medium text-purple-700 bg-purple-50 border border-purple-200 px-2 py-1 rounded-lg hover:bg-purple-100 transition-colors whitespace-nowrap"
+                      className="inline-flex items-center gap-1 text-xs font-medium text-teal-700 bg-teal-50 border border-teal-200 px-2 py-1 rounded-lg hover:bg-teal-100 transition-colors whitespace-nowrap"
                     >
                       <Repeat className="w-3.5 h-3.5" /> → Launch PDSA
                     </Link>

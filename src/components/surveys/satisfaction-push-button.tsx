@@ -56,7 +56,7 @@ export function SatisfactionPushButton({ surveyId, existingScore, conductedDate 
   if (!open) {
     return (
       <button onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-purple-600 hover:bg-purple-50 px-2 py-0.5 rounded-full border border-slate-200 hover:border-purple-200 transition-colors">
+        className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-teal-600 hover:bg-teal-50 px-2 py-0.5 rounded-full border border-slate-200 hover:border-teal-200 transition-colors">
         <TrendingUp className="w-3 h-3" /> Log satisfaction
       </button>
     );
@@ -76,7 +76,7 @@ export function SatisfactionPushButton({ surveyId, existingScore, conductedDate 
         <span className="text-xs text-slate-400">%</span>
       </div>
       <button onClick={handlePush} disabled={saving || !score}
-        className="inline-flex items-center gap-1 text-xs text-white bg-purple-600 hover:bg-purple-700 disabled:opacity-50 px-2 py-1 rounded-lg transition-colors">
+        className="inline-flex items-center gap-1 text-xs text-white bg-teal-600 hover:bg-teal-700 disabled:opacity-50 px-2 py-1 rounded-lg transition-colors">
         {saving ? <Loader2 className="w-3 h-3 animate-spin" /> : <TrendingUp className="w-3 h-3" />}
         {monthLabel ? `→ QAPI ${monthLabel}` : '→ QAPI'}
       </button>

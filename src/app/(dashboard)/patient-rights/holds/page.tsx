@@ -9,7 +9,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
   EXTENDED:                { label: 'Extended',          color: 'bg-amber-100 text-amber-700' },
   DISCHARGED:              { label: 'Discharged',        color: 'bg-emerald-100 text-emerald-700' },
   CONVERTED_VOLUNTARY:     { label: 'Voluntary',         color: 'bg-blue-100 text-blue-700' },
-  COURT_ORDERED_CONTINUED: { label: 'Court Continued',   color: 'bg-purple-100 text-purple-700' },
+  COURT_ORDERED_CONTINUED: { label: 'Court Continued',   color: 'bg-teal-100 text-teal-700' },
 };
 
 export default async function InvoluntaryHoldsPage() {

@@ -125,7 +125,7 @@ export default function IntegrationsPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Plug className="w-6 h-6 text-purple-600" />
+          <Plug className="w-6 h-6 text-teal-600" />
           Integrations
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">
@@ -141,8 +141,8 @@ export default function IntegrationsPage() {
             onClick={() => setActiveCategory(cat)}
             className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
               activeCategory === cat
-                ? 'bg-purple-600 text-white border-purple-600'
-                : 'bg-white text-slate-600 border-slate-200 hover:border-purple-300'
+                ? 'bg-teal-600 text-white border-teal-600'
+                : 'bg-white text-slate-600 border-slate-200 hover:border-teal-300'
             }`}
           >
             {cat}
@@ -191,14 +191,14 @@ export default function IntegrationsPage() {
                     href={integration.docsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-purple-600 hover:underline flex items-center gap-1"
+                    className="text-xs text-teal-600 hover:underline flex items-center gap-1"
                   >
                     <ExternalLink className="w-3 h-3" />
                     Docs
                   </a>
                 )}
                 {integration.status === 'available' && (
-                  <button className="text-xs bg-purple-600 text-white px-3 py-1 rounded-lg hover:bg-purple-700 transition">
+                  <button className="text-xs bg-teal-600 text-white px-3 py-1 rounded-lg hover:bg-teal-700 transition">
                     Configure
                   </button>
                 )}
@@ -210,7 +210,7 @@ export default function IntegrationsPage() {
 
       <p className="text-xs text-slate-400">
         Need a custom integration? Contact{' '}
-        <a href="mailto:support@nyxcitadel.com" className="text-purple-600 hover:underline">
+        <a href="mailto:support@nyxcitadel.com" className="text-teal-600 hover:underline">
           support@nyxcitadel.com
         </a>
         .

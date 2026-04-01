@@ -205,10 +205,10 @@ export default async function DashboardPage() {
           <p className="text-sm text-muted-foreground mt-0.5">{facilityName} · {formatDate(new Date(), 'MMMM d, yyyy')}</p>
         </div>
         <div className="flex items-center gap-2">
-          <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-purple-400 border border-purple-800/50 bg-purple-950/30 hover:bg-purple-950/60 px-3 py-1.5 rounded-lg transition-colors">
+          <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-teal-400 border border-teal-800/50 bg-teal-950/30 hover:bg-teal-950/60 px-3 py-1.5 rounded-lg transition-colors">
             <Activity className="w-3.5 h-3.5" /> QAPI Metrics
           </Link>
-          <Link href="/calendar" className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+          <Link href="/calendar" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
             <CalendarDays className="w-4 h-4" /> Calendar
           </Link>
         </div>
@@ -274,9 +274,9 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-card rounded-xl border border-border p-5">
           <div className="flex items-center gap-2 mb-4">
-            <GraduationCap className="w-4 h-4 text-purple-400" />
+            <GraduationCap className="w-4 h-4 text-teal-400" />
             <h3 className="text-sm font-semibold text-foreground">Staff Training Compliance</h3>
-            <Link href="/trackers/training" className="ml-auto text-xs text-purple-400 hover:underline">View all →</Link>
+            <Link href="/trackers/training" className="ml-auto text-xs text-teal-400 hover:underline">View all →</Link>
           </div>
           {s.trainingCompliancePct !== null ? (
             <div>
@@ -290,14 +290,14 @@ export default async function DashboardPage() {
               <p className="text-xs text-muted-foreground mt-1">{s.trainingCompliancePct >= 90 ? '✓ Target met (≥90%)' : `Target: 90% · ${s.expiringTraining30} expiring in 30d`}</p>
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">No training records. <Link href="/trackers/training/new" className="text-purple-400 hover:underline">Add records</Link></p>
+            <p className="text-sm text-muted-foreground">No training records. <Link href="/trackers/training/new" className="text-teal-400 hover:underline">Add records</Link></p>
           )}
         </div>
         <div className="bg-card rounded-xl border border-border p-5">
           <div className="flex items-center gap-2 mb-4">
             <Siren className="w-4 h-4 text-blue-400" />
             <h3 className="text-sm font-semibold text-foreground">{new Date().getFullYear()} Drill Compliance</h3>
-            <Link href="/emergency/drills" className="ml-auto text-xs text-purple-400 hover:underline">View all →</Link>
+            <Link href="/emergency/drills" className="ml-auto text-xs text-teal-400 hover:underline">View all →</Link>
           </div>
           <div className="space-y-3">
             <ProgressBar value={s.fireDrills} max={12} label="Fire Evacuation Drills" sublabel="All shifts, quarterly min. 12/year · JC" />
@@ -312,10 +312,10 @@ export default async function DashboardPage() {
         <div className="flex items-center gap-2 mb-4">
           <ShieldCheck className="w-4 h-4 text-teal-400" />
           <h3 className="text-sm font-semibold text-foreground">Environment of Care (EOC) Health</h3>
-          <Link href="/emergency/map" className="ml-auto text-xs text-purple-400 hover:underline">View rounds →</Link>
+          <Link href="/emergency/map" className="ml-auto text-xs text-teal-400 hover:underline">View rounds →</Link>
         </div>
         {s.eocOpenDeficiencies === 0 && !s.lastEocRound ? (
-          <p className="text-sm text-muted-foreground">No EOC data yet. <Link href="/emergency/map" className="text-purple-400 hover:underline">Start an EOC round</Link></p>
+          <p className="text-sm text-muted-foreground">No EOC data yet. <Link href="/emergency/map" className="text-teal-400 hover:underline">Start an EOC round</Link></p>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {/* Open deficiencies */}
@@ -358,7 +358,7 @@ export default async function DashboardPage() {
       {/* COMPLIANCE HEALTH SCORE */}
       <div className="bg-card rounded-xl border border-border p-5">
         <div className="flex items-center gap-2 mb-4">
-          <HeartPulse className="w-4 h-4 text-purple-400" />
+            <HeartPulse className="w-4 h-4 text-teal-400" />
           <h3 className="text-sm font-semibold text-foreground">Facility Compliance Health Score</h3>
           <span className={`ml-auto text-xs font-semibold px-2 py-0.5 rounded-full border ${getHealthScoreColor(healthScore.overallScore)}`}>
             {healthScore.trend === 'improving' ? '↑ Improving' : healthScore.trend === 'declining' ? '↓ Declining' : '→ Stable'}
@@ -415,9 +415,9 @@ export default async function DashboardPage() {
       {Object.keys(s.latestMetrics).length > 0 && (
         <div className="bg-card rounded-xl border border-border p-5">
           <div className="flex items-center gap-2 mb-4">
-            <Activity className="w-4 h-4 text-purple-400" />
+            <Activity className="w-4 h-4 text-teal-400" />
             <h3 className="text-sm font-semibold text-foreground">QAPI Metrics Snapshot</h3>
-            <Link href="/quality/metrics" className="ml-auto text-xs text-purple-400 hover:underline">Enter metrics →</Link>
+            <Link href="/quality/metrics" className="ml-auto text-xs text-teal-400 hover:underline">Enter metrics →</Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
             {([
@@ -456,10 +456,10 @@ export default async function DashboardPage() {
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-border/50">
           <h2 className="text-base font-semibold text-foreground flex items-center gap-2">
-            <CalendarDays className="w-5 h-5 text-purple-400" />
+            <CalendarDays className="w-5 h-5 text-teal-400" />
             Next Up: Compliance Events
           </h2>
-          <Link href="/calendar" className="text-sm text-purple-400 hover:text-purple-300 font-medium">View all →</Link>
+          <Link href="/calendar" className="text-sm text-teal-400 hover:text-teal-300 font-medium">View all →</Link>
         </div>
         <div className="divide-y divide-border/30">
           {s.recentEvents.length === 0 ? (
@@ -495,8 +495,8 @@ export default async function DashboardPage() {
         {([
           { href: '/trackers/ir-iad/new',     label: 'Log Incident Report',  icon: FileWarning,          color: 'text-red-400    bg-red-950/30    border-red-800/50    hover:bg-red-950/50'    },
           { href: '/trackers/grievances/new', label: 'Log Grievance',         icon: MessageSquareWarning, color: 'text-orange-400 bg-orange-950/30 border-orange-800/50 hover:bg-orange-950/50' },
-          { href: '/trackers/caps/new',        label: 'New CAP',              icon: ClipboardList,        color: 'text-purple-400 bg-purple-950/30 border-purple-800/50 hover:bg-purple-950/50' },
-          { href: '/quality/metrics',          label: 'Enter QAPI Metrics',   icon: Activity,             color: 'text-purple-400 bg-purple-950/30 border-purple-800/50 hover:bg-purple-950/50' },
+          { href: '/trackers/caps/new',        label: 'New CAP',              icon: ClipboardList,        color: 'text-teal-400 bg-teal-950/30 border-teal-800/50 hover:bg-teal-950/50' },
+          { href: '/quality/metrics',          label: 'Enter QAPI Metrics',   icon: Activity,             color: 'text-teal-400 bg-teal-950/30 border-teal-800/50 hover:bg-teal-950/50' },
         ] as const).map(({ href, label, icon: Icon, color }) => (
           <Link key={href} href={href} className={`flex items-center gap-2 border rounded-xl px-4 py-3 text-sm font-medium transition-colors ${color}`}>
             <Icon className="w-4 h-4 flex-shrink-0" />
@@ -536,13 +536,13 @@ function StatCard({ title, value, icon: Icon, color, href, description }: {
     red:    { bg: 'bg-red-950/40',    icon: 'text-red-400',    ring: 'ring-red-800/40',    value: 'text-red-400'    },
     yellow: { bg: 'bg-yellow-950/40', icon: 'text-yellow-400', ring: 'ring-yellow-800/40', value: 'text-yellow-400' },
     orange: { bg: 'bg-orange-950/40', icon: 'text-orange-400', ring: 'ring-orange-800/40', value: 'text-orange-400' },
-    purple: { bg: 'bg-purple-950/40', icon: 'text-purple-400', ring: 'ring-purple-800/40', value: 'text-purple-400' },
+    purple: { bg: 'bg-teal-950/40', icon: 'text-teal-400', ring: 'ring-teal-800/40', value: 'text-teal-400' },
     blue:   { bg: 'bg-blue-950/40',   icon: 'text-blue-400',   ring: 'ring-blue-800/40',   value: 'text-blue-400'   },
     green:  { bg: 'bg-green-950/40',  icon: 'text-green-400',  ring: 'ring-green-800/40',  value: 'text-green-400'  },
   };
   const c = colorMap[color];
   return (
-    <Link href={href} className="bg-card rounded-xl border border-border p-4 hover:border-brand/40 hover:shadow-[0_0_15px_rgba(139,92,246,0.12)] hover:-translate-y-0.5 transition-all">
+      <Link href={href} className="bg-card rounded-xl border border-border p-4 hover:border-brand/40 hover:shadow-[0_0_15px_rgba(13,115,119,0.15)] hover:-translate-y-0.5 transition-all">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{title}</p>

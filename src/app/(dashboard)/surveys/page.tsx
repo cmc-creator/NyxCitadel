@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { ClipboardList, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
@@ -37,7 +37,7 @@ export default async function SurveysPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <ClipboardList className="w-6 h-6 text-purple-400" />
+            <ClipboardList className="w-6 h-6 text-teal-400" />
             Surveys &amp; Inspections
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -46,7 +46,7 @@ export default async function SurveysPage() {
         </div>
         <a
           href="/surveys/new"
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors"
         >
           + Add Survey
         </a>
@@ -76,7 +76,7 @@ export default async function SurveysPage() {
           <div className="flex flex-col items-center justify-center py-20 text-slate-400">
             <ClipboardList className="w-10 h-10 mb-2 opacity-30" />
             <p className="text-sm">No surveys recorded yet.</p>
-            <a href="/surveys/new" className="mt-3 text-sm text-purple-400 hover:underline">Add your first survey</a>
+            <a href="/surveys/new" className="mt-3 text-sm text-teal-400 hover:underline">Add your first survey</a>
           </div>
         ) : (
           <table className="data-table">

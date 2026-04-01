@@ -113,7 +113,7 @@ export function SetupWizard() {
 
   return (
     <div className="fixed inset-0 z-[65] flex items-end sm:items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-purple-500/30 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-teal-500/30 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
         {/* Close button */}
         <button
           onClick={handleDismiss}
@@ -129,12 +129,12 @@ export function SetupWizard() {
               <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
                 allStepsCompleted 
                   ? 'bg-emerald-500/20 border border-emerald-500/30' 
-                  : 'bg-purple-500/20 border border-purple-500/30'
+                  : 'bg-teal-500/20 border border-teal-500/30'
               }`}>
                 {allStepsCompleted ? (
                   <CheckCircle className="w-6 h-6 text-emerald-400" />
                 ) : (
-                  <Zap className="w-6 h-6 text-purple-400" />
+                  <Zap className="w-6 h-6 text-teal-400" />
                 )}
               </div>
               <div>
@@ -158,7 +158,7 @@ export function SetupWizard() {
                 </div>
                 <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-purple-600 to-violet-600 transition-all duration-300"
+                    className="h-full bg-gradient-to-r from-teal-600 to-cyan-600 transition-all duration-300"
                     style={{ width: `${progressPercentage}%` }}
                   />
                 </div>
@@ -199,7 +199,7 @@ export function SetupWizard() {
                       <p className="text-sm text-slate-400 mt-1">{step.description}</p>
                     </div>
 
-                    <ChevronRight className={`w-5 h-5 flex-shrink-0 transition-colors ${isLoading ? 'animate-spin text-purple-400' : 'text-slate-500 group-hover:text-slate-400'}`} />
+                    <ChevronRight className={`w-5 h-5 flex-shrink-0 transition-colors ${isLoading ? 'animate-spin text-teal-400' : 'text-slate-500 group-hover:text-slate-400'}`} />
                   </div>
                 );
 
@@ -264,7 +264,7 @@ export function SetupWizard() {
                     window.location.href = first.action.href;
                   }
                 }}
-                className="flex-1 px-4 py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 text-white font-medium transition-all flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2.5 rounded-lg bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white font-medium transition-all flex items-center justify-center gap-2"
               >
                 Start Setup <ChevronRight className="w-4 h-4" />
               </button>

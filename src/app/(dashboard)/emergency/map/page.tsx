@@ -297,7 +297,7 @@ export default function FacilityMapPage() {
                     { label: 'AED Location',        color: 'bg-yellow-500' },
                     { label: 'Shelter Zone',        color: 'bg-blue-500'   },
                     { label: 'Hazmat Area',         color: 'bg-orange-500' },
-                    { label: 'Command Post',        color: 'bg-purple-500' },
+                    { label: 'Command Post',        color: 'bg-teal-500' },
                   ].map((z) => (
                     <div key={z.label} className="flex items-center gap-1.5">
                       <div className={`w-2.5 h-2.5 rounded-full ${z.color}`} />

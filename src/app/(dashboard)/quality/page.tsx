@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
@@ -112,7 +112,7 @@ export default async function QualityPage() {
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <Activity className="w-6 h-6 text-purple-600" />
+            <Activity className="w-6 h-6 text-teal-600" />
             Quality / QAPI
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -123,7 +123,7 @@ export default async function QualityPage() {
           <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-slate-600 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors">
             <BarChart2 className="w-4 h-4" /> Enter Metrics
           </Link>
-          <Link href="/quality/projects/new" className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+          <Link href="/quality/projects/new" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
             <Plus className="w-4 h-4" /> New QAPI Project
           </Link>
         </div>
@@ -134,7 +134,7 @@ export default async function QualityPage() {
         <div className="bg-white rounded-xl border border-slate-200 p-4">
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Open CAPs</p>
           <p className="text-3xl font-bold mt-1 text-orange-600">{openCaps}</p>
-          <Link href="/trackers/caps" className="text-xs text-slate-400 hover:text-purple-600">View CAPs →</Link>
+          <Link href="/trackers/caps" className="text-xs text-slate-400 hover:text-teal-600">View CAPs →</Link>
         </div>
         <div className="bg-white rounded-xl border border-slate-200 p-4">
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">CAP Completion</p>
@@ -143,13 +143,13 @@ export default async function QualityPage() {
         </div>
         <div className="bg-white rounded-xl border border-slate-200 p-4">
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Active QAPI Projects</p>
-          <p className="text-3xl font-bold mt-1 text-purple-600">{activeProjects}</p>
-          <Link href="/quality/projects" className="text-xs text-slate-400 hover:text-purple-600">View projects →</Link>
+          <p className="text-3xl font-bold mt-1 text-teal-600">{activeProjects}</p>
+          <Link href="/quality/projects" className="text-xs text-slate-400 hover:text-teal-600">View projects →</Link>
         </div>
         <div className="bg-white rounded-xl border border-slate-200 p-4">
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Incidents (This Month)</p>
           <p className="text-3xl font-bold mt-1 text-red-600">{monthlyIncidentCounts[5]}</p>
-          <Link href="/trackers/incidents" className="text-xs text-slate-400 hover:text-purple-600">View incidents →</Link>
+          <Link href="/trackers/incidents" className="text-xs text-slate-400 hover:text-teal-600">View incidents →</Link>
         </div>
       </div>
 
@@ -189,10 +189,10 @@ export default async function QualityPage() {
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
           <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-            <Target className="w-5 h-5 text-purple-600" />
+            <Target className="w-5 h-5 text-teal-600" />
             Standard HBIPS Quality Indicators
           </h2>
-          <Link href="/quality/metrics" className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+          <Link href="/quality/metrics" className="text-sm text-teal-600 hover:text-teal-700 font-medium">
             Enter data →
           </Link>
         </div>
@@ -222,7 +222,7 @@ export default async function QualityPage() {
                   <p className="text-xs text-slate-400">{ind.ref} · {ind.unit}</p>
                 </div>
                 {ind.required && (
-                  <span className="text-xs font-medium bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full">Required</span>
+                  <span className="text-xs font-medium bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full">Required</span>
                 )}
                 <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${hasData ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-500'}`}>
                   {hasData ? `${thisYear} ✓` : 'No data'}

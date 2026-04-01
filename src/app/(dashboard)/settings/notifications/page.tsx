@@ -145,7 +145,7 @@ export default function NotificationPreferencesPage() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <Bell className="w-6 h-6 text-purple-600" />
+            <Bell className="w-6 h-6 text-teal-600" />
             Notification Preferences
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -155,7 +155,7 @@ export default function NotificationPreferencesPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium px-4 py-2 rounded-lg transition shrink-0"
+          className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-medium px-4 py-2 rounded-lg transition shrink-0"
         >
           {saved ? (
             <>
@@ -250,14 +250,14 @@ export default function NotificationPreferencesPage() {
           <button
             type="button"
             onClick={() => { setExportFrequency('daily'); setSaved(false); }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${exportFrequency === 'daily' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${exportFrequency === 'daily' ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
           >
             Daily
           </button>
           <button
             type="button"
             onClick={() => { setExportFrequency('weekly'); setSaved(false); }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${exportFrequency === 'weekly' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${exportFrequency === 'weekly' ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
           >
             Weekly
           </button>
@@ -272,14 +272,14 @@ export default function NotificationPreferencesPage() {
           <button
             type="button"
             onClick={() => { setDigestMode('immediate'); setSaved(false); }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${digestMode === 'immediate' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${digestMode === 'immediate' ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
           >
             Immediate Emails
           </button>
           <button
             type="button"
             onClick={() => { setDigestMode('daily'); setSaved(false); }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${digestMode === 'daily' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${digestMode === 'daily' ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}`}
           >
             Daily Digest
           </button>
@@ -297,7 +297,7 @@ export default function NotificationPreferencesPage() {
             <button
               onClick={() => toggleRule(rule.key)}
               className={`mt-0.5 w-10 h-6 flex-shrink-0 rounded-full transition-colors relative ${
-                rule.enabled ? 'bg-purple-600' : 'bg-slate-200'
+                rule.enabled ? 'bg-teal-600' : 'bg-slate-200'
               }`}
             >
               <span
@@ -323,7 +323,7 @@ export default function NotificationPreferencesPage() {
                   value={rule.daysAhead}
                   disabled={!rule.enabled}
                   onChange={e => setDays(rule.key, Number(e.target.value))}
-                  className="text-xs border border-slate-200 rounded-md px-2 py-1 bg-white disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  className="text-xs border border-slate-200 rounded-md px-2 py-1 bg-white disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-teal-400"
                 >
                   {DAY_OPTIONS.filter(d => d > 0).map(d => (
                     <option key={d} value={d}>

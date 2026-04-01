@@ -53,7 +53,7 @@ const BODY_COLORS: Record<string, string> = {
   DEA:      'bg-rose-100 text-rose-700',
   OSHA:     'bg-amber-100 text-amber-700',
   AZ_ADHS:  'bg-green-100 text-green-700',
-  HIPAA:    'bg-purple-100 text-purple-700',
+  HIPAA:    'bg-teal-100 text-teal-700',
   JC:       'bg-indigo-100 text-indigo-700',
   NFPA:     'bg-orange-100 text-orange-700',
   FEMA:     'bg-teal-100 text-teal-700',
@@ -716,7 +716,7 @@ function getCategoryColor(cat: string): string {
   if (/^EM_|^HVA|^FUNCTIONAL|^TABLETOP|^AFTER_ACTION/.test(cat))
     return 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100';
   if (/^PATIENT_RIGHTS|^INFORMED_CONSENT/.test(cat))
-    return 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100';
+    return 'bg-teal-50 text-teal-700 border-teal-200 hover:bg-teal-100';
   if (/^MEDIC|^PHARM|^FORMULA|^CONTROLLED/.test(cat))
     return 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100';
   if (/^AZ_|^JC_MOCK|^JC_STANDARDS/.test(cat))

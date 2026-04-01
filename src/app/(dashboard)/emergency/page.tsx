@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import {
@@ -61,7 +61,7 @@ export default async function EmergencyManagementPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <Siren className="w-6 h-6 text-purple-400" />
+            <Siren className="w-6 h-6 text-teal-400" />
             Emergency Management
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -108,10 +108,10 @@ export default async function EmergencyManagementPage() {
 
         <Link
           href="/emergency/plans"
-          className="bg-card rounded-xl border border-border p-5 hover:border-purple-600/50 hover:-translate-y-0.5 transition-all flex items-center gap-3"
+          className="bg-card rounded-xl border border-border p-5 hover:border-teal-600/50 hover:-translate-y-0.5 transition-all flex items-center gap-3"
         >
-          <div className="w-12 h-12 rounded-xl bg-purple-950/40 border border-purple-800/30 flex items-center justify-center">
-            <BookOpen className="w-6 h-6 text-purple-400" />
+          <div className="w-12 h-12 rounded-xl bg-teal-950/40 border border-teal-800/30 flex items-center justify-center">
+            <BookOpen className="w-6 h-6 text-teal-400" />
           </div>
           <div>
             <p className="font-semibold text-foreground">EM Plans</p>
@@ -139,7 +139,7 @@ export default async function EmergencyManagementPage() {
                 Start HVA
               </Link>
             )}
-            <Link href="/emergency/hva" className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+            <Link href="/emergency/hva" className="text-sm text-teal-600 hover:text-teal-700 font-medium">
               View full HVA →
             </Link>
           </div>
@@ -225,7 +225,7 @@ export default async function EmergencyManagementPage() {
               <Clock className="w-4 h-4 text-blue-400" />
               Upcoming Drills (90 days)
             </h2>
-            <Link href="/emergency/drills/new" className="inline-flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300 font-medium">
+            <Link href="/emergency/drills/new" className="inline-flex items-center gap-1 text-xs text-teal-400 hover:text-teal-300 font-medium">
               <Plus className="w-3 h-3" /> Add
             </Link>
           </div>
@@ -260,7 +260,7 @@ export default async function EmergencyManagementPage() {
               <CheckCircle2 className="w-4 h-4 text-green-400" />
               Recently Completed Drills
             </h2>
-            <Link href="/emergency/drills" className="text-xs text-purple-400 hover:text-purple-300 font-medium">
+            <Link href="/emergency/drills" className="text-xs text-teal-400 hover:text-teal-300 font-medium">
               View all →
             </Link>
           </div>

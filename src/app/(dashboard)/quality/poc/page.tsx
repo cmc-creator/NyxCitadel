@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { ClipboardCheck, Plus, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
@@ -15,7 +15,7 @@ const STATUS_COLORS: Record<string, string> = {
   ACCEPTED:           'bg-green-100 text-green-700',
   REJECTED:           'bg-red-100 text-red-700',
   RESUBMIT_REQUIRED:  'bg-orange-100 text-orange-700',
-  CLOSED:             'bg-purple-100 text-purple-700',
+  CLOSED:             'bg-teal-100 text-teal-700',
 };
 
 const BODY_LABELS: Record<string, string> = {
@@ -57,7 +57,7 @@ export default async function PocPage() {
         </div>
         <Link
           href="/quality/poc/new"
-          className="inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg transition-colors"
         >
           <Plus className="w-4 h-4" /> New POC
         </Link>
@@ -97,7 +97,7 @@ export default async function PocPage() {
           <p className="text-slate-500 font-medium">No plans of correction logged yet</p>
           <Link
             href="/quality/poc/new"
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" /> Create POC
           </Link>
@@ -105,7 +105,7 @@ export default async function PocPage() {
       ) : (
         <div className="space-y-3">
           {pocs.map(poc => (
-            <div key={poc.id} className="bg-white rounded-xl border border-slate-200 p-4 hover:border-purple-300 transition-colors">
+            <div key={poc.id} className="bg-white rounded-xl border border-slate-200 p-4 hover:border-teal-300 transition-colors">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -133,7 +133,7 @@ export default async function PocPage() {
                 </div>
                 <Link
                   href={`/quality/poc/${poc.id}`}
-                  className="text-xs text-purple-600 hover:text-purple-700 font-medium shrink-0"
+                  className="text-xs text-teal-600 hover:text-teal-700 font-medium shrink-0"
                 >
                   View →
                 </Link>

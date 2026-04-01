@@ -125,7 +125,7 @@ export default function NewRcaPage() {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <a href="/trackers/rca" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/trackers/rca" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to RCAs
         </a>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
@@ -178,7 +178,7 @@ export default function NewRcaPage() {
                   type="date"
                   required
                   defaultValue={prefillDate}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
 
@@ -188,7 +188,7 @@ export default function NewRcaPage() {
                   name="eventType"
                   required
                   defaultValue={prefillType}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 >
                   <option value="">Select type...</option>
                   {EVENT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
@@ -200,7 +200,7 @@ export default function NewRcaPage() {
                 <input
                   name="conductedDate"
                   type="date"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
 
@@ -209,7 +209,7 @@ export default function NewRcaPage() {
                 <input
                   name="completedBy"
                   placeholder="Name / title"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
 
@@ -219,7 +219,7 @@ export default function NewRcaPage() {
                   name="linkedIncidentId"
                   placeholder="Incident record ID (if applicable)"
                   defaultValue={fromIr}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
             </div>
@@ -232,7 +232,7 @@ export default function NewRcaPage() {
                 rows={4}
                 defaultValue={prefillDesc}
                 placeholder="Describe what happened - what was the adverse event or sentinel event?"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
 
@@ -242,7 +242,7 @@ export default function NewRcaPage() {
                 name="eventTimeline"
                 rows={5}
                 placeholder="Chronological timeline of events leading up to and following the incident..."
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
 
@@ -252,7 +252,7 @@ export default function NewRcaPage() {
                 name="teamMembers"
                 rows={2}
                 placeholder="Names and roles of team members who participated in the RCA..."
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
           </div>
@@ -277,7 +277,7 @@ export default function NewRcaPage() {
                   name={factor.name}
                   rows={2}
                   placeholder={factor.placeholder}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                 />
               </div>
             ))}
@@ -317,14 +317,14 @@ export default function NewRcaPage() {
                     value={item.why}
                     onChange={e => setWhyItems(prev => prev.map(w => w.id === item.id ? { ...w, why: e.target.value } : w))}
                     placeholder="Why question..."
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                   <textarea
                     value={item.answer}
                     onChange={e => setWhyItems(prev => prev.map(w => w.id === item.id ? { ...w, answer: e.target.value } : w))}
                     rows={2}
                     placeholder="Answer..."
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                   />
                 </div>
               ))}
@@ -336,7 +336,7 @@ export default function NewRcaPage() {
                 name="rootCauses"
                 rows={4}
                 placeholder="Based on the 5-Whys analysis, what are the identified root causes?"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
 
@@ -347,7 +347,7 @@ export default function NewRcaPage() {
                 <label className="block text-sm font-medium text-slate-700 mb-1">Preventability Rating</label>
                 <select
                   name="preventabilityRating"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 >
                   <option value="">Select...</option>
                   <option value="Preventable">Preventable</option>
@@ -360,7 +360,7 @@ export default function NewRcaPage() {
                 name="conclusion"
                 rows={3}
                 placeholder="Overall conclusion of the RCA..."
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
 
               <div className="space-y-2">
@@ -374,7 +374,7 @@ export default function NewRcaPage() {
                     <input
                       name={c.name}
                       type="checkbox"
-                      className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                      className="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
                     />
                     <span className="text-sm text-slate-700">{c.label}</span>
                   </label>
@@ -417,20 +417,20 @@ export default function NewRcaPage() {
                   onChange={e => setActionItems(prev => prev.map(a => a.id === item.id ? { ...a, action: e.target.value } : a))}
                   rows={2}
                   placeholder="Action item description..."
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                 />
                 <div className="grid grid-cols-2 gap-2">
                   <input
                     value={item.responsible}
                     onChange={e => setActionItems(prev => prev.map(a => a.id === item.id ? { ...a, responsible: e.target.value } : a))}
                     placeholder="Responsible party"
-                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                   <input
                     type="date"
                     value={item.targetDate}
                     onChange={e => setActionItems(prev => prev.map(a => a.id === item.id ? { ...a, targetDate: e.target.value } : a))}
-                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                 </div>
               </div>
@@ -442,7 +442,7 @@ export default function NewRcaPage() {
                 name="notes"
                 rows={2}
                 placeholder="Any additional notes..."
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
           </div>
@@ -452,7 +452,7 @@ export default function NewRcaPage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
+            className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
           >
             {saving ? 'Saving...' : 'Save Root Cause Analysis'}
           </button>

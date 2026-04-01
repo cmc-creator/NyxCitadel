@@ -64,7 +64,7 @@ export function TopBar({ user }: TopBarProps) {
 
         {/* User avatar */}
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
+          <div className="w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
             {user.name?.charAt(0)?.toUpperCase() ?? user.email?.charAt(0)?.toUpperCase() ?? 'U'}
           </div>
           <div className="hidden md:block text-right">

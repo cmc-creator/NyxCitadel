@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { GraduationCap, Plus, AlertTriangle, Download } from 'lucide-react';
@@ -79,7 +79,7 @@ export default async function TrainingPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <GraduationCap className="w-6 h-6 text-purple-600" />
+            <GraduationCap className="w-6 h-6 text-teal-600" />
             Training &amp; Competency
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -97,7 +97,7 @@ export default async function TrainingPage({
           <PrintButton />
           <Link
             href="/trackers/training/new"
-            className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             Add Record
@@ -175,7 +175,7 @@ export default async function TrainingPage({
             href={tab.href}
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
               tab.active
-                ? 'bg-purple-600 text-white'
+                ? 'bg-teal-600 text-white'
                 : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
             }`}
           >

@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { scoreToGrade5, incidentScore, capScore, grievanceScore, grade12ToScore } from '@/lib/grading';
@@ -241,7 +241,7 @@ export default async function ResilienceScorecardPage() {
           trend={recentIR.length === 0 ? 'good' : recentIR.length <= 3 ? 'warn' : 'bad'}
         />
         <MetricCard
-          icon={<ClipboardList className="w-5 h-5 text-purple-600" />}
+          icon={<ClipboardList className="w-5 h-5 text-teal-600" />}
           label="Open CAPs"
           value={String(openCaps)}
           sub="corrective action plans"
@@ -387,7 +387,7 @@ function QuickLink({ href, label, color }: { href: string; label: string; color:
   const colors: Record<string, string> = {
     blue:   'bg-blue-600 hover:bg-blue-700',
     orange: 'bg-orange-600 hover:bg-orange-700',
-    purple: 'bg-purple-600 hover:bg-purple-700',
+    purple: 'bg-teal-600 hover:bg-teal-700',
     indigo: 'bg-indigo-600 hover:bg-indigo-700',
     red:    'bg-red-600 hover:bg-red-700',
   };

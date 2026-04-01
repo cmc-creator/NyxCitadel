@@ -56,7 +56,7 @@ export function RunAlertsNowButton() {
       <button
         onClick={runNow}
         disabled={running}
-        className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium px-3 py-2 rounded-lg transition"
+        className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-medium px-3 py-2 rounded-lg transition"
       >
         {running ? <Loader2 className="w-4 h-4 animate-spin" /> : <BellRing className="w-4 h-4" />}
         {running ? 'Running Alerts…' : 'Run Alerts Now'}

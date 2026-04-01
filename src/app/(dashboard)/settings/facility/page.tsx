@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { Building2, Save, CheckCircle2, AlertCircle, Palette } from 'lucide-react';
@@ -126,7 +126,7 @@ export default function FacilitySettingsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-48">
-        <div className="w-6 h-6 border-2 border-purple-600 border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-teal-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -136,7 +136,7 @@ export default function FacilitySettingsPage() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <Building2 className="w-6 h-6 text-purple-600" />
+            <Building2 className="w-6 h-6 text-teal-600" />
             Facility Configuration
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -145,7 +145,7 @@ export default function FacilitySettingsPage() {
           </p>
         </div>
         <button type="submit" disabled={saving}
-          className="inline-flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+          className="inline-flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
           <Save className="w-4 h-4" />{saving ? 'Saving' : 'Save Changes'}
         </button>
       </div>
@@ -264,7 +264,7 @@ export default function FacilitySettingsPage() {
         {/* Branding */}
         <div className="px-6 py-5">
           <h2 className="text-sm font-semibold text-slate-800 mb-1 flex items-center gap-1.5">
-            <Palette className="w-4 h-4 text-purple-500" />
+            <Palette className="w-4 h-4 text-teal-500" />
             Branding (White-Label)
           </h2>
           <p className="text-xs text-slate-400 mb-4">
@@ -292,7 +292,7 @@ export default function FacilitySettingsPage() {
             Changes are scoped to this facility only. Multi-facility environments each configure independently.
           </p>
           <button type="submit" disabled={saving}
-            className="inline-flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+            className="inline-flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
             <Save className="w-4 h-4" />{saving ? 'Saving' : 'Save Changes'}
           </button>
         </div>

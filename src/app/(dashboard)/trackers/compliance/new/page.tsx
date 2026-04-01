@@ -96,11 +96,11 @@ export default function NewComplianceItemPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/compliance" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/trackers/compliance" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Compliance Tracker
         </a>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <ShieldCheck className="w-6 h-6 text-purple-600" />
+          <ShieldCheck className="w-6 h-6 text-teal-600" />
           Add Compliance Item
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">
@@ -190,7 +190,7 @@ export default function NewComplianceItemPage() {
             </select>
           </div>
           <div className="flex items-center gap-2">
-            <input type="checkbox" id="isRequired" name="isRequired" defaultChecked className="accent-purple-600" />
+            <input type="checkbox" id="isRequired" name="isRequired" defaultChecked className="accent-teal-600" />
             <label htmlFor="isRequired" className="text-sm text-slate-700">This is a mandatory compliance requirement</label>
           </div>
           <div>

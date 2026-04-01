@@ -38,7 +38,7 @@ export default async function HaiPage() {
           <div className="flex items-center gap-3 mb-1">
             <Activity className="w-5 h-5 text-teal-400" />
             <h1 className="text-xl font-bold text-white">HAI Surveillance</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">NHSN Reportable</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700">NHSN Reportable</span>
           </div>
           <p className="text-slate-400 text-sm">Monthly healthcare-associated infection rates tracked against NHSN national benchmarks.</p>
         </div>

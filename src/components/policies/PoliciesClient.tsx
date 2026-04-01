@@ -60,7 +60,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   LEADERSHIP:             'bg-indigo-100 text-indigo-700 border-indigo-200',
   LIFE_SAFETY:            'bg-orange-100 text-orange-700 border-orange-200',
   MEDICATION_MANAGEMENT:  'bg-pink-100 text-pink-700 border-pink-200',
-  PATIENT_RIGHTS:         'bg-purple-100 text-purple-700 border-purple-200',
+  PATIENT_RIGHTS:         'bg-teal-100 text-teal-700 border-teal-200',
   PERFORMANCE_IMPROVEMENT:'bg-yellow-100 text-yellow-700 border-yellow-200',
   PRIVACY_SECURITY:       'bg-rose-100 text-rose-700 border-rose-200',
   OTHER:                  'bg-gray-100 text-gray-600 border-gray-200',
@@ -262,7 +262,7 @@ export default function PoliciesClient({ initialData }: Props) {
       {/* ── Stats Bar ──────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Total Policies', value: stats.total,   accent: 'border-purple-400', icon: <FileText className="w-4 h-4 text-purple-500" /> },
+          { label: 'Total Policies', value: stats.total,   accent: 'border-teal-400', icon: <FileText className="w-4 h-4 text-teal-500" /> },
           { label: 'Active',         value: stats.active,  accent: 'border-green-400',  icon: <CheckCircle className="w-4 h-4 text-green-500" /> },
           { label: 'Overdue Review', value: stats.overdue, accent: 'border-red-400',    icon: <AlertTriangle className="w-4 h-4 text-red-500" /> },
           { label: 'Due in 30d',     value: stats.dueSoon, accent: 'border-amber-400',  icon: <Clock className="w-4 h-4 text-amber-500" /> },
@@ -285,7 +285,7 @@ export default function PoliciesClient({ initialData }: Props) {
             <button
               onClick={() => setFilterCat('')}
               className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition whitespace-nowrap ${
-                !filterCat ? 'bg-purple-600 text-white border-purple-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:border-purple-300 hover:bg-purple-50'
+                !filterCat ? 'bg-teal-600 text-white border-teal-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-teal-50'
               }`}
             >
               All
@@ -301,7 +301,7 @@ export default function PoliciesClient({ initialData }: Props) {
                   key={cat}
                   onClick={() => setFilterCat(active ? '' : cat)}
                   className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition whitespace-nowrap ${
-                    active ? 'bg-purple-600 text-white border-purple-600 shadow-sm' : colorBase + ' hover:opacity-80'
+                    active ? 'bg-teal-600 text-white border-teal-600 shadow-sm' : colorBase + ' hover:opacity-80'
                   }`}
                 >
                   {CATEGORY_LABELS[cat] ?? cat}
@@ -320,7 +320,7 @@ export default function PoliciesClient({ initialData }: Props) {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
           <input
-            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-purple-300"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
             placeholder="Search title, policy #, owner, reference..."
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -329,7 +329,7 @@ export default function PoliciesClient({ initialData }: Props) {
         <select
           value={filterStatus}
           onChange={e => setFilterStatus(e.target.value)}
-          className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-purple-300"
+          className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
         >
           <option value="">All Statuses</option>
           {Object.entries(STATUS_META).map(([v, m]) => (
@@ -358,7 +358,7 @@ export default function PoliciesClient({ initialData }: Props) {
       <div className="flex gap-2 flex-wrap">
         <a
           href="/trackers/policies/new"
-          className="inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg transition-colors"
         >
           <Plus className="w-3.5 h-3.5" /> Add Policy
         </a>
@@ -398,9 +398,9 @@ export default function PoliciesClient({ initialData }: Props) {
                 <tr>
                   <td colSpan={9} className="text-center py-16 text-slate-400">
                     {search || filterCat || filterStatus ? (
-                      <>No policies match your filters. <button onClick={() => { setSearch(''); setFilterCat(''); setFilterStatus(''); }} className="text-purple-600 hover:underline">Clear filters</button></>
+                      <>No policies match your filters. <button onClick={() => { setSearch(''); setFilterCat(''); setFilterStatus(''); }} className="text-teal-600 hover:underline">Clear filters</button></>
                     ) : (
-                      <>No policies yet. <a href="/trackers/policies/new" className="text-purple-600 hover:underline">Add your first policy</a> or <a href="/trackers/policies/import" className="text-purple-600 hover:underline">import from CSV</a>.</>
+                      <>No policies yet. <a href="/trackers/policies/new" className="text-teal-600 hover:underline">Add your first policy</a> or <a href="/trackers/policies/import" className="text-teal-600 hover:underline">import from CSV</a>.</>
                     )}
                   </td>
                 </tr>
@@ -411,12 +411,12 @@ export default function PoliciesClient({ initialData }: Props) {
                   return (
                     <tr key={policy.id} className={`hover:bg-slate-50 transition-colors ${policy.status === 'ARCHIVED' ? 'opacity-60' : ''}`}>
                       <td className="px-4 py-3 font-mono text-xs text-slate-600 whitespace-nowrap">
-                        <a href={`/trackers/policies/${policy.id}`} className="hover:text-purple-600 hover:underline">
+                        <a href={`/trackers/policies/${policy.id}`} className="hover:text-teal-600 hover:underline">
                           {policy.policyNumber}
                         </a>
                       </td>
                       <td className="px-4 py-3 max-w-[260px]">
-                        <a href={`/trackers/policies/${policy.id}`} className="font-medium text-slate-800 hover:text-purple-700 hover:underline block truncate">
+                        <a href={`/trackers/policies/${policy.id}`} className="font-medium text-slate-800 hover:text-teal-700 hover:underline block truncate">
                           {policy.title}
                         </a>
                         {policy.owner && <p className="text-xs text-slate-400 truncate">{policy.owner}</p>}
@@ -469,7 +469,7 @@ export default function PoliciesClient({ initialData }: Props) {
                           <a
                             href={`/trackers/policies/${policy.id}/edit`}
                             title="Edit policy"
-                            className="p-1 rounded text-slate-400 hover:text-purple-600 hover:bg-purple-50 transition"
+                            className="p-1 rounded text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition"
                           >
                             <RotateCcw className="w-3.5 h-3.5" />
                           </a>
