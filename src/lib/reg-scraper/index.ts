@@ -21,6 +21,8 @@
 import { prisma } from '@/lib/prisma';
 import { fetchFederalRegister } from './federal-register';
 import { fetchAllRss } from './rss-sources';
+import { sendNotificationEmail } from '@/lib/notifications/email';
+import { getRegulatoryAlertEmail } from '@/lib/notifications/email-templates';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -182,6 +184,8 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
     where: { role: { in: ['ADMIN', 'COMPLIANCE_OFFICER'] } },
     select: {
       id: true,
+      email: true,
+      name: true,
       facilityId: true,
       facility: { select: { state: true } },
     },
@@ -201,6 +205,9 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
     linkUrl: string;
     isRead: boolean;
   }[] = [];
+
+  // Track which updates each user should be emailed about
+  const userUpdateMap = new Map<string, { user: (typeof staff)[number]; updates: ScrapedUpdate[] }>();
 
   for (const update of updates) {
     const isAzOnly = AZ_ONLY_AGENCIES.has(update.agency);
@@ -226,6 +233,10 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
         linkUrl:    '/intelligence/updates',
         isRead:     false,
       });
+
+      const entry = userUpdateMap.get(user.id) ?? { user, updates: [] };
+      entry.updates.push(update);
+      userUpdateMap.set(user.id, entry);
     }
   }
 
@@ -234,4 +245,31 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
   // Batch insert - no skipDuplicates since Notification has no unique constraint
   // but caller guarantees these are only called for genuinely new updates
   await prisma.notification.createMany({ data: notifData });
+
+  // Send one grouped email per user for all their relevant new alerts
+  for (const { user, updates: userUpdates } of userUpdateMap.values()) {
+    if (!user.email) continue;
+    try {
+      const emailData = getRegulatoryAlertEmail({
+        recipientName: user.name,
+        updates: userUpdates.map(u => ({
+          impactLevel: u.impactLevel,
+          agency: u.agency,
+          docType: u.docType,
+          title: u.title,
+          url: u.url,
+        })),
+      });
+      await sendNotificationEmail({
+        to: user.email,
+        subject: emailData.subject,
+        text: userUpdates
+          .map(u => `[${u.impactLevel}] ${u.agency}: ${u.title}${u.url ? `\n${u.url}` : ''}`)
+          .join('\n\n'),
+        html: emailData.html,
+      });
+    } catch {
+      // Non-fatal — in-app notifications already created
+    }
+  }
 }

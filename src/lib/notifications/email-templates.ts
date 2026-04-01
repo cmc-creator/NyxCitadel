@@ -116,3 +116,56 @@ export function getExportSummaryEmail(data: {
     html: emailShell(`${periodLabel} Export Package`, 'Reporting', body),
   };
 }
+
+export function getRegulatoryAlertEmail(data: {
+  recipientName: string | null;
+  updates: Array<{
+    impactLevel: string;
+    agency: string;
+    docType: string | null;
+    title: string;
+    url: string;
+  }>;
+}) {
+  const base = appBaseUrl();
+  const criticalCount = data.updates.filter((u) => u.impactLevel === 'CRITICAL').length;
+  const highCount = data.updates.filter((u) => u.impactLevel === 'HIGH').length;
+
+  const summaryParts: string[] = [];
+  if (criticalCount > 0) summaryParts.push(`${criticalCount} CRITICAL`);
+  if (highCount > 0) summaryParts.push(`${highCount} HIGH`);
+  const summary = summaryParts.join(', ');
+
+  const body = `
+    <div class="section">
+      <p class="muted">Hello <strong>${data.recipientName ?? 'Compliance Team'}</strong>,</p>
+      <p class="muted">NyxCitadel has detected <strong>${data.updates.length} new high-priority regulatory update${data.updates.length === 1 ? '' : 's'}</strong> (${summary}) that may require immediate attention.</p>
+    </div>
+    <div class="section">
+      ${data.updates.map((u) => {
+        const badge = u.impactLevel === 'CRITICAL'
+          ? '<span style="background:#fef2f2;color:#dc2626;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid #fecaca;">CRITICAL</span>'
+          : '<span style="background:#fff7ed;color:#ea580c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid #fed7aa;">HIGH</span>';
+        const agencyLabel = u.agency.replace(/_/g, '/');
+        const docLabel = u.docType ? ` &mdash; ${u.docType}` : '';
+        return `
+          <div class="list-item">
+            <h3>${badge}&nbsp; ${agencyLabel}${docLabel}</h3>
+            <p>${u.title.slice(0, 200)}</p>
+            ${u.url ? `<div class="meta"><a href="${u.url}" style="color:#4f46e5;text-decoration:none;">View Source</a> &nbsp;·&nbsp; <a href="${base}/intelligence/updates" style="color:#4f46e5;text-decoration:none;">Open in NyxCitadel</a></div>` : `<div class="meta"><a href="${base}/intelligence/updates" style="color:#4f46e5;text-decoration:none;">Open in NyxCitadel</a></div>`}
+          </div>`;
+      }).join('')}
+    </div>
+    <div class="section">
+      <a class="button" href="${base}/intelligence/updates">Review All Regulatory Updates</a>
+    </div>
+    <div class="section">
+      <p class="muted" style="font-size:12px;">You are receiving this alert because your role (Admin / Compliance Officer) is configured to receive high-priority regulatory intelligence notifications.</p>
+    </div>
+  `;
+
+  return {
+    subject: `[NyxCitadel] ${summary} Regulatory Alert${data.updates.length === 1 ? '' : 's'} Detected`,
+    html: emailShell('New Regulatory Alerts', 'Regulatory Intelligence', body),
+  };
+}
