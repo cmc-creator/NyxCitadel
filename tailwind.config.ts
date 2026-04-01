@@ -66,6 +66,26 @@ const config: Config = {
           upcoming: '#2563eb',
           pending: '#7c3aed',
         },
+        // Luxury citadel palette (from citadellogo.png stained-glass crest)
+        citadel: {
+          teal: {
+            DEFAULT: 'hsl(177 82% 42%)',
+            dark:    'hsl(177 82% 32%)',
+            light:   'hsl(177 82% 62%)',
+            muted:   'hsl(177 50% 30%)',
+          },
+          gold: {
+            DEFAULT: 'hsl(43 65% 52%)',
+            dark:    'hsl(43 65% 38%)',
+            light:   'hsl(43 65% 68%)',
+          },
+          navy: {
+            DEFAULT: 'hsl(228 38% 5%)',
+            card:    'hsl(228 35% 8%)',
+            mid:     'hsl(228 32% 12%)',
+          },
+          sapphire: 'hsl(221 74% 48%)',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
