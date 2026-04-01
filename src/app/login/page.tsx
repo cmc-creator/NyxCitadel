@@ -201,7 +201,7 @@ function LoginForm() {
                 />
               </div>
 
-              {/* Password */}}
+              {/* Password */}
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-1.5">
                   Password
