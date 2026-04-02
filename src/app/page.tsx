@@ -241,7 +241,7 @@ export default async function RootPage() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Image
-              src="/citadellogo.png"
+              src="/citadellogo-clean.png"
               alt="NyxCitadel"
               width={36}
               height={36}
@@ -885,7 +885,7 @@ export default async function RootPage() {
           <div className="relative z-10">
             <div className="flex justify-center mb-5">
               <Image
-                src="/citadellogo.png"
+                src="/citadellogo-clean.png"
                 alt="NyxCitadel"
                 width={72}
                 height={72}
@@ -1038,7 +1038,7 @@ export default async function RootPage() {
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
           <div className="flex items-center gap-2.5">
             <Image
-              src="/citadellogo.png"
+              src="/citadellogo-clean.png"
               alt="NyxCitadel"
               width={28}
               height={28}

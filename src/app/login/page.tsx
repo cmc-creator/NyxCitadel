@@ -97,7 +97,7 @@ function LoginForm() {
           </Link>
           <div className="flex items-center gap-3 mb-8">
             <Image
-              src="/citadellogo.png"
+              src="/citadellogo-clean.png"
               alt="NyxCitadel"
               width={44}
               height={44}
@@ -165,7 +165,7 @@ function LoginForm() {
         <div className="lg:hidden mb-10 text-center">
           <div className="inline-flex items-center gap-2.5 mb-3">
             <Image
-              src="/citadellogo.png"
+              src="/citadellogo-clean.png"
               alt="NyxCitadel"
               width={36}
               height={36}
