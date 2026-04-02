@@ -36,6 +36,20 @@ const SUBMISSION_TYPES = [
     href: '/reporting/jc-sentinel',
     color: 'text-red-400',
   },
+  {
+    type: 'CMS_HCAHPS',
+    label: 'CMS HCAHPS Patient Satisfaction',
+    description: 'Patient satisfaction survey composite scores (quarterly)',
+    href: '/reporting/hcahps',
+    color: 'text-violet-400',
+  },
+  {
+    type: 'CMS_CONDITION_OF_PARTICIPATION',
+    label: 'CMS Conditions of Participation',
+    description: 'Psychiatric hospital CoP self-assessment and compliance tracking',
+    href: '/reporting/cop',
+    color: 'text-indigo-400',
+  },
 ];
 
 const STATUS_CONFIG: Record<string, { label: string; cls: string }> = {

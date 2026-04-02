@@ -269,6 +269,8 @@ const navItems: NavItem[] = [
       { href: '/reporting/nhsn', label: 'NHSN HAI', icon: ShieldAlert, badge: 'CDC', badgeColor: 'bg-blue-100 text-blue-700' },
       { href: '/reporting/adhs', label: 'ADHS IR/IAD', icon: FileWarning, badge: 'ADHS', badgeColor: 'bg-orange-100 text-orange-700' },
       { href: '/reporting/jc-sentinel', label: 'JC Sentinel Event', icon: AlertTriangle, badge: 'JC', badgeColor: 'bg-red-100 text-red-700' },
+      { href: '/reporting/hcahps', label: 'CMS HCAHPS', icon: BarChart3, badge: 'CMS', badgeColor: 'bg-violet-100 text-violet-700' },
+      { href: '/reporting/cop', label: 'CMS CoP', icon: ShieldAlert, badge: 'CMS', badgeColor: 'bg-indigo-100 text-indigo-700' },
     ],
   },
   {
