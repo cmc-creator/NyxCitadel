@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/components/providers/auth-provider';
 
 const inter = Inter({ subsets: ['latin'] });
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://nyxcitadel.com';
 
 export const metadata: Metadata = {
   title: {
@@ -13,12 +14,36 @@ export const metadata: Metadata = {
   },
   description:
     'Compliance, risk management, and emergency management platform - NyxCitadel.',
+  metadataBase: new URL(appUrl),
+  openGraph: {
+    title: 'NyxCitadel | Compliance & Risk Management',
+    description:
+      'Compliance, risk management, and emergency management platform built for healthcare organizations.',
+    url: appUrl,
+    siteName: 'NyxCitadel',
+    type: 'website',
+    images: [
+      {
+        url: '/citadellogo.png',
+        width: 1200,
+        height: 1200,
+        alt: 'NyxCitadel',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'NyxCitadel | Compliance & Risk Management',
+    description:
+      'Compliance, risk management, and emergency management platform built for healthcare organizations.',
+    images: ['/citadellogo.png'],
+  },
   icons: {
     icon: '/citadellogo.png',
     shortcut: '/citadellogo.png',
     apple: '/citadellogo.png',
   },
-  robots: { index: false, follow: false }, // Private application
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A0F1D"/>
+      <stop offset="1" stop-color="#1F2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" rx="24" fill="url(#bg)"/>
+  <rect x="30" y="24" width="1220" height="72" rx="14" fill="#0B1220" stroke="#334155"/>
+  <rect x="56" y="50" width="260" height="18" rx="6" fill="#38BDF8" fill-opacity="0.4"/>
+
+  <rect x="30" y="114" width="1220" height="576" rx="16" fill="#0B1220" stroke="#334155"/>
+  <rect x="56" y="142" width="260" height="16" rx="5" fill="#E2E8F0" fill-opacity="0.65"/>
+
+  <rect x="56" y="176" width="280" height="150" rx="14" fill="#0F172A" stroke="#1E293B"/>
+  <rect x="76" y="198" width="140" height="12" rx="4" fill="#CBD5E1" fill-opacity="0.6"/>
+  <rect x="76" y="226" width="100" height="56" rx="10" fill="#22C55E" fill-opacity="0.35"/>
+
+  <rect x="352" y="176" width="280" height="150" rx="14" fill="#0F172A" stroke="#1E293B"/>
+  <rect x="372" y="198" width="140" height="12" rx="4" fill="#CBD5E1" fill-opacity="0.6"/>
+  <rect x="372" y="226" width="100" height="56" rx="10" fill="#3B82F6" fill-opacity="0.35"/>
+
+  <rect x="648" y="176" width="280" height="150" rx="14" fill="#0F172A" stroke="#1E293B"/>
+  <rect x="668" y="198" width="140" height="12" rx="4" fill="#CBD5E1" fill-opacity="0.6"/>
+  <rect x="668" y="226" width="100" height="56" rx="10" fill="#A78BFA" fill-opacity="0.35"/>
+
+  <rect x="944" y="176" width="280" height="150" rx="14" fill="#0F172A" stroke="#1E293B"/>
+  <rect x="964" y="198" width="140" height="12" rx="4" fill="#CBD5E1" fill-opacity="0.6"/>
+  <rect x="964" y="226" width="100" height="56" rx="10" fill="#F97316" fill-opacity="0.35"/>
+
+  <rect x="56" y="346" width="1168" height="316" rx="14" fill="#0F172A" stroke="#1E293B"/>
+  <rect x="76" y="368" width="240" height="14" rx="5" fill="#E2E8F0" fill-opacity="0.65"/>
+  <rect x="76" y="398" width="1128" height="240" rx="10" fill="#111827"/>
+  <path d="M110 596L230 570L360 580L500 548L660 564L820 524L980 538L1170 500" stroke="#38BDF8" stroke-width="6" stroke-linecap="round"/>
+</svg>

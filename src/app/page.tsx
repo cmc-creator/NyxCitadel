@@ -259,6 +259,7 @@ export default async function RootPage() {
             <a href="#quality" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Quality &amp; Risk</a>
             <a href="#compliance" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Standards</a>
             <Link href="/guide" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Guide</Link>
+            <Link href="/priority-partner-portal" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Partner Portal</Link>
             <a href="#sentry" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Sentry AI</a>
             <a href="#pricing" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Pricing</a>
           </nav>
@@ -1022,7 +1023,16 @@ export default async function RootPage() {
               <span className="text-slate-700 ml-2 hidden sm:inline">· Healthcare Compliance &amp; Risk Management Platform</span>
             </div>
           </div>
-          <p>© {new Date().getFullYear()} <a href="https://nyxcollective.com" className="hover:text-slate-400 transition-colors">NyxCollective LLC</a> · HIPAA-compliant · Survey-ready · Always current</p>
+          <div className="flex flex-col items-center gap-2">
+            <p>© {new Date().getFullYear()} <a href="https://nyxcollective.com" className="hover:text-slate-400 transition-colors">NyxCollective LLC</a> · HIPAA-compliant · Survey-ready · Always current</p>
+            <div className="flex items-center gap-4 text-xs">
+              <Link href="/privacy" className="text-slate-500 hover:text-slate-300 transition-colors">Privacy Policy</Link>
+              <span className="text-slate-700">•</span>
+              <Link href="/terms" className="text-slate-500 hover:text-slate-300 transition-colors">Terms of Service</Link>
+              <span className="text-slate-700">•</span>
+              <Link href="/contact" className="text-slate-500 hover:text-slate-300 transition-colors">Contact</Link>
+            </div>
+          </div>
           <Link href={portalHref} className="text-slate-500 hover:text-white transition-colors font-medium">
             {portalLabel} →
           </Link>

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { sendEmail } from '@/lib/email';
+import { getSmtpReadiness, sendEmail, verifySmtpConnection } from '@/lib/email';
 import { getOnboardingWelcomeEmail } from '@/lib/email-templates';
 import { enforceRateLimit } from '@/lib/security/rate-limit';
 
@@ -35,28 +35,57 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid form data', issues: parsed.error.issues }, { status: 422 });
   }
 
+  const smtpReadiness = getSmtpReadiness();
+  if (!smtpReadiness.ok) {
+    return NextResponse.json(
+      {
+        error: 'Email delivery is not configured. Please contact support.',
+        missing: smtpReadiness.missing,
+      },
+      { status: 503 },
+    );
+  }
+
+  const smtpVerification = await verifySmtpConnection();
+  if (!smtpVerification.ok) {
+    return NextResponse.json(
+      {
+        error: 'Email delivery service is currently unavailable. Please try again shortly.',
+      },
+      { status: 503 },
+    );
+  }
+
   const { name, email, facility, facilityType, beds, phone, message } = parsed.data;
 
-  // 1. Send acknowledgement email to the prospect
-  const welcome = getOnboardingWelcomeEmail({ facilityName: facility, contactName: name, contactEmail: email });
-  await sendEmail({ to: email, subject: welcome.subject, html: welcome.html });
+  try {
+    // 1. Send acknowledgement email to the prospect
+    const welcome = getOnboardingWelcomeEmail({ facilityName: facility, contactName: name, contactEmail: email });
+    await sendEmail({ to: email, subject: welcome.subject, html: welcome.html });
 
-  // 2. Notify the sales/admin team
-  const adminEmail = process.env.ADMIN_EMAIL;
-  if (adminEmail) {
-    await sendEmail({
-      to: adminEmail,
-      subject: `New demo request from ${name} — ${facility}`,
-      html: `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Facility:</strong> ${facility}</p>
-        ${facilityType ? `<p><strong>Type:</strong> ${facilityType}</p>` : ''}
-        ${beds ? `<p><strong>Beds:</strong> ${beds}</p>` : ''}
-        ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
-        ${message ? `<p><strong>Message:</strong><br>${message.replace(/\n/g, '<br>')}</p>` : ''}
-      `,
-    });
+    // 2. Notify the sales/admin team
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (adminEmail) {
+      await sendEmail({
+        to: adminEmail,
+        subject: `New demo request from ${name} - ${facility}`,
+        html: `
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Facility:</strong> ${facility}</p>
+          ${facilityType ? `<p><strong>Type:</strong> ${facilityType}</p>` : ''}
+          ${beds ? `<p><strong>Beds:</strong> ${beds}</p>` : ''}
+          ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
+          ${message ? `<p><strong>Message:</strong><br>${message.replace(/\n/g, '<br>')}</p>` : ''}
+        `,
+      });
+    }
+  } catch (error) {
+    console.error('Signup email delivery failed:', error);
+    return NextResponse.json(
+      { error: 'We could not deliver confirmation email. Please try again shortly.' },
+      { status: 503 },
+    );
   }
 
   return NextResponse.json({ ok: true });

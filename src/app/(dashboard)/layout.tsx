@@ -1,11 +1,16 @@
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import type { Metadata } from 'next';
 import { Sidebar } from '@/components/layout/sidebar';
 import { TopBar } from '@/components/layout/topbar';
 import { AssistantChat } from '@/components/ai/assistant-chat';
 import { WelcomeOnboarding } from '@/components/layout/WelcomeOnboarding';
 import { WhatsNew } from '@/components/layout/WhatsNew';
 import { SetupWizard } from '@/components/layout/SetupWizard';
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default async function DashboardLayout({
   children,
