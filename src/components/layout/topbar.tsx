@@ -36,6 +36,12 @@ export function TopBar({ user }: TopBarProps) {
           width={32}
           height={32}
           unoptimized
+          onError={(e) => {
+            const img = e.currentTarget as HTMLImageElement;
+            if (!img.src.includes('/logo-white.svg')) {
+              img.src = '/logo-white.svg';
+            }
+          }}
           className="h-8 w-8"
         />
       </div>

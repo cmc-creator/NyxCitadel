@@ -66,6 +66,12 @@ export default function SignupPage() {
             width={32}
             height={32}
             unoptimized
+            onError={(e) => {
+              const img = e.currentTarget as HTMLImageElement;
+              if (!img.src.includes('/logo-white.svg')) {
+                img.src = '/logo-white.svg';
+              }
+            }}
             className="h-8 w-auto rounded-lg flex-shrink-0"
           />
           <span className="font-bold text-white tracking-tight">NyxCitadel<sup className="text-[10px] align-super ml-0.5 font-normal text-purple-400">™</sup></span>

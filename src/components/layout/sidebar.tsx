@@ -373,6 +373,12 @@ export function Sidebar() {
             height={36}
             unoptimized
             priority
+            onError={(e) => {
+              const img = e.currentTarget as HTMLImageElement;
+              if (!img.src.includes('/logo-white.svg')) {
+                img.src = '/logo-white.svg';
+              }
+            }}
             className="h-9 w-9 flex-shrink-0 drop-shadow-lg group-hover:drop-shadow-[0_0_8px_rgba(14,165,160,0.6)] transition-all duration-300"
           />
           <div>

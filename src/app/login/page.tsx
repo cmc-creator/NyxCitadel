@@ -102,6 +102,12 @@ function LoginForm() {
               width={44}
               height={44}
               unoptimized
+              onError={(e) => {
+                const img = e.currentTarget as HTMLImageElement;
+                if (!img.src.includes('/logo-white.svg')) {
+                  img.src = '/logo-white.svg';
+                }
+              }}
               className="h-11 w-auto flex-shrink-0"
             />
             <div>
@@ -164,6 +170,12 @@ function LoginForm() {
               width={36}
               height={36}
               unoptimized
+              onError={(e) => {
+                const img = e.currentTarget as HTMLImageElement;
+                if (!img.src.includes('/logo-white.svg')) {
+                  img.src = '/logo-white.svg';
+                }
+              }}
               className="h-9 w-auto flex-shrink-0"
             />
             <span className="font-bold text-xl text-white">NyxCitadel</span>
