@@ -31,10 +31,11 @@ export function TopBar({ user }: TopBarProps) {
       {/* Mobile logo - hidden on desktop (sidebar shows it there) */}
       <div className="lg:hidden flex-shrink-0 flex items-center gap-2">
         <Image
-          src="/citadellogo-v2.png"
+          src="/citadellogo-v2.png?v=20260401b"
           alt="NyxCitadel"
           width={32}
           height={32}
+          unoptimized
           className="h-8 w-8"
         />
       </div>

@@ -61,10 +61,11 @@ export default function SignupPage() {
       <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/5">
         <Link href="/" className="flex items-center gap-2.5">
           <Image
-            src="/citadellogo-v2.png"
+            src="/citadellogo-v2.png?v=20260401b"
             alt="NyxCitadel"
             width={32}
             height={32}
+            unoptimized
             className="h-8 w-auto rounded-lg flex-shrink-0"
           />
           <span className="font-bold text-white tracking-tight">NyxCitadel<sup className="text-[10px] align-super ml-0.5 font-normal text-purple-400">™</sup></span>

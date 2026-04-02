@@ -367,10 +367,11 @@ export function Sidebar() {
       <div className="flex items-center px-4 py-4 border-b border-white/8" style={{background: 'linear-gradient(135deg, hsl(228 45% 5%) 0%, hsl(228 42% 7%) 100%)'}}>
         <Link href="/dashboard" className="flex items-center gap-3 group">
           <Image
-            src="/citadellogo-v2.png"
+            src="/citadellogo-v2.png?v=20260401b"
             alt="NyxCitadel"
             width={36}
             height={36}
+            unoptimized
             priority
             className="h-9 w-9 flex-shrink-0 drop-shadow-lg group-hover:drop-shadow-[0_0_8px_rgba(14,165,160,0.6)] transition-all duration-300"
           />

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/citadellogo-v2.png',
+        url: '/citadellogo-v2.png?v=20260401b',
         width: 1200,
         height: 1200,
         alt: 'NyxCitadel',
@@ -36,12 +36,12 @@ export const metadata: Metadata = {
     title: 'NyxCitadel | Compliance & Risk Management',
     description:
       'Compliance, risk management, and emergency management platform built for healthcare organizations.',
-    images: ['/citadellogo-v2.png'],
+    images: ['/citadellogo-v2.png?v=20260401b'],
   },
   icons: {
-    icon: '/citadellogo-v2.png',
-    shortcut: '/citadellogo-v2.png',
-    apple: '/citadellogo-v2.png',
+    icon: '/citadellogo-v2.png?v=20260401b',
+    shortcut: '/citadellogo-v2.png?v=20260401b',
+    apple: '/citadellogo-v2.png?v=20260401b',
   },
   robots: { index: true, follow: true },
 };
