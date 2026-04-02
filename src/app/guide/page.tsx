@@ -115,7 +115,7 @@ export default function GuidePage() {
               <p className="text-sm text-sky-100 leading-relaxed mb-4">
                 After the guide, open the show-and-tell walkthrough for the fastest way to understand how the pieces fit together.
               </p>
-              <Link href="/walkthrough" className="inline-flex items-center gap-2 rounded-xl bg-white text-slate-900 px-4 py-2.5 text-sm font-semibold hover:bg-slate-100 transition">
+              <Link href="/walkthrough" className="inline-flex items-center gap-2 rounded-xl bg-white text-foreground px-4 py-2.5 text-sm font-semibold hover:bg-slate-100 transition">
                 Open Walkthrough
                 <ChevronRight className="w-4 h-4" />
               </Link>

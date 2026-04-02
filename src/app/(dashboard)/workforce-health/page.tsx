@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { Users2, ChevronRight, AlertTriangle, CheckCircle, HeartHandshake, Shield } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -41,7 +41,7 @@ export default async function WorkforceHealthPage() {
           { label: 'Flu Vax Declined', value: fluDeclined, color: fluDeclined > 0 ? 'text-amber-400' : 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
-            <p className="text-xs text-slate-400 mb-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mb-1">{s.label}</p>
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
           </div>
         ))}
@@ -60,7 +60,7 @@ export default async function WorkforceHealthPage() {
               <m.icon className={`w-5 h-5 ${m.color}`} />
               <div>
                 <p className="font-semibold text-white">{m.label}</p>
-                <p className="text-xs text-slate-400">{m.desc}</p>
+                <p className="text-xs text-muted-foreground/70">{m.desc}</p>
               </div>
             </div>
             <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />

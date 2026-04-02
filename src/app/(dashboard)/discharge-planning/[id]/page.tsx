@@ -19,7 +19,7 @@ const STATUS_OPTIONS = [
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -30,8 +30,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -47,24 +47,24 @@ export default async function DischargePlanDetailPage({ params }: { params: { id
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/discharge-planning" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/discharge-planning" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Discharge Planning
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/discharge-planning/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/discharge-planning/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <LogOut className="w-5 h-5 text-teal-600" />
             </div>
-            <h1 className="text-xl font-bold text-slate-900">Patient {plan.patientInitials}</h1>
+            <h1 className="text-xl font-bold text-foreground">Patient {plan.patientInitials}</h1>
             <p className="text-sm text-slate-500 mt-1">
               {plan.unit} &middot; Admitted: <strong>{formatDate(plan.admitDate)}</strong>
               {plan.patientMrn && <> &middot; MRN: <strong>{plan.patientMrn}</strong></>}
@@ -78,7 +78,7 @@ export default async function DischargePlanDetailPage({ params }: { params: { id
         <div className="md:col-span-2 space-y-5">
           {plan.barrierNotes && (
             <Section title="Discharge Barriers">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{plan.barrierNotes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{plan.barrierNotes}</p>
             </Section>
           )}
 
@@ -86,15 +86,15 @@ export default async function DischargePlanDetailPage({ params }: { params: { id
             <dl className="space-y-4">
               {plan.followUpCall1Date && (
                 <div>
-                  <dt className="text-xs text-slate-400">Call 1 - {formatDate(plan.followUpCall1Date)}</dt>
-                  <dd className="text-sm font-medium text-slate-800 mt-0.5">{plan.followUpCall1By}</dd>
+                  <dt className="text-xs text-muted-foreground/70">Call 1 - {formatDate(plan.followUpCall1Date)}</dt>
+                  <dd className="text-sm font-medium text-foreground mt-0.5">{plan.followUpCall1By}</dd>
                   {plan.followUpCall1Notes && <p className="text-xs text-slate-500 mt-1">{plan.followUpCall1Notes}</p>}
                 </div>
               )}
               {plan.followUpCall2Date && (
                 <div>
-                  <dt className="text-xs text-slate-400">Call 2 - {formatDate(plan.followUpCall2Date)}</dt>
-                  <dd className="text-sm font-medium text-slate-800 mt-0.5">{plan.followUpCall2By}</dd>
+                  <dt className="text-xs text-muted-foreground/70">Call 2 - {formatDate(plan.followUpCall2Date)}</dt>
+                  <dd className="text-sm font-medium text-foreground mt-0.5">{plan.followUpCall2By}</dd>
                 </div>
               )}
               {plan.followUpResult && <Field label="Follow-Up Result" value={plan.followUpResult} />}
@@ -103,7 +103,7 @@ export default async function DischargePlanDetailPage({ params }: { params: { id
 
           {plan.referralsSent.length > 0 && (
             <Section title="Referrals Sent">
-              <ul className="text-sm text-slate-700 list-disc list-inside space-y-1">
+              <ul className="text-sm text-foreground/80 list-disc list-inside space-y-1">
                 {plan.referralsSent.map((r, i) => <li key={i}>{r}</li>)}
               </ul>
             </Section>
@@ -129,20 +129,20 @@ export default async function DischargePlanDetailPage({ params }: { params: { id
               {plan.actualDischargeDate && <Field label="Actual Discharge" value={formatDate(plan.actualDischargeDate)} />}
               {plan.actualDisposition && <Field label="Actual Disposition" value={plan.actualDisposition.replace(/_/g, ' ')} />}
               <div>
-                <dt className="text-xs text-slate-400">Family Involved</dt>
+                <dt className="text-xs text-muted-foreground/70">Family Involved</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${plan.familyInvolved ? 'text-green-600' : 'text-slate-500'}`}>
                   {plan.familyInvolved ? 'Yes' : 'No'}
                 </dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-400">Transition Care Note</dt>
+                <dt className="text-xs text-muted-foreground/70">Transition Care Note</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${plan.transitionCareNote ? 'text-green-600' : 'text-yellow-600'}`}>
                   {plan.transitionCareNote ? 'Completed' : 'Pending'}
                 </dd>
               </div>
               {plan.moonRequired && (
                 <div>
-                  <dt className="text-xs text-slate-400">MOON Notice Issued</dt>
+                  <dt className="text-xs text-muted-foreground/70">MOON Notice Issued</dt>
                   <dd className={`text-sm font-semibold mt-0.5 ${plan.moonIssuedDate ? 'text-green-600' : 'text-red-600'}`}>
                     {plan.moonIssuedDate ? formatDate(plan.moonIssuedDate) : 'Not Issued'}
                   </dd>

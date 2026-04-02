@@ -96,7 +96,7 @@ export default function EditRcaPage() {
     setActionItems(prev => [...prev, { id: crypto.randomUUID(), action: '', responsible: '', targetDate: '', status: 'OPEN' }]);
   }
 
-  if (loading) return <div className="text-slate-400 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
   if (!data) return <div className="text-red-400 p-8">{error || 'Record not found.'}</div>;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -161,14 +161,14 @@ export default function EditRcaPage() {
         <a href={`/trackers/rca/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Search className="w-6 h-6 text-indigo-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <Search className="w-6 h-6 text-teal-600" />
           Edit Root Cause Analysis
         </h1>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
       {/* Tab navigation */}
@@ -179,7 +179,7 @@ export default function EditRcaPage() {
             type="button"
             onClick={() => setActiveTab(tab.id)}
             className={`flex-1 text-xs font-medium py-2 rounded-lg transition-colors ${
-              activeTab === tab.id ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+              activeTab === tab.id ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-500 hover:text-foreground/80'
             }`}
           >
             {tab.label}
@@ -190,12 +190,12 @@ export default function EditRcaPage() {
       <form key={data.id} onSubmit={handleSubmit} className="space-y-5">
         {/* Tab 1: Event */}
         {activeTab === 'event' && (
-          <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-            <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Event Information</h2>
+          <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+            <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Event Information</h2>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Event Date *</label>
+                <label className="block text-sm font-medium text-foreground/80 mb-1">Event Date *</label>
                 <input
                   name="eventDate"
                   type="date"
@@ -206,7 +206,7 @@ export default function EditRcaPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Event Type *</label>
+                <label className="block text-sm font-medium text-foreground/80 mb-1">Event Type *</label>
                 <select
                   name="eventType"
                   required
@@ -219,7 +219,7 @@ export default function EditRcaPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">RCA Conducted Date</label>
+                <label className="block text-sm font-medium text-foreground/80 mb-1">RCA Conducted Date</label>
                 <input
                   name="conductedDate"
                   type="date"
@@ -229,7 +229,7 @@ export default function EditRcaPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Led By</label>
+                <label className="block text-sm font-medium text-foreground/80 mb-1">Led By</label>
                 <input
                   name="completedBy"
                   defaultValue={data.completedBy ?? ''}
@@ -238,7 +238,7 @@ export default function EditRcaPage() {
               </div>
 
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-slate-700 mb-1">Linked Incident ID</label>
+                <label className="block text-sm font-medium text-foreground/80 mb-1">Linked Incident ID</label>
                 <input
                   name="linkedIncidentId"
                   defaultValue={data.linkedIncidentId ?? ''}
@@ -248,7 +248,7 @@ export default function EditRcaPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Event Description *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Event Description *</label>
               <textarea
                 name="eventDescription"
                 required
@@ -259,7 +259,7 @@ export default function EditRcaPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Event Timeline</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Event Timeline</label>
               <textarea
                 name="eventTimeline"
                 rows={5}
@@ -269,7 +269,7 @@ export default function EditRcaPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">RCA Team Members</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">RCA Team Members</label>
               <textarea
                 name="teamMembers"
                 rows={2}
@@ -282,8 +282,8 @@ export default function EditRcaPage() {
 
         {/* Tab 2: Contributing Factors */}
         {activeTab === 'factors' && (
-          <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-            <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Contributing Factors (JC Framework)</h2>
+          <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+            <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Contributing Factors (JC Framework)</h2>
             <p className="text-xs text-slate-500">Identify contributing factors in each category. Not all categories may apply.</p>
 
             {[
@@ -294,7 +294,7 @@ export default function EditRcaPage() {
               { name: 'organizationalFactors',  label: 'Organizational',         placeholder: 'Leadership decisions, culture, resource allocation, staffing levels...', defaultValue: data.organizationalFactors ?? '' },
             ].map(factor => (
               <div key={factor.name}>
-                <label className="block text-sm font-medium text-slate-700 mb-1">{factor.label}</label>
+                <label className="block text-sm font-medium text-foreground/80 mb-1">{factor.label}</label>
                 <textarea
                   name={factor.name}
                   rows={2}
@@ -310,27 +310,27 @@ export default function EditRcaPage() {
         {/* Tab 3: 5-Whys */}
         {activeTab === 'analysis' && (
           <div className="space-y-4">
-            <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
+            <div className="bg-card rounded-xl border border-border p-6 space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">5-Whys Analysis</h2>
+                <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">5-Whys Analysis</h2>
                 <button
                   type="button"
                   onClick={addWhy}
-                  className="inline-flex items-center gap-1 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg"
+                  className="inline-flex items-center gap-1 text-xs font-medium bg-teal-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg"
                 >
                   <Plus className="w-3.5 h-3.5" /> Add Why
                 </button>
               </div>
 
               {whyItems.map((item, idx) => (
-                <div key={item.id} className="border border-slate-200 rounded-lg p-4 space-y-2">
+                <div key={item.id} className="border border-border rounded-lg p-4 space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-semibold text-indigo-700">Why #{idx + 1}</span>
                     {whyItems.length > 1 && (
                       <button
                         type="button"
                         onClick={() => setWhyItems(prev => prev.filter(w => w.id !== item.id))}
-                        className="text-slate-400 hover:text-red-500"
+                        className="text-muted-foreground/70 hover:text-red-500"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -353,8 +353,8 @@ export default function EditRcaPage() {
               ))}
             </div>
 
-            <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-              <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Root Causes Identified</h2>
+            <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+              <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Root Causes Identified</h2>
               <textarea
                 name="rootCauses"
                 rows={4}
@@ -363,11 +363,11 @@ export default function EditRcaPage() {
               />
             </div>
 
-            <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-              <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Conclusion &amp; Preventability</h2>
+            <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+              <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Conclusion &amp; Preventability</h2>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Preventability Rating</label>
+                <label className="block text-sm font-medium text-foreground/80 mb-1">Preventability Rating</label>
                 <select
                   name="preventabilityRating"
                   defaultValue={data.preventabilityRating ?? ''}
@@ -388,7 +388,7 @@ export default function EditRcaPage() {
               />
 
               <div className="space-y-2">
-                <p className="text-sm font-medium text-slate-700">Required Changes</p>
+                <p className="text-sm font-medium text-foreground/80">Required Changes</p>
                 <label className="flex items-center gap-3 cursor-pointer">
                   <input
                     type="checkbox"
@@ -396,7 +396,7 @@ export default function EditRcaPage() {
                     onChange={e => setSystemChangesRequired(e.target.checked)}
                     className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
                   />
-                  <span className="text-sm text-slate-700">System or process changes required</span>
+                  <span className="text-sm text-foreground/80">System or process changes required</span>
                 </label>
                 <label className="flex items-center gap-3 cursor-pointer">
                   <input
@@ -405,7 +405,7 @@ export default function EditRcaPage() {
                     onChange={e => setPolicyChangesRequired(e.target.checked)}
                     className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
                   />
-                  <span className="text-sm text-slate-700">Policy or procedure changes required</span>
+                  <span className="text-sm text-foreground/80">Policy or procedure changes required</span>
                 </label>
                 <label className="flex items-center gap-3 cursor-pointer">
                   <input
@@ -414,7 +414,7 @@ export default function EditRcaPage() {
                     onChange={e => setTrainingRequired(e.target.checked)}
                     className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
                   />
-                  <span className="text-sm text-slate-700">Staff training / education required</span>
+                  <span className="text-sm text-foreground/80">Staff training / education required</span>
                 </label>
               </div>
             </div>
@@ -423,9 +423,9 @@ export default function EditRcaPage() {
 
         {/* Tab 4: Action Items */}
         {activeTab === 'actions' && (
-          <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
+          <div className="bg-card rounded-xl border border-border p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Action Items</h2>
+              <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Action Items</h2>
               <button
                 type="button"
                 onClick={addAction}
@@ -436,14 +436,14 @@ export default function EditRcaPage() {
             </div>
 
             {actionItems.map((item, idx) => (
-              <div key={item.id} className="border border-slate-200 rounded-lg p-4 space-y-2">
+              <div key={item.id} className="border border-border rounded-lg p-4 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-semibold text-slate-600">Action #{idx + 1}</span>
                   {actionItems.length > 1 && (
                     <button
                       type="button"
                       onClick={() => setActionItems(prev => prev.filter(a => a.id !== item.id))}
-                      className="text-slate-400 hover:text-red-500"
+                      className="text-muted-foreground/70 hover:text-red-500"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -474,7 +474,7 @@ export default function EditRcaPage() {
             ))}
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Internal Notes</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Internal Notes</label>
               <textarea
                 name="notes"
                 rows={2}
@@ -495,7 +495,7 @@ export default function EditRcaPage() {
           </button>
           <a
             href={`/trackers/rca/${id}`}
-            className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors"
           >
             Cancel
           </a>

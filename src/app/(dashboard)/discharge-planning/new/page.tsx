@@ -59,18 +59,18 @@ export default function NewDischargePlanPage() {
         <a href="/discharge-planning" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Discharge Planning
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Home className="w-6 h-6 text-rose-600" />
           New Discharge Plan
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Assessment should be initiated within 24 hours of admission.</p>
       </div>
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
+      {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Patient &amp; Admission</h2>
+          <h2 className="text-sm font-semibold text-foreground">Patient &amp; Admission</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
@@ -98,7 +98,7 @@ export default function NewDischargePlanPage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Assessment</h2>
+          <h2 className="text-sm font-semibold text-foreground">Assessment</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Assessment Start Date *</label>
@@ -116,7 +116,7 @@ export default function NewDischargePlanPage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Discharge Planning</h2>
+          <h2 className="text-sm font-semibold text-foreground">Discharge Planning</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Expected Disposition *</label>
@@ -139,11 +139,11 @@ export default function NewDischargePlanPage() {
             <textarea name="barrierNotes" rows={2} className="form-input w-full" placeholder="Homeless, no support, insurance denial, etc." />
           </div>
           <div className="flex gap-6">
-            <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+            <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
               <input name="familyInvolved" type="checkbox" className="rounded" />
               Family / Caregiver Involved
             </label>
-            <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+            <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
               <input name="moonRequired" type="checkbox" className="rounded" />
               MOON Notice Required
             </label>
@@ -151,7 +151,7 @@ export default function NewDischargePlanPage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/discharge-planning" className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/discharge-planning" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-rose-600 text-white hover:bg-rose-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Create Plan'}
           </button>

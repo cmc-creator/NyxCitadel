@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -21,8 +21,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -40,11 +40,11 @@ export default async function PdmpCheckDetailPage({ params }: { params: { id: st
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/pharmacy/pdmp" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/pharmacy/pdmp" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to PDMP Checks
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/pharmacy/pdmp/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/pharmacy/pdmp/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -52,7 +52,7 @@ export default async function PdmpCheckDetailPage({ params }: { params: { id: st
       </div>
 
       {findingUnresolved && (
-        <div className="flex items-start gap-3 bg-red-50 border border-red-300 text-red-800 rounded-2xl p-4">
+        <div className="flex items-start gap-3 bg-red-950/20 border border-red-300 text-red-800 rounded-2xl p-4">
           <AlertTriangle className="w-5 h-5 mt-0.5 flex-shrink-0" />
           <div>
             <p className="font-semibold">Significant Finding - Action Required</p>
@@ -63,7 +63,7 @@ export default async function PdmpCheckDetailPage({ params }: { params: { id: st
         </div>
       )}
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex items-center gap-2 mb-1 flex-wrap">
           {check.significantFinding ? (
             <span className="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-100 text-red-700">Significant Finding</span>
@@ -71,7 +71,7 @@ export default async function PdmpCheckDetailPage({ params }: { params: { id: st
             <span className="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold bg-green-100 text-green-700">No Significant Finding</span>
           )}
         </div>
-        <h1 className="text-xl font-bold text-slate-900">PDMP Check - {check.prescriptionType}</h1>
+        <h1 className="text-xl font-bold text-foreground">PDMP Check - {check.prescriptionType}</h1>
         <p className="text-sm text-slate-500 mt-1">
           Patient: {check.patientInitials} &middot; DOB: {formatDate(check.patientDob)} &middot; {formatDate(check.checkDate)}
         </p>
@@ -81,13 +81,13 @@ export default async function PdmpCheckDetailPage({ params }: { params: { id: st
         <div className="md:col-span-2 space-y-5">
           {check.findingNotes && (
             <Section title="Finding Notes">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{check.findingNotes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{check.findingNotes}</p>
             </Section>
           )}
 
           {check.actionTaken && (
             <Section title="Action Taken">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{check.actionTaken}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{check.actionTaken}</p>
             </Section>
           )}
         </div>

@@ -30,7 +30,7 @@ const STATUS_OPTIONS = [
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -41,8 +41,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5 mb-3">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5 mb-3">{value}</dd>
     </>
   );
 }
@@ -71,11 +71,11 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/eoc/deficiencies" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/eoc/deficiencies" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Deficiencies
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/eoc/deficiencies/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/eoc/deficiencies/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/eoc/deficiencies/${params.id}`} redirectPath="/eoc/deficiencies" label="deficiency" />
@@ -83,17 +83,17 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <AlertCircle className="w-5 h-5 text-orange-600" />
-              <span className="text-xs font-mono text-slate-400">{def.defNumber}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">{def.defNumber}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${SEVERITY_COLOR[def.severity] ?? 'bg-slate-100 text-slate-600'}`}>
                 {def.severity.replace(/_/g, ' ')}
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{def.category.replace(/_/g, ' ')}</h1>
+            <h1 className="text-xl font-bold text-foreground">{def.category.replace(/_/g, ' ')}</h1>
             <p className="text-sm text-slate-500 mt-1">
               {def.location}{def.unit && ` · ${def.unit}`}
             </p>
@@ -105,12 +105,12 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-5">
           <Section title="Description">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{def.description}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{def.description}</p>
           </Section>
 
           {def.notes && (
             <Section title="Notes">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{def.notes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{def.notes}</p>
             </Section>
           )}
 
@@ -146,7 +146,7 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
 
           {def.round && (
             <Section title="Originating Round">
-              <Link href={`/eoc/rounds/${def.round.id}`} className="text-sm text-indigo-600 hover:underline">
+              <Link href={`/eoc/rounds/${def.round.id}`} className="text-sm text-teal-600 hover:underline">
                 {def.round.roundNumber} — {def.round.roundType.replace(/_/g, ' ')} →
               </Link>
             </Section>

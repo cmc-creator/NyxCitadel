@@ -33,7 +33,7 @@ const DEF_STATUS_COLOR: Record<string, string> = {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -56,28 +56,28 @@ export default async function EocRoundDetailPage({ params }: { params: { id: str
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/eoc/rounds" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/eoc/rounds" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to EOC Rounds
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/eoc/rounds/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/eoc/rounds/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <ClipboardCheck className="w-5 h-5 text-teal-600" />
-              <span className="text-xs font-mono text-slate-400">{round.roundNumber}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">{round.roundNumber}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[round.status] ?? 'bg-slate-100 text-slate-600'}`}>
                 {round.status.replace(/_/g, ' ')}
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{round.roundType.replace(/_/g, ' ')}</h1>
+            <h1 className="text-xl font-bold text-foreground">{round.roundType.replace(/_/g, ' ')}</h1>
             <p className="text-sm text-slate-500 mt-1">
               Conducted: <strong>{formatDate(round.conductedDate)}</strong>
               &middot; By: <strong>{round.conductedBy}</strong>
@@ -85,12 +85,12 @@ export default async function EocRoundDetailPage({ params }: { params: { id: str
           </div>
           <div className="flex gap-4 text-center shrink-0">
             <div className="bg-slate-50 rounded-xl px-4 py-2">
-              <p className="text-2xl font-bold text-slate-800">{round.totalItems}</p>
-              <p className="text-xs text-slate-400">Total Items</p>
+              <p className="text-2xl font-bold text-foreground">{round.totalItems}</p>
+              <p className="text-xs text-muted-foreground/70">Total Items</p>
             </div>
-            <div className={`rounded-xl px-4 py-2 ${openDefs.length > 0 ? 'bg-red-50' : 'bg-green-50'}`}>
+            <div className={`rounded-xl px-4 py-2 ${openDefs.length > 0 ? 'bg-red-950/20' : 'bg-green-50'}`}>
               <p className={`text-2xl font-bold ${openDefs.length > 0 ? 'text-red-700' : 'text-green-700'}`}>{openDefs.length}</p>
-              <p className="text-xs text-slate-400">Open Deficiencies</p>
+              <p className="text-xs text-muted-foreground/70">Open Deficiencies</p>
             </div>
           </div>
         </div>
@@ -100,15 +100,15 @@ export default async function EocRoundDetailPage({ params }: { params: { id: str
         <div className="md:col-span-2 space-y-5">
           <Section title={`Deficiencies Found (${round.deficiencies.length})`}>
             {round.deficiencies.length === 0 ? (
-              <p className="text-sm text-slate-400">No deficiencies recorded for this round.</p>
+              <p className="text-sm text-muted-foreground/70">No deficiencies recorded for this round.</p>
             ) : (
-              <div className="divide-y divide-slate-100">
+              <div className="divide-y divide-border/30">
                 {round.deficiencies.map(def => (
                   <div key={def.id} className="py-3">
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <span className="text-xs font-mono text-slate-400">{def.defNumber}</span>
+                          <span className="text-xs font-mono text-muted-foreground/70">{def.defNumber}</span>
                           <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${DEF_SEVERITY_COLOR[def.severity] ?? 'bg-slate-100 text-slate-600'}`}>
                             {def.severity.replace(/_/g, ' ')}
                           </span>
@@ -116,12 +116,12 @@ export default async function EocRoundDetailPage({ params }: { params: { id: str
                             {def.status}
                           </span>
                         </div>
-                        <p className="text-sm text-slate-700">{def.description}</p>
-                        <p className="text-xs text-slate-400 mt-0.5">{def.location}{def.unit && ` · ${def.unit}`}</p>
+                        <p className="text-sm text-foreground/80">{def.description}</p>
+                        <p className="text-xs text-muted-foreground/70 mt-0.5">{def.location}{def.unit && ` · ${def.unit}`}</p>
                       </div>
                     </div>
                     {def.dueDate && (
-                      <p className="text-xs text-slate-400 mt-1">Due: {formatDate(def.dueDate)}</p>
+                      <p className="text-xs text-muted-foreground/70 mt-1">Due: {formatDate(def.dueDate)}</p>
                     )}
                   </div>
                 ))}
@@ -131,7 +131,7 @@ export default async function EocRoundDetailPage({ params }: { params: { id: str
 
           {round.summary && (
             <Section title="Summary">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{round.summary}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{round.summary}</p>
             </Section>
           )}
         </div>
@@ -140,21 +140,21 @@ export default async function EocRoundDetailPage({ params }: { params: { id: str
           <Section title="Round Details">
             <dl className="space-y-3">
               <div>
-                <dt className="text-xs text-slate-400">Round Type</dt>
-                <dd className="text-sm font-medium text-slate-800 mt-0.5">{round.roundType.replace(/_/g, ' ')}</dd>
+                <dt className="text-xs text-muted-foreground/70">Round Type</dt>
+                <dd className="text-sm font-medium text-foreground mt-0.5">{round.roundType.replace(/_/g, ' ')}</dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-400">Conducted Date</dt>
-                <dd className="text-sm font-medium text-slate-800 mt-0.5">{formatDate(round.conductedDate)}</dd>
+                <dt className="text-xs text-muted-foreground/70">Conducted Date</dt>
+                <dd className="text-sm font-medium text-foreground mt-0.5">{formatDate(round.conductedDate)}</dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-400">Conducted By</dt>
-                <dd className="text-sm font-medium text-slate-800 mt-0.5">{round.conductedBy}</dd>
+                <dt className="text-xs text-muted-foreground/70">Conducted By</dt>
+                <dd className="text-sm font-medium text-foreground mt-0.5">{round.conductedBy}</dd>
               </div>
               {round.areasInspected.length > 0 && (
                 <div>
-                  <dt className="text-xs text-slate-400">Areas Inspected</dt>
-                  <dd className="text-sm font-medium text-slate-800 mt-0.5">{round.areasInspected.join(', ')}</dd>
+                  <dt className="text-xs text-muted-foreground/70">Areas Inspected</dt>
+                  <dd className="text-sm font-medium text-foreground mt-0.5">{round.areasInspected.join(', ')}</dd>
                 </div>
               )}
             </dl>

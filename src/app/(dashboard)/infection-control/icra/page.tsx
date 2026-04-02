@@ -1,4 +1,4 @@
-﻿import { ClipboardList, CheckCircle, AlertTriangle, Plus } from 'lucide-react';
+import { ClipboardList, CheckCircle, AlertTriangle, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -41,7 +41,7 @@ export default async function IcraPage() {
             <h1 className="text-xl font-bold text-white">IC Risk Assessment (ICRA)</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700">CMS §482.42</span>
           </div>
-          <p className="text-slate-400 text-sm">Annual infection control risk assessment - identifies risks, assigns ratings, sets mitigation goals.</p>
+          <p className="text-muted-foreground/70 text-sm">Annual infection control risk assessment - identifies risks, assigns ratings, sets mitigation goals.</p>
         </div>
         <Link href="/infection-control/icra/new"
           className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
@@ -59,7 +59,7 @@ export default async function IcraPage() {
             <p className={`text-sm font-semibold ${current.status === 'APPROVED' ? 'text-teal-300' : 'text-amber-300'}`}>
               {current.assessmentYear} ICRA - {statusConfig[current.status]?.label ?? current.status}
             </p>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-muted-foreground/70 mt-0.5">
               Conducted: {new Date(current.conductedDate).toLocaleDateString()}
               {current.approvedBy ? ` · Approved by: ${current.approvedBy}` : ''}
               {current.reviewedBy ? ` · Reviewed by: ${current.reviewedBy}` : ''}
@@ -82,7 +82,7 @@ export default async function IcraPage() {
             <thead className="bg-slate-900/40">
               <tr>
                 {['Risk Area', 'Risk Description', 'Rating', 'Mitigation Goal', 'Owner'].map(h => (
-                  <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-3">{h}</th>
+                  <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -90,12 +90,12 @@ export default async function IcraPage() {
               {riskAreas.map((r, i) => (
                 <tr key={i} className="hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 font-semibold text-white text-xs">{r.area}</td>
-                  <td className="px-4 py-3 text-slate-400 text-xs max-w-xs">{r.risk}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70 text-xs max-w-xs">{r.risk}</td>
                   <td className="px-4 py-3">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ratingColor[r.rating] ?? 'bg-slate-100 text-slate-600'}`}>{r.rating}</span>
                   </td>
                   <td className="px-4 py-3 text-slate-300 text-xs max-w-sm">{r.mitigationGoal}</td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{r.owner ?? '-'}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70 text-xs">{r.owner ?? '-'}</td>
                 </tr>
               ))}
             </tbody>
@@ -112,7 +112,7 @@ export default async function IcraPage() {
             <thead className="bg-slate-900/40">
               <tr>
                 {['Year', 'Conducted', 'Conducted By', 'Status', 'Approved By'].map(h => (
-                  <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-3">{h}</th>
+                  <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -120,14 +120,14 @@ export default async function IcraPage() {
               {assessments.map(a => (
                 <tr key={a.id} className="hover:bg-white/5">
                   <td className="px-4 py-3 font-semibold text-white text-xs">{a.assessmentYear}</td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{new Date(a.conductedDate).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70 text-xs">{new Date(a.conductedDate).toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{a.conductedBy}</td>
                   <td className="px-4 py-3">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[a.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
                       {statusConfig[a.status]?.label ?? a.status}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{a.approvedBy ?? '-'}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70 text-xs">{a.approvedBy ?? '-'}</td>
                 </tr>
               ))}
             </tbody>

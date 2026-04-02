@@ -84,7 +84,7 @@ export default function EditQapiProjectPage() {
     }
   }
 
-  if (loading) return <div className="text-slate-400 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
   if (!data || data.error) return <div className="text-red-400 p-8">{error || 'Not found.'}</div>;
 
   return (
@@ -93,20 +93,20 @@ export default function EditQapiProjectPage() {
         <a href={`/quality/projects/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Project
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Target className="w-6 h-6 text-purple-600" />
           Edit QAPI Project
         </h1>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <form key={data.id} onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form key={data.id} onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         {/* Core info */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Project Overview</h2>
+          <h2 className="text-sm font-semibold text-foreground">Project Overview</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Project Title *</label>
             <input name="title" required defaultValue={data.title ?? ''} className="form-input w-full" />
@@ -147,7 +147,7 @@ export default function EditQapiProjectPage() {
 
         {/* PDSA content */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Problem Statement & Aim (PDSA - Plan)</h2>
+          <h2 className="text-sm font-semibold text-foreground">Problem Statement & Aim (PDSA - Plan)</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Problem Statement *</label>
             <textarea name="problemStatement" required rows={3} defaultValue={data.problemStatement ?? ''} className="form-input w-full resize-none" />
@@ -178,7 +178,7 @@ export default function EditQapiProjectPage() {
 
         {/* Interventions */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Planned Interventions (PDSA - Do)</h2>
+          <h2 className="text-sm font-semibold text-foreground">Planned Interventions (PDSA - Do)</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Interventions</label>
             <textarea name="interventions" rows={4} defaultValue={data.interventions ?? ''} className="form-input w-full resize-none" />
@@ -187,7 +187,7 @@ export default function EditQapiProjectPage() {
 
         {/* Regulatory */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Regulatory Linkage</h2>
+          <h2 className="text-sm font-semibold text-foreground">Regulatory Linkage</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
@@ -208,7 +208,7 @@ export default function EditQapiProjectPage() {
         </div>
 
         <div className="px-6 py-4 flex items-center justify-end gap-3">
-          <a href={`/quality/projects/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-800">Cancel</a>
+          <a href={`/quality/projects/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

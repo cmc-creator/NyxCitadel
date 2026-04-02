@@ -25,7 +25,7 @@ const HAI_LABELS: Record<string, string> = {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -36,8 +36,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -55,22 +55,22 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/infection-control/hai" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/infection-control/hai" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to HAI Surveillance
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/infection-control/hai/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/infection-control/hai/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex items-start gap-3">
           <Activity className="w-5 h-5 text-teal-600 mt-0.5 shrink-0" />
           <div>
-            <h1 className="text-xl font-bold text-slate-900">{HAI_LABELS[hai.haiType] ?? hai.haiType}</h1>
+            <h1 className="text-xl font-bold text-foreground">{HAI_LABELS[hai.haiType] ?? hai.haiType}</h1>
             <p className="text-sm text-slate-500 mt-1">
               {MONTHS[hai.reportMonth]} {hai.reportYear}
               &middot; <strong>{hai.caseCount} case{hai.caseCount !== 1 ? 's' : ''}</strong>
@@ -80,7 +80,7 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
       </div>
 
       {aboveBenchmark && (
-        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+        <div className="bg-orange-950/20 border border-orange-200 rounded-xl p-4">
           <p className="text-sm font-semibold text-orange-800">SIR Above NHSN Benchmark - Review required and consider QAPI project.</p>
         </div>
       )}
@@ -89,19 +89,19 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
         <Section title="Surveillance Data">
           <dl className="space-y-3">
             <div>
-              <dt className="text-xs text-slate-400">Case Count</dt>
-              <dd className="text-2xl font-bold text-slate-800 mt-0.5">{hai.caseCount}</dd>
+              <dt className="text-xs text-muted-foreground/70">Case Count</dt>
+              <dd className="text-2xl font-bold text-foreground mt-0.5">{hai.caseCount}</dd>
             </div>
             {hai.patientDays != null && (
               <div>
-                <dt className="text-xs text-slate-400">Patient Days</dt>
-                <dd className="text-sm font-medium text-slate-800 mt-0.5">{hai.patientDays.toLocaleString()}</dd>
+                <dt className="text-xs text-muted-foreground/70">Patient Days</dt>
+                <dd className="text-sm font-medium text-foreground mt-0.5">{hai.patientDays.toLocaleString()}</dd>
               </div>
             )}
             {hai.rate != null && (
               <div>
-                <dt className="text-xs text-slate-400">Rate (per 1,000 pt-days)</dt>
-                <dd className="text-sm font-medium text-slate-800 mt-0.5">{hai.rate.toFixed(2)}</dd>
+                <dt className="text-xs text-muted-foreground/70">Rate (per 1,000 pt-days)</dt>
+                <dd className="text-sm font-medium text-foreground mt-0.5">{hai.rate.toFixed(2)}</dd>
               </div>
             )}
           </dl>
@@ -111,20 +111,20 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
           <dl className="space-y-3">
             {hai.nhsnBenchmark != null && (
               <div>
-                <dt className="text-xs text-slate-400">NHSN SIR Benchmark</dt>
-                <dd className="text-sm font-medium text-slate-800 mt-0.5">{hai.nhsnBenchmark.toFixed(2)}</dd>
+                <dt className="text-xs text-muted-foreground/70">NHSN SIR Benchmark</dt>
+                <dd className="text-sm font-medium text-foreground mt-0.5">{hai.nhsnBenchmark.toFixed(2)}</dd>
               </div>
             )}
             {hai.sir != null && (
               <div>
-                <dt className="text-xs text-slate-400">Standardized Infection Ratio (SIR)</dt>
+                <dt className="text-xs text-muted-foreground/70">Standardized Infection Ratio (SIR)</dt>
                 <dd className={`text-sm font-bold mt-0.5 ${aboveBenchmark ? 'text-red-600' : 'text-green-600'}`}>
                   {hai.sir.toFixed(2)} {aboveBenchmark ? '▲ Above' : '▼ Below'} benchmark
                 </dd>
               </div>
             )}
             <div>
-              <dt className="text-xs text-slate-400">Submitted to NHSN</dt>
+              <dt className="text-xs text-muted-foreground/70">Submitted to NHSN</dt>
               <dd className={`text-sm font-semibold mt-0.5 ${hai.submittedToNhsn ? 'text-green-600' : 'text-yellow-600'}`}>
                 {hai.submittedToNhsn ? 'Yes' : 'Pending'}
               </dd>
@@ -135,7 +135,7 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
 
       {hai.notes && (
         <Section title="Notes">
-          <p className="text-sm text-slate-700 whitespace-pre-wrap">{hai.notes}</p>
+          <p className="text-sm text-foreground/80 whitespace-pre-wrap">{hai.notes}</p>
         </Section>
       )}
     </div>

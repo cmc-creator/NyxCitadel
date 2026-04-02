@@ -135,7 +135,7 @@ const severityBadge: Record<string, string> = {
   HIGH: 'bg-orange-950/60 text-orange-300 border border-orange-600/40',
   MEDIUM: 'bg-amber-950/60 text-amber-300 border border-amber-600/40',
   LOW: 'bg-slate-700/60 text-slate-300 border border-slate-600/40',
-  OBSERVATION: 'bg-slate-800/60 text-slate-400 border border-slate-600/40',
+  OBSERVATION: 'bg-slate-800/60 text-muted-foreground/70 border border-slate-600/40',
 };
 
 const statusBadge: Record<string, string> = {
@@ -160,7 +160,7 @@ export default function EocOverviewPage() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Environment of Care</h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-muted-foreground/70 mt-1">
             Life safety, ligature risk, physical environment, and equipment maintenance
           </p>
         </div>
@@ -201,7 +201,7 @@ export default function EocOverviewPage() {
           >
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs text-slate-400 mb-1">{s.label}</p>
+                <p className="text-xs text-muted-foreground/70 mb-1">{s.label}</p>
                 <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
                 <p className="text-xs text-slate-500 mt-1">{s.sub}</p>
               </div>
@@ -213,7 +213,7 @@ export default function EocOverviewPage() {
 
       {/* Module cards */}
       <div>
-        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">EOC Modules</h2>
+        <h2 className="text-sm font-semibold text-muted-foreground/70 uppercase tracking-wider mb-3">EOC Modules</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {modules.map((m) => (
             <Link
@@ -225,7 +225,7 @@ export default function EocOverviewPage() {
                 <div className={`p-2 rounded-lg ${m.bg} border ${m.border}`}>
                   <m.icon className={`w-5 h-5 ${m.color}`} />
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-colors" />
+                <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-muted-foreground/70 transition-colors" />
               </div>
               <div>
                 <p className="text-sm font-semibold text-foreground">{m.label}</p>
@@ -250,7 +250,7 @@ export default function EocOverviewPage() {
               <div key={p.label}>
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
-                    <p.icon className="w-3.5 h-3.5 text-slate-400" />
+                    <p.icon className="w-3.5 h-3.5 text-muted-foreground/70" />
                     <span className="text-xs text-slate-300">{p.label}</span>
                   </div>
                   <span className={`text-xs font-semibold ${p.score >= 85 ? 'text-emerald-400' : p.score >= 70 ? 'text-amber-400' : 'text-red-400'}`}>
@@ -268,7 +268,7 @@ export default function EocOverviewPage() {
           </div>
           <div className="mt-4 pt-4 border-t border-border">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-slate-400">Overall EOC Score</span>
+              <span className="text-xs text-muted-foreground/70">Overall EOC Score</span>
               <span className="text-sm font-bold text-amber-400">84.5%</span>
             </div>
             <p className="text-xs text-slate-600 mt-1">Ligature risk deficiencies are dragging the overall score. Target: 95%</p>
@@ -337,7 +337,7 @@ export default function EocOverviewPage() {
                     <p className="text-foreground font-medium text-xs">{e.name}</p>
                   </td>
                   <td className="py-2.5 pr-4">
-                    <span className="text-xs text-slate-400">{e.category.replace('_', ' ')}</span>
+                    <span className="text-xs text-muted-foreground/70">{e.category.replace('_', ' ')}</span>
                   </td>
                   <td className="py-2.5 pr-4">
                     <span className={`text-xs font-medium ${e.status === 'OVERDUE' ? 'text-red-400' : e.status === 'DUE_SOON' ? 'text-amber-400' : 'text-slate-300'}`}>

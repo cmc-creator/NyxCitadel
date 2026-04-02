@@ -34,7 +34,7 @@ function Field({ label, note, children }: { label: string; note?: string; childr
   return (
     <div>
       <label className="block text-xs font-medium text-slate-500 mb-1">
-        {label}{note && <span className="font-normal text-slate-400 ml-1">{note}</span>}
+        {label}{note && <span className="font-normal text-muted-foreground/70 ml-1">{note}</span>}
       </label>
       {children}
     </div>
@@ -135,7 +135,7 @@ export default function FacilitySettingsPage() {
     <form onSubmit={handleSave} className="space-y-6 max-w-3xl">
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <Building2 className="w-6 h-6 text-teal-600" />
             Facility Configuration
           </h1>
@@ -157,16 +157,16 @@ export default function FacilitySettingsPage() {
         </div>
       )}
       {error && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+        <div className="flex items-center gap-2 bg-red-950/20 border border-red-200 rounded-xl px-4 py-3">
           <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />
           <p className="text-sm text-red-800">{error}</p>
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
         {/* Facility Info */}
         <div className="px-6 py-5">
-          <h2 className="text-sm font-semibold text-slate-800 mb-4">Facility Information</h2>
+          <h2 className="text-sm font-semibold text-foreground mb-4">Facility Information</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="Facility Name *">
               <input required type="text" value={form.name}
@@ -232,7 +232,7 @@ export default function FacilitySettingsPage() {
 
         {/* Regulatory IDs */}
         <div className="px-6 py-5">
-          <h2 className="text-sm font-semibold text-slate-800 mb-4">Regulatory Identifiers</h2>
+          <h2 className="text-sm font-semibold text-foreground mb-4">Regulatory Identifiers</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="NPI (National Provider Identifier)">
               <input type="text" value={form.npi} onChange={e => set('npi', e.target.value)}
@@ -263,11 +263,11 @@ export default function FacilitySettingsPage() {
 
         {/* Branding */}
         <div className="px-6 py-5">
-          <h2 className="text-sm font-semibold text-slate-800 mb-1 flex items-center gap-1.5">
+          <h2 className="text-sm font-semibold text-foreground mb-1 flex items-center gap-1.5">
             <Palette className="w-4 h-4 text-teal-500" />
             Branding (White-Label)
           </h2>
-          <p className="text-xs text-slate-400 mb-4">
+          <p className="text-xs text-muted-foreground/70 mb-4">
             Stored for report headers, PDF exports, and future theming.
           </p>
           <div className="flex items-center gap-10">
@@ -278,7 +278,7 @@ export default function FacilitySettingsPage() {
                 </label>
                 <div className="flex items-center gap-3">
                   <input type="color" value={form[key]} onChange={e => set(key, e.target.value)}
-                    className="w-10 h-10 rounded-lg border border-slate-200 cursor-pointer p-0.5" />
+                    className="w-10 h-10 rounded-lg border border-border cursor-pointer p-0.5" />
                   <input type="text" value={form[key]} onChange={e => set(key, e.target.value)}
                     pattern="^#[0-9a-fA-F]{6}$" className="form-input w-28 text-sm font-mono" />
                 </div>
@@ -288,7 +288,7 @@ export default function FacilitySettingsPage() {
         </div>
 
         <div className="px-6 py-4 flex items-center justify-between bg-slate-50 rounded-b-xl">
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-muted-foreground/70">
             Changes are scoped to this facility only. Multi-facility environments each configure independently.
           </p>
           <button type="submit" disabled={saving}

@@ -56,7 +56,7 @@ export function SatisfactionPushButton({ surveyId, existingScore, conductedDate 
   if (!open) {
     return (
       <button onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-teal-600 hover:bg-teal-50 px-2 py-0.5 rounded-full border border-slate-200 hover:border-teal-200 transition-colors">
+        className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-teal-600 hover:bg-teal-950/20 px-2 py-0.5 rounded-full border border-border hover:border-teal-200 transition-colors">
         <TrendingUp className="w-3 h-3" /> Log satisfaction
       </button>
     );
@@ -64,7 +64,7 @@ export function SatisfactionPushButton({ surveyId, existingScore, conductedDate 
 
   return (
     <div className="flex items-center gap-1.5">
-      <div className="flex items-center gap-1 bg-white border border-slate-200 rounded-lg px-2 py-1">
+      <div className="flex items-center gap-1 bg-card border border-border rounded-lg px-2 py-1">
         <input
           type="number" min={0} max={100} step={0.1}
           value={score}
@@ -73,7 +73,7 @@ export function SatisfactionPushButton({ surveyId, existingScore, conductedDate 
           className="w-16 text-xs border-none outline-none bg-transparent"
           autoFocus
         />
-        <span className="text-xs text-slate-400">%</span>
+        <span className="text-xs text-muted-foreground/70">%</span>
       </div>
       <button onClick={handlePush} disabled={saving || !score}
         className="inline-flex items-center gap-1 text-xs text-white bg-teal-600 hover:bg-teal-700 disabled:opacity-50 px-2 py-1 rounded-lg transition-colors">
@@ -81,7 +81,7 @@ export function SatisfactionPushButton({ surveyId, existingScore, conductedDate 
         {monthLabel ? `→ QAPI ${monthLabel}` : '→ QAPI'}
       </button>
       <button onClick={() => setOpen(false)}
-        className="text-xs text-slate-400 hover:text-slate-600 px-1">✕</button>
+        className="text-xs text-muted-foreground/70 hover:text-slate-600 px-1">✕</button>
     </div>
   );
 }

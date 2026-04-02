@@ -23,11 +23,11 @@ export function scoreToGrade12(score: number): string {
 // ─── 5-point scale (facility resilience) ─────────────────────────────────────
 
 export function scoreToGrade5(score: number): { label: string; color: string; bg: string } {
-  if (score >= 90) return { label: 'A', color: 'text-emerald-700', bg: 'bg-emerald-50 border-emerald-200' };
-  if (score >= 80) return { label: 'B', color: 'text-blue-700',    bg: 'bg-blue-50 border-blue-200' };
+  if (score >= 90) return { label: 'A', color: 'text-emerald-700', bg: 'bg-emerald-950/20 border-emerald-200' };
+  if (score >= 80) return { label: 'B', color: 'text-blue-700',    bg: 'bg-blue-950/20 border-blue-200' };
   if (score >= 70) return { label: 'C', color: 'text-yellow-700',  bg: 'bg-yellow-50 border-yellow-200' };
-  if (score >= 60) return { label: 'D', color: 'text-orange-700',  bg: 'bg-orange-50 border-orange-200' };
-  return               { label: 'F', color: 'text-red-700',        bg: 'bg-red-50 border-red-200' };
+  if (score >= 60) return { label: 'D', color: 'text-orange-700',  bg: 'bg-orange-950/20 border-orange-200' };
+  return               { label: 'F', color: 'text-red-700',        bg: 'bg-red-950/20 border-red-200' };
 }
 
 // ─── Grade-to-color helper (for 12-point grades in UI) ───────────────────────

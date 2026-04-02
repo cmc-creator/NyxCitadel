@@ -15,7 +15,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   EM_PLAN:     'bg-orange-100 text-orange-700',
   TRAINING:    'bg-green-100 text-green-700',
   REGULATORY:  'bg-red-100 text-red-700',
-  OTHER:       'bg-slate-100 text-slate-700',
+  OTHER:       'bg-slate-100 text-foreground/80',
 };
 
 export default async function DocumentsPage() {
@@ -31,7 +31,7 @@ export default async function DocumentsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <FileText className="w-6 h-6 text-teal-600" />
             Document Library
           </h1>
@@ -47,9 +47,9 @@ export default async function DocumentsPage() {
         </a>
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         {documents.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-20 text-muted-foreground/70">
             <FileText className="w-10 h-10 mb-2 opacity-30" />
             <p className="text-sm">No documents uploaded yet.</p>
             <a href="/documents/upload" className="mt-3 text-sm text-teal-600 hover:underline">
@@ -67,13 +67,13 @@ export default async function DocumentsPage() {
                 <th className="data-table-th">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border/30">
               {documents.map(doc => (
                 <tr key={doc.id} className="data-table-row">
                   <td className="data-table-td">
-                    <Link href={`/documents/${doc.id}`} className="font-medium text-slate-900 hover:text-teal-700 transition-colors">{doc.name}</Link>
+                    <Link href={`/documents/${doc.id}`} className="font-medium text-foreground hover:text-teal-700 transition-colors">{doc.name}</Link>
                     {doc.description && (
-                      <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{doc.description}</p>
+                      <p className="text-xs text-muted-foreground/70 mt-0.5 line-clamp-1">{doc.description}</p>
                     )}
                   </td>
                   <td className="data-table-td">
@@ -98,7 +98,7 @@ export default async function DocumentsPage() {
                           href={doc.fileUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700"
+                          className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-foreground/80"
                         >
                           <Download className="w-3.5 h-3.5" /> Download
                         </a>

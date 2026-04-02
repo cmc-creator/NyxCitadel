@@ -80,7 +80,7 @@ export default async function QocPage({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <Scale className="w-6 h-6 text-teal-600" />
             QOC / LOI Complaint Tracker
           </h1>
@@ -98,7 +98,7 @@ export default async function QocPage({
 
       {/* Archive year banner */}
       {year && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
+        <div className="bg-amber-950/20 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
           <p className="text-sm text-amber-800">
             <strong>{year} Archive View</strong> - showing QOC complaints received within {year}.
           </p>
@@ -108,7 +108,7 @@ export default async function QocPage({
 
       {/* Alert banners */}
       {ij.length > 0 && (
-        <div className="bg-red-50 border border-red-300 rounded-xl px-4 py-3 flex items-center gap-3">
+        <div className="bg-red-950/20 border border-red-300 rounded-xl px-4 py-3 flex items-center gap-3">
           <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />
           <p className="text-sm text-red-700 font-semibold">
             {ij.length} active Immediate Jeopardy investigation{ij.length > 1 ? 's' : ''} - requires immediate executive action.
@@ -116,7 +116,7 @@ export default async function QocPage({
         </div>
       )}
       {overdueResponse.length > 0 && (
-        <div className="bg-orange-50 border border-orange-200 rounded-xl px-4 py-3 flex items-center gap-3">
+        <div className="bg-orange-950/20 border border-orange-200 rounded-xl px-4 py-3 flex items-center gap-3">
           <AlertCircle className="w-5 h-5 text-orange-500 shrink-0" />
           <p className="text-sm text-orange-700">
             <strong>{overdueResponse.length} LOI response{overdueResponse.length > 1 ? 's' : ''}</strong> past the 10-business-day deadline.
@@ -126,19 +126,19 @@ export default async function QocPage({
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
-          <div className="text-2xl font-bold text-slate-900">{open.length}</div>
+        <div className="bg-card rounded-xl border border-border p-4">
+          <div className="text-2xl font-bold text-foreground">{open.length}</div>
           <div className="text-sm text-slate-500">Open Complaints</div>
         </div>
-        <div className={`rounded-xl border p-4 ${ij.length > 0 ? 'bg-red-50 border-red-200' : 'bg-white border-slate-200'}`}>
-          <div className={`text-2xl font-bold ${ij.length > 0 ? 'text-red-600' : 'text-slate-900'}`}>{ij.length}</div>
+        <div className={`rounded-xl border p-4 ${ij.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-white border-slate-200'}`}>
+          <div className={`text-2xl font-bold ${ij.length > 0 ? 'text-red-600' : 'text-foreground'}`}>{ij.length}</div>
           <div className="text-sm text-slate-500">Immediate Jeopardy</div>
         </div>
-        <div className={`rounded-xl border p-4 ${overdueResponse.length > 0 ? 'bg-orange-50 border-orange-200' : 'bg-white border-slate-200'}`}>
-          <div className={`text-2xl font-bold ${overdueResponse.length > 0 ? 'text-orange-600' : 'text-slate-900'}`}>{overdueResponse.length}</div>
+        <div className={`rounded-xl border p-4 ${overdueResponse.length > 0 ? 'bg-orange-950/20 border-orange-200' : 'bg-white border-slate-200'}`}>
+          <div className={`text-2xl font-bold ${overdueResponse.length > 0 ? 'text-orange-600' : 'text-foreground'}`}>{overdueResponse.length}</div>
           <div className="text-sm text-slate-500">Overdue Responses</div>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-green-600">
             {complaints.filter(c => c.status === 'CLOSED' || c.status === 'UNSUBSTANTIATED').length}
           </div>
@@ -147,7 +147,7 @@ export default async function QocPage({
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 border-b border-slate-200">
@@ -161,10 +161,10 @@ export default async function QocPage({
                 <th className="text-left px-4 py-3 font-medium text-slate-600">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border/30">
               {complaints.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-4 py-12 text-center text-slate-400">
+                  <td colSpan={7} className="px-4 py-12 text-center text-muted-foreground/70">
                     <FileSearch className="w-8 h-8 mx-auto mb-2 opacity-30" />
                     No QOC complaints logged yet.
                   </td>
@@ -179,7 +179,7 @@ export default async function QocPage({
                     <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
                       {c.complainantType.replace(/_/g, ' ')}
                     </td>
-                    <td className="px-4 py-3 text-slate-700 max-w-xs truncate">{c.allegationSummary}</td>
+                    <td className="px-4 py-3 text-foreground/80 max-w-xs truncate">{c.allegationSummary}</td>
                     <td className="px-4 py-3">
                       <span className={`text-xs px-2 py-0.5 rounded-full ${INV_COLORS[c.investigationType] ?? 'bg-slate-100 text-slate-600'}`}>
                         {c.investigationType.replace(/_/g, ' ')}
@@ -193,7 +193,7 @@ export default async function QocPage({
                           <CheckCircle2 className="w-3 h-3" /> Submitted {formatDate(c.responseSubmittedDate)}
                         </span>
                       ) : (
-                        <span className="text-slate-400 text-xs">No LOI yet</span>
+                        <span className="text-muted-foreground/70 text-xs">No LOI yet</span>
                       )}
                     </td>
                     <td className="px-4 py-3">

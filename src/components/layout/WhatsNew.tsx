@@ -51,7 +51,7 @@ export function WhatsNew() {
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-semibold text-white">Meet Sentry 🤖</h3>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-muted-foreground/70 mt-1">
                   Your AI compliance assistant has a new name and identity. Say hello to Sentry.
                 </p>
               </div>
@@ -66,7 +66,7 @@ export function WhatsNew() {
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-semibold text-white">Draft CAPs & Incidents</h3>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-muted-foreground/70 mt-1">
                   Ask Sentry to draft CAPs, incident reports, or calendar events. Review and edit before creating.
                 </p>
               </div>
@@ -81,7 +81,7 @@ export function WhatsNew() {
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-semibold text-white">Edit Before Creating</h3>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-muted-foreground/70 mt-1">
                   Sentry shows you a preview. Make changes directly in the confirmation card before saving.
                 </p>
               </div>
@@ -91,7 +91,7 @@ export function WhatsNew() {
 
         {/* Links to guide/walkthrough */}
         <div className="border-t border-slate-700/50 pt-4 space-y-2">
-          <p className="text-xs text-slate-400 uppercase tracking-widest font-semibold">Learn More</p>
+          <p className="text-xs text-muted-foreground/70 uppercase tracking-widest font-semibold">Learn More</p>
           <div className="flex gap-2">
             <Link
               href="/guide"

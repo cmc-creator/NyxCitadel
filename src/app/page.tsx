@@ -1,4 +1,4 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 import { auth } from '@/lib/auth';
 import Link from 'next/link';
 import {
@@ -91,7 +91,7 @@ const regulatoryFeeds = [
   { agency: 'OSHA', text: 'Bloodborne pathogen standard training window reminder - 30 days', time: '1h ago', color: 'text-orange-400', dot: 'bg-orange-400' },
   { agency: 'Joint Commission', text: 'NPSG.07.01 hand hygiene compliance threshold updated', time: '3h ago', color: 'text-yellow-400', dot: 'bg-yellow-400' },
   { agency: 'State DOH', text: 'State survey protocol for infection control revised statewide', time: '1d ago', color: 'text-blue-400', dot: 'bg-blue-400' },
-  { agency: 'AHCA', text: 'PDPM billing guidance clarification memo published', time: '2d ago', color: 'text-violet-400', dot: 'bg-violet-400' },
+  { agency: 'AHCA', text: 'PDPM billing guidance clarification memo published', time: '2d ago', color: 'text-teal-400', dot: 'bg-teal-400' },
 ];
 
 const stats = [
@@ -253,7 +253,7 @@ export default async function RootPage() {
               <span className="hidden sm:inline text-slate-600 text-xs ml-2">Healthcare Compliance Platform</span>
             </div>
           </div>
-          <nav className="hidden md:flex items-center gap-7 text-sm text-slate-400">
+          <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground/70">
             <a href="#intel" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Reg. Intelligence</a>
             <a href="#features" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Features</a>
             <a href="#quality" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Quality &amp; Risk</a>
@@ -311,7 +311,7 @@ export default async function RootPage() {
                 to do before a surveyor ever walks through your door.
               </strong>
             </p>
-            <p className="text-base text-slate-400 leading-relaxed mb-8 max-w-xl">
+            <p className="text-base text-muted-foreground/70 leading-relaxed mb-8 max-w-xl">
               Built from the ground up for long-term care, skilled nursing, and healthcare
               facilities that refuse to be caught off guard.
             </p>
@@ -355,7 +355,7 @@ export default async function RootPage() {
                 { icon: Star,        label: 'CMS Aligned' },
                 { icon: BadgeCheck,  label: 'Joint Commission Ready' },
               ].map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-1.5 text-xs text-slate-400">
+                <div key={label} className="flex items-center gap-1.5 text-xs text-muted-foreground/70">
                   <Icon className="w-4 h-4 text-green-400" />
                   {label}
                 </div>
@@ -449,7 +449,7 @@ export default async function RootPage() {
             'General Acute Care',
             'Dual-Diagnosis Programs',
           ].map(label => (
-            <span key={label} className="text-xs font-medium text-slate-400 border border-white/8 bg-white/3 rounded-full px-4 py-1.5">
+            <span key={label} className="text-xs font-medium text-muted-foreground/70 border border-white/8 bg-white/3 rounded-full px-4 py-1.5">
               {label}
             </span>
           ))}
@@ -494,7 +494,7 @@ export default async function RootPage() {
               The Joint Commission shifts National Patient Safety Goals. OSHA updates exposure
               standards. State surveyors change what they&apos;re looking for - sometimes overnight.
             </p>
-            <p className="text-base text-slate-400 leading-relaxed mb-8">
+            <p className="text-base text-muted-foreground/70 leading-relaxed mb-8">
               <strong className="text-white">
                 NyxCitadel&apos;s regulatory intelligence engine monitors every major governing body
                 and delivers actionable change notifications directly to your compliance team
@@ -569,7 +569,7 @@ export default async function RootPage() {
                 your facility deserves
               </span>
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground/70 max-w-2xl mx-auto">
               Healthcare compliance is a team sport - and right now, most facilities are playing it
               with spreadsheets, sticky notes, and crossed fingers. NyxCitadel changes that entirely.
             </p>
@@ -581,7 +581,7 @@ export default async function RootPage() {
                   <p.icon className="w-6 h-6 text-teal-300" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{p.title}</h3>
-                <p className="text-slate-400 leading-relaxed">{p.body}</p>
+                <p className="text-muted-foreground/70 leading-relaxed">{p.body}</p>
               </div>
             ))}
           </div>
@@ -599,7 +599,7 @@ export default async function RootPage() {
               Unified.
             </span>
           </h2>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground/70 max-w-2xl mx-auto">
             Nine fully-integrated modules covering every corner of healthcare compliance -
             from the exam room to the boardroom.
           </p>
@@ -619,7 +619,7 @@ export default async function RootPage() {
                 </span>
               </div>
               <h3 className="font-bold text-white mb-2 text-base">{f.title}</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">{f.description}</p>
+              <p className="text-sm text-muted-foreground/70 leading-relaxed">{f.description}</p>
             </div>
           ))}
         </div>
@@ -648,7 +648,7 @@ export default async function RootPage() {
                 engine. Identify root causes. Launch targeted PIPs. Measure outcomes. Close the loop.
                 Repeat. Every quarter, your metrics improve - and you have the data to prove it.
               </p>
-              <p className="text-slate-400 leading-relaxed mb-8">
+              <p className="text-muted-foreground/70 leading-relaxed mb-8">
                 On the risk side, our enterprise risk management module gives you a living, breathing
                 risk register - with automated likelihood/severity scoring, mitigation tracking, and
                 real-time risk posture across every department. Stop finding out about risks from
@@ -684,7 +684,7 @@ export default async function RootPage() {
                   ].map(m => (
                     <div key={m.label}>
                       <div className="flex items-center justify-between text-xs mb-1">
-                        <span className="text-slate-400">{m.label}</span>
+                        <span className="text-muted-foreground/70">{m.label}</span>
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-white">{m.value}</span>
                           <span className={`font-medium ${m.good ? 'text-green-400' : 'text-yellow-400'}`}>{m.trend}</span>
@@ -734,7 +734,7 @@ export default async function RootPage() {
             Every standard. Every agency.
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"> Every time.</span>
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto mb-12 text-lg">
+          <p className="text-muted-foreground/70 max-w-2xl mx-auto mb-12 text-lg">
             NyxCitadel isn&apos;t built around one regulation - it&apos;s built around the entire
             regulatory universe your facility operates within. If it affects your survey
             readiness, we cover it.
@@ -786,7 +786,7 @@ export default async function RootPage() {
                 every facility.
               </span>
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground/70 max-w-2xl mx-auto">
               No surprise fees. No module paywalls. Every plan includes onboarding support
               and a 30-day satisfaction guarantee.
             </p>
@@ -817,7 +817,7 @@ export default async function RootPage() {
 
                 <div className="mb-6">
                   <h3 className="text-xl font-extrabold text-white mb-1">{tier.name}</h3>
-                  <p className="text-sm text-slate-400">{tier.tagline}</p>
+                  <p className="text-sm text-muted-foreground/70">{tier.tagline}</p>
                 </div>
 
                 <div className="mb-7">
@@ -846,7 +846,7 @@ export default async function RootPage() {
                       {f.included ? (
                         <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
                       ) : (
-                        <X className="w-4 h-4 text-slate-700 flex-shrink-0" />
+                        <X className="w-4 h-4 text-foreground/80 flex-shrink-0" />
                       )}
                       <span className={f.included ? 'text-slate-300' : 'text-slate-600'}>
                         {f.label}
@@ -889,7 +889,7 @@ export default async function RootPage() {
               Incidents don&apos;t schedule themselves. But with NyxCitadel, your facility is always
               prepared - because preparation is built into every single day.
             </p>
-            <p className="text-slate-400 max-w-xl mx-auto mb-10">
+            <p className="text-muted-foreground/70 max-w-xl mx-auto mb-10">
               Join the healthcare facilities that have turned compliance from a crisis response
               into a competitive advantage.
             </p>
@@ -928,7 +928,7 @@ export default async function RootPage() {
                 { icon: TrendingUp, label: 'Continuous Improvement' },
                 { icon: Award,      label: 'Survey Confidence' },
               ].map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-2 text-sm text-slate-400">
+                <div key={label} className="flex items-center gap-2 text-sm text-muted-foreground/70">
                   <Icon className="w-4 h-4 text-green-400" />
                   {label}
                 </div>
@@ -996,7 +996,7 @@ export default async function RootPage() {
               </div>
               <div className="space-y-3">
                 <div className="bg-slate-700/50 rounded-lg p-3 border border-slate-600/50">
-                  <p className="text-xs text-slate-400 mb-1.5">You ask:</p>
+                  <p className="text-xs text-muted-foreground/70 mb-1.5">You ask:</p>
                   <p className="text-sm text-slate-100">"Draft a CAP for the F-835 deficiency about documentation"</p>
                 </div>
                 <div className="flex justify-center">
@@ -1018,11 +1018,11 @@ export default async function RootPage() {
           <div className="flex items-center gap-2.5">
             <Image src="/citadellogo.png" alt="NyxCitadel" width={28} height={28} />
             <div>
-              <span className="font-bold text-slate-400">NyxCitadel<sup className="text-[9px] font-normal">™</sup></span>
-              <span className="text-slate-700 ml-2 hidden sm:inline">· Healthcare Compliance &amp; Risk Management Platform</span>
+              <span className="font-bold text-muted-foreground/70">NyxCitadel<sup className="text-[9px] font-normal">™</sup></span>
+              <span className="text-foreground/80 ml-2 hidden sm:inline">· Healthcare Compliance &amp; Risk Management Platform</span>
             </div>
           </div>
-          <p>© {new Date().getFullYear()} <a href="https://nyxcollective.com" className="hover:text-slate-400 transition-colors">NyxCollective LLC</a> · HIPAA-compliant · Survey-ready · Always current</p>
+          <p>© {new Date().getFullYear()} <a href="https://nyxcollective.com" className="hover:text-muted-foreground/70 transition-colors">NyxCollective LLC</a> · HIPAA-compliant · Survey-ready · Always current</p>
           <Link href={portalHref} className="text-slate-500 hover:text-white transition-colors font-medium">
             {portalLabel} →
           </Link>

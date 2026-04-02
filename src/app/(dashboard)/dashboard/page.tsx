@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { calculateComplianceHealth, getHealthScoreColor } from '@/lib/compliance-health';
 import {
@@ -463,7 +463,7 @@ export default async function DashboardPage() {
         </div>
         <div className="divide-y divide-border/30">
           {s.recentEvents.length === 0 ? (
-            <div className="flex items-center justify-center py-12 text-slate-400">
+            <div className="flex items-center justify-center py-12 text-muted-foreground/70">
               <div className="text-center">
                 <CheckCircle2 className="w-10 h-10 mx-auto mb-2 text-green-400" />
                 <p className="text-sm font-medium">All caught up!</p>

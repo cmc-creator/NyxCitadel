@@ -96,7 +96,7 @@ export default function NewTrainingPage() {
         <a href="/trackers/training" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Training Tracker
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <GraduationCap className="w-6 h-6 text-teal-600" />
           Log Training Record
         </h1>
@@ -106,14 +106,14 @@ export default function NewTrainingPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
 
         {/* Staff Info */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Staff Information</h2>
+          <h2 className="text-sm font-semibold text-foreground">Staff Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
               <label className="block text-xs font-medium text-slate-600 mb-1">Full Name *</label>
@@ -136,7 +136,7 @@ export default function NewTrainingPage() {
 
         {/* Training Details */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Training Details</h2>
+          <h2 className="text-sm font-semibold text-foreground">Training Details</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Training Name *</label>
             <input name="trainingName" required className="form-input w-full" placeholder="e.g., CPI Nonviolent Crisis Intervention - Annual Recertification" />
@@ -176,7 +176,7 @@ export default function NewTrainingPage() {
 
         {/* Scoring */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Assessment Score <span className="font-normal text-slate-400">(optional)</span></h2>
+          <h2 className="text-sm font-semibold text-foreground">Assessment Score <span className="font-normal text-muted-foreground/70">(optional)</span></h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Score Achieved (%)</label>
@@ -191,7 +191,7 @@ export default function NewTrainingPage() {
 
         {/* Regulatory & Flags */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Compliance Flags</h2>
+          <h2 className="text-sm font-semibold text-foreground">Compliance Flags</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
             <select name="regulatoryBody" className="form-input w-full">
@@ -202,7 +202,7 @@ export default function NewTrainingPage() {
           </div>
           <div className="flex items-center gap-2">
             <input type="checkbox" id="isRequired" name="isRequired" defaultChecked className="accent-teal-600" />
-            <label htmlFor="isRequired" className="text-sm text-slate-700">This is a required / mandatory training</label>
+            <label htmlFor="isRequired" className="text-sm text-foreground/80">This is a required / mandatory training</label>
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>

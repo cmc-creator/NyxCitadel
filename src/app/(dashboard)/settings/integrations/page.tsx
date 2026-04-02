@@ -95,18 +95,18 @@ const STATUS_CONFIG = {
     label: 'Connected',
     icon: CheckCircle2,
     color: 'text-emerald-600',
-    bg: 'bg-emerald-50 border-emerald-200',
+    bg: 'bg-emerald-950/20 border-emerald-200',
   },
   available: {
     label: 'Available - Configure',
     icon: Clock,
     color: 'text-blue-600',
-    bg: 'bg-blue-50 border-blue-200',
+    bg: 'bg-blue-950/20 border-blue-200',
   },
   coming_soon: {
     label: 'Coming Soon',
     icon: AlertCircle,
-    color: 'text-slate-400',
+    color: 'text-muted-foreground/70',
     bg: 'bg-slate-50 border-slate-200',
   },
 };
@@ -124,7 +124,7 @@ export default function IntegrationsPage() {
     <div className="space-y-6 max-w-3xl">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Plug className="w-6 h-6 text-teal-600" />
           Integrations
         </h1>
@@ -170,8 +170,8 @@ export default function IntegrationsPage() {
               {/* Body */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <p className="text-sm font-semibold text-slate-900">{integration.name}</p>
-                  <span className="text-xs text-slate-400 bg-slate-100 rounded-full px-2 py-0.5">
+                  <p className="text-sm font-semibold text-foreground">{integration.name}</p>
+                  <span className="text-xs text-muted-foreground/70 bg-slate-100 rounded-full px-2 py-0.5">
                     {integration.category}
                   </span>
                 </div>
@@ -208,7 +208,7 @@ export default function IntegrationsPage() {
         })}
       </div>
 
-      <p className="text-xs text-slate-400">
+      <p className="text-xs text-muted-foreground/70">
         Need a custom integration? Contact{' '}
         <a href="mailto:support@nyxcitadel.com" className="text-teal-600 hover:underline">
           support@nyxcitadel.com

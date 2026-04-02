@@ -57,18 +57,18 @@ export default function NewRestraintEventPage() {
         <a href="/restraint-seclusion" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Restraint / Seclusion
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ShieldOff className="w-6 h-6 text-rose-600" />
           Log Restraint / Seclusion Event
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Monitoring logs are added after creation on the event detail page.</p>
       </div>
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
+      {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Event Identification</h2>
+          <h2 className="text-sm font-semibold text-foreground">Event Identification</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Event Number *</label>
@@ -109,7 +109,7 @@ export default function NewRestraintEventPage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Order &amp; Staff</h2>
+          <h2 className="text-sm font-semibold text-foreground">Order &amp; Staff</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Ordering Provider *</label>
@@ -127,7 +127,7 @@ export default function NewRestraintEventPage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Clinical Documentation</h2>
+          <h2 className="text-sm font-semibold text-foreground">Clinical Documentation</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Behaviors Warranting Use *</label>
             <textarea name="behaviors" rows={2} required className="form-input w-full" placeholder="Describe observed behaviors…" />
@@ -143,7 +143,7 @@ export default function NewRestraintEventPage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/restraint-seclusion" className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/restraint-seclusion" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-rose-600 text-white hover:bg-rose-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Log Event'}
           </button>

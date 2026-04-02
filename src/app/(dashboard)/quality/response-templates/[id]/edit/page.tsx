@@ -98,7 +98,7 @@ export default function EditResponseTemplatePage() {
     }
   }
 
-  if (loading) return <div className="text-slate-400 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
   if (!data || data.error) return <div className="text-red-400 p-8">{error || 'Not found.'}</div>;
 
   return (
@@ -107,23 +107,23 @@ export default function EditResponseTemplatePage() {
         <a href={`/quality/response-templates/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Template
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <FileText className="w-6 h-6 text-purple-600" />
           Edit Response Template
         </h1>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
       <form key={data.id} onSubmit={handleSubmit} className="space-y-5">
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Template Details</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Template Details</h2>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Template Name *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Template Name *</label>
               <input
                 name="name"
                 required
@@ -133,7 +133,7 @@ export default function EditResponseTemplatePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Category *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Category *</label>
               <select
                 name="category"
                 required
@@ -148,7 +148,7 @@ export default function EditResponseTemplatePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Regulatory Reference</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Regulatory Reference</label>
               <input
                 name="regulatoryRef"
                 defaultValue={data.regulatoryRef ?? ''}
@@ -157,7 +157,7 @@ export default function EditResponseTemplatePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Description</label>
               <input
                 name="description"
                 defaultValue={data.description ?? ''}
@@ -166,7 +166,7 @@ export default function EditResponseTemplatePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Response Deadline (days)</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Response Deadline (days)</label>
               <input
                 name="daysRequired"
                 type="number"
@@ -178,7 +178,7 @@ export default function EditResponseTemplatePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Default Subject Line</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Default Subject Line</label>
             <input
               name="subject"
               defaultValue={data.subject ?? ''}
@@ -188,8 +188,8 @@ export default function EditResponseTemplatePage() {
         </div>
 
         {/* Variables */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Template Variables</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Template Variables</h2>
           <p className="text-xs text-slate-500">Variables are replaced when generating a response. Click to add common variables.</p>
 
           <div className="flex flex-wrap gap-1.5">
@@ -199,7 +199,7 @@ export default function EditResponseTemplatePage() {
                 type="button"
                 onClick={() => addVariable(v)}
                 disabled={variables.includes(v)}
-                className="text-xs bg-slate-50 hover:bg-purple-50 border border-slate-200 hover:border-purple-300 text-slate-600 hover:text-purple-700 px-2 py-1 rounded disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="text-xs bg-slate-50 hover:bg-purple-50 border border-border hover:border-purple-300 text-slate-600 hover:text-purple-700 px-2 py-1 rounded disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 {v}
               </button>
@@ -228,7 +228,7 @@ export default function EditResponseTemplatePage() {
             <button
               type="button"
               onClick={() => addVariable(newVar)}
-              className="inline-flex items-center gap-1 text-sm font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg"
+              className="inline-flex items-center gap-1 text-sm font-medium bg-slate-100 hover:bg-slate-200 text-foreground/80 px-3 py-2 rounded-lg"
             >
               <Plus className="w-4 h-4" /> Add
             </button>
@@ -236,8 +236,8 @@ export default function EditResponseTemplatePage() {
         </div>
 
         {/* Body Template */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Letter Body Template *</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Letter Body Template *</h2>
           <textarea
             name="bodyTemplate"
             required
@@ -248,8 +248,8 @@ export default function EditResponseTemplatePage() {
         </div>
 
         {/* Instructions */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Usage Instructions</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Usage Instructions</h2>
           <textarea
             name="instructions"
             rows={3}
@@ -268,7 +268,7 @@ export default function EditResponseTemplatePage() {
           </button>
           <a
             href={`/quality/response-templates/${id}`}
-            className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors"
           >
             Cancel
           </a>

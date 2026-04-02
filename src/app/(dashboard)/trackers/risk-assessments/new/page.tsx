@@ -124,7 +124,7 @@ export default function NewRiskAssessmentPage() {
         <a href="/trackers/risk-assessments" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Risk Assessments
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ShieldAlert className="w-6 h-6 text-teal-600" />
           New Risk Assessment
         </h1>
@@ -134,14 +134,14 @@ export default function NewRiskAssessmentPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Header info */}
-        <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+        <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
           <div className="px-6 py-5 space-y-4">
-            <h2 className="text-sm font-semibold text-slate-800">Assessment Information</h2>
+            <h2 className="text-sm font-semibold text-foreground">Assessment Information</h2>
 
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Assessment Title *</label>
@@ -197,10 +197,10 @@ export default function NewRiskAssessmentPage() {
         </div>
 
         {/* Risk matrix */}
-        <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+        <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
           <div className="px-6 py-4 flex items-center justify-between">
             <div>
-              <h2 className="text-sm font-semibold text-slate-800">Risk Identification Matrix</h2>
+              <h2 className="text-sm font-semibold text-foreground">Risk Identification Matrix</h2>
               <p className="text-xs text-slate-500 mt-0.5">Score = Likelihood (1-5) × Severity (1-5). Critical ≥20 · High ≥12 · Medium ≥6 · Low 1-5</p>
             </div>
             <button
@@ -219,7 +219,7 @@ export default function NewRiskAssessmentPage() {
               return (
                 <div key={item.id} className="px-6 py-5 space-y-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-bold text-slate-400 w-5">#{idx + 1}</span>
+                    <span className="text-xs font-bold text-muted-foreground/70 w-5">#{idx + 1}</span>
                     <div className="flex-1">
                       <input
                         value={item.riskDescription}
@@ -236,7 +236,7 @@ export default function NewRiskAssessmentPage() {
                     <button
                       type="button"
                       onClick={() => removeItem(item.id)}
-                      className="p-1.5 text-slate-400 hover:text-red-500 transition-colors"
+                      className="p-1.5 text-muted-foreground/70 hover:text-red-500 transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -329,7 +329,7 @@ export default function NewRiskAssessmentPage() {
           </div>
 
           {items.length === 0 && (
-            <div className="px-6 py-8 text-center text-slate-400 text-sm">
+            <div className="px-6 py-8 text-center text-muted-foreground/70 text-sm">
               No risks added yet.{' '}
               <button type="button" onClick={() => setItems([newItem()])} className="text-teal-600 hover:underline">
                 Add your first risk
@@ -339,13 +339,13 @@ export default function NewRiskAssessmentPage() {
         </div>
 
         {/* Notes */}
-        <div className="bg-white rounded-xl border border-slate-200 px-6 py-5">
+        <div className="bg-card rounded-xl border border-border px-6 py-5">
           <label className="block text-xs font-medium text-slate-600 mb-1">Additional Notes</label>
           <textarea name="notes" rows={3} placeholder="Methodology used, sources reviewed, team members involved, follow-up plans…" className="form-input w-full resize-none" />
         </div>
 
         <div className="flex items-center justify-end gap-3">
-          <a href="/trackers/risk-assessments" className="px-4 py-2 text-sm text-slate-600 hover:text-slate-800">Cancel</a>
+          <a href="/trackers/risk-assessments" className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
           <button
             type="submit"
             disabled={saving}

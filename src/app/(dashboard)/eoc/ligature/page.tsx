@@ -33,7 +33,7 @@ const statusBadge: Record<string, string> = {
   IN_MITIGATION: 'bg-amber-950/40 text-amber-400',
   MITIGATED: 'bg-sky-950/40 text-sky-400',
   RESOLVED: 'bg-emerald-950/40 text-emerald-400',
-  ACCEPTED_RISK: 'bg-slate-700/40 text-slate-400',
+  ACCEPTED_RISK: 'bg-slate-700/40 text-muted-foreground/70',
 };
 
 const statusIcon: Record<string, React.ElementType> = {
@@ -51,7 +51,7 @@ const summaryStats = [
   { label: 'IMMEDIATE', value: ligatureItems.filter(i => i.risk === 'IMMEDIATE').length, color: 'text-red-400', bg: 'bg-red-950/40 border-red-700/40' },
   { label: 'HIGH', value: ligatureItems.filter(i => i.risk === 'HIGH').length, color: 'text-orange-400', bg: 'bg-orange-950/40 border-orange-700/40' },
   { label: 'MEDIUM', value: ligatureItems.filter(i => i.risk === 'MEDIUM').length, color: 'text-amber-400', bg: 'bg-amber-950/40 border-amber-700/40' },
-  { label: 'LOW', value: ligatureItems.filter(i => i.risk === 'LOW').length, color: 'text-slate-400', bg: 'bg-slate-800/60 border-slate-600/40' },
+  { label: 'LOW', value: ligatureItems.filter(i => i.risk === 'LOW').length, color: 'text-muted-foreground/70', bg: 'bg-slate-800/60 border-slate-600/40' },
   { label: 'OPEN/ACTIVE', value: ligatureItems.filter(i => ['OPEN','IN_MITIGATION'].includes(i.status)).length, color: 'text-red-400', bg: 'bg-red-950/30 border-red-700/40' },
   { label: 'RESOLVED', value: ligatureItems.filter(i => ['RESOLVED','MITIGATED','ACCEPTED_RISK'].includes(i.status)).length, color: 'text-emerald-400', bg: 'bg-emerald-950/30 border-emerald-700/40' },
 ];
@@ -73,12 +73,12 @@ export default function LigaturePage() {
       <div className="flex items-start justify-between flex-wrap gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <Link href="/eoc" className="text-sm text-slate-400 hover:text-slate-300">Environment of Care</Link>
+            <Link href="/eoc" className="text-sm text-muted-foreground/70 hover:text-slate-300">Environment of Care</Link>
             <span className="text-slate-600">›</span>
             <span className="text-sm text-foreground font-medium">Ligature Risk</span>
           </div>
           <h1 className="text-2xl font-bold text-foreground mt-1">Ligature Risk Assessment</h1>
-          <p className="text-sm text-slate-400 mt-0.5">TJC EC.02.06.01 - Psychiatric Environment Ligature Point Tracking</p>
+          <p className="text-sm text-muted-foreground/70 mt-0.5">TJC EC.02.06.01 - Psychiatric Environment Ligature Point Tracking</p>
         </div>
         <button className="px-3 py-1.5 text-sm rounded-md bg-amber-600 hover:bg-amber-500 text-white font-medium transition-colors">
           + Add Item
@@ -107,7 +107,7 @@ export default function LigaturePage() {
 
       {/* Filters */}
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="flex items-center gap-1.5 text-xs text-slate-400">
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground/70">
           <Filter className="w-3.5 h-3.5" />
           <span>Filter:</span>
         </div>
@@ -116,7 +116,7 @@ export default function LigaturePage() {
             <button
               key={r}
               onClick={() => setRiskFilter(r)}
-              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${riskFilter === r ? 'bg-amber-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${riskFilter === r ? 'bg-amber-600 text-white' : 'bg-slate-800 text-muted-foreground/70 hover:bg-slate-700'}`}
             >
               {r === 'ALL' ? 'All Risk Levels' : r}
             </button>
@@ -127,7 +127,7 @@ export default function LigaturePage() {
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
-              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-sky-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-sky-600 text-white' : 'bg-slate-800 text-muted-foreground/70 hover:bg-slate-700'}`}
             >
               {s === 'ALL' ? 'All Statuses' : s.replace('_', ' ')}
             </button>
@@ -150,7 +150,7 @@ export default function LigaturePage() {
                 className="w-full text-left p-4 flex items-start gap-3 hover:bg-white/5 transition-colors"
                 onClick={() => setExpandedId(expanded ? null : item.id)}
               >
-                <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${item.status === 'RESOLVED' || item.status === 'MITIGATED' ? 'text-emerald-400' : item.status === 'ACCEPTED_RISK' ? 'text-slate-400' : item.risk === 'IMMEDIATE' ? 'text-red-400' : item.risk === 'HIGH' ? 'text-orange-400' : 'text-amber-400'}`} />
+                <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${item.status === 'RESOLVED' || item.status === 'MITIGATED' ? 'text-emerald-400' : item.status === 'ACCEPTED_RISK' ? 'text-muted-foreground/70' : item.risk === 'IMMEDIATE' ? 'text-red-400' : item.risk === 'HIGH' ? 'text-orange-400' : 'text-amber-400'}`} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-xs font-mono text-slate-500">{item.id}</span>
@@ -180,7 +180,7 @@ export default function LigaturePage() {
                     {item.notes && (
                       <div>
                         <p className="text-xs text-slate-500 font-medium">Notes</p>
-                        <p className="text-sm text-slate-400 mt-0.5">{item.notes}</p>
+                        <p className="text-sm text-muted-foreground/70 mt-0.5">{item.notes}</p>
                       </div>
                     )}
                   </div>

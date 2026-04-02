@@ -118,7 +118,7 @@ export default function NewResponsePage() {
         <a href="/quality/responses" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Responses
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <BookOpen className="w-6 h-6 text-teal-600" />
           Generate Response
         </h1>
@@ -128,13 +128,13 @@ export default function NewResponsePage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Template picker */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Template (optional)</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Template (optional)</h2>
           <div className="grid grid-cols-2 gap-3">
             {templates.map(t => (
               <button
@@ -143,11 +143,11 @@ export default function NewResponsePage() {
                 onClick={() => loadTemplate(t)}
                 className={`text-left p-3 rounded-lg border-2 transition-colors text-sm ${
                   selectedTemplate?.id === t.id
-                    ? 'border-teal-500 bg-teal-50'
+                    ? 'border-teal-500 bg-teal-950/20'
                     : 'border-slate-200 hover:border-teal-300'
                 }`}
               >
-                <div className="font-medium text-slate-800">{t.name}</div>
+                <div className="font-medium text-foreground">{t.name}</div>
                 {t.regulatoryRef && <div className="text-xs text-slate-500 mt-0.5">{t.regulatoryRef}</div>}
                 {t.daysRequired && (
                   <div className="text-xs text-amber-600 mt-0.5">⏱ {t.daysRequired}-day deadline</div>
@@ -159,7 +159,7 @@ export default function NewResponsePage() {
 
         {/* Fill variables */}
         {selectedTemplate && Object.keys(varValues).length > 0 && (
-          <div className="bg-teal-50 rounded-xl border border-teal-200 p-6 space-y-4">
+          <div className="bg-teal-950/20 rounded-xl border border-teal-800/50 p-6 space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="font-semibold text-teal-800 text-sm uppercase tracking-wide">Fill Variables</h2>
               <button
@@ -188,12 +188,12 @@ export default function NewResponsePage() {
         )}
 
         {/* Response metadata */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Response Details</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Response Details</h2>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Title *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Title *</label>
               <input
                 name="title"
                 required
@@ -204,7 +204,7 @@ export default function NewResponsePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Category *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Category *</label>
               <select
                 name="category"
                 required
@@ -219,7 +219,7 @@ export default function NewResponsePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Due Date</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Due Date</label>
               <input
                 name="dueDate"
                 type="date"
@@ -228,7 +228,7 @@ export default function NewResponsePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Source Type</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Source Type</label>
               <select
                 name="sourceType"
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
@@ -242,7 +242,7 @@ export default function NewResponsePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Source Reference #</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Source Reference #</label>
               <input
                 name="sourceRef"
                 placeholder="e.g., GR-2025-001"
@@ -251,7 +251,7 @@ export default function NewResponsePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Recipient Name</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Recipient Name</label>
               <input
                 name="recipientName"
                 placeholder="Full name"
@@ -260,7 +260,7 @@ export default function NewResponsePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Recipient Role / Agency</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Recipient Role / Agency</label>
               <input
                 name="recipientRole"
                 placeholder="e.g., Patient, AZ ADHS, The Joint Commission"
@@ -269,7 +269,7 @@ export default function NewResponsePage() {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Recipient Address</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Recipient Address</label>
               <input
                 name="recipientAddress"
                 placeholder="Mailing address (optional)"
@@ -278,7 +278,7 @@ export default function NewResponsePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Drafted By</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Drafted By</label>
               <input
                 name="draftedBy"
                 placeholder="Your name / role"
@@ -289,11 +289,11 @@ export default function NewResponsePage() {
         </div>
 
         {/* Subject + Body */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Letter Content *</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Letter Content *</h2>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Subject</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Subject</label>
             <input
               value={subject}
               onChange={e => setSubject(e.target.value)}
@@ -303,7 +303,7 @@ export default function NewResponsePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Letter Body *</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Letter Body *</label>
             <textarea
               value={body}
               onChange={e => setBody(e.target.value)}
@@ -316,8 +316,8 @@ export default function NewResponsePage() {
         </div>
 
         {/* Notes */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <label className="block text-sm font-medium text-slate-700 mb-1">Internal Notes</label>
+        <div className="bg-card rounded-xl border border-border p-6">
+          <label className="block text-sm font-medium text-foreground/80 mb-1">Internal Notes</label>
           <textarea
             name="notes"
             rows={2}
@@ -336,7 +336,7 @@ export default function NewResponsePage() {
           </button>
           <a
             href="/quality/responses"
-            className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors"
           >
             Cancel
           </a>

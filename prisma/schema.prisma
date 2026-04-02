@@ -120,6 +120,12 @@ model Facility {
 
   attachments          Attachment[]
 
+  // Mock Survey Tracer
+  mockSurveys          MockSurvey[]
+
+  // Regulatory Reporting Submissions
+  regulatorySubmissions RegulatorySubmission[]
+
   @@map("facilities")
 }
 
@@ -2723,6 +2729,120 @@ enum CsLogStatus {
   DISCREPANCY_EXPLAINED
   REPORTED_DEA
   INVESTIGATION
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MOCK SURVEY / TRACER TOOL
+// ─────────────────────────────────────────────────────────────────────────────
+
+model MockSurvey {
+  id              String            @id @default(cuid())
+  facilityId      String
+  facility        Facility          @relation(fields: [facilityId], references: [id])
+  title           String
+  surveyType      MockSurveyType    @default(JC_FULL)
+  surveyorName    String?
+  scheduledDate   DateTime
+  completedDate   DateTime?
+  status          MockSurveyStatus  @default(SCHEDULED)
+  chaptersScoped  String[]          // e.g. ["EC","IC","HR","MM","NPSG","PC","RC","RI","TS","WT"]
+  overallScore    Float?            // 0-100
+  metCount        Int               @default(0)
+  notMetCount     Int               @default(0)
+  naCount         Int               @default(0)
+  summaryNotes    String?           @db.Text
+  linkedPocsCreated Boolean         @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  findings        MockSurveyFinding[]
+
+  @@map("mock_surveys")
+}
+
+model MockSurveyFinding {
+  id              String            @id @default(cuid())
+  mockSurveyId    String
+  mockSurvey      MockSurvey        @relation(fields: [mockSurveyId], references: [id], onDelete: Cascade)
+  chapter         String            // e.g. "EC"
+  standardRef     String            // e.g. "EC.02.06.01"
+  epNumber        String?           // e.g. "EP 1"
+  epText          String            @db.Text
+  score           EpScore           @default(NOT_EVALUATED)
+  surveyorNotes   String?           @db.Text
+  evidence        String?           @db.Text
+  pocCreated      Boolean           @default(false)
+  pocId           String?           // link to PlanOfCorrection if created
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@map("mock_survey_findings")
+}
+
+enum MockSurveyType {
+  JC_FULL
+  JC_FOCUSED
+  JC_DISEASE_SPECIFIC
+  CMS_CONDITION_LEVEL
+  ADHS_LICENSING
+  INTERNAL_AUDIT
+}
+
+enum MockSurveyStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  REPORT_GENERATED
+}
+
+enum EpScore {
+  MET
+  NOT_MET
+  NOT_APPLICABLE
+  NOT_EVALUATED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REGULATORY REPORTING SUBMISSIONS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model RegulatorySubmission {
+  id              String                @id @default(cuid())
+  facilityId      String
+  facility        Facility              @relation(fields: [facilityId], references: [id])
+  submissionType  SubmissionType
+  reportingPeriod String                // e.g. "2026-Q1" or "2026-03"
+  status          SubmissionStatus      @default(DRAFT)
+  dueDate         DateTime?
+  submittedDate   DateTime?
+  submittedBy     String?
+  portalReference String?               // confirmation number from portal
+  exportFileUrl   String?               // stored export file
+  notes           String?               @db.Text
+  data            Json?                 // snapshot of submitted data
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@map("regulatory_submissions")
+}
+
+enum SubmissionType {
+  ORYX_HBIPS           // HBIPS monthly to JC
+  NHSN_HAI             // CDC NHSN monthly HAI
+  CMS_HCAHPS           // CMS patient satisfaction
+  ADHS_IR_IAD          // AZ adverse data
+  CMS_RESTRAINT_DEATH  // CMS restraint/seclusion death 24hr
+  JC_SENTINEL_EVENT    // JC sentinel event disclosure
+  CMS_CONDITION_OF_PARTICIPATION // CoP survey response
+}
+
+enum SubmissionStatus {
+  DRAFT
+  READY
+  SUBMITTED
+  ACKNOWLEDGED
+  REJECTED
+  OVERDUE
 }
 
 model HighAlertMedAudit {

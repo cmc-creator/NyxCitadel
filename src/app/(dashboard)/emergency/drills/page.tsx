@@ -53,7 +53,7 @@ export default async function DrillsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <Siren className="w-6 h-6 text-blue-600" />
             Drills &amp; Exercises
           </h1>
@@ -64,7 +64,7 @@ export default async function DrillsPage({
         <div className="flex items-center gap-2">
           <Link
             href="/api/export/drills"
-            className="inline-flex items-center gap-1.5 text-sm bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm bg-card border border-border hover:bg-slate-50 text-foreground/80 px-3 py-1.5 rounded-lg font-medium transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
             Export CSV
@@ -81,10 +81,10 @@ export default async function DrillsPage({
       </div>
 
       {/* JC Requirements Progress */}
-      <div className="bg-white rounded-xl border border-slate-200 p-5">
+      <div className="bg-card rounded-xl border border-border p-5">
         <div className="flex items-center gap-2 mb-4">
           <Info className="w-4 h-4 text-blue-500" />
-          <h2 className="text-sm font-semibold text-slate-800">
+          <h2 className="text-sm font-semibold text-foreground">
             {currentYear} Joint Commission Drill Requirements Progress
           </h2>
         </div>
@@ -123,7 +123,7 @@ export default async function DrillsPage({
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
               tab.active
                 ? 'bg-teal-600 text-white'
-                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                : 'bg-card border border-border text-slate-600 hover:bg-slate-50'
             }`}
           >
             {tab.label}
@@ -132,7 +132,7 @@ export default async function DrillsPage({
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
@@ -148,7 +148,7 @@ export default async function DrillsPage({
           <tbody className="divide-y divide-slate-50">
             {drills.length === 0 ? (
               <tr>
-                <td colSpan={7} className="text-center py-12 text-slate-400">
+                <td colSpan={7} className="text-center py-12 text-muted-foreground/70">
                   No drills found.{' '}
                   <Link href="/emergency/drills/new" className="text-teal-600 hover:underline">
                     Schedule your first drill
@@ -167,9 +167,9 @@ export default async function DrillsPage({
                 return (
                   <tr key={drill.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-4 py-3">
-                      <p className="font-medium text-slate-800">{drill.drillName}</p>
+                      <p className="font-medium text-foreground">{drill.drillName}</p>
                       {drill.location && (
-                        <p className="text-xs text-slate-400">{drill.location}</p>
+                        <p className="text-xs text-muted-foreground/70">{drill.location}</p>
                       )}
                     </td>
                     <td className="px-4 py-3 text-xs text-slate-600">
@@ -190,7 +190,7 @@ export default async function DrillsPage({
                           {aarOverdue ? '⚠ ' : ''}{formatDate(aarDue)}
                         </span>
                       ) : (
-                        <span className="text-slate-400">-</span>
+                        <span className="text-muted-foreground/70">-</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -225,7 +225,7 @@ function DrillRequirementBar({
   return (
     <div>
       <div className="flex justify-between items-center mb-1">
-        <span className="text-xs font-semibold text-slate-700">{label}</span>
+        <span className="text-xs font-semibold text-foreground/80">{label}</span>
         <span className={`text-xs font-bold ${isDone ? 'text-green-600' : 'text-red-600'}`}>
           {completed}/{required}
         </span>
@@ -236,7 +236,7 @@ function DrillRequirementBar({
           style={{ width: `${pct}%` }}
         />
       </div>
-      <p className="text-xs text-slate-400">{description}</p>
+      <p className="text-xs text-muted-foreground/70">{description}</p>
     </div>
   );
 }

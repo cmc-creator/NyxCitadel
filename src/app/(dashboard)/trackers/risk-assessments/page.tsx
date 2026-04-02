@@ -29,10 +29,10 @@ const LEVEL_COLORS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  IN_PROGRESS: 'bg-blue-50 text-blue-700',
+  IN_PROGRESS: 'bg-blue-950/20 text-blue-700',
   COMPLETED: 'bg-green-50 text-green-700',
-  REVIEWED: 'bg-teal-50 text-teal-700',
-  APPROVED: 'bg-emerald-50 text-emerald-700',
+  REVIEWED: 'bg-teal-950/20 text-teal-700',
+  APPROVED: 'bg-emerald-950/20 text-emerald-700',
   ARCHIVED: 'bg-slate-100 text-slate-500',
 };
 
@@ -62,7 +62,7 @@ export default async function RiskAssessmentsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <ShieldAlert className="w-6 h-6 text-teal-600" />
             Risk Assessments
           </h1>
@@ -81,7 +81,7 @@ export default async function RiskAssessmentsPage() {
 
       {/* Missing required assessments banner */}
       {missingRequired.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
+        <div className="bg-amber-950/20 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-semibold text-amber-800">Required assessments not yet completed for {thisYear}:</p>
@@ -110,7 +110,7 @@ export default async function RiskAssessmentsPage() {
               ) : (
                 <Clock className="w-5 h-5 text-amber-500 mb-1" />
               )}
-              <p className="text-xs font-medium text-slate-700 leading-snug">{TYPE_LABELS[t]}</p>
+              <p className="text-xs font-medium text-foreground/80 leading-snug">{TYPE_LABELS[t]}</p>
               <p className={`text-xs mt-0.5 font-semibold ${done ? 'text-green-600' : 'text-amber-600'}`}>
                 {done ? `✓ ${thisYear} complete` : `${thisYear} pending`}
               </p>
@@ -120,12 +120,12 @@ export default async function RiskAssessmentsPage() {
       </div>
 
       {/* Assessment list */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-100">
-          <h2 className="text-base font-semibold text-slate-900">All Risk Assessments</h2>
+          <h2 className="text-base font-semibold text-foreground">All Risk Assessments</h2>
         </div>
         {assessments.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground/70">
             <ClipboardCheck className="w-12 h-12 mb-3 text-slate-300" />
             <p className="text-sm font-medium">No risk assessments yet</p>
             <p className="text-xs mt-1">Create your first annual proactive risk assessment</p>
@@ -139,7 +139,7 @@ export default async function RiskAssessmentsPage() {
               <Link key={a.id} href={`/trackers/risk-assessments/${a.id}`} className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-colors">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <p className="text-sm font-semibold text-slate-800">{a.title}</p>
+                    <p className="text-sm font-semibold text-foreground">{a.title}</p>
                     {a.overallRiskLevel && (
                       <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${LEVEL_COLORS[a.overallRiskLevel] ?? ''}`}>
                         {a.overallRiskLevel} RISK
@@ -153,7 +153,7 @@ export default async function RiskAssessmentsPage() {
                     {a.conductedBy && ` · ${a.conductedBy}`}
                   </p>
                   {a.nextReviewDate && (
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-muted-foreground/70 mt-0.5">
                       Next review: {formatDate(a.nextReviewDate, 'MMM d, yyyy')}
                     </p>
                   )}

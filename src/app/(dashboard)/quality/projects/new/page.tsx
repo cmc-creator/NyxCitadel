@@ -79,7 +79,7 @@ export default function NewQapiProjectPage() {
         <a href="/quality/projects" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to QAPI Projects
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Target className="w-6 h-6 text-teal-600" />
           New QAPI Project
         </h1>
@@ -89,13 +89,13 @@ export default function NewQapiProjectPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         {/* Core info */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Project Overview</h2>
+          <h2 className="text-sm font-semibold text-foreground">Project Overview</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Project Title *</label>
             <input name="title" required placeholder="e.g., Reduce Restraint Use by 20% by Q4 2026" className="form-input w-full" />
@@ -136,7 +136,7 @@ export default function NewQapiProjectPage() {
 
         {/* PDSA content */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Problem Statement & Aim (PDSA - Plan)</h2>
+          <h2 className="text-sm font-semibold text-foreground">Problem Statement & Aim (PDSA - Plan)</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Problem Statement *</label>
             <textarea name="problemStatement" required rows={3} placeholder="Describe the problem using data. e.g., 'Restraint use rate has averaged 8.2 per 1,000 pt-days in Q1 2026, exceeding the facility target of 5.0 and national benchmark.'" className="form-input w-full resize-none" />
@@ -167,7 +167,7 @@ export default function NewQapiProjectPage() {
 
         {/* Interventions */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Planned Interventions (PDSA - Do)</h2>
+          <h2 className="text-sm font-semibold text-foreground">Planned Interventions (PDSA - Do)</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Interventions</label>
             <textarea name="interventions" rows={4} placeholder="List specific interventions to be tested. e.g.:&#10;1. Implement CPI refresher training for all direct care staff by March 2026&#10;2. Establish sensory room on Unit A by April 2026&#10;3. Daily restraint review huddle with charge nurses&#10;4. Root cause analysis for each restraint event" className="form-input w-full resize-none" />
@@ -176,7 +176,7 @@ export default function NewQapiProjectPage() {
 
         {/* Regulatory */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Regulatory Linkage</h2>
+          <h2 className="text-sm font-semibold text-foreground">Regulatory Linkage</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
@@ -197,7 +197,7 @@ export default function NewQapiProjectPage() {
         </div>
 
         <div className="px-6 py-4 flex items-center justify-end gap-3">
-          <a href="/quality/projects" className="px-4 py-2 text-sm text-slate-600 hover:text-slate-800">Cancel</a>
+          <a href="/quality/projects" className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
           <button
             type="submit"
             disabled={saving}

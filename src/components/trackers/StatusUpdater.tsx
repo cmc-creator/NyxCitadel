@@ -56,7 +56,7 @@ export default function StatusUpdater({
         {current?.label ?? currentStatus}
       </span>
       <select
-        className="text-xs border border-slate-200 rounded-lg px-2 py-1 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-teal-400"
+        className="text-xs border border-border rounded-lg px-2 py-1 bg-white text-foreground/80 focus:outline-none focus:ring-1 focus:ring-teal-400"
         value={selected}
         onChange={e => setSelected(e.target.value)}
         disabled={saving || isPending}

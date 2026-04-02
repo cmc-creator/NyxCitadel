@@ -111,7 +111,7 @@ export default async function QualityPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <Activity className="w-6 h-6 text-teal-600" />
             Quality / QAPI
           </h1>
@@ -120,7 +120,7 @@ export default async function QualityPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-slate-600 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors">
+          <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-slate-600 border border-border px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors">
             <BarChart2 className="w-4 h-4" /> Enter Metrics
           </Link>
           <Link href="/quality/projects/new" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
@@ -131,25 +131,25 @@ export default async function QualityPage() {
 
       {/* Top stat cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <div className="bg-card rounded-xl border border-border p-4">
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Open CAPs</p>
           <p className="text-3xl font-bold mt-1 text-orange-600">{openCaps}</p>
-          <Link href="/trackers/caps" className="text-xs text-slate-400 hover:text-teal-600">View CAPs →</Link>
+          <Link href="/trackers/caps" className="text-xs text-muted-foreground/70 hover:text-teal-600">View CAPs →</Link>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <div className="bg-card rounded-xl border border-border p-4">
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">CAP Completion</p>
           <p className="text-3xl font-bold mt-1 text-green-600">{capCompletionPct}%</p>
-          <p className="text-xs text-slate-400">{closedCaps} of {totalCaps} closed</p>
+          <p className="text-xs text-muted-foreground/70">{closedCaps} of {totalCaps} closed</p>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <div className="bg-card rounded-xl border border-border p-4">
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Active QAPI Projects</p>
           <p className="text-3xl font-bold mt-1 text-teal-600">{activeProjects}</p>
-          <Link href="/quality/projects" className="text-xs text-slate-400 hover:text-teal-600">View projects →</Link>
+          <Link href="/quality/projects" className="text-xs text-muted-foreground/70 hover:text-teal-600">View projects →</Link>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <div className="bg-card rounded-xl border border-border p-4">
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Incidents (This Month)</p>
           <p className="text-3xl font-bold mt-1 text-red-600">{monthlyIncidentCounts[5]}</p>
-          <Link href="/trackers/incidents" className="text-xs text-slate-400 hover:text-teal-600">View incidents →</Link>
+          <Link href="/trackers/incidents" className="text-xs text-muted-foreground/70 hover:text-teal-600">View incidents →</Link>
         </div>
       </div>
 
@@ -162,17 +162,17 @@ export default async function QualityPage() {
             ? key === 'patient_satisfaction' ? m.value >= info.target : m.value <= info.target
             : null;
           return (
-            <div key={key} className="bg-white rounded-xl border border-slate-200 p-4">
+            <div key={key} className="bg-card rounded-xl border border-border p-4">
               <p className="text-xs font-medium text-slate-500">{info.label}</p>
               {m ? (
                 <>
-                  <p className={`text-2xl font-bold mt-1 ${isGood === true ? 'text-green-600' : isGood === false ? 'text-red-600' : 'text-slate-700'}`}>
+                  <p className={`text-2xl font-bold mt-1 ${isGood === true ? 'text-green-600' : isGood === false ? 'text-red-600' : 'text-foreground/80'}`}>
                     {m.value}{key === 'patient_satisfaction' ? '%' : ''}
                   </p>
-                  <p className="text-xs text-slate-400">{MONTH_ABBR[m.month - 1]} {m.year} · Target: {info.target}{info.unit.includes('%') ? '%' : ''}</p>
+                  <p className="text-xs text-muted-foreground/70">{MONTH_ABBR[m.month - 1]} {m.year} · Target: {info.target}{info.unit.includes('%') ? '%' : ''}</p>
                 </>
               ) : (
-                <p className="text-sm text-slate-400 mt-2">No data yet</p>
+                <p className="text-sm text-muted-foreground/70 mt-2">No data yet</p>
               )}
             </div>
           );
@@ -186,9 +186,9 @@ export default async function QualityPage() {
       />
 
       {/* Required QAPI indicators checklist */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
+          <h2 className="text-base font-semibold text-foreground flex items-center gap-2">
             <Target className="w-5 h-5 text-teal-600" />
             Standard HBIPS Quality Indicators
           </h2>
@@ -218,11 +218,11 @@ export default async function QualityPage() {
                   : <div className="w-4 h-4 rounded-full border-2 border-slate-300 flex-shrink-0" />
                 }
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-800">{ind.label}</p>
-                  <p className="text-xs text-slate-400">{ind.ref} · {ind.unit}</p>
+                  <p className="text-sm font-medium text-foreground">{ind.label}</p>
+                  <p className="text-xs text-muted-foreground/70">{ind.ref} · {ind.unit}</p>
                 </div>
                 {ind.required && (
-                  <span className="text-xs font-medium bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full">Required</span>
+                  <span className="text-xs font-medium bg-teal-950/20 text-teal-700 px-2 py-0.5 rounded-full">Required</span>
                 )}
                 <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${hasData ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-500'}`}>
                   {hasData ? `${thisYear} ✓` : 'No data'}

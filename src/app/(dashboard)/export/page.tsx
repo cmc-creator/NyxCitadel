@@ -98,12 +98,12 @@ const REPORT_PACKS = [
 ] as const;
 
 const colorClasses = {
-  purple: { bg: 'bg-teal-50 border-teal-200 hover:bg-teal-100', text: 'text-teal-600' },
-  blue: { bg: 'bg-blue-50 border-blue-200 hover:bg-blue-100', text: 'text-blue-600' },
-  red: { bg: 'bg-red-50 border-red-200 hover:bg-red-100', text: 'text-red-600' },
+  purple: { bg: 'bg-teal-950/20 border-teal-200 hover:bg-teal-100', text: 'text-teal-600' },
+  blue: { bg: 'bg-blue-950/20 border-blue-200 hover:bg-blue-100', text: 'text-blue-600' },
+  red: { bg: 'bg-red-950/20 border-red-200 hover:bg-red-100', text: 'text-red-600' },
   green: { bg: 'bg-green-50 border-green-200 hover:bg-green-100', text: 'text-green-600' },
-  orange: { bg: 'bg-orange-50 border-orange-200 hover:bg-orange-100', text: 'text-orange-600' },
-  indigo: { bg: 'bg-indigo-50 border-indigo-200 hover:bg-indigo-100', text: 'text-indigo-600' },
+  orange: { bg: 'bg-orange-950/20 border-orange-200 hover:bg-orange-100', text: 'text-orange-600' },
+  indigo: { bg: 'bg-teal-950/20 border-indigo-200 hover:bg-indigo-100', text: 'text-teal-600' },
 };
 
 const badgeClasses = {

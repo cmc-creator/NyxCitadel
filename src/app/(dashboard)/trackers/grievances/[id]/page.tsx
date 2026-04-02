@@ -41,28 +41,28 @@ export default async function GrievanceDetailPage({ params }: { params: { id: st
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/grievances" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/trackers/grievances" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Grievances
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/grievances/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/grievances/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <MessageSquareWarning className="w-5 h-5 text-orange-500" />
-              <span className="text-xs font-mono text-slate-400">{g.grievanceNumber}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">{g.grievanceNumber}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${SEVERITY_COLOR[g.severity]}`}>
                 {g.severity}
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{g.category.replace(/_/g, ' ')}</h1>
+            <h1 className="text-xl font-bold text-foreground">{g.category.replace(/_/g, ' ')}</h1>
             <p className="text-sm text-slate-500 mt-1">
               Received: <strong>{formatDate(g.dateReceived)}</strong>
               {g.assignedTo && <> &middot; Assigned to: <strong>{g.assignedTo}</strong></>}
@@ -82,7 +82,7 @@ export default async function GrievanceDetailPage({ params }: { params: { id: st
       </div>
 
       {g.reportableToAdhs && !g.reportedToAdhs && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
+        <div className="bg-red-950/20 border border-red-200 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
           <p className="text-sm text-red-800"><strong>ADHS Report Required</strong> &mdash; this grievance has not been reported to ADHS.</p>
         </div>
@@ -91,17 +91,17 @@ export default async function GrievanceDetailPage({ params }: { params: { id: st
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-5">
           <Section title="Grievance Summary">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{g.summary}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{g.summary}</p>
           </Section>
           {g.resolution && (
             <Section title="Resolution">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{g.resolution}</p>
-              {g.outcomeCategory && <p className="mt-2 text-xs text-slate-500">Outcome: <span className="font-medium text-slate-800">{g.outcomeCategory}</span></p>}
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{g.resolution}</p>
+              {g.outcomeCategory && <p className="mt-2 text-xs text-slate-500">Outcome: <span className="font-medium text-foreground">{g.outcomeCategory}</span></p>}
             </Section>
           )}
           {g.notes && (
             <Section title="Internal Notes">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{g.notes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{g.notes}</p>
             </Section>
           )}
         </div>
@@ -157,10 +157,10 @@ function DeadlineCard({ title, subtitle, dueDate, completedDate, completedBy, da
 }) {
   const done = !!completedDate;
   return (
-    <div className={`rounded-xl border p-4 ${done ? 'bg-green-50 border-green-200' : overdue ? 'bg-red-50 border-red-200' : 'bg-white border-slate-200'}`}>
+    <div className={`rounded-xl border p-4 ${done ? 'bg-green-50 border-green-200' : overdue ? 'bg-red-950/20 border-red-200' : 'bg-white border-slate-200'}`}>
       <div className="flex items-start justify-between gap-2">
         <div>
-          <p className="text-sm font-semibold text-slate-800">{title}</p>
+          <p className="text-sm font-semibold text-foreground">{title}</p>
           <p className="text-xs text-slate-500 mt-0.5">{subtitle}</p>
         </div>
         {done ? (
@@ -180,8 +180,8 @@ function DeadlineCard({ title, subtitle, dueDate, completedDate, completedBy, da
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
-      <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">{title}</h3>
+    <div className="bg-card rounded-xl border border-border p-4">
+      <h3 className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide mb-3">{title}</h3>
       {children}
     </div>
   );
@@ -191,7 +191,7 @@ function Row({ label, value, highlight }: { label: string; value: string; highli
   return (
     <div className="flex justify-between gap-2">
       <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
-      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
+      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );
 }

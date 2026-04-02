@@ -27,7 +27,7 @@ type Goal = { goalText: string; targetDate?: string; progress?: string };
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -38,8 +38,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -63,28 +63,28 @@ export default async function TreatmentPlanDetailPage({ params }: { params: { id
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/treatment-plans" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/treatment-plans" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Treatment Plans
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/treatment-plans/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/treatment-plans/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <ClipboardList className="w-5 h-5 text-blue-600" />
-              <span className="text-xs font-mono text-slate-400">{plan.patientMrn}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">{plan.patientMrn}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[plan.status] ?? 'bg-slate-100 text-slate-600'}`}>
                 {plan.status}
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">Treatment Plan - {plan.patientInitials}</h1>
+            <h1 className="text-xl font-bold text-foreground">Treatment Plan - {plan.patientInitials}</h1>
             <p className="text-sm text-slate-500 mt-1">
               {plan.unit} &middot; Admitted: {formatDate(plan.admitDate)} &middot; Dx: {plan.primaryDx}
             </p>
@@ -100,9 +100,9 @@ export default async function TreatmentPlanDetailPage({ params }: { params: { id
               <div className="space-y-3">
                 {goals.map((g, i) => (
                   <div key={i} className="rounded-xl border border-slate-100 bg-slate-50 p-3">
-                    <p className="text-sm font-medium text-slate-800">{g.goalText}</p>
+                    <p className="text-sm font-medium text-foreground">{g.goalText}</p>
                     <div className="flex gap-4 mt-1 flex-wrap">
-                      {g.targetDate && <span className="text-xs text-slate-400">Target: {formatDate(new Date(g.targetDate))}</span>}
+                      {g.targetDate && <span className="text-xs text-muted-foreground/70">Target: {formatDate(new Date(g.targetDate))}</span>}
                       {g.progress && <span className="text-xs text-slate-500">{g.progress}</span>}
                     </div>
                   </div>
@@ -113,22 +113,22 @@ export default async function TreatmentPlanDetailPage({ params }: { params: { id
 
           {plan.dischargeGoal && (
             <Section title="Discharge Goal">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{plan.dischargeGoal}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{plan.dischargeGoal}</p>
             </Section>
           )}
 
           <Section title="Patient Participation">
             <dl className="space-y-3">
               <div>
-                <dt className="text-xs text-slate-400">Participated in Plan Creation</dt>
+                <dt className="text-xs text-muted-foreground/70">Participated in Plan Creation</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${plan.patientParticipated ? 'text-green-600' : 'text-slate-500'}`}>
                   {plan.patientParticipated ? 'Yes' : 'No / Unable'}
                 </dd>
               </div>
               {plan.participationNotes && (
                 <div>
-                  <dt className="text-xs text-slate-400">Participation Notes</dt>
-                  <dd className="text-sm text-slate-700 mt-0.5">{plan.participationNotes}</dd>
+                  <dt className="text-xs text-muted-foreground/70">Participation Notes</dt>
+                  <dd className="text-sm text-foreground/80 mt-0.5">{plan.participationNotes}</dd>
                 </div>
               )}
             </dl>
@@ -140,19 +140,19 @@ export default async function TreatmentPlanDetailPage({ params }: { params: { id
                 {plan.reviews.map((r) => (
                   <div key={r.id} className="rounded-xl border border-slate-100 p-3 space-y-2">
                     <div className="flex items-center justify-between flex-wrap gap-2">
-                      <span className="text-sm font-semibold text-slate-800">{formatDate(r.reviewDate)}</span>
-                      <span className="text-xs text-slate-400">Reviewed by: {r.reviewedBy}</span>
+                      <span className="text-sm font-semibold text-foreground">{formatDate(r.reviewDate)}</span>
+                      <span className="text-xs text-muted-foreground/70">Reviewed by: {r.reviewedBy}</span>
                     </div>
                     {r.attendees && (r.attendees as string[]).length > 0 && (
                       <p className="text-xs text-slate-500">Attendees: {(r.attendees as string[]).join(', ')}</p>
                     )}
                     {r.progressSummary && (
-                      <p className="text-sm text-slate-700">{r.progressSummary}</p>
+                      <p className="text-sm text-foreground/80">{r.progressSummary}</p>
                     )}
                     <div className="flex gap-4 flex-wrap text-xs">
                       {r.dischargeTarget && <span className="text-slate-500">Discharge target: {formatDate(r.dischargeTarget)}</span>}
                       {r.goalsUpdated && <span className="text-blue-600 font-medium">Goals Updated</span>}
-                      {r.signature && <span className="text-slate-400">Signed: {r.signature}</span>}
+                      {r.signature && <span className="text-muted-foreground/70">Signed: {r.signature}</span>}
                     </div>
                   </div>
                 ))}
@@ -171,8 +171,8 @@ export default async function TreatmentPlanDetailPage({ params }: { params: { id
               <Field label="Created By" value={plan.planCreatedBy} />
               {plan.estimatedLos !== null && plan.estimatedLos !== undefined && (
                 <div>
-                  <dt className="text-xs text-slate-400">Estimated LOS (days)</dt>
-                  <dd className="text-sm font-medium text-slate-800 mt-0.5">{plan.estimatedLos}</dd>
+                  <dt className="text-xs text-muted-foreground/70">Estimated LOS (days)</dt>
+                  <dd className="text-sm font-medium text-foreground mt-0.5">{plan.estimatedLos}</dd>
                 </div>
               )}
               {plan.dischargedDate && <Field label="Discharged" value={formatDate(plan.dischargedDate)} />}
@@ -183,7 +183,7 @@ export default async function TreatmentPlanDetailPage({ params }: { params: { id
             <Section title="Treatment Team">
               <ul className="space-y-1">
                 {treatmentTeam.map((m, i) => (
-                  <li key={i} className="text-sm text-slate-700">{m}</li>
+                  <li key={i} className="text-sm text-foreground/80">{m}</li>
                 ))}
               </ul>
             </Section>

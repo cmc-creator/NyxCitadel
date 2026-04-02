@@ -60,7 +60,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="absolute top-4 right-4 z-10 rounded-lg p-2 text-slate-400 hover:text-white hover:bg-white/5 transition"
+          className="absolute top-4 right-4 z-10 rounded-lg p-2 text-muted-foreground/70 hover:text-white hover:bg-white/5 transition"
           aria-label="Close welcome"
         >
           <X className="w-4 h-4" />
@@ -99,7 +99,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
             </div>
           </div>
 
-          <div className="p-8 lg:p-10 bg-white text-slate-900">
+          <div className="p-8 lg:p-10 bg-white text-foreground">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4">What To Open First</p>
             <div className="space-y-3 mb-8">
               {[
@@ -109,9 +109,9 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
                 'Regulatory Updates for external changes',
                 'Sentry 🤖 for drafting and guidance',
               ].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3">
+                <div key={item} className="flex items-center gap-3 rounded-xl border border-border px-4 py-3">
                   <span className="w-2 h-2 rounded-full bg-teal-500" />
-                  <span className="text-sm font-medium text-slate-700">{item}</span>
+                  <span className="text-sm font-medium text-foreground/80">{item}</span>
                 </div>
               ))}
             </div>
@@ -128,7 +128,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
               <Link
                 href="/guide"
                 onClick={() => setOpen(false)}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 hover:border-slate-300 px-4 py-3 text-sm font-semibold text-slate-800 transition"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-border hover:border-slate-300 px-4 py-3 text-sm font-semibold text-foreground transition"
               >
                 <BookOpen className="w-4 h-4" />
                 Open User Guide
@@ -136,7 +136,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-xl px-4 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition"
+                className="rounded-xl px-4 py-3 text-sm font-medium text-slate-500 hover:text-foreground/80 transition"
               >
                 Go straight to the dashboard
               </button>

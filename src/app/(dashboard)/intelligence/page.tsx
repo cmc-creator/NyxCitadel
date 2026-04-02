@@ -46,8 +46,8 @@ export default async function IntelligencePage() {
   const stats = [
     { label: 'Open Incidents', value: openIncidents, icon: AlertTriangle, color: 'text-orange-400 bg-orange-950/40', href: '/trackers/incidents' },
     { label: 'Active CAPs', value: openCaps, icon: ClipboardList, color: 'text-blue-400 bg-blue-950/40', href: '/trackers/caps' },
-    { label: 'Overdue CAPs', value: overdueCaps, icon: AlertTriangle, color: overdueCaps > 0 ? 'text-red-400 bg-red-950/40' : 'text-slate-400 bg-slate-800/40', href: '/trackers/caps' },
-    { label: 'High/Critical Risks', value: criticalRisks, icon: Shield, color: criticalRisks > 0 ? 'text-red-400 bg-red-950/40' : 'text-slate-400 bg-slate-800/40', href: '/trackers/risk-assessments' },
+    { label: 'Overdue CAPs', value: overdueCaps, icon: AlertTriangle, color: overdueCaps > 0 ? 'text-red-400 bg-red-950/40' : 'text-muted-foreground/70 bg-slate-800/40', href: '/trackers/caps' },
+    { label: 'High/Critical Risks', value: criticalRisks, icon: Shield, color: criticalRisks > 0 ? 'text-red-400 bg-red-950/40' : 'text-muted-foreground/70 bg-slate-800/40', href: '/trackers/risk-assessments' },
     { label: 'Open Grievances', value: openGrievances, icon: Activity, color: 'text-teal-400 bg-teal-950/40', href: '/trackers/grievances' },
     { label: 'Active QAPI Projects', value: activeProjects, icon: TrendingUp, color: 'text-teal-400 bg-teal-950/40', href: '/quality/projects' },
   ];
@@ -56,7 +56,7 @@ export default async function IntelligencePage() {
     CRITICAL: 'bg-red-950/40 text-red-400',
     HIGH: 'bg-orange-950/40 text-orange-400',
     MEDIUM: 'bg-amber-950/40 text-amber-400',
-    INFORMATIONAL: 'bg-slate-800/40 text-slate-400',
+    INFORMATIONAL: 'bg-slate-800/40 text-muted-foreground/70',
   };
 
   const views: { href: string; title: string; description: string; icon: React.ElementType; badge: string | null; badgeColor: string; color: string; iconBg: string }[] = [
@@ -148,7 +148,7 @@ export default async function IntelligencePage() {
                 </div>
                 <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
               </div>
-              <span className="text-slate-600 group-hover:text-slate-400 mt-1 text-lg">→</span>
+              <span className="text-slate-600 group-hover:text-muted-foreground/70 mt-1 text-lg">→</span>
             </Link>
           ))}
         </div>
@@ -170,7 +170,7 @@ export default async function IntelligencePage() {
                 href={`/regulatory-updates/${upd.id}`}
                 className="flex items-center gap-3 bg-card border border-border rounded-xl px-4 py-3 hover:border-teal-500 transition-colors group"
               >
-                <span className={`text-xs font-semibold rounded-full px-2 py-0.5 flex-shrink-0 ${URGENCY_COLOR[upd.urgency] ?? 'bg-slate-800/40 text-slate-400'}`}>
+                <span className={`text-xs font-semibold rounded-full px-2 py-0.5 flex-shrink-0 ${URGENCY_COLOR[upd.urgency] ?? 'bg-slate-800/40 text-muted-foreground/70'}`}>
                   {upd.urgency}
                 </span>
                 <span className="text-sm text-foreground group-hover:text-teal-400 transition-colors truncate flex-1">{upd.title}</span>

@@ -16,7 +16,7 @@ export function Toaster() {
             'pointer-events-auto flex items-start gap-3 rounded-xl border px-4 py-3 shadow-lg transition-all',
             toast.variant === 'destructive'
               ? 'bg-red-600 text-white border-red-700'
-              : 'bg-white text-slate-900 border-slate-200'
+              : 'bg-white text-foreground border-slate-200'
           )}
         >
           <div className="flex-1 text-sm">
@@ -33,7 +33,7 @@ export function Toaster() {
             onClick={() => dismiss(toast.id)}
             className={cn(
               'p-0.5 rounded hover:opacity-70 transition-opacity flex-shrink-0',
-              toast.variant === 'destructive' ? 'text-red-100' : 'text-slate-400'
+              toast.variant === 'destructive' ? 'text-red-100' : 'text-muted-foreground/70'
             )}
           >
             <X className="w-4 h-4" />

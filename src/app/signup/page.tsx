@@ -67,7 +67,7 @@ export default function SignupPage() {
           />
           <span className="font-bold text-white tracking-tight">NyxCitadel<sup className="text-[10px] align-super ml-0.5 font-normal text-teal-400">™</sup></span>
         </Link>
-        <Link href="/login" className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors">
+        <Link href="/login" className="flex items-center gap-1.5 text-sm text-muted-foreground/70 hover:text-white transition-colors">
           <ArrowLeft className="w-4 h-4" /> Sign in instead
         </Link>
       </header>
@@ -84,11 +84,11 @@ export default function SignupPage() {
               NyxCitadel<sup className="text-base align-super">™</sup>
             </span>
           </h1>
-          <p className="text-slate-400 text-base leading-relaxed">
+          <p className="text-muted-foreground/70 text-base leading-relaxed">
             Explore the live demo instantly, or request access for your facility. Full platform, real data - no credit card required to evaluate.
           </p>
           <div className="mt-5 flex items-center justify-center gap-4 text-sm">
-            <Link href="/guide" className="text-slate-400 hover:text-white transition-colors">Read the user guide</Link>
+            <Link href="/guide" className="text-muted-foreground/70 hover:text-white transition-colors">Read the user guide</Link>
             <Link href="/walkthrough" className="text-teal-300 hover:text-teal-200 transition-colors">Watch the walkthrough</Link>
           </div>
         </div>
@@ -97,13 +97,13 @@ export default function SignupPage() {
         <div className="flex gap-0.5 bg-slate-900/60 border border-white/8 rounded-xl p-1 mb-8">
           <button
             onClick={() => setTab('demo')}
-            className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === 'demo' ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20' : 'text-slate-400 hover:text-white'}`}
+            className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === 'demo' ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20' : 'text-muted-foreground/70 hover:text-white'}`}
           >
             Try Live Demo
           </button>
           <button
             onClick={() => setTab('request')}
-            className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === 'request' ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20' : 'text-slate-400 hover:text-white'}`}
+            className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === 'request' ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20' : 'text-muted-foreground/70 hover:text-white'}`}
           >
             Request Access
           </button>
@@ -124,7 +124,7 @@ export default function SignupPage() {
                     <Icon className="w-4.5 h-4.5 w-[18px] h-[18px]" />
                   </div>
                   <h3 className="text-sm font-semibold text-white mb-1.5">{title}</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">{desc}</p>
+                  <p className="text-xs text-muted-foreground/70 leading-relaxed">{desc}</p>
                 </div>
               ))}
             </div>
@@ -147,7 +147,7 @@ export default function SignupPage() {
                     </div>
                     <ul className="space-y-1.5">
                       {plan.features.slice(0, 5).map(f => (
-                        <li key={f} className="flex items-center gap-1.5 text-xs text-slate-400">
+                        <li key={f} className="flex items-center gap-1.5 text-xs text-muted-foreground/70">
                           <CheckCircle className="w-3 h-3 text-emerald-500 flex-shrink-0" /> {f}
                         </li>
                       ))}
@@ -171,7 +171,7 @@ export default function SignupPage() {
                   <CheckCircle className="w-7 h-7 text-emerald-400" />
                 </div>
                 <h2 className="text-xl font-bold text-white mb-2">Request received!</h2>
-                <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                <p className="text-muted-foreground/70 text-sm leading-relaxed mb-6">
                   We'll be in touch within 1 business day to schedule your personalized demo and discuss your facility's needs.
                 </p>
                 <div className="flex gap-3 justify-center">
@@ -184,12 +184,12 @@ export default function SignupPage() {
               <div className="bg-slate-900/60 border border-white/8 rounded-2xl p-8 backdrop-blur-sm">
                 <div className="mb-7">
                   <h2 className="text-xl font-bold text-white">Request access</h2>
-                  <p className="text-slate-400 text-sm mt-1">Tell us about your facility and we'll reach out within 1 business day.</p>
+                  <p className="text-muted-foreground/70 text-sm mt-1">Tell us about your facility and we'll reach out within 1 business day.</p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-medium text-slate-400 mb-1.5">Your name <span className="text-red-500">*</span></label>
+                      <label className="block text-xs font-medium text-muted-foreground/70 mb-1.5">Your name <span className="text-red-500">*</span></label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
                         <input
@@ -200,7 +200,7 @@ export default function SignupPage() {
                       </div>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-400 mb-1.5">Work email <span className="text-red-500">*</span></label>
+                      <label className="block text-xs font-medium text-muted-foreground/70 mb-1.5">Work email <span className="text-red-500">*</span></label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
                         <input
@@ -213,7 +213,7 @@ export default function SignupPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1.5">Facility name <span className="text-red-500">*</span></label>
+                    <label className="block text-xs font-medium text-muted-foreground/70 mb-1.5">Facility name <span className="text-red-500">*</span></label>
                     <div className="relative">
                       <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
                       <input
@@ -226,7 +226,7 @@ export default function SignupPage() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-medium text-slate-400 mb-1.5">Facility type</label>
+                      <label className="block text-xs font-medium text-muted-foreground/70 mb-1.5">Facility type</label>
                       <select
                         value={form.facilityType} onChange={e => setForm(f => ({ ...f, facilityType: e.target.value }))}
                         className="w-full px-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-slate-300 focus:outline-none focus:border-teal-500/60 transition"
@@ -241,7 +241,7 @@ export default function SignupPage() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-400 mb-1.5">Bed count</label>
+                      <label className="block text-xs font-medium text-muted-foreground/70 mb-1.5">Bed count</label>
                       <input
                         type="number" placeholder="e.g. 60" min="1"
                         value={form.beds} onChange={e => setForm(f => ({ ...f, beds: e.target.value }))}
@@ -251,7 +251,7 @@ export default function SignupPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1.5">Phone</label>
+                    <label className="block text-xs font-medium text-muted-foreground/70 mb-1.5">Phone</label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
                       <input
@@ -263,7 +263,7 @@ export default function SignupPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1.5">What are your biggest compliance challenges? (optional)</label>
+                    <label className="block text-xs font-medium text-muted-foreground/70 mb-1.5">What are your biggest compliance challenges? (optional)</label>
                     <textarea
                       rows={3} placeholder="e.g. managing Joint Commission survey readiness, tracking sentinel events, staff training compliance..."
                       value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
@@ -279,7 +279,7 @@ export default function SignupPage() {
                   </button>
 
                   <p className="text-xs text-slate-600 text-center">
-                    By submitting, you agree to our <Link href="#" className="text-slate-500 hover:text-slate-400 underline">Privacy Policy</Link>. We never sell or share your information.
+                    By submitting, you agree to our <Link href="#" className="text-slate-500 hover:text-muted-foreground/70 underline">Privacy Policy</Link>. We never sell or share your information.
                   </p>
                 </form>
               </div>
@@ -291,7 +291,7 @@ export default function SignupPage() {
       {/* Footer */}
       <footer className="relative z-10 py-6 border-t border-white/5 text-center">
         <p className="text-xs text-slate-600">
-          © {new Date().getFullYear()} NyxCitadel<sup className="text-[9px]">™</sup> · HIPAA Compliant · <Link href="/login" className="hover:text-slate-400 transition-colors">Sign In</Link>
+          © {new Date().getFullYear()} NyxCitadel<sup className="text-[9px]">™</sup> · HIPAA Compliant · <Link href="/login" className="hover:text-muted-foreground/70 transition-colors">Sign In</Link>
         </p>
       </footer>
     </div>

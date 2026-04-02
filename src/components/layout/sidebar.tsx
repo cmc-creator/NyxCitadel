@@ -51,6 +51,7 @@ import {
   Newspaper,
   PlayCircle,
   Download,
+  BarChart3,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -185,7 +186,7 @@ const navItems: NavItem[] = [
     label: 'Treatment Planning',
     icon: ClipboardList,
     badge: 'ADHS',
-    badgeColor: 'bg-violet-100 text-violet-700',
+    badgeColor: 'bg-teal-100 text-teal-700',
   },
   {
     href: '/hipaa',
@@ -250,6 +251,25 @@ const navItems: NavItem[] = [
     href: '/surveys',
     label: 'Surveys & Inspections',
     icon: FileSearch,
+    children: [
+      { href: '/surveys', label: 'All Surveys', icon: FileSearch },
+      { href: '/surveys/mock', label: 'Mock Surveys', icon: ClipboardCheck, badge: 'JC', badgeColor: 'bg-teal-100 text-teal-700' },
+      { href: '/surveys/new', label: 'Log Survey', icon: FileText },
+    ],
+  },
+  {
+    href: '/reporting',
+    label: 'Regulatory Reporting',
+    icon: BarChart3,
+    badge: 'CMS/JC',
+    badgeColor: 'bg-blue-100 text-blue-700',
+    children: [
+      { href: '/reporting', label: 'Reporting Dashboard', icon: BarChart3 },
+      { href: '/reporting/oryx', label: 'HBIPS / ORYX', icon: BarChart3, badge: 'JC', badgeColor: 'bg-teal-100 text-teal-700' },
+      { href: '/reporting/nhsn', label: 'NHSN HAI', icon: ShieldAlert, badge: 'CDC', badgeColor: 'bg-blue-100 text-blue-700' },
+      { href: '/reporting/adhs', label: 'ADHS IR/IAD', icon: FileWarning, badge: 'ADHS', badgeColor: 'bg-orange-100 text-orange-700' },
+      { href: '/reporting/jc-sentinel', label: 'JC Sentinel Event', icon: AlertTriangle, badge: 'JC', badgeColor: 'bg-red-100 text-red-700' },
+    ],
   },
   {
     href: '/archives',

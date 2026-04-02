@@ -15,7 +15,7 @@ const STATUS_OPTIONS = [
   { value: 'COMPLETED', label: 'Completed', color: 'bg-blue-100 text-blue-700' },
   { value: 'REVIEWED', label: 'Reviewed', color: 'bg-purple-100 text-purple-700' },
   { value: 'APPROVED', label: 'Approved', color: 'bg-green-100 text-green-700' },
-  { value: 'ARCHIVED', label: 'Archived', color: 'bg-slate-100 text-slate-400' },
+  { value: 'ARCHIVED', label: 'Archived', color: 'bg-slate-100 text-muted-foreground/70' },
 ];
 
 const RISK_LEVEL_COLORS: Record<string, string> = {
@@ -58,11 +58,11 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/risk-assessments" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/trackers/risk-assessments" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Risk Assessments
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/risk-assessments/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/risk-assessments/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/risk-assessments/${params.id}`} redirectPath="/trackers/risk-assessments" label="risk assessment" />
@@ -70,7 +70,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -82,7 +82,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
               )}
               <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2.5 py-0.5">{ra.assessmentType.replace(/_/g, ' ')}</span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{ra.title}</h1>
+            <h1 className="text-xl font-bold text-foreground">{ra.title}</h1>
             <p className="text-sm text-slate-500 mt-1">
               Conducted: <strong>{formatDate(ra.conductedDate)}</strong>
               {ra.conductedBy && <> &middot; by <strong>{ra.conductedBy}</strong></>}
@@ -96,13 +96,13 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
         <div className="md:col-span-2 space-y-5">
           {ra.scope && (
             <Section title="Scope">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ra.scope}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ra.scope}</p>
             </Section>
           )}
 
           {ra.summary && (
             <Section title="Executive Summary">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ra.summary}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ra.summary}</p>
             </Section>
           )}
 
@@ -112,7 +112,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
               <div className="overflow-x-auto -mx-1">
                 <table className="w-full text-xs min-w-[640px]">
                   <thead>
-                    <tr className="text-left text-slate-400 border-b border-slate-100">
+                    <tr className="text-left text-muted-foreground/70 border-b border-slate-100">
                       <th className="pb-2 pr-2">Risk</th>
                       <th className="pb-2 pr-2">Category</th>
                       <th className="pb-2 pr-2 text-center">L</th>
@@ -125,10 +125,10 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                   </thead>
                   <tbody className="divide-y divide-slate-50">
                     {ra.items.map((item) => (
-                      <tr key={item.id} className="text-slate-700 hover:bg-slate-50">
+                      <tr key={item.id} className="text-foreground/80 hover:bg-slate-50">
                         <td className="py-2 pr-2 max-w-[200px]">
                           <p className="truncate" title={item.riskDescription}>{item.riskDescription}</p>
-                          {item.currentControls && <p className="text-xs text-slate-400 truncate">Controls: {item.currentControls}</p>}
+                          {item.currentControls && <p className="text-xs text-muted-foreground/70 truncate">Controls: {item.currentControls}</p>}
                         </td>
                         <td className="py-2 pr-2 text-slate-500">{item.category ? item.category.replace(/_/g, ' ') : '—'}</td>
                         <td className="py-2 pr-2 text-center font-medium">{item.likelihood}</td>
@@ -150,13 +150,13 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-slate-400 mt-3">L = Likelihood (1–5) &middot; S = Severity (1–5) &middot; Score = L &times; S</p>
+              <p className="text-xs text-muted-foreground/70 mt-3">L = Likelihood (1–5) &middot; S = Severity (1–5) &middot; Score = L &times; S</p>
             </Section>
           )}
 
           {ra.notes && (
             <Section title="Notes">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ra.notes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ra.notes}</p>
             </Section>
           )}
         </div>
@@ -196,7 +196,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
             <Section title="Regulatory Bodies">
               <div className="flex flex-wrap gap-1.5">
                 {regulatoryBodies.map((b, i) => (
-                  <span key={i} className="text-xs bg-blue-50 text-blue-700 rounded px-2 py-0.5">{b.replace(/_/g, ' ')}</span>
+                  <span key={i} className="text-xs bg-blue-950/20 text-blue-700 rounded px-2 py-0.5">{b.replace(/_/g, ' ')}</span>
                 ))}
               </div>
             </Section>
@@ -219,8 +219,8 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
-      <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">{title}</h3>
+    <div className="bg-card rounded-xl border border-border p-4">
+      <h3 className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide mb-3">{title}</h3>
       {children}
     </div>
   );
@@ -230,7 +230,7 @@ function Row({ label, value, highlight }: { label: string; value: string; highli
   return (
     <div className="flex justify-between gap-2">
       <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
-      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
+      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );
 }

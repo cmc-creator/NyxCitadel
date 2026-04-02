@@ -44,7 +44,7 @@ const PRIORITY_META: Record<string, { label: string; color: string }> = {
   CRITICAL: { label: 'Critical', color: 'bg-red-100 text-red-800 border border-red-200' },
   HIGH:     { label: 'High',     color: 'bg-orange-100 text-orange-800 border border-orange-200' },
   MEDIUM:   { label: 'Medium',   color: 'bg-yellow-100 text-yellow-800 border border-yellow-200' },
-  LOW:      { label: 'Low',      color: 'bg-slate-100 text-slate-700 border border-slate-200' },
+  LOW:      { label: 'Low',      color: 'bg-slate-100 text-foreground/80 border border-border' },
 };
 
 const BODY_COLORS: Record<string, string> = {
@@ -84,7 +84,7 @@ function BodyBadge({ body }: { body: string }) {
 }
 
 function MonthChips({ months }: { months: number[] }) {
-  if (!months.length) return <span className="text-slate-400 text-xs">-</span>;
+  if (!months.length) return <span className="text-muted-foreground/70 text-xs">-</span>;
   return (
     <div className="flex flex-wrap gap-0.5">
       {months.map(m => (
@@ -325,14 +325,14 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
       {/* ── Category Cards ────────────────────────────────────────────────── */}
       {allCategories.length > 0 && (
         <div>
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Browse by Category</p>
+          <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-widest mb-2">Browse by Category</p>
           <div className="flex gap-2 flex-wrap">
             <button
               onClick={() => setFilterCategory('')}
               className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition whitespace-nowrap ${
                 !filterCategory
                   ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                  : 'bg-white text-slate-600 border-slate-200 hover:border-blue-300 hover:bg-blue-50'
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-blue-300 hover:bg-blue-950/20'
               }`}
             >
               All
@@ -368,15 +368,15 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
       <div className="flex flex-col md:flex-row gap-3 items-start md:items-center justify-between">
         {/* Search */}
         <div className="relative flex-1 max-w-md">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/70">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </span>
           <input
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-lg bg-white
-                       focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-slate-400"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-border rounded-lg bg-white
+                       focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-muted-foreground/70"
             placeholder="Search title, standard, description..."
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -403,7 +403,7 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
           {/* Action buttons */}
           <button
             onClick={exportCsv}
-            className="flex items-center gap-1.5 px-3 py-2 text-sm bg-white border border-slate-200
+            className="flex items-center gap-1.5 px-3 py-2 text-sm bg-card border border-border
                        rounded-lg hover:bg-slate-50 transition text-slate-600"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -427,14 +427,14 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
 
       {/* ── Result count ──────────────────────────────────────────────────── */}
       <p className="text-sm text-slate-500">
-        Showing <span className="font-medium text-slate-700">{filtered.length}</span> of{' '}
-        <span className="font-medium text-slate-700">{initialData.length}</span> references
+        Showing <span className="font-medium text-foreground/80">{filtered.length}</span> of{' '}
+        <span className="font-medium text-foreground/80">{initialData.length}</span> references
         {isPending && <span className="ml-2 text-blue-500 animate-pulse">Refreshing…</span>}
       </p>
 
       {/* ── Table ─────────────────────────────────────────────────────────── */}
-      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-        <table className="min-w-full divide-y divide-slate-100 text-sm">
+      <div className="overflow-x-auto rounded-xl border border-border bg-white shadow-sm">
+        <table className="min-w-full divide-y divide-border/30 text-sm">
           <thead className="bg-slate-50">
             <tr>
               <Th>Standard Ref</Th>
@@ -451,7 +451,7 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
             {filtered.length === 0 && (
               <tr>
                 <td colSpan={canManage ? 8 : 7}
-                    className="py-12 text-center text-slate-400">
+                    className="py-12 text-center text-muted-foreground/70">
                   No references match your filters.
                 </td>
               </tr>
@@ -471,9 +471,9 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
                       {entry.standardRef}
                     </div>
                   </td>
-                  <td className="px-4 py-3 font-medium text-slate-800 max-w-xs">
+                  <td className="px-4 py-3 font-medium text-foreground max-w-xs">
                     <div className="truncate">{entry.title}</div>
-                    <div className="text-xs text-slate-400 font-mono">{entry.refId}</div>
+                    <div className="text-xs text-muted-foreground/70 font-mono">{entry.refId}</div>
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap"><BodyBadge body={entry.regulatoryBody} /></td>
                   <td className="px-4 py-3 whitespace-nowrap"><PriorityBadge priority={entry.priority} /></td>
@@ -481,7 +481,7 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
                     {entry.frequency.replace(/_/g, ' ')}
                   </td>
                   <td className="px-4 py-3"><MonthChips months={entry.months} /></td>
-                  <td className="px-4 py-3 text-xs text-slate-400 whitespace-nowrap">
+                  <td className="px-4 py-3 text-xs text-muted-foreground/70 whitespace-nowrap">
                     {entry.lastVerified
                       ? new Date(entry.lastVerified).toLocaleDateString()
                       : '-'}
@@ -491,7 +491,7 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
                       <div className="flex items-center gap-2">
                         <button
                           className="text-xs text-blue-600 hover:text-blue-800 font-medium px-2 py-1
-                                     rounded hover:bg-blue-50 transition"
+                                     rounded hover:bg-blue-950/20 transition"
                           onClick={() => openEdit(entry)}
                         >
                           {entry.isBuiltIn ? 'Annotate' : 'Edit'}
@@ -499,7 +499,7 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
                         {!entry.isBuiltIn && (
                           <button
                             className="text-xs text-red-500 hover:text-red-700 font-medium px-2 py-1
-                                       rounded hover:bg-red-50 transition disabled:opacity-40"
+                                       rounded hover:bg-red-950/20 transition disabled:opacity-40"
                             disabled={deleting === entry.id}
                             onClick={() => handleDelete(entry)}
                           >
@@ -517,7 +517,7 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
                     <td colSpan={canManage ? 8 : 7} className="px-6 py-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div>
-                          <p className="font-semibold text-slate-700 mb-1">Description</p>
+                          <p className="font-semibold text-foreground/80 mb-1">Description</p>
                           <p className="text-slate-600 whitespace-pre-wrap">{entry.description}</p>
                         </div>
                         <div className="space-y-2">
@@ -554,18 +554,18 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
                onClick={e => e.stopPropagation()}>
             <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-slate-800">
+              <h2 className="text-lg font-semibold text-foreground">
                 {modalMode === 'add'      ? 'Add Custom Regulatory Entry'  :
                  modalMode === 'annotate' ? 'Annotate Built-in Reference'  :
                                            'Edit Custom Entry'}
               </h2>
               <button onClick={() => setModalMode(null)}
-                      className="text-slate-400 hover:text-slate-600 text-2xl leading-none">&times;</button>
+                      className="text-muted-foreground/70 hover:text-slate-600 text-2xl leading-none">&times;</button>
             </div>
 
             <div className="px-6 py-5 space-y-4">
               {modalMode === 'annotate' && (
-                <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 text-sm text-blue-700">
+                <div className="rounded-lg bg-blue-950/20 border border-blue-200 p-3 text-sm text-blue-700">
                   <strong>Built-in reference</strong> - only Notes, Source URL, and Last Verified
                   date can be updated. Core regulation text is managed in the compliance library.
                 </div>
@@ -672,13 +672,13 @@ export default function RegLibraryClient({ initialData, stats, userRole }: Props
               </Field>
 
               {formError && (
-                <p className="text-red-600 text-sm bg-red-50 rounded-lg px-3 py-2">{formError}</p>
+                <p className="text-red-600 text-sm bg-red-950/20 rounded-lg px-3 py-2">{formError}</p>
               )}
             </div>
 
             <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-end gap-3">
               <button onClick={() => setModalMode(null)}
-                      className="px-4 py-2 text-sm text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+                      className="px-4 py-2 text-sm text-slate-600 hover:text-foreground rounded-lg hover:bg-slate-100 transition">
                 Cancel
               </button>
               <button
@@ -708,17 +708,17 @@ function fmtCategory(cat: string): string {
 
 function getCategoryColor(cat: string): string {
   if (/^CMS|^CREDENTIALING|^QAPI|^JC_PI|^MEDICAL_STAFF|^BOARD|^BYLAWS/.test(cat))
-    return 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100';
+    return 'bg-blue-950/20 text-blue-700 border-blue-200 hover:bg-blue-100';
   if (/^IC_|^HAND_HYGIENE/.test(cat))
-    return 'bg-teal-50 text-teal-700 border-teal-200 hover:bg-teal-100';
+    return 'bg-teal-950/20 text-teal-700 border-teal-200 hover:bg-teal-100';
   if (/^FIRE|^LIFE_|^ELEVATOR|^GENERATOR|^SPRINKLER|^BACKFLOW|^EOC/.test(cat))
-    return 'bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100';
+    return 'bg-orange-950/20 text-orange-700 border-orange-200 hover:bg-orange-100';
   if (/^EM_|^HVA|^FUNCTIONAL|^TABLETOP|^AFTER_ACTION/.test(cat))
-    return 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100';
+    return 'bg-red-950/20 text-red-700 border-red-200 hover:bg-red-100';
   if (/^PATIENT_RIGHTS|^INFORMED_CONSENT/.test(cat))
-    return 'bg-teal-50 text-teal-700 border-teal-200 hover:bg-teal-100';
+    return 'bg-teal-950/20 text-teal-700 border-teal-200 hover:bg-teal-100';
   if (/^MEDIC|^PHARM|^FORMULA|^CONTROLLED/.test(cat))
-    return 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100';
+    return 'bg-amber-950/20 text-amber-700 border-amber-200 hover:bg-amber-100';
   if (/^AZ_|^JC_MOCK|^JC_STANDARDS/.test(cat))
     return 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100';
   if (/^POLICY|^STAFF_TRAIN|^MANDATORY|^COMPETENCY|^ANNUAL_EVAL/.test(cat))
@@ -728,8 +728,8 @@ function getCategoryColor(cat: string): string {
 
 function StatCard({ label, value, accent }: { label: string; value: number; accent: string }) {
   return (
-    <div className={`bg-white rounded-xl border-l-4 ${accent} border border-slate-200 p-4 shadow-sm`}>
-      <p className="text-2xl font-bold text-slate-800">{value}</p>
+    <div className={`bg-white rounded-xl border-l-4 ${accent} border border-border p-4 shadow-sm`}>
+      <p className="text-2xl font-bold text-foreground">{value}</p>
       <p className="text-xs text-slate-500 mt-0.5">{label}</p>
     </div>
   );
@@ -747,14 +747,14 @@ function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <span className="font-medium text-slate-500 text-xs uppercase">{label}</span>
-      <p className="text-slate-700 text-sm mt-0.5 whitespace-pre-wrap">{value}</p>
+      <p className="text-foreground/80 text-sm mt-0.5 whitespace-pre-wrap">{value}</p>
     </div>
   );
 }
 
 function LockIcon() {
   return (
-    <svg className="w-3 h-3 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="w-3 h-3 text-muted-foreground/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
             d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
     </svg>
@@ -768,8 +768,8 @@ function Select({
 }) {
   return (
     <select
-      className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none
-                 focus:ring-2 focus:ring-blue-500 text-slate-700 min-w-[130px]"
+      className="text-sm border border-border rounded-lg px-3 py-2 bg-white focus:outline-none
+                 focus:ring-2 focus:ring-blue-500 text-foreground/80 min-w-[130px]"
       value={value}
       onChange={e => onChange(e.target.value)}
     >
@@ -782,12 +782,12 @@ function Select({
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-slate-700 mb-1">{label}</label>
-      {hint && <p className="text-xs text-slate-400 mb-1">{hint}</p>}
+      <label className="block text-sm font-medium text-foreground/80 mb-1">{label}</label>
+      {hint && <p className="text-xs text-muted-foreground/70 mb-1">{hint}</p>}
       {children}
     </div>
   );
 }
 
-const INPUT_CLS = `w-full text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white
-  focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-slate-400`;
+const INPUT_CLS = `w-full text-sm border border-border rounded-lg px-3 py-2 bg-white
+  focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-muted-foreground/70`;

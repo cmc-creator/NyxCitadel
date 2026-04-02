@@ -14,7 +14,7 @@ const IMPACT_STYLES: Record<string, { badge: string; icon: React.ElementType; ba
   CRITICAL: { badge: 'bg-red-500/15 text-red-400 border border-red-500/30',         icon: AlertTriangle,  bar: 'bg-red-500',    label: 'Critical - Act Now' },
   HIGH:     { badge: 'bg-orange-500/15 text-orange-400 border border-orange-500/30', icon: ArrowUpCircle,  bar: 'bg-orange-500', label: 'High Priority' },
   MEDIUM:   { badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',    icon: Info,           bar: 'bg-amber-500',  label: 'Medium' },
-  INFORMATIONAL: { badge: 'bg-slate-500/15 text-slate-400 border border-slate-500/20',    icon: CheckCircle2,   bar: 'bg-slate-500',  label: 'Informational' },
+  INFORMATIONAL: { badge: 'bg-slate-500/15 text-muted-foreground/70 border border-slate-500/20',    icon: CheckCircle2,   bar: 'bg-slate-500',  label: 'Informational' },
 };
 
 const IMPACT_ORDER = ['CRITICAL', 'HIGH', 'MEDIUM', 'INFORMATIONAL'];

@@ -77,7 +77,7 @@ export function AssistantChat() {
 
       {/* Chat panel */}
       <div
-        className={`fixed bottom-6 right-6 z-50 w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col transition-all duration-200 ${
+        className={`fixed bottom-6 right-6 z-50 w-96 bg-white rounded-2xl shadow-2xl border border-border flex flex-col transition-all duration-200 ${
           open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
         style={{ height: '520px' }}
@@ -113,7 +113,7 @@ export function AssistantChat() {
                 className={`max-w-[80%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
                   msg.role === 'user'
                     ? 'bg-teal-600 text-white rounded-tr-sm'
-                    : 'bg-slate-100 text-slate-700 rounded-tl-sm'
+                    : 'bg-slate-100 text-foreground/80 rounded-tl-sm'
                 }`}
               >
                 {msg.content}
@@ -127,7 +127,7 @@ export function AssistantChat() {
                 <Bot className="w-3.5 h-3.5 text-slate-600" />
               </div>
               <div className="bg-slate-100 rounded-2xl rounded-tl-sm px-4 py-3">
-                <Loader2 className="w-4 h-4 text-slate-400 animate-spin" />
+                <Loader2 className="w-4 h-4 text-muted-foreground/70 animate-spin" />
               </div>
             </div>
           )}
@@ -135,12 +135,12 @@ export function AssistantChat() {
           {/* Suggested prompts - show only when just greeting */}
           {messages.length === 1 && !loading && (
             <div className="space-y-1.5 pt-1">
-              <p className="text-xs text-slate-400 font-medium">Try asking:</p>
+              <p className="text-xs text-muted-foreground/70 font-medium">Try asking:</p>
               {SUGGESTED_PROMPTS.map(p => (
                 <button
                   key={p}
                   onClick={() => sendMessage(p)}
-                  className="block w-full text-left text-xs text-teal-600 hover:text-teal-700 hover:bg-teal-50 px-3 py-1.5 rounded-lg border border-teal-100 transition-colors"
+                  className="block w-full text-left text-xs text-teal-600 hover:text-teal-700 hover:bg-teal-950/20 px-3 py-1.5 rounded-lg border border-teal-100 transition-colors"
                 >
                   {p}
                 </button>

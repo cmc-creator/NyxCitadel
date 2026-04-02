@@ -34,7 +34,7 @@ const severityBadge: Record<string, string> = {
   HIGH: 'bg-orange-950/60 text-orange-300 border border-orange-600/50',
   MEDIUM: 'bg-amber-950/60 text-amber-300 border border-amber-600/50',
   LOW: 'bg-slate-700/60 text-slate-300 border border-slate-600/50',
-  OBSERVATION: 'bg-slate-800/60 text-slate-400 border border-slate-600/50',
+  OBSERVATION: 'bg-slate-800/60 text-muted-foreground/70 border border-slate-600/50',
 };
 
 const statusBadge: Record<string, string> = {
@@ -42,7 +42,7 @@ const statusBadge: Record<string, string> = {
   IN_PROGRESS: 'bg-amber-950/40 text-amber-400',
   RESOLVED: 'bg-emerald-950/40 text-emerald-400',
   VERIFIED: 'bg-sky-950/40 text-sky-400',
-  ACCEPTED: 'bg-slate-700/40 text-slate-400',
+  ACCEPTED: 'bg-slate-700/40 text-muted-foreground/70',
 };
 
 const daysPastDue = (dueDate: string, resolvedDate: string | null) => {
@@ -79,12 +79,12 @@ export default function DeficienciesPage() {
       <div className="flex items-start justify-between flex-wrap gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <Link href="/eoc" className="text-sm text-slate-400 hover:text-slate-300">Environment of Care</Link>
+            <Link href="/eoc" className="text-sm text-muted-foreground/70 hover:text-slate-300">Environment of Care</Link>
             <span className="text-slate-600">›</span>
             <span className="text-sm text-foreground font-medium">Deficiencies</span>
           </div>
           <h1 className="text-2xl font-bold text-foreground mt-1">Deficiency Tracker</h1>
-          <p className="text-sm text-slate-400 mt-0.5">All environment-of-care findings from rounds, surveys, and ad-hoc observations</p>
+          <p className="text-sm text-muted-foreground/70 mt-0.5">All environment-of-care findings from rounds, surveys, and ad-hoc observations</p>
         </div>
         <a href="/eoc/deficiencies/new" className="px-3 py-1.5 text-sm rounded-md bg-red-700 hover:bg-red-600 text-white font-medium transition-colors">
           + Log Deficiency
@@ -113,7 +113,7 @@ export default function DeficienciesPage() {
 
       {/* Filters */}
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="flex items-center gap-1.5 text-xs text-slate-400">
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground/70">
           <Filter className="w-3.5 h-3.5" />
           <span>Category:</span>
         </div>
@@ -122,7 +122,7 @@ export default function DeficienciesPage() {
             <button
               key={c}
               onClick={() => setCatFilter(c)}
-              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${catFilter === c ? 'bg-sky-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${catFilter === c ? 'bg-sky-600 text-white' : 'bg-slate-800 text-muted-foreground/70 hover:bg-slate-700'}`}
             >
               {c === 'ALL' ? 'All' : c.replace('_', ' ')}
             </button>
@@ -133,7 +133,7 @@ export default function DeficienciesPage() {
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
-              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-teal-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-teal-600 text-white' : 'bg-slate-800 text-muted-foreground/70 hover:bg-slate-700'}`}
             >
               {s === 'ALL' ? 'All Statuses' : s.replace('_', ' ')}
             </button>
@@ -163,7 +163,7 @@ export default function DeficienciesPage() {
                 return (
                   <tr key={d.id} className="hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
-                      <p className="text-xs font-mono text-slate-400">{d.id}</p>
+                      <p className="text-xs font-mono text-muted-foreground/70">{d.id}</p>
                       <p className="text-xs text-slate-600 mt-0.5">{d.unit}</p>
                     </td>
                     <td className="px-4 py-3 max-w-xs">
@@ -171,7 +171,7 @@ export default function DeficienciesPage() {
                       <p className="text-xs text-slate-500 mt-0.5">{d.location}</p>
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`text-xs px-1.5 py-0.5 rounded border font-medium ${categoryBadge[d.category] ?? 'bg-slate-800 text-slate-400'}`}>
+                      <span className={`text-xs px-1.5 py-0.5 rounded border font-medium ${categoryBadge[d.category] ?? 'bg-slate-800 text-muted-foreground/70'}`}>
                         {d.category.replace('_', ' ')}
                       </span>
                     </td>
@@ -181,7 +181,7 @@ export default function DeficienciesPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-xs text-slate-400">{d.assignedTo}</span>
+                      <span className="text-xs text-muted-foreground/70">{d.assignedTo}</span>
                     </td>
                     <td className="px-4 py-3">
                       <p className={`text-xs font-medium ${overdue ? 'text-red-400' : 'text-slate-300'}`}>

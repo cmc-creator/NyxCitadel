@@ -55,7 +55,7 @@ export default async function SurveysPage() {
       {/* Summary cards */}
       <div className="grid grid-cols-4 gap-4">
         {[
-          { label: 'Total Surveys',  value: total,       icon: ClipboardList, color: 'text-slate-400',  bg: 'bg-slate-800/40'   },
+          { label: 'Total Surveys',  value: total,       icon: ClipboardList, color: 'text-muted-foreground/70',  bg: 'bg-slate-800/40'   },
           { label: 'Open / Active',  value: open,        icon: Clock,         color: 'text-blue-400',  bg: 'bg-blue-950/40'    },
           { label: 'Response Due',   value: responseDue, icon: AlertTriangle, color: 'text-orange-400',bg: 'bg-orange-950/40'  },
           { label: 'Completed',      value: complete,    icon: CheckCircle2,  color: 'text-green-400', bg: 'bg-green-950/40'   },
@@ -73,7 +73,7 @@ export default async function SurveysPage() {
       {/* Table */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         {surveys.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-20 text-muted-foreground/70">
             <ClipboardList className="w-10 h-10 mb-2 opacity-30" />
             <p className="text-sm">No surveys recorded yet.</p>
             <a href="/surveys/new" className="mt-3 text-sm text-teal-400 hover:underline">Add your first survey</a>

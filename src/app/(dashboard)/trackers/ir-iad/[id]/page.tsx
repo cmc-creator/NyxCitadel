@@ -38,28 +38,28 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/ir-iad" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/trackers/ir-iad" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to IR / IAD Reports
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/ir-iad/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/ir-iad/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <FileWarning className="w-5 h-5 text-red-500" />
-              <span className="text-xs font-mono text-slate-400">{ir.irNumber}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">{ir.irNumber}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${SEVERITY_COLOR[ir.severity]}`}>
                 {ir.severity.replace(/_/g, ' ')}
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{ir.incidentType.replace(/_/g, ' ')}</h1>
+            <h1 className="text-xl font-bold text-foreground">{ir.incidentType.replace(/_/g, ' ')}</h1>
             <p className="text-sm text-slate-500 mt-1">
               Incident date: <strong>{formatDate(ir.incidentDate)}</strong>
               {ir.location && <> &middot; <strong>{ir.location}</strong></>}
@@ -82,7 +82,7 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
         <div className={`rounded-xl border p-4 flex items-start gap-3 ${ir.iadSubmitted ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'}`}>
           <AlertTriangle className={`w-5 h-5 shrink-0 mt-0.5 ${ir.iadSubmitted ? 'text-green-600' : 'text-yellow-600'}`} />
           <div>
-            <p className="text-sm font-semibold text-slate-800">IAD Required</p>
+            <p className="text-sm font-semibold text-foreground">IAD Required</p>
             {ir.iadSubmitted
               ? <p className="text-xs text-green-700 mt-0.5">Submitted {ir.iadSubmittedDate ? formatDate(ir.iadSubmittedDate) : ''}{ir.iadPeriod && ` · Period: ${ir.iadPeriod}`}</p>
               : <p className="text-xs text-yellow-700 mt-0.5">IAD has not been submitted yet.{ir.iadPeriod && ` Period: ${ir.iadPeriod}`}</p>
@@ -93,8 +93,8 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
 
       {/* AI Triage */}
       {ir.aiTriageSeverity && (
-        <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4 flex items-start gap-3">
-          <Brain className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
+        <div className="bg-teal-950/20 border border-indigo-200 rounded-xl p-4 flex items-start gap-3">
+          <Brain className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-semibold text-indigo-800">AI Triage &mdash; {ir.aiTriageSeverity}</p>
             {ir.aiTriageReason && <p className="text-xs text-indigo-700 mt-0.5">{ir.aiTriageReason}</p>}
@@ -111,33 +111,33 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-5">
           <Section title="Incident Description">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{ir.briefDescription}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ir.briefDescription}</p>
           </Section>
 
           {ir.injuryDescription && (
             <Section title="Injury / Harm Description">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ir.injuryDescription}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ir.injuryDescription}</p>
             </Section>
           )}
 
           {ir.immediateActions && (
             <Section title="Immediate Actions Taken">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ir.immediateActions}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ir.immediateActions}</p>
             </Section>
           )}
 
           {ir.investigationFindings && (
             <Section title="Investigation Findings">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ir.investigationFindings}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ir.investigationFindings}</p>
               {ir.rootCauseIdentified && (
-                <p className="mt-2 text-xs text-slate-500">Root cause identified: <strong className="text-slate-800">{ir.rootCauseIdentified}</strong></p>
+                <p className="mt-2 text-xs text-slate-500">Root cause identified: <strong className="text-foreground">{ir.rootCauseIdentified}</strong></p>
               )}
             </Section>
           )}
 
           {ir.preventiveActions && (
             <Section title="Preventive Actions">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{ir.preventiveActions}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ir.preventiveActions}</p>
             </Section>
           )}
         </div>
@@ -193,13 +193,13 @@ function ReportingBadge({ label, reportable, reported, dueDate, confirmationNum 
   if (!reportable) {
     return (
       <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 text-center">
-        <p className="text-xs font-semibold text-slate-400">{label}</p>
-        <p className="text-xs text-slate-400 mt-0.5">Not Reportable</p>
+        <p className="text-xs font-semibold text-muted-foreground/70">{label}</p>
+        <p className="text-xs text-muted-foreground/70 mt-0.5">Not Reportable</p>
       </div>
     );
   }
   return (
-    <div className={`rounded-xl border p-3 text-center ${reported ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+    <div className={`rounded-xl border p-3 text-center ${reported ? 'bg-green-50 border-green-200' : 'bg-red-950/20 border-red-200'}`}>
       <p className={`text-xs font-semibold ${reported ? 'text-green-700' : 'text-red-700'}`}>{label}</p>
       <p className={`text-xs mt-0.5 ${reported ? 'text-green-600' : 'text-red-600 font-bold'}`}>
         {reported ? (confirmationNum ? `Reported (${confirmationNum})` : 'Reported') : '⚠ Not Yet Reported'}
@@ -211,8 +211,8 @@ function ReportingBadge({ label, reportable, reported, dueDate, confirmationNum 
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
-      <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">{title}</h3>
+    <div className="bg-card rounded-xl border border-border p-4">
+      <h3 className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide mb-3">{title}</h3>
       {children}
     </div>
   );
@@ -222,7 +222,7 @@ function Row({ label, value, highlight }: { label: string; value: string; highli
   return (
     <div className="flex justify-between gap-2">
       <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
-      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
+      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );
 }

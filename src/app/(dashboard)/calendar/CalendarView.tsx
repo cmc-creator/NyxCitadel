@@ -178,11 +178,11 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                   onDrop={() => handleDrop(day)}
                   className={`min-h-[110px] border-b border-r border-slate-100 p-1.5 relative group/cell transition-colors ${
                     !inMonth ? 'bg-slate-50/70' : ''
-                  } ${isDragOver ? 'bg-teal-50 ring-2 ring-inset ring-teal-300' : ''}`}
+                  } ${isDragOver ? 'bg-teal-950/20 ring-2 ring-inset ring-teal-300' : ''}`}
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span className={`text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full ${
-                      today ? 'bg-teal-600 text-white' : inMonth ? 'text-slate-700' : 'text-slate-300'
+                      today ? 'bg-teal-600 text-white' : inMonth ? 'text-foreground/80' : 'text-slate-300'
                     }`}>
                       {format(day, 'd')}
                     </span>
@@ -203,7 +203,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                           dragId === ev.id ? 'opacity-40' : ''
                         } ${
                           ev.status === 'COMPLETED'
-                            ? 'line-through opacity-50 bg-slate-100 text-slate-400'
+                            ? 'line-through opacity-50 bg-slate-100 text-muted-foreground/70'
                             : PRIORITY_CHIP[ev.priority]
                         }`}
                         title={ev.title}
@@ -214,7 +214,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                       </div>
                     ))}
                     {dayEvents.length > 3 && (
-                      <div className="text-[10px] text-slate-400 font-medium px-1">+{dayEvents.length - 3} more</div>
+                      <div className="text-[10px] text-muted-foreground/70 font-medium px-1">+{dayEvents.length - 3} more</div>
                     )}
                   </div>
                 </div>
@@ -249,16 +249,16 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                 onDragLeave={() => setDragOverDay(null)}
                 onDrop={() => handleDrop(day)}
                 className={`min-h-[360px] p-2 hover:bg-slate-50/50 group/cell transition-colors ${
-                  isDragOver ? 'bg-teal-50 ring-2 ring-inset ring-teal-300' : ''
+                  isDragOver ? 'bg-teal-950/20 ring-2 ring-inset ring-teal-300' : ''
                 }`}
               >
                 {/* Column header */}
                 <div className="text-center pb-2 mb-2 border-b border-slate-100">
-                  <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">
+                  <div className="text-[10px] font-semibold text-muted-foreground/70 uppercase tracking-wide">
                     {format(day, 'EEE')}
                   </div>
                   <div className={`text-lg font-bold mt-0.5 w-8 h-8 rounded-full flex items-center justify-center mx-auto ${
-                    today ? 'bg-teal-600 text-white' : 'text-slate-700'
+                    today ? 'bg-teal-600 text-white' : 'text-foreground/80'
                   }`}>
                     {format(day, 'd')}
                   </div>
@@ -278,7 +278,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                         dragId === ev.id ? 'opacity-40' : ''
                       } ${
                         ev.status === 'COMPLETED'
-                          ? 'bg-slate-100 text-slate-400 line-through'
+                          ? 'bg-slate-100 text-muted-foreground/70 line-through'
                           : PRIORITY_CHIP[ev.priority]
                       }`}
                     >
@@ -307,7 +307,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
       grouped[key].push(ev);
     });
     if (Object.keys(grouped).length === 0) return (
-      <div className="p-16 text-center text-slate-400">
+      <div className="p-16 text-center text-muted-foreground/70">
         <CalendarDays className="w-12 h-12 mx-auto mb-3 text-slate-200" />
         <p className="font-medium">No events match this filter.</p>
         <p className="text-sm mt-1">
@@ -317,12 +317,12 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
       </div>
     );
     return (
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-border/30">
         {Object.entries(grouped).map(([month, monthEvents]) => (
           <div key={month}>
             <div className="bg-slate-50 px-5 py-2.5 flex items-center justify-between border-b border-slate-100">
-              <h3 className="text-sm font-semibold text-slate-700">{month}</h3>
-              <span className="text-xs text-slate-400">{monthEvents.length} event{monthEvents.length !== 1 ? 's' : ''}</span>
+              <h3 className="text-sm font-semibold text-foreground/80">{month}</h3>
+              <span className="text-xs text-muted-foreground/70">{monthEvents.length} event{monthEvents.length !== 1 ? 's' : ''}</span>
             </div>
             <div className="divide-y divide-slate-50">
               {monthEvents.map(ev => {
@@ -333,8 +333,8 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                     {/* Date bubble */}
                     <div className={`w-11 h-11 rounded-xl flex flex-col items-center justify-center flex-shrink-0 border ${
                       isToday(due)  ? 'bg-teal-600 border-teal-600 text-white' :
-                      overdue       ? 'bg-red-50 border-red-200 text-red-700' :
-                      'bg-teal-50 border-teal-100 text-teal-700'
+                      overdue       ? 'bg-red-950/20 border-red-200 text-red-700' :
+                      'bg-teal-950/20 border-teal-100 text-teal-700'
                     }`}>
                       <span className="text-sm font-bold leading-none">{format(due,'d')}</span>
                       <span className="text-[10px] uppercase leading-none mt-0.5">{format(due,'MMM')}</span>
@@ -344,7 +344,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                       <div className="flex items-center gap-1.5 flex-wrap min-w-0">
                         <StatusIcon status={ev.status} />
                         <Link href={`/calendar/${ev.id}/edit`}
-                          className="text-sm font-medium text-slate-800 hover:text-teal-700 truncate">
+                          className="text-sm font-medium text-foreground hover:text-teal-700 truncate">
                           {ev.title}
                         </Link>
                         <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded uppercase flex-shrink-0 ${PRIORITY_CHIP[ev.priority]}`}>
@@ -354,7 +354,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                           <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-red-100 text-red-700 flex-shrink-0">OVERDUE</span>
                         )}
                       </div>
-                      <div className="text-xs text-slate-400 mt-0.5 truncate">
+                      <div className="text-xs text-muted-foreground/70 mt-0.5 truncate">
                         {fmtCat(ev.category)}{ev.regulatoryBody ? ` · ${ev.regulatoryBody.replace(/_/g,' ')}` : ''}
                       </div>
                     </div>
@@ -370,7 +370,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                       </button>
                     )}
                     <Link href={`/calendar/${ev.id}/edit`}
-                      className="opacity-0 group-hover:opacity-100 text-xs text-slate-500 border border-slate-200 rounded-lg px-2.5 py-1.5 hover:bg-slate-50 transition-all">
+                      className="opacity-0 group-hover:opacity-100 text-xs text-slate-500 border border-border rounded-lg px-2.5 py-1.5 hover:bg-slate-50 transition-all">
                       Edit
                     </Link>
                   </div>
@@ -400,7 +400,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
       {/* ── Page header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <CalendarDays className="w-6 h-6 text-teal-600" />
             Compliance Calendar
           </h1>
@@ -421,12 +421,12 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
       {/* ── Stats strip ── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Total', value: stats.total, color: 'text-slate-700', bg: 'bg-white' },
-          { label: 'Overdue', value: stats.overdue, color: stats.overdue > 0 ? 'text-red-700' : 'text-slate-500', bg: stats.overdue > 0 ? 'bg-red-50' : 'bg-white' },
-          { label: 'Due in 30 Days', value: stats.due30, color: stats.due30 > 0 ? 'text-orange-700' : 'text-slate-500', bg: stats.due30 > 0 ? 'bg-orange-50' : 'bg-white' },
+          { label: 'Total', value: stats.total, color: 'text-foreground/80', bg: 'bg-white' },
+          { label: 'Overdue', value: stats.overdue, color: stats.overdue > 0 ? 'text-red-700' : 'text-slate-500', bg: stats.overdue > 0 ? 'bg-red-950/20' : 'bg-white' },
+          { label: 'Due in 30 Days', value: stats.due30, color: stats.due30 > 0 ? 'text-orange-700' : 'text-slate-500', bg: stats.due30 > 0 ? 'bg-orange-950/20' : 'bg-white' },
           { label: 'Completed', value: stats.completed, color: 'text-green-700', bg: 'bg-green-50' },
         ].map(s => (
-          <div key={s.label} className={`${s.bg} rounded-xl border border-slate-200 px-4 py-3 text-center`}>
+          <div key={s.label} className={`${s.bg} rounded-xl border border-border px-4 py-3 text-center`}>
             <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
             <div className="text-xs text-slate-500 mt-0.5">{s.label}</div>
           </div>
@@ -434,7 +434,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
       </div>
 
       {/* ── Filter pills ── */}
-      <div className="bg-white rounded-xl border border-slate-200 px-4 py-3 flex flex-wrap gap-2">
+      <div className="bg-card rounded-xl border border-border px-4 py-3 flex flex-wrap gap-2">
         {FILTER_OPTS.map(o => (
           <button key={o.value} onClick={() => setFilter(o.value)}
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
@@ -444,17 +444,17 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
           </button>
         ))}
         <div className="flex-1" />
-        <span className="text-xs text-slate-400 self-center italic">{filtered.length} shown</span>
+        <span className="text-xs text-muted-foreground/70 self-center italic">{filtered.length} shown</span>
       </div>
 
       {/* ── View controls bar ── */}
-      <div className="bg-white rounded-xl border border-slate-200 px-4 py-3 flex flex-wrap items-center gap-3">
+      <div className="bg-card rounded-xl border border-border px-4 py-3 flex flex-wrap items-center gap-3">
         {/* View tabs */}
         <div className="flex items-center gap-0.5 bg-slate-100 rounded-lg p-0.5">
           {(['month','week','list'] as ViewMode[]).map(v => (
             <button key={v} onClick={() => setView(v)}
               className={`px-3 py-1.5 text-xs font-semibold rounded transition-colors ${
-                view === v ? 'bg-white shadow-sm text-teal-700' : 'text-slate-500 hover:text-slate-700'
+                view === v ? 'bg-white shadow-sm text-teal-700' : 'text-slate-500 hover:text-foreground/80'
               }`}>
               {v === 'month' ? '📅 Month' : v === 'week' ? '🗓 Week' : '📋 List'}
             </button>
@@ -466,25 +466,25 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
             <button onClick={prev} className="p-1.5 rounded hover:bg-slate-100 text-slate-600 transition-colors">
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="text-sm font-semibold text-slate-700 min-w-[180px] text-center">{navLabel()}</span>
+            <span className="text-sm font-semibold text-foreground/80 min-w-[180px] text-center">{navLabel()}</span>
             <button onClick={next} className="p-1.5 rounded hover:bg-slate-100 text-slate-600 transition-colors">
               <ChevronRight className="w-4 h-4" />
             </button>
             <button onClick={() => setCurrent(new Date())}
-              className="ml-1 text-xs text-teal-600 border border-teal-200 rounded px-2 py-1 hover:bg-teal-50 transition-colors">
+              className="ml-1 text-xs text-teal-600 border border-teal-800/50 rounded px-2 py-1 hover:bg-teal-950/20 transition-colors">
               Today
             </button>
           </div>
         )}
         {dragId && (
-          <span className="text-xs text-teal-600 italic bg-teal-50 px-2 py-1 rounded ml-2">
+          <span className="text-xs text-teal-600 italic bg-teal-950/20 px-2 py-1 rounded ml-2">
             Drag to a new date to reschedule
           </span>
         )}
       </div>
 
       {/* ── Calendar body ── */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         {view === 'month' && renderMonth()}
         {view === 'week'  && renderWeek()}
         {view === 'list'  && renderList()}

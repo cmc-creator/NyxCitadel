@@ -57,18 +57,18 @@ export default function NewHaiSurveillancePage() {
         <a href="/infection-control/hai" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to HAI Surveillance
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Activity className="w-6 h-6 text-red-600" />
           Add HAI Surveillance Report
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Monthly NHSN reporting. Rate auto-calculated from case count and patient-days.</p>
       </div>
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
+      {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Reporting Period &amp; Type</h2>
+          <h2 className="text-sm font-semibold text-foreground">Reporting Period &amp; Type</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Month *</label>
@@ -91,7 +91,7 @@ export default function NewHaiSurveillancePage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Counts &amp; Rate</h2>
+          <h2 className="text-sm font-semibold text-foreground">Counts &amp; Rate</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Case Count *</label>
@@ -112,7 +112,7 @@ export default function NewHaiSurveillancePage() {
               <input name="sir" type="number" step="0.001" className="form-input w-full" />
             </div>
           </div>
-          <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+          <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
             <input name="submittedToNhsn" type="checkbox" className="rounded" />
             Submitted to NHSN
           </label>
@@ -124,7 +124,7 @@ export default function NewHaiSurveillancePage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/infection-control/hai" className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/infection-control/hai" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save HAI Report'}
           </button>

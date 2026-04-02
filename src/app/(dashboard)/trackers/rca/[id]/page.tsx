@@ -36,26 +36,26 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/rca" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/trackers/rca" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to RCAs
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/rca/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/rca/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <Search className="w-5 h-5 text-indigo-600" />
-              <span className="text-xs font-mono text-slate-400">{rca.rcaNumber}</span>
+              <Search className="w-5 h-5 text-teal-600" />
+              <span className="text-xs font-mono text-muted-foreground/70">{rca.rcaNumber}</span>
               <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2.5 py-0.5">{rca.eventType}</span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900 line-clamp-2">{rca.eventDescription}</h1>
+            <h1 className="text-xl font-bold text-foreground line-clamp-2">{rca.eventDescription}</h1>
             <p className="text-sm text-slate-500 mt-1">Event date: <strong>{formatDate(rca.eventDate)}</strong></p>
           </div>
           <StatusUpdater apiPath={`/api/rca/${rca.id}`} currentStatus={rca.status} options={STATUS_OPTIONS} />
@@ -66,7 +66,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
         <div className="md:col-span-2 space-y-5">
           {rca.eventTimeline && (
             <Section title="Event Timeline">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{rca.eventTimeline}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{rca.eventTimeline}</p>
             </Section>
           )}
 
@@ -78,7 +78,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
               {rca.processFactors && <Factor label="Process / Protocol" content={rca.processFactors} color="yellow" />}
               {rca.organizationalFactors && <Factor label="Organizational" content={rca.organizationalFactors} color="purple" />}
               {!rca.humanFactors && !rca.equipmentFactors && !rca.environmentFactors && !rca.processFactors && !rca.organizationalFactors && (
-                <p className="text-sm text-slate-400 italic">No contributing factors recorded yet.</p>
+                <p className="text-sm text-muted-foreground/70 italic">No contributing factors recorded yet.</p>
               )}
             </div>
           </Section>
@@ -90,8 +90,8 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
                   <li key={i} className="flex gap-3">
                     <span className="flex-none w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">{i + 1}</span>
                     <div>
-                      <p className="text-xs font-semibold text-slate-600">Why: <span className="font-normal text-slate-800">{item.why}</span></p>
-                      <p className="text-xs text-slate-700 mt-0.5">Because: {item.answer}</p>
+                      <p className="text-xs font-semibold text-slate-600">Why: <span className="font-normal text-foreground">{item.why}</span></p>
+                      <p className="text-xs text-foreground/80 mt-0.5">Because: {item.answer}</p>
                     </div>
                   </li>
                 ))}
@@ -103,8 +103,8 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
             <Section title="Root Causes Identified">
               <ul className="space-y-2">
                 {rootCauses.map((rc, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                    <span className="text-indigo-500 font-bold mt-0.5">&#x2022;</span>
+                  <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
+                    <span className="text-teal-500 font-bold mt-0.5">&#x2022;</span>
                     <span>{typeof rc === 'string' ? rc : rc.cause}</span>
                   </li>
                 ))}
@@ -117,7 +117,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="text-left text-slate-400 border-b border-slate-100">
+                    <tr className="text-left text-muted-foreground/70 border-b border-slate-100">
                       <th className="pb-2 pr-3">Action</th>
                       <th className="pb-2 pr-3">Responsible</th>
                       <th className="pb-2 pr-3">Target Date</th>
@@ -126,7 +126,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
                   </thead>
                   <tbody className="divide-y divide-slate-50">
                     {actionItems.map((a, i) => (
-                      <tr key={i} className="text-slate-700">
+                      <tr key={i} className="text-foreground/80">
                         <td className="py-2 pr-3">{a.action}</td>
                         <td className="py-2 pr-3 text-slate-500">{a.responsible}</td>
                         <td className="py-2 pr-3 text-slate-500 whitespace-nowrap">{a.targetDate}</td>
@@ -145,9 +145,9 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
 
           {rca.conclusion && (
             <Section title="Conclusion">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{rca.conclusion}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{rca.conclusion}</p>
               {rca.preventabilityRating && (
-                <p className="mt-2 text-xs text-slate-500">Preventability: <span className="font-medium text-slate-800">{rca.preventabilityRating}</span></p>
+                <p className="mt-2 text-xs text-slate-500">Preventability: <span className="font-medium text-foreground">{rca.preventabilityRating}</span></p>
               )}
             </Section>
           )}
@@ -175,7 +175,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
 
           {rca.teamMembers && (
             <Section title="RCA Team">
-              <p className="text-xs text-slate-700 whitespace-pre-wrap">{rca.teamMembers}</p>
+              <p className="text-xs text-foreground/80 whitespace-pre-wrap">{rca.teamMembers}</p>
             </Section>
           )}
 
@@ -192,8 +192,8 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
 
 function Factor({ label, content, color }: { label: string; content: string; color: string }) {
   const colors: Record<string, string> = {
-    blue: 'bg-blue-50 border-blue-200',
-    orange: 'bg-orange-50 border-orange-200',
+    blue: 'bg-blue-950/20 border-blue-200',
+    orange: 'bg-orange-950/20 border-orange-200',
     green: 'bg-green-50 border-green-200',
     yellow: 'bg-yellow-50 border-yellow-200',
     purple: 'bg-purple-50 border-purple-200',
@@ -201,15 +201,15 @@ function Factor({ label, content, color }: { label: string; content: string; col
   return (
     <div className={`rounded-lg border p-3 ${colors[color]}`}>
       <p className="text-xs font-semibold text-slate-600 mb-1">{label}</p>
-      <p className="text-xs text-slate-700 whitespace-pre-wrap">{content}</p>
+      <p className="text-xs text-foreground/80 whitespace-pre-wrap">{content}</p>
     </div>
   );
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
-      <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">{title}</h3>
+    <div className="bg-card rounded-xl border border-border p-4">
+      <h3 className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide mb-3">{title}</h3>
       {children}
     </div>
   );
@@ -219,7 +219,7 @@ function Row({ label, value, highlight }: { label: string; value: string; highli
   return (
     <div className="flex justify-between gap-2">
       <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
-      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
+      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );
 }

@@ -56,16 +56,16 @@ export default function NewCalendarEventPage() {
         <a href="/calendar" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Calendar
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Calendar className="w-6 h-6 text-teal-600" />
           Add Compliance Event
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Add a manual compliance event or deadline to the calendar.</p>
       </div>
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
+      {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Event Title *</label>
@@ -119,7 +119,7 @@ export default function NewCalendarEventPage() {
           </div>
         </div>
         <div className="px-6 py-4 flex items-center justify-end gap-3">
-          <a href="/calendar" className="text-sm text-slate-500 hover:text-slate-700">Cancel</a>
+          <a href="/calendar" className="text-sm text-slate-500 hover:text-foreground/80">Cancel</a>
           <button type="submit" disabled={saving}
             className="px-5 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 disabled:opacity-50 transition-colors">
             {saving ? 'Saving…' : 'Add to Calendar'}

@@ -25,7 +25,7 @@ export default async function HighAlertMedsPage() {
             <h1 className="text-xl font-bold text-white">High-Alert Medication Audits</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">ISMP / TJC MM.01</span>
           </div>
-          <p className="text-slate-400 text-sm">Storage, labeling, access restriction, and double-check compliance audits for ISMP high-alert medications.</p>
+          <p className="text-muted-foreground/70 text-sm">Storage, labeling, access restriction, and double-check compliance audits for ISMP high-alert medications.</p>
         </div>
         <a href="/pharmacy/high-alert/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Audit
@@ -50,7 +50,7 @@ export default async function HighAlertMedsPage() {
                   <p className="font-bold text-white">{a.medication}</p>
                   {a.actionRequired && <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Action Required</span>}
                 </div>
-                <p className="text-xs text-slate-400">{a.unit} — {a.auditDate.toLocaleDateString()} — Auditor: {a.auditor}</p>
+                <p className="text-xs text-muted-foreground/70">{a.unit} — {a.auditDate.toLocaleDateString()} — Auditor: {a.auditor}</p>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-3 text-xs mt-2">

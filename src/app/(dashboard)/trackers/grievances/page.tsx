@@ -73,7 +73,7 @@ export default async function GrievancesPage({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <MessageSquareWarning className="w-6 h-6 text-orange-500" />
             Patient Grievance Tracker
           </h1>
@@ -91,7 +91,7 @@ export default async function GrievancesPage({
 
       {/* Archive year banner */}
       {year && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
+        <div className="bg-amber-950/20 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
           <p className="text-sm text-amber-800">
             <strong>{year} Archive View</strong> - showing grievances received within {year}.
           </p>
@@ -101,7 +101,7 @@ export default async function GrievancesPage({
 
       {/* Alert banners */}
       {overdueAck.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-center gap-3">
+        <div className="bg-red-950/20 border border-red-200 rounded-xl px-4 py-3 flex items-center gap-3">
           <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />
           <p className="text-sm text-red-700">
             <strong>{overdueAck.length} grievance{overdueAck.length > 1 ? 's' : ''}</strong> past the 7-day acknowledgment deadline (42 CFR 482.13(e)).
@@ -109,7 +109,7 @@ export default async function GrievancesPage({
         </div>
       )}
       {overdueRes.length > 0 && (
-        <div className="bg-orange-50 border border-orange-200 rounded-xl px-4 py-3 flex items-center gap-3">
+        <div className="bg-orange-950/20 border border-orange-200 rounded-xl px-4 py-3 flex items-center gap-3">
           <AlertCircle className="w-5 h-5 text-orange-500 shrink-0" />
           <p className="text-sm text-orange-700">
             <strong>{overdueRes.length} grievance{overdueRes.length > 1 ? 's' : ''}</strong> past the 30-day resolution deadline (42 CFR 482.13(e)).
@@ -119,19 +119,19 @@ export default async function GrievancesPage({
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
-          <div className="text-2xl font-bold text-slate-900">{open.length}</div>
+        <div className="bg-card rounded-xl border border-border p-4">
+          <div className="text-2xl font-bold text-foreground">{open.length}</div>
           <div className="text-sm text-slate-500">Open Grievances</div>
         </div>
-        <div className={`rounded-xl border p-4 ${overdueAck.length > 0 ? 'bg-red-50 border-red-200' : 'bg-white border-slate-200'}`}>
-          <div className={`text-2xl font-bold ${overdueAck.length > 0 ? 'text-red-600' : 'text-slate-900'}`}>{overdueAck.length}</div>
+        <div className={`rounded-xl border p-4 ${overdueAck.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-white border-slate-200'}`}>
+          <div className={`text-2xl font-bold ${overdueAck.length > 0 ? 'text-red-600' : 'text-foreground'}`}>{overdueAck.length}</div>
           <div className="text-sm text-slate-500">Overdue Acknowledgments</div>
         </div>
-        <div className={`rounded-xl border p-4 ${overdueRes.length > 0 ? 'bg-orange-50 border-orange-200' : 'bg-white border-slate-200'}`}>
-          <div className={`text-2xl font-bold ${overdueRes.length > 0 ? 'text-orange-600' : 'text-slate-900'}`}>{overdueRes.length}</div>
+        <div className={`rounded-xl border p-4 ${overdueRes.length > 0 ? 'bg-orange-950/20 border-orange-200' : 'bg-white border-slate-200'}`}>
+          <div className={`text-2xl font-bold ${overdueRes.length > 0 ? 'text-orange-600' : 'text-foreground'}`}>{overdueRes.length}</div>
           <div className="text-sm text-slate-500">Overdue Resolutions</div>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-green-600">
             {grievances.filter(g => g.status === 'RESOLVED' || g.status === 'CLOSED').length}
           </div>
@@ -141,7 +141,7 @@ export default async function GrievancesPage({
 
       {/* Table */}
       {grievances.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
+        <div className="bg-card rounded-xl border border-border p-12 text-center">
           <MessageSquareWarning className="w-10 h-10 text-slate-300 mx-auto mb-3" />
           <p className="text-slate-500 font-medium">No grievances logged yet</p>
           <Link
@@ -152,7 +152,7 @@ export default async function GrievancesPage({
           </Link>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="bg-card rounded-xl border border-border overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>
@@ -165,14 +165,14 @@ export default async function GrievancesPage({
                 <th className="px-4 py-3" />
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border/30">
               {grievances.map(g => {
                 const isClosed = g.status === 'CLOSED' || g.status === 'RESOLVED';
                 return (
                   <tr key={g.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-4 py-3 font-mono text-xs text-slate-600">{g.grievanceNumber}</td>
                     <td className="px-4 py-3">
-                      <div className="font-medium text-slate-800">{g.complainantName}</div>
+                      <div className="font-medium text-foreground">{g.complainantName}</div>
                       {g.patientName && <div className="text-xs text-slate-500">Patient: {g.patientName}</div>}
                     </td>
                     <td className="px-4 py-3">

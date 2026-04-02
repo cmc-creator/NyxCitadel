@@ -55,17 +55,17 @@ export default function NewGovernanceDocumentPage() {
         <a href="/governance/documents" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Governance Documents
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <FileText className="w-6 h-6 text-indigo-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <FileText className="w-6 h-6 text-teal-600" />
           Add Governance Document
         </h1>
       </div>
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
+      {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Document Info</h2>
+          <h2 className="text-sm font-semibold text-foreground">Document Info</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Document Type *</label>
@@ -98,7 +98,7 @@ export default function NewGovernanceDocumentPage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Dates</h2>
+          <h2 className="text-sm font-semibold text-foreground">Dates</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Effective Date *</label>
@@ -123,8 +123,8 @@ export default function NewGovernanceDocumentPage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/governance/documents" className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">Cancel</a>
-          <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50">
+          <a href="/governance/documents" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-indigo-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Document'}
           </button>
         </div>

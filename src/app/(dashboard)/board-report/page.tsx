@@ -154,24 +154,24 @@ export default async function BoardReportPage() {
     <div className="space-y-4">
       {/* Toolbar */}
       <div className="flex items-center justify-between print:hidden">
-        <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-indigo-600">
+        <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600">
           <ChevronLeft className="w-4 h-4" /> Dashboard
         </Link>
         <PrintButton />
       </div>
 
       {/* ─── REPORT BODY ──────────────────────────────────── */}
-      <div className="bg-white border border-slate-200 rounded-xl p-8 space-y-8 print:border-0 print:p-2">
+      <div className="bg-card border border-border rounded-xl p-8 space-y-8 print:border-0 print:p-2">
 
         {/* Header */}
-        <div className="border-b-2 border-indigo-600 pb-5">
+        <div className="border-b-2 border-teal-600 pb-5">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <Shield className="w-5 h-5 text-indigo-600" />
-                <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest">NyxCitadel - Compliance Intelligence</span>
+                <Shield className="w-5 h-5 text-teal-600" />
+                <span className="text-xs font-bold text-teal-600 uppercase tracking-widest">NyxCitadel - Compliance Intelligence</span>
               </div>
-              <h1 className="text-3xl font-black text-slate-900">Board Compliance Report</h1>
+              <h1 className="text-3xl font-black text-foreground">Board Compliance Report</h1>
               <p className="text-slate-500 mt-1 text-sm">
                 {facility?.name} · {facility?.city}, {facility?.state} ·{' '}
                 {facility?.licenseNumber ? `Lic. #${facility.licenseNumber} · ` : ''}
@@ -179,9 +179,9 @@ export default async function BoardReportPage() {
               </p>
             </div>
             <div className="text-right text-sm text-slate-500">
-              <p className="font-semibold text-slate-700">Reporting Period</p>
+              <p className="font-semibold text-foreground/80">Reporting Period</p>
               <p>{formatDate(since90)} - {reportDate}</p>
-              <p className="text-xs text-slate-400 mt-1">CONFIDENTIAL - BOARD USE ONLY</p>
+              <p className="text-xs text-muted-foreground/70 mt-1">CONFIDENTIAL - BOARD USE ONLY</p>
             </div>
           </div>
         </div>
@@ -189,10 +189,10 @@ export default async function BoardReportPage() {
         {/* Resilience Score */}
         <div className="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200 rounded-xl p-6 flex items-center justify-between">
           <div>
-            <p className="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-1">Facility Resilience Score</p>
+            <p className="text-xs font-bold text-teal-600 uppercase tracking-widest mb-1">Facility Resilience Score</p>
             <div className="flex items-end gap-3">
               <span className="text-6xl font-black text-indigo-700">{resGrade}</span>
-              <span className="text-3xl font-bold text-indigo-500 mb-1">{resilience}/100</span>
+              <span className="text-3xl font-bold text-teal-500 mb-1">{resilience}/100</span>
             </div>
             <p className="text-sm text-slate-600 mt-1">
               Training {trainingPct}% · IR (90d): {irLast90} · Open CAPs: {capsOpen} · Open Grievances: {grievancesOpen}
@@ -241,7 +241,7 @@ export default async function BoardReportPage() {
                       {ir.aiCascadeTriggered ? (
                         <span className="text-emerald-600 font-medium">Yes</span>
                       ) : (
-                        <span className="text-slate-400">No</span>
+                        <span className="text-muted-foreground/70">No</span>
                       )}
                     </td>
                     <td className="py-1.5 text-xs text-slate-600">{ir.status.replace(/_/g, ' ')}</td>
@@ -318,7 +318,7 @@ export default async function BoardReportPage() {
                 {drillsLast90.map((d, i) => (
                   <tr key={i} className="border-b border-slate-100">
                     <td className="py-1.5 text-xs font-medium">
-                      <a href={`/emergency/drills/${d.id}`} className="hover:text-indigo-600 hover:underline">{d.drillName}</a>
+                      <a href={`/emergency/drills/${d.id}`} className="hover:text-teal-600 hover:underline">{d.drillName}</a>
                     </td>
                     <td className="py-1.5 text-xs text-slate-500">{d.drillType.replace(/_/g, ' ')}</td>
                     <td className="py-1.5 text-xs text-slate-500">{formatDate(d.scheduledDate)}</td>
@@ -335,14 +335,14 @@ export default async function BoardReportPage() {
                           d.resilienceGrade.startsWith('C') ? 'text-yellow-600' : 'text-red-600'
                         }`}>{d.resilienceGrade}</span>
                       ) : (
-                        <span className="text-slate-400 text-xs">-</span>
+                        <span className="text-muted-foreground/70 text-xs">-</span>
                       )}
                     </td>
                     <td className="py-1.5 text-center text-xs">
                       {d.aarGeneratedAt ? (
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mx-auto" />
                       ) : (
-                        <span className="text-slate-400">-</span>
+                        <span className="text-muted-foreground/70">-</span>
                       )}
                     </td>
                   </tr>
@@ -401,7 +401,7 @@ export default async function BoardReportPage() {
                     <tr key={m.metricName} className="border-b border-slate-100">
                       <td className="py-1.5 text-xs font-medium">{m.metricName}</td>
                       <td className="py-1.5 text-right text-xs">{m.value}{m.unit ? ` ${m.unit}` : ''}</td>
-                      <td className="py-1.5 text-right text-xs text-slate-400">{m.target ?? '-'}{m.unit && m.target ? ` ${m.unit}` : ''}</td>
+                      <td className="py-1.5 text-right text-xs text-muted-foreground/70">{m.target ?? '-'}{m.unit && m.target ? ` ${m.unit}` : ''}</td>
                       <td className="py-1.5 text-center">
                         {onTarget ? (
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mx-auto" />
@@ -448,7 +448,7 @@ export default async function BoardReportPage() {
         )}
 
         {/* ── Section 7: Credentialing ───────────────────── */}
-        <ReportSection icon={<Shield className="w-4 h-4 text-violet-500" />} title="Section 7 - Credentialing &amp; Licensure">
+        <ReportSection icon={<Shield className="w-4 h-4 text-teal-500" />} title="Section 7 - Credentialing &amp; Licensure">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             <StatBox label="Licenses Expiring (90d)" value={expiringLicenses90} highlight={expiringLicenses90 > 0} />
           </div>
@@ -480,8 +480,8 @@ export default async function BoardReportPage() {
         </ReportSection>
 
         {/* Closing Statement */}
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
-          <h3 className="text-sm font-bold text-slate-700 mb-2">Closing Statement</h3>
+        <div className="bg-slate-50 border border-border rounded-xl p-5">
+          <h3 className="text-sm font-bold text-foreground/80 mb-2">Closing Statement</h3>
           <p className="text-sm text-slate-600 leading-relaxed">
             {facility?.name} presents this compliance report for the period ending {reportDate}.
             The facility&apos;s overall Resilience Grade is <strong>{resGrade} ({resilience}/100)</strong>.{' '}
@@ -511,7 +511,7 @@ export default async function BoardReportPage() {
           </div>
         </div>
 
-        <div className="text-xs text-slate-400 border-t border-slate-100 pt-3 flex justify-between">
+        <div className="text-xs text-muted-foreground/70 border-t border-slate-100 pt-3 flex justify-between">
           <span>NyxCitadel · {facility?.name} · {reportDate}</span>
           <span>Confidential - Generated automatically from compliance data</span>
         </div>
@@ -525,7 +525,7 @@ export default async function BoardReportPage() {
 function ReportSection({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="flex items-center gap-2 text-sm font-bold text-slate-800 uppercase tracking-wide border-b-2 border-slate-200 pb-1 mb-3">
+      <h2 className="flex items-center gap-2 text-sm font-bold text-foreground uppercase tracking-wide border-b-2 border-slate-200 pb-1 mb-3">
         {icon}
         {title}
       </h2>
@@ -536,8 +536,8 @@ function ReportSection({ icon, title, children }: { icon: React.ReactNode; title
 
 function StatBox({ label, value, highlight = false }: { label: string; value: number | string; highlight?: boolean }) {
   return (
-    <div className={`rounded-lg border p-3 ${highlight ? 'bg-orange-50 border-orange-200' : 'bg-slate-50 border-slate-200'}`}>
-      <p className={`text-2xl font-bold ${highlight ? 'text-orange-700' : 'text-slate-800'}`}>{value}</p>
+    <div className={`rounded-lg border p-3 ${highlight ? 'bg-orange-950/20 border-orange-200' : 'bg-slate-50 border-slate-200'}`}>
+      <p className={`text-2xl font-bold ${highlight ? 'text-orange-700' : 'text-foreground'}`}>{value}</p>
       <p className="text-xs text-slate-500 mt-0.5">{label}</p>
     </div>
   );

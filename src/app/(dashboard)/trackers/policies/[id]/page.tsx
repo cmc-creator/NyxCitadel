@@ -13,7 +13,7 @@ const STATUS_OPTIONS = [
   { value: 'DRAFT', label: 'Draft', color: 'bg-slate-100 text-slate-600' },
   { value: 'UNDER_REVIEW', label: 'Under Review', color: 'bg-yellow-100 text-yellow-700' },
   { value: 'ACTIVE', label: 'Active', color: 'bg-green-100 text-green-700' },
-  { value: 'ARCHIVED', label: 'Archived', color: 'bg-slate-100 text-slate-400' },
+  { value: 'ARCHIVED', label: 'Archived', color: 'bg-slate-100 text-muted-foreground/70' },
   { value: 'OVERDUE_REVIEW', label: 'Overdue Review', color: 'bg-red-100 text-red-700' },
 ];
 
@@ -35,29 +35,29 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/policies" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/trackers/policies" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Policies
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/policies/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/policies/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <BookOpen className="w-5 h-5 text-blue-600" />
-              <span className="text-xs font-mono text-slate-400">{policy.policyNumber}</span>
-              <span className="text-xs text-slate-400">v{policy.version}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">{policy.policyNumber}</span>
+              <span className="text-xs text-muted-foreground/70">v{policy.version}</span>
               {policy.category && (
-                <span className="text-xs bg-blue-50 text-blue-700 rounded-full px-2.5 py-0.5">{policy.category.replace(/_/g, ' ')}</span>
+                <span className="text-xs bg-blue-950/20 text-blue-700 rounded-full px-2.5 py-0.5">{policy.category.replace(/_/g, ' ')}</span>
               )}
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{policy.title}</h1>
+            <h1 className="text-xl font-bold text-foreground">{policy.title}</h1>
             <p className="text-sm text-slate-500 mt-1">
               Effective: <strong>{formatDate(policy.effectiveDate)}</strong>
               {policy.owner && <> &middot; Owner: <strong>{policy.owner}</strong></>}
@@ -68,7 +68,7 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
       </div>
 
       {reviewOverdue && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
+        <div className="bg-red-950/20 border border-red-200 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
           <p className="text-sm text-red-800">
             <strong>Review Overdue</strong> &mdash; this policy was due for review on {formatDate(policy.nextReviewDate!)}. {Math.abs(daysToReview!)} days overdue.
@@ -80,7 +80,7 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
         <div className="md:col-span-2 space-y-5">
           {policy.summary && (
             <Section title="Summary">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{policy.summary}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{policy.summary}</p>
             </Section>
           )}
 
@@ -105,8 +105,8 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
                     </div>
                     <div className="pb-3">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-slate-700">v{r.version}</span>
-                        <span className="text-xs text-slate-400">{r.date}</span>
+                        <span className="text-xs font-semibold text-foreground/80">v{r.version}</span>
+                        <span className="text-xs text-muted-foreground/70">{r.date}</span>
                         <span className="text-xs text-slate-500">&mdash; {r.changedBy}</span>
                       </div>
                       <p className="text-xs text-slate-600 mt-0.5">{r.summary}</p>
@@ -139,7 +139,7 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
             <Section title="Regulatory Bodies">
               <div className="flex flex-wrap gap-1.5">
                 {regulatoryBodies.map((b, i) => (
-                  <span key={i} className="text-xs bg-blue-50 text-blue-700 rounded px-2 py-0.5">{b.replace(/_/g, ' ')}</span>
+                  <span key={i} className="text-xs bg-blue-950/20 text-blue-700 rounded px-2 py-0.5">{b.replace(/_/g, ' ')}</span>
                 ))}
               </div>
             </Section>
@@ -147,8 +147,8 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
 
           {daysToReview !== null && !reviewOverdue && (
             <Section title="Review Countdown">
-              <p className="text-2xl font-bold text-slate-800 text-center">{daysToReview}</p>
-              <p className="text-xs text-slate-400 text-center mt-0.5">days until next review</p>
+              <p className="text-2xl font-bold text-foreground text-center">{daysToReview}</p>
+              <p className="text-xs text-muted-foreground/70 text-center mt-0.5">days until next review</p>
             </Section>
           )}
         </div>
@@ -159,8 +159,8 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
-      <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">{title}</h3>
+    <div className="bg-card rounded-xl border border-border p-4">
+      <h3 className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide mb-3">{title}</h3>
       {children}
     </div>
   );
@@ -170,7 +170,7 @@ function Row({ label, value, highlight }: { label: string; value: string; highli
   return (
     <div className="flex justify-between gap-2">
       <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
-      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
+      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );
 }

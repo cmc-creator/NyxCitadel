@@ -48,7 +48,7 @@ const categoryColor: Record<string, string> = {
   PLUMBING: 'text-teal-400',
   ELECTRICAL: 'text-yellow-400',
   NURSE_CALL: 'text-blue-400',
-  ELEVATOR: 'text-slate-400',
+  ELEVATOR: 'text-muted-foreground/70',
   MEDICAL_EQUIPMENT: 'text-emerald-400',
 };
 
@@ -80,12 +80,12 @@ export default function EquipmentPmPage() {
       <div className="flex items-start justify-between flex-wrap gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <Link href="/eoc" className="text-sm text-slate-400 hover:text-slate-300">Environment of Care</Link>
+            <Link href="/eoc" className="text-sm text-muted-foreground/70 hover:text-slate-300">Environment of Care</Link>
             <span className="text-slate-600">›</span>
             <span className="text-sm text-foreground font-medium">Equipment PM</span>
           </div>
           <h1 className="text-2xl font-bold text-foreground mt-1">Equipment Preventive Maintenance</h1>
-          <p className="text-sm text-slate-400 mt-0.5">Fire systems, utilities, HVAC, elevators, and clinical support equipment schedules</p>
+          <p className="text-sm text-muted-foreground/70 mt-0.5">Fire systems, utilities, HVAC, elevators, and clinical support equipment schedules</p>
         </div>
         <a href="/eoc/equipment/new" className="px-3 py-1.5 text-sm rounded-md bg-teal-600 hover:bg-teal-500 text-white font-medium transition-colors">
           + Add Equipment
@@ -110,12 +110,12 @@ export default function EquipmentPmPage() {
 
       {/* Filters */}
       <div className="flex items-center gap-2 flex-wrap">
-        <Filter className="w-3.5 h-3.5 text-slate-400" />
+        <Filter className="w-3.5 h-3.5 text-muted-foreground/70" />
         {(['ALL','OVERDUE','DUE_SOON','UPCOMING','COMPLETED'] as StatusFilter[]).map(s => (
           <button
             key={s}
             onClick={() => setStatusFilter(s)}
-            className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-teal-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+            className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${statusFilter === s ? 'bg-teal-600 text-white' : 'bg-slate-800 text-muted-foreground/70 hover:bg-slate-700'}`}
           >
             {s === 'ALL' ? 'All' : s.replace('_', ' ')}
           </button>
@@ -127,7 +127,7 @@ export default function EquipmentPmPage() {
       <div className="space-y-2">
         {filtered.map(e => {
           const Icon = categoryIcon[e.category] ?? Wrench;
-          const iconColor = categoryColor[e.category] ?? 'text-slate-400';
+          const iconColor = categoryColor[e.category] ?? 'text-muted-foreground/70';
           const sc = statusConfig[e.status];
           const StatusIcon = sc.icon;
           const isOverdue = e.status === 'OVERDUE';
@@ -144,7 +144,7 @@ export default function EquipmentPmPage() {
                       <p className="text-xs text-slate-500 mt-0.5">{e.location} · <span className="text-slate-600">{e.assetId}</span></p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">{frequencyLabel[e.frequency]}</span>
+                      <span className="text-xs bg-slate-800 text-muted-foreground/70 px-2 py-0.5 rounded-full">{frequencyLabel[e.frequency]}</span>
                       <span className={`text-xs px-2 py-0.5 rounded-full font-medium border flex items-center gap-1 ${sc.color}`}>
                         <StatusIcon className="w-3 h-3" />
                         {sc.label}
@@ -154,8 +154,8 @@ export default function EquipmentPmPage() {
                   <div className="flex items-center gap-4 mt-2 text-xs text-slate-500 flex-wrap">
                     <span>Last service: <span className={`font-medium ${e.lastService ? 'text-slate-300' : 'text-red-400'}`}>{e.lastService ?? 'Never'}</span></span>
                     <span>Next due: <span className={`font-medium ${isOverdue ? 'text-red-400' : e.status === 'DUE_SOON' ? 'text-amber-400' : 'text-slate-300'}`}>{e.nextService}</span></span>
-                    <span>Vendor: <span className="text-slate-400">{e.vendor}</span></span>
-                    {e.contactPhone && <span><span className="text-slate-400">{e.contactPhone}</span></span>}
+                    <span>Vendor: <span className="text-muted-foreground/70">{e.vendor}</span></span>
+                    {e.contactPhone && <span><span className="text-muted-foreground/70">{e.contactPhone}</span></span>}
                   </div>
                   {e.notes && <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{e.notes}</p>}
                 </div>

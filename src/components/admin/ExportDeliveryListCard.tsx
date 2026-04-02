@@ -61,7 +61,7 @@ export function ExportDeliveryListCard() {
   return (
     <div className="bg-card border border-border rounded-xl p-4 space-y-3">
       <div className="flex items-center gap-2">
-        <Mail className="w-4 h-4 text-violet-400" />
+        <Mail className="w-4 h-4 text-teal-400" />
         <h3 className="text-sm font-semibold text-foreground">Export Delivery Lists</h3>
       </div>
       <p className="text-xs text-muted-foreground">Add executive recipients who should receive scheduled export packages even if they do not have platform logins.</p>
@@ -132,7 +132,7 @@ function FacilityDeliveryRow({
           <button
             onClick={() => void onSave(facility.facilityId, value, frequency)}
             disabled={saving}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-violet-600 hover:bg-violet-700 disabled:opacity-60 text-white text-xs font-medium"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-xs font-medium"
           >
             <Save className="w-3.5 h-3.5" />
             {saving ? 'Saving…' : 'Save'}

@@ -50,11 +50,11 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  ADMINISTRATIVE:         'bg-slate-100 text-slate-700 border-slate-200',
+  ADMINISTRATIVE:         'bg-slate-100 text-foreground/80 border-slate-200',
   CLINICAL:               'bg-blue-100 text-blue-700 border-blue-200',
   EMERGENCY_MANAGEMENT:   'bg-red-100 text-red-700 border-red-200',
   ENVIRONMENT_OF_CARE:    'bg-green-100 text-green-700 border-green-200',
-  HUMAN_RESOURCES:        'bg-violet-100 text-violet-700 border-violet-200',
+  HUMAN_RESOURCES:        'bg-teal-100 text-teal-700 border-teal-200',
   INFECTION_CONTROL:      'bg-teal-100 text-teal-700 border-teal-200',
   INFORMATION_MANAGEMENT: 'bg-cyan-100 text-cyan-700 border-cyan-200',
   LEADERSHIP:             'bg-indigo-100 text-indigo-700 border-indigo-200',
@@ -95,7 +95,7 @@ function fmt(d: string | null) {
 }
 
 function ReviewBadge({ dateStr, status }: { dateStr: string | null; status: string }) {
-  if (!dateStr || status === 'ARCHIVED') return <span className="text-xs text-slate-400">-</span>;
+  if (!dateStr || status === 'ARCHIVED') return <span className="text-xs text-muted-foreground/70">-</span>;
   const date = new Date(dateStr);
   const days = differenceInCalendarDays(date, new Date());
   const overdue = days < 0;
@@ -267,10 +267,10 @@ export default function PoliciesClient({ initialData }: Props) {
           { label: 'Overdue Review', value: stats.overdue, accent: 'border-red-400',    icon: <AlertTriangle className="w-4 h-4 text-red-500" /> },
           { label: 'Due in 30d',     value: stats.dueSoon, accent: 'border-amber-400',  icon: <Clock className="w-4 h-4 text-amber-500" /> },
         ].map(s => (
-          <div key={s.label} className={`bg-white rounded-xl border-l-4 border border-slate-200 ${s.accent} px-4 py-3 flex items-center gap-3`}>
+          <div key={s.label} className={`bg-white rounded-xl border-l-4 border border-border ${s.accent} px-4 py-3 flex items-center gap-3`}>
             {s.icon}
             <div>
-              <p className="text-2xl font-bold text-slate-900">{s.value}</p>
+              <p className="text-2xl font-bold text-foreground">{s.value}</p>
               <p className="text-xs text-slate-500">{s.label}</p>
             </div>
           </div>
@@ -280,12 +280,12 @@ export default function PoliciesClient({ initialData }: Props) {
       {/* ── Category Pills ─────────────────────────────────────────────────── */}
       {catCounts.length > 0 && (
         <div>
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Browse by Category</p>
+          <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-widest mb-2">Browse by Category</p>
           <div className="flex gap-2 flex-wrap">
             <button
               onClick={() => setFilterCat('')}
               className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition whitespace-nowrap ${
-                !filterCat ? 'bg-teal-600 text-white border-teal-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-teal-50'
+                !filterCat ? 'bg-teal-600 text-white border-teal-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-teal-950/20'
               }`}
             >
               All
@@ -295,7 +295,7 @@ export default function PoliciesClient({ initialData }: Props) {
             </button>
             {catCounts.map(([cat, count]) => {
               const active = filterCat === cat;
-              const colorBase = CATEGORY_COLORS[cat] ?? 'bg-slate-100 text-slate-700 border-slate-200';
+              const colorBase = CATEGORY_COLORS[cat] ?? 'bg-slate-100 text-foreground/80 border-slate-200';
               return (
                 <button
                   key={cat}
@@ -318,9 +318,9 @@ export default function PoliciesClient({ initialData }: Props) {
       {/* ── Toolbar ───────────────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/70" />
           <input
-            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
             placeholder="Search title, policy #, owner, reference..."
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -329,15 +329,15 @@ export default function PoliciesClient({ initialData }: Props) {
         <select
           value={filterStatus}
           onChange={e => setFilterStatus(e.target.value)}
-          className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
+          className="text-sm border border-border rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
         >
           <option value="">All Statuses</option>
           {Object.entries(STATUS_META).map(([v, m]) => (
             <option key={v} value={v}>{m.label}</option>
           ))}
         </select>
-        <div className="flex items-center gap-1.5 text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white">
-          <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
+        <div className="flex items-center gap-1.5 text-sm border border-border rounded-lg px-3 py-2 bg-white">
+          <ArrowUpDown className="w-3.5 h-3.5 text-muted-foreground/70" />
           <select
             value={sort}
             onChange={e => setSort(e.target.value)}
@@ -348,7 +348,7 @@ export default function PoliciesClient({ initialData }: Props) {
         </div>
         <button
           onClick={exportCsv}
-          className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition whitespace-nowrap"
+          className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg border border-border bg-white text-slate-600 hover:bg-slate-50 transition whitespace-nowrap"
         >
           <Download className="w-3.5 h-3.5" /> Export CSV
         </button>
@@ -364,7 +364,7 @@ export default function PoliciesClient({ initialData }: Props) {
         </a>
         <a
           href="/trackers/policies/import"
-          className="inline-flex items-center gap-1.5 text-sm font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 px-3 py-1.5 rounded-lg transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium bg-card border border-border text-foreground/80 hover:bg-slate-50 px-3 py-1.5 rounded-lg transition-colors"
         >
           <Upload className="w-3.5 h-3.5" /> Bulk Import CSV
         </a>
@@ -377,7 +377,7 @@ export default function PoliciesClient({ initialData }: Props) {
       </p>
 
       {/* ── Table ─────────────────────────────────────────────────────────── */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm min-w-[800px]">
             <thead className="bg-slate-50 border-b border-slate-200">
@@ -396,7 +396,7 @@ export default function PoliciesClient({ initialData }: Props) {
             <tbody className="divide-y divide-slate-50">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="text-center py-16 text-slate-400">
+                  <td colSpan={9} className="text-center py-16 text-muted-foreground/70">
                     {search || filterCat || filterStatus ? (
                       <>No policies match your filters. <button onClick={() => { setSearch(''); setFilterCat(''); setFilterStatus(''); }} className="text-teal-600 hover:underline">Clear filters</button></>
                     ) : (
@@ -416,11 +416,11 @@ export default function PoliciesClient({ initialData }: Props) {
                         </a>
                       </td>
                       <td className="px-4 py-3 max-w-[260px]">
-                        <a href={`/trackers/policies/${policy.id}`} className="font-medium text-slate-800 hover:text-teal-700 hover:underline block truncate">
+                        <a href={`/trackers/policies/${policy.id}`} className="font-medium text-foreground hover:text-teal-700 hover:underline block truncate">
                           {policy.title}
                         </a>
-                        {policy.owner && <p className="text-xs text-slate-400 truncate">{policy.owner}</p>}
-                        {policy.standardRef && <p className="text-[10px] text-slate-400 truncate">{policy.standardRef}</p>}
+                        {policy.owner && <p className="text-xs text-muted-foreground/70 truncate">{policy.owner}</p>}
+                        {policy.standardRef && <p className="text-[10px] text-muted-foreground/70 truncate">{policy.standardRef}</p>}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${CATEGORY_COLORS[policy.category] ?? ''}`}>
@@ -460,7 +460,7 @@ export default function PoliciesClient({ initialData }: Props) {
                               disabled={busy}
                               onClick={() => markReviewed(policy)}
                               title="Mark as reviewed - extends next review date"
-                              className="p-1 rounded text-slate-400 hover:text-green-600 hover:bg-green-50 transition disabled:opacity-40"
+                              className="p-1 rounded text-muted-foreground/70 hover:text-green-600 hover:bg-green-50 transition disabled:opacity-40"
                             >
                               <CheckCircle className="w-3.5 h-3.5" />
                             </button>
@@ -469,7 +469,7 @@ export default function PoliciesClient({ initialData }: Props) {
                           <a
                             href={`/trackers/policies/${policy.id}/edit`}
                             title="Edit policy"
-                            className="p-1 rounded text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition"
+                            className="p-1 rounded text-muted-foreground/70 hover:text-teal-600 hover:bg-teal-950/20 transition"
                           >
                             <RotateCcw className="w-3.5 h-3.5" />
                           </a>
@@ -479,7 +479,7 @@ export default function PoliciesClient({ initialData }: Props) {
                               disabled={busy}
                               onClick={() => archivePolicy(policy.id)}
                               title="Archive policy"
-                              className="p-1 rounded text-slate-400 hover:text-amber-600 hover:bg-amber-50 transition disabled:opacity-40"
+                              className="p-1 rounded text-muted-foreground/70 hover:text-amber-600 hover:bg-amber-950/20 transition disabled:opacity-40"
                             >
                               <Archive className="w-3.5 h-3.5" />
                             </button>
@@ -489,7 +489,7 @@ export default function PoliciesClient({ initialData }: Props) {
                             disabled={busy}
                             onClick={() => deletePolicy(policy.id)}
                             title="Delete policy"
-                            className="p-1 rounded text-slate-400 hover:text-red-600 hover:bg-red-50 transition disabled:opacity-40"
+                            className="p-1 rounded text-muted-foreground/70 hover:text-red-600 hover:bg-red-950/20 transition disabled:opacity-40"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>

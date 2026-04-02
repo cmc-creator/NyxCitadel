@@ -117,7 +117,7 @@ export function SetupWizard() {
         {/* Close button */}
         <button
           onClick={handleDismiss}
-          className="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition z-10"
+          className="absolute top-4 right-4 p-2 rounded-lg text-muted-foreground/70 hover:text-white hover:bg-white/10 transition z-10"
         >
           <X className="w-5 h-5" />
         </button>
@@ -141,7 +141,7 @@ export function SetupWizard() {
                 <h2 className="text-2xl font-bold text-white">
                   {allStepsCompleted ? '🎉 Setup Complete!' : 'Quick Setup Guide'}
                 </h2>
-                <p className="text-slate-400 text-sm mt-1">
+                <p className="text-muted-foreground/70 text-sm mt-1">
                   {allStepsCompleted 
                     ? 'Your facility is ready. Dismiss to visit the dashboard.' 
                     : 'Get your compliance command center up and running in minutes.'}
@@ -152,7 +152,7 @@ export function SetupWizard() {
             {/* Progress bar */}
             {!allStepsCompleted && (
               <div className="space-y-2">
-                <div className="flex justify-between text-xs text-slate-400 mb-1">
+                <div className="flex justify-between text-xs text-muted-foreground/70 mb-1">
                   <span>Setup Progress</span>
                   <span className="font-medium">{progressPercentage}%</span>
                 </div>
@@ -183,7 +183,7 @@ export function SetupWizard() {
                           <CheckCircle className="w-4 h-4 text-white" />
                         </div>
                       ) : (
-                        <div className="w-6 h-6 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-400">
+                        <div className="w-6 h-6 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-muted-foreground/70">
                           {index + 1}
                         </div>
                       )}
@@ -191,15 +191,15 @@ export function SetupWizard() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <Icon className={`w-4 h-4 flex-shrink-0 ${isCompleted ? 'text-emerald-400' : 'text-slate-400'}`} />
+                        <Icon className={`w-4 h-4 flex-shrink-0 ${isCompleted ? 'text-emerald-400' : 'text-muted-foreground/70'}`} />
                         <h3 className={`font-semibold ${isCompleted ? 'text-emerald-400' : 'text-white'}`}>
                           {step.title}
                         </h3>
                       </div>
-                      <p className="text-sm text-slate-400 mt-1">{step.description}</p>
+                      <p className="text-sm text-muted-foreground/70 mt-1">{step.description}</p>
                     </div>
 
-                    <ChevronRight className={`w-5 h-5 flex-shrink-0 transition-colors ${isLoading ? 'animate-spin text-teal-400' : 'text-slate-500 group-hover:text-slate-400'}`} />
+                    <ChevronRight className={`w-5 h-5 flex-shrink-0 transition-colors ${isLoading ? 'animate-spin text-teal-400' : 'text-slate-500 group-hover:text-muted-foreground/70'}`} />
                   </div>
                 );
 

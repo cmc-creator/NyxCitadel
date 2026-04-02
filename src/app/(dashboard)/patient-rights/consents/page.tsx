@@ -47,7 +47,7 @@ export default async function ConsentsPage() {
             <h1 className="text-xl font-bold text-white">Consent Records</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">CMS §482.13(b)</span>
           </div>
-          <p className="text-slate-400 text-sm">Informed consent documentation — treatment, medications, ECT, and capacity determination.</p>
+          <p className="text-muted-foreground/70 text-sm">Informed consent documentation — treatment, medications, ECT, and capacity determination.</p>
         </div>
         <a href="/patient-rights/consents/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Consent
@@ -69,7 +69,7 @@ export default async function ConsentsPage() {
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4 text-center">
             <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
-            <p className="text-xs text-slate-400 mt-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mt-1">{s.label}</p>
           </div>
         ))}
       </div>
@@ -79,7 +79,7 @@ export default async function ConsentsPage() {
           <thead className="bg-slate-900/40 border-b border-white/10">
             <tr>
               {['Patient', 'Consent Type', 'Date Signed', 'Obtained By', 'Status'].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-3">{h}</th>
+                <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">{h}</th>
               ))}
             </tr>
           </thead>
@@ -90,8 +90,8 @@ export default async function ConsentsPage() {
               <tr key={c.id} className="hover:bg-white/5 transition-colors">
                 <td className="px-4 py-3 font-bold text-white">{c.patientInitials}</td>
                 <td className="px-4 py-3 text-slate-300 text-xs">{typeLabels[c.consentType] ?? c.consentType}</td>
-                <td className="px-4 py-3 text-slate-400 text-xs">{c.consentDate ? c.consentDate.toLocaleDateString() : '—'}</td>
-                <td className="px-4 py-3 text-slate-400 text-xs">{c.obtainedBy ?? '—'}</td>
+                <td className="px-4 py-3 text-muted-foreground/70 text-xs">{c.consentDate ? c.consentDate.toLocaleDateString() : '—'}</td>
+                <td className="px-4 py-3 text-muted-foreground/70 text-xs">{c.obtainedBy ?? '—'}</td>
                 <td className="px-4 py-3">
                   <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[c.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
                     {statusConfig[c.status]?.label ?? c.status}

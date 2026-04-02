@@ -34,7 +34,7 @@ export default async function ComplianceTrackerPage({
     NON_COMPLIANT:   'bg-red-950/40 text-red-400 border-red-700/50',
     PENDING_REVIEW:  'bg-yellow-950/40 text-yellow-400 border-yellow-700/50',
     ACTIVE:          'bg-blue-950/40 text-blue-400 border-blue-700/50',
-    WAIVED:          'bg-slate-800/40 text-slate-400 border-slate-700/50',
+    WAIVED:          'bg-slate-800/40 text-muted-foreground/70 border-slate-700/50',
     NA:              'bg-slate-800/40 text-slate-500 border-slate-700/30',
   };
 

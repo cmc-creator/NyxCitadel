@@ -96,7 +96,7 @@ const typeBadge: Record<string, { label: string; color: string }> = {
   SECURITY: { label: 'Security', color: 'bg-teal-950/50 text-teal-300 border border-teal-700/40' },
   UTILITIES: { label: 'Utilities', color: 'bg-orange-950/50 text-orange-300 border border-orange-700/40' },
   PATIENT_ENVIRONMENT: { label: 'Patient Environment', color: 'bg-emerald-950/50 text-emerald-300 border border-emerald-700/40' },
-  EOC_COMMITTEE: { label: 'EOC Committee', color: 'bg-violet-950/50 text-violet-300 border border-violet-700/40' },
+  EOC_COMMITTEE: { label: 'EOC Committee', color: 'bg-teal-950/50 text-teal-300 border border-teal-700/40' },
 };
 
 const statusBadge: Record<string, string> = {
@@ -120,12 +120,12 @@ export default function EocRoundsPage() {
       <div className="flex items-start justify-between flex-wrap gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <Link href="/eoc" className="text-sm text-slate-400 hover:text-slate-300">Environment of Care</Link>
+            <Link href="/eoc" className="text-sm text-muted-foreground/70 hover:text-slate-300">Environment of Care</Link>
             <span className="text-slate-600">›</span>
             <span className="text-sm text-foreground font-medium">Safety Rounds</span>
           </div>
           <h1 className="text-2xl font-bold text-foreground mt-1">Life Safety Rounds</h1>
-          <p className="text-sm text-slate-400 mt-0.5">Monthly environment-of-care rounds, fire safety inspections, and ligature surveys</p>
+          <p className="text-sm text-muted-foreground/70 mt-0.5">Monthly environment-of-care rounds, fire safety inspections, and ligature surveys</p>
         </div>
         <a href="/eoc/rounds/new" className="px-3 py-1.5 text-sm rounded-md bg-sky-600 hover:bg-sky-500 text-white font-medium transition-colors">
           + Start New Round
@@ -179,11 +179,11 @@ export default function EocRoundsPage() {
                     {round.participants.length > 0 && (
                       <p className="text-xs text-slate-600 mt-0.5">+ {round.participants.join(', ')}</p>
                     )}
-                    <p className="text-xs text-slate-400 mt-2 leading-relaxed">{round.summary}</p>
+                    <p className="text-xs text-muted-foreground/70 mt-2 leading-relaxed">{round.summary}</p>
                     {round.areas.length > 0 && round.areas[0] !== 'Administrative' && (
                       <div className="flex flex-wrap gap-1 mt-2">
                         {round.areas.map(a => (
-                          <span key={a} className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                          <span key={a} className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-muted-foreground/70">
                             {a}
                           </span>
                         ))}

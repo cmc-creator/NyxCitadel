@@ -178,7 +178,7 @@ export default async function EmergencyManagementPage() {
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-0.5">
                           <span className="text-sm font-medium text-slate-300">{hazard.hazardName}</span>
-                          <span className="text-xs font-semibold text-slate-400">{(hazard.riskScore * 100).toFixed(0)}%</span>
+                          <span className="text-xs font-semibold text-muted-foreground/70">{(hazard.riskScore * 100).toFixed(0)}%</span>
                         </div>
                         <div className="w-full bg-slate-700 rounded-full h-1.5">
                           <div
@@ -193,7 +193,7 @@ export default async function EmergencyManagementPage() {
                           />
                         </div>
                       </div>
-                      <span className="text-xs bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded flex-shrink-0">
+                      <span className="text-xs bg-slate-800 text-muted-foreground/70 px-1.5 py-0.5 rounded flex-shrink-0">
                         {hazard.hazardType}
                       </span>
                     </div>
@@ -203,7 +203,7 @@ export default async function EmergencyManagementPage() {
             )}
           </div>
         ) : (
-          <div className="p-8 text-center text-slate-400">
+          <div className="p-8 text-center text-muted-foreground/70">
             <ShieldAlert className="w-10 h-10 mx-auto mb-2 text-slate-300" />
             <p className="font-medium">No HVA for {now.getFullYear()} yet</p>
             <p className="text-sm mt-1">
@@ -231,7 +231,7 @@ export default async function EmergencyManagementPage() {
           </div>
           <div className="divide-y divide-border/50">
             {upcomingDrills.length === 0 ? (
-              <p className="text-center text-sm text-slate-400 py-8">No upcoming drills scheduled</p>
+              <p className="text-center text-sm text-muted-foreground/70 py-8">No upcoming drills scheduled</p>
             ) : (
               upcomingDrills.map((drill) => (
                 <div key={drill.id} className="flex items-center gap-3 px-5 py-3">
@@ -245,7 +245,7 @@ export default async function EmergencyManagementPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-foreground truncate">{drill.drillName}</p>
-                    <p className="text-xs text-slate-400">{drillTypeLabel(drill.drillType)}</p>
+                    <p className="text-xs text-muted-foreground/70">{drillTypeLabel(drill.drillType)}</p>
                   </div>
                 </div>
               ))
@@ -266,14 +266,14 @@ export default async function EmergencyManagementPage() {
           </div>
           <div className="divide-y divide-border/50">
             {recentDrills.length === 0 ? (
-              <p className="text-center text-sm text-slate-400 py-8">No completed drills yet</p>
+              <p className="text-center text-sm text-muted-foreground/70 py-8">No completed drills yet</p>
             ) : (
               recentDrills.map((drill) => (
                 <div key={drill.id} className="flex items-center gap-3 px-5 py-3">
                   <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-foreground truncate">{drill.drillName}</p>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-muted-foreground/70">
                       {drillTypeLabel(drill.drillType)} · {formatDate(drill.conductedDate)}
                     </p>
                   </div>

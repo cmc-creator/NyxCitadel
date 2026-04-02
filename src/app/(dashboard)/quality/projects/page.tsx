@@ -9,8 +9,8 @@ export const dynamic = 'force-dynamic';
 export const metadata = { title: 'QAPI Projects' };
 
 const STATUS_COLORS: Record<string, string> = {
-  ACTIVE: 'bg-blue-50 text-blue-700',
-  MONITORING: 'bg-teal-50 text-teal-700',
+  ACTIVE: 'bg-blue-950/20 text-blue-700',
+  MONITORING: 'bg-teal-950/20 text-teal-700',
   COMPLETED: 'bg-green-50 text-green-700',
   SUSPENDED: 'bg-yellow-50 text-yellow-700',
   CANCELLED: 'bg-slate-100 text-slate-500',
@@ -25,7 +25,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   PATIENT_EXPERIENCE: 'bg-green-100 text-green-700',
   STAFF_SAFETY: 'bg-teal-100 text-teal-700',
   READMISSIONS: 'bg-indigo-100 text-indigo-700',
-  COMPLIANCE: 'bg-violet-100 text-violet-700',
+  COMPLIANCE: 'bg-teal-100 text-teal-700',
   WORKFORCE: 'bg-pink-100 text-pink-700',
   OTHER: 'bg-slate-100 text-slate-600',
   THROUGHPUT: 'bg-cyan-100 text-cyan-700',
@@ -47,7 +47,7 @@ export default async function QapiProjectsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <Target className="w-6 h-6 text-teal-600" />
             QAPI Projects
           </h1>
@@ -63,25 +63,25 @@ export default async function QapiProjectsPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
+        <div className="bg-card rounded-xl border border-border p-4 text-center">
           <p className="text-3xl font-bold text-blue-600">{active.length}</p>
           <p className="text-xs text-slate-500 mt-0.5">Active Projects</p>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
+        <div className="bg-card rounded-xl border border-border p-4 text-center">
           <p className="text-3xl font-bold text-green-600">{completed.length}</p>
           <p className="text-xs text-slate-500 mt-0.5">Completed</p>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
-          <p className="text-3xl font-bold text-slate-700">{projects.length}</p>
+        <div className="bg-card rounded-xl border border-border p-4 text-center">
+          <p className="text-3xl font-bold text-foreground/80">{projects.length}</p>
           <p className="text-xs text-slate-500 mt-0.5">Total Projects</p>
         </div>
       </div>
 
       {/* Active projects */}
       {active.length > 0 && (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="bg-card rounded-xl border border-border overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-100">
-            <h2 className="text-base font-semibold text-slate-900">Active & Monitoring</h2>
+            <h2 className="text-base font-semibold text-foreground">Active & Monitoring</h2>
           </div>
           <div className="divide-y divide-slate-50">
             {active.map(p => (
@@ -93,9 +93,9 @@ export default async function QapiProjectsPage() {
 
       {/* Completed */}
       {completed.length > 0 && (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="bg-card rounded-xl border border-border overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-100">
-            <h2 className="text-base font-semibold text-slate-900">Completed</h2>
+            <h2 className="text-base font-semibold text-foreground">Completed</h2>
           </div>
           <div className="divide-y divide-slate-50">
             {completed.map(p => (
@@ -106,7 +106,7 @@ export default async function QapiProjectsPage() {
       )}
 
       {projects.length === 0 && (
-        <div className="bg-white rounded-xl border border-slate-200 flex flex-col items-center justify-center py-16 text-slate-400">
+        <div className="bg-card rounded-xl border border-border flex flex-col items-center justify-center py-16 text-muted-foreground/70">
           <Target className="w-12 h-12 mb-3 text-slate-300" />
           <p className="text-sm font-medium">No QAPI projects yet</p>
           <p className="text-xs mt-1">CMS requires at least 2 active PIPs annually</p>
@@ -128,14 +128,14 @@ function ProjectRow({ project }: { project: any }) {
       <div className="flex items-start gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <p className="text-sm font-semibold text-slate-800">{project.title}</p>
-            <span className="text-xs text-slate-400 font-mono">{project.projectNumber}</span>
+            <p className="text-sm font-semibold text-foreground">{project.title}</p>
+            <span className="text-xs text-muted-foreground/70 font-mono">{project.projectNumber}</span>
             <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${CATEGORY_COLORS[project.category] ?? 'bg-slate-100 text-slate-600'}`}>
               {project.category.replace(/_/g, ' ')}
             </span>
           </div>
           <p className="text-xs text-slate-600 mt-1 line-clamp-2">{project.problemStatement}</p>
-          <div className="flex items-center gap-3 mt-1.5 text-xs text-slate-400">
+          <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground/70">
             <span>Owner: {project.owner ?? '-'}</span>
             <span>Target: {formatDate(new Date(project.targetDate), 'MMM d, yyyy')}</span>
             {project.baselineValue !== null && <span>Baseline: {project.baselineValue}{project.targetUnit ?? ''}</span>}

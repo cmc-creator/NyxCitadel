@@ -18,7 +18,7 @@ const STATUS_COLOR: Record<string, string> = {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -29,8 +29,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -46,18 +46,18 @@ export default async function ConsentDetailPage({ params }: { params: { id: stri
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/patient-rights/consents" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/patient-rights/consents" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Consent Records
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/patient-rights/consents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/patient-rights/consents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -66,7 +66,7 @@ export default async function ConsentDetailPage({ params }: { params: { id: stri
                 {consent.status.replace(/_/g, ' ')}
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{consent.consentType.replace(/_/g, ' ')}</h1>
+            <h1 className="text-xl font-bold text-foreground">{consent.consentType.replace(/_/g, ' ')}</h1>
             <p className="text-sm text-slate-500 mt-1">
               Patient: <strong>{consent.patientInitials}</strong>
               {consent.patientMrn && <> &middot; MRN: <strong>{consent.patientMrn}</strong></>}
@@ -89,7 +89,7 @@ export default async function ConsentDetailPage({ params }: { params: { id: stri
         <Section title="Capacity & Representation">
           <dl className="space-y-3">
             <div>
-              <dt className="text-xs text-slate-400">Patient Capacity Determined</dt>
+              <dt className="text-xs text-muted-foreground/70">Patient Capacity Determined</dt>
               <dd className={`text-sm font-semibold mt-0.5 ${consent.patientCapacityDetermined ? 'text-green-600' : 'text-yellow-600'}`}>
                 {consent.patientCapacityDetermined ? 'Yes - Patient has capacity' : 'No - Capacity not established'}
               </dd>
@@ -106,7 +106,7 @@ export default async function ConsentDetailPage({ params }: { params: { id: stri
 
       {consent.notes && (
         <Section title="Notes">
-          <p className="text-sm text-slate-700 whitespace-pre-wrap">{consent.notes}</p>
+          <p className="text-sm text-foreground/80 whitespace-pre-wrap">{consent.notes}</p>
         </Section>
       )}
     </div>

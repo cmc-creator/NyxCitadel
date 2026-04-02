@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -21,18 +21,18 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
 
-function BoolField({ label, value, yesColor = 'text-green-600', noColor = 'text-slate-400' }: {
+function BoolField({ label, value, yesColor = 'text-green-600', noColor = 'text-muted-foreground/70' }: {
   label: string; value: boolean; yesColor?: string; noColor?: string
 }) {
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
       <dd className={`text-sm font-semibold mt-0.5 ${value ? yesColor : noColor}`}>{value ? 'Yes' : 'No'}</dd>
     </div>
   );
@@ -51,22 +51,22 @@ export default async function EmployeeHealthDetailPage({ params }: { params: { i
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/workforce-health/employee-health" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/workforce-health/employee-health" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Employee Health
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/workforce-health/employee-health/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/workforce-health/employee-health/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex items-start gap-3">
           <HeartPulse className="w-5 h-5 text-rose-600 mt-0.5 shrink-0" />
           <div>
-            <h1 className="text-xl font-bold text-slate-900">{record.employeeName}</h1>
+            <h1 className="text-xl font-bold text-foreground">{record.employeeName}</h1>
             <p className="text-sm text-slate-500 mt-1">
               {record.department}
               {record.employeeId && <> &middot; ID: <strong>{record.employeeId}</strong></>}
@@ -77,7 +77,7 @@ export default async function EmployeeHealthDetailPage({ params }: { params: { i
       </div>
 
       {tbDue && (
-        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+        <div className="bg-orange-950/20 border border-orange-200 rounded-xl p-4">
           <p className="text-sm font-semibold text-orange-800">TB Screening Overdue - Last due: {record.tbNextDueDate ? formatDate(record.tbNextDueDate) : 'Unknown'}</p>
         </div>
       )}
@@ -90,8 +90,8 @@ export default async function EmployeeHealthDetailPage({ params }: { params: { i
             <Field label="Result" value={record.tbResult} />
             {record.tbNextDueDate && (
               <div>
-                <dt className="text-xs text-slate-400">Next Due</dt>
-                <dd className={`text-sm font-semibold mt-0.5 ${tbDue ? 'text-red-600' : 'text-slate-800'}`}>
+                <dt className="text-xs text-muted-foreground/70">Next Due</dt>
+                <dd className={`text-sm font-semibold mt-0.5 ${tbDue ? 'text-red-600' : 'text-foreground'}`}>
                   {formatDate(record.tbNextDueDate)}
                 </dd>
               </div>
@@ -106,7 +106,7 @@ export default async function EmployeeHealthDetailPage({ params }: { params: { i
             {record.fluVaxDeclined && (
               <>
                 <div>
-                  <dt className="text-xs text-slate-400">Declined</dt>
+                  <dt className="text-xs text-muted-foreground/70">Declined</dt>
                   <dd className="text-sm font-semibold text-yellow-600 mt-0.5">Yes - Declined</dd>
                 </div>
                 <Field label="Decline Reason" value={record.fluDeclineReason} />
@@ -134,7 +134,7 @@ export default async function EmployeeHealthDetailPage({ params }: { params: { i
 
       {record.notes && (
         <Section title="Notes">
-          <p className="text-sm text-slate-700 whitespace-pre-wrap">{record.notes}</p>
+          <p className="text-sm text-foreground/80 whitespace-pre-wrap">{record.notes}</p>
         </Section>
       )}
     </div>

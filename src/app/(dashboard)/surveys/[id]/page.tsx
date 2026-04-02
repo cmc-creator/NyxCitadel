@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ClipboardList, ArrowLeft, AlertTriangle, CheckCircle2, Clock, ShieldCheck, Pencil } from 'lucide-react';
@@ -71,7 +71,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
         <Link href="/surveys" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Surveys &amp; Inspections
         </Link>
-        <Link href={`/surveys/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+        <Link href={`/surveys/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
           <Pencil className="w-3.5 h-3.5" /> Edit
         </Link>
         <DeleteButton apiPath={`/api/surveys/${params.id}`} redirectPath="/surveys" label="survey record" />
@@ -90,7 +90,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
             <span className="text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded border border-orange-200">Condition-Level</span>
           )}
         </div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ClipboardList className="w-6 h-6 text-purple-600" />
           {SURVEY_TYPE_LABELS[survey.surveyType] ?? survey.surveyType.replace(/_/g, ' ')}
         </h1>
@@ -101,13 +101,13 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
 
       {/* Response alerts */}
       {responseOverdue && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+        <div className="flex items-center gap-2 bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
           <AlertTriangle className="w-4 h-4 shrink-0" />
           <span><strong>Response overdue</strong> — deadline was {formatDate(survey.responseDeadline!)}.</span>
         </div>
       )}
       {!responseOverdue && daysLeft !== null && daysLeft >= 0 && daysLeft <= 7 && !survey.responseSubmitted && (
-        <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 rounded-lg px-4 py-3 text-sm">
+        <div className="flex items-center gap-2 bg-amber-950/20 border border-amber-200 text-amber-700 rounded-lg px-4 py-3 text-sm">
           <Clock className="w-4 h-4 shrink-0" />
           <span>Response due in <strong>{daysLeft} day{daysLeft !== 1 ? 's' : ''}</strong> — {formatDate(survey.responseDeadline!)}.</span>
         </div>
@@ -120,24 +120,24 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
       )}
 
       {/* Survey Details */}
-      <div className="bg-white rounded-xl border border-slate-200">
+      <div className="bg-card rounded-xl border border-border">
         <div className="px-5 py-4 border-b border-slate-100">
           <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Survey Details</h2>
         </div>
         <dl className="px-5 py-4 grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
-          <div><dt className="text-xs text-slate-400">Survey Type</dt><dd className="text-slate-800 font-medium">{SURVEY_TYPE_LABELS[survey.surveyType] ?? survey.surveyType}</dd></div>
-          <div><dt className="text-xs text-slate-400">Regulatory Body</dt><dd className="text-slate-800">{survey.regulatoryBody.replace(/_/g, ' ')}</dd></div>
-          {survey.conductedDate && <div><dt className="text-xs text-slate-400">Date Conducted</dt><dd className="text-slate-800">{formatDate(survey.conductedDate)}</dd></div>}
-          {survey.surveyorNames && <div><dt className="text-xs text-slate-400">Surveyors</dt><dd className="text-slate-800">{survey.surveyorNames}</dd></div>}
-          {survey.findingCount != null && <div><dt className="text-xs text-slate-400">Findings</dt><dd className={`font-semibold ${survey.findingCount > 0 ? 'text-orange-600' : 'text-green-600'}`}>{survey.findingCount}</dd></div>}
+          <div><dt className="text-xs text-muted-foreground/70">Survey Type</dt><dd className="text-foreground font-medium">{SURVEY_TYPE_LABELS[survey.surveyType] ?? survey.surveyType}</dd></div>
+          <div><dt className="text-xs text-muted-foreground/70">Regulatory Body</dt><dd className="text-foreground">{survey.regulatoryBody.replace(/_/g, ' ')}</dd></div>
+          {survey.conductedDate && <div><dt className="text-xs text-muted-foreground/70">Date Conducted</dt><dd className="text-foreground">{formatDate(survey.conductedDate)}</dd></div>}
+          {survey.surveyorNames && <div><dt className="text-xs text-muted-foreground/70">Surveyors</dt><dd className="text-foreground">{survey.surveyorNames}</dd></div>}
+          {survey.findingCount != null && <div><dt className="text-xs text-muted-foreground/70">Findings</dt><dd className={`font-semibold ${survey.findingCount > 0 ? 'text-orange-600' : 'text-green-600'}`}>{survey.findingCount}</dd></div>}
           {survey.responseDeadline && (
             <div>
-              <dt className="text-xs text-slate-400">Response Deadline</dt>
-              <dd className={responseOverdue ? 'text-red-600 font-medium' : 'text-slate-800'}>{formatDate(survey.responseDeadline)}</dd>
+              <dt className="text-xs text-muted-foreground/70">Response Deadline</dt>
+              <dd className={responseOverdue ? 'text-red-600 font-medium' : 'text-foreground'}>{formatDate(survey.responseDeadline)}</dd>
             </div>
           )}
-          {survey.outcome && <div className="col-span-2"><dt className="text-xs text-slate-400">Outcome</dt><dd className="text-slate-800">{survey.outcome}</dd></div>}
-          {survey.satisfactionScore != null && <div><dt className="text-xs text-slate-400">Patient Satisfaction</dt><dd className="text-slate-800 font-semibold">{survey.satisfactionScore}%</dd></div>}
+          {survey.outcome && <div className="col-span-2"><dt className="text-xs text-muted-foreground/70">Outcome</dt><dd className="text-foreground">{survey.outcome}</dd></div>}
+          {survey.satisfactionScore != null && <div><dt className="text-xs text-muted-foreground/70">Patient Satisfaction</dt><dd className="text-foreground font-semibold">{survey.satisfactionScore}%</dd></div>}
         </dl>
         {survey.reportUrl && (
           <div className="px-5 pb-4">
@@ -151,13 +151,13 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
 
       {/* Linked CAP */}
       {survey.cap && (
-        <div className="bg-white rounded-xl border border-slate-200 px-5 py-4">
+        <div className="bg-card rounded-xl border border-border px-5 py-4">
           <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Linked Corrective Action Plan</h2>
           <Link href={`/trackers/caps/${survey.cap.id}`}
-            className="flex items-center justify-between rounded-lg border border-slate-200 px-4 py-3 hover:border-purple-300 transition-colors group">
+            className="flex items-center justify-between rounded-lg border border-border px-4 py-3 hover:border-purple-300 transition-colors group">
             <div>
               <span className="text-xs font-mono text-slate-500 mr-2">{survey.cap.capNumber}</span>
-              <span className="text-sm font-medium text-slate-800 group-hover:text-purple-700">{survey.cap.title}</span>
+              <span className="text-sm font-medium text-foreground group-hover:text-purple-700">{survey.cap.title}</span>
             </div>
             <span className={`text-xs px-2 py-0.5 rounded font-medium ${ ({OPEN:'bg-blue-100 text-blue-700',IN_PROGRESS:'bg-yellow-100 text-yellow-700',COMPLETED:'bg-green-100 text-green-700',VERIFIED:'bg-teal-100 text-teal-700',OVERDUE:'bg-red-100 text-red-700',EXTENDED:'bg-purple-100 text-purple-700'} as Record<string,string>)[survey.cap.status] ?? 'bg-slate-100 text-slate-600'}`}>
               {survey.cap.status.replace(/_/g, ' ')}
@@ -168,17 +168,17 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
 
       {/* Plans of Correction */}
       {survey.plansOfCorrection.length > 0 && (
-        <div className="bg-white rounded-xl border border-slate-200">
+        <div className="bg-card rounded-xl border border-border">
           <div className="px-5 py-4 border-b border-slate-100">
             <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Plans of Correction</h2>
           </div>
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-border/30">
             {survey.plansOfCorrection.map(poc => (
               <Link key={poc.id} href={`/quality/poc/${poc.id}`}
                 className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition-colors group">
                 <div className="text-sm">
-                  <span className="text-slate-700 group-hover:text-purple-700">Plan of Correction</span>
-                  <span className="ml-2 text-xs text-slate-400">created {formatDate(poc.createdAt)}</span>
+                  <span className="text-foreground/80 group-hover:text-purple-700">Plan of Correction</span>
+                  <span className="ml-2 text-xs text-muted-foreground/70">created {formatDate(poc.createdAt)}</span>
                 </div>
                 <div className="flex items-center gap-3 text-xs text-slate-500">
                   {poc.findings.length > 0 && (
@@ -194,9 +194,9 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
 
       {/* Notes */}
       {survey.notes && (
-        <div className="bg-white rounded-xl border border-slate-200 px-5 py-4">
+        <div className="bg-card rounded-xl border border-border px-5 py-4">
           <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Notes</h2>
-          <p className="text-sm text-slate-700 whitespace-pre-wrap">{survey.notes}</p>
+          <p className="text-sm text-foreground/80 whitespace-pre-wrap">{survey.notes}</p>
         </div>
       )}
 

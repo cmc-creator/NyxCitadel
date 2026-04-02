@@ -35,7 +35,7 @@ export default async function InvoluntaryHoldsPage() {
             <h1 className="text-xl font-bold text-white">Involuntary Hold Log</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">ARS Title 36</span>
           </div>
-          <p className="text-slate-400 text-sm">72-hour emergency holds, court orders, legal counsel notification, and hearing dates.</p>
+          <p className="text-muted-foreground/70 text-sm">72-hour emergency holds, court orders, legal counsel notification, and hearing dates.</p>
         </div>
         <a href="/patient-rights/holds/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Hold
@@ -60,7 +60,7 @@ export default async function InvoluntaryHoldsPage() {
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4 text-center">
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
-            <p className="text-xs text-slate-400 mt-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mt-1">{s.label}</p>
           </div>
         ))}
       </div>
@@ -82,9 +82,9 @@ export default async function InvoluntaryHoldsPage() {
                   )}
                 </div>
                 <p className="text-sm text-slate-300">{h.holdType}</p>
-                <p className="text-xs text-slate-400 mt-0.5">Ordering: {h.orderingPhysician}</p>
+                <p className="text-xs text-muted-foreground/70 mt-0.5">Ordering: {h.orderingPhysician}</p>
               </div>
-              <div className="text-right text-xs text-slate-400">
+              <div className="text-right text-xs text-muted-foreground/70">
                 <p>Start: {h.holdStartDate.toLocaleDateString()}</p>
                 <p>Expiry: {h.holdExpiryDate.toLocaleDateString()}</p>
                 {h.courtHearingDate && <p className="text-blue-400">Hearing: {h.courtHearingDate.toLocaleDateString()}</p>}

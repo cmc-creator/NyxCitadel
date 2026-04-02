@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { HeartHandshake, ChevronRight, CheckCircle, AlertTriangle, Shield, Clock } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -63,7 +63,7 @@ export default async function PatientRightsPage() {
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">CMS §482.13</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">ARS Title 36</span>
           </div>
-          <p className="text-slate-400 text-sm">Informed consent, advance directives, MOON notices, and involuntary hold documentation.</p>
+          <p className="text-muted-foreground/70 text-sm">Informed consent, advance directives, MOON notices, and involuntary hold documentation.</p>
         </div>
       </div>
 
@@ -77,7 +77,7 @@ export default async function PatientRightsPage() {
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-2">
               <s.icon className={`w-4 h-4 ${s.color}`} />
-              <span className="text-xs text-slate-400">{s.label}</span>
+              <span className="text-xs text-muted-foreground/70">{s.label}</span>
             </div>
             <p className="text-2xl font-bold text-white">{s.value}</p>
           </div>
@@ -115,7 +115,7 @@ export default async function PatientRightsPage() {
               </div>
               <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-rose-400 transition-colors" />
             </div>
-            <p className="text-xs text-slate-400 mb-3">{m.description}</p>
+            <p className="text-xs text-muted-foreground/70 mb-3">{m.description}</p>
             <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>
           </Link>
         ))}

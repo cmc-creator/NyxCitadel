@@ -28,7 +28,7 @@ const STATUS_COLOR: Record<string, string> = {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -39,8 +39,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5 mb-3">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5 mb-3">{value}</dd>
     </>
   );
 }
@@ -69,11 +69,11 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/hipaa/breaches" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/hipaa/breaches" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to HIPAA Breach Log
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/hipaa/breaches/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/hipaa/breaches/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/hipaa/breaches/${params.id}`} redirectPath="/hipaa/breaches" label="breach record" />
@@ -81,12 +81,12 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <ShieldAlert className="w-5 h-5 text-red-600" />
-              <span className="text-xs font-mono text-slate-400">{breach.incidentNumber}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">{breach.incidentNumber}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${RISK_COLOR[breach.riskAssessment] ?? 'bg-slate-100 text-slate-600'}`}>
                 {breach.riskAssessment} RISK
               </span>
@@ -94,7 +94,7 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
                 {breach.status.replace(/_/g, ' ')}
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{breach.breachType.replace(/_/g, ' ')}</h1>
+            <h1 className="text-xl font-bold text-foreground">{breach.breachType.replace(/_/g, ' ')}</h1>
             <p className="text-sm text-slate-500 mt-1">
               Discovered: <strong>{formatDate(breach.discoveryDate)}</strong>
               {breach.incidentDate && <> &middot; Incident: <strong>{formatDate(breach.incidentDate)}</strong></>}
@@ -104,7 +104,7 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
       </div>
 
       {isReportable && !breach.hhsNotifyDate && (
-        <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl p-4">
+        <div className="flex items-start gap-3 bg-red-950/20 border border-red-200 rounded-xl p-4">
           <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 shrink-0" />
           <div>
             <p className="text-sm font-semibold text-red-800">HHS Notification Required</p>
@@ -116,16 +116,16 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-5">
           <Section title="Description">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{breach.description}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{breach.description}</p>
           </Section>
 
           <Section title="Immediate Actions Taken">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{breach.immediateActions}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{breach.immediateActions}</p>
           </Section>
 
           {breach.notes && (
             <Section title="Investigation Notes">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{breach.notes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{breach.notes}</p>
             </Section>
           )}
 
@@ -158,7 +158,7 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
           <Section title="Regulatory Reporting">
             <dl className="space-y-3">
               <div>
-                <dt className="text-xs text-slate-400">Reportable Breach</dt>
+                <dt className="text-xs text-muted-foreground/70">Reportable Breach</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${isReportable ? 'text-red-600' : 'text-green-600'}`}>
                   {isReportable ? 'Yes — Reportable' : 'No / Under Review'}
                 </dd>
@@ -174,7 +174,7 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
               {breach.status.replace(/_/g, ' ')}
             </span>
             {breach.closedDate && (
-              <p className="text-xs text-slate-400 mt-2">Closed: {formatDate(breach.closedDate)}</p>
+              <p className="text-xs text-muted-foreground/70 mt-2">Closed: {formatDate(breach.closedDate)}</p>
             )}
           </Section>
         </div>

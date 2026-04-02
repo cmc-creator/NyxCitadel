@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { Pill, AlertTriangle, ChevronRight, CheckCircle, Clipboard } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -52,7 +52,7 @@ export default async function PharmacyPage() {
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">CMS MM CoP</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">TJC MM.04</span>
           </div>
-          <p className="text-slate-400 text-sm">Controlled substance reconciliation, high-alert medication audits, PDMP compliance, and P&T committee records.</p>
+          <p className="text-muted-foreground/70 text-sm">Controlled substance reconciliation, high-alert medication audits, PDMP compliance, and P&T committee records.</p>
         </div>
       </div>
 
@@ -66,7 +66,7 @@ export default async function PharmacyPage() {
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-2">
               <s.icon className={`w-4 h-4 ${s.color}`} />
-              <span className="text-xs text-slate-400">{s.label}</span>
+              <span className="text-xs text-muted-foreground/70">{s.label}</span>
             </div>
             <p className="text-2xl font-bold text-white">{s.value}</p>
           </div>
@@ -87,7 +87,7 @@ export default async function PharmacyPage() {
               </div>
               <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-emerald-400 transition-colors" />
             </div>
-            <p className="text-xs text-slate-400 mb-3">{m.description}</p>
+            <p className="text-xs text-muted-foreground/70 mb-3">{m.description}</p>
             <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>
           </Link>
         ))}
