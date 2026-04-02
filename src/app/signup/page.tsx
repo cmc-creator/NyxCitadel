@@ -61,7 +61,7 @@ export default function SignupPage() {
       <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/5">
         <Link href="/" className="flex items-center gap-2.5">
           <Image
-            src="/citadellogo-v2.png?v=20260401b"
+            src="/citadellogo.png"
             alt="NyxCitadel"
             width={32}
             height={32}
