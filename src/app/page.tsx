@@ -241,7 +241,7 @@ export default async function RootPage() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Image
-              src="/citadellogo.png"
+              src="/citadellogo-v2.png"
               alt="NyxCitadel"
               width={36}
               height={36}
@@ -877,7 +877,7 @@ export default async function RootPage() {
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-500/15 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative z-10">
             <div className="flex justify-center mb-5">
-              <Image src="/citadellogo.png" alt="NyxCitadel" width={72} height={72} className="shadow-2xl shadow-teal-500/30" />
+              <Image src="/citadellogo-v2.png" alt="NyxCitadel" width={72} height={72} className="shadow-2xl shadow-teal-500/30" />
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
               Your next survey is coming.{' '}
@@ -1017,7 +1017,7 @@ export default async function RootPage() {
       <footer className="relative z-10 border-t border-white/5 bg-slate-950">
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
           <div className="flex items-center gap-2.5">
-            <Image src="/citadellogo.png" alt="NyxCitadel" width={28} height={28} />
+            <Image src="/citadellogo-v2.png" alt="NyxCitadel" width={28} height={28} />
             <div>
               <span className="font-bold text-slate-400">NyxCitadel<sup className="text-[9px] font-normal">™</sup></span>
               <span className="text-slate-700 ml-2 hidden sm:inline">· Healthcare Compliance &amp; Risk Management Platform</span>
