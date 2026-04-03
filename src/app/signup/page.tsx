@@ -22,6 +22,7 @@ export default function SignupPage() {
   const [tab, setTab] = useState<'demo' | 'request'>('demo');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [form, setForm] = useState({
     name: '', email: '', facility: '', phone: '', facilityType: '', beds: '', message: '',
   });
@@ -29,6 +30,7 @@ export default function SignupPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
+    setSubmitError('');
     try {
       const res = await fetch('/api/signup', {
         method: 'POST',
@@ -39,12 +41,12 @@ export default function SignupPage() {
         const data = await res.json().catch(() => ({}));
         throw new Error((data as { error?: string }).error ?? 'Request failed');
       }
+      setSubmitted(true);
     } catch (err) {
       console.error('Signup error:', err);
-      // Still show success to avoid leaking internal errors to end users
+      setSubmitError(err instanceof Error ? err.message : 'Request failed. Please try again.');
     }
     setLoading(false);
-    setSubmitted(true);
   }
 
   return (
@@ -59,10 +61,17 @@ export default function SignupPage() {
       <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/5">
         <Link href="/" className="flex items-center gap-2.5">
           <Image
-            src="/citadellogo.png"
+            src="/citadellogo-clean.png"
             alt="NyxCitadel"
             width={32}
             height={32}
+            unoptimized
+            onError={(e) => {
+              const img = e.currentTarget as HTMLImageElement;
+              if (!img.src.includes('/logo-white.svg')) {
+                img.src = '/logo-white.svg';
+              }
+            }}
             className="h-8 w-auto rounded-lg flex-shrink-0"
           />
           <span className="font-bold text-white tracking-tight">NyxCitadel<sup className="text-[10px] align-super ml-0.5 font-normal text-teal-400">™</sup></span>
@@ -278,8 +287,12 @@ export default function SignupPage() {
                     {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</> : <>Request Access <ChevronRight className="w-4 h-4" /></>}
                   </button>
 
+                  {submitError && (
+                    <p className="text-xs text-rose-300 text-center">{submitError}</p>
+                  )}
+
                   <p className="text-xs text-slate-600 text-center">
-                    By submitting, you agree to our <Link href="#" className="text-slate-500 hover:text-muted-foreground/70 underline">Privacy Policy</Link>. We never sell or share your information.
+                    By submitting, you agree to our <Link href="/privacy" className="text-slate-500 hover:text-slate-400 underline">Privacy Policy</Link> and <Link href="/terms" className="text-slate-500 hover:text-slate-400 underline">Terms of Service</Link>. We never sell or share your information.
                   </p>
                 </form>
               </div>
@@ -291,7 +304,7 @@ export default function SignupPage() {
       {/* Footer */}
       <footer className="relative z-10 py-6 border-t border-white/5 text-center">
         <p className="text-xs text-slate-600">
-          © {new Date().getFullYear()} NyxCitadel<sup className="text-[9px]">™</sup> · HIPAA Compliant · <Link href="/login" className="hover:text-muted-foreground/70 transition-colors">Sign In</Link>
+          © {new Date().getFullYear()} NyxCitadel<sup className="text-[9px]">™</sup> · HIPAA Compliant · <Link href="/privacy" className="hover:text-slate-400 transition-colors">Privacy</Link> · <Link href="/terms" className="hover:text-slate-400 transition-colors">Terms</Link> · <Link href="/contact" className="hover:text-slate-400 transition-colors">Contact</Link> · <Link href="/login" className="hover:text-slate-400 transition-colors">Sign In</Link>
         </p>
       </footer>
     </div>

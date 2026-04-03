@@ -31,10 +31,17 @@ export function TopBar({ user }: TopBarProps) {
       {/* Mobile logo - hidden on desktop (sidebar shows it there) */}
       <div className="lg:hidden flex-shrink-0 flex items-center gap-2">
         <Image
-          src="/citadellogo.png"
+          src="/citadellogo-clean.png"
           alt="NyxCitadel"
           width={32}
           height={32}
+          unoptimized
+          onError={(e) => {
+            const img = e.currentTarget as HTMLImageElement;
+            if (!img.src.includes('/logo-white.svg')) {
+              img.src = '/logo-white.svg';
+            }
+          }}
           className="h-8 w-8"
         />
       </div>

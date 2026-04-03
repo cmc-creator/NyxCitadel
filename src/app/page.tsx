@@ -241,11 +241,18 @@ export default async function RootPage() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Image
-              src="/citadellogo.png"
+              src="/citadellogo-clean.png"
               alt="NyxCitadel"
               width={36}
               height={36}
+              unoptimized
               priority
+              onError={(e) => {
+                const img = e.currentTarget as HTMLImageElement;
+                if (!img.src.includes('/logo-white.svg')) {
+                  img.src = '/logo-white.svg';
+                }
+              }}
               className="h-9 w-9 flex-shrink-0 drop-shadow-lg"
             />
             <div>
@@ -259,6 +266,7 @@ export default async function RootPage() {
             <a href="#quality" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Quality &amp; Risk</a>
             <a href="#compliance" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Standards</a>
             <Link href="/guide" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Guide</Link>
+            <Link href="/priority-partner-portal" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Partner Portal</Link>
             <a href="#sentry" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Sentry AI</a>
             <a href="#pricing" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Pricing</a>
           </nav>
@@ -876,7 +884,20 @@ export default async function RootPage() {
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-500/15 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative z-10">
             <div className="flex justify-center mb-5">
-              <Image src="/citadellogo.png" alt="NyxCitadel" width={72} height={72} className="shadow-2xl shadow-teal-500/30" />
+              <Image
+                src="/citadellogo-clean.png"
+                alt="NyxCitadel"
+                width={72}
+                height={72}
+                unoptimized
+                onError={(e) => {
+                  const img = e.currentTarget as HTMLImageElement;
+                  if (!img.src.includes('/logo-white.svg')) {
+                    img.src = '/logo-white.svg';
+                  }
+                }}
+                className="shadow-2xl shadow-teal-500/30"
+              />
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
               Your next survey is coming.{' '}
@@ -1016,13 +1037,34 @@ export default async function RootPage() {
       <footer className="relative z-10 border-t border-white/5 bg-slate-950">
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
           <div className="flex items-center gap-2.5">
-            <Image src="/citadellogo.png" alt="NyxCitadel" width={28} height={28} />
+            <Image
+              src="/citadellogo-clean.png"
+              alt="NyxCitadel"
+              width={28}
+              height={28}
+              unoptimized
+              onError={(e) => {
+                const img = e.currentTarget as HTMLImageElement;
+                if (!img.src.includes('/logo-white.svg')) {
+                  img.src = '/logo-white.svg';
+                }
+              }}
+            />
             <div>
               <span className="font-bold text-muted-foreground/70">NyxCitadel<sup className="text-[9px] font-normal">™</sup></span>
               <span className="text-foreground/80 ml-2 hidden sm:inline">· Healthcare Compliance &amp; Risk Management Platform</span>
             </div>
           </div>
-          <p>© {new Date().getFullYear()} <a href="https://nyxcollective.com" className="hover:text-muted-foreground/70 transition-colors">NyxCollective LLC</a> · HIPAA-compliant · Survey-ready · Always current</p>
+          <div className="flex flex-col items-center gap-2">
+            <p>© {new Date().getFullYear()} <a href="https://nyxcollective.com" className="hover:text-slate-400 transition-colors">NyxCollective LLC</a> · HIPAA-compliant · Survey-ready · Always current</p>
+            <div className="flex items-center gap-4 text-xs">
+              <Link href="/privacy" className="text-slate-500 hover:text-slate-300 transition-colors">Privacy Policy</Link>
+              <span className="text-slate-700">•</span>
+              <Link href="/terms" className="text-slate-500 hover:text-slate-300 transition-colors">Terms of Service</Link>
+              <span className="text-slate-700">•</span>
+              <Link href="/contact" className="text-slate-500 hover:text-slate-300 transition-colors">Contact</Link>
+            </div>
+          </div>
           <Link href={portalHref} className="text-slate-500 hover:text-white transition-colors font-medium">
             {portalLabel} →
           </Link>

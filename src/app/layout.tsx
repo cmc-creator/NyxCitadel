@@ -6,6 +6,7 @@ import { AuthProvider } from '@/components/providers/auth-provider';
 import * as Sentry from '@sentry/nextjs';
 
 const inter = Inter({ subsets: ['latin'] });
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://nyxcitadel.com';
 
 export function generateMetadata(): Metadata {
   return {
@@ -15,12 +16,36 @@ export function generateMetadata(): Metadata {
     },
     description:
       'Compliance, risk management, and emergency management platform - NyxCitadel.',
-    icons: {
-      icon: '/citadellogo.png',
-      shortcut: '/citadellogo.png',
-      apple: '/citadellogo.png',
+    metadataBase: new URL(appUrl),
+    openGraph: {
+      title: 'NyxCitadel | Compliance & Risk Management',
+      description:
+        'Compliance, risk management, and emergency management platform built for healthcare organizations.',
+      url: appUrl,
+      siteName: 'NyxCitadel',
+      type: 'website',
+      images: [
+        {
+          url: '/citadellogo-clean.png',
+          width: 1200,
+          height: 1200,
+          alt: 'NyxCitadel',
+        },
+      ],
     },
-    robots: { index: false, follow: false },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'NyxCitadel | Compliance & Risk Management',
+      description:
+        'Compliance, risk management, and emergency management platform built for healthcare organizations.',
+      images: ['/citadellogo-clean.png'],
+    },
+    icons: {
+      icon: '/citadellogo-clean.png',
+      shortcut: '/citadellogo-clean.png',
+      apple: '/citadellogo-clean.png',
+    },
+    robots: { index: true, follow: true },
     other: {
       ...Sentry.getTraceData(),
     },
