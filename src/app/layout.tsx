@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/components/providers/auth-provider';
-import * as Sentry from '@sentry/nextjs';
 
 const inter = Inter({ subsets: ['latin'] });
 const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://nyxcitadel.com';
@@ -46,9 +45,6 @@ export function generateMetadata(): Metadata {
       apple: '/citadellogo-clean.png',
     },
     robots: { index: true, follow: true },
-    other: {
-      ...Sentry.getTraceData(),
-    },
   };
 }
 
