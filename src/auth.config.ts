@@ -6,6 +6,7 @@ import type { User } from 'next-auth';
 // Used ONLY by middleware (Edge Runtime compatible).
 // The Credentials provider (which uses bcryptjs) is in src/lib/auth.ts.
 export const authConfig: NextAuthConfig = {
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/login',
     error: '/login',
