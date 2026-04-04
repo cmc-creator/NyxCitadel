@@ -16,9 +16,16 @@ export default function Page() {
   const [isConnected, setIsConnected] = useState(true);
 
   useEffect(() => {
-    Sentry.logger.info("Sentry example page loaded");
+    if (typeof Sentry.logger?.info === "function") {
+      Sentry.logger.info("Sentry example page loaded");
+    }
     async function checkConnectivity() {
-      const result = await Sentry.diagnoseSdkConnectivity();
+      // diagnoseSdkConnectivity may not be available in all Sentry versions
+      if (typeof (Sentry as any).diagnoseSdkConnectivity !== "function") {
+        setIsConnected(true);
+        return;
+      }
+      const result = await (Sentry as any).diagnoseSdkConnectivity();
       setIsConnected(result !== "sentry-unreachable");
     }
     checkConnectivity();

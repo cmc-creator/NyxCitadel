@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import { auth } from '@/lib/auth';
 import Link from 'next/link';
+import { ClientLogoImage } from '@/components/client-logo-image';
 import {
   Shield, AlertTriangle, BarChart3, CheckCircle, ArrowRight, Activity,
   Lock, Star, Zap, ChevronRight, ClipboardList, TrendingUp, Bell, Users,
@@ -241,19 +241,13 @@ export default async function RootPage() {
       <header className="z-20 border-b border-white/5 backdrop-blur-md sticky top-0" style={{background: 'rgba(6,11,22,0.85)'}}>
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Image
+            <ClientLogoImage
               src="/citadellogo-clean.png"
               alt="NyxCitadel"
               width={36}
               height={36}
               unoptimized
               priority
-              onError={(e) => {
-                const img = e.currentTarget as HTMLImageElement;
-                if (!img.src.includes('/logo-white.svg')) {
-                  img.src = '/logo-white.svg';
-                }
-              }}
               className="h-9 w-9 flex-shrink-0 drop-shadow-lg"
             />
             <div>
@@ -885,18 +879,12 @@ export default async function RootPage() {
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-500/15 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative z-10">
             <div className="flex justify-center mb-5">
-              <Image
+              <ClientLogoImage
                 src="/citadellogo-clean.png"
                 alt="NyxCitadel"
                 width={72}
                 height={72}
                 unoptimized
-                onError={(e) => {
-                  const img = e.currentTarget as HTMLImageElement;
-                  if (!img.src.includes('/logo-white.svg')) {
-                    img.src = '/logo-white.svg';
-                  }
-                }}
                 className="shadow-2xl shadow-teal-500/30"
               />
             </div>
@@ -1038,18 +1026,12 @@ export default async function RootPage() {
       <footer className="relative z-10 border-t border-white/5 bg-slate-950">
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
           <div className="flex items-center gap-2.5">
-            <Image
+            <ClientLogoImage
               src="/citadellogo-clean.png"
               alt="NyxCitadel"
               width={28}
               height={28}
               unoptimized
-              onError={(e) => {
-                const img = e.currentTarget as HTMLImageElement;
-                if (!img.src.includes('/logo-white.svg')) {
-                  img.src = '/logo-white.svg';
-                }
-              }}
             />
             <div>
               <span className="font-bold text-muted-foreground/70">NyxCitadel<sup className="text-[9px] font-normal">™</sup></span>
