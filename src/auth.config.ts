@@ -16,7 +16,20 @@ export const authConfig: NextAuthConfig = {
       const isLoggedIn = !!auth?.user;
       const isAuthPage = nextUrl.pathname.startsWith('/login');
       const isApiAuth  = nextUrl.pathname.startsWith('/api/nyx-auth');
-      const isPublic   = nextUrl.pathname === '/' || nextUrl.pathname.startsWith('/signup') || isApiAuth || nextUrl.pathname === '/api/health';
+      const isPublic   =
+        nextUrl.pathname === '/'                                         ||
+        nextUrl.pathname.startsWith('/signup')                           ||
+        nextUrl.pathname.startsWith('/terms')                            ||
+        nextUrl.pathname.startsWith('/privacy')                          ||
+        nextUrl.pathname.startsWith('/contact')                          ||
+        nextUrl.pathname.startsWith('/guide')                            ||
+        nextUrl.pathname.startsWith('/walkthrough')                      ||
+        nextUrl.pathname.startsWith('/priority-partner-portal')          ||
+        nextUrl.pathname.startsWith('/drill-task/')                      ||
+        nextUrl.pathname.startsWith('/drill-muster/')                    ||
+        nextUrl.pathname === '/monitoring'                                ||
+        isApiAuth                                                        ||
+        nextUrl.pathname === '/api/health';
 
       if (isPublic)   return true;
       if (isAuthPage) return isLoggedIn ? Response.redirect(new URL('/dashboard', nextUrl)) : true;
