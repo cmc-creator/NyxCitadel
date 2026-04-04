@@ -238,42 +238,74 @@ export default async function RootPage() {
         />
       </div>
 
-      <header className="z-20 border-b border-white/5 backdrop-blur-md sticky top-0" style={{background: 'rgba(6,11,22,0.85)'}}>
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <LogoImage width={36} height={36} priority className="h-9 w-9 flex-shrink-0 drop-shadow-lg" />
-            <div>
-              <span className="font-extrabold text-lg tracking-tight">NyxCitadel<sup className="text-[10px] font-normal align-super ml-0.5">™</sup></span>
-              <span className="hidden sm:inline text-slate-600 text-xs ml-2">Healthcare Compliance Platform</span>
+      <header className="z-20 sticky top-0" style={{borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(6,11,22,0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)'}}>
+        <div className="max-w-7xl mx-auto px-8 h-[72px] flex items-center justify-between gap-8">
+
+          {/* ── Brand ── */}
+          <Link href="/" className="flex items-center gap-3.5 flex-shrink-0 group">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-xl bg-teal-500/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <LogoImage width={46} height={46} priority className="h-[46px] w-[46px] flex-shrink-0 drop-shadow-[0_0_12px_rgba(13,115,119,0.5)] relative" />
             </div>
-          </div>
-          <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground/70">
-            <a href="#intel" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Reg. Intelligence</a>
-            <a href="#features" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Features</a>
-            <a href="#quality" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Quality &amp; Risk</a>
-            <a href="#compliance" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Standards</a>
-            <Link href="/guide" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Guide</Link>
-            <Link href="/priority-partner-portal" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Partner Portal</Link>
-            <a href="#sentry" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Sentry AI</a>
-            <a href="#pricing" className="hover:text-white hover:-translate-y-0.5 transition-all duration-200">Pricing</a>
-          </nav>
-          <div className="flex items-center gap-2">
-            {!isLoggedIn && (
-              <Link
-                href="/signup"
-                className="flex items-center gap-2 px-4 py-2 border border-teal-500/50 hover:border-teal-400 hover:bg-teal-500/10 rounded-lg text-sm font-semibold text-teal-300 hover:text-teal-200 transition-all"
-              >
-                Get Started
-              </Link>
+            <div className="flex flex-col leading-none">
+              <span className="font-extrabold text-[1.15rem] tracking-tight text-white">
+                NyxCitadel<sup className="text-[9px] font-normal align-super ml-0.5 text-teal-400">™</sup>
+              </span>
+              <span className="text-[10px] font-medium tracking-widest text-slate-500 uppercase mt-0.5">Healthcare Compliance</span>
+            </div>
+          </Link>
+
+          {/* ── Nav ── */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {[
+              { label: 'Features',   href: '#features' },
+              { label: 'Intelligence', href: '#intel' },
+              { label: 'Sentry AI',  href: '#sentry' },
+              { label: 'Pricing',    href: '#pricing' },
+              { label: 'Guide',      href: '/guide', isLink: true },
+            ].map(({ label, href, isLink }) =>
+              isLink ? (
+                <Link key={label} href={href}
+                  className="px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+                  {label}
+                </Link>
+              ) : (
+                <a key={label} href={href}
+                  className="px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+                  {label}
+                </a>
+              )
             )}
-            <Link
-              href={portalHref}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all shadow-lg"
-              style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.35)'}}
-            >
-              {portalLabel} <ChevronRight className="w-4 h-4" />
+            <span className="w-px h-5 bg-white/10 mx-2" />
+            <Link href="/priority-partner-portal"
+              className="px-4 py-2 rounded-lg text-sm font-semibold text-amber-300/80 hover:text-amber-200 hover:bg-amber-400/8 transition-all duration-200">
+              Partner Portal
             </Link>
+          </nav>
+
+          {/* ── CTAs ── */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            {isLoggedIn ? (
+              <Link href="/dashboard"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(13,115,119,0.45)]"
+                style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.3)'}}>
+                Dashboard <ChevronRight className="w-4 h-4" />
+              </Link>
+            ) : (
+              <>
+                <Link href="/login"
+                  className="hidden sm:flex px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/6 transition-all duration-200">
+                  Sign In
+                </Link>
+                <Link href="/signup"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(13,115,119,0.45)]"
+                  style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.3)'}}>
+                  Get Started <ChevronRight className="w-4 h-4" />
+                </Link>
+              </>
+            )}
           </div>
+
         </div>
       </header>
 
