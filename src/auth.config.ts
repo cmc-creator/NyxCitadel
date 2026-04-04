@@ -25,9 +25,9 @@ export const authConfig: NextAuthConfig = {
         nextUrl.pathname.startsWith('/guide')                            ||
         nextUrl.pathname.startsWith('/walkthrough')                      ||
         nextUrl.pathname.startsWith('/priority-partner-portal')          ||
-        nextUrl.pathname.startsWith('/drill-task/')                      ||
-        nextUrl.pathname.startsWith('/drill-muster/')                    ||
-        nextUrl.pathname === '/monitoring'                                ||
+        nextUrl.pathname.startsWith('/drill-task')                       ||
+        nextUrl.pathname.startsWith('/drill-muster')                     ||
+        nextUrl.pathname.startsWith('/monitoring')                        ||
         isApiAuth                                                        ||
         nextUrl.pathname === '/api/health';
 
