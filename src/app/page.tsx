@@ -214,7 +214,8 @@ const painPoints = [
 ];
 
 export default async function RootPage() {
-  const session     = await auth();
+  let session = null;
+  try { session = await auth(); } catch { /* treat as unauthenticated if auth misconfigured */ }
   const isLoggedIn  = !!session;
   const portalHref  = isLoggedIn ? '/dashboard' : '/login';
   const portalLabel = isLoggedIn ? 'Go to Dashboard' : 'Sign In';
