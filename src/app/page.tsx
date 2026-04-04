@@ -245,7 +245,7 @@ export default async function RootPage() {
           <Link href="/" className="flex items-center gap-3.5 flex-shrink-0 group">
             <div className="relative">
               <div className="absolute inset-0 rounded-xl bg-teal-500/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <LogoImage width={46} height={46} priority className="h-[46px] w-[46px] flex-shrink-0 drop-shadow-[0_0_12px_rgba(13,115,119,0.5)] relative" />
+              <LogoImage width={56} height={56} priority className="h-[56px] w-[56px] flex-shrink-0 drop-shadow-[0_0_16px_rgba(13,115,119,0.6)] relative" />
             </div>
             <div className="flex flex-col leading-none">
               <span className="font-extrabold text-[1.15rem] tracking-tight text-white">
