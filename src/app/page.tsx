@@ -239,13 +239,13 @@ export default async function RootPage() {
       </div>
 
       <header className="z-20 sticky top-0" style={{borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(6,11,22,0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)'}}>
-        <div className="max-w-7xl mx-auto px-8 h-[88px] flex items-center justify-between gap-8">
+        <div className="max-w-7xl mx-auto px-8 h-[100px] flex items-center justify-between gap-8">
 
           {/* ── Brand ── */}
           <Link href="/" className="flex items-center gap-3.5 flex-shrink-0 group">
             <div className="relative">
               <div className="absolute inset-0 rounded-xl bg-teal-500/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <LogoImage width={72} height={72} priority className="h-[72px] w-[72px] flex-shrink-0 drop-shadow-[0_0_20px_rgba(13,115,119,0.7)] relative" />
+              <LogoImage width={96} height={96} priority className="h-[96px] w-[96px] flex-shrink-0 drop-shadow-[0_0_24px_rgba(13,115,119,0.75)] relative" />
             </div>
             <div className="flex flex-col leading-none">
               <span className="font-extrabold text-[1.15rem] tracking-tight text-white">
