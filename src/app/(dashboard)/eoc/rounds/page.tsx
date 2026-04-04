@@ -1,109 +1,37 @@
 import Link from 'next/link';
 import { ClipboardList, CheckCircle2, Clock, AlertTriangle, ChevronRight } from 'lucide-react';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
-const rounds = [
-  {
-    id: 'EOC-ROUND-2026-03',
-    roundNumber: 'EOC-ROUND-2026-03',
-    type: 'LIFE_SAFETY_GENERAL',
-    label: 'Monthly Life Safety Round',
-    conductedDate: '2026-03-07',
-    conductedBy: 'Carlos Vega, EOC Chair',
-    participants: ['Maria Santos RN', 'Darnell Williams MHT'],
-    areas: ['Acute Adult Unit', 'Nursing Stations', 'Medication Room', 'Stairwells', 'Mechanical Room'],
-    totalItems: 42,
-    openItems: 3,
-    status: 'IN_PROGRESS',
-    summary: 'Round in progress. Three open deficiencies identified: two ligature-related, one fire door.',
-  },
-  {
-    id: 'EOC-ROUND-2026-LIG-01',
-    roundNumber: 'EOC-ROUND-2026-LIG-01',
-    type: 'LIGATURE_RISK',
-    label: 'Quarterly Ligature Risk Survey',
-    conductedDate: '2026-02-20',
-    conductedBy: 'Compliance Officer / Carlos Vega',
-    participants: ['Maria Santos RN', 'Risk Manager'],
-    areas: ['All Patient Rooms', 'Bathrooms', 'Group Therapy Rooms', 'Seclusion Room', 'Common Areas'],
-    totalItems: 10,
-    openItems: 4,
-    status: 'COMPLETED',
-    summary: 'Full facility ligature survey completed per TJC EC.02.06.01. 10 items identified; 1 IMMEDIATE (seclusion shower rod), 3 HIGH, 4 MEDIUM, 2 LOW. Written mitigation plans issued for all.',
-  },
-  {
-    id: 'EOC-ROUND-2026-02',
-    roundNumber: 'EOC-ROUND-2026-02',
-    type: 'LIFE_SAFETY_GENERAL',
-    label: 'Monthly Life Safety Round',
-    conductedDate: '2026-02-07',
-    conductedBy: 'Carlos Vega, EOC Chair',
-    participants: ['Linda Park CNO', 'Facilities Manager'],
-    areas: ['Adolescent Unit', 'Step-Down Unit', 'Family Visitation', 'Cafeteria', 'Parking/Exterior'],
-    totalItems: 38,
-    openItems: 0,
-    status: 'REVIEWED',
-    summary: 'All findings from January round resolved. New items: 1 burned-out exit sign (corrected same day), 1 blocked egress in storage (cleared same day). All issues resolved before round end.',
-  },
-  {
-    id: 'EOC-ROUND-2026-FIRE-01',
-    roundNumber: 'EOC-ROUND-2026-FIRE-01',
-    type: 'FIRE_SAFETY',
-    label: 'Annual Fire Safety Round (with Fire Marshal)',
-    conductedDate: '2026-01-20',
-    conductedBy: 'Carlos Vega + Peoria Fire Dept.',
-    participants: ['Peoria Fire Marshal – D. Hughes', 'Carlos Vega EOC Chair', 'Facilities Manager'],
-    areas: ['All Areas', 'Mechanical Rooms', 'Electrical Rooms', 'Sprinkler Risers', 'Egress Routes'],
-    totalItems: 55,
-    openItems: 1,
-    status: 'REVIEWED',
-    summary: 'Annual fire inspection with Peoria Fire Department. Passed overall. One deficiency: kitchen hood suppression service overdue - corrective action plan issued. Certificate of Compliance issued pending hood service.',
-  },
-  {
-    id: 'EOC-ROUND-2026-01',
-    roundNumber: 'EOC-ROUND-2026-01',
-    type: 'LIFE_SAFETY_GENERAL',
-    label: 'Monthly Life Safety Round',
-    conductedDate: '2026-01-10',
-    conductedBy: 'Carlos Vega, EOC Chair',
-    participants: ['Maria Santos RN'],
-    areas: ['Acute Adult Unit', 'Nursing Stations', 'Medication Room', 'Seclusion Rooms', 'Stairwells'],
-    totalItems: 40,
-    openItems: 0,
-    status: 'REVIEWED',
-    summary: 'Routine monthly round. No new deficiencies identified. All prior open items verified resolved.',
-  },
-  {
-    id: 'EOC-ROUND-2025-EOC-COMM-12',
-    roundNumber: 'EOC-ROUND-2025-EOC-COMM-12',
-    type: 'EOC_COMMITTEE',
-    label: 'EOC Committee Meeting – December',
-    conductedDate: '2025-12-18',
-    conductedBy: 'Carlos Vega, EOC Chair',
-    participants: ['Linda Park CNO', 'James Holloway CEO', 'Maria Santos RN', 'Facilities Manager', 'Security Director'],
-    areas: ['Administrative'],
-    totalItems: 0,
-    openItems: 0,
-    status: 'APPROVED',
-    summary: 'Q4 EOC report presented to committee. Annual program evaluation accepted. 2026 EOC calendar approved. Ligature risk re-assessment scheduled for Q1 2026.',
-  },
-];
+export const dynamic = 'force-dynamic';
 
 const typeBadge: Record<string, { label: string; color: string }> = {
   LIFE_SAFETY_GENERAL: { label: 'Life Safety', color: 'bg-sky-950/50 text-sky-300 border border-sky-700/40' },
   LIGATURE_RISK: { label: 'Ligature Risk', color: 'bg-amber-950/50 text-amber-300 border border-amber-700/40' },
   FIRE_SAFETY: { label: 'Fire Safety', color: 'bg-red-950/50 text-red-300 border border-red-700/40' },
   INFECTION_CONTROL: { label: 'Infection Control', color: 'bg-teal-950/50 text-teal-300 border border-teal-700/40' },
-  SECURITY: { label: 'Security', color: 'bg-purple-950/50 text-purple-300 border border-purple-700/40' },
+  SECURITY: { label: 'Security', color: 'bg-teal-950/50 text-teal-300 border border-teal-700/40' },
   UTILITIES: { label: 'Utilities', color: 'bg-orange-950/50 text-orange-300 border border-orange-700/40' },
   PATIENT_ENVIRONMENT: { label: 'Patient Environment', color: 'bg-emerald-950/50 text-emerald-300 border border-emerald-700/40' },
-  EOC_COMMITTEE: { label: 'EOC Committee', color: 'bg-violet-950/50 text-violet-300 border border-violet-700/40' },
+  EOC_COMMITTEE: { label: 'EOC Committee', color: 'bg-teal-950/50 text-teal-300 border border-teal-700/40' },
+};
+
+const TYPE_LABELS: Record<string, string> = {
+  LIFE_SAFETY_GENERAL: 'Life Safety Round',
+  LIGATURE_RISK: 'Ligature Risk Survey',
+  FIRE_SAFETY: 'Fire Safety Inspection',
+  INFECTION_CONTROL: 'Infection Control Round',
+  SECURITY: 'Security Round',
+  UTILITIES: 'Utilities Inspection',
+  PATIENT_ENVIRONMENT: 'Patient Environment Round',
+  EOC_COMMITTEE: 'EOC Committee Meeting',
 };
 
 const statusBadge: Record<string, string> = {
   IN_PROGRESS: 'bg-amber-950/40 text-amber-400',
   COMPLETED: 'bg-sky-950/40 text-sky-400',
   REVIEWED: 'bg-emerald-950/40 text-emerald-400',
-  APPROVED: 'bg-purple-950/40 text-purple-400',
+  APPROVED: 'bg-teal-950/40 text-teal-400',
 };
 
 const statusIcon: Record<string, React.ElementType> = {
@@ -113,19 +41,27 @@ const statusIcon: Record<string, React.ElementType> = {
   APPROVED: CheckCircle2,
 };
 
-export default function EocRoundsPage() {
+export default async function EocRoundsPage() {
+  const session = await auth();
+  const facilityId = session!.user.facilityId;
+
+  const rounds = await prisma.eocRound.findMany({
+    where: { facilityId },
+    orderBy: { conductedDate: 'desc' },
+  });
+
   return (
     <div className="p-6 space-y-6 max-w-5xl mx-auto">
       {/* Header */}
       <div className="flex items-start justify-between flex-wrap gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <Link href="/eoc" className="text-sm text-slate-400 hover:text-slate-300">Environment of Care</Link>
+            <Link href="/eoc" className="text-sm text-muted-foreground/70 hover:text-slate-300">Environment of Care</Link>
             <span className="text-slate-600">›</span>
             <span className="text-sm text-foreground font-medium">Safety Rounds</span>
           </div>
           <h1 className="text-2xl font-bold text-foreground mt-1">Life Safety Rounds</h1>
-          <p className="text-sm text-slate-400 mt-0.5">Monthly environment-of-care rounds, fire safety inspections, and ligature surveys</p>
+          <p className="text-sm text-muted-foreground/70 mt-0.5">Monthly environment-of-care rounds, fire safety inspections, and ligature surveys</p>
         </div>
         <a href="/eoc/rounds/new" className="px-3 py-1.5 text-sm rounded-md bg-sky-600 hover:bg-sky-500 text-white font-medium transition-colors">
           + Start New Round
@@ -156,7 +92,7 @@ export default function EocRoundsPage() {
       <div className="space-y-3">
         {rounds.map(round => {
           const Icon = statusIcon[round.status] ?? ClipboardList;
-          const typeInfo = typeBadge[round.type] ?? { label: round.type, color: 'bg-slate-800 text-slate-300' };
+          const typeInfo = typeBadge[round.roundType] ?? { label: String(round.roundType).replace(/_/g, ' '), color: 'bg-slate-800 text-slate-300' };
           return (
             <div key={round.id} className="bg-card rounded-xl border border-border p-5 hover:border-slate-500/50 transition-colors">
               <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -172,18 +108,18 @@ export default function EocRoundsPage() {
                         </span>
                       )}
                     </div>
-                    <p className="text-sm font-semibold text-foreground mt-1">{round.label}</p>
+                    <p className="text-sm font-semibold text-foreground mt-1">{TYPE_LABELS[round.roundType] ?? typeInfo.label}</p>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      {round.conductedDate} · {round.conductedBy}
+                      {round.conductedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} · {round.conductedBy}
                     </p>
-                    {round.participants.length > 0 && (
-                      <p className="text-xs text-slate-600 mt-0.5">+ {round.participants.join(', ')}</p>
+                    {round.participantIds.length > 0 && (
+                      <p className="text-xs text-slate-600 mt-0.5">+ {round.participantIds.join(', ')}</p>
                     )}
-                    <p className="text-xs text-slate-400 mt-2 leading-relaxed">{round.summary}</p>
-                    {round.areas.length > 0 && round.areas[0] !== 'Administrative' && (
+                    <p className="text-xs text-muted-foreground/70 mt-2 leading-relaxed">{round.summary}</p>
+                    {round.areasInspected.length > 0 && round.areasInspected[0] !== 'Administrative' && (
                       <div className="flex flex-wrap gap-1 mt-2">
-                        {round.areas.map(a => (
-                          <span key={a} className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                        {round.areasInspected.map(a => (
+                          <span key={a} className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-muted-foreground/70">
                             {a}
                           </span>
                         ))}
@@ -198,7 +134,7 @@ export default function EocRoundsPage() {
                   )}
                   <Link
                     href={`/eoc/rounds/${round.id}`}
-                    className="flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300"
+                    className="flex items-center gap-1 text-xs text-teal-400 hover:text-teal-300"
                   >
                     View details <ChevronRight className="w-3 h-3" />
                   </Link>

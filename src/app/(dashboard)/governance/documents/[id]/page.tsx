@@ -20,7 +20,7 @@ const STATUS_COLOR: Record<string, string> = {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -31,8 +31,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5 mb-3">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5 mb-3">{value}</dd>
     </>
   );
 }
@@ -60,11 +60,11 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/governance/documents" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/governance/documents" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Governance Documents
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/governance/documents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/governance/documents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/governance/documents/${params.id}`} redirectPath="/governance/documents" label="governance document" />
@@ -72,12 +72,12 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <FileText className="w-5 h-5 text-indigo-600" />
-              <span className="text-xs text-slate-400">{doc.docType.replace(/_/g, ' ')}</span>
+              <FileText className="w-5 h-5 text-teal-600" />
+              <span className="text-xs text-muted-foreground/70">{doc.docType.replace(/_/g, ' ')}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[doc.status] ?? 'bg-slate-100 text-slate-600'}`}>
                 {doc.status.replace(/_/g, ' ')}
               </span>
@@ -85,8 +85,8 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
                 <span className="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-100 text-red-800">Review Overdue</span>
               )}
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{doc.title}</h1>
-            {doc.version && <p className="text-sm text-slate-400 mt-0.5">Version {doc.version}</p>}
+            <h1 className="text-xl font-bold text-foreground">{doc.title}</h1>
+            {doc.version && <p className="text-sm text-muted-foreground/70 mt-0.5">Version {doc.version}</p>}
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
         <Section title="Status & Document">
           <dl className="space-y-3">
             <div>
-              <dt className="text-xs text-slate-400">Status</dt>
+              <dt className="text-xs text-muted-foreground/70">Status</dt>
               <dd className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold mt-1 ${STATUS_COLOR[doc.status] ?? 'bg-slate-100 text-slate-600'}`}>
                 {doc.status.replace(/_/g, ' ')}
               </dd>
@@ -115,7 +115,7 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
           {doc.documentUrl && (
             <div className="mt-4">
               <a href={doc.documentUrl} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-indigo-600 hover:underline">
+                className="inline-flex items-center gap-2 text-sm text-teal-600 hover:underline">
                 <FileText className="w-4 h-4" /> View Document
               </a>
             </div>
@@ -125,7 +125,7 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
 
       {doc.notes && (
         <Section title="Notes">
-          <p className="text-sm text-slate-700 whitespace-pre-wrap">{doc.notes}</p>
+          <p className="text-sm text-foreground/80 whitespace-pre-wrap">{doc.notes}</p>
         </Section>
       )}
 

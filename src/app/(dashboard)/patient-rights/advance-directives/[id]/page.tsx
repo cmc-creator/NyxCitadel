@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -21,8 +21,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -32,7 +32,7 @@ function BoolField({ label, value, yesColor = 'text-green-600', noColor = 'text-
 }) {
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
       <dd className={`text-sm font-semibold mt-0.5 ${value ? yesColor : noColor}`}>{value ? 'Yes' : 'No'}</dd>
     </div>
   );
@@ -49,22 +49,22 @@ export default async function AdvanceDirectiveDetailPage({ params }: { params: {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/patient-rights/advance-directives" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/patient-rights/advance-directives" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Advance Directives
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/patient-rights/advance-directives/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/patient-rights/advance-directives/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex items-start gap-3">
           <FileHeart className="w-5 h-5 text-teal-600 mt-1 shrink-0" />
           <div>
-            <h1 className="text-xl font-bold text-slate-900">Patient {ad.patientInitials}</h1>
+            <h1 className="text-xl font-bold text-foreground">Patient {ad.patientInitials}</h1>
             <p className="text-sm text-slate-500 mt-1">
               Admit: <strong>{formatDate(ad.admitDate)}</strong>
               {ad.patientMrn && <> &middot; MRN: <strong>{ad.patientMrn}</strong></>}
@@ -98,7 +98,7 @@ export default async function AdvanceDirectiveDetailPage({ params }: { params: {
 
       {ad.notes && (
         <Section title="Notes">
-          <p className="text-sm text-slate-700 whitespace-pre-wrap">{ad.notes}</p>
+          <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ad.notes}</p>
         </Section>
       )}
     </div>

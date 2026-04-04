@@ -18,7 +18,7 @@ const STATUS_COLOR: Record<string, string> = {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -29,8 +29,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -48,18 +48,18 @@ export default async function BaaDetailPage({ params }: { params: { id: string }
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/hipaa/baa" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/hipaa/baa" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to BAA Tracker
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/hipaa/baa/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/hipaa/baa/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -71,7 +71,7 @@ export default async function BaaDetailPage({ params }: { params: { id: string }
                 <span className="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold bg-orange-100 text-orange-800">Expiring Soon</span>
               )}
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{baa.vendorName}</h1>
+            <h1 className="text-xl font-bold text-foreground">{baa.vendorName}</h1>
             <p className="text-sm text-slate-500 mt-1">BAA Effective: <strong>{formatDate(baa.agreementDate)}</strong>
               {baa.expiryDate && <> &middot; Expires: <strong>{formatDate(baa.expiryDate)}</strong></>}
             </p>
@@ -82,12 +82,12 @@ export default async function BaaDetailPage({ params }: { params: { id: string }
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-5">
           <Section title="Service Description">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{baa.serviceDescription}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{baa.serviceDescription}</p>
           </Section>
 
           {baa.notes && (
             <Section title="Notes">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{baa.notes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{baa.notes}</p>
             </Section>
           )}
         </div>
@@ -106,11 +106,11 @@ export default async function BaaDetailPage({ params }: { params: { id: string }
               <Field label="Agreement Date" value={formatDate(baa.agreementDate)} />
               {baa.expiryDate && <Field label="Expiry Date" value={formatDate(baa.expiryDate)} />}
               <div>
-                <dt className="text-xs text-slate-400">Auto-Renew</dt>
-                <dd className="text-sm font-medium text-slate-800 mt-0.5">{baa.autoRenew ? 'Yes' : 'No'}</dd>
+                <dt className="text-xs text-muted-foreground/70">Auto-Renew</dt>
+                <dd className="text-sm font-medium text-foreground mt-0.5">{baa.autoRenew ? 'Yes' : 'No'}</dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-400">HIPAA Compliance Verified</dt>
+                <dt className="text-xs text-muted-foreground/70">HIPAA Compliance Verified</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${baa.phoneHipaaVerified ? 'text-green-600' : 'text-red-600'}`}>
                   {baa.phoneHipaaVerified ? 'Yes' : 'Not Verified'}
                 </dd>

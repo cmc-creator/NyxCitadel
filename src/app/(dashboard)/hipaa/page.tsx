@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { Lock, AlertTriangle, ChevronRight, CheckCircle, FileText, Clock } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -46,7 +46,7 @@ export default async function HipaaPage() {
             <h1 className="text-2xl font-bold text-white">HIPAA / Privacy Compliance</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">45 CFR Parts 160 &amp; 164</span>
           </div>
-          <p className="text-slate-400 text-sm">Breach log, BAA management, risk assessment tracking, and Notice of Privacy Practices.</p>
+          <p className="text-muted-foreground/70 text-sm">Breach log, BAA management, risk assessment tracking, and Notice of Privacy Practices.</p>
         </div>
       </div>
 
@@ -60,7 +60,7 @@ export default async function HipaaPage() {
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-2">
               <s.icon className={`w-4 h-4 ${s.color}`} />
-              <span className="text-xs text-slate-400">{s.label}</span>
+              <span className="text-xs text-muted-foreground/70">{s.label}</span>
             </div>
             <p className="text-2xl font-bold text-white">{s.value}</p>
           </div>
@@ -68,7 +68,7 @@ export default async function HipaaPage() {
       </div>
 
       <div className="rounded-xl bg-slate-800/50 border border-white/10 p-5">
-        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">HIPAA Program Requirements</p>
+        <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-3">HIPAA Program Requirements</p>
         <div className="grid md:grid-cols-2 gap-2">
           {[
             { item: 'Privacy Officer designated',                      status: true  },
@@ -104,7 +104,7 @@ export default async function HipaaPage() {
               </div>
               <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-blue-400 transition-colors" />
             </div>
-            <p className="text-xs text-slate-400 mb-3">{m.description}</p>
+            <p className="text-xs text-muted-foreground/70 mb-3">{m.description}</p>
             <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>
           </Link>
         ))}

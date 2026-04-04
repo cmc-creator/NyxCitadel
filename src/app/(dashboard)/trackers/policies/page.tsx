@@ -37,8 +37,8 @@ export default async function PoliciesPage() {
   return (
     <div className="max-w-screen-2xl mx-auto space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <FileText className="w-6 h-6 text-purple-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <FileText className="w-6 h-6 text-teal-600" />
           Policies &amp; Procedures
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">

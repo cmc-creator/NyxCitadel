@@ -159,16 +159,16 @@ export default function AttachmentComposer({
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <div className="bg-card rounded-xl border border-border overflow-hidden">
       <div className="px-5 py-3 border-b border-slate-200 flex items-center justify-between gap-3">
         <div>
-          <h3 className="text-sm font-semibold text-slate-800">{title}</h3>
+          <h3 className="text-sm font-semibold text-foreground">{title}</h3>
           <p className="text-xs text-slate-500 mt-0.5">Upload a file directly, or paste an existing file URL for evidence, screenshots, certificates, or survey documentation.</p>
         </div>
         <button
           type="button"
           onClick={() => setOpen((current) => !current)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-600 hover:bg-indigo-700 text-white text-sm font-medium transition-colors"
         >
           {open ? <Paperclip className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
           {open ? 'Hide Form' : 'Add Attachment'}
@@ -178,7 +178,7 @@ export default function AttachmentComposer({
       {open && (
         <form onSubmit={handleSubmit} className="px-5 py-4 space-y-4">
           {error && (
-            <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div>
+            <div className="rounded-lg border border-red-200 bg-red-950/20 px-3 py-2 text-sm text-red-700">{error}</div>
           )}
 
           <div className="grid md:grid-cols-2 gap-4">

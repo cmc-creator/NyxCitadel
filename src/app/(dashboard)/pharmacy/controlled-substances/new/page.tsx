@@ -54,21 +54,21 @@ export default function NewControlledSubstancePage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/pharmacy/controlled-substances" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/pharmacy/controlled-substances" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Controlled Substances
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Pill className="w-6 h-6 text-violet-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <Pill className="w-6 h-6 text-teal-600" />
           New CS Count Log
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Count difference is calculated automatically.</p>
       </div>
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
+      {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Count Details</h2>
+          <h2 className="text-sm font-semibold text-foreground">Count Details</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Log Date *</label>
@@ -100,7 +100,7 @@ export default function NewControlledSubstancePage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Count Amounts</h2>
+          <h2 className="text-sm font-semibold text-foreground">Count Amounts</h2>
           <div className="grid grid-cols-3 gap-4 items-end">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Amount Expected *</label>
@@ -121,7 +121,7 @@ export default function NewControlledSubstancePage() {
               </p>
             </div>
           </div>
-          <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+          <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
             <input name="discrepancyFound" type="checkbox" className="rounded"
               checked={discrepancyFound} onChange={e => setDiscrepancyFound(e.target.checked)} />
             Discrepancy Found
@@ -135,7 +135,7 @@ export default function NewControlledSubstancePage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Signatures</h2>
+          <h2 className="text-sm font-semibold text-foreground">Signatures</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Counted By *</label>
@@ -147,7 +147,7 @@ export default function NewControlledSubstancePage() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 items-end">
-            <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer mt-2">
+            <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer mt-2">
               <input name="reportedToPharmacy" type="checkbox" className="rounded" />
               Reported to Pharmacy
             </label>
@@ -159,8 +159,8 @@ export default function NewControlledSubstancePage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/pharmacy/controlled-substances" className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">Cancel</a>
-          <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-violet-600 text-white hover:bg-violet-700 disabled:opacity-50">
+          <a href="/pharmacy/controlled-substances" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-teal-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Log'}
           </button>
         </div>

@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 const statusConfig: Record<string, { label: string; classes: string }> = {
   ACTIVE:      { label: 'Active',      classes: 'bg-emerald-100 text-emerald-700' },
   UPDATED:     { label: 'Updated',     classes: 'bg-blue-100 text-blue-700' },
-  DISCHARGED:  { label: 'Discharged',  classes: 'bg-slate-100 text-slate-700' },
+  DISCHARGED:  { label: 'Discharged',  classes: 'bg-slate-100 text-foreground/80' },
   TRANSFERRED: { label: 'Transferred', classes: 'bg-amber-100 text-amber-700' },
 };
 
@@ -35,7 +35,7 @@ export default async function TreatmentPlansPage() {
             <h1 className="text-xl font-bold text-white">Treatment Plans</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">TJC RC.02</span>
           </div>
-          <p className="text-slate-400 text-sm">Individualized plan-of-care tracking and interdisciplinary team documentation.</p>
+          <p className="text-muted-foreground/70 text-sm">Individualized plan-of-care tracking and interdisciplinary team documentation.</p>
         </div>
         <a href="/treatment-plans/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Plan
@@ -46,11 +46,11 @@ export default async function TreatmentPlansPage() {
         {[
           { label: 'Total Plans', value: plans.length, color: 'text-blue-400' },
           { label: 'Active', value: active, color: 'text-emerald-400' },
-          { label: 'Pending Creation', value: pending, color: pending > 0 ? 'text-amber-400' : 'text-slate-400' },
+          { label: 'Pending Creation', value: pending, color: pending > 0 ? 'text-amber-400' : 'text-muted-foreground/70' },
           { label: 'Overdue', value: overdue, color: overdue > 0 ? 'text-red-400' : 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
-            <p className="text-xs text-slate-400 mb-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mb-1">{s.label}</p>
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
           </div>
         ))}
@@ -59,7 +59,7 @@ export default async function TreatmentPlansPage() {
       <div className="rounded-xl border border-white/10 bg-slate-800/50 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-white/10 text-slate-400 text-xs">
+            <tr className="border-b border-white/10 text-muted-foreground/70 text-xs">
               <th className="text-left px-4 py-3">Patient</th>
               <th className="text-left px-4 py-3">Admit Date</th>
               <th className="text-left px-4 py-3">Unit</th>
@@ -73,13 +73,13 @@ export default async function TreatmentPlansPage() {
             {plans.length === 0 ? (
               <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">No treatment plans on record.</td></tr>
             ) : plans.map(p => {
-              const cfg = statusConfig[p.status] ?? { label: p.status, classes: 'bg-slate-100 text-slate-700' };
+              const cfg = statusConfig[p.status] ?? { label: p.status, classes: 'bg-slate-100 text-foreground/80' };
               return (
                 <tr key={p.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-white font-medium">{p.patientInitials}</td>
                   <td className="px-4 py-3 text-slate-300">{p.admitDate.toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-slate-400">{p.unit ?? '—'}</td>
-                  <td className="px-4 py-3 text-slate-400">{p.primaryDx ?? '—'}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70">{p.unit ?? '—'}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70">{p.primaryDx ?? '—'}</td>
                   <td className="px-4 py-3 text-slate-300">{p.planCreatedDate?.toLocaleDateString() ?? '—'}</td>
                   <td className="px-4 py-3 text-slate-300">{p.estimatedLos ? `${p.estimatedLos}d` : '—'}</td>
                   <td className="px-4 py-3"><span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cfg.classes}`}>{cfg.label}</span></td>

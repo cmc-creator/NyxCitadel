@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -64,7 +64,7 @@ export default async function DrillAARPage({
       <div className="flex items-center justify-between print:hidden">
         <Link
           href={`/emergency/drills/${drill.id}`}
-          className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-indigo-600"
+          className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600"
         >
           <ChevronLeft className="w-4 h-4" /> Back to Drill
         </Link>
@@ -72,17 +72,17 @@ export default async function DrillAARPage({
       </div>
 
       {/* ─── PRINTABLE REPORT ─────────────────────────────── */}
-      <div className="bg-white border border-slate-200 rounded-xl p-8 space-y-8 print:border-0 print:shadow-none print:p-0">
+      <div className="bg-card border border-border rounded-xl p-8 space-y-8 print:border-0 print:shadow-none print:p-0">
 
         {/* Cover */}
         <div className="border-b border-slate-200 pb-6">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Shield className="w-6 h-6 text-indigo-600" />
-                <span className="text-xs font-semibold text-indigo-600 uppercase tracking-widest">NyxCitadel</span>
+                <Shield className="w-6 h-6 text-teal-600" />
+                <span className="text-xs font-semibold text-teal-600 uppercase tracking-widest">NyxCitadel</span>
               </div>
-              <h1 className="text-2xl font-bold text-slate-900">After-Action Report (AAR)</h1>
+              <h1 className="text-2xl font-bold text-foreground">After-Action Report (AAR)</h1>
               <p className="text-slate-600 mt-1">{drill.drillName}</p>
               <p className="text-sm text-slate-500 mt-0.5">{drill.drillType.replace(/_/g, ' ')} - {facility?.name ?? ''}, {facility?.city}, {facility?.state}</p>
             </div>
@@ -90,7 +90,7 @@ export default async function DrillAARPage({
               <p>Report Generated: {formatDate(generatedDate)}</p>
               <p>Drill Date: {formatDate(drill.conductedDate ?? drill.scheduledDate)}</p>
               {drill.observer && <p>Observer: {drill.observer}</p>}
-              <p className="text-xs text-slate-400">CONFIDENTIAL - FOR INTERNAL QI USE</p>
+              <p className="text-xs text-muted-foreground/70">CONFIDENTIAL - FOR INTERNAL QI USE</p>
             </div>
           </div>
         </div>
@@ -126,13 +126,13 @@ export default async function DrillAARPage({
             {drill.objectives && (
               <div className="mb-3">
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Objectives</p>
-                <p className="text-sm text-slate-700 whitespace-pre-wrap">{drill.objectives}</p>
+                <p className="text-sm text-foreground/80 whitespace-pre-wrap">{drill.objectives}</p>
               </div>
             )}
             {drill.scenario && (
               <div>
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Scenario Description</p>
-                <p className="text-sm text-slate-700 whitespace-pre-wrap">{drill.scenario}</p>
+                <p className="text-sm text-foreground/80 whitespace-pre-wrap">{drill.scenario}</p>
               </div>
             )}
           </Section>
@@ -141,7 +141,7 @@ export default async function DrillAARPage({
         {/* Full Timeline */}
         <Section title="Drill Timeline">
           {drill.drillActions.length === 0 ? (
-            <p className="text-sm text-slate-400">No actions were logged during this drill.</p>
+            <p className="text-sm text-muted-foreground/70">No actions were logged during this drill.</p>
           ) : (
             <table className="min-w-full text-sm border-collapse">
               <thead>
@@ -155,13 +155,13 @@ export default async function DrillAARPage({
               </thead>
               <tbody>
                 {drill.drillActions.map((a) => (
-                  <tr key={a.id} className={`border-b border-slate-100 ${a.issueFlag ? 'bg-red-50' : ''}`}>
+                  <tr key={a.id} className={`border-b border-slate-100 ${a.issueFlag ? 'bg-red-950/20' : ''}`}>
                     <td className="py-2 text-slate-500 text-xs">
                       {new Date(a.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                     </td>
-                    <td className="py-2 text-slate-700 text-xs">{a.actor}</td>
+                    <td className="py-2 text-foreground/80 text-xs">{a.actor}</td>
                     <td className="py-2 text-slate-600 text-xs">{a.actionType.replace(/_/g, ' ')}</td>
-                    <td className="py-2 text-slate-800">
+                    <td className="py-2 text-foreground">
                       {a.description}
                       {a.outcomeNotes && <span className="block text-xs text-slate-500 italic">{a.outcomeNotes}</span>}
                     </td>
@@ -184,14 +184,14 @@ export default async function DrillAARPage({
           ) : (
             <ol className="space-y-3">
               {issues.map((issue, i) => (
-                <li key={issue.id} className="border border-red-200 bg-red-50 rounded-lg p-3">
+                <li key={issue.id} className="border border-red-200 bg-red-950/20 rounded-lg p-3">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-xs font-bold text-red-700">Issue #{i + 1}</span>
                     <span className="text-xs text-slate-500">
                       {new Date(issue.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} - {issue.actor}
                     </span>
                   </div>
-                  <p className="text-sm text-slate-800 font-medium">{issue.description}</p>
+                  <p className="text-sm text-foreground font-medium">{issue.description}</p>
                   {issue.outcomeNotes && (
                     <p className="text-xs text-slate-600 mt-1">Note: {issue.outcomeNotes}</p>
                   )}
@@ -205,16 +205,16 @@ export default async function DrillAARPage({
         <div className="grid md:grid-cols-2 gap-6">
           <Section title="Strengths Observed">
             {drill.strengths ? (
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{drill.strengths}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{drill.strengths}</p>
             ) : (
-              <p className="text-sm text-slate-400 italic">No strengths recorded. Edit this drill to add observations.</p>
+              <p className="text-sm text-muted-foreground/70 italic">No strengths recorded. Edit this drill to add observations.</p>
             )}
           </Section>
           <Section title="Areas for Improvement">
             {drill.improvements ? (
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{drill.improvements}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{drill.improvements}</p>
             ) : (
-              <p className="text-sm text-slate-400 italic">No improvements recorded. Edit this drill to add observations.</p>
+              <p className="text-sm text-muted-foreground/70 italic">No improvements recorded. Edit this drill to add observations.</p>
             )}
           </Section>
         </div>
@@ -228,7 +228,7 @@ export default async function DrillAARPage({
               <p className="text-sm text-slate-600 mb-3">
                 The following items require a Corrective Action Plan (CAP) based on issues identified:
               </p>
-              <ol className="list-decimal list-inside space-y-2 text-sm text-slate-700">
+              <ol className="list-decimal list-inside space-y-2 text-sm text-foreground/80">
                 {issues.map((issue, i) => (
                   <li key={issue.id}>
                     <span className="font-medium">Issue #{i + 1}:</span> {issue.description}
@@ -240,7 +240,7 @@ export default async function DrillAARPage({
               </ol>
               <Link
                 href="/trackers/caps/new"
-                className="mt-3 inline-flex items-center gap-1 text-xs text-indigo-600 hover:underline print:hidden"
+                className="mt-3 inline-flex items-center gap-1 text-xs text-teal-600 hover:underline print:hidden"
               >
                 → Create CAP in NyxCitadel
               </Link>
@@ -267,7 +267,7 @@ export default async function DrillAARPage({
         </Section>
 
         {/* Footer */}
-        <div className="border-t border-slate-100 pt-4 text-xs text-slate-400 flex items-center justify-between">
+        <div className="border-t border-slate-100 pt-4 text-xs text-muted-foreground/70 flex items-center justify-between">
           <span>Generated by NyxCitadel · {facility?.name}</span>
           <span>JC EM.03.01.03 / EC.02.02.01 · {formatDate(generatedDate)}</span>
         </div>
@@ -279,7 +279,7 @@ export default async function DrillAARPage({
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-1 mb-3">
+      <h2 className="text-sm font-bold text-foreground/80 uppercase tracking-wide border-b border-slate-200 pb-1 mb-3">
         {title}
       </h2>
       {children}
@@ -297,8 +297,8 @@ function SummaryBox({
   highlight?: boolean;
 }) {
   return (
-    <div className={`rounded-lg border p-3 ${highlight ? 'bg-orange-50 border-orange-200' : 'bg-slate-50 border-slate-200'}`}>
-      <p className={`text-lg font-bold ${highlight ? 'text-orange-700' : 'text-slate-800'}`}>{value}</p>
+    <div className={`rounded-lg border p-3 ${highlight ? 'bg-orange-950/20 border-orange-200' : 'bg-slate-50 border-slate-200'}`}>
+      <p className={`text-lg font-bold ${highlight ? 'text-orange-700' : 'text-foreground'}`}>{value}</p>
       <p className="text-xs text-slate-500 mt-0.5">{label}</p>
     </div>
   );

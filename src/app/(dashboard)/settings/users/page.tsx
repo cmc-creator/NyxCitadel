@@ -31,13 +31,13 @@ const ROLES = [
 
 const ROLE_COLORS: Record<string, string> = {
   SUPER_ADMIN:       'bg-red-100    text-red-800',
-  ADMIN:             'bg-purple-100 text-purple-800',
+  ADMIN:             'bg-teal-100 text-teal-800',
   COMPLIANCE_OFFICER:'bg-blue-100   text-blue-800',
   RISK_MANAGER:      'bg-orange-100 text-orange-800',
   EM_COORDINATOR:    'bg-teal-100   text-teal-800',
   QUALITY:           'bg-green-100  text-green-800',
   EDUCATION:         'bg-yellow-100 text-yellow-800',
-  STAFF:             'bg-slate-100  text-slate-700',
+  STAFF:             'bg-slate-100  text-foreground/80',
   READ_ONLY:         'bg-gray-100   text-gray-600',
 };
 
@@ -127,15 +127,15 @@ export default function UsersSettingsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <Users className="w-6 h-6 text-purple-600" />
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <Users className="w-6 h-6 text-teal-600" />
             User Management
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">Manage staff accounts and role-based access for your facility.</p>
         </div>
         <button
           onClick={openNew}
-          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
+          className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
         >
           <Plus className="w-4 h-4" />
           Add User
@@ -144,7 +144,7 @@ export default function UsersSettingsPage() {
 
       {/* Flash */}
       {flash && (
-        <div className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium ${flash.type === 'ok' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+        <div className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium ${flash.type === 'ok' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-950/20 text-red-800 border border-red-200'}`}>
           {flash.type === 'ok' ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
           {flash.msg}
           <button onClick={() => setFlash(null)} className="ml-auto"><X className="w-4 h-4" /></button>
@@ -152,24 +152,24 @@ export default function UsersSettingsPage() {
       )}
 
       {error && (
-        <div className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm bg-red-50 text-red-800 border border-red-200">
+        <div className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm bg-red-950/20 text-red-800 border border-red-200">
           <AlertCircle className="w-4 h-4" />{error}
         </div>
       )}
 
       {/* Add / Edit Form */}
       {showForm && (
-        <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-          <h2 className="text-base font-semibold text-slate-900 mb-4">{editUser ? `Edit ${editUser.name ?? editUser.email}` : 'Add New User'}</h2>
+        <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
+          <h2 className="text-base font-semibold text-foreground mb-4">{editUser ? `Edit ${editUser.name ?? editUser.email}` : 'Add New User'}</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Full Name</label>
-              <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Jane Smith" />
+              <label className="block text-xs font-medium text-foreground/80 mb-1">Full Name</label>
+              <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Jane Smith" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Email <span className="text-red-500">*</span></label>
+              <label className="block text-xs font-medium text-foreground/80 mb-1">Email <span className="text-red-500">*</span></label>
               <input
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                 type="email"
@@ -177,61 +177,61 @@ export default function UsersSettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">
+              <label className="block text-xs font-medium text-foreground/80 mb-1">
                 {editUser ? 'New Password (leave blank to keep current)' : 'Password *'}
               </label>
               <div className="relative">
                 <input
-                  className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 pr-10"
+                  className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 pr-10"
                   type={showPw ? 'text' : 'password'}
                   value={form.password}
                   onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
                   placeholder="••••••••"
                 />
-                <button type="button" onClick={() => setShowPw(v => !v)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700">
+                <button type="button" onClick={() => setShowPw(v => !v)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground/70 hover:text-foreground/80">
                   {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Role *</label>
-              <select className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))}>
+              <label className="block text-xs font-medium text-foreground/80 mb-1">Role *</label>
+              <select className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))}>
                 {ROLES.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Job Title</label>
-              <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Compliance Officer" />
+              <label className="block text-xs font-medium text-foreground/80 mb-1">Job Title</label>
+              <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Compliance Officer" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Department</label>
-              <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.department} onChange={e => setForm(f => ({ ...f, department: e.target.value }))} placeholder="Risk Management" />
+              <label className="block text-xs font-medium text-foreground/80 mb-1">Department</label>
+              <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.department} onChange={e => setForm(f => ({ ...f, department: e.target.value }))} placeholder="Risk Management" />
             </div>
           </div>
           <div className="flex gap-3 mt-5">
             <button
               onClick={save}
               disabled={saving}
-              className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-semibold px-5 py-2 rounded-lg transition"
+              className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-semibold px-5 py-2 rounded-lg transition"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
               {editUser ? 'Save Changes' : 'Create User'}
             </button>
-            <button onClick={() => setShowForm(false)} className="px-5 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg hover:bg-slate-50 transition">Cancel</button>
+            <button onClick={() => setShowForm(false)} className="px-5 py-2 text-sm font-medium text-slate-600 hover:text-foreground border border-slate-300 rounded-lg hover:bg-slate-50 transition">Cancel</button>
           </div>
         </div>
       )}
 
       {/* Active Users Table */}
       {loading ? (
-        <div className="flex items-center gap-2 text-slate-400 text-sm py-6">
+        <div className="flex items-center gap-2 text-muted-foreground/70 text-sm py-6">
           <Loader2 className="w-4 h-4 animate-spin" /> Loading users…
         </div>
       ) : (
         <>
           <section>
-            <h2 className="text-sm font-semibold text-slate-700 mb-3">Active Staff ({active.length})</h2>
-            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+            <h2 className="text-sm font-semibold text-foreground/80 mb-3">Active Staff ({active.length})</h2>
+            <div className="bg-card border border-border rounded-xl overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-slate-100">
@@ -245,17 +245,17 @@ export default function UsersSettingsPage() {
                 </thead>
                 <tbody className="divide-y divide-slate-50">
                   {active.length === 0 && (
-                    <tr><td colSpan={6} className="text-center text-slate-400 text-sm py-6">No active users.</td></tr>
+                    <tr><td colSpan={6} className="text-center text-muted-foreground/70 text-sm py-6">No active users.</td></tr>
                   )}
                   {active.map(u => (
                     <tr key={u.id} className="hover:bg-slate-50 transition">
                       <td className="px-4 py-3">
-                        <p className="font-medium text-slate-900">{u.name ?? '-'}</p>
-                        <p className="text-xs text-slate-400">{u.email}</p>
+                        <p className="font-medium text-foreground">{u.name ?? '-'}</p>
+                        <p className="text-xs text-muted-foreground/70">{u.email}</p>
                         {u.title && <p className="text-xs text-slate-500 mt-0.5">{u.title}</p>}
                       </td>
                       <td className="px-4 py-3">
-                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ROLE_COLORS[u.role] ?? 'bg-slate-100 text-slate-700'}`}>
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ROLE_COLORS[u.role] ?? 'bg-slate-100 text-foreground/80'}`}>
                           {ROLES.find(r => r.value === u.role)?.label ?? u.role}
                         </span>
                       </td>
@@ -264,7 +264,7 @@ export default function UsersSettingsPage() {
                       <td className="px-4 py-3 text-xs text-slate-500">{fmtDate(u.createdAt)}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-1">
-                          <button onClick={() => openEdit(u)} className="p-1.5 rounded hover:bg-slate-200 text-slate-500 hover:text-purple-700 transition" title="Edit">
+                          <button onClick={() => openEdit(u)} className="p-1.5 rounded hover:bg-slate-200 text-slate-500 hover:text-teal-700 transition" title="Edit">
                             <PencilLine className="w-3.5 h-3.5" />
                           </button>
                           <button onClick={() => void toggleActive(u)} className="p-1.5 rounded hover:bg-red-100 text-slate-500 hover:text-red-700 transition" title="Deactivate">
@@ -282,13 +282,13 @@ export default function UsersSettingsPage() {
           {inactive.length > 0 && (
             <section>
               <h2 className="text-sm font-semibold text-slate-500 mb-3">Inactive / Deactivated ({inactive.length})</h2>
-              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden opacity-70">
+              <div className="bg-card border border-border rounded-xl overflow-hidden opacity-70">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-slate-100">
-                      <th className="text-left text-xs font-semibold text-slate-400 px-4 py-3 w-1/3">Name / Email</th>
-                      <th className="text-left text-xs font-semibold text-slate-400 px-4 py-3">Role</th>
-                      <th className="text-left text-xs font-semibold text-slate-400 px-4 py-3">Department</th>
+                      <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3 w-1/3">Name / Email</th>
+                      <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">Role</th>
+                      <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">Department</th>
                       <th className="px-4 py-3 w-20" />
                     </tr>
                   </thead>
@@ -297,16 +297,16 @@ export default function UsersSettingsPage() {
                       <tr key={u.id} className="hover:bg-slate-50">
                         <td className="px-4 py-3">
                           <p className="font-medium text-slate-500">{u.name ?? '-'}</p>
-                          <p className="text-xs text-slate-400">{u.email}</p>
+                          <p className="text-xs text-muted-foreground/70">{u.email}</p>
                         </td>
                         <td className="px-4 py-3">
                           <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">
                             {ROLES.find(r => r.value === u.role)?.label ?? u.role}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-xs text-slate-400">{u.department ?? '-'}</td>
+                        <td className="px-4 py-3 text-xs text-muted-foreground/70">{u.department ?? '-'}</td>
                         <td className="px-4 py-3">
-                          <button onClick={() => void toggleActive(u)} className="p-1.5 rounded hover:bg-green-100 text-slate-400 hover:text-green-700 transition" title="Reactivate">
+                          <button onClick={() => void toggleActive(u)} className="p-1.5 rounded hover:bg-green-100 text-muted-foreground/70 hover:text-green-700 transition" title="Reactivate">
                             <ShieldCheck className="w-3.5 h-3.5" />
                           </button>
                         </td>

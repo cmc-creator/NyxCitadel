@@ -26,7 +26,7 @@ export default async function EmployeeHealthPage() {
             <HeartHandshake className="w-5 h-5 text-emerald-400" />
             <h1 className="text-xl font-bold text-white">Employee Health</h1>
           </div>
-          <p className="text-slate-400 text-sm">TB screening, flu vaccination status, and occupational exposure tracking.</p>
+          <p className="text-muted-foreground/70 text-sm">TB screening, flu vaccination status, and occupational exposure tracking.</p>
         </div>
         <a href="/workforce-health/employee-health/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Add Record
@@ -38,10 +38,10 @@ export default async function EmployeeHealthPage() {
           { label: 'Total Records', value: records.length, color: 'text-blue-400' },
           { label: 'TB Screening Overdue', value: tbOverdue, color: tbOverdue > 0 ? 'text-red-400' : 'text-emerald-400' },
           { label: 'Flu Vax Given', value: fluVaxGiven, color: 'text-emerald-400' },
-          { label: 'Flu Vax Declined', value: fluDeclined, color: fluDeclined > 0 ? 'text-amber-400' : 'text-slate-400' },
+          { label: 'Flu Vax Declined', value: fluDeclined, color: fluDeclined > 0 ? 'text-amber-400' : 'text-muted-foreground/70' },
         ].map(s => (
           <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
-            <p className="text-xs text-slate-400 mb-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mb-1">{s.label}</p>
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
           </div>
         ))}
@@ -57,7 +57,7 @@ export default async function EmployeeHealthPage() {
       <div className="rounded-xl border border-white/10 bg-slate-800/50 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-white/10 text-slate-400 text-xs">
+            <tr className="border-b border-white/10 text-muted-foreground/70 text-xs">
               <th className="text-left px-4 py-3">Employee</th>
               <th className="text-left px-4 py-3">Department</th>
               <th className="text-left px-4 py-3">TB Screen Date</th>
@@ -74,9 +74,9 @@ export default async function EmployeeHealthPage() {
               return (
                 <tr key={r.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-white font-medium">{r.employeeName}</td>
-                  <td className="px-4 py-3 text-slate-400">{r.department ?? '-'}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70">{r.department ?? '-'}</td>
                   <td className="px-4 py-3 text-slate-300">{r.tbScreenDate?.toLocaleDateString() ?? '-'}</td>
-                  <td className="px-4 py-3 text-slate-400">{r.tbResult ?? '-'}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70">{r.tbResult ?? '-'}</td>
                   <td className={`px-4 py-3 ${tbPast ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{r.tbNextDueDate?.toLocaleDateString() ?? '-'}</td>
                   <td className="px-4 py-3">
                     {r.fluVaxDeclined

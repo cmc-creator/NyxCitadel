@@ -17,7 +17,7 @@ const RATING_COLOR: Record<string, string> = {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -28,8 +28,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -52,28 +52,28 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/credentialing/oppe" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/credentialing/oppe" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to OPPE Records
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/credentialing/oppe/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/credentialing/oppe/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <BarChart3 className="w-5 h-5 text-indigo-600" />
-              <span className="text-xs text-slate-400 font-mono">{oppe.reviewCycle}</span>
+              <BarChart3 className="w-5 h-5 text-teal-600" />
+              <span className="text-xs text-muted-foreground/70 font-mono">{oppe.reviewCycle}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${RATING_COLOR[oppe.overallRating] ?? 'bg-slate-100 text-slate-600'}`}>
                 {oppe.overallRating.replace(/_/g, ' ')}
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">
+            <h1 className="text-xl font-bold text-foreground">
               OPPE - {oppe.provider.firstName} {oppe.provider.lastName}, {oppe.provider.credentials}
             </h1>
             <p className="text-sm text-slate-500 mt-1">
@@ -101,11 +101,11 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
                   <tbody>
                     {metrics.map((m, i) => (
                       <tr key={i} className="border-b border-slate-50">
-                        <td className="py-2 text-slate-700 font-medium">{m.metric}</td>
+                        <td className="py-2 text-foreground/80 font-medium">{m.metric}</td>
                         <td className="py-2 text-right text-slate-600">{m.numerator}</td>
                         <td className="py-2 text-right text-slate-600">{m.denominator}</td>
                         <td className="py-2 text-right text-slate-600">{m.rate?.toFixed(1)}%</td>
-                        <td className="py-2 text-right text-slate-400">{m.benchmark != null ? `${m.benchmark}%` : '-'}</td>
+                        <td className="py-2 text-right text-muted-foreground/70">{m.benchmark != null ? `${m.benchmark}%` : '-'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -116,7 +116,7 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
 
           {oppe.notes && (
             <Section title="Notes">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{oppe.notes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{oppe.notes}</p>
             </Section>
           )}
         </div>
@@ -127,17 +127,17 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
               <Field label="Review Cycle" value={oppe.reviewCycle} />
               <Field label="Period" value={`${formatDate(oppe.periodStart)} – ${formatDate(oppe.periodEnd)}`} />
               <div>
-                <dt className="text-xs text-slate-400">Total Cases</dt>
-                <dd className="text-sm font-medium text-slate-800 mt-0.5">{oppe.totalCases}</dd>
+                <dt className="text-xs text-muted-foreground/70">Total Cases</dt>
+                <dd className="text-sm font-medium text-foreground mt-0.5">{oppe.totalCases}</dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-400">Compliant Cases</dt>
-                <dd className="text-sm font-medium text-slate-800 mt-0.5">{oppe.compliantCases}</dd>
+                <dt className="text-xs text-muted-foreground/70">Compliant Cases</dt>
+                <dd className="text-sm font-medium text-foreground mt-0.5">{oppe.compliantCases}</dd>
               </div>
               <Field label="Overall Rating" value={oppe.overallRating.replace(/_/g, ' ')} />
               {oppe.reviewedBy && <Field label="Reviewed By" value={oppe.reviewedBy} />}
               <div>
-                <dt className="text-xs text-slate-400">MEC Approved</dt>
+                <dt className="text-xs text-muted-foreground/70">MEC Approved</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${oppe.approvedByMec ? 'text-green-600' : 'text-slate-500'}`}>
                   {oppe.approvedByMec ? 'Yes' : 'Pending'}
                 </dd>
@@ -146,7 +146,7 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
           </Section>
 
           <Section title="Provider">
-            <Link href={`/credentialing/providers/${oppe.provider.id}`} className="text-sm text-indigo-600 hover:underline">
+            <Link href={`/credentialing/providers/${oppe.provider.id}`} className="text-sm text-teal-600 hover:underline">
               {oppe.provider.firstName} {oppe.provider.lastName}, {oppe.provider.credentials} →
             </Link>
           </Section>

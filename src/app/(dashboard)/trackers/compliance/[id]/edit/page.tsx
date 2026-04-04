@@ -73,7 +73,7 @@ export default function EditComplianceItemPage() {
       });
   }, [id]);
 
-  if (loading) return <div className="text-slate-400 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
   if (!data) return <div className="text-red-400 p-8">{error || 'Record not found.'}</div>;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -120,21 +120,21 @@ export default function EditComplianceItemPage() {
         <a href={`/trackers/compliance/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ShieldCheck className="w-6 h-6 text-purple-600" />
           Edit Compliance Item
         </h1>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <form key={data.id} onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form key={data.id} onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
 
         {/* Core Info */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Compliance Requirement</h2>
+          <h2 className="text-sm font-semibold text-foreground">Compliance Requirement</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Title *</label>
             <input name="title" required defaultValue={data.title} className="form-input w-full" />
@@ -166,7 +166,7 @@ export default function EditComplianceItemPage() {
 
         {/* Schedule */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Schedule &amp; Status</h2>
+          <h2 className="text-sm font-semibold text-foreground">Schedule &amp; Status</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Frequency *</label>
@@ -198,7 +198,7 @@ export default function EditComplianceItemPage() {
 
         {/* Ownership */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Ownership &amp; Flags</h2>
+          <h2 className="text-sm font-semibold text-foreground">Ownership &amp; Flags</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Responsible Role</label>
             <select name="responsibleRole" defaultValue={data.responsibleRole ?? ''} className="form-input w-full">
@@ -215,16 +215,16 @@ export default function EditComplianceItemPage() {
               onChange={e => setIsRequired(e.target.checked)}
               className="accent-purple-600"
             />
-            <label htmlFor="isRequired" className="text-sm text-slate-700">This is a mandatory compliance requirement</label>
+            <label htmlFor="isRequired" className="text-sm text-foreground/80">This is a mandatory compliance requirement</label>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes <span className="font-normal text-slate-400">(optional)</span></label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Notes <span className="font-normal text-muted-foreground/70">(optional)</span></label>
             <textarea name="notes" rows={2} defaultValue={data.notes ?? ''} className="form-input w-full resize-none" />
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/trackers/compliance/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
+          <a href={`/trackers/compliance/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

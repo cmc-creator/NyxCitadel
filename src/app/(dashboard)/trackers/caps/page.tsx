@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
 import { ClipboardList, Plus, AlertTriangle, Download } from 'lucide-react';
@@ -49,9 +49,9 @@ export default async function CapsPage({
   };
 
   const sourceColor: Record<string, string> = {
-    SURVEY_FINDING: 'bg-red-50 text-red-700',
-    INCIDENT: 'bg-orange-50 text-orange-700',
-    INTERNAL_AUDIT: 'bg-blue-50 text-blue-700',
+    SURVEY_FINDING: 'bg-red-950/20 text-red-700',
+    INCIDENT: 'bg-orange-950/20 text-orange-700',
+    INTERNAL_AUDIT: 'bg-blue-950/20 text-blue-700',
     COMPLAINT: 'bg-yellow-50 text-yellow-700',
     SENTINEL_EVENT: 'bg-red-100 text-red-900',
     DEFAULT: 'bg-slate-50 text-slate-600',
@@ -61,8 +61,8 @@ export default async function CapsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <ClipboardList className="w-6 h-6 text-purple-600" />
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <ClipboardList className="w-6 h-6 text-teal-600" />
             Corrective Action Plans
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -72,7 +72,7 @@ export default async function CapsPage({
         <div className="flex items-center gap-2">
           <Link
             href="/api/export/caps"
-            className="inline-flex items-center gap-1.5 text-sm bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm bg-card border border-border hover:bg-slate-50 text-foreground/80 px-3 py-1.5 rounded-lg font-medium transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
             Export CSV
@@ -80,7 +80,7 @@ export default async function CapsPage({
           <PrintButton />
           <Link
             href="/trackers/caps/new"
-            className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             New CAP
@@ -90,7 +90,7 @@ export default async function CapsPage({
 
       {/* Archive year banner */}
       {year && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
+        <div className="bg-amber-950/20 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
           <p className="text-sm text-amber-800">
             <strong>{year} Archive View</strong> - showing CAPs created within {year}.
           </p>
@@ -99,7 +99,7 @@ export default async function CapsPage({
       )}
 
       {overdueCount > 0 && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg p-3">
+        <div className="flex items-center gap-2 bg-red-950/20 border border-red-200 rounded-lg p-3">
           <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0" />
           <p className="text-sm text-red-800">
             <span className="font-bold">{overdueCount} corrective action plans</span> are past their target completion date.
@@ -120,8 +120,8 @@ export default async function CapsPage({
             href={tab.href}
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
               tab.active
-                ? 'bg-purple-600 text-white'
-                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                ? 'bg-teal-600 text-white'
+                : 'bg-card border border-border text-slate-600 hover:bg-slate-50'
             }`}
           >
             {tab.label}
@@ -132,11 +132,11 @@ export default async function CapsPage({
       {/* Cards grid for CAPs */}
       <div className="grid gap-4">
         {caps.length === 0 ? (
-          <div className="bg-white rounded-xl border border-slate-200 p-12 text-center text-slate-400">
+          <div className="bg-card rounded-xl border border-border p-12 text-center text-muted-foreground/70">
             <ClipboardList className="w-12 h-12 mx-auto mb-3 text-slate-200" />
             <p className="font-medium">No corrective action plans found.</p>
             <p className="text-sm mt-1">
-              <Link href="/trackers/caps/new" className="text-purple-600 hover:underline">
+              <Link href="/trackers/caps/new" className="text-teal-600 hover:underline">
                 Create your first CAP
               </Link>
             </p>
@@ -149,7 +149,7 @@ export default async function CapsPage({
               <Link
                 key={cap.id}
                 href={`/trackers/caps/${cap.id}`}
-                className="block bg-white rounded-xl border border-slate-200 p-5 hover:shadow-md hover:border-purple-300 transition-all"
+                className="block bg-card rounded-xl border border-border p-5 hover:shadow-md hover:border-teal-300 transition-all"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
@@ -168,9 +168,9 @@ export default async function CapsPage({
                         </span>
                       )}
                     </div>
-                    <h3 className="font-semibold text-slate-900">{cap.title}</h3>
+                    <h3 className="font-semibold text-foreground">{cap.title}</h3>
                     <p className="text-sm text-slate-500 mt-1 line-clamp-2">{cap.description}</p>
-                    <div className="flex items-center gap-4 mt-2 text-xs text-slate-400">
+                    <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground/70">
                       <span>Assignee: {cap.assignee?.name ?? cap.assignee?.email ?? 'Unassigned'}</span>
                       {cap.sourceRef && <span>Ref: {cap.sourceRef}</span>}
                     </div>
@@ -192,7 +192,7 @@ export default async function CapsPage({
                 {cap.correctionPlan && (
                   <div className="mt-3 pt-3 border-t border-slate-100">
                     <p className="text-xs font-medium text-slate-500 mb-1">Correction Plan:</p>
-                    <p className="text-sm text-slate-700 line-clamp-2">{cap.correctionPlan}</p>
+                    <p className="text-sm text-foreground/80 line-clamp-2">{cap.correctionPlan}</p>
                   </div>
                 )}
               </Link>

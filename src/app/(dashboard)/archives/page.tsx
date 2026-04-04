@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
@@ -171,7 +171,7 @@ export default async function ArchivesPage({
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <Archive className="w-6 h-6 text-slate-400" />
+            <Archive className="w-6 h-6 text-muted-foreground/70" />
             Compliance Archive
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -182,7 +182,7 @@ export default async function ArchivesPage({
           <a
             href={`/archives?year=${year}`}
             onClick={(e) => { e.preventDefault(); window.print(); }}
-            className="inline-flex items-center gap-1.5 text-sm text-slate-400 border border-border bg-card hover:bg-white/5 px-3 py-1.5 rounded-lg transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground/70 border border-border bg-card hover:bg-white/5 px-3 py-1.5 rounded-lg transition-colors"
           >
             <Printer className="w-3.5 h-3.5" /> Print / Export
           </a>
@@ -198,7 +198,7 @@ export default async function ArchivesPage({
             className={`text-sm font-semibold px-4 py-1.5 rounded-lg border transition-colors ${
               y === year
                 ? 'bg-slate-700 text-white border-slate-700'
-                : 'bg-card text-slate-400 border-border hover:bg-white/5'
+                : 'bg-card text-muted-foreground/70 border-border hover:bg-white/5'
             }`}
           >
             {y}
@@ -273,7 +273,7 @@ export default async function ArchivesPage({
         <DomainCard
           title="QOC / LOI Complaints"
           icon={Scale}
-          color="purple"
+          color="teal"
           status={qocSign}
           href={`/trackers/qoc?year=${year}`}
           rows={[
@@ -362,7 +362,7 @@ export default async function ArchivesPage({
         <DomainCard
           title="QAPI Metrics"
           icon={Activity}
-          color="purple"
+          color="teal"
           status={qapiSign}
           href={`/quality/metrics?year=${year}`}
           rows={[
@@ -427,11 +427,11 @@ function DomainCard({
   const colorMap: Record<string, string> = {
     red:    'text-red-400 bg-red-950/40',
     orange: 'text-orange-400 bg-orange-950/40',
-    purple: 'text-purple-400 bg-purple-950/40',
+    purple: 'text-teal-400 bg-teal-950/40',
     blue:   'text-blue-400 bg-blue-950/40',
     indigo: 'text-indigo-400 bg-indigo-950/40',
     teal:   'text-teal-400 bg-teal-950/40',
-    slate:  'text-slate-400 bg-slate-800/50',
+    slate:  'text-muted-foreground/70 bg-slate-800/50',
     amber:  'text-amber-400 bg-amber-950/40',
     green:  'text-green-400 bg-green-950/40',
     yellow: 'text-yellow-400 bg-yellow-950/40',
@@ -466,7 +466,7 @@ function DomainCard({
         {note && <p className="text-xs text-slate-500 leading-snug">{note}</p>}
         <Link
           href={href}
-          className="text-xs text-purple-400 hover:text-purple-300 font-medium whitespace-nowrap shrink-0 ml-auto"
+          className="text-xs text-teal-400 hover:text-teal-300 font-medium whitespace-nowrap shrink-0 ml-auto"
         >
           View records →
         </Link>

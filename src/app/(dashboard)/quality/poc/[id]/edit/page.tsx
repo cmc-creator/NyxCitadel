@@ -103,7 +103,7 @@ export default function EditPocPage() {
     }
   }
 
-  if (loading) return <div className="text-slate-400 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
   if (!data || data.error) return <div className="text-red-400 p-8">{error || 'Not found.'}</div>;
 
   return (
@@ -112,24 +112,24 @@ export default function EditPocPage() {
         <a href={`/quality/poc/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to POC
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ClipboardCheck className="w-6 h-6 text-blue-600" />
           Edit Plan of Correction
         </h1>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
       <form key={data.id} onSubmit={handleSubmit} className="space-y-5">
         {/* POC Overview */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">POC Overview</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">POC Overview</h2>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Title *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Title *</label>
               <input
                 name="title"
                 required
@@ -139,7 +139,7 @@ export default function EditPocPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Regulatory Body *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Regulatory Body *</label>
               <select
                 name="regulatoryBody"
                 required
@@ -154,7 +154,7 @@ export default function EditPocPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Survey Date</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Survey Date</label>
               <input
                 name="surveyDate"
                 type="date"
@@ -164,7 +164,7 @@ export default function EditPocPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Response Deadline</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Response Deadline</label>
               <input
                 name="responseDeadline"
                 type="date"
@@ -174,7 +174,7 @@ export default function EditPocPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Prepared By</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Prepared By</label>
               <input
                 name="submittedBy"
                 defaultValue={data.submittedBy ?? ''}
@@ -184,7 +184,7 @@ export default function EditPocPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Cover Letter</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Cover Letter</label>
             <textarea
               name="coverLetter"
               rows={4}
@@ -197,7 +197,7 @@ export default function EditPocPage() {
         {/* Findings */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">
+            <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">
               Deficiency Findings ({findings.length})
             </h2>
             <button
@@ -210,9 +210,9 @@ export default function EditPocPage() {
           </div>
 
           {findings.map((finding, idx) => (
-            <div key={finding.id} className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
+            <div key={finding.id} className="bg-card rounded-xl border border-border p-6 space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-slate-700 text-sm">Finding #{idx + 1}</h3>
+                <h3 className="font-semibold text-foreground/80 text-sm">Finding #{idx + 1}</h3>
                 {findings.length > 1 && (
                   <button
                     type="button"
@@ -304,8 +304,8 @@ export default function EditPocPage() {
         </div>
 
         {/* Notes */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <label className="block text-sm font-medium text-slate-700 mb-1">Internal Notes</label>
+        <div className="bg-card rounded-xl border border-border p-6">
+          <label className="block text-sm font-medium text-foreground/80 mb-1">Internal Notes</label>
           <textarea
             name="notes"
             rows={2}
@@ -324,7 +324,7 @@ export default function EditPocPage() {
           </button>
           <a
             href={`/quality/poc/${id}`}
-            className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors"
           >
             Cancel
           </a>

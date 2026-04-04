@@ -34,7 +34,7 @@ export default function DeleteAttachmentButton({ id }: { id: string }) {
         <span className="text-slate-300">|</span>
         <button
           onClick={() => setConfirming(false)}
-          className="text-[11px] text-slate-400 hover:text-slate-600"
+          className="text-[11px] text-muted-foreground/70 hover:text-slate-600"
         >
           Cancel
         </button>

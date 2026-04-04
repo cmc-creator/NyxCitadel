@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { scoreToGrade5, incidentScore, capScore, grievanceScore, grade12ToScore } from '@/lib/grading';
@@ -147,18 +147,18 @@ export default async function ResilienceScorecardPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <Shield className="w-6 h-6 text-indigo-600" />
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <Shield className="w-6 h-6 text-teal-600" />
             Resilience Scorecard
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Facility-wide compliance health - training gaps cascade into emergency readiness risk flags.
           </p>
         </div>
         <div className="text-right">
-          <span className="text-xs text-slate-400">Rolling 60-day snapshot · {facility?.name}</span>
+          <span className="text-xs text-muted-foreground/70">Rolling 60-day snapshot · {facility?.name}</span>
           {drillAvgScore != null && (
-            <p className="text-xs text-slate-400 mt-0.5">Drill avg: <strong className="text-slate-600">{drillAvgScore}/100</strong> ({recentDrills.length} scored)</p>
+            <p className="text-xs text-muted-foreground/70 mt-0.5">Drill avg: <strong className="text-muted-foreground">{drillAvgScore}/100</strong> ({recentDrills.length} scored)</p>
           )}
         </div>
       </div>
@@ -169,7 +169,7 @@ export default async function ResilienceScorecardPage() {
           <div className={`text-6xl font-black ${facilityGrade.color}`}>{facilityGrade.label}</div>
           <div>
             <p className={`text-xl font-bold ${facilityGrade.color}`}>Facility Resilience Score: {facilityScore}/100</p>
-            <p className="text-sm text-slate-600 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Training {facilityTrainingPct}% · Incidents (60d): {recentIR.length} · Open CAPs: {openCaps} · Open Grievances: {openGrievances}
             </p>
           </div>
@@ -199,7 +199,7 @@ export default async function ResilienceScorecardPage() {
 
       {/* Cascading Risk Banner */}
       {cascadeDepts.length > 0 && (
-        <div className="rounded-lg bg-red-50 border border-red-200 p-4">
+        <div className="rounded-lg bg-red-950/20 border border-red-200 p-4">
           <div className="flex items-start gap-3">
             <ShieldAlert className="w-5 h-5 text-red-600 mt-0.5 shrink-0" />
             <div>
@@ -241,7 +241,7 @@ export default async function ResilienceScorecardPage() {
           trend={recentIR.length === 0 ? 'good' : recentIR.length <= 3 ? 'warn' : 'bad'}
         />
         <MetricCard
-          icon={<ClipboardList className="w-5 h-5 text-purple-600" />}
+          icon={<ClipboardList className="w-5 h-5 text-teal-600" />}
           label="Open CAPs"
           value={String(openCaps)}
           sub="corrective action plans"
@@ -257,19 +257,19 @@ export default async function ResilienceScorecardPage() {
       </div>
 
       {/* Department Table */}
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-        <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h2 className="font-semibold text-slate-800 flex items-center gap-2">
-            <Activity className="w-4 h-4 text-indigo-500" />
+      <div className="bg-card border border-border rounded-xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-border/50 flex items-center justify-between">
+          <h2 className="font-semibold text-foreground flex items-center gap-2">
+            <Activity className="w-4 h-4 text-teal-500" />
             Department Health Breakdown
           </h2>
-          <Link href="/trackers/training" className="text-xs text-indigo-600 hover:underline">
+          <Link href="/trackers/training" className="text-xs text-teal-600 hover:underline">
             View training records →
           </Link>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
-            <thead className="bg-slate-50 text-xs text-slate-500 uppercase tracking-wide">
+            <thead className="bg-muted/30 text-xs text-muted-foreground uppercase tracking-wide">
               <tr>
                 <th className="px-5 py-3 text-left font-medium">Department</th>
                 <th className="px-4 py-3 text-center font-medium">Grade</th>
@@ -279,17 +279,17 @@ export default async function ResilienceScorecardPage() {
                 <th className="px-4 py-3 text-left font-medium">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border/30">
               {departments.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-5 py-8 text-center text-slate-400 text-sm">
+                  <td colSpan={6} className="px-5 py-8 text-center text-muted-foreground/70 text-sm">
                     No training records found. Add training data to generate department scores.
                   </td>
                 </tr>
               ) : (
                 departments.map((d) => (
-                  <tr key={d.dept} className={d.emergencyRisk ? 'bg-red-50' : ''}>
-                    <td className="px-5 py-3 font-medium text-slate-800">
+                  <tr key={d.dept} className={d.emergencyRisk ? 'bg-red-950/20' : ''}>
+                    <td className="px-5 py-3 font-medium text-foreground">
                       {d.dept}
                       {d.emergencyRisk && (
                         <span className="ml-2 text-xs text-red-600 font-normal">(emergency risk)</span>
@@ -300,20 +300,20 @@ export default async function ResilienceScorecardPage() {
                     </td>
                     <td className="px-4 py-3 text-center">
                       <div className="flex items-center justify-center gap-2">
-                        <div className="w-20 bg-slate-100 rounded-full h-2">
+                        <div className="w-20 bg-muted/50 rounded-full h-2">
                           <div
                             className={`h-2 rounded-full ${d.deptScore >= 80 ? 'bg-emerald-500' : d.deptScore >= 65 ? 'bg-yellow-500' : 'bg-red-500'}`}
                             style={{ width: `${d.deptScore}%` }}
                           />
                         </div>
-                        <span className="text-xs text-slate-500 w-8">{d.deptScore}</span>
+                        <span className="text-xs text-muted-foreground w-8">{d.deptScore}</span>
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center">
                       <span className={`font-semibold ${d.trainingPct >= 80 ? 'text-emerald-700' : d.trainingPct >= 65 ? 'text-yellow-700' : 'text-red-700'}`}>
                         {d.trainingPct}%
                       </span>
-                      <span className="text-xs text-slate-400 ml-1">({d.completed}/{d.total})</span>
+                      <span className="text-xs text-muted-foreground/70 ml-1">({d.completed}/{d.total})</span>
                     </td>
                     <td className="px-4 py-3 text-center">
                       <span className={`font-semibold ${d.irCount === 0 ? 'text-emerald-700' : d.irCount <= 2 ? 'text-yellow-700' : 'text-red-700'}`}>
@@ -366,7 +366,7 @@ function MetricCard({
   sub: string;
   trend: 'good' | 'warn' | 'bad';
 }) {
-  const bg = trend === 'good' ? 'bg-emerald-50' : trend === 'warn' ? 'bg-yellow-50' : 'bg-red-50';
+  const bg = trend === 'good' ? 'bg-emerald-950/20' : trend === 'warn' ? 'bg-yellow-50' : 'bg-red-950/20';
   const val = trend === 'good' ? 'text-emerald-700' : trend === 'warn' ? 'text-yellow-700' : 'text-red-700';
   const TrendIcon = trend === 'good' ? TrendingUp : trend === 'bad' ? TrendingDown : TrendingUp;
 
@@ -377,8 +377,8 @@ function MetricCard({
         <TrendIcon className={`w-4 h-4 ${val}`} />
       </div>
       <p className={`text-2xl font-bold ${val}`}>{value}</p>
-      <p className="text-xs font-medium text-slate-700 mt-0.5">{label}</p>
-      <p className="text-xs text-slate-500 mt-0.5">{sub}</p>
+      <p className="text-xs font-medium text-foreground/80 mt-0.5">{label}</p>
+      <p className="text-xs text-muted-foreground mt-0.5">{sub}</p>
     </div>
   );
 }
@@ -387,8 +387,8 @@ function QuickLink({ href, label, color }: { href: string; label: string; color:
   const colors: Record<string, string> = {
     blue:   'bg-blue-600 hover:bg-blue-700',
     orange: 'bg-orange-600 hover:bg-orange-700',
-    purple: 'bg-purple-600 hover:bg-purple-700',
-    indigo: 'bg-indigo-600 hover:bg-indigo-700',
+    purple: 'bg-teal-600 hover:bg-teal-700',
+    indigo: 'bg-teal-600 hover:bg-indigo-700',
     red:    'bg-red-600 hover:bg-red-700',
   };
   return (

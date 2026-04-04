@@ -61,7 +61,7 @@ export default function EditGrievancePage() {
       });
   }, [id]);
 
-  if (loading) return <div className="text-slate-400 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
   if (!data) return <div className="text-red-400 p-8">{error || 'Record not found.'}</div>;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -108,24 +108,24 @@ export default function EditGrievancePage() {
         <a href={`/trackers/grievances/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <MessageSquareWarning className="w-6 h-6 text-orange-500" />
           Edit Patient Grievance
         </h1>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
       <form key={data.id} onSubmit={handleSubmit} className="space-y-5">
         {/* Grievance details */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Grievance Details</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Grievance Details</h2>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Date Received *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Date Received *</label>
               <input
                 name="dateReceived"
                 type="date"
@@ -136,7 +136,7 @@ export default function EditGrievancePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Severity *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Severity *</label>
               <select
                 name="severity"
                 required
@@ -150,7 +150,7 @@ export default function EditGrievancePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Category *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Category *</label>
               <select
                 name="category"
                 required
@@ -165,7 +165,7 @@ export default function EditGrievancePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Assigned To</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Assigned To</label>
               <input
                 name="assignedTo"
                 defaultValue={data.assignedTo ?? ''}
@@ -175,7 +175,7 @@ export default function EditGrievancePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Grievance Summary *</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Grievance Summary *</label>
             <textarea
               name="summary"
               required
@@ -187,12 +187,12 @@ export default function EditGrievancePage() {
         </div>
 
         {/* Complainant info */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Complainant Information</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Complainant Information</h2>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Complainant Name *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Complainant Name *</label>
               <input
                 name="complainantName"
                 required
@@ -202,7 +202,7 @@ export default function EditGrievancePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Complainant Type *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Complainant Type *</label>
               <select
                 name="complainantType"
                 required
@@ -217,7 +217,7 @@ export default function EditGrievancePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Phone</label>
               <input
                 name="complainantPhone"
                 type="tel"
@@ -227,7 +227,7 @@ export default function EditGrievancePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Email</label>
               <input
                 name="complainantEmail"
                 type="email"
@@ -239,12 +239,12 @@ export default function EditGrievancePage() {
         </div>
 
         {/* Patient info */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Patient Information (if applicable)</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Patient Information (if applicable)</h2>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Patient Name</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Patient Name</label>
               <input
                 name="patientName"
                 defaultValue={data.patientName ?? ''}
@@ -253,7 +253,7 @@ export default function EditGrievancePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">MRN</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">MRN</label>
               <input
                 name="patientMRN"
                 defaultValue={data.patientMRN ?? ''}
@@ -264,8 +264,8 @@ export default function EditGrievancePage() {
         </div>
 
         {/* Regulatory */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Regulatory</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Regulatory</h2>
 
           <label className="flex items-center gap-3 cursor-pointer">
             <input
@@ -274,13 +274,13 @@ export default function EditGrievancePage() {
               onChange={e => setReportableToAdhs(e.target.checked)}
               className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
             />
-            <span className="text-sm text-slate-700">
+            <span className="text-sm text-foreground/80">
               Reportable to AZ ADHS (R9-10-211 adverse event or patient rights violation)
             </span>
           </label>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Internal Notes</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Internal Notes</label>
             <textarea
               name="notes"
               rows={2}
@@ -294,7 +294,7 @@ export default function EditGrievancePage() {
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>
-          <a href={`/trackers/grievances/${id}`} className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+          <a href={`/trackers/grievances/${id}`} className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors">
             Cancel
           </a>
         </div>

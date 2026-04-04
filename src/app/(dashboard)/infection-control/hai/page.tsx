@@ -38,9 +38,9 @@ export default async function HaiPage() {
           <div className="flex items-center gap-3 mb-1">
             <Activity className="w-5 h-5 text-teal-400" />
             <h1 className="text-xl font-bold text-white">HAI Surveillance</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">NHSN Reportable</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700">NHSN Reportable</span>
           </div>
-          <p className="text-slate-400 text-sm">Monthly healthcare-associated infection rates tracked against NHSN national benchmarks.</p>
+          <p className="text-muted-foreground/70 text-sm">Monthly healthcare-associated infection rates tracked against NHSN national benchmarks.</p>
         </div>
         <a href="/infection-control/hai/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Enter Monthly Data
@@ -69,10 +69,10 @@ export default async function HaiPage() {
                 </div>
                 <p className="text-xs text-slate-500 mb-3">{m.reportMonth}/{m.reportYear}</p>
                 <div className="space-y-1.5">
-                  <div className="flex justify-between text-xs"><span className="text-slate-400">Cases</span><span className="font-semibold text-white">{m.caseCount}</span></div>
-                  <div className="flex justify-between text-xs"><span className="text-slate-400">Rate / 1000 pt-days</span><span className={`font-semibold ${above ? 'text-red-400' : 'text-emerald-400'}`}>{m.rate != null ? m.rate.toFixed(1) : '—'}</span></div>
-                  <div className="flex justify-between text-xs"><span className="text-slate-400">NHSN Benchmark</span><span className="text-slate-300">{m.nhsnBenchmark != null ? m.nhsnBenchmark.toFixed(1) : '—'}</span></div>
-                  <div className="flex justify-between text-xs"><span className="text-slate-400">SIR</span><span className={`font-bold ${m.sir && m.sir > 1 ? 'text-red-400' : 'text-emerald-400'}`}>{m.sir ? m.sir.toFixed(2) : '—'}</span></div>
+                  <div className="flex justify-between text-xs"><span className="text-muted-foreground/70">Cases</span><span className="font-semibold text-white">{m.caseCount}</span></div>
+                  <div className="flex justify-between text-xs"><span className="text-muted-foreground/70">Rate / 1000 pt-days</span><span className={`font-semibold ${above ? 'text-red-400' : 'text-emerald-400'}`}>{m.rate != null ? m.rate.toFixed(1) : '—'}</span></div>
+                  <div className="flex justify-between text-xs"><span className="text-muted-foreground/70">NHSN Benchmark</span><span className="text-slate-300">{m.nhsnBenchmark != null ? m.nhsnBenchmark.toFixed(1) : '—'}</span></div>
+                  <div className="flex justify-between text-xs"><span className="text-muted-foreground/70">SIR</span><span className={`font-bold ${m.sir && m.sir > 1 ? 'text-red-400' : 'text-emerald-400'}`}>{m.sir ? m.sir.toFixed(2) : '—'}</span></div>
                 </div>
               </div>
             );
@@ -93,9 +93,9 @@ export default async function HaiPage() {
           <table className="w-full text-sm">
             <thead className="bg-slate-900/40">
               <tr>
-                <th className="text-left text-xs font-semibold text-slate-400 px-4 py-2.5">Month</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-2.5">Month</th>
                 {Array.from(new Set(records.map(r => r.haiType))).map(t => (
-                  <th key={t} className="text-left text-xs font-semibold text-slate-400 px-4 py-2.5">{t.replace(/_/g, ' ')}</th>
+                  <th key={t} className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-2.5">{t.replace(/_/g, ' ')}</th>
                 ))}
               </tr>
             </thead>

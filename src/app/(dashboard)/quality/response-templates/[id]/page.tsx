@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -30,7 +30,7 @@ const CATEGORY_STYLES: Record<string, string> = {
   CAP_COMPLETION_NOTICE:            'bg-emerald-100 text-emerald-800',
   INCIDENT_FAMILY_NOTIFICATION:     'bg-yellow-100 text-yellow-800',
   REGULATORY_INQUIRY_RESPONSE:      'bg-indigo-100 text-indigo-800',
-  COMPLAINT_ACKNOWLEDGMENT:         'bg-slate-100 text-slate-700',
+  COMPLAINT_ACKNOWLEDGMENT:         'bg-slate-100 text-foreground/80',
 };
 
 export default async function ResponseTemplateDetailPage({ params }: { params: { id: string } }) {
@@ -52,7 +52,7 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
       {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <FileText className="w-6 h-6 text-purple-600" />
             {template.name}
           </h1>
@@ -61,10 +61,10 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
           )}
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
-          <Link href={`/quality/response-templates/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/quality/response-templates/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <span className={`text-xs font-medium px-3 py-1 rounded-full ${CATEGORY_STYLES[template.category] ?? 'bg-slate-100 text-slate-700'}`}>
+          <span className={`text-xs font-medium px-3 py-1 rounded-full ${CATEGORY_STYLES[template.category] ?? 'bg-slate-100 text-foreground/80'}`}>
             {template.category.replace(/_/g, ' ')}
           </span>
           {!template.isActive && (
@@ -76,52 +76,52 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left */}
         <div className="lg:col-span-1 space-y-4">
-          <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
-            <h2 className="text-sm font-semibold text-slate-800">Details</h2>
+          <div className="bg-card rounded-xl border border-border p-5 space-y-3">
+            <h2 className="text-sm font-semibold text-foreground">Details</h2>
             <dl className="space-y-3">
               {template.regulatoryRef && (
                 <div>
                   <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Regulatory Reference</dt>
-                  <dd className="text-sm font-mono text-slate-800">{template.regulatoryRef}</dd>
+                  <dd className="text-sm font-mono text-foreground">{template.regulatoryRef}</dd>
                 </div>
               )}
               {template.daysRequired && (
                 <div>
                   <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Response Deadline</dt>
-                  <dd className="text-sm text-slate-900 flex items-center gap-1">
+                  <dd className="text-sm text-foreground flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5 text-orange-500" /> {template.daysRequired} days
                   </dd>
                 </div>
               )}
               <div>
                 <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Times Used</dt>
-                <dd className="text-sm text-slate-900">{template._count.responses} responses</dd>
+                <dd className="text-sm text-foreground">{template._count.responses} responses</dd>
               </div>
               <div>
                 <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">System Default</dt>
                 <dd className="text-sm">{template.isDefault
                   ? <span className="text-emerald-700 flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5" /> Yes</span>
-                  : <span className="text-slate-400">No (custom)</span>}
+                  : <span className="text-muted-foreground/70">No (custom)</span>}
                 </dd>
               </div>
             </dl>
           </div>
 
           {template.variables.length > 0 && (
-            <div className="bg-white rounded-xl border border-slate-200 p-5">
-              <h2 className="text-sm font-semibold text-slate-800 flex items-center gap-2 mb-3">
-                <Code className="w-4 h-4 text-slate-400" /> Template Variables
+            <div className="bg-card rounded-xl border border-border p-5">
+              <h2 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
+                <Code className="w-4 h-4 text-muted-foreground/70" /> Template Variables
               </h2>
               <div className="flex flex-wrap gap-2">
                 {(template.variables as string[]).map((v) => (
-                  <code key={v} className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded font-mono">{v}</code>
+                  <code key={v} className="text-xs bg-slate-100 text-foreground/80 px-2 py-1 rounded font-mono">{v}</code>
                 ))}
               </div>
             </div>
           )}
 
           {template.instructions && (
-            <div className="bg-amber-50 rounded-xl border border-amber-200 p-5">
+            <div className="bg-amber-950/20 rounded-xl border border-amber-200 p-5">
               <h2 className="text-sm font-semibold text-amber-800 mb-2">Usage Instructions</h2>
               <p className="text-xs text-amber-700 whitespace-pre-wrap leading-relaxed">{template.instructions}</p>
             </div>
@@ -138,20 +138,20 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
         {/* Right: Body */}
         <div className="lg:col-span-2 space-y-4">
           {template.subject && (
-            <div className="bg-white rounded-xl border border-slate-200 p-5">
+            <div className="bg-card rounded-xl border border-border p-5">
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Default Subject</p>
-              <p className="text-base font-semibold text-slate-900">{template.subject}</p>
+              <p className="text-base font-semibold text-foreground">{template.subject}</p>
             </div>
           )}
 
-          <div className="bg-white rounded-xl border border-slate-200 p-5">
-            <h3 className="text-sm font-semibold text-slate-800 mb-4">Template Body</h3>
-            <pre className="text-sm text-slate-700 whitespace-pre-wrap leading-relaxed font-mono bg-slate-50 rounded-lg p-4 overflow-x-auto">
+          <div className="bg-card rounded-xl border border-border p-5">
+            <h3 className="text-sm font-semibold text-foreground mb-4">Template Body</h3>
+            <pre className="text-sm text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono bg-slate-50 rounded-lg p-4 overflow-x-auto">
               {template.bodyTemplate}
             </pre>
           </div>
 
-          <div className="bg-slate-50 rounded-xl border border-slate-200 px-5 py-3 flex items-center justify-between text-xs text-slate-500">
+          <div className="bg-slate-50 rounded-xl border border-border px-5 py-3 flex items-center justify-between text-xs text-slate-500">
             <span>Created {formatDate(template.createdAt)}</span>
             <span>Last updated {formatDate(template.updatedAt)}</span>
           </div>

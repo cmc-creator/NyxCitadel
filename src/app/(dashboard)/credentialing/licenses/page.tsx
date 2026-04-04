@@ -36,9 +36,9 @@ export default async function LicensesPage() {
             <h1 className="text-xl font-bold text-white">License Tracker</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
           </div>
-          <p className="text-slate-400 text-sm">Medical licenses, APRN licenses, and DEA registrations � expiry tracking with automated alerts.</p>
+          <p className="text-muted-foreground/70 text-sm">Medical licenses, APRN licenses, and DEA registrations � expiry tracking with automated alerts.</p>
         </div>
-        <a href="/credentialing/licenses/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
+        <a href="/credentialing/licenses/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Add License
         </a>
       </div>
@@ -61,7 +61,7 @@ export default async function LicensesPage() {
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4 text-center">
             <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
-            <p className="text-xs text-slate-400 mt-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mt-1">{s.label}</p>
           </div>
         ))}
       </div>
@@ -71,7 +71,7 @@ export default async function LicensesPage() {
           <thead className="bg-slate-900/40 border-b border-white/10">
             <tr>
               {['Provider', 'License Type', 'License #', 'State', 'Expiry', 'Days', 'Status'].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-slate-400 px-3 py-3">{h}</th>
+                <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-3 py-3">{h}</th>
               ))}
             </tr>
           </thead>
@@ -85,10 +85,10 @@ export default async function LicensesPage() {
               return (
                 <tr key={l.id} className={`hover:bg-white/5 transition-colors ${isExpired ? 'bg-red-500/5' : isSoon ? 'bg-amber-500/5' : ''}`}>
                   <td className="px-3 py-3 font-semibold text-white text-xs">{l.provider.lastName}, {l.provider.firstName}</td>
-                  <td className="px-3 py-3 text-slate-400 text-xs">{l.licenseType}</td>
+                  <td className="px-3 py-3 text-muted-foreground/70 text-xs">{l.licenseType}</td>
                   <td className="px-3 py-3 text-slate-500 text-xs font-mono">{l.licenseNumber}</td>
-                  <td className="px-3 py-3 text-slate-400 text-xs">{l.state}</td>
-                  <td className="px-3 py-3 text-slate-400 text-xs">{l.expiryDate.toLocaleDateString()}</td>
+                  <td className="px-3 py-3 text-muted-foreground/70 text-xs">{l.state}</td>
+                  <td className="px-3 py-3 text-muted-foreground/70 text-xs">{l.expiryDate.toLocaleDateString()}</td>
                   <td className={`px-3 py-3 text-xs font-bold ${isExpired ? 'text-red-400' : isSoon ? 'text-amber-400' : 'text-slate-500'}`}>
                     {isExpired ? `${Math.abs(daysLeft)}d overdue` : `${daysLeft}d`}
                   </td>

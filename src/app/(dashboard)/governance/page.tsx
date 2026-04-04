@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { Building2, ChevronRight, Users, FileText, CheckCircle, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -23,26 +23,26 @@ export default async function GovernancePage() {
   const overallCompliant = overdueDocuments === 0;
 
   const subModules = [
-    { href: '/governance/committees', icon: Users, label: 'Committee Meetings', desc: 'Track quorum, minutes, and action items', color: 'text-violet-400' },
+    { href: '/governance/committees', icon: Users, label: 'Committee Meetings', desc: 'Track quorum, minutes, and action items', color: 'text-teal-400' },
     { href: '/governance/documents', icon: FileText, label: 'Governance Documents', desc: 'Bylaws, policies, charters, and approvals', color: 'text-blue-400' },
   ];
 
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center gap-3 mb-2">
-        <Building2 className="w-5 h-5 text-violet-400" />
+        <Building2 className="w-5 h-5 text-teal-400" />
         <h1 className="text-xl font-bold text-white">Governance</h1>
       </div>
 
       <div className="grid grid-cols-4 gap-4">
         {[
-          { label: 'Committee Meetings YTD', value: committeeMeetings, color: 'text-violet-400' },
+          { label: 'Committee Meetings YTD', value: committeeMeetings, color: 'text-teal-400' },
           { label: 'Upcoming Meetings (30d)', value: upcomingMeetings, color: 'text-blue-400' },
           { label: 'Documents Overdue Review', value: overdueDocuments, color: overdueDocuments > 0 ? 'text-red-400' : 'text-emerald-400' },
           { label: 'Expiring Soon (90d)', value: expiringSoonDocs, color: expiringSoonDocs > 0 ? 'text-amber-400' : 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
-            <p className="text-xs text-slate-400 mb-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mb-1">{s.label}</p>
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
           </div>
         ))}
@@ -61,7 +61,7 @@ export default async function GovernancePage() {
               <m.icon className={`w-5 h-5 ${m.color}`} />
               <div>
                 <p className="font-semibold text-white">{m.label}</p>
-                <p className="text-xs text-slate-400">{m.desc}</p>
+                <p className="text-xs text-muted-foreground/70">{m.desc}</p>
               </div>
             </div>
             <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />

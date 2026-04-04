@@ -60,7 +60,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="absolute top-4 right-4 z-10 rounded-lg p-2 text-slate-400 hover:text-white hover:bg-white/5 transition"
+          className="absolute top-4 right-4 z-10 rounded-lg p-2 text-muted-foreground/70 hover:text-white hover:bg-white/5 transition"
           aria-label="Close welcome"
         >
           <X className="w-4 h-4" />
@@ -68,7 +68,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
 
         <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
           <div className="p-8 lg:p-10 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.22),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.18),transparent_36%)]">
-            <div className="inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-purple-400/10 px-3 py-1.5 text-xs font-semibold text-purple-200 mb-5">
+            <div className="inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-400/10 px-3 py-1.5 text-xs font-semibold text-teal-200 mb-5">
               <PartyPopper className="w-3.5 h-3.5" />
               Welcome to NyxCitadel
             </div>
@@ -87,7 +87,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
                 <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-5 h-5 text-purple-200" />
+                      <Icon className="w-5 h-5 text-teal-200" />
                     </div>
                     <div>
                       <p className="font-semibold text-white">{title}</p>
@@ -99,7 +99,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
             </div>
           </div>
 
-          <div className="p-8 lg:p-10 bg-white text-slate-900">
+          <div className="p-8 lg:p-10 bg-white text-foreground">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4">What To Open First</p>
             <div className="space-y-3 mb-8">
               {[
@@ -109,9 +109,9 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
                 'Regulatory Updates for external changes',
                 'Sentry 🤖 for drafting and guidance',
               ].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3">
-                  <span className="w-2 h-2 rounded-full bg-purple-500" />
-                  <span className="text-sm font-medium text-slate-700">{item}</span>
+                <div key={item} className="flex items-center gap-3 rounded-xl border border-border px-4 py-3">
+                  <span className="w-2 h-2 rounded-full bg-teal-500" />
+                  <span className="text-sm font-medium text-foreground/80">{item}</span>
                 </div>
               ))}
             </div>
@@ -120,7 +120,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
               <Link
                 href="/walkthrough"
                 onClick={() => setOpen(false)}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-purple-600 hover:bg-purple-500 px-4 py-3 text-sm font-semibold text-white transition"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 px-4 py-3 text-sm font-semibold text-white transition"
               >
                 <PlayCircle className="w-4 h-4" />
                 Start Show-and-Tell Walkthrough
@@ -128,7 +128,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
               <Link
                 href="/guide"
                 onClick={() => setOpen(false)}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 hover:border-slate-300 px-4 py-3 text-sm font-semibold text-slate-800 transition"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-border hover:border-slate-300 px-4 py-3 text-sm font-semibold text-foreground transition"
               >
                 <BookOpen className="w-4 h-4" />
                 Open User Guide
@@ -136,7 +136,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-xl px-4 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition"
+                className="rounded-xl px-4 py-3 text-sm font-medium text-slate-500 hover:text-foreground/80 transition"
               >
                 Go straight to the dashboard
               </button>

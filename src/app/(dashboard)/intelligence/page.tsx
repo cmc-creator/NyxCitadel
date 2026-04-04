@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
@@ -46,9 +46,9 @@ export default async function IntelligencePage() {
   const stats = [
     { label: 'Open Incidents', value: openIncidents, icon: AlertTriangle, color: 'text-orange-400 bg-orange-950/40', href: '/trackers/incidents' },
     { label: 'Active CAPs', value: openCaps, icon: ClipboardList, color: 'text-blue-400 bg-blue-950/40', href: '/trackers/caps' },
-    { label: 'Overdue CAPs', value: overdueCaps, icon: AlertTriangle, color: overdueCaps > 0 ? 'text-red-400 bg-red-950/40' : 'text-slate-400 bg-slate-800/40', href: '/trackers/caps' },
-    { label: 'High/Critical Risks', value: criticalRisks, icon: Shield, color: criticalRisks > 0 ? 'text-red-400 bg-red-950/40' : 'text-slate-400 bg-slate-800/40', href: '/trackers/risk-assessments' },
-    { label: 'Open Grievances', value: openGrievances, icon: Activity, color: 'text-purple-400 bg-purple-950/40', href: '/trackers/grievances' },
+    { label: 'Overdue CAPs', value: overdueCaps, icon: AlertTriangle, color: overdueCaps > 0 ? 'text-red-400 bg-red-950/40' : 'text-muted-foreground/70 bg-slate-800/40', href: '/trackers/caps' },
+    { label: 'High/Critical Risks', value: criticalRisks, icon: Shield, color: criticalRisks > 0 ? 'text-red-400 bg-red-950/40' : 'text-muted-foreground/70 bg-slate-800/40', href: '/trackers/risk-assessments' },
+    { label: 'Open Grievances', value: openGrievances, icon: Activity, color: 'text-teal-400 bg-teal-950/40', href: '/trackers/grievances' },
     { label: 'Active QAPI Projects', value: activeProjects, icon: TrendingUp, color: 'text-teal-400 bg-teal-950/40', href: '/quality/projects' },
   ];
 
@@ -56,7 +56,7 @@ export default async function IntelligencePage() {
     CRITICAL: 'bg-red-950/40 text-red-400',
     HIGH: 'bg-orange-950/40 text-orange-400',
     MEDIUM: 'bg-amber-950/40 text-amber-400',
-    INFORMATIONAL: 'bg-slate-800/40 text-slate-400',
+    INFORMATIONAL: 'bg-slate-800/40 text-muted-foreground/70',
   };
 
   const views: { href: string; title: string; description: string; icon: React.ElementType; badge: string | null; badgeColor: string; color: string; iconBg: string }[] = [
@@ -67,8 +67,8 @@ export default async function IntelligencePage() {
       icon: Shield,
       badge: null,
       badgeColor: '',
-      color: 'border-purple-700/40 hover:border-purple-500',
-      iconBg: 'bg-purple-950/40 text-purple-400',
+      color: 'border-teal-700/40 hover:border-teal-500',
+      iconBg: 'bg-teal-950/40 text-teal-400',
     },
     {
       href: '/board-report',
@@ -86,9 +86,9 @@ export default async function IntelligencePage() {
       description: 'Admin-curated feed of regulatory changes, new CMS/JC/state guidance, and compliance mandates. Notifies all users instantly on publish.',
       icon: Newspaper,
       badge: 'LIVE',
-      badgeColor: 'bg-purple-950/40 text-purple-400',
-      color: 'border-purple-700/40 hover:border-purple-500',
-      iconBg: 'bg-purple-950/40 text-purple-400',
+      badgeColor: 'bg-teal-950/40 text-teal-400',
+      color: 'border-teal-700/40 hover:border-teal-500',
+      iconBg: 'bg-teal-950/40 text-teal-400',
     },
   ];
 
@@ -97,7 +97,7 @@ export default async function IntelligencePage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <BarChart2 className="w-6 h-6 text-purple-400" />
+          <BarChart2 className="w-6 h-6 text-teal-400" />
           Intelligence
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">
@@ -111,12 +111,12 @@ export default async function IntelligencePage() {
           <Link
             key={label}
             href={href}
-            className="bg-card border border-border rounded-xl px-4 py-3 hover:border-purple-500 transition-colors group"
+            className="bg-card border border-border rounded-xl px-4 py-3 hover:border-teal-500 transition-colors group"
           >
             <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-2 ${color}`}>
               <Icon className="w-4 h-4" />
             </div>
-            <p className="text-2xl font-bold text-foreground group-hover:text-purple-400 leading-none">
+            <p className="text-2xl font-bold text-foreground group-hover:text-teal-400 leading-none">
               {value}
             </p>
             <p className="text-xs text-slate-500 mt-1 leading-tight">{label}</p>
@@ -148,7 +148,7 @@ export default async function IntelligencePage() {
                 </div>
                 <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
               </div>
-              <span className="text-slate-600 group-hover:text-slate-400 mt-1 text-lg">→</span>
+              <span className="text-slate-600 group-hover:text-muted-foreground/70 mt-1 text-lg">→</span>
             </Link>
           ))}
         </div>
@@ -159,7 +159,7 @@ export default async function IntelligencePage() {
         <div>
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">Recent Regulatory Updates</h2>
-            <Link href="/regulatory-updates" className="text-xs text-purple-400 hover:text-purple-300 transition-colors">
+            <Link href="/regulatory-updates" className="text-xs text-teal-400 hover:text-teal-300 transition-colors">
               View all →
             </Link>
           </div>
@@ -168,12 +168,12 @@ export default async function IntelligencePage() {
               <Link
                 key={upd.id}
                 href={`/regulatory-updates/${upd.id}`}
-                className="flex items-center gap-3 bg-card border border-border rounded-xl px-4 py-3 hover:border-purple-500 transition-colors group"
+                className="flex items-center gap-3 bg-card border border-border rounded-xl px-4 py-3 hover:border-teal-500 transition-colors group"
               >
-                <span className={`text-xs font-semibold rounded-full px-2 py-0.5 flex-shrink-0 ${URGENCY_COLOR[upd.urgency] ?? 'bg-slate-800/40 text-slate-400'}`}>
+                <span className={`text-xs font-semibold rounded-full px-2 py-0.5 flex-shrink-0 ${URGENCY_COLOR[upd.urgency] ?? 'bg-slate-800/40 text-muted-foreground/70'}`}>
                   {upd.urgency}
                 </span>
-                <span className="text-sm text-foreground group-hover:text-purple-400 transition-colors truncate flex-1">{upd.title}</span>
+                <span className="text-sm text-foreground group-hover:text-teal-400 transition-colors truncate flex-1">{upd.title}</span>
                 <span className="text-xs text-slate-500 flex-shrink-0">{upd.regulatoryBody}</span>
               </Link>
             ))}

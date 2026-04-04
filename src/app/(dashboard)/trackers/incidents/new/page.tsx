@@ -53,10 +53,10 @@ export default function NewIncidentPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/incidents" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/trackers/incidents" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Incidents
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <AlertTriangle className="w-6 h-6 text-red-500" />
           File Incident Report
         </h1>
@@ -66,13 +66,13 @@ export default function NewIncidentPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         {/* Core info */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Incident Information</h2>
+          <h2 className="text-sm font-semibold text-foreground">Incident Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Incident Type *</label>
@@ -107,7 +107,7 @@ export default function NewIncidentPage() {
 
         {/* Narrative */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Narrative &amp; Actions</h2>
+          <h2 className="text-sm font-semibold text-foreground">Narrative &amp; Actions</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Description of Incident *</label>
             <textarea name="description" required rows={5} className="form-input w-full"
@@ -122,23 +122,23 @@ export default function NewIncidentPage() {
 
         {/* Reporting flags */}
         <div className="px-6 py-5 space-y-3">
-          <h2 className="text-sm font-semibold text-slate-800">Reporting Flags</h2>
-          <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
-            <input name="patientInvolved" type="checkbox" className="rounded border-slate-300 text-purple-600" />
+          <h2 className="text-sm font-semibold text-foreground">Reporting Flags</h2>
+          <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
+            <input name="patientInvolved" type="checkbox" className="rounded border-slate-300 text-teal-600" />
             Patient was involved in this incident
           </label>
-          <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
-            <input name="reportableToState" type="checkbox" className="rounded border-slate-300 text-purple-600" />
+          <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
+            <input name="reportableToState" type="checkbox" className="rounded border-slate-300 text-teal-600" />
             Requires AZ ADHS / Regulatory Reporting (Sentinel Event, Abuse, Unexpected Death)
           </label>
         </div>
 
         <div className="px-6 py-4 flex items-center justify-end gap-3">
-          <a href="/trackers/incidents" className="text-sm text-slate-500 hover:text-slate-700">Cancel</a>
+          <a href="/trackers/incidents" className="text-sm text-slate-500 hover:text-foreground/80">Cancel</a>
           <button
             type="submit"
             disabled={saving}
-            className="px-5 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors"
+            className="px-5 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 disabled:opacity-50 transition-colors"
           >
             {saving ? 'Saving…' : 'Submit Incident Report'}
           </button>

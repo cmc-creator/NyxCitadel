@@ -31,7 +31,7 @@ export default async function PdmpPage() {
             <Shield className="w-5 h-5 text-blue-400" />
             <h1 className="text-xl font-bold text-white">PDMP Check Log</h1>
           </div>
-          <p className="text-slate-400 text-sm">Prescription Drug Monitoring Program checks for controlled substance prescribers and patients.</p>
+          <p className="text-muted-foreground/70 text-sm">Prescription Drug Monitoring Program checks for controlled substance prescribers and patients.</p>
         </div>
         <a href="/pharmacy/pdmp/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New Check
@@ -45,7 +45,7 @@ export default async function PdmpPage() {
           { label: 'Open Concerns', value: openConcerns, color: 'text-red-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
-            <p className="text-xs text-slate-400 mb-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mb-1">{s.label}</p>
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
           </div>
         ))}
@@ -61,7 +61,7 @@ export default async function PdmpPage() {
       <div className="rounded-xl border border-white/10 bg-slate-800/50 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-white/10 text-slate-400 text-xs">
+            <tr className="border-b border-white/10 text-muted-foreground/70 text-xs">
               <th className="text-left px-4 py-3">Date</th>
               <th className="text-left px-4 py-3">Patient</th>
               <th className="text-left px-4 py-3">Prescriber ID</th>
@@ -82,8 +82,8 @@ export default async function PdmpPage() {
                 <tr key={c.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-slate-300">{c.checkDate.toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-slate-300">{c.patientInitials}</td>
-                  <td className="px-4 py-3 text-slate-400">{c.prescriberId}</td>
-                  <td className="px-4 py-3 text-slate-400">{c.prescriptionType ?? '---'}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70">{c.prescriberId}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70">{c.prescriptionType ?? '---'}</td>
                   <td className="px-4 py-3">
                     {c.significantFinding
                       ? <div className="flex items-center gap-1 text-amber-300"><AlertTriangle className="w-3.5 h-3.5" />Yes</div>

@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
 import { BookOpen, Plus, AlertTriangle } from 'lucide-react';
@@ -57,8 +57,8 @@ export default async function EmergencyPlansPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <BookOpen className="w-6 h-6 text-purple-600" />
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-teal-600" />
             Emergency Plans
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -67,7 +67,7 @@ export default async function EmergencyPlansPage() {
         </div>
         <Link
           href="/emergency/plans/new"
-          className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
         >
           <Plus className="w-3.5 h-3.5" />
           Add Plan
@@ -91,7 +91,7 @@ export default async function EmergencyPlansPage() {
       )}
 
       {overdueCount > 0 && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg p-3">
+        <div className="flex items-center gap-2 bg-red-950/20 border border-red-200 rounded-lg p-3">
           <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0" />
           <p className="text-sm text-red-800">
             <span className="font-bold">{overdueCount} plans</span> are past their annual review date.
@@ -100,7 +100,7 @@ export default async function EmergencyPlansPage() {
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
@@ -117,9 +117,9 @@ export default async function EmergencyPlansPage() {
           <tbody className="divide-y divide-slate-50">
             {plans.length === 0 ? (
               <tr>
-                <td colSpan={8} className="text-center py-12 text-slate-400">
+                <td colSpan={8} className="text-center py-12 text-muted-foreground/70">
                   No emergency plans found.{' '}
-                  <Link href="/emergency/plans/new" className="text-purple-600 hover:underline">
+                  <Link href="/emergency/plans/new" className="text-teal-600 hover:underline">
                     Add your first plan
                   </Link>
                 </td>
@@ -132,7 +132,7 @@ export default async function EmergencyPlansPage() {
                 return (
                   <tr key={plan.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
                     <td className="px-4 py-3">
-                      <Link href={`/emergency/plans/${plan.id}`} className="font-medium text-slate-800 hover:underline hover:text-purple-700">{plan.planName}</Link>
+                      <Link href={`/emergency/plans/${plan.id}`} className="font-medium text-foreground hover:underline hover:text-teal-700">{plan.planName}</Link>
                     </td>
                     <td className="px-4 py-3 text-xs text-slate-500">
                       {planTypeLabel[plan.planType] ?? plan.planType.replace(/_/g, ' ')}
@@ -168,12 +168,12 @@ export default async function EmergencyPlansPage() {
                           href={plan.documentUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-purple-600 hover:underline"
+                          className="text-teal-600 hover:underline"
                         >
                           View
                         </a>
                       ) : (
-                        <span className="text-slate-400">-</span>
+                        <span className="text-muted-foreground/70">-</span>
                       )}
                     </td>
                   </tr>

@@ -39,29 +39,29 @@ export default async function QocDetailPage({ params }: { params: { id: string }
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/qoc" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/trackers/qoc" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to QoC Complaints
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/qoc/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/qoc/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <ClipboardCheck className="w-5 h-5 text-purple-600" />
-              <span className="text-xs font-mono text-slate-400">{qoc.qocNumber}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">{qoc.qocNumber}</span>
               {qoc.cmsComplaintNumber && <span className="text-xs text-slate-500">CMS: {qoc.cmsComplaintNumber}</span>}
               <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2.5 py-0.5">
                 {qoc.complainantType.replace(/_/g, ' ')}
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900 line-clamp-2">{qoc.allegationSummary}</h1>
+            <h1 className="text-xl font-bold text-foreground line-clamp-2">{qoc.allegationSummary}</h1>
             <p className="text-sm text-slate-500 mt-1">Received: <strong>{formatDate(qoc.dateReceived)}</strong></p>
           </div>
           <StatusUpdater apiPath={`/api/qoc-complaints/${qoc.id}`} currentStatus={qoc.status} options={STATUS_OPTIONS} />
@@ -69,16 +69,16 @@ export default async function QocDetailPage({ params }: { params: { id: string }
       </div>
 
       {qoc.investigationType === 'IMMEDIATE_JEOPARDY' && (
-        <div className="bg-red-50 border border-red-300 rounded-xl p-4 flex items-start gap-3">
+        <div className="bg-red-950/20 border border-red-300 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
           <p className="text-sm text-red-800"><strong>Immediate Jeopardy Investigation</strong> &mdash; this complaint has been classified as an Immediate Jeopardy matter.</p>
         </div>
       )}
 
       {qoc.loiReceivedDate && qoc.responseDueDate && (
-        <div className={`rounded-xl border p-4 flex items-start justify-between gap-4 ${responseOverdue ? 'bg-red-50 border-red-200' : qoc.responseSubmittedDate ? 'bg-green-50 border-green-200' : 'bg-orange-50 border-orange-200'}`}>
+        <div className={`rounded-xl border p-4 flex items-start justify-between gap-4 ${responseOverdue ? 'bg-red-950/20 border-red-200' : qoc.responseSubmittedDate ? 'bg-green-50 border-green-200' : 'bg-orange-950/20 border-orange-200'}`}>
           <div>
-            <p className="text-sm font-semibold text-slate-800">LOI Response Deadline</p>
+            <p className="text-sm font-semibold text-foreground">LOI Response Deadline</p>
             <p className="text-xs text-slate-500 mt-0.5">LOI received {formatDate(qoc.loiReceivedDate)} &middot; 10 business days to respond</p>
           </div>
           {qoc.responseSubmittedDate ? (
@@ -95,11 +95,11 @@ export default async function QocDetailPage({ params }: { params: { id: string }
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-5">
           <Section title="Allegation Summary">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{qoc.allegationSummary}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{qoc.allegationSummary}</p>
             {allegations && allegations.length > 0 && (
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {allegations.map((a, i) => (
-                  <span key={i} className="text-xs bg-orange-50 text-orange-700 rounded px-2 py-0.5">{a}</span>
+                  <span key={i} className="text-xs bg-orange-950/20 text-orange-700 rounded px-2 py-0.5">{a}</span>
                 ))}
               </div>
             )}
@@ -107,7 +107,7 @@ export default async function QocDetailPage({ params }: { params: { id: string }
 
           {qoc.findingsSummary && (
             <Section title="Findings Summary">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{qoc.findingsSummary}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{qoc.findingsSummary}</p>
               {qoc.deficienciesFound !== null && (
                 <p className="mt-2 text-xs text-slate-500">Deficiencies found: <strong className={qoc.deficienciesFound ? 'text-red-600' : 'text-green-600'}>{qoc.deficienciesFound ? 'Yes' : 'No'}</strong></p>
               )}
@@ -118,7 +118,7 @@ export default async function QocDetailPage({ params }: { params: { id: string }
             <Section title="Citations Issued">
               <div className="space-y-2">
                 {citations.map((c, i) => (
-                  <div key={i} className="rounded-lg bg-red-50 border border-red-100 p-3">
+                  <div key={i} className="rounded-lg bg-red-950/20 border border-red-100 p-3">
                     <p className="text-xs font-bold text-red-700">{c.tag}</p>
                     {c.description && <p className="text-xs text-slate-600 mt-0.5">{c.description}</p>}
                     {c.poC && <p className="text-xs text-slate-500 mt-1">PoC: {c.poC}</p>}
@@ -130,7 +130,7 @@ export default async function QocDetailPage({ params }: { params: { id: string }
 
           {qoc.notes && (
             <Section title="Notes">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{qoc.notes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{qoc.notes}</p>
             </Section>
           )}
         </div>
@@ -164,8 +164,8 @@ export default async function QocDetailPage({ params }: { params: { id: string }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
-      <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">{title}</h3>
+    <div className="bg-card rounded-xl border border-border p-4">
+      <h3 className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide mb-3">{title}</h3>
       {children}
     </div>
   );
@@ -175,7 +175,7 @@ function Row({ label, value, highlight }: { label: string; value: string; highli
   return (
     <div className="flex justify-between gap-2">
       <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
-      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
+      <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { UserCheck, Award, FileCheck, AlertTriangle, ChevronRight, Clock } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -32,7 +32,7 @@ export default async function CredentialingPage() {
   const subModules = [
     { href: '/credentialing/providers', title: 'Provider Directory', description: 'All credentialed providers — status, specialty, privileges, and reappointment dates.', icon: '👩‍⚕️', badge: 'CVO', badgeColor: 'bg-blue-100 text-blue-700', stat: `${totalActive} Active Providers`, statColor: 'text-emerald-400' },
     { href: '/credentialing/licenses', title: 'License Tracking', description: 'Medical, DEA, APRN, and state licenses — expiry alerts, verification, and renewal workflow.', icon: '📜', badge: 'Auto-Alert', badgeColor: 'bg-amber-100 text-amber-700', stat: expiringLicenses.length > 0 ? `${expiringLicenses.length} Expiring <90 days` : 'All licenses current', statColor: expiringLicenses.length > 0 ? 'text-amber-400' : 'text-emerald-400' },
-    { href: '/credentialing/oppe', title: 'OPPE Records', description: 'Ongoing Professional Practice Evaluation — quarterly metrics per provider reviewed by MEC.', icon: '📊', badge: 'TJC MS.06', badgeColor: 'bg-purple-100 text-purple-700', stat: 'OPPE tracking', statColor: 'text-blue-400' },
+    { href: '/credentialing/oppe', title: 'OPPE Records', description: 'Ongoing Professional Practice Evaluation — quarterly metrics per provider reviewed by MEC.', icon: '📊', badge: 'TJC MS.06', badgeColor: 'bg-teal-100 text-teal-700', stat: 'OPPE tracking', statColor: 'text-blue-400' },
   ];
 
   const statusConfig: Record<string, { label: string; color: string }> = {
@@ -52,9 +52,9 @@ export default async function CredentialingPage() {
             <UserCheck className="w-6 h-6 text-indigo-400" />
             <h1 className="text-2xl font-bold text-white">Credentialing &amp; Privileging</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">CMS CoP</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700">CMS CoP</span>
           </div>
-          <p className="text-slate-400 text-sm">Provider licenses, clinical privileges, OPPE/FPPE, and medical staff committee records.</p>
+          <p className="text-muted-foreground/70 text-sm">Provider licenses, clinical privileges, OPPE/FPPE, and medical staff committee records.</p>
         </div>
       </div>
 
@@ -68,7 +68,7 @@ export default async function CredentialingPage() {
           <div key={i} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-2">
               <s.icon className={`w-4 h-4 ${s.color}`} />
-              <span className="text-xs text-slate-400">{s.label}</span>
+              <span className="text-xs text-muted-foreground/70">{s.label}</span>
             </div>
             <p className="text-2xl font-bold text-white">{s.value}</p>
           </div>
@@ -88,10 +88,10 @@ export default async function CredentialingPage() {
                 <div key={l.id} className="px-5 py-3 flex items-center justify-between">
                   <div>
                     <p className="text-sm font-semibold text-white">{l.provider.lastName}, {l.provider.firstName}</p>
-                    <p className="text-xs text-slate-400">{l.licenseType} — {l.licenseNumber}</p>
+                    <p className="text-xs text-muted-foreground/70">{l.licenseType} — {l.licenseNumber}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-slate-400">Expires {l.expiryDate.toLocaleDateString()}</p>
+                    <p className="text-xs text-muted-foreground/70">Expires {l.expiryDate.toLocaleDateString()}</p>
                     <span className={`text-xs font-bold ${daysLeft <= 30 ? 'text-red-400' : 'text-amber-400'}`}>{daysLeft} days</span>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ export default async function CredentialingPage() {
       <div className="grid md:grid-cols-3 gap-4">
         {subModules.map(m => (
           <Link key={m.href} href={m.href}
-            className="rounded-xl bg-slate-800/50 border border-white/10 p-5 hover:border-indigo-500/40 transition-all group">
+            className="rounded-xl bg-slate-800/50 border border-white/10 p-5 hover:border-teal-500/40 transition-all group">
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center gap-2">
                 <span className="text-2xl">{m.icon}</span>
@@ -115,7 +115,7 @@ export default async function CredentialingPage() {
               </div>
               <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-indigo-400 transition-colors" />
             </div>
-            <p className="text-xs text-slate-400 mb-3">{m.description}</p>
+            <p className="text-xs text-muted-foreground/70 mb-3">{m.description}</p>
             <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>
           </Link>
         ))}
@@ -132,7 +132,7 @@ export default async function CredentialingPage() {
           <thead className="bg-slate-900/40">
             <tr>
               {['Provider', 'Credentials', 'Specialty', 'Type', 'Reappointment', 'Status'].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-2.5">{h}</th>
+                <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-2.5">{h}</th>
               ))}
             </tr>
           </thead>
@@ -144,8 +144,8 @@ export default async function CredentialingPage() {
                 <td className="px-4 py-2.5 font-semibold text-white text-xs">{p.lastName}, {p.firstName}</td>
                 <td className="px-4 py-2.5 text-indigo-300 text-xs font-semibold">{p.credentials}</td>
                 <td className="px-4 py-2.5 text-slate-300 text-xs">{p.specialty}</td>
-                <td className="px-4 py-2.5 text-slate-400 text-xs">{p.providerType.replace(/_/g, ' ')}</td>
-                <td className="px-4 py-2.5 text-slate-400 text-xs">{p.reappointmentDate ? p.reappointmentDate.toLocaleDateString() : '—'}</td>
+                <td className="px-4 py-2.5 text-muted-foreground/70 text-xs">{p.providerType.replace(/_/g, ' ')}</td>
+                <td className="px-4 py-2.5 text-muted-foreground/70 text-xs">{p.reappointmentDate ? p.reappointmentDate.toLocaleDateString() : '—'}</td>
                 <td className="px-4 py-2.5">
                   <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[p.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
                     {statusConfig[p.status]?.label ?? p.status}

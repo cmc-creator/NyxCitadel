@@ -31,7 +31,7 @@ export default async function OutbreaksPage() {
             <h1 className="text-xl font-bold text-white">Outbreak Log</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">Reportable</span>
           </div>
-          <p className="text-slate-400 text-sm">Track active and resolved outbreaks, containment measures, and health department notification.</p>
+          <p className="text-muted-foreground/70 text-sm">Track active and resolved outbreaks, containment measures, and health department notification.</p>
         </div>
         <a href="/infection-control/outbreaks/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Log Outbreak
@@ -57,7 +57,7 @@ export default async function OutbreaksPage() {
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-mono text-xs text-slate-400">{o.outbreakNumber}</span>
+                    <span className="font-mono text-xs text-muted-foreground/70">{o.outbreakNumber}</span>
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[o.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
                       {statusConfig[o.status]?.label ?? o.status}
                     </span>
@@ -67,7 +67,7 @@ export default async function OutbreaksPage() {
                   </div>
                   <h3 className="text-white font-bold">{o.organism} - {o.unitAffected}</h3>
                 </div>
-                <div className="text-right text-xs text-slate-400">
+                <div className="text-right text-xs text-muted-foreground/70">
                   <p>Start: {new Date(o.startDate).toLocaleDateString()}</p>
                   {o.endDate && <p>End: {new Date(o.endDate).toLocaleDateString()}</p>}
                 </div>
@@ -75,12 +75,12 @@ export default async function OutbreaksPage() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
                 <div className="bg-slate-900/40 rounded-lg p-2.5 text-center">
                   <p className="text-lg font-bold text-white">{o.caseCount}</p>
-                  <p className="text-xs text-slate-400">Total Cases</p>
+                  <p className="text-xs text-muted-foreground/70">Total Cases</p>
                 </div>
               </div>
               {o.containmentActions.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold text-slate-400 mb-1.5">Containment Actions</p>
+                  <p className="text-xs font-semibold text-muted-foreground/70 mb-1.5">Containment Actions</p>
                   <div className="flex flex-wrap gap-2">
                     {o.containmentActions.map((a, i) => (
                       <span key={i} className="text-xs bg-slate-700 text-slate-300 rounded-full px-3 py-1">{a}</span>

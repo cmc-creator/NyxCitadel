@@ -39,9 +39,9 @@ export default async function OppePage() {
             <h1 className="text-xl font-bold text-white">OPPE Records</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
           </div>
-          <p className="text-slate-400 text-sm">Ongoing Professional Practice Evaluation — quarterly performance data reviewed by Medical Executive Committee.</p>
+          <p className="text-muted-foreground/70 text-sm">Ongoing Professional Practice Evaluation — quarterly performance data reviewed by Medical Executive Committee.</p>
         </div>
-        <a href="/credentialing/oppe/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
+        <a href="/credentialing/oppe/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New OPPE Record
         </a>
       </div>
@@ -66,7 +66,7 @@ export default async function OppePage() {
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-2">
               <s.icon className={`w-4 h-4 ${s.color}`} />
-              <span className="text-xs text-slate-400">{s.label}</span>
+              <span className="text-xs text-muted-foreground/70">{s.label}</span>
             </div>
             <p className="text-2xl font-bold text-white">{s.value}</p>
           </div>
@@ -81,7 +81,7 @@ export default async function OppePage() {
           <thead className="bg-slate-900/40">
             <tr>
               {['Provider', 'Period', 'Cases Reviewed', 'Compliance Rate', 'Overall Rating', 'MEC Approved'].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-3">{h}</th>
+                <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">{h}</th>
               ))}
             </tr>
           </thead>
@@ -93,7 +93,7 @@ export default async function OppePage() {
               return (
                 <tr key={r.id} className="hover:bg-white/5">
                   <td className="px-4 py-3 font-semibold text-white text-xs">{r.provider.lastName}, {r.provider.firstName}</td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{r.periodStart.toLocaleDateString()} – {r.periodEnd.toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70 text-xs">{r.periodStart.toLocaleDateString()} – {r.periodEnd.toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{r.totalCases}</td>
                   <td className={`px-4 py-3 font-bold text-sm ${rate >= 90 ? 'text-emerald-400' : 'text-amber-400'}`}>
                     {rate.toFixed(1)}%

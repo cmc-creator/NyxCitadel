@@ -14,15 +14,15 @@ export function getOnboardingWelcomeEmail(data: OnboardingEmailData) {
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; padding: 40px 20px; border-radius: 12px 12px 0 0; text-align: center; }
+    .header { background: linear-gradient(135deg, #0d7377 0%, #14a4a8 100%); color: white; padding: 40px 20px; border-radius: 12px 12px 0 0; text-align: center; }
     .header h1 { margin: 0; font-size: 28px; }
     .header p { margin: 8px 0 0 0; opacity: 0.95; }
-    .content { background: #f9fafb; padding: 40px 20px; border-radius: 0 0 12px 12px; }
+    .content { background: #f0fdfa; padding: 40px 20px; border-radius: 0 0 12px 12px; }
     .section { margin-bottom: 30px; }
     .section h2 { color: #1f2937; font-size: 18px; margin-top: 0; }
-    .cta-button { display: inline-block; background: #7c3aed; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 10px 0; }
-    .cta-button:hover { background: #6d28d9; }
-    .step { background: white; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #7c3aed; }
+    .cta-button { display: inline-block; background: #0d7377; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 10px 0; }
+    .cta-button:hover { background: #0b6165; }
+    .step { background: white; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #0d7377; }
     .step-title { font-weight: 600; color: #1f2937; }
     .step-desc { color: #6b7280; font-size: 14px; margin: 5px 0 0 0; }
     .footer { color: #9ca3af; font-size: 12px; text-align: center; margin-top: 30px; }
@@ -71,14 +71,14 @@ export function getOnboardingWelcomeEmail(data: OnboardingEmailData) {
       <div class="section">
         <h2>📖 Resources to Get Started</h2>
         <ul style="color: #6b7280; padding-left: 20px;">
-          <li><a href="https://citadel.example.com/guide" style="color: #7c3aed; text-decoration: none;">📚 Read the User Guide</a> - Comprehensive walkthrough of all features</li>
-          <li><a href="https://citadel.example.com/walkthrough" style="color: #7c3aed; text-decoration: none;">🎬 Watch the Feature Tour</a> - 5-minute video showing core workflows</li>
+          <li><a href="https://citadel.example.com/guide" style="color: #0d7377; text-decoration: none;">📚 Read the User Guide</a> - Comprehensive walkthrough of all features</li>
+          <li><a href="https://citadel.example.com/walkthrough" style="color: #0d7377; text-decoration: none;">🎬 Watch the Feature Tour</a> - 5-minute video showing core workflows</li>
           <li><strong>Questions?</strong> Reply to this email or contact support@nyxcitadel.com</li>
         </ul>
       </div>
 
-      <div class="section" style="background: #ede9fe; padding: 20px; border-radius: 8px; border: 1px solid #ddd6fe;">
-        <strong style="color: #6d28d9;">Pro Tip:</strong> Your compliance calendar is pre-loaded with samples. Customize it in the <strong>Dashboard → Compliance Calendar</strong> section to match your facility's regulatory timeline and survey cycle.
+      <div class="section" style="background: #ccfbf1; padding: 20px; border-radius: 8px; border: 1px solid #99f6e4;">
+        <strong style="color: #0b6165;">Pro Tip:</strong> Your compliance calendar is pre-loaded with samples. Customize it in the <strong>Dashboard → Compliance Calendar</strong> section to match your facility's regulatory timeline and survey cycle.
       </div>
 
       <div class="footer">

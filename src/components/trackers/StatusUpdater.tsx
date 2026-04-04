@@ -56,7 +56,7 @@ export default function StatusUpdater({
         {current?.label ?? currentStatus}
       </span>
       <select
-        className="text-xs border border-slate-200 rounded-lg px-2 py-1 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-purple-400"
+        className="text-xs border border-border rounded-lg px-2 py-1 bg-white text-foreground/80 focus:outline-none focus:ring-1 focus:ring-teal-400"
         value={selected}
         onChange={e => setSelected(e.target.value)}
         disabled={saving || isPending}
@@ -69,7 +69,7 @@ export default function StatusUpdater({
         <button
           onClick={handleSave}
           disabled={saving || isPending}
-          className="text-xs bg-purple-600 text-white px-3 py-1 rounded-lg hover:bg-purple-700 transition disabled:opacity-60"
+          className="text-xs bg-teal-600 text-white px-3 py-1 rounded-lg hover:bg-teal-700 transition disabled:opacity-60"
         >
           {saving ? 'Saving…' : 'Update'}
         </button>

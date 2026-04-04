@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { ClipboardCheck, Plus, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
@@ -15,7 +15,7 @@ const STATUS_COLORS: Record<string, string> = {
   ACCEPTED:           'bg-green-100 text-green-700',
   REJECTED:           'bg-red-100 text-red-700',
   RESUBMIT_REQUIRED:  'bg-orange-100 text-orange-700',
-  CLOSED:             'bg-purple-100 text-purple-700',
+  CLOSED:             'bg-teal-100 text-teal-700',
 };
 
 const BODY_LABELS: Record<string, string> = {
@@ -47,7 +47,7 @@ export default async function PocPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <ClipboardCheck className="w-6 h-6 text-blue-600" />
             Plans of Correction
           </h1>
@@ -57,14 +57,14 @@ export default async function PocPage() {
         </div>
         <Link
           href="/quality/poc/new"
-          className="inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg transition-colors"
         >
           <Plus className="w-4 h-4" /> New POC
         </Link>
       </div>
 
       {overdue.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-center gap-3">
+        <div className="bg-red-950/20 border border-red-200 rounded-xl px-4 py-3 flex items-center gap-3">
           <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />
           <p className="text-sm text-red-700">
             <strong>{overdue.length} POC{overdue.length > 1 ? 's' : ''}</strong> past the response deadline.
@@ -74,15 +74,15 @@ export default async function PocPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
-          <div className="text-2xl font-bold text-slate-900">{open.length}</div>
+        <div className="bg-card rounded-xl border border-border p-4">
+          <div className="text-2xl font-bold text-foreground">{open.length}</div>
           <div className="text-sm text-slate-500">Open POCs</div>
         </div>
-        <div className={`rounded-xl border p-4 ${overdue.length > 0 ? 'bg-red-50 border-red-200' : 'bg-white border-slate-200'}`}>
-          <div className={`text-2xl font-bold ${overdue.length > 0 ? 'text-red-600' : 'text-slate-900'}`}>{overdue.length}</div>
+        <div className={`rounded-xl border p-4 ${overdue.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-white border-slate-200'}`}>
+          <div className={`text-2xl font-bold ${overdue.length > 0 ? 'text-red-600' : 'text-foreground'}`}>{overdue.length}</div>
           <div className="text-sm text-slate-500">Past Deadline</div>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-green-600">
             {pocs.filter(p => p.status === 'ACCEPTED' || p.status === 'CLOSED').length}
           </div>
@@ -92,12 +92,12 @@ export default async function PocPage() {
 
       {/* List */}
       {pocs.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
+        <div className="bg-card rounded-xl border border-border p-12 text-center">
           <ClipboardCheck className="w-10 h-10 text-slate-300 mx-auto mb-3" />
           <p className="text-slate-500 font-medium">No plans of correction logged yet</p>
           <Link
             href="/quality/poc/new"
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" /> Create POC
           </Link>
@@ -105,7 +105,7 @@ export default async function PocPage() {
       ) : (
         <div className="space-y-3">
           {pocs.map(poc => (
-            <div key={poc.id} className="bg-white rounded-xl border border-slate-200 p-4 hover:border-purple-300 transition-colors">
+            <div key={poc.id} className="bg-card rounded-xl border border-border p-4 hover:border-teal-300 transition-colors">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -117,7 +117,7 @@ export default async function PocPage() {
                       {poc.status.replace(/_/g, ' ')}
                     </span>
                   </div>
-                  <div className="font-semibold text-slate-800 mt-1">{poc.title}</div>
+                  <div className="font-semibold text-foreground mt-1">{poc.title}</div>
                   <div className="flex flex-wrap gap-3 mt-2 text-xs text-slate-500">
                     {poc.surveyDate && <span>Survey: {formatDate(poc.surveyDate)}</span>}
                     {poc.responseDeadline && (
@@ -133,7 +133,7 @@ export default async function PocPage() {
                 </div>
                 <Link
                   href={`/quality/poc/${poc.id}`}
-                  className="text-xs text-purple-600 hover:text-purple-700 font-medium shrink-0"
+                  className="text-xs text-teal-600 hover:text-teal-700 font-medium shrink-0"
                 >
                   View →
                 </Link>

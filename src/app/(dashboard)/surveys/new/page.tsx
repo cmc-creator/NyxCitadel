@@ -83,11 +83,11 @@ export default function NewSurveyPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/surveys" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/surveys" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Surveys &amp; Inspections
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <ClipboardList className="w-6 h-6 text-purple-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <ClipboardList className="w-6 h-6 text-teal-600" />
           Add Survey / Inspection
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">
@@ -96,14 +96,14 @@ export default function NewSurveyPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
 
         {/* Survey Info */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Survey Information</h2>
+          <h2 className="text-sm font-semibold text-foreground">Survey Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Survey Type *</label>
@@ -144,7 +144,7 @@ export default function NewSurveyPage() {
 
         {/* Findings */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Findings &amp; Response</h2>
+          <h2 className="text-sm font-semibold text-foreground">Findings &amp; Response</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Number of Findings</label>
@@ -158,13 +158,13 @@ export default function NewSurveyPage() {
           <div className="flex gap-6">
             <div className="flex items-center gap-2">
               <input type="checkbox" id="immediateJeopardy" name="immediateJeopardy" className="accent-red-600" />
-              <label htmlFor="immediateJeopardy" className="text-sm text-slate-700">
+              <label htmlFor="immediateJeopardy" className="text-sm text-foreground/80">
                 <span className="font-medium text-red-600">Immediate Jeopardy</span> cited
               </label>
             </div>
             <div className="flex items-center gap-2">
               <input type="checkbox" id="conditionLevel" name="conditionLevel" className="accent-orange-500" />
-              <label htmlFor="conditionLevel" className="text-sm text-slate-700">
+              <label htmlFor="conditionLevel" className="text-sm text-foreground/80">
                 <span className="font-medium text-orange-500">Condition-Level</span> deficiency
               </label>
             </div>
@@ -173,7 +173,7 @@ export default function NewSurveyPage() {
 
         {/* Notes */}
         <div className="px-6 py-5 space-y-3">
-          <h2 className="text-sm font-semibold text-slate-800">Notes <span className="font-normal text-slate-400">(optional)</span></h2>
+          <h2 className="text-sm font-semibold text-foreground">Notes <span className="font-normal text-muted-foreground/70">(optional)</span></h2>
           <textarea name="notes" rows={3} className="form-input w-full resize-none" placeholder="Survey scope, key observations, follow-up actions…" />
         </div>
 

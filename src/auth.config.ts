@@ -28,6 +28,7 @@ export const authConfig: NextAuthConfig = {
         nextUrl.pathname.startsWith('/drill-task/') ||
         nextUrl.pathname.startsWith('/drill-muster/') ||
         nextUrl.pathname.startsWith('/monitoring') ||
+        nextUrl.pathname === '/api/health' ||
         isApiAuth;
 
       if (isPublic)   return true;

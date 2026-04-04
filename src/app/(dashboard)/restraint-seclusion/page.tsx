@@ -35,7 +35,7 @@ export default async function RestraintSeclusionPage() {
             <h1 className="text-xl font-bold text-white">Restraint & Seclusion</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">TJC PC.03</span>
           </div>
-          <p className="text-slate-400 text-sm">Track restraint and seclusion events with death reporting and CMS compliance.</p>
+          <p className="text-muted-foreground/70 text-sm">Track restraint and seclusion events with death reporting and CMS compliance.</p>
         </div>
         <a href="/restraint-seclusion/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Log Event
@@ -50,7 +50,7 @@ export default async function RestraintSeclusionPage() {
           { label: 'Deaths in Restraint', value: deathCount, color: deathCount > 0 ? 'text-red-400' : 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
-            <p className="text-xs text-slate-400 mb-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mb-1">{s.label}</p>
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
           </div>
         ))}
@@ -66,7 +66,7 @@ export default async function RestraintSeclusionPage() {
       <div className="rounded-xl border border-white/10 bg-slate-800/50 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-white/10 text-slate-400 text-xs">
+            <tr className="border-b border-white/10 text-muted-foreground/70 text-xs">
               <th className="text-left px-4 py-3">Event #</th>
               <th className="text-left px-4 py-3">Date</th>
               <th className="text-left px-4 py-3">Patient</th>
@@ -80,7 +80,7 @@ export default async function RestraintSeclusionPage() {
             {events.length === 0 ? (
               <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">No restraint/seclusion events on record.</td></tr>
             ) : events.map(e => {
-              const cfg = statusConfig[e.status] ?? { label: e.status, classes: 'bg-slate-100 text-slate-700' };
+              const cfg = statusConfig[e.status] ?? { label: e.status, classes: 'bg-slate-100 text-foreground/80' };
               return (
                 <tr key={e.id} className={`border-b border-white/5 hover:bg-white/5 transition-colors ${e.deathOccurred ? 'bg-red-500/5' : ''}`}>
                   <td className="px-4 py-3 text-slate-300">{e.eventNumber}</td>
@@ -89,8 +89,8 @@ export default async function RestraintSeclusionPage() {
                     {e.patientInitials}
                     {e.deathOccurred && <span className="ml-1 text-xs text-red-400 font-semibold">[DEATH]</span>}
                   </td>
-                  <td className="px-4 py-3 text-slate-400">{e.unit ?? '-'}</td>
-                  <td className="px-4 py-3 text-slate-400">{e.rsType ?? '-'}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70">{e.unit ?? '-'}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70">{e.rsType ?? '-'}</td>
                   <td className="px-4 py-3 text-slate-300">{e.durationMinutes ? `${e.durationMinutes} min` : '-'}</td>
                   <td className="px-4 py-3"><span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cfg.classes}`}>{cfg.label}</span></td>
                 </tr>

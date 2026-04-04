@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { Biohazard, Activity, AlertTriangle, CheckCircle, ChevronRight, Droplets } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -46,7 +46,7 @@ export default async function InfectionControlPage() {
 
   const subModules = [
     { href: '/infection-control/icra', title: 'IC Risk Assessment', description: 'Annual ICRA - risk identification, ratings, and mitigation goals per CMS §482.42.', icon: '📋', badge: 'Annual', badgeColor: 'bg-blue-100 text-blue-700', stat: icraActive ? `${icraActive.assessmentYear} ICRA Approved` : 'No active ICRA', statColor: icraActive ? 'text-emerald-400' : 'text-amber-400' },
-    { href: '/infection-control/hai', title: 'HAI Surveillance', description: 'Monthly HAI rate tracking - CAUTI, CLABSI, MRSA, CDI vs. NHSN benchmarks.', icon: '📊', badge: 'NHSN', badgeColor: 'bg-purple-100 text-purple-700', stat: `${recentHai.length} records`, statColor: 'text-blue-400' },
+    { href: '/infection-control/hai', title: 'HAI Surveillance', description: 'Monthly HAI rate tracking - CAUTI, CLABSI, MRSA, CDI vs. NHSN benchmarks.', icon: '📊', badge: 'NHSN', badgeColor: 'bg-teal-100 text-teal-700', stat: `${recentHai.length} records`, statColor: 'text-blue-400' },
     { href: '/infection-control/outbreaks', title: 'Outbreak Log', description: 'Track active and resolved outbreaks, containment actions, and health department reporting.', icon: '🦠', badge: 'Reportable', badgeColor: 'bg-red-100 text-red-700', stat: `${activeOutbreaks} Active`, statColor: activeOutbreaks > 0 ? 'text-red-400' : 'text-emerald-400' },
     { href: '/infection-control/hand-hygiene', title: 'Hand Hygiene Audits', description: 'Unit-level compliance audits - opportunities observed vs. compliant events.', icon: '🧴', badge: 'TJC NPSG 07.01', badgeColor: 'bg-amber-100 text-amber-700', stat: avgHhRate != null ? `${avgHhRate}% compliance` : 'No audits', statColor: avgHhRate != null && avgHhRate < 90 ? 'text-amber-400' : 'text-emerald-400' },
   ];
@@ -61,7 +61,7 @@ export default async function InfectionControlPage() {
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700">CMS §482.42</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">TJC IC</span>
           </div>
-          <p className="text-slate-400 text-sm">IC risk assessment, HAI surveillance, outbreak management, and hand hygiene compliance.</p>
+          <p className="text-muted-foreground/70 text-sm">IC risk assessment, HAI surveillance, outbreak management, and hand hygiene compliance.</p>
         </div>
       </div>
 
@@ -76,7 +76,7 @@ export default async function InfectionControlPage() {
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-2">
               <s.icon className={`w-4 h-4 ${s.color}`} />
-              <span className="text-xs text-slate-400">{s.label}</span>
+              <span className="text-xs text-muted-foreground/70">{s.label}</span>
             </div>
             <p className="text-2xl font-bold text-white">{s.value}</p>
             <p className="text-xs text-slate-500 mt-0.5">{s.sub}</p>
@@ -104,7 +104,7 @@ export default async function InfectionControlPage() {
             <thead className="bg-slate-900/40">
               <tr>
                 {['HAI Type', 'Month', 'Cases', 'Rate / 1000 pt-days', 'NHSN Benchmark', 'SIR', 'Status'].map(h => (
-                  <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-2.5">{h}</th>
+                  <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-2.5">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -114,12 +114,12 @@ export default async function InfectionControlPage() {
                 return (
                   <tr key={h.id} className="hover:bg-white/5">
                     <td className="px-4 py-3 font-semibold text-white">{h.haiType.replace(/_/g, ' ')}</td>
-                    <td className="px-4 py-3 text-slate-400 text-xs">{h.reportMonth}/{h.reportYear}</td>
+                    <td className="px-4 py-3 text-muted-foreground/70 text-xs">{h.reportMonth}/{h.reportYear}</td>
                     <td className="px-4 py-3 text-slate-300">{h.caseCount}</td>
                     <td className={`px-4 py-3 font-semibold ${aboveBench ? 'text-red-400' : 'text-emerald-400'}`}>
                       {h.rate != null ? h.rate.toFixed(1) : '-'}
                     </td>
-                    <td className="px-4 py-3 text-slate-400">{h.nhsnBenchmark != null ? h.nhsnBenchmark.toFixed(1) : '-'}</td>
+                    <td className="px-4 py-3 text-muted-foreground/70">{h.nhsnBenchmark != null ? h.nhsnBenchmark.toFixed(1) : '-'}</td>
                     <td className={`px-4 py-3 font-semibold ${h.sir && h.sir > 1 ? 'text-red-400' : 'text-emerald-400'}`}>
                       {h.sir ? h.sir.toFixed(2) : '-'}
                     </td>
@@ -151,7 +151,7 @@ export default async function InfectionControlPage() {
               </div>
               <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-teal-400 transition-colors" />
             </div>
-            <p className="text-xs text-slate-400 mb-3">{m.description}</p>
+            <p className="text-xs text-muted-foreground/70 mb-3">{m.description}</p>
             <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>
           </Link>
         ))}

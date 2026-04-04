@@ -58,11 +58,11 @@ export default async function CapDetailPage({ params }: { params: { id: string }
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/caps" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/trackers/caps" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to CAPs
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/caps/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/caps/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/caps/${params.id}`} redirectPath="/trackers/caps" label="CAP" />
@@ -70,12 +70,12 @@ export default async function CapDetailPage({ params }: { params: { id: string }
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <ClipboardList className="w-5 h-5 text-purple-600" />
-              <span className="text-xs font-mono text-slate-400">{cap.capNumber}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">{cap.capNumber}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${PRIORITY_COLOR[cap.priority]}`}>
                 {cap.priority}
               </span>
@@ -83,7 +83,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
                 {cap.source.replace(/_/g, ' ')}
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{cap.title}</h1>
+            <h1 className="text-xl font-bold text-foreground">{cap.title}</h1>
             {cap.sourceRef && <p className="text-xs text-slate-500 mt-0.5">Ref: {cap.sourceRef}</p>}
           </div>
           <StatusUpdater apiPath={`/api/caps/${cap.id}`} currentStatus={cap.status} options={STATUS_OPTIONS} />
@@ -91,14 +91,14 @@ export default async function CapDetailPage({ params }: { params: { id: string }
       </div>
 
       {isOverdue && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
+        <div className="bg-red-950/20 border border-red-200 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
           <p className="text-sm text-red-800"><strong>Overdue</strong> &mdash; target date was {formatDate(cap.targetDate)}.</p>
         </div>
       )}
 
       {vigilanceActive && (
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
+        <div className="bg-blue-950/20 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
           <p className="text-sm text-blue-800">
             <strong>Vigilance Monitoring Active</strong> &mdash; ends {formatDate(cap.vigilanceEndDate!)}.
@@ -110,22 +110,22 @@ export default async function CapDetailPage({ params }: { params: { id: string }
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-5">
           <Section title="Problem Description">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{cap.description}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{cap.description}</p>
           </Section>
 
           {cap.rootCause && (
             <Section title="Root Cause">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{cap.rootCause}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{cap.rootCause}</p>
             </Section>
           )}
 
           <Section title="Correction Plan">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{cap.correctionPlan}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{cap.correctionPlan}</p>
           </Section>
 
           {cap.measureOfSuccess && (
             <Section title="Measure of Success">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{cap.measureOfSuccess}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{cap.measureOfSuccess}</p>
             </Section>
           )}
 
@@ -142,7 +142,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
 
           {cap.followUpNotes && (
             <Section title="Follow-Up Notes">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{cap.followUpNotes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{cap.followUpNotes}</p>
             </Section>
           )}
 
@@ -178,9 +178,9 @@ export default async function CapDetailPage({ params }: { params: { id: string }
           {cap.assignee && (
             <Section title="Assignee">
               <div className="text-sm">
-                <p className="font-medium text-slate-800">{cap.assignee.name}</p>
+                <p className="font-medium text-foreground">{cap.assignee.name}</p>
                 {cap.assignee.title && <p className="text-xs text-slate-500">{cap.assignee.title}</p>}
-                <p className="text-xs text-slate-400 mt-0.5">{cap.assignee.email}</p>
+                <p className="text-xs text-muted-foreground/70 mt-0.5">{cap.assignee.email}</p>
               </div>
             </Section>
           )}
@@ -207,9 +207,9 @@ export default async function CapDetailPage({ params }: { params: { id: string }
 
 function PdsaBlock({ label, color, content }: { label: string; color: string; content: string }) {
   const colors: Record<string, string> = {
-    blue: 'bg-blue-50 border-blue-200 text-blue-700',
+    blue: 'bg-blue-950/20 border-blue-200 text-blue-700',
     purple: 'bg-purple-50 border-purple-200 text-purple-700',
-    orange: 'bg-orange-50 border-orange-200 text-orange-700',
+    orange: 'bg-orange-950/20 border-orange-200 text-orange-700',
     green: 'bg-green-50 border-green-200 text-green-700',
   };
   return (
@@ -222,8 +222,8 @@ function PdsaBlock({ label, color, content }: { label: string; color: string; co
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
-      <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">{title}</h3>
+    <div className="bg-card rounded-xl border border-border p-4">
+      <h3 className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide mb-3">{title}</h3>
       {children}
     </div>
   );
@@ -233,7 +233,7 @@ function Row({ label, value, highlight }: { label: string; value: string; highli
   return (
     <>
       <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
-      <dd className={`text-xs font-medium text-right mb-2 ${highlight ? 'text-red-600 font-bold' : 'text-slate-800'}`}>{value}</dd>
+      <dd className={`text-xs font-medium text-right mb-2 ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </>
   );
 }

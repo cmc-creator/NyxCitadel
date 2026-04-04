@@ -6,9 +6,9 @@ export const dynamic = 'force-dynamic';
 
 const typeConfig: Record<string, { label: string; color: string }> = {
   PHYSICIAN:    { label: 'MD/DO',   color: 'bg-indigo-100 text-indigo-700' },
-  APRN:         { label: 'APRN/NP', color: 'bg-violet-100 text-violet-700' },
+  APRN:         { label: 'APRN/NP', color: 'bg-teal-100 text-teal-700' },
   PA:           { label: 'PA',      color: 'bg-blue-100 text-blue-700' },
-  PSYCHOLOGIST: { label: 'PhD',     color: 'bg-purple-100 text-purple-700' },
+  PSYCHOLOGIST: { label: 'PhD',     color: 'bg-teal-100 text-teal-700' },
 };
 
 const privilegeConfig: Record<string, { label: string; color: string }> = {
@@ -57,9 +57,9 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
             <h1 className="text-xl font-bold text-white">Provider Directory</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
           </div>
-          <p className="text-slate-400 text-sm">Active medical staff - credentials, privileges, license expiry, and OPPE/FPPE status.</p>
+          <p className="text-muted-foreground/70 text-sm">Active medical staff - credentials, privileges, license expiry, and OPPE/FPPE status.</p>
         </div>
-        <a href="/credentialing/providers/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
+        <a href="/credentialing/providers/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Add Provider
         </a>
       </div>
@@ -74,7 +74,7 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
       )}
 
       <form method="GET" className="flex gap-3 items-center bg-slate-800/50 border border-white/10 rounded-lg px-3 py-2">
-        <Search className="w-4 h-4 text-slate-400" />
+        <Search className="w-4 h-4 text-muted-foreground/70" />
         <input name="q" defaultValue={q}
           placeholder="Search by name or specialty..."
           className="bg-transparent text-sm text-white placeholder:text-slate-500 outline-none flex-1" />
@@ -85,7 +85,7 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
           <thead className="bg-slate-900/40 border-b border-white/10">
             <tr>
               {['Provider', 'Type', 'Specialty', 'NPI', 'License Expiry', 'Privileges', 'OPPE/FPPE', 'Reappointment'].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-slate-400 px-3 py-3">{h}</th>
+                <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-3 py-3">{h}</th>
               ))}
             </tr>
           </thead>
@@ -100,15 +100,15 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
               const hasFppe = p.fppeRecords.length > 0;
               return (
                 <tr key={p.id} className="hover:bg-white/5 transition-colors">
-                  <td className="px-3 py-3 font-semibold text-white text-xs">{p.lastName}, {p.firstName} {p.credentials && <span className="text-slate-400">{p.credentials}</span>}</td>
+                  <td className="px-3 py-3 font-semibold text-white text-xs">{p.lastName}, {p.firstName} {p.credentials && <span className="text-muted-foreground/70">{p.credentials}</span>}</td>
                   <td className="px-3 py-3">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${typeConfig[p.providerType]?.color ?? 'bg-slate-100 text-slate-600'}`}>
                       {typeConfig[p.providerType]?.label ?? p.providerType}
                     </span>
                   </td>
-                  <td className="px-3 py-3 text-slate-400 text-xs">{p.specialty}</td>
+                  <td className="px-3 py-3 text-muted-foreground/70 text-xs">{p.specialty}</td>
                   <td className="px-3 py-3 text-slate-500 text-xs font-mono">{p.npi ?? '-'}</td>
-                  <td className={`px-3 py-3 text-xs font-semibold ${isExpired ? 'text-red-400' : isExpiringSoon ? 'text-amber-400' : 'text-slate-400'}`}>
+                  <td className={`px-3 py-3 text-xs font-semibold ${isExpired ? 'text-red-400' : isExpiringSoon ? 'text-amber-400' : 'text-muted-foreground/70'}`}>
                     {licExpiry ? licExpiry.toLocaleDateString() : '-'}
                     {(isExpiringSoon || isExpired) && <span className="ml-1">⚠️</span>}
                   </td>
@@ -122,7 +122,7 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
                       ? <span className="text-amber-400 font-semibold">FPPE Active</span>
                       : <span className="text-emerald-400">Current</span>}
                   </td>
-                  <td className="px-3 py-3 text-slate-400 text-xs">
+                  <td className="px-3 py-3 text-muted-foreground/70 text-xs">
                     {p.reappointmentDate ? p.reappointmentDate.toLocaleDateString() : '-'}
                   </td>
                 </tr>

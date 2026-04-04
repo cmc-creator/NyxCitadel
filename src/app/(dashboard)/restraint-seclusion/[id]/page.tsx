@@ -27,7 +27,7 @@ const RS_TYPE_LABEL: Record<string, string> = {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -38,8 +38,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -57,25 +57,25 @@ export default async function RestraintDetailPage({ params }: { params: { id: st
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/restraint-seclusion" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/restraint-seclusion" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Restraint & Seclusion
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/restraint-seclusion/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/restraint-seclusion/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <ShieldOff className="w-5 h-5 text-red-600" />
-              <span className="text-xs font-mono text-slate-400">{event.eventNumber}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">{event.eventNumber}</span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{RS_TYPE_LABEL[event.rsType] ?? event.rsType}</h1>
+            <h1 className="text-xl font-bold text-foreground">{RS_TYPE_LABEL[event.rsType] ?? event.rsType}</h1>
             <p className="text-sm text-slate-500 mt-1">
               Patient: <strong>{event.patientInitials}</strong>
               {event.patientMrn && <> &middot; MRN: <strong>{event.patientMrn}</strong></>}
@@ -87,7 +87,7 @@ export default async function RestraintDetailPage({ params }: { params: { id: st
       </div>
 
       {event.deathOccurred && !event.deathReportedToCms && (
-        <div className="flex items-start gap-3 bg-red-50 border border-red-300 rounded-xl p-4">
+        <div className="flex items-start gap-3 bg-red-950/20 border border-red-300 rounded-xl p-4">
           <AlertTriangle className="w-5 h-5 text-red-700 mt-0.5 shrink-0" />
           <div>
             <p className="text-sm font-bold text-red-800">DEATH OCCURRED - CMS Report Required</p>
@@ -99,28 +99,28 @@ export default async function RestraintDetailPage({ params }: { params: { id: st
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-5">
           <Section title="Clinical Justification">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{event.clinicalJustification}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{event.clinicalJustification}</p>
           </Section>
 
           <Section title="Precipitating Behaviors">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{event.behaviors}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{event.behaviors}</p>
           </Section>
 
           <Section title="Less Restrictive Measures Tried">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap">{event.lessRestrictiveTried}</p>
+            <p className="text-sm text-foreground/80 whitespace-pre-wrap">{event.lessRestrictiveTried}</p>
           </Section>
 
           {monitoringLogs.length > 0 && (
             <Section title={`Monitoring Logs (${monitoringLogs.length})`}>
-              <div className="divide-y divide-slate-100">
+              <div className="divide-y divide-border/30">
                 {monitoringLogs.map((log, i) => (
                   <div key={i} className="py-2">
                     <div className="flex justify-between text-xs text-slate-500 mb-0.5">
                       <span>{log.time}</span>
                       <span>{log.staff}</span>
                     </div>
-                    <p className="text-sm text-slate-700">{log.assessment}</p>
-                    {log.vitals && <p className="text-xs text-slate-400 mt-0.5">Vitals: {log.vitals}</p>}
+                    <p className="text-sm text-foreground/80">{log.assessment}</p>
+                    {log.vitals && <p className="text-xs text-muted-foreground/70 mt-0.5">Vitals: {log.vitals}</p>}
                   </div>
                 ))}
               </div>
@@ -129,7 +129,7 @@ export default async function RestraintDetailPage({ params }: { params: { id: st
 
           {event.debriefNotes && (
             <Section title="Debrief Notes">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{event.debriefNotes}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{event.debriefNotes}</p>
             </Section>
           )}
         </div>
@@ -146,8 +146,8 @@ export default async function RestraintDetailPage({ params }: { params: { id: st
               {event.releasedAt && <Field label="Released At" value={formatDate(event.releasedAt)} />}
               {event.durationMinutes != null && (
                 <div>
-                  <dt className="text-xs text-slate-400">Duration</dt>
-                  <dd className="text-sm font-medium text-slate-800 mt-0.5">{event.durationMinutes} minutes</dd>
+                  <dt className="text-xs text-muted-foreground/70">Duration</dt>
+                  <dd className="text-sm font-medium text-foreground mt-0.5">{event.durationMinutes} minutes</dd>
                 </div>
               )}
             </dl>
@@ -169,20 +169,20 @@ export default async function RestraintDetailPage({ params }: { params: { id: st
           <Section title="Post-Event">
             <dl className="space-y-3">
               <div>
-                <dt className="text-xs text-slate-400">Debrief Completed</dt>
+                <dt className="text-xs text-muted-foreground/70">Debrief Completed</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${event.debrief ? 'text-green-600' : 'text-yellow-600'}`}>
                   {event.debrief ? `Yes - ${event.debriefDate ? formatDate(event.debriefDate) : ''}` : 'Pending'}
                 </dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-400">Injury Occurred</dt>
+                <dt className="text-xs text-muted-foreground/70">Injury Occurred</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${event.injuryOccurred ? 'text-red-600' : 'text-green-600'}`}>
                   {event.injuryOccurred ? 'Yes' : 'No'}
                 </dd>
               </div>
               {event.injuryDescription && <Field label="Injury Description" value={event.injuryDescription} />}
               <div>
-                <dt className="text-xs text-slate-400">Death Occurred</dt>
+                <dt className="text-xs text-muted-foreground/70">Death Occurred</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${event.deathOccurred ? 'text-red-700 font-bold' : 'text-green-600'}`}>
                   {event.deathOccurred ? 'YES' : 'No'}
                 </dd>

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import {
@@ -70,7 +70,7 @@ const SEVERITY_COLORS: Record<string, string> = {
   CRITICAL: 'bg-red-100 text-red-800 border-red-200',
   HIGH: 'bg-orange-100 text-orange-800 border-orange-200',
   MODERATE: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-  LOW: 'bg-slate-100 text-slate-700 border-slate-200',
+  LOW: 'bg-slate-100 text-foreground/80 border-slate-200',
 };
 
 const ACTION_ICONS: Record<string, React.ElementType> = {
@@ -281,13 +281,13 @@ export default function DrillWarRoomClient({
           )}
           {drillStatus === 'IN_PROGRESS' && (
             <span className="hidden md:flex items-center gap-1 text-xs text-slate-500 ml-2">
-              <RefreshCw className={`w-3 h-3 ${syncing ? 'animate-spin text-slate-400' : 'text-slate-600'}`} />
+              <RefreshCw className={`w-3 h-3 ${syncing ? 'animate-spin text-muted-foreground/70' : 'text-slate-600'}`} />
               {lastSynced ? `synced ${lastSynced.toLocaleTimeString()}` : 'syncing…'}
             </span>
           )}
         </div>
         <div className="flex items-center gap-3">
-          <div className="hidden md:flex gap-3 text-xs text-slate-400">
+          <div className="hidden md:flex gap-3 text-xs text-muted-foreground/70">
             <span className="flex items-center gap-1">
               <Users className="w-3 h-3" />{accountabilityPct}% accounted
             </span>
@@ -329,8 +329,8 @@ export default function DrillWarRoomClient({
             onClick={() => setActiveTab(key as any)}
             className={`flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-medium transition-colors ${
               activeTab === key
-                ? 'text-white border-b-2 border-indigo-500 bg-slate-800'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'text-white border-b-2 border-teal-500 bg-slate-800'
+                : 'text-muted-foreground/70 hover:text-slate-200'
             }`}
           >
             <Icon className="w-4 h-4" />
@@ -359,10 +359,10 @@ export default function DrillWarRoomClient({
                     <Icon className="w-4 h-4 mt-0.5 flex-shrink-0" />
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-bold text-slate-900">{action.actionType.replace(/_/g, ' ')}</span>
+                        <span className="font-bold text-foreground">{action.actionType.replace(/_/g, ' ')}</span>
                         <span className="ml-auto text-slate-500 text-xs">{new Date(action.createdAt).toLocaleTimeString()}</span>
                       </div>
-                      <p className="text-slate-700 mt-0.5 leading-snug">{action.description}</p>
+                      <p className="text-foreground/80 mt-0.5 leading-snug">{action.description}</p>
                       {(action.location || action.performedBy) && (
                         <div className="flex gap-2 mt-0.5 text-slate-500">
                           {action.location && <span className="flex items-center gap-0.5"><MapPin className="w-3 h-3" />{action.location}</span>}
@@ -376,7 +376,7 @@ export default function DrillWarRoomClient({
             )}
           </div>
           <form onSubmit={submitAction} className="p-4 space-y-2.5">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Log Action</p>
+            <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide">Log Action</p>
             <select
               value={logForm.actionType}
               onChange={(e) => setLogForm((f) => ({ ...f, actionType: e.target.value }))}
@@ -416,7 +416,7 @@ export default function DrillWarRoomClient({
             <button
               type="submit"
               disabled={submitting || drillStatus !== 'IN_PROGRESS'}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-medium py-2.5 rounded-lg text-sm flex items-center justify-center gap-2"
+              className="w-full bg-teal-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-medium py-2.5 rounded-lg text-sm flex items-center justify-center gap-2"
             >
               {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
               Log Action
@@ -436,7 +436,7 @@ export default function DrillWarRoomClient({
               <div className="flex items-start justify-between px-4 pt-3 pb-2">
                 <div>
                   <p className="font-bold text-sm text-white">{task.taskName}</p>
-                  <p className="text-xs text-slate-400 mt-0.5">{task.locationLabel}  {task.assignedRole}  {task.timeLimitMinutes}min limit</p>
+                  <p className="text-xs text-muted-foreground/70 mt-0.5">{task.locationLabel}  {task.assignedRole}  {task.timeLimitMinutes}min limit</p>
                 </div>
                 <KillTaskBadge task={task} />
               </div>
@@ -444,7 +444,7 @@ export default function DrillWarRoomClient({
                 <div className="w-16 h-16 bg-white rounded-lg overflow-hidden flex-shrink-0">
                   <img src={qrUrl(`${baseUrl}/drill-task/${task.qrToken}`)} alt="Task QR" className="w-16 h-16 object-contain" loading="lazy" />
                 </div>
-                <div className="text-xs text-slate-400 space-y-0.5">
+                <div className="text-xs text-muted-foreground/70 space-y-0.5">
                   <p className="flex items-center gap-1"><QrCode className="w-3 h-3" /> Print and post at {task.locationLabel}</p>
                   <p>Staff scan to confirm task complete</p>
                   {task.completedBy && <p className="text-emerald-400"> Completed by {task.completedBy}</p>}
@@ -455,7 +455,7 @@ export default function DrillWarRoomClient({
           ))}
           {showTaskForm ? (
             <form onSubmit={addKillTask} className="bg-slate-800 border border-slate-600 rounded-xl p-4 space-y-3">
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">New Kill Task</p>
+              <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide">New Kill Task</p>
               <input required placeholder="Task name" value={taskForm.taskName}
                 onChange={(e) => setTaskForm((f) => ({ ...f, taskName: e.target.value }))}
                 className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" />
@@ -468,13 +468,13 @@ export default function DrillWarRoomClient({
                   className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" />
               </div>
               <div className="flex items-center gap-4">
-                <label className="text-xs text-slate-400 flex items-center gap-1">
+                <label className="text-xs text-muted-foreground/70 flex items-center gap-1">
                   Time limit (min)
                   <input type="number" min={1} max={60} value={taskForm.timeLimitMinutes}
                     onChange={(e) => setTaskForm((f) => ({ ...f, timeLimitMinutes: parseInt(e.target.value) || 3 }))}
                     className="w-14 ml-1 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white text-sm" />
                 </label>
-                <label className="flex items-center gap-2 text-xs text-slate-400">
+                <label className="flex items-center gap-2 text-xs text-muted-foreground/70">
                   <input type="checkbox" checked={taskForm.isRequired}
                     onChange={(e) => setTaskForm((f) => ({ ...f, isRequired: e.target.checked }))} />
                   Required for score
@@ -482,7 +482,7 @@ export default function DrillWarRoomClient({
               </div>
               <div className="flex gap-2">
                 <button type="submit" disabled={addingTask}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-2 rounded-lg flex items-center justify-center gap-1.5">
+                  className="flex-1 bg-teal-600 hover:bg-indigo-700 text-white text-sm font-medium py-2 rounded-lg flex items-center justify-center gap-1.5">
                   {addingTask ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />} Add Task
                 </button>
                 <button type="button" onClick={() => setShowTaskForm(false)}
@@ -491,7 +491,7 @@ export default function DrillWarRoomClient({
             </form>
           ) : drillStatus === 'IN_PROGRESS' && (
             <button onClick={() => setShowTaskForm(true)}
-              className="w-full border-2 border-dashed border-slate-700 hover:border-slate-600 text-slate-400 py-3 rounded-xl text-sm flex items-center justify-center gap-2">
+              className="w-full border-2 border-dashed border-slate-700 hover:border-slate-600 text-muted-foreground/70 py-3 rounded-xl text-sm flex items-center justify-center gap-2">
               <Plus className="w-4 h-4" /> Add Kill Task
             </button>
           )}
@@ -504,7 +504,7 @@ export default function DrillWarRoomClient({
           {muster.length > 0 && (
             <div className="bg-slate-800 rounded-xl p-3 flex items-center gap-4">
               <div className="flex-1">
-                <div className="flex justify-between text-xs text-slate-400 mb-1">
+                <div className="flex justify-between text-xs text-muted-foreground/70 mb-1">
                   <span>Live Accountability</span>
                   <span className="font-bold text-white">{accountedCount}/{muster.length} ({accountabilityPct}%)</span>
                 </div>
@@ -528,7 +528,7 @@ export default function DrillWarRoomClient({
                   <p className="font-bold text-sm text-white truncate">{entry.staffName}</p>
                   <MusterBadge status={entry.status} />
                 </div>
-                {entry.staffRole && <p className="text-xs text-slate-400 truncate">{entry.staffRole}</p>}
+                {entry.staffRole && <p className="text-xs text-muted-foreground/70 truncate">{entry.staffRole}</p>}
                 {entry.department && <p className="text-xs text-slate-500 truncate">{entry.department}</p>}
                 {entry.musterPoint && (
                   <p className="text-xs text-slate-500 flex items-center gap-0.5 mt-0.5"><MapPin className="w-3 h-3" />{entry.musterPoint}</p>
@@ -544,7 +544,7 @@ export default function DrillWarRoomClient({
           ))}
           {showStaffForm ? (
             <form onSubmit={addStaff} className="bg-slate-800 border border-slate-600 rounded-xl p-4 space-y-3">
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Add Staff to Roster</p>
+              <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide">Add Staff to Roster</p>
               <input required placeholder="Full name" value={staffForm.staffName}
                 onChange={(e) => setStaffForm((f) => ({ ...f, staffName: e.target.value }))}
                 className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" />
@@ -570,7 +570,7 @@ export default function DrillWarRoomClient({
             </form>
           ) : drillStatus === 'IN_PROGRESS' && (
             <button onClick={() => setShowStaffForm(true)}
-              className="w-full border-2 border-dashed border-slate-700 hover:border-slate-600 text-slate-400 py-3 rounded-xl text-sm flex items-center justify-center gap-2">
+              className="w-full border-2 border-dashed border-slate-700 hover:border-slate-600 text-muted-foreground/70 py-3 rounded-xl text-sm flex items-center justify-center gap-2">
               <Plus className="w-4 h-4" /> Add Staff Member
             </button>
           )}

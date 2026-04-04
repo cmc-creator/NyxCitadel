@@ -87,7 +87,7 @@ export default function EditQocPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => setForm(f => ({ ...f, [field]: e.target.value }));
 
-  if (loading) return <div className="text-slate-400 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
   if (!data) return <div className="text-red-400 p-8">{error || 'Record not found.'}</div>;
 
   async function handleSubmit(e: React.FormEvent) {
@@ -120,31 +120,31 @@ export default function EditQocPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <a href={`/trackers/qoc/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-3">
+        <a href={`/trackers/qoc/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-foreground/80 mb-3">
           <ArrowLeft className="w-4 h-4" /> Back to Record
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Scale className="w-6 h-6 text-purple-600" />
           Edit QOC / LOI Complaint
         </h1>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-red-700 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 rounded-lg px-4 py-3 text-red-700 text-sm">{error}</div>
       )}
 
       <form key={data.id} onSubmit={handleSubmit} className="space-y-6">
         {/* Complaint info */}
-        <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-          <h2 className="font-semibold text-slate-800 text-sm uppercase tracking-wide">Complaint Details</h2>
+        <div className="bg-card rounded-xl border border-border p-5 space-y-4">
+          <h2 className="font-semibold text-foreground text-sm uppercase tracking-wide">Complaint Details</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Date Received <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Date Received <span className="text-red-500">*</span></label>
               <input type="date" required value={form.dateReceived} onChange={set('dateReceived')}
                 className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Complainant Type <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Complainant Type <span className="text-red-500">*</span></label>
               <select value={form.complainantType} onChange={set('complainantType')} className="input-field w-full">
                 <option value="ANONYMOUS">Anonymous</option>
                 <option value="PATIENT">Patient</option>
@@ -157,23 +157,23 @@ export default function EditQocPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">CMS Complaint Number</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">CMS Complaint Number</label>
               <input type="text" value={form.cmsComplaintNumber} onChange={set('cmsComplaintNumber')}
                 className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">State / ADHS Reference #</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">State / ADHS Reference #</label>
               <input type="text" value={form.stateReferenceNumber} onChange={set('stateReferenceNumber')}
                 className="input-field w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Allegation Summary <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Allegation Summary <span className="text-red-500">*</span></label>
             <textarea required rows={3} value={form.allegationSummary} onChange={set('allegationSummary')}
               className="input-field w-full resize-none" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Allegation Categories (select all that apply)</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-2">Allegation Categories (select all that apply)</label>
             <div className="flex flex-wrap gap-2">
               {ALLEGATION_CATEGORIES.map(cat => (
                 <button
@@ -194,17 +194,17 @@ export default function EditQocPage() {
         </div>
 
         {/* LOI Information */}
-        <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-          <h2 className="font-semibold text-slate-800 text-sm uppercase tracking-wide">Letter of Investigation (LOI)</h2>
+        <div className="bg-card rounded-xl border border-border p-5 space-y-4">
+          <h2 className="font-semibold text-foreground text-sm uppercase tracking-wide">Letter of Investigation (LOI)</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">LOI Received Date</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">LOI Received Date</label>
               <input type="date" value={form.loiReceivedDate} onChange={set('loiReceivedDate')}
                 className="input-field w-full" />
-              <p className="text-xs text-slate-400 mt-1">Response due 10 business days after receipt</p>
+              <p className="text-xs text-muted-foreground/70 mt-1">Response due 10 business days after receipt</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Investigation Type</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Investigation Type</label>
               <select value={form.investigationType} onChange={set('investigationType')} className="input-field w-full">
                 <option value="STANDARD">Standard</option>
                 <option value="IMMEDIATE_JEOPARDY">Immediate Jeopardy</option>
@@ -214,22 +214,22 @@ export default function EditQocPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">State Investigator Name</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">State Investigator Name</label>
               <input type="text" value={form.investigatorName} onChange={set('investigatorName')}
                 className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Response Submitted Date</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Response Submitted Date</label>
               <input type="date" value={form.responseSubmittedDate} onChange={set('responseSubmittedDate')}
                 className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Survey / On-Site Date</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Survey / On-Site Date</label>
               <input type="date" value={form.surveyDate} onChange={set('surveyDate')}
                 className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Assigned To</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Assigned To</label>
               <input type="text" value={form.assignedTo} onChange={set('assignedTo')}
                 className="input-field w-full" />
             </div>
@@ -237,8 +237,8 @@ export default function EditQocPage() {
         </div>
 
         {/* Notes */}
-        <div className="bg-white rounded-xl border border-slate-200 p-5">
-          <label className="block text-sm font-medium text-slate-700 mb-1">Internal Notes</label>
+        <div className="bg-card rounded-xl border border-border p-5">
+          <label className="block text-sm font-medium text-foreground/80 mb-1">Internal Notes</label>
           <textarea rows={3} value={form.notes} onChange={set('notes')}
             className="input-field w-full resize-none" />
         </div>
@@ -251,7 +251,7 @@ export default function EditQocPage() {
           >
             {saving ? 'Saving...' : 'Save Changes'}
           </button>
-          <a href={`/trackers/qoc/${id}`} className="px-4 py-2.5 text-sm text-slate-600 hover:text-slate-800 rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
+          <a href={`/trackers/qoc/${id}`} className="px-4 py-2.5 text-sm text-slate-600 hover:text-foreground rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
             Cancel
           </a>
         </div>

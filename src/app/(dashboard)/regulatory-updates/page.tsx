@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
@@ -14,7 +14,7 @@ const IMPACT_STYLES: Record<string, { badge: string; icon: React.ElementType; ba
   CRITICAL: { badge: 'bg-red-500/15 text-red-400 border border-red-500/30',         icon: AlertTriangle,  bar: 'bg-red-500',    label: 'Critical - Act Now' },
   HIGH:     { badge: 'bg-orange-500/15 text-orange-400 border border-orange-500/30', icon: ArrowUpCircle,  bar: 'bg-orange-500', label: 'High Priority' },
   MEDIUM:   { badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',    icon: Info,           bar: 'bg-amber-500',  label: 'Medium' },
-  INFORMATIONAL: { badge: 'bg-slate-500/15 text-slate-400 border border-slate-500/20',    icon: CheckCircle2,   bar: 'bg-slate-500',  label: 'Informational' },
+  INFORMATIONAL: { badge: 'bg-slate-500/15 text-muted-foreground/70 border border-slate-500/20',    icon: CheckCircle2,   bar: 'bg-slate-500',  label: 'Informational' },
 };
 
 const IMPACT_ORDER = ['CRITICAL', 'HIGH', 'MEDIUM', 'INFORMATIONAL'];
@@ -43,7 +43,7 @@ export default async function RegulatoryUpdatesPage() {
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <Newspaper className="w-6 h-6 text-purple-400" />
+            <Newspaper className="w-6 h-6 text-teal-400" />
             Regulatory Updates
           </h1>
           <p className="text-sm text-muted-foreground mt-0.5">
@@ -93,7 +93,7 @@ export default async function RegulatoryUpdatesPage() {
               <Link
                 key={u.id}
                 href={`/regulatory-updates/${u.id}`}
-                className="block bg-card border border-border hover:border-purple-500/40 rounded-xl overflow-hidden transition-colors group"
+                className="block bg-card border border-border hover:border-teal-500/40 rounded-xl overflow-hidden transition-colors group"
               >
                 <div className={`h-0.5 w-full ${style.bar}`} />
                 <div className="px-5 py-4 flex items-start gap-4">
@@ -109,7 +109,7 @@ export default async function RegulatoryUpdatesPage() {
                         {u.regulatoryBody}
                       </span>
                     </div>
-                    <p className="text-sm font-semibold text-foreground group-hover:text-purple-300 transition-colors truncate">
+                    <p className="text-sm font-semibold text-foreground group-hover:text-teal-300 transition-colors truncate">
                       {u.title}
                     </p>
                     {u.summary && (

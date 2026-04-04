@@ -95,18 +95,18 @@ const STATUS_CONFIG = {
     label: 'Connected',
     icon: CheckCircle2,
     color: 'text-emerald-600',
-    bg: 'bg-emerald-50 border-emerald-200',
+    bg: 'bg-emerald-950/20 border-emerald-200',
   },
   available: {
     label: 'Available - Configure',
     icon: Clock,
     color: 'text-blue-600',
-    bg: 'bg-blue-50 border-blue-200',
+    bg: 'bg-blue-950/20 border-blue-200',
   },
   coming_soon: {
     label: 'Coming Soon',
     icon: AlertCircle,
-    color: 'text-slate-400',
+    color: 'text-muted-foreground/70',
     bg: 'bg-slate-50 border-slate-200',
   },
 };
@@ -124,8 +124,8 @@ export default function IntegrationsPage() {
     <div className="space-y-6 max-w-3xl">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Plug className="w-6 h-6 text-purple-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <Plug className="w-6 h-6 text-teal-600" />
           Integrations
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">
@@ -141,8 +141,8 @@ export default function IntegrationsPage() {
             onClick={() => setActiveCategory(cat)}
             className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
               activeCategory === cat
-                ? 'bg-purple-600 text-white border-purple-600'
-                : 'bg-white text-slate-600 border-slate-200 hover:border-purple-300'
+                ? 'bg-teal-600 text-white border-teal-600'
+                : 'bg-white text-slate-600 border-slate-200 hover:border-teal-300'
             }`}
           >
             {cat}
@@ -170,8 +170,8 @@ export default function IntegrationsPage() {
               {/* Body */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <p className="text-sm font-semibold text-slate-900">{integration.name}</p>
-                  <span className="text-xs text-slate-400 bg-slate-100 rounded-full px-2 py-0.5">
+                  <p className="text-sm font-semibold text-foreground">{integration.name}</p>
+                  <span className="text-xs text-muted-foreground/70 bg-slate-100 rounded-full px-2 py-0.5">
                     {integration.category}
                   </span>
                 </div>
@@ -191,14 +191,14 @@ export default function IntegrationsPage() {
                     href={integration.docsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-purple-600 hover:underline flex items-center gap-1"
+                    className="text-xs text-teal-600 hover:underline flex items-center gap-1"
                   >
                     <ExternalLink className="w-3 h-3" />
                     Docs
                   </a>
                 )}
                 {integration.status === 'available' && (
-                  <button className="text-xs bg-purple-600 text-white px-3 py-1 rounded-lg hover:bg-purple-700 transition">
+                  <button className="text-xs bg-teal-600 text-white px-3 py-1 rounded-lg hover:bg-teal-700 transition">
                     Configure
                   </button>
                 )}
@@ -208,9 +208,9 @@ export default function IntegrationsPage() {
         })}
       </div>
 
-      <p className="text-xs text-slate-400">
+      <p className="text-xs text-muted-foreground/70">
         Need a custom integration? Contact{' '}
-        <a href="mailto:support@nyxcitadel.com" className="text-purple-600 hover:underline">
+        <a href="mailto:support@nyxcitadel.com" className="text-teal-600 hover:underline">
           support@nyxcitadel.com
         </a>
         .

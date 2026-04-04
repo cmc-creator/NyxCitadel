@@ -44,21 +44,21 @@ export default function NewIcOutbreakPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/infection-control/outbreaks" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/infection-control/outbreaks" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Outbreaks
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Biohazard className="w-6 h-6 text-orange-600" />
           Report Infection Outbreak
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Report to ADHS within 24 hours for reportable conditions (ARS §36-621).</p>
       </div>
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
+      {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Outbreak Details</h2>
+          <h2 className="text-sm font-semibold text-foreground">Outbreak Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Outbreak Number *</label>
@@ -92,8 +92,8 @@ export default function NewIcOutbreakPage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Reporting &amp; Containment</h2>
-          <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+          <h2 className="text-sm font-semibold text-foreground">Reporting &amp; Containment</h2>
+          <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
             <input name="reportedToHealth" type="checkbox" className="rounded" />
             Reported to public health department
           </label>
@@ -112,7 +112,7 @@ export default function NewIcOutbreakPage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/infection-control/outbreaks" className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/infection-control/outbreaks" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-orange-600 text-white hover:bg-orange-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Report Outbreak'}
           </button>

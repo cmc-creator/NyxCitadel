@@ -91,7 +91,7 @@ function LoginForm() {
 
         {/* Logo */}
         <div className="relative z-10">
-          <Link href="/" className="inline-flex items-center gap-2.5 text-slate-400 hover:text-white text-sm transition-colors mb-16">
+          <Link href="/" className="inline-flex items-center gap-2.5 text-muted-foreground/70 hover:text-white text-sm transition-colors mb-16">
             <ArrowLeft className="w-4 h-4" />
             Back to site
           </Link>
@@ -121,7 +121,7 @@ function LoginForm() {
               compliance command center
             </span>
           </h1>
-          <p className="text-slate-400 text-lg leading-relaxed max-w-md">
+          <p className="text-muted-foreground/70 text-lg leading-relaxed max-w-md">
             Everything your team needs to stay survey-ready, reduce risk,
             and drive quality improvement - in one platform.
           </p>
@@ -136,7 +136,7 @@ function LoginForm() {
               </div>
               <div>
                 <p className="font-semibold text-white text-sm">{title}</p>
-                <p className="text-slate-400 text-sm leading-snug">{desc}</p>
+                <p className="text-muted-foreground/70 text-sm leading-snug">{desc}</p>
               </div>
             </div>
           ))}
@@ -188,7 +188,7 @@ function LoginForm() {
           <div className="bg-slate-900/70 backdrop-blur-xl border border-white/8 rounded-2xl p-8 shadow-2xl shadow-black/40">
             <div className="mb-7">
               <h2 className="text-2xl font-bold text-white">Welcome back</h2>
-              <p className="text-slate-400 text-sm mt-1">Sign in to access your facility portal</p>
+              <p className="text-muted-foreground/70 text-sm mt-1">Sign in to access your facility portal</p>
             </div>
 
             {error && (
@@ -272,7 +272,7 @@ function LoginForm() {
           </div>
 
           {/* Footer */}
-          <p className="text-center text-slate-700 text-xs mt-5">
+          <p className="text-center text-foreground/80 text-xs mt-5">
             © {new Date().getFullYear()} <a href="https://nyxcollective.com" className="hover:text-slate-500 transition-colors">NyxCollective LLC</a> · NyxCitadel · HIPAA-compliant platform
           </p>
         </div>

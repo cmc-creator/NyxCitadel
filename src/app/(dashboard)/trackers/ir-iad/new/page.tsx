@@ -117,7 +117,7 @@ export default function NewIrIadPage() {
           onChange={toggle(field)}
           className="w-4 h-4 rounded border-slate-300 text-red-600 focus:ring-red-500"
         />
-        <span className="text-sm font-medium text-slate-700">{label}</span>
+        <span className="text-sm font-medium text-foreground/80">{label}</span>
       </label>
       {form[field] && children}
     </div>
@@ -126,10 +126,10 @@ export default function NewIrIadPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <Link href="/trackers/ir-iad" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-3">
+        <Link href="/trackers/ir-iad" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-foreground/80 mb-3">
           <ArrowLeft className="w-4 h-4" /> Back to IR / IAD Tracker
         </Link>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <FileWarning className="w-6 h-6 text-red-500" />
           Log Incident Report
         </h1>
@@ -139,26 +139,26 @@ export default function NewIrIadPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-red-700 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 rounded-lg px-4 py-3 text-red-700 text-sm">{error}</div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Incident Details */}
-        <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-          <h2 className="font-semibold text-slate-800 text-sm uppercase tracking-wide">Incident Details</h2>
+        <div className="bg-card rounded-xl border border-border p-5 space-y-4">
+          <h2 className="font-semibold text-foreground text-sm uppercase tracking-wide">Incident Details</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Date of Incident <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Date of Incident <span className="text-red-500">*</span></label>
               <input type="date" required value={form.incidentDate} onChange={set('incidentDate')}
                 className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Time of Incident</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Time of Incident</label>
               <input type="time" value={form.incidentTime} onChange={set('incidentTime')}
                 className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Incident Type <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Incident Type <span className="text-red-500">*</span></label>
               <select required value={form.incidentType} onChange={set('incidentType')} className="input-field w-full">
                 <option value="PATIENT_FALL">Patient Fall</option>
                 <option value="MEDICATION_ERROR">Medication Error</option>
@@ -181,7 +181,7 @@ export default function NewIrIadPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Severity <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Severity <span className="text-red-500">*</span></label>
               <select required value={form.severity} onChange={set('severity')} className="input-field w-full">
                 <option value="NEAR_MISS">Near Miss (no harm)</option>
                 <option value="MINOR">Minor (temporary, minor harm)</option>
@@ -191,30 +191,30 @@ export default function NewIrIadPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Location</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Location</label>
               <input type="text" placeholder="e.g. Unit A - Room 104" value={form.location} onChange={set('location')}
                 className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Unit Name</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Unit Name</label>
               <input type="text" placeholder="e.g. Acute Adult Psych" value={form.unitName} onChange={set('unitName')}
                 className="input-field w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Description of Incident <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Description of Incident <span className="text-red-500">*</span></label>
             <textarea required rows={4} value={form.briefDescription} onChange={set('briefDescription')}
               placeholder="Provide a detailed, factual description of what occurred..."
               className="input-field w-full resize-none" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Injury Description</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Injury Description</label>
             <textarea rows={2} value={form.injuryDescription} onChange={set('injuryDescription')}
               placeholder="Describe any injuries sustained..."
               className="input-field w-full resize-none" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Immediate Actions Taken</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Immediate Actions Taken</label>
             <textarea rows={3} value={form.immediateActions} onChange={set('immediateActions')}
               placeholder="What immediate actions were taken at the time of the incident?"
               className="input-field w-full resize-none" />
@@ -222,46 +222,46 @@ export default function NewIrIadPage() {
         </div>
 
         {/* Patient Info */}
-        <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-          <h2 className="font-semibold text-slate-800 text-sm uppercase tracking-wide">Patient Information</h2>
+        <div className="bg-card rounded-xl border border-border p-5 space-y-4">
+          <h2 className="font-semibold text-foreground text-sm uppercase tracking-wide">Patient Information</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Patient Name</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Patient Name</label>
               <input type="text" value={form.patientName} onChange={set('patientName')}
                 placeholder="Full name" className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">MRN</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">MRN</label>
               <input type="text" value={form.patientMRN} onChange={set('patientMRN')}
                 placeholder="Medical record number" className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Date of Birth</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Date of Birth</label>
               <input type="date" value={form.patientDOB} onChange={set('patientDOB')}
                 className="input-field w-full" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Age</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Age</label>
               <input type="number" min={0} max={130} value={form.patientAge} onChange={set('patientAge')}
                 placeholder="Age in years" className="input-field w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Staff Involved</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Staff Involved</label>
             <textarea rows={2} value={form.staffInvolvedNames} onChange={set('staffInvolvedNames')}
               placeholder="Names and roles of staff involved..."
               className="input-field w-full resize-none" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Witnesses</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Witnesses</label>
             <input type="text" value={form.witnessNames} onChange={set('witnessNames')}
               placeholder="Witness names" className="input-field w-full" />
           </div>
         </div>
 
         {/* Notifications */}
-        <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-          <h2 className="font-semibold text-slate-800 text-sm uppercase tracking-wide">Notifications</h2>
+        <div className="bg-card rounded-xl border border-border p-5 space-y-4">
+          <h2 className="font-semibold text-foreground text-sm uppercase tracking-wide">Notifications</h2>
           <CheckRow label="Physician Notified" field="physicianNotified">
             <input type="time" value={form.physicianNotifiedTime} onChange={set('physicianNotifiedTime')}
               placeholder="Time notified" className="input-field w-40 text-sm" />
@@ -280,8 +280,8 @@ export default function NewIrIadPage() {
         </div>
 
         {/* Regulatory Reporting */}
-        <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-          <h2 className="font-semibold text-slate-800 text-sm uppercase tracking-wide">Regulatory Reporting Requirements</h2>
+        <div className="bg-card rounded-xl border border-border p-5 space-y-4">
+          <h2 className="font-semibold text-foreground text-sm uppercase tracking-wide">Regulatory Reporting Requirements</h2>
 
           <CheckRow label="ADHS Reportable (ARS 36-2402)" field="adhsReportable">
             <div className="ml-6">
@@ -311,15 +311,15 @@ export default function NewIrIadPage() {
         </div>
 
         {/* Assignment & Notes */}
-        <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-          <h2 className="font-semibold text-slate-800 text-sm uppercase tracking-wide">Assignment & Notes</h2>
+        <div className="bg-card rounded-xl border border-border p-5 space-y-4">
+          <h2 className="font-semibold text-foreground text-sm uppercase tracking-wide">Assignment & Notes</h2>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Assigned To</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Assigned To</label>
             <input type="text" value={form.assignedTo} onChange={set('assignedTo')}
               placeholder="Staff member responsible for investigation" className="input-field w-full" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Internal Notes</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Internal Notes</label>
             <textarea rows={3} value={form.notes} onChange={set('notes')}
               placeholder="Additional notes..."
               className="input-field w-full resize-none" />
@@ -351,7 +351,7 @@ export default function NewIrIadPage() {
               ))}
             </div>
           )}
-          <p className="text-xs text-slate-400 leading-relaxed">{triage.reason}</p>
+          <p className="text-xs text-muted-foreground/70 leading-relaxed">{triage.reason}</p>
           {triage.severity === 'CRITICAL' && (
             <div className="flex items-start gap-2 text-xs text-amber-300 bg-amber-900/30 border border-amber-700 rounded-lg p-2">
               <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0" />
@@ -368,7 +368,7 @@ export default function NewIrIadPage() {
           >
             {saving ? 'Saving...' : 'Log Incident Report'}
           </button>
-          <Link href="/trackers/ir-iad" className="px-4 py-2.5 text-sm text-slate-600 hover:text-slate-800 rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
+          <Link href="/trackers/ir-iad" className="px-4 py-2.5 text-sm text-slate-600 hover:text-foreground rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
             Cancel
           </Link>
         </div>

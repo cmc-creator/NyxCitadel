@@ -264,11 +264,11 @@ export default function ImportPoliciesPage() {
   return (
     <div className="max-w-4xl space-y-6">
       <div>
-        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Policy Tracker
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Upload className="w-6 h-6 text-purple-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <Upload className="w-6 h-6 text-teal-600" />
           Bulk Import Policies
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">
@@ -277,7 +277,7 @@ export default function ImportPoliciesPage() {
       </div>
 
       {/* Template Download */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl px-5 py-4 flex items-start gap-4">
+      <div className="bg-blue-950/20 border border-blue-200 rounded-xl px-5 py-4 flex items-start gap-4">
         <FileText className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
         <div className="flex-1">
           <p className="text-sm font-semibold text-blue-900 mb-1">Download the import template</p>
@@ -289,30 +289,30 @@ export default function ImportPoliciesPage() {
             Dates must be in <strong>YYYY-MM-DD</strong> or <strong>MM/DD/YYYY</strong> format.
             Policy numbers are auto-generated if omitted.
           </p>
-          <button onClick={downloadTemplate} className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-700 border border-blue-300 bg-white hover:bg-blue-50 px-3 py-1.5 rounded-lg transition">
+          <button onClick={downloadTemplate} className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-700 border border-blue-300 bg-white hover:bg-blue-950/20 px-3 py-1.5 rounded-lg transition">
             <Download className="w-3.5 h-3.5" /> Download Template CSV
           </button>
         </div>
       </div>
 
       {/* File Upload */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-        <h2 className="text-sm font-semibold text-slate-800">Upload CSV File</h2>
+      <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+        <h2 className="text-sm font-semibold text-foreground">Upload CSV File</h2>
         {!fileName ? (
-          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-purple-300 hover:bg-purple-50 transition-colors">
-            <Upload className="w-6 h-6 text-slate-400 mb-2" />
+          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-teal-300 hover:bg-teal-950/20 transition-colors">
+            <Upload className="w-6 h-6 text-muted-foreground/70 mb-2" />
             <span className="text-sm text-slate-500">Click to upload your policies CSV</span>
-            <span className="text-xs text-slate-400 mt-1">CSV files only</span>
+            <span className="text-xs text-muted-foreground/70 mt-1">CSV files only</span>
             <input ref={fileRef} type="file" accept=".csv,text/csv" className="hidden" onChange={handleFile} />
           </label>
         ) : (
-          <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-lg px-4 py-3">
-            <FileText className="w-5 h-5 text-purple-600 shrink-0" />
+          <div className="flex items-center gap-3 bg-slate-50 border border-border rounded-lg px-4 py-3">
+            <FileText className="w-5 h-5 text-teal-600 shrink-0" />
             <div className="flex-1">
-              <p className="text-sm font-medium text-slate-800">{fileName}</p>
+              <p className="text-sm font-medium text-foreground">{fileName}</p>
               <p className="text-xs text-slate-500">{rows.length} rows parsed &mdash; {validRows.length} valid, {invalidRows.length} with errors</p>
             </div>
-            <button onClick={clearFile} className="p-1 text-slate-400 hover:text-red-500">
+            <button onClick={clearFile} className="p-1 text-muted-foreground/70 hover:text-red-500">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -321,7 +321,7 @@ export default function ImportPoliciesPage() {
 
       {/* Validation errors */}
       {invalidRows.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
+        <div className="bg-amber-950/20 border border-amber-200 rounded-xl p-4 space-y-2">
           <p className="text-sm font-semibold text-amber-800 flex items-center gap-2">
             <AlertTriangle className="w-4 h-4" />
             {invalidRows.length} row{invalidRows.length > 1 ? 's' : ''} will be skipped (fix these in your CSV and re-upload)
@@ -338,13 +338,13 @@ export default function ImportPoliciesPage() {
 
       {/* Preview Table */}
       {validRows.length > 0 && (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="bg-card rounded-xl border border-border overflow-hidden">
           <div className="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-            <span className="text-sm font-semibold text-slate-800">{validRows.length} policies ready to import</span>
+            <span className="text-sm font-semibold text-foreground">{validRows.length} policies ready to import</span>
             <button
               onClick={handleImport}
               disabled={importing}
-              className="inline-flex items-center gap-1.5 text-sm font-medium bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white px-4 py-1.5 rounded-lg transition"
+              className="inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white px-4 py-1.5 rounded-lg transition"
             >
               {importing ? 'Importing...' : `Import ${validRows.length} Policies`}
             </button>
@@ -365,9 +365,9 @@ export default function ImportPoliciesPage() {
               <tbody className="divide-y divide-slate-50">
                 {validRows.map(r => (
                   <tr key={r._line} className="hover:bg-slate-50">
-                    <td className="px-4 py-2 text-slate-400">{r._line}</td>
+                    <td className="px-4 py-2 text-muted-foreground/70">{r._line}</td>
                     <td className="px-4 py-2 font-mono text-slate-500">{r.policyNumber ?? <span className="text-slate-300">auto</span>}</td>
-                    <td className="px-4 py-2 text-slate-700 max-w-[200px] truncate">{r.title}</td>
+                    <td className="px-4 py-2 text-foreground/80 max-w-[200px] truncate">{r.title}</td>
                     <td className="px-4 py-2 text-slate-500">{r.category.replace(/_/g, ' ')}</td>
                     <td className="px-4 py-2 text-slate-500">{r.effectiveDate}</td>
                     <td className="px-4 py-2 text-slate-500">{r.nextReviewDate}</td>
@@ -382,14 +382,14 @@ export default function ImportPoliciesPage() {
 
       {/* Import Results */}
       {results && (
-        <div className={`rounded-xl border px-5 py-4 flex items-start gap-3 ${results.failed === 0 ? 'bg-green-50 border-green-200' : 'bg-amber-50 border-amber-200'}`}>
+        <div className={`rounded-xl border px-5 py-4 flex items-start gap-3 ${results.failed === 0 ? 'bg-green-50 border-green-200' : 'bg-amber-950/20 border-amber-200'}`}>
           {results.failed === 0 ? (
             <CheckCircle className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
           ) : (
             <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
           )}
           <div>
-            <p className="text-sm font-semibold text-slate-800">
+            <p className="text-sm font-semibold text-foreground">
               {results.ok} imported successfully{results.failed > 0 && `, ${results.failed} failed`}
             </p>
             {results.failed === 0 && (

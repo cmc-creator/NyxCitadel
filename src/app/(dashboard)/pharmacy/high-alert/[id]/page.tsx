@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -21,8 +21,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -30,7 +30,7 @@ function Field({ label, value }: { label: string; value?: string | null }) {
 function BoolCheck({ label, value }: { label: string; value: boolean }) {
   return (
     <div className="flex items-center justify-between py-2 border-b border-slate-100 last:border-0">
-      <span className="text-sm text-slate-700">{label}</span>
+      <span className="text-sm text-foreground/80">{label}</span>
       {value ? (
         <CheckCircle className="w-5 h-5 text-green-500" />
       ) : (
@@ -54,11 +54,11 @@ export default async function HighAlertMedAuditDetailPage({ params }: { params: 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/pharmacy/high-alert" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/pharmacy/high-alert" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to High-Alert Medications
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/pharmacy/high-alert/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/pharmacy/high-alert/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -66,7 +66,7 @@ export default async function HighAlertMedAuditDetailPage({ params }: { params: 
       </div>
 
       {actionNeeded && (
-        <div className="flex items-start gap-3 bg-orange-50 border border-orange-300 text-orange-800 rounded-2xl p-4">
+        <div className="flex items-start gap-3 bg-orange-950/20 border border-orange-300 text-orange-800 rounded-2xl p-4">
           <AlertTriangle className="w-5 h-5 mt-0.5 flex-shrink-0" />
           <div>
             <p className="font-semibold">Action Required</p>
@@ -75,7 +75,7 @@ export default async function HighAlertMedAuditDetailPage({ params }: { params: 
         </div>
       )}
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -85,7 +85,7 @@ export default async function HighAlertMedAuditDetailPage({ params }: { params: 
                 <span className="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold bg-yellow-100 text-yellow-700">Findings Noted</span>
               )}
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{audit.medication}</h1>
+            <h1 className="text-xl font-bold text-foreground">{audit.medication}</h1>
             <p className="text-sm text-slate-500 mt-1">{audit.unit} &middot; Auditor: {audit.auditor} &middot; {formatDate(audit.auditDate)}</p>
           </div>
         </div>
@@ -101,19 +101,19 @@ export default async function HighAlertMedAuditDetailPage({ params }: { params: 
 
           {audit.auditFindings && (
             <Section title="Audit Findings">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{audit.auditFindings}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{audit.auditFindings}</p>
             </Section>
           )}
 
           {audit.actionRequired && (
             <Section title="Action Required">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{audit.actionRequired}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{audit.actionRequired}</p>
             </Section>
           )}
 
           {audit.actionTaken && (
             <Section title="Action Taken">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{audit.actionTaken}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{audit.actionTaken}</p>
             </Section>
           )}
         </div>

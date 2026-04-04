@@ -167,11 +167,11 @@ export default function NewPolicyPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Policy Tracker
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <FileText className="w-6 h-6 text-purple-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <FileText className="w-6 h-6 text-teal-600" />
           Add Policy / Procedure
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">
@@ -180,20 +180,20 @@ export default function NewPolicyPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         {/* Core Info */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Policy Information</h2>
+          <h2 className="text-sm font-semibold text-foreground">Policy Information</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Policy Title *</label>
             <input name="title" required className="form-input w-full" placeholder="e.g., Patient Rights and Responsibilities Policy" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Policy # <span className="font-normal text-slate-400">(auto-generated if blank)</span></label>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Policy # <span className="font-normal text-muted-foreground/70">(auto-generated if blank)</span></label>
               <input name="policyNumber" className="form-input w-full" placeholder="e.g., PR-001" />
             </div>
             <div>
@@ -232,7 +232,7 @@ export default function NewPolicyPage() {
 
         {/* Dates */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Review Schedule</h2>
+          <h2 className="text-sm font-semibold text-foreground">Review Schedule</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Review Frequency</label>
             <select
@@ -270,19 +270,19 @@ export default function NewPolicyPage() {
               />
             </div>
           </div>
-          <p className="text-xs text-slate-400">Next review date is auto-calculated when you set the effective date.</p>
+          <p className="text-xs text-muted-foreground/70">Next review date is auto-calculated when you set the effective date.</p>
         </div>
 
         {/* Regulatory Bodies */}
         <div className="px-6 py-5 space-y-3">
-          <h2 className="text-sm font-semibold text-slate-800">Applicable Regulatory Bodies</h2>
+          <h2 className="text-sm font-semibold text-foreground">Applicable Regulatory Bodies</h2>
           <div className="flex flex-wrap gap-2">
             {REGULATORY_BODIES.map(v => (
               <button
                 key={v}
                 type="button"
                 onClick={() => toggleBody(v)}
-                className={`px-3 py-1 text-xs rounded-full border transition-colors ${selectedBodies.includes(v) ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-600 border-slate-200 hover:border-purple-300'}`}
+                className={`px-3 py-1 text-xs rounded-full border transition-colors ${selectedBodies.includes(v) ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-slate-600 border-slate-200 hover:border-teal-300'}`}
               >
                 {REG_LABELS[v] ?? v}
               </button>
@@ -292,14 +292,14 @@ export default function NewPolicyPage() {
 
         {/* Document Upload */}
         <div className="px-6 py-5 space-y-3">
-          <h2 className="text-sm font-semibold text-slate-800">
-            Policy Document <span className="font-normal text-slate-400">(optional - PDF or Word)</span>
+          <h2 className="text-sm font-semibold text-foreground">
+            Policy Document <span className="font-normal text-muted-foreground/70">(optional - PDF or Word)</span>
           </h2>
           {!uploadFile && !uploadedUrl ? (
-            <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-purple-300 hover:bg-purple-50 transition-colors">
-              <Upload className="w-5 h-5 text-slate-400 mb-1.5" />
+            <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-teal-300 hover:bg-teal-950/20 transition-colors">
+              <Upload className="w-5 h-5 text-muted-foreground/70 mb-1.5" />
               <span className="text-sm text-slate-500">Click to upload PDF or Word document</span>
-              <span className="text-xs text-slate-400 mt-0.5">Max 20 MB</span>
+              <span className="text-xs text-muted-foreground/70 mt-0.5">Max 20 MB</span>
               <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileSelect} />
             </label>
           ) : (
@@ -311,7 +311,7 @@ export default function NewPolicyPage() {
                 {uploadedUrl && <p className="text-xs text-green-600">Uploaded successfully</p>}
                 {uploadError && <p className="text-xs text-red-600">{uploadError}</p>}
               </div>
-              <button type="button" onClick={clearFile} className="p-1 rounded text-slate-400 hover:text-red-500">
+              <button type="button" onClick={clearFile} className="p-1 rounded text-muted-foreground/70 hover:text-red-500">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -323,7 +323,7 @@ export default function NewPolicyPage() {
 
         {/* Description */}
         <div className="px-6 py-5 space-y-3">
-          <h2 className="text-sm font-semibold text-slate-800">Summary / Description <span className="font-normal text-slate-400">(optional)</span></h2>
+          <h2 className="text-sm font-semibold text-foreground">Summary / Description <span className="font-normal text-muted-foreground/70">(optional)</span></h2>
           <textarea name="description" rows={3} className="form-input w-full resize-none" placeholder="Brief summary of policy purpose and scope..." />
         </div>
 

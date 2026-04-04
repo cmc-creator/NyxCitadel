@@ -25,7 +25,7 @@ export default function EditPdmpCheckPage() {
       .catch(() => { setError('Failed to load.'); setLoading(false); });
   }, [id]);
 
-  if (loading) return <div className="text-slate-400 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
   if (!data || data.error) return <div className="text-red-400 p-8">{error || 'Record not found.'}</div>;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -58,17 +58,17 @@ export default function EditPdmpCheckPage() {
         <a href={`/pharmacy/pdmp/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Search className="w-6 h-6 text-violet-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <Search className="w-6 h-6 text-teal-600" />
           Edit PDMP Check
         </h1>
       </div>
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
+      {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
 
-      <form key={data.id} onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form key={data.id} onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Check Details</h2>
+          <h2 className="text-sm font-semibold text-foreground">Check Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Check Date *</label>
@@ -101,8 +101,8 @@ export default function EditPdmpCheckPage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Findings</h2>
-          <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+          <h2 className="text-sm font-semibold text-foreground">Findings</h2>
+          <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
             <input name="significantFinding" type="checkbox" className="rounded"
               checked={significantFinding} onChange={e => setSignificantFinding(e.target.checked)} />
             Significant Finding Identified
@@ -124,7 +124,7 @@ export default function EditPdmpCheckPage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/pharmacy/pdmp/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900">Cancel</a>
+          <a href={`/pharmacy/pdmp/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

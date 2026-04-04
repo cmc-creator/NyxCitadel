@@ -49,3 +49,6 @@ coverage/
 
 # Turbopack
 .turbo/
+
+# Sentry Config File
+.env.sentry-build-plugin

@@ -57,20 +57,20 @@ export default function NewEmployeeHealthPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/workforce-health/employee-health" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/workforce-health/employee-health" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Employee Health
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <HeartPulse className="w-6 h-6 text-orange-600" />
           New Employee Health Record
         </h1>
       </div>
 
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
+      {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Employee Info</h2>
+          <h2 className="text-sm font-semibold text-foreground">Employee Info</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Employee Name *</label>
@@ -94,7 +94,7 @@ export default function NewEmployeeHealthPage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">TB Screening</h2>
+          <h2 className="text-sm font-semibold text-foreground">TB Screening</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Screen Date</label>
@@ -122,7 +122,7 @@ export default function NewEmployeeHealthPage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Influenza Vaccination</h2>
+          <h2 className="text-sm font-semibold text-foreground">Influenza Vaccination</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Flu Vax Date</label>
@@ -133,7 +133,7 @@ export default function NewEmployeeHealthPage() {
               <input name="fluVaxSeason" type="text" className="form-input w-full" placeholder="e.g. 2024-2025" />
             </div>
           </div>
-          <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+          <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
             <input name="fluVaxDeclined" type="checkbox" className="rounded"
               onChange={e => setFluDeclined(e.target.checked)} />
             Declined Flu Vaccine
@@ -147,7 +147,7 @@ export default function NewEmployeeHealthPage() {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Other Health Items</h2>
+          <h2 className="text-sm font-semibold text-foreground">Other Health Items</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">COVID Vax Status</label>
@@ -161,7 +161,7 @@ export default function NewEmployeeHealthPage() {
               <input name="bgCheckDate" type="date" className="form-input w-full" />
             </div>
           </div>
-          <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+          <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
             <input name="licenseVerified" type="checkbox" className="rounded" />
             License / Credential Verified
           </label>
@@ -187,7 +187,7 @@ export default function NewEmployeeHealthPage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/workforce-health/employee-health" className="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/workforce-health/employee-health" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-orange-600 text-white hover:bg-orange-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Record'}
           </button>

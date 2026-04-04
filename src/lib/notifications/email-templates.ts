@@ -20,7 +20,7 @@ function emailShell(title: string, eyebrow: string, body: string): string {
     body { margin: 0; padding: 0; background: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #111827; }
     .wrap { max-width: 720px; margin: 0 auto; padding: 32px 16px; }
     .card { background: #ffffff; border-radius: 18px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08); }
-    .hero { padding: 28px 28px 20px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 60%, #0f172a 100%); color: white; }
+    .hero { padding: 28px 28px 20px; background: linear-gradient(135deg, #0d7377 0%, #14a4a8 60%, #0f172a 100%); color: white; }
     .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.78; }
     .hero h1 { margin: 10px 0 0; font-size: 28px; line-height: 1.15; }
     .content { padding: 28px; }
@@ -29,8 +29,8 @@ function emailShell(title: string, eyebrow: string, body: string): string {
     .list-item { padding: 14px 16px; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 12px; background: #f8fafc; }
     .list-item h3 { margin: 0 0 6px; font-size: 15px; color: #111827; }
     .list-item p { margin: 0; color: #4b5563; font-size: 13px; line-height: 1.5; }
-    .meta { margin-top: 8px; font-size: 12px; color: #7c3aed; font-weight: 600; }
-    .button { display: inline-block; padding: 12px 18px; border-radius: 10px; background: #4f46e5; color: white; text-decoration: none; font-weight: 700; font-size: 14px; }
+    .meta { margin-top: 8px; font-size: 12px; color: #0d7377; font-weight: 600; }
+    .button { display: inline-block; padding: 12px 18px; border-radius: 10px; background: #0d7377; color: white; text-decoration: none; font-weight: 700; font-size: 14px; }
     .footer { padding: 0 28px 28px; color: #9ca3af; font-size: 12px; }
   </style>
 </head>
@@ -63,7 +63,7 @@ export function getComplianceDigestEmail(data: {
         <div class="list-item">
           <h3>${alert.title}</h3>
           <p>${alert.message}</p>
-          <div class="meta">${alert.createdAt.toLocaleString()}${alert.linkUrl ? ` · <a href="${base}${alert.linkUrl}" style="color:#4f46e5;text-decoration:none;">Open in NyxCitadel</a>` : ''}</div>
+          <div class="meta">${alert.createdAt.toLocaleString()}${alert.linkUrl ? ` · <a href="${base}${alert.linkUrl}" style="color:#0d7377;text-decoration:none;">Open in NyxCitadel</a>` : ''}</div>
         </div>
       `).join('')}
     </div>
@@ -101,7 +101,7 @@ export function getExportSummaryEmail(data: {
       ${items.map((item) => `
         <div class="list-item">
           <h3>${item.label}</h3>
-          <p><a href="${base}${item.path}" style="color:#4f46e5;text-decoration:none;">${base}${item.path}</a></p>
+          <p><a href="${base}${item.path}" style="color:#0d7377;text-decoration:none;">${base}${item.path}</a></p>
         </div>
       `).join('')}
     </div>
@@ -152,7 +152,7 @@ export function getRegulatoryAlertEmail(data: {
           <div class="list-item">
             <h3>${badge}&nbsp; ${agencyLabel}${docLabel}</h3>
             <p>${u.title.slice(0, 200)}</p>
-            ${u.url ? `<div class="meta"><a href="${u.url}" style="color:#4f46e5;text-decoration:none;">View Source</a> &nbsp;·&nbsp; <a href="${base}/intelligence/updates" style="color:#4f46e5;text-decoration:none;">Open in NyxCitadel</a></div>` : `<div class="meta"><a href="${base}/intelligence/updates" style="color:#4f46e5;text-decoration:none;">Open in NyxCitadel</a></div>`}
+            ${u.url ? `<div class="meta"><a href="${u.url}" style="color:#0d7377;text-decoration:none;">View Source</a> &nbsp;·&nbsp; <a href="${base}/intelligence/updates" style="color:#0d7377;text-decoration:none;">Open in NyxCitadel</a></div>` : `<div class="meta"><a href="${base}/intelligence/updates" style="color:#0d7377;text-decoration:none;">Open in NyxCitadel</a></div>`}
           </div>`;
       }).join('')}
     </div>

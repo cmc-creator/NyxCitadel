@@ -44,7 +44,7 @@ export default async function HandHygienePage({ searchParams }: { searchParams: 
             <h1 className="text-xl font-bold text-white">Hand Hygiene Audits</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">TJC NPSG 07.01</span>
           </div>
-          <p className="text-slate-400 text-sm">Unit-level direct observation audits - compliance rate vs. 90% facility goal.</p>
+          <p className="text-muted-foreground/70 text-sm">Unit-level direct observation audits - compliance rate vs. 90% facility goal.</p>
         </div>
         <a href="/infection-control/hand-hygiene/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Enter Audit
@@ -86,12 +86,12 @@ export default async function HandHygienePage({ searchParams }: { searchParams: 
       {/* Filter */}
       <div className="flex flex-wrap gap-2">
         <a href="/infection-control/hand-hygiene"
-          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${!searchParams.unit ? 'bg-teal-600 text-white' : 'bg-slate-800 text-slate-400 hover:text-white border border-white/10'}`}>
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${!searchParams.unit ? 'bg-teal-600 text-white' : 'bg-slate-800 text-muted-foreground/70 hover:text-white border border-white/10'}`}>
           All Units
         </a>
         {allUnits.map(u => (
           <a key={u.unit} href={`/infection-control/hand-hygiene?unit=${encodeURIComponent(u.unit)}`}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${searchParams.unit === u.unit ? 'bg-teal-600 text-white' : 'bg-slate-800 text-slate-400 hover:text-white border border-white/10'}`}>
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${searchParams.unit === u.unit ? 'bg-teal-600 text-white' : 'bg-slate-800 text-muted-foreground/70 hover:text-white border border-white/10'}`}>
             {u.unit}
           </a>
         ))}
@@ -102,7 +102,7 @@ export default async function HandHygienePage({ searchParams }: { searchParams: 
           <thead className="bg-slate-900/40 border-b border-white/10">
             <tr>
               {['Date', 'Unit', 'Staff Type', 'Auditor', 'Opportunities', 'Compliant', 'Rate'].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-3">{h}</th>
+                <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">{h}</th>
               ))}
             </tr>
           </thead>
@@ -113,10 +113,10 @@ export default async function HandHygienePage({ searchParams }: { searchParams: 
               const below = a.complianceRate < 90;
               return (
                 <tr key={a.id} className="hover:bg-white/5">
-                  <td className="px-4 py-3 text-slate-400 text-xs">{new Date(a.auditDate).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70 text-xs">{new Date(a.auditDate).toLocaleDateString()}</td>
                   <td className="px-4 py-3 font-semibold text-white text-xs">{a.unit}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{a.staffType ?? '-'}</td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{a.auditor}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70 text-xs">{a.auditor}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{a.opportunities}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{a.compliant}</td>
                   <td className={`px-4 py-3 font-bold text-sm ${below ? 'text-amber-400' : 'text-emerald-400'}`}>

@@ -22,24 +22,24 @@ export default async function CommitteeMeetingsPage() {
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <Users className="w-5 h-5 text-violet-400" />
+            <Users className="w-5 h-5 text-teal-400" />
             <h1 className="text-xl font-bold text-white">Committee Meetings</h1>
           </div>
-          <p className="text-slate-400 text-sm">Track committee quorum, minutes approval, and action items.</p>
+          <p className="text-muted-foreground/70 text-sm">Track committee quorum, minutes approval, and action items.</p>
         </div>
-        <a href="/governance/committees/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors">
+        <a href="/governance/committees/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Log Meeting
         </a>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: 'Total Meetings', value: meetings.length, color: 'text-violet-400' },
+          { label: 'Total Meetings', value: meetings.length, color: 'text-teal-400' },
           { label: 'Pending Minutes Approval', value: pendingMinutes, color: pendingMinutes > 0 ? 'text-amber-400' : 'text-emerald-400' },
           { label: 'Quorum Not Met', value: noQuorum, color: noQuorum > 0 ? 'text-red-400' : 'text-emerald-400' },
         ].map(s => (
           <div key={s.label} className="rounded-xl border border-white/10 bg-slate-800/50 p-4">
-            <p className="text-xs text-slate-400 mb-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mb-1">{s.label}</p>
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
           </div>
         ))}
@@ -55,7 +55,7 @@ export default async function CommitteeMeetingsPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="font-semibold text-white">{m.committeeType}</p>
-                  <p className="text-xs text-slate-400 mt-0.5">{m.meetingDate.toLocaleDateString()} {m.chair ? `- Chair: ${m.chair}` : ''}</p>
+                  <p className="text-xs text-muted-foreground/70 mt-0.5">{m.meetingDate.toLocaleDateString()} {m.chair ? `- Chair: ${m.chair}` : ''}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   {m.quorumMet

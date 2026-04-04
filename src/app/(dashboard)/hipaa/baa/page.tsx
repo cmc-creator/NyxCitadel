@@ -43,7 +43,7 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
             <h1 className="text-xl font-bold text-white">Business Associate Agreement Tracker</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">HIPAA §164.308</span>
           </div>
-          <p className="text-slate-400 text-sm">All vendors and contractors with access to PHI — BAA status, expiry tracking, and renewal workflow.</p>
+          <p className="text-muted-foreground/70 text-sm">All vendors and contractors with access to PHI — BAA status, expiry tracking, and renewal workflow.</p>
         </div>
         <a href="/hipaa/baa/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Add BAA
@@ -72,7 +72,7 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4 text-center">
             <p className="text-2xl font-bold text-white">{s.value}</p>
-            <p className="text-xs text-slate-400 mt-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mt-1">{s.label}</p>
           </div>
         ))}
       </div>
@@ -80,7 +80,7 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
       <div className="flex gap-2 flex-wrap">
         {['ALL', 'ACTIVE', 'EXPIRED', 'PENDING_RENEWAL'].map(f => (
           <a key={f} href={`/hipaa/baa?filter=${f}`}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === f ? 'bg-blue-600 text-white' : 'bg-slate-800 text-slate-400 hover:text-white border border-white/10'}`}>
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === f ? 'bg-blue-600 text-white' : 'bg-slate-800 text-muted-foreground/70 hover:text-white border border-white/10'}`}>
             {f.replace('_', ' ')}
           </a>
         ))}
@@ -91,7 +91,7 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
           <thead className="bg-slate-900/40 border-b border-white/10">
             <tr>
               {['Vendor / BA', 'Service / PHI Access', 'Agreement Date', 'Expiry', 'Days Left', 'Status'].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-slate-400 px-4 py-3">{h}</th>
+                <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">{h}</th>
               ))}
             </tr>
           </thead>
@@ -105,10 +105,10 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
               return (
                 <tr key={b.id} className={`hover:bg-white/5 transition-colors ${b.status === 'EXPIRED' ? 'bg-red-500/5' : ''}`}>
                   <td className="px-4 py-3 font-semibold text-white text-xs">{b.vendorName}</td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{b.serviceDescription}</td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{b.agreementDate.toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70 text-xs">{b.serviceDescription}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70 text-xs">{b.agreementDate.toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{b.expiryDate ? b.expiryDate.toLocaleDateString() : '—'}</td>
-                  <td className={`px-4 py-3 font-bold text-xs ${daysLeft == null ? 'text-slate-500' : daysLeft <= 0 ? 'text-red-400' : daysLeft <= 90 ? 'text-amber-400' : 'text-slate-400'}`}>
+                  <td className={`px-4 py-3 font-bold text-xs ${daysLeft == null ? 'text-slate-500' : daysLeft <= 0 ? 'text-red-400' : daysLeft <= 90 ? 'text-amber-400' : 'text-muted-foreground/70'}`}>
                     {daysLeft == null ? '—' : daysLeft <= 0 ? `${Math.abs(daysLeft)}d overdue` : `${daysLeft}d`}
                   </td>
                   <td className="px-4 py-3">

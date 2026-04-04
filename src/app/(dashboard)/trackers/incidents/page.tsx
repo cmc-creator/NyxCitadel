@@ -1,4 +1,4 @@
-﻿import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { AlertTriangle, Plus, Download } from 'lucide-react';
@@ -44,7 +44,7 @@ export default async function IncidentsPage({
     OPEN: 'bg-blue-100 text-blue-800',
     UNDER_INVESTIGATION: 'bg-yellow-100 text-yellow-800',
     RCA_IN_PROGRESS: 'bg-orange-100 text-orange-800',
-    CAP_IN_PROGRESS: 'bg-purple-100 text-purple-800',
+    CAP_IN_PROGRESS: 'bg-teal-100 text-teal-800',
     CLOSED: 'bg-gray-100 text-gray-600',
     REPORTABLE_PENDING: 'bg-red-100 text-red-800',
   };
@@ -53,8 +53,8 @@ export default async function IncidentsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <AlertTriangle className="w-6 h-6 text-purple-600" />
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <AlertTriangle className="w-6 h-6 text-teal-600" />
             Incident / Occurrence Reports
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -64,7 +64,7 @@ export default async function IncidentsPage({
         <div className="flex items-center gap-2">
           <Link
             href="/api/export/incidents"
-            className="inline-flex items-center gap-1.5 text-sm bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm bg-card border border-border hover:bg-slate-50 text-foreground/80 px-3 py-1.5 rounded-lg font-medium transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
             Export CSV
@@ -72,7 +72,7 @@ export default async function IncidentsPage({
           <PrintButton />
           <Link
             href="/trackers/incidents/new"
-            className="inline-flex items-center gap-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             New Incident Report
@@ -81,7 +81,7 @@ export default async function IncidentsPage({
       </div>
 
       {reportableCount > 0 && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg p-3">
+        <div className="flex items-center gap-2 bg-red-950/20 border border-red-200 rounded-lg p-3">
           <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0" />
           <p className="text-sm text-red-800">
             <span className="font-bold">{reportableCount} incidents</span> are reportable to the state and have not been reported yet.
@@ -101,8 +101,8 @@ export default async function IncidentsPage({
             href={tab.href}
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
               tab.active
-                ? 'bg-purple-600 text-white'
-                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                ? 'bg-teal-600 text-white'
+                : 'bg-card border border-border text-slate-600 hover:bg-slate-50'
             }`}
           >
             {tab.label}
@@ -111,7 +111,7 @@ export default async function IncidentsPage({
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
@@ -128,22 +128,22 @@ export default async function IncidentsPage({
           <tbody className="divide-y divide-slate-50">
             {incidents.length === 0 ? (
               <tr>
-                <td colSpan={8} className="text-center py-12 text-slate-400">
-                  No incidents found. <Link href="/trackers/incidents/new" className="text-purple-600 hover:underline">File a new incident report</Link>
+                <td colSpan={8} className="text-center py-12 text-muted-foreground/70">
+                  No incidents found. <Link href="/trackers/incidents/new" className="text-teal-600 hover:underline">File a new incident report</Link>
                 </td>
               </tr>
             ) : (
               incidents.map((incident) => (
                 <tr key={incident.id} className="hover:bg-slate-50 transition-colors">
                   <td className="px-4 py-3 font-mono text-xs text-slate-600">
-                    <Link href={`/trackers/incidents/${incident.id}`} className="text-purple-600 hover:underline">
+                    <Link href={`/trackers/incidents/${incident.id}`} className="text-teal-600 hover:underline">
                       {incident.incidentNumber}
                     </Link>
                   </td>
                   <td className="px-4 py-3 text-xs text-slate-600">
                     {formatDate(incident.dateOccurred)}
                   </td>
-                  <td className="px-4 py-3 text-xs text-slate-700">
+                  <td className="px-4 py-3 text-xs text-foreground/80">
                     {incident.incidentType.replace(/_/g, ' ')}
                   </td>
                   <td className="px-4 py-3">
@@ -160,12 +160,12 @@ export default async function IncidentsPage({
                         {incident.reportedToState ? `Reported ${formatDate(incident.stateReportDate)}` : '⚠ Not Reported'}
                       </span>
                     ) : (
-                      <span className="text-slate-400">N/A</span>
+                      <span className="text-muted-foreground/70">N/A</span>
                     )}
                   </td>
                   <td className="px-4 py-3 text-xs">
                     {incident.cap ? (
-                      <Link href={`/trackers/caps`} className="text-purple-600 hover:underline font-mono">
+                      <Link href={`/trackers/caps`} className="text-teal-600 hover:underline font-mono">
                         {incident.cap.capNumber}
                       </Link>
                     ) : incident.correctionRequired ? (
@@ -173,7 +173,7 @@ export default async function IncidentsPage({
                         Create CAP
                       </Link>
                     ) : (
-                      <span className="text-slate-400">-</span>
+                      <span className="text-muted-foreground/70">-</span>
                     )}
                   </td>
                   <td className="px-4 py-3">

@@ -1,4 +1,4 @@
-﻿import { Clipboard, Plus, AlertTriangle } from 'lucide-react';
+import { Clipboard, Plus, AlertTriangle } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -8,7 +8,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
   RECONCILED:            { label: 'Reconciled',          color: 'bg-emerald-100 text-emerald-700' },
   DISCREPANCY_OPEN:      { label: 'Discrepancy Open',    color: 'bg-red-100 text-red-700' },
   DISCREPANCY_EXPLAINED: { label: 'Explained',           color: 'bg-amber-100 text-amber-700' },
-  REPORTED_DEA:          { label: 'Reported to DEA',     color: 'bg-purple-100 text-purple-700' },
+  REPORTED_DEA:          { label: 'Reported to DEA',     color: 'bg-teal-100 text-teal-700' },
   INVESTIGATION:         { label: 'Under Investigation', color: 'bg-orange-100 text-orange-700' },
 };
 
@@ -34,7 +34,7 @@ export default async function ControlledSubstancesPage() {
             <h1 className="text-xl font-bold text-white">Controlled Substance Log</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">DEA Schedule II–V</span>
           </div>
-          <p className="text-slate-400 text-sm">Shift count verification, waste reconciliation, and discrepancy tracking for controlled substances.</p>
+          <p className="text-muted-foreground/70 text-sm">Shift count verification, waste reconciliation, and discrepancy tracking for controlled substances.</p>
         </div>
         <a href="/pharmacy/controlled-substances/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Enter Count
@@ -55,11 +55,11 @@ export default async function ControlledSubstancesPage() {
         {[
           { label: 'Logs (recent 60)',    value: logs.length,        color: 'text-emerald-400' },
           { label: 'Open Discrepancies',  value: discrepancies,      color: discrepancies > 0 ? 'text-red-400' : 'text-emerald-400' },
-          { label: 'All Discrepancies',   value: ytdDiscrepancies,   color: ytdDiscrepancies > 0 ? 'text-amber-400' : 'text-slate-400' },
+          { label: 'All Discrepancies',   value: ytdDiscrepancies,   color: ytdDiscrepancies > 0 ? 'text-amber-400' : 'text-muted-foreground/70' },
         ].map(s => (
           <div key={s.label} className="rounded-xl bg-slate-800/50 border border-white/10 p-4 text-center">
             <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
-            <p className="text-xs text-slate-400 mt-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground/70 mt-1">{s.label}</p>
           </div>
         ))}
       </div>
@@ -69,7 +69,7 @@ export default async function ControlledSubstancesPage() {
           <thead className="bg-slate-900/40 border-b border-white/10">
             <tr>
               {['Date', 'Unit', 'Shift', 'Medication', 'Schedule', 'Expected', 'Counted', 'Difference', 'Status'].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-slate-400 px-3 py-3">{h}</th>
+                <th key={h} className="text-left text-xs font-semibold text-muted-foreground/70 px-3 py-3">{h}</th>
               ))}
             </tr>
           </thead>
@@ -78,9 +78,9 @@ export default async function ControlledSubstancesPage() {
               <tr><td colSpan={9} className="text-center py-8 text-slate-500 text-sm">No controlled substance log entries.</td></tr>
             ) : logs.map(l => (
               <tr key={l.id} className={`hover:bg-white/5 transition-colors ${l.discrepancyFound ? 'bg-red-500/5' : ''}`}>
-                <td className="px-3 py-3 text-slate-400 text-xs">{l.logDate.toLocaleDateString()}</td>
+                <td className="px-3 py-3 text-muted-foreground/70 text-xs">{l.logDate.toLocaleDateString()}</td>
                 <td className="px-3 py-3 text-slate-300 text-xs">{l.unit}</td>
-                <td className="px-3 py-3 text-slate-400 text-xs">{l.shift}</td>
+                <td className="px-3 py-3 text-muted-foreground/70 text-xs">{l.shift}</td>
                 <td className="px-3 py-3 font-semibold text-white text-xs">{l.medicationName}</td>
                 <td className="px-3 py-3 text-xs">
                   <span className="text-xs font-semibold text-red-300 bg-red-900/30 px-2 py-0.5 rounded">{l.schedule.replace('_', ' ')}</span>

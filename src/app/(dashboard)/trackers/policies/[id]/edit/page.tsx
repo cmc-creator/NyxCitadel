@@ -117,7 +117,7 @@ export default function EditPolicyPage() {
     setDocumentUrl(data?.documentUrl ?? '');
   }
 
-  if (loading) return <div className="text-slate-400 p-8">Loading...</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">Loading...</div>;
   if (!data) return <div className="text-red-400 p-8">{error || 'Record not found.'}</div>;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -165,21 +165,21 @@ export default function EditPolicyPage() {
         <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Policy Tracker
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <FileText className="w-6 h-6 text-purple-600" />
           Edit Policy / Procedure
         </h1>
-        <p className="text-xs text-slate-400 mt-1 font-mono">{data.policyNumber}</p>
+        <p className="text-xs text-muted-foreground/70 mt-1 font-mono">{data.policyNumber}</p>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         {/* Core Info */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Policy Information</h2>
+          <h2 className="text-sm font-semibold text-foreground">Policy Information</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Policy Title *</label>
             <input name="title" required defaultValue={data.title} className="form-input w-full" />
@@ -223,7 +223,7 @@ export default function EditPolicyPage() {
 
         {/* Dates */}
         <div className="px-6 py-5 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-800">Review Schedule</h2>
+          <h2 className="text-sm font-semibold text-foreground">Review Schedule</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Review Frequency</label>
             <select name="reviewFrequency" defaultValue={data.reviewFrequency} className="form-input w-full">
@@ -244,7 +244,7 @@ export default function EditPolicyPage() {
 
         {/* Regulatory Bodies */}
         <div className="px-6 py-5 space-y-3">
-          <h2 className="text-sm font-semibold text-slate-800">Applicable Regulatory Bodies</h2>
+          <h2 className="text-sm font-semibold text-foreground">Applicable Regulatory Bodies</h2>
           <div className="flex flex-wrap gap-2">
             {REGULATORY_BODIES.map(v => (
               <button
@@ -265,11 +265,11 @@ export default function EditPolicyPage() {
 
         {/* Document Upload */}
         <div className="px-6 py-5 space-y-3">
-          <h2 className="text-sm font-semibold text-slate-800">
-            Policy Document <span className="font-normal text-slate-400">(PDF or Word)</span>
+          <h2 className="text-sm font-semibold text-foreground">
+            Policy Document <span className="font-normal text-muted-foreground/70">(PDF or Word)</span>
           </h2>
           {documentUrl && !uploadFile ? (
-            <div className="flex items-center gap-3 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
+            <div className="flex items-center gap-3 bg-blue-950/20 border border-blue-200 rounded-lg px-4 py-3">
               <FileCheck className="w-5 h-5 text-blue-600 shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-blue-800">Document attached</p>
@@ -291,15 +291,15 @@ export default function EditPolicyPage() {
                 {!uploading && documentUrl && <p className="text-xs text-green-600">Uploaded successfully</p>}
                 {uploadError && <p className="text-xs text-red-600">{uploadError}</p>}
               </div>
-              <button type="button" onClick={clearFile} className="p-1 rounded text-slate-400 hover:text-red-500">
+              <button type="button" onClick={clearFile} className="p-1 rounded text-muted-foreground/70 hover:text-red-500">
                 <X className="w-4 h-4" />
               </button>
             </div>
           ) : (
             <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-purple-300 hover:bg-purple-50 transition-colors">
-              <Upload className="w-5 h-5 text-slate-400 mb-1.5" />
+              <Upload className="w-5 h-5 text-muted-foreground/70 mb-1.5" />
               <span className="text-sm text-slate-500">Click to upload PDF or Word document</span>
-              <span className="text-xs text-slate-400 mt-0.5">Max 20 MB</span>
+              <span className="text-xs text-muted-foreground/70 mt-0.5">Max 20 MB</span>
               <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileSelect} />
             </label>
           )}
@@ -307,7 +307,7 @@ export default function EditPolicyPage() {
 
         {/* Description */}
         <div className="px-6 py-5 space-y-3">
-          <h2 className="text-sm font-semibold text-slate-800">Summary / Description <span className="font-normal text-slate-400">(optional)</span></h2>
+          <h2 className="text-sm font-semibold text-foreground">Summary / Description <span className="font-normal text-muted-foreground/70">(optional)</span></h2>
           <textarea name="description" rows={3} defaultValue={data.summary ?? ''} className="form-input w-full resize-none" />
         </div>
 

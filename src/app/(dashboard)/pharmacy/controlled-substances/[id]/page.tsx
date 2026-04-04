@@ -27,7 +27,7 @@ const STATUS_OPTIONS = [
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+    <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
@@ -38,8 +38,8 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   if (value === undefined || value === null) return null;
   return (
     <div>
-      <dt className="text-xs text-slate-400">{label}</dt>
-      <dd className="text-sm font-medium text-slate-800 mt-0.5">{value}</dd>
+      <dt className="text-xs text-muted-foreground/70">{label}</dt>
+      <dd className="text-sm font-medium text-foreground mt-0.5">{value}</dd>
     </div>
   );
 }
@@ -57,11 +57,11 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/pharmacy/controlled-substances" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition">
+        <Link href="/pharmacy/controlled-substances" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Controlled Substances
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/pharmacy/controlled-substances/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors">
+          <Link href={`/pharmacy/controlled-substances/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -69,7 +69,7 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
       </div>
 
       {openDiscrepancy && (
-        <div className="flex items-start gap-3 bg-red-50 border border-red-300 text-red-800 rounded-2xl p-4">
+        <div className="flex items-start gap-3 bg-red-950/20 border border-red-300 text-red-800 rounded-2xl p-4">
           <AlertTriangle className="w-5 h-5 mt-0.5 flex-shrink-0" />
           <div>
             <p className="font-semibold">Open Discrepancy - Action Required</p>
@@ -81,12 +81,12 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
         </div>
       )}
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <Shield className="w-5 h-5 text-purple-600" />
-              <span className="text-xs font-mono text-slate-400">Schedule {log.schedule}</span>
+              <span className="text-xs font-mono text-muted-foreground/70">Schedule {log.schedule}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[log.status] ?? 'bg-slate-100 text-slate-600'}`}>
                 {log.status.replace(/_/g, ' ')}
               </span>
@@ -94,7 +94,7 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
                 <span className="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-100 text-red-700">Discrepancy Found</span>
               )}
             </div>
-            <h1 className="text-xl font-bold text-slate-900">{log.medicationName}</h1>
+            <h1 className="text-xl font-bold text-foreground">{log.medicationName}</h1>
             <p className="text-sm text-slate-500 mt-1">{log.unit} &middot; {log.shift} Shift &middot; {formatDate(log.logDate)}</p>
           </div>
           <StatusUpdater apiPath={`/api/controlled-substances/${log.id}`} currentStatus={log.status} options={STATUS_OPTIONS} />
@@ -106,16 +106,16 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
           <Section title="Count Details">
             <dl className="grid grid-cols-2 gap-3">
               <div>
-                <dt className="text-xs text-slate-400">Amount Expected</dt>
-                <dd className="text-2xl font-bold text-slate-900 mt-0.5">{log.amountExpected}</dd>
+                <dt className="text-xs text-muted-foreground/70">Amount Expected</dt>
+                <dd className="text-2xl font-bold text-foreground mt-0.5">{log.amountExpected}</dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-400">Amount Counted</dt>
-                <dd className="text-2xl font-bold text-slate-900 mt-0.5">{log.amountCounted}</dd>
+                <dt className="text-xs text-muted-foreground/70">Amount Counted</dt>
+                <dd className="text-2xl font-bold text-foreground mt-0.5">{log.amountCounted}</dd>
               </div>
               {log.discrepancyFound && (
                 <div className="col-span-2">
-                  <dt className="text-xs text-slate-400">Count Difference</dt>
+                  <dt className="text-xs text-muted-foreground/70">Count Difference</dt>
                   <dd className={`text-2xl font-bold mt-0.5 ${(log.countDifference ?? 0) !== 0 ? 'text-red-600' : 'text-green-600'}`}>
                     {log.countDifference ?? 0}
                   </dd>
@@ -126,7 +126,7 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
 
           {log.discrepancyExplanation && (
             <Section title="Discrepancy Explanation">
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{log.discrepancyExplanation}</p>
+              <p className="text-sm text-foreground/80 whitespace-pre-wrap">{log.discrepancyExplanation}</p>
             </Section>
           )}
         </div>
@@ -141,8 +141,8 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
               <Field label="Counted By" value={log.countedBy} />
               <Field label="Witness" value={log.witnessName} />
               <div>
-                <dt className="text-xs text-slate-400">Reported to Pharmacy</dt>
-                <dd className={`text-sm font-semibold mt-0.5 ${log.reportedToPharmacy ? 'text-orange-600' : 'text-slate-400'}`}>
+                <dt className="text-xs text-muted-foreground/70">Reported to Pharmacy</dt>
+                <dd className={`text-sm font-semibold mt-0.5 ${log.reportedToPharmacy ? 'text-orange-600' : 'text-muted-foreground/70'}`}>
                   {log.reportedToPharmacy ? `Yes - ${log.reportedDate ? formatDate(log.reportedDate) : ''}` : 'No'}
                 </dd>
               </div>

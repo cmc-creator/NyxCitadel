@@ -40,14 +40,14 @@ const IMPACT_CONFIG: Record<string, { badge: string; icon: React.ElementType; ba
   CRITICAL: { badge: 'bg-red-500/15 text-red-400 border border-red-500/30',     icon: AlertTriangle,  bar: 'bg-red-500',    label: 'Critical' },
   HIGH:     { badge: 'bg-orange-500/15 text-orange-400 border border-orange-500/30', icon: ArrowUpCircle,  bar: 'bg-orange-500', label: 'High' },
   MEDIUM:   { badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',    icon: Info,           bar: 'bg-amber-500',  label: 'Medium' },
-  INFORMATIONAL: { badge: 'bg-slate-500/15 text-slate-400 border border-slate-500/20', icon: CheckCircle2, bar: 'bg-slate-500', label: 'Info' },
+  INFORMATIONAL: { badge: 'bg-slate-500/15 text-muted-foreground/70 border border-slate-500/20', icon: CheckCircle2, bar: 'bg-slate-500', label: 'Info' },
 };
 
 const AGENCY_COLORS: Record<string, string> = {
   CMS:     'bg-blue-500/15 text-blue-400 border border-blue-500/30',
-  SAMHSA:  'bg-purple-500/15 text-purple-400 border border-purple-500/30',
+  SAMHSA:  'bg-teal-500/15 text-teal-400 border border-teal-500/30',
   DEA:     'bg-rose-500/15 text-rose-400 border border-rose-500/30',
-  HHS_OCR: 'bg-indigo-500/15 text-indigo-400 border border-indigo-500/30',
+  HHS_OCR: 'bg-teal-500/15 text-indigo-400 border border-teal-500/30',
   OSHA:    'bg-amber-500/15 text-amber-400 border border-amber-500/30',
   AZ_ADHS: 'bg-green-500/15 text-green-400 border border-green-500/30',
 };
@@ -139,7 +139,7 @@ function ImpactBadge({ level }: { level: string }) {
 }
 
 function AgencyBadge({ agency }: { agency: string }) {
-  const cls = AGENCY_COLORS[agency] ?? 'bg-slate-500/15 text-slate-400 border border-slate-500/20';
+  const cls = AGENCY_COLORS[agency] ?? 'bg-slate-500/15 text-muted-foreground/70 border border-slate-500/20';
   return (
     <span className={`inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded-full border ${cls}`}>
       {agency.replace('_', ' ')}
@@ -209,7 +209,7 @@ export default async function IopDashboardPage() {
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <BookOpen className="w-6 h-6 text-purple-400" />
+            <BookOpen className="w-6 h-6 text-teal-400" />
             IOP Outpatient Dashboard
           </h1>
           <p className="text-sm text-muted-foreground mt-0.5">
@@ -218,7 +218,7 @@ export default async function IopDashboardPage() {
         </div>
         <Link
           href="/regulatory-updates"
-          className="flex items-center gap-1.5 text-sm text-purple-400 hover:text-purple-300 transition-colors"
+          className="flex items-center gap-1.5 text-sm text-teal-400 hover:text-teal-300 transition-colors"
         >
           All facility updates <ChevronRight className="w-4 h-4" />
         </Link>
@@ -232,8 +232,8 @@ export default async function IopDashboardPage() {
             value: iopUpdates.length,
             sub: `${newCount} new in last 90 days`,
             icon: Newspaper,
-            color: 'text-purple-400',
-            ring: 'ring-purple-500/20',
+            color: 'text-teal-400',
+            ring: 'ring-teal-500/20',
           },
           {
             label: 'Critical Alerts',
@@ -309,7 +309,7 @@ export default async function IopDashboardPage() {
         <div className="lg:col-span-3 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-semibold text-foreground flex items-center gap-2">
-              <Newspaper className="w-4 h-4 text-purple-400" />
+              <Newspaper className="w-4 h-4 text-teal-400" />
               Recent IOP-Relevant Updates
             </h2>
             <span className="text-xs text-muted-foreground">{iopUpdates.length} total</span>
@@ -334,7 +334,7 @@ export default async function IopDashboardPage() {
                   >
                     <div className={`w-1 self-stretch rounded-full flex-shrink-0 ${cfg.bar}`} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground group-hover:text-purple-300 transition-colors line-clamp-2">
+                      <p className="text-sm font-medium text-foreground group-hover:text-teal-300 transition-colors line-clamp-2">
                         {u.title}
                       </p>
                       {u.summary && (
@@ -356,7 +356,7 @@ export default async function IopDashboardPage() {
           {iopUpdates.length > 12 && (
             <Link
               href="/regulatory-updates"
-              className="block text-center text-sm text-purple-400 hover:text-purple-300 py-2 transition-colors"
+              className="block text-center text-sm text-teal-400 hover:text-teal-300 py-2 transition-colors"
             >
               View all {iopUpdates.length} updates <ChevronRight className="w-3.5 h-3.5 inline" />
             </Link>
@@ -381,7 +381,7 @@ export default async function IopDashboardPage() {
                       <div className="flex-1 min-w-0">
                         <Link
                           href={`/calendar/${ev.id}`}
-                          className="text-sm text-foreground hover:text-purple-300 transition-colors line-clamp-1"
+                          className="text-sm text-foreground hover:text-teal-300 transition-colors line-clamp-1"
                         >
                           {ev.title}
                         </Link>
@@ -393,7 +393,7 @@ export default async function IopDashboardPage() {
               </div>
               <Link
                 href="/calendar"
-                className="block text-xs text-purple-400 hover:text-purple-300 mt-3 transition-colors"
+                className="block text-xs text-teal-400 hover:text-teal-300 mt-3 transition-colors"
               >
                 Full calendar <ChevronRight className="w-3 h-3 inline" />
               </Link>
@@ -465,7 +465,7 @@ export default async function IopDashboardPage() {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-purple-400 transition-colors flex-shrink-0 mt-0.5"
+                  className="text-muted-foreground hover:text-teal-400 transition-colors flex-shrink-0 mt-0.5"
                   aria-label="Open source"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />

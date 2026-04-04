@@ -115,11 +115,11 @@ export default function NewResponsePage() {
   return (
     <div className="max-w-4xl space-y-6">
       <div>
-        <a href="/quality/responses" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/quality/responses" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Responses
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <BookOpen className="w-6 h-6 text-purple-600" />
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <BookOpen className="w-6 h-6 text-teal-600" />
           Generate Response
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">
@@ -128,13 +128,13 @@ export default function NewResponsePage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Template picker */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Template (optional)</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Template (optional)</h2>
           <div className="grid grid-cols-2 gap-3">
             {templates.map(t => (
               <button
@@ -143,11 +143,11 @@ export default function NewResponsePage() {
                 onClick={() => loadTemplate(t)}
                 className={`text-left p-3 rounded-lg border-2 transition-colors text-sm ${
                   selectedTemplate?.id === t.id
-                    ? 'border-purple-500 bg-purple-50'
-                    : 'border-slate-200 hover:border-purple-300'
+                    ? 'border-teal-500 bg-teal-950/20'
+                    : 'border-slate-200 hover:border-teal-300'
                 }`}
               >
-                <div className="font-medium text-slate-800">{t.name}</div>
+                <div className="font-medium text-foreground">{t.name}</div>
                 {t.regulatoryRef && <div className="text-xs text-slate-500 mt-0.5">{t.regulatoryRef}</div>}
                 {t.daysRequired && (
                   <div className="text-xs text-amber-600 mt-0.5">⏱ {t.daysRequired}-day deadline</div>
@@ -159,13 +159,13 @@ export default function NewResponsePage() {
 
         {/* Fill variables */}
         {selectedTemplate && Object.keys(varValues).length > 0 && (
-          <div className="bg-purple-50 rounded-xl border border-purple-200 p-6 space-y-4">
+          <div className="bg-teal-950/20 rounded-xl border border-teal-800/50 p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="font-semibold text-purple-800 text-sm uppercase tracking-wide">Fill Variables</h2>
+              <h2 className="font-semibold text-teal-800 text-sm uppercase tracking-wide">Fill Variables</h2>
               <button
                 type="button"
                 onClick={applyVariables}
-                className="inline-flex items-center gap-1.5 text-xs font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg"
+                className="inline-flex items-center gap-1.5 text-xs font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg"
               >
                 <RefreshCw className="w-3 h-3" /> Apply to Letter
               </button>
@@ -173,43 +173,43 @@ export default function NewResponsePage() {
             <div className="grid grid-cols-2 gap-3">
               {Object.keys(varValues).map(v => (
                 <div key={v}>
-                  <label className="block text-xs font-medium text-purple-700 mb-1">{v}</label>
+                  <label className="block text-xs font-medium text-teal-700 mb-1">{v}</label>
                   <input
                     value={varValues[v]}
                     onChange={e => setVarValues(prev => ({ ...prev, [v]: e.target.value }))}
                     placeholder={`Value for ${v}`}
-                    className="w-full rounded-lg border border-purple-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white"
+                    className="w-full rounded-lg border border-teal-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
                   />
                 </div>
               ))}
             </div>
-            <p className="text-xs text-purple-600">Fill values above and click "Apply to Letter" to substitute them in the body.</p>
+            <p className="text-xs text-teal-600">Fill values above and click "Apply to Letter" to substitute them in the body.</p>
           </div>
         )}
 
         {/* Response metadata */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Response Details</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Response Details</h2>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Title *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Title *</label>
               <input
                 name="title"
                 required
                 defaultValue={selectedTemplate ? `Response: ${selectedTemplate.name}` : ''}
                 placeholder="Internal title for this response"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Category *</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Category *</label>
               <select
                 name="category"
                 required
                 defaultValue={selectedTemplate?.category ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select category...</option>
                 {CATEGORIES.map(c => (
@@ -219,19 +219,19 @@ export default function NewResponsePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Due Date</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Due Date</label>
               <input
                 name="dueDate"
                 type="date"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Source Type</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Source Type</label>
               <select
                 name="sourceType"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">-</option>
                 <option value="INCIDENT">Incident</option>
@@ -242,87 +242,87 @@ export default function NewResponsePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Source Reference #</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Source Reference #</label>
               <input
                 name="sourceRef"
                 placeholder="e.g., GR-2025-001"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Recipient Name</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Recipient Name</label>
               <input
                 name="recipientName"
                 placeholder="Full name"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Recipient Role / Agency</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Recipient Role / Agency</label>
               <input
                 name="recipientRole"
                 placeholder="e.g., Patient, AZ ADHS, The Joint Commission"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Recipient Address</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Recipient Address</label>
               <input
                 name="recipientAddress"
                 placeholder="Mailing address (optional)"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Drafted By</label>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Drafted By</label>
               <input
                 name="draftedBy"
                 placeholder="Your name / role"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
         </div>
 
         {/* Subject + Body */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Letter Content *</h2>
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4">
+          <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Letter Content *</h2>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Subject</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Subject</label>
             <input
               value={subject}
               onChange={e => setSubject(e.target.value)}
               placeholder="Subject line"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Letter Body *</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Letter Body *</label>
             <textarea
               value={body}
               onChange={e => setBody(e.target.value)}
               required
               rows={20}
               placeholder="Type or paste your response here..."
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-purple-500 resize-y h-80"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-500 resize-y h-80"
             />
           </div>
         </div>
 
         {/* Notes */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <label className="block text-sm font-medium text-slate-700 mb-1">Internal Notes</label>
+        <div className="bg-card rounded-xl border border-border p-6">
+          <label className="block text-sm font-medium text-foreground/80 mb-1">Internal Notes</label>
           <textarea
             name="notes"
             rows={2}
             placeholder="Any internal notes about this response..."
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
           />
         </div>
 
@@ -330,13 +330,13 @@ export default function NewResponsePage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
+            className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
           >
             {saving ? 'Saving...' : 'Save as Draft'}
           </button>
           <a
             href="/quality/responses"
-            className="py-2.5 px-5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors"
           >
             Cancel
           </a>

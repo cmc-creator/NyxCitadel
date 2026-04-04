@@ -80,7 +80,7 @@ export default function NewRegulatoryUpdatePage() {
           <ArrowLeft className="w-4 h-4" /> Back
         </Link>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <Newspaper className="w-6 h-6 text-purple-400" />
+          <Newspaper className="w-6 h-6 text-teal-400" />
           Publish Regulatory Update
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
@@ -100,7 +100,7 @@ export default function NewRegulatoryUpdatePage() {
                 key={opt.value}
                 className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                   form.urgency === opt.value
-                    ? 'border-purple-500/60 bg-purple-500/10'
+                    ? 'border-teal-500/60 bg-teal-500/10'
                     : 'border-border bg-card hover:border-border/80'
                 }`}
               >
@@ -110,7 +110,7 @@ export default function NewRegulatoryUpdatePage() {
                   value={opt.value}
                   checked={form.urgency === opt.value}
                   onChange={e => set('urgency', e.target.value)}
-                  className="mt-0.5 accent-purple-500"
+                  className="mt-0.5 accent-teal-500"
                 />
                 <div>
                   <p className="text-xs font-semibold text-foreground">{opt.label}</p>
@@ -130,7 +130,7 @@ export default function NewRegulatoryUpdatePage() {
             value={form.regulatoryBody}
             onChange={e => set('regulatoryBody', e.target.value)}
             required
-            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition"
+            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500/60 transition"
           >
             <option value="">Select body…</option>
             {REGULATORY_BODIES.map(b => <option key={b} value={b}>{b}</option>)}
@@ -148,7 +148,7 @@ export default function NewRegulatoryUpdatePage() {
             onChange={e => set('title', e.target.value)}
             required
             placeholder="e.g. CMS Updated Discharge Planning Requirements - Effective July 2026"
-            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition"
+            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500/60 transition"
           />
         </div>
 
@@ -163,7 +163,7 @@ export default function NewRegulatoryUpdatePage() {
             required
             rows={3}
             placeholder="1–3 sentence plain-language summary of what changed and what staff need to know."
-            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition resize-none"
+            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500/60 transition resize-none"
           />
         </div>
 
@@ -177,7 +177,7 @@ export default function NewRegulatoryUpdatePage() {
             onChange={e => set('body', e.target.value)}
             rows={6}
             placeholder="Detailed explanation, action items, affected departments, policy change requirements, etc."
-            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition resize-y"
+            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500/60 transition resize-y"
           />
         </div>
 
@@ -192,7 +192,7 @@ export default function NewRegulatoryUpdatePage() {
               value={form.standardRef}
               onChange={e => set('standardRef', e.target.value)}
               placeholder="e.g. 42 CFR 482.43(a)"
-              className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition"
+              className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500/60 transition"
             />
           </div>
           <div>
@@ -203,7 +203,7 @@ export default function NewRegulatoryUpdatePage() {
               type="date"
               value={form.effectiveDate}
               onChange={e => set('effectiveDate', e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition"
+              className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500/60 transition"
             />
           </div>
         </div>
@@ -218,7 +218,7 @@ export default function NewRegulatoryUpdatePage() {
             value={form.sourceUrl}
             onChange={e => set('sourceUrl', e.target.value)}
             placeholder="https://www.cms.gov/..."
-            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition"
+            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500/60 transition"
           />
         </div>
 
@@ -230,7 +230,7 @@ export default function NewRegulatoryUpdatePage() {
           <button
             type="submit"
             disabled={saving}
-            className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 disabled:opacity-60 text-white font-semibold text-sm px-6 py-2.5 rounded-lg transition-colors shadow-lg shadow-purple-500/20"
+            className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 disabled:opacity-60 text-white font-semibold text-sm px-6 py-2.5 rounded-lg transition-colors shadow-lg shadow-teal-500/20"
           >
             {saving ? <><Loader2 className="w-4 h-4 animate-spin" /> Publishing…</> : <><Send className="w-4 h-4" /> Publish &amp; Notify All Users</>}
           </button>

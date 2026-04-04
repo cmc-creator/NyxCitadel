@@ -61,28 +61,28 @@ export default function EditDocumentPage() {
     }
   }
 
-  if (loading) return <div className="text-slate-400 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
   if (!data || data.error) return <div className="text-red-400 p-8">{error || 'Not found.'}</div>;
 
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/documents/${id}`} className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 mb-4">
+        <a href={`/documents/${id}`} className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground/80 mb-4">
           <ArrowLeft className="w-4 h-4" /> Back to Document
         </a>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <FileText className="w-6 h-6 text-purple-600" /> Edit Document
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Update document metadata. To replace the file, upload a new document.</p>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-2">{error}</div>
+        <div className="bg-red-950/20 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-2">{error}</div>
       )}
 
-      <form key={data.id} onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 p-6 space-y-5">
+      <form key={data.id} onSubmit={handleSubmit} className="bg-card rounded-xl border border-border p-6 space-y-5">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Document Name <span className="text-red-500">*</span></label>
+          <label className="block text-sm font-medium text-foreground/80 mb-1">Document Name <span className="text-red-500">*</span></label>
           <input
             name="name"
             required
@@ -92,7 +92,7 @@ export default function EditDocumentPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Category <span className="text-red-500">*</span></label>
+          <label className="block text-sm font-medium text-foreground/80 mb-1">Category <span className="text-red-500">*</span></label>
           <select
             name="category"
             required
@@ -105,7 +105,7 @@ export default function EditDocumentPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
+          <label className="block text-sm font-medium text-foreground/80 mb-1">Description</label>
           <textarea
             name="description"
             rows={2}
@@ -116,7 +116,7 @@ export default function EditDocumentPage() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Expiry / Review Date</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Expiry / Review Date</label>
             <input
               type="date"
               name="expiryDate"
@@ -125,7 +125,7 @@ export default function EditDocumentPage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Tags</label>
+            <label className="block text-sm font-medium text-foreground/80 mb-1">Tags</label>
             <input
               name="tags"
               defaultValue={Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags ?? '')}
