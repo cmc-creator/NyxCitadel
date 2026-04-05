@@ -1047,7 +1047,7 @@ export default async function RootPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="relative z-10 border-t border-white/5 bg-slate-950">
+      <footer className="relative z-10 border-t border-white/5 bg-[#060b16]">
         <div className="max-w-7xl mx-auto px-6 py-14">
           {/* Top grid — brand + columns */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">

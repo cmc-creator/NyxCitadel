@@ -168,7 +168,7 @@ export default function AttachmentComposer({
         <button
           type="button"
           onClick={() => setOpen((current) => !current)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-600 hover:bg-indigo-700 text-white text-sm font-medium transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium transition-colors"
         >
           {open ? <Paperclip className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
           {open ? 'Hide Form' : 'Add Attachment'}

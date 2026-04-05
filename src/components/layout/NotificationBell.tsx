@@ -30,7 +30,7 @@ const TYPE_COLORS: Record<string, string> = {
   CS_DISCREPANCY:         'bg-red-500/20   text-red-300',
   TB_OVERDUE:             'bg-orange-500/15 text-orange-400',
   MOON_MISSING:           'bg-yellow-500/15 text-yellow-400',
-  GOVERNANCE_DOC_OVERDUE: 'bg-teal-500/15 text-indigo-400',
+  GOVERNANCE_DOC_OVERDUE: 'bg-teal-500/15 text-teal-400',
   BREACH_REPORTABLE:      'bg-red-600/20   text-red-300',
   REGULATORY_UPDATE:      'bg-teal-500/15 text-teal-400',
 };

@@ -3,7 +3,7 @@ import { AlertTriangle, ArrowLeft, Home } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-6">
+    <div className="min-h-screen bg-[#060b16] text-white flex items-center justify-center px-6">
       <div className="w-full max-w-2xl rounded-3xl border border-white/10 bg-slate-900/60 p-10 text-center shadow-2xl">
         <div className="mx-auto w-14 h-14 rounded-2xl border border-amber-400/30 bg-amber-400/10 flex items-center justify-center mb-5">
           <AlertTriangle className="w-7 h-7 text-amber-300" />
@@ -17,7 +17,8 @@ export default function NotFound() {
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 font-semibold transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-colors text-white"
+            style={{ background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)' }}
           >
             <Home className="w-4 h-4" />
             Return Home

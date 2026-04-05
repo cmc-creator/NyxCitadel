@@ -187,11 +187,11 @@ export default async function BoardReportPage() {
         </div>
 
         {/* Resilience Score */}
-        <div className="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200 rounded-xl p-6 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-teal-950/40 to-blue-950/30 border border-teal-500/20 rounded-xl p-6 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-teal-600 uppercase tracking-widest mb-1">Facility Resilience Score</p>
             <div className="flex items-end gap-3">
-              <span className="text-6xl font-black text-indigo-700">{resGrade}</span>
+              <span className="text-6xl font-black text-teal-300">{resGrade}</span>
               <span className="text-3xl font-bold text-teal-500 mb-1">{resilience}/100</span>
             </div>
             <p className="text-sm text-slate-600 mt-1">

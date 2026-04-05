@@ -124,7 +124,7 @@ export default function NewGovernanceDocumentPage() {
 
         <div className="px-6 py-4 flex justify-end gap-3">
           <a href="/governance/documents" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
-          <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-indigo-700 disabled:opacity-50">
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-teal-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Document'}
           </button>
         </div>

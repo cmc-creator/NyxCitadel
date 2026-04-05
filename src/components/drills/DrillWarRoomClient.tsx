@@ -416,7 +416,7 @@ export default function DrillWarRoomClient({
             <button
               type="submit"
               disabled={submitting || drillStatus !== 'IN_PROGRESS'}
-              className="w-full bg-teal-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-medium py-2.5 rounded-lg text-sm flex items-center justify-center gap-2"
+              className="w-full bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white font-medium py-2.5 rounded-lg text-sm flex items-center justify-center gap-2"
             >
               {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
               Log Action
@@ -482,7 +482,7 @@ export default function DrillWarRoomClient({
               </div>
               <div className="flex gap-2">
                 <button type="submit" disabled={addingTask}
-                  className="flex-1 bg-teal-600 hover:bg-indigo-700 text-white text-sm font-medium py-2 rounded-lg flex items-center justify-center gap-1.5">
+                  className="flex-1 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium py-2 rounded-lg flex items-center justify-center gap-1.5">
                   {addingTask ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />} Add Task
                 </button>
                 <button type="button" onClick={() => setShowTaskForm(false)}
