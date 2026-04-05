@@ -53,18 +53,26 @@ export default function SignupPage() {
     <div className="min-h-screen bg-slate-950 flex flex-col">
       {/* Background glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-60 -left-40 w-[700px] h-[700px] bg-teal-700/12 rounded-full blur-[140px]" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-700/8 rounded-full blur-[130px]" />
+        <div className="absolute -top-60 -left-40 w-[700px] h-[700px] bg-teal-700/15 rounded-full blur-[140px]" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-700/10 rounded-full blur-[130px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-teal-900/10 rounded-full blur-[100px]" />
+        <div
+          className="absolute inset-0 opacity-[0.015]"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
       </div>
 
       {/* Nav */}
-      <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/5">
+      <header className="relative z-10 flex items-center justify-between px-6 py-5 border-b border-white/8">
         <Link href="/" className="flex items-center gap-2.5">
           <Image
             src="/citadellogo-clean.png"
             alt="NyxCitadel"
-            width={32}
-            height={32}
+            width={48}
+            height={48}
             unoptimized
             onError={(e) => {
               const img = e.currentTarget as HTMLImageElement;
@@ -72,20 +80,23 @@ export default function SignupPage() {
                 img.src = '/logo-white.svg';
               }
             }}
-            className="h-8 w-auto rounded-lg flex-shrink-0"
+            className="h-12 w-auto rounded-lg flex-shrink-0 drop-shadow-[0_0_14px_rgba(13,115,119,0.5)]"
           />
-          <span className="font-bold text-white tracking-tight">NyxCitadel<sup className="text-[10px] align-super ml-0.5 font-normal text-teal-400">™</sup></span>
+          <div className="flex flex-col leading-none">
+            <span className="font-bold text-white tracking-tight">NyxCitadel<sup className="text-[10px] align-super ml-0.5 font-normal text-teal-400">™</sup></span>
+            <span className="text-[10px] text-slate-500 uppercase tracking-wider">Healthcare Compliance</span>
+          </div>
         </Link>
-        <Link href="/login" className="flex items-center gap-1.5 text-sm text-muted-foreground/70 hover:text-white transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Sign in instead
+        <Link href="/login" className="flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-white border border-white/8 hover:border-white/15 px-3.5 py-2 rounded-xl transition-all">
+          <ArrowLeft className="w-3.5 h-3.5" /> Sign in instead
         </Link>
       </header>
 
       <main className="relative z-10 flex-1 flex flex-col items-center justify-start px-4 py-12">
         {/* Heading */}
         <div className="text-center mb-10 max-w-2xl">
-          <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/20 rounded-full px-4 py-1.5 text-xs font-medium text-teal-300 mb-5">
-            <Sparkles className="w-3.5 h-3.5" /> Built for Behavioral Health &amp; Acute Psychiatric Facilities
+          <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/25 rounded-full px-4 py-1.5 text-xs font-medium text-teal-300 mb-5 shadow-[0_0_16px_rgba(13,115,119,0.2)]">
+            <Sparkles className="w-3.5 h-3.5 animate-pulse" /> Built for Behavioral Health &amp; Acute Psychiatric Facilities
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-4">
             Get started with{' '}

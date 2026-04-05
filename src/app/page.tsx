@@ -1,4 +1,5 @@
 import { LogoImage } from '@/components/ui/LogoImage';
+import { MobileNav } from '@/components/ui/MobileNav';
 import { auth } from '@/lib/auth';
 import Link from 'next/link';
 import {
@@ -287,23 +288,24 @@ export default async function RootPage() {
           <div className="flex items-center gap-3 flex-shrink-0">
             {isLoggedIn ? (
               <Link href="/dashboard"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(13,115,119,0.45)]"
+                className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(13,115,119,0.45)]"
                 style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.3)'}}>
                 Dashboard <ChevronRight className="w-4 h-4" />
               </Link>
             ) : (
               <>
                 <Link href="/login"
-                  className="hidden sm:flex px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/6 transition-all duration-200">
+                  className="hidden lg:flex px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/6 transition-all duration-200">
                   Sign In
                 </Link>
                 <Link href="/signup"
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(13,115,119,0.45)]"
+                  className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(13,115,119,0.45)]"
                   style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.3)'}}>
                   Get Started <ChevronRight className="w-4 h-4" />
                 </Link>
               </>
             )}
+            <MobileNav isLoggedIn={isLoggedIn} />
           </div>
 
         </div>
@@ -315,8 +317,8 @@ export default async function RootPage() {
       <section className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-12">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/40 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/40 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6 shadow-[0_0_20px_rgba(13,115,119,0.25)]">
+              <Sparkles className="w-3.5 h-3.5 animate-pulse" />
               The Only Healthcare Compliance Platform That Never Sleeps
             </div>
             <h1 className="text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-6">
@@ -825,10 +827,13 @@ export default async function RootPage() {
                 key={tier.name}
                 className={`relative flex flex-col bg-slate-900/60 border ${
                   tier.badge === 'Most Popular'
-                    ? tier.color + ' ring-1 ring-teal-500/40 shadow-2xl shadow-teal-900/30'
+                    ? tier.color + ' ring-2 ring-teal-500/50 shadow-[0_0_60px_rgba(13,115,119,0.35),0_25px_60px_rgba(0,0,0,0.5)]'
                     : tier.color
                 } rounded-2xl p-7 hover:-translate-y-1 transition-all duration-200`}
               >
+                {tier.badge === 'Most Popular' && (
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-teal-500/10 via-transparent to-transparent pointer-events-none" />
+                )}
                 {tier.badge && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
                     <span
@@ -1045,30 +1050,101 @@ export default async function RootPage() {
 
       {/* ── Footer ── */}
       <footer className="relative z-10 border-t border-white/5 bg-slate-950">
-        <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
-          <div className="flex items-center gap-2.5">
-            <LogoImage
-              width={28}
-              height={28}
-            />
+        <div className="max-w-7xl mx-auto px-6 py-14">
+          {/* Top grid — brand + columns */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+
+            {/* Brand */}
+            <div className="col-span-2 md:col-span-1">
+              <div className="flex items-center gap-2.5 mb-4">
+                <LogoImage width={40} height={40} />
+                <div>
+                  <span className="font-extrabold text-sm text-white">
+                    NyxCitadel<sup className="text-[9px] font-normal text-teal-400">™</sup>
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs text-slate-500 leading-relaxed mb-5">
+                Healthcare compliance &amp; risk management platform for behavioral health,
+                acute psychiatric, and skilled nursing facilities.
+              </p>
+              <div className="flex items-center gap-2 text-[11px] text-slate-600">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
+                All systems operational
+              </div>
+            </div>
+
+            {/* Platform */}
             <div>
-              <span className="font-bold text-muted-foreground/70">NyxCitadel<sup className="text-[9px] font-normal">™</sup></span>
-              <span className="text-foreground/80 ml-2 hidden sm:inline">· Healthcare Compliance &amp; Risk Management Platform</span>
+              <h4 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-4">Platform</h4>
+              <ul className="space-y-2.5">
+                {[
+                  { label: 'Features', href: '#features' },
+                  { label: 'Sentry AI', href: '#sentry' },
+                  { label: 'Pricing', href: '#pricing' },
+                  { label: 'Regulatory Intel', href: '#intel' },
+                  { label: 'User Guide', href: '/guide' },
+                  { label: 'Walkthrough', href: '/walkthrough' },
+                ].map(({ label, href }) => (
+                  <li key={label}>
+                    <a href={href} className="text-xs text-slate-500 hover:text-slate-300 transition-colors">{label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h4 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-4">Company</h4>
+              <ul className="space-y-2.5">
+                {[
+                  { label: 'Contact Us', href: '/contact' },
+                  { label: 'Partner Portal', href: '/priority-partner-portal' },
+                  { label: 'Request Access', href: '/signup' },
+                  { label: 'Sign In', href: '/login' },
+                  { label: 'NyxCollective', href: 'https://nyxcollective.com' },
+                ].map(({ label, href }) => (
+                  <li key={label}>
+                    <Link href={href} className="text-xs text-slate-500 hover:text-slate-300 transition-colors">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Legal & Trust */}
+            <div>
+              <h4 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-4">Legal &amp; Trust</h4>
+              <ul className="space-y-2.5 mb-5">
+                {[
+                  { label: 'Privacy Policy', href: '/privacy' },
+                  { label: 'Terms of Service', href: '/terms' },
+                  { label: 'HIPAA BAA', href: '/contact' },
+                  { label: 'Security', href: '/contact' },
+                ].map(({ label, href }) => (
+                  <li key={label}>
+                    <Link href={href} className="text-xs text-slate-500 hover:text-slate-300 transition-colors">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="space-y-2">
+                {['HIPAA Compliant', 'SOC 2 Ready', 'CMS Aligned'].map(badge => (
+                  <div key={badge} className="flex items-center gap-1.5 text-[11px] text-slate-600">
+                    <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" /> {badge}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <p>© {new Date().getFullYear()} <a href="https://nyxcollective.com" className="hover:text-slate-400 transition-colors">NyxCollective LLC</a> · HIPAA-compliant · Survey-ready · Always current</p>
-            <div className="flex items-center gap-4 text-xs">
-              <Link href="/privacy" className="text-slate-500 hover:text-slate-300 transition-colors">Privacy Policy</Link>
-              <span className="text-slate-700">•</span>
-              <Link href="/terms" className="text-slate-500 hover:text-slate-300 transition-colors">Terms of Service</Link>
-              <span className="text-slate-700">•</span>
-              <Link href="/contact" className="text-slate-500 hover:text-slate-300 transition-colors">Contact</Link>
-            </div>
+
+          {/* Bottom bar */}
+          <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-700">
+            <p>
+              © {new Date().getFullYear()}{' '}
+              <a href="https://nyxcollective.com" className="hover:text-slate-500 transition-colors">NyxCollective LLC</a>
+              {' '}· All rights reserved
+            </p>
+            <p className="text-slate-700">HIPAA-compliant · Survey-ready · Always current</p>
           </div>
-          <Link href={portalHref} className="text-slate-500 hover:text-white transition-colors font-medium">
-            {portalLabel} →
-          </Link>
         </div>
       </footer>
     </div>

@@ -10,16 +10,16 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://nyxcitadel.com';
 export function generateMetadata(): Metadata {
   return {
     title: {
-      default: 'NyxCitadel | Compliance & Risk Management',
+      default: 'NyxCitadel | Healthcare Compliance That Never Sleeps',
       template: '%s | NyxCitadel',
     },
     description:
-      'Compliance, risk management, and emergency management platform - NyxCitadel.',
+      'The only healthcare compliance platform that never sleeps. CMS, Joint Commission, OSHA, and State DOH monitoring — automated alerts, CAP tracking, QAPI, and AI-powered survey readiness for behavioral health and acute care facilities.',
     metadataBase: new URL(appUrl),
     openGraph: {
-      title: 'NyxCitadel | Compliance & Risk Management',
+      title: 'NyxCitadel | Healthcare Compliance That Never Sleeps',
       description:
-        'Compliance, risk management, and emergency management platform built for healthcare organizations.',
+        'Automated regulatory intelligence, survey readiness, QAPI, and AI-powered compliance management — built for behavioral health and acute psychiatric facilities.',
       url: appUrl,
       siteName: 'NyxCitadel',
       type: 'website',
@@ -27,21 +27,24 @@ export function generateMetadata(): Metadata {
         {
           url: '/citadellogo-clean.png',
           width: 1200,
-          height: 1200,
-          alt: 'NyxCitadel',
+          height: 630,
+          alt: 'NyxCitadel — Healthcare Compliance Platform',
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'NyxCitadel | Compliance & Risk Management',
+      title: 'NyxCitadel | Healthcare Compliance That Never Sleeps',
       description:
-        'Compliance, risk management, and emergency management platform built for healthcare organizations.',
+        'Automated regulatory intelligence, survey readiness, QAPI, and AI-powered compliance management for behavioral health facilities.',
       images: ['/citadellogo-clean.png'],
     },
     icons: {
-      icon: '/citadellogo-clean.png',
-      shortcut: '/citadellogo-clean.png',
+      icon: [
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+        { url: '/citadellogo-clean.png', type: 'image/png' },
+      ],
+      shortcut: '/favicon.svg',
       apple: '/citadellogo-clean.png',
     },
     robots: { index: true, follow: true },

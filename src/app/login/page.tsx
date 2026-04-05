@@ -99,8 +99,8 @@ function LoginForm() {
             <Image
               src="/citadellogo-clean.png"
               alt="NyxCitadel"
-              width={44}
-              height={44}
+              width={64}
+              height={64}
               unoptimized
               onError={(e) => {
                 const img = e.currentTarget as HTMLImageElement;
@@ -108,7 +108,7 @@ function LoginForm() {
                   img.src = '/logo-white.svg';
                 }
               }}
-              className="h-11 w-auto flex-shrink-0"
+              className="h-16 w-auto flex-shrink-0 drop-shadow-[0_0_18px_rgba(13,115,119,0.6)]"
             />
             <div>
               <p className="font-bold text-xl text-white tracking-tight">NyxCitadel</p>
