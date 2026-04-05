@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Calculator, Landmark, Wallet } from 'lucide-react';
 
 export const metadata = {
-  title: 'Lease-Buy Options',
+  title: 'Lease-Buy Options | NyxCitadel Partner Portal',
 };
 
 const models = [
@@ -76,12 +77,27 @@ const firstYearEstimates = [
 
 export default function LeaseBuyOptionsPage() {
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        <Link href="/priority-partner-portal" className="inline-flex items-center gap-2 text-sm text-slate-300 hover:text-white transition">
-          <ArrowLeft className="h-4 w-4" />
-          Back to Priority Partner Portal
+    <div className="min-h-screen bg-[#060b16] text-white">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-teal-700/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-blue-800/8 rounded-full blur-[100px]" />
+      </div>
+
+      <header className="relative z-10 flex items-center justify-between px-6 md:px-10 py-5 border-b border-white/6">
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image src="/citadellogo-clean.png" alt="NyxCitadel" width={40} height={40} unoptimized
+            className="h-10 w-auto rounded-lg flex-shrink-0 drop-shadow-[0_0_12px_rgba(13,115,119,0.45)]" />
+          <div className="flex flex-col leading-none">
+            <span className="font-bold text-sm text-white">NyxCitadel<sup className="text-[9px] font-normal text-teal-400">™</sup></span>
+            <span className="text-[10px] text-slate-500 uppercase tracking-wider">Healthcare Compliance</span>
+          </div>
         </Link>
+        <Link href="/priority-partner-portal" className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white border border-white/8 hover:border-white/15 px-3.5 py-2 rounded-xl transition-all">
+          <ArrowLeft className="w-3.5 h-3.5" /> Partner Portal
+        </Link>
+      </header>
+
+      <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-10 py-12">
 
         <div className="mt-6 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-6">
           <h1 className="text-3xl font-extrabold tracking-tight">Lease-Buy Commercial Options</h1>
