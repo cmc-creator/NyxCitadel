@@ -218,8 +218,6 @@ export default async function RootPage() {
   let session = null;
   try { session = await auth(); } catch { /* treat as unauthenticated if auth misconfigured */ }
   const isLoggedIn  = !!session;
-  const portalHref  = isLoggedIn ? '/dashboard' : '/login';
-  const portalLabel = isLoggedIn ? 'Go to Dashboard' : 'Sign In';
 
   return (
     <div className="min-h-screen bg-[#060b16] text-white overflow-x-hidden">
@@ -317,11 +315,11 @@ export default async function RootPage() {
       <section className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-12">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/40 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6 shadow-[0_0_20px_rgba(13,115,119,0.25)]">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/40 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6 shadow-[0_0_20px_rgba(13,115,119,0.25)] animate-fade-in-up">
               <Sparkles className="w-3.5 h-3.5 animate-pulse" />
               The Only Healthcare Compliance Platform That Never Sleeps
             </div>
-            <h1 className="text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-6">
+            <h1 className="text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-6 animate-fade-in-up delay-100">
               Stop Chasing{' '}
               <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
                 Regulations.
@@ -466,7 +464,7 @@ export default async function RootPage() {
           SOCIAL PROOF
       ══════════════════════════════ */}
       <section className="relative z-10 max-w-7xl mx-auto px-6 py-16">
-        <p className="text-center text-xs font-semibold text-slate-600 uppercase tracking-widest mb-8">Built for the full spectrum of behavioral health &amp; acute care</p>
+        <p className="text-center text-xs font-semibold text-slate-600 uppercase tracking-widest mb-8 scroll-fade">Built for the full spectrum of behavioral health &amp; acute care</p>
         <div className="flex flex-wrap justify-center gap-3 mb-14">
           {[
             'Acute Psychiatric Hospitals',
@@ -511,7 +509,7 @@ export default async function RootPage() {
               <Radio className="w-3.5 h-3.5" />
               Live Regulatory Intelligence Engine
             </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">
+            <h2 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-5 scroll-fade">
               The rules change{' '}
               <span className="bg-gradient-to-r from-rose-400 to-orange-400 bg-clip-text text-transparent">
                 constantly.
@@ -592,7 +590,7 @@ export default async function RootPage() {
               <BrainCircuit className="w-3.5 h-3.5" />
               Built for Quality &amp; Risk Professionals
             </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
+            <h2 className="text-4xl lg:text-5xl font-extrabold mb-5 scroll-fade">
               The unfair advantage{' '}
               <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
                 your facility deserves
@@ -622,7 +620,7 @@ export default async function RootPage() {
       ══════════════════════════════ */}
       <section id="features" className="relative z-10 max-w-7xl mx-auto px-6 py-24">
         <div className="text-center mb-14">
-          <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
+          <h2 className="text-4xl lg:text-5xl font-extrabold mb-5 scroll-fade">
             Every tool your compliance team needs.{' '}
             <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
               Unified.
@@ -665,7 +663,7 @@ export default async function RootPage() {
                 <HeartPulse className="w-3.5 h-3.5" />
                 QAPI &amp; Risk Management
               </div>
-              <h2 className="text-4xl font-extrabold leading-tight mb-5">
+              <h2 className="text-4xl font-extrabold leading-tight mb-5 scroll-fade">
                 Quality isn&apos;t a report.{' '}
                 <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
                   It&apos;s a culture.
@@ -759,7 +757,7 @@ export default async function RootPage() {
             <Lock className="w-3.5 h-3.5" />
             Deep Regulatory Alignment
           </div>
-          <h2 className="text-4xl lg:text-5xl font-extrabold mb-4">
+          <h2 className="text-4xl lg:text-5xl font-extrabold mb-4 scroll-fade">
             Every standard. Every agency.
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"> Every time.</span>
           </h2>
@@ -809,7 +807,7 @@ export default async function RootPage() {
               <Sparkles className="w-3.5 h-3.5" />
               Simple, Transparent Pricing
             </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
+            <h2 className="text-4xl lg:text-5xl font-extrabold mb-5 scroll-fade">
               The right plan for{' '}
               <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
                 every facility.
@@ -984,7 +982,7 @@ export default async function RootPage() {
               <span className="text-lg">🤖</span>
               AI Assistant
             </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
+            <h2 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6 scroll-fade">
               Meet{' '}
               <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
                 Sentry

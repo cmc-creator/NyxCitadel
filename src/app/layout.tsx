@@ -23,21 +23,12 @@ export function generateMetadata(): Metadata {
       url: appUrl,
       siteName: 'NyxCitadel',
       type: 'website',
-      images: [
-        {
-          url: '/citadellogo-clean.png',
-          width: 1200,
-          height: 630,
-          alt: 'NyxCitadel — Healthcare Compliance Platform',
-        },
-      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: 'NyxCitadel | Healthcare Compliance That Never Sleeps',
       description:
         'Automated regulatory intelligence, survey readiness, QAPI, and AI-powered compliance management for behavioral health facilities.',
-      images: ['/citadellogo-clean.png'],
     },
     icons: {
       icon: [
