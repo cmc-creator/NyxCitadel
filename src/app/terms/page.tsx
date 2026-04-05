@@ -4,8 +4,14 @@ import Image from 'next/image';
 import { ArrowLeft, FileText } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service',
-  description: 'Terms of Service for NyxCitadel platform and services.',
+  title: 'Terms of Service | NyxCitadel',
+  description: 'NyxCitadel Terms of Service. Subscription terms, acceptable use, customer responsibilities, warranties, liability caps, and governing law for healthcare organizations using the NyxCitadel platform.',
+  openGraph: {
+    title: 'NyxCitadel Terms of Service',
+    description: 'Subscription terms and conditions for healthcare organizations using the NyxCitadel platform.',
+    type: 'website',
+  },
+  twitter: { card: 'summary', title: 'NyxCitadel Terms of Service' },
 };
 
 const sections = [

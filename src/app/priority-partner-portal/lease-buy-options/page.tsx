@@ -4,6 +4,7 @@ import { ArrowLeft, Calculator, Landmark, Wallet } from 'lucide-react';
 
 export const metadata = {
   title: 'Lease-Buy Options | NyxCitadel Partner Portal',
+  description: 'Compare NyxCitadel commercial options: operating lease, lease-to-own, and direct purchase. Includes budgetary package pricing and first-year cost estimates for procurement planning.',
 };
 
 const models = [

@@ -4,6 +4,7 @@ import { ArrowLeft, ShieldCheck } from 'lucide-react';
 
 export const metadata = {
   title: 'Business Associate Agreement (BAA) | NyxCitadel',
+  description: 'HIPAA-compliant Business Associate Agreement for NyxCitadel. Covers PHI safeguards, breach notification windows, permitted uses, subcontractor requirements, and signature blocks for legal redline.',
 };
 
 const sections = [

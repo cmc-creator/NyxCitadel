@@ -4,8 +4,14 @@ import Image from 'next/image';
 import { ArrowLeft, Lock } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy',
-  description: 'Privacy policy for NyxCitadel platform and services.',
+  title: 'Privacy Policy | NyxCitadel',
+  description: 'NyxCitadel Privacy Policy. How NyxCollective LLC collects, uses, and protects information for platform visitors, demo requesters, and healthcare organization users. HIPAA compliant.',
+  openGraph: {
+    title: 'NyxCitadel Privacy Policy',
+    description: 'How NyxCollective LLC collects, uses, and protects your information.',
+    type: 'website',
+  },
+  twitter: { card: 'summary', title: 'NyxCitadel Privacy Policy' },
 };
 
 const sections = [

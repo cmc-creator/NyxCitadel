@@ -74,7 +74,7 @@ const features = [
     title: 'Executive & Board Reporting',
     description:
       'Auto-generated board-level dashboards pull live data from every module. Impress surveyors and leadership with a unified compliance scorecard.',
-    color: 'from-indigo-500 to-blue-500',
+    color: 'from-blue-500 to-cyan-500',
     badge: 'One Click',
   },
   {

@@ -7,8 +7,14 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Contact NyxCitadel sales, legal, and support teams.',
+  title: 'Contact NyxCitadel | Sales, Legal & Support',
+  description: 'Get in touch with NyxCitadel. Contact our sales team for demos and pricing, legal for BAA and security reviews, or support for platform questions. HIPAA BAA included on all plans.',
+  openGraph: {
+    title: 'Contact NyxCitadel',
+    description: 'Get in touch with NyxCitadel — sales, legal, and support.',
+    type: 'website',
+  },
+  twitter: { card: 'summary', title: 'Contact NyxCitadel' },
 };
 
 const contacts = [

@@ -50,7 +50,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col">
+    <div className="min-h-screen bg-[#060b16] flex flex-col">
       {/* Background glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-60 -left-40 w-[700px] h-[700px] bg-teal-700/15 rounded-full blur-[140px]" />
@@ -179,6 +179,21 @@ export default function SignupPage() {
                 ))}
               </div>
               <p className="text-xs text-slate-600 mt-4 text-center">Annual billing available · 30-day money-back guarantee · HIPAA BAA included on all plans</p>
+            </div>
+
+            {/* Demo tab CTA */}
+            <div className="rounded-2xl border border-teal-500/20 bg-teal-500/6 p-6 flex flex-col sm:flex-row items-center justify-between gap-5">
+              <div>
+                <h3 className="text-base font-bold text-white mb-1">Ready to see it live?</h3>
+                <p className="text-sm text-slate-400 leading-relaxed">Tell us about your facility and we&apos;ll set up a personalized demo with real data — free, no credit card required.</p>
+              </div>
+              <button
+                onClick={() => setTab('request')}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white flex-shrink-0 transition-all hover:-translate-y-px"
+                style={{ background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.3)' }}
+              >
+                Request Access <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
         )}

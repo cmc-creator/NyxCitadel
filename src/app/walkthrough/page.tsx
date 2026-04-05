@@ -1,8 +1,18 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PlayCircle, LayoutDashboard, CalendarDays, ClipboardList, Sparkles, Newspaper, FileBarChart, ChevronRight, ArrowLeft } from 'lucide-react';
 
-export const metadata = { title: 'Feature Walkthrough | NyxCitadel' };
+export const metadata: Metadata = {
+  title: 'Feature Walkthrough | NyxCitadel',
+  description: 'A fast tour of NyxCitadel ordered the way an experienced compliance leader would explore the platform. Dashboard, Calendar, Trackers, Sentry AI, Regulatory Updates, and Board Report.',
+  openGraph: {
+    title: 'NyxCitadel Feature Walkthrough',
+    description: 'A fast tour of NyxCitadel — ordered the way an experienced compliance leader would explore the platform.',
+    type: 'article',
+  },
+  twitter: { card: 'summary_large_image', title: 'NyxCitadel Feature Walkthrough' },
+};
 
 const stops = [
   {

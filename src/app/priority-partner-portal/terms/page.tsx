@@ -4,6 +4,7 @@ import { ArrowLeft, FileText } from 'lucide-react';
 
 export const metadata = {
   title: 'Terms of Service | NyxCitadel Partner Portal',
+  description: 'NyxCitadel commercial Terms of Service for healthcare organizations. Covers subscription terms, fees, customer responsibilities, warranties, liability limits, and governing law.',
 };
 
 const terms = [

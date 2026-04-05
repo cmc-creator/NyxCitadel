@@ -1,8 +1,18 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, CalendarDays, ClipboardList, ShieldCheck, GraduationCap, Siren, Sparkles, ChevronRight, ArrowLeft, CheckCircle } from 'lucide-react';
 
-export const metadata = { title: 'User Guide | NyxCitadel' };
+export const metadata: Metadata = {
+  title: 'User Guide | NyxCitadel',
+  description: 'Practical operator guide for compliance officers, quality leaders, and healthcare executives using NyxCitadel. Learn the daily rhythm, where work lives, evidence discipline, and how to use Sentry AI.',
+  openGraph: {
+    title: 'NyxCitadel Operator Guide',
+    description: 'Practical operator guide for compliance officers, quality leaders, and healthcare executives using NyxCitadel.',
+    type: 'article',
+  },
+  twitter: { card: 'summary_large_image', title: 'NyxCitadel Operator Guide' },
+};
 
 const sections = [
   {

@@ -16,8 +16,13 @@ import PartnerPreviewImage from '@/components/partners/PartnerPreviewImage';
 
 export const metadata = {
   title: 'Priority Partner Portal | NyxCitadel',
-  description:
-    'Legal, commercial, and procurement resources for Priority Partners evaluating NyxCitadel.',
+  description: 'Legal, commercial, and procurement resources for healthcare organizations evaluating NyxCitadel. Review the BAA, Terms of Service, Priority Partner Agreement, and Lease-Buy commercial options.',
+  openGraph: {
+    title: 'NyxCitadel Priority Partner Portal',
+    description: 'Contracts, legal documents, and commercial options for healthcare procurement teams evaluating NyxCitadel.',
+    type: 'website',
+  },
+  twitter: { card: 'summary', title: 'NyxCitadel Priority Partner Portal' },
 };
 
 const legalCards = [

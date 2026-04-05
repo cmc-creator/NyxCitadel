@@ -4,6 +4,7 @@ import { ArrowLeft, Handshake } from 'lucide-react';
 
 export const metadata = {
   title: 'Priority Partner Agreement | NyxCitadel',
+  description: 'NyxCitadel Priority Partner Agreement with early-access pricing protections, implementation milestones, KPI acceptance criteria, and expansion rights for qualified healthcare partners.',
 };
 
 const items = [
