@@ -62,6 +62,7 @@ export function SetupWizard() {
   const [isOpen, setIsOpen] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<Set<string>>(new Set());
   const [loadingStep, setLoadingStep] = useState<string | null>(null);
+  const [stepMessage, setStepMessage] = useState<{ id: string; text: string; ok: boolean } | null>(null);
 
   useEffect(() => {
     const hasSeen = window.localStorage.getItem(STORAGE_KEY);
@@ -92,13 +93,23 @@ export function SetupWizard() {
   const handleApiStep = async (step: SetupStep) => {
     if (!step.action.apiEndpoint || loadingStep) return;
     setLoadingStep(step.id);
+    setStepMessage(null);
     try {
-      await fetch(step.action.apiEndpoint, { method: step.action.method ?? 'POST' });
+      const res = await fetch(step.action.apiEndpoint, { method: step.action.method ?? 'POST' });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        const summary = data.calendarEventsCreated !== undefined
+          ? `Created ${data.calendarEventsCreated} calendar events, ${data.policiesCreated} policies, ${data.capsCreated} CAPs.`
+          : 'Templates applied successfully.';
+        setStepMessage({ id: step.id, text: summary, ok: true });
+        markCompleted(step.id);
+      } else {
+        setStepMessage({ id: step.id, text: data.error ?? 'Something went wrong. Please try again.', ok: false });
+      }
     } catch {
-      // Best-effort — mark as done regardless
+      setStepMessage({ id: step.id, text: 'Network error. Please check your connection.', ok: false });
     }
     setLoadingStep(null);
-    markCompleted(step.id);
   };
 
   const handleDismiss = () => {
@@ -197,6 +208,11 @@ export function SetupWizard() {
                         </h3>
                       </div>
                       <p className="text-sm text-muted-foreground/70 mt-1">{step.description}</p>
+                      {stepMessage?.id === step.id && (
+                        <p className={`text-xs mt-2 font-medium ${stepMessage.ok ? 'text-emerald-400' : 'text-red-400'}`}>
+                          {stepMessage.ok ? '✓ ' : '⚠ '}{stepMessage.text}
+                        </p>
+                      )}
                     </div>
 
                     <ChevronRight className={`w-5 h-5 flex-shrink-0 transition-colors ${isLoading ? 'animate-spin text-teal-400' : 'text-slate-500 group-hover:text-muted-foreground/70'}`} />
