@@ -47,14 +47,14 @@ const setupSteps: SetupStep[] = [
     title: 'Build Your Compliance Calendar',
     description: 'Create a baseline calendar with regulatory deadlines, audit schedules, and review cycles specific to your facility type.',
     icon: Calendar,
-    action: { label: 'Open Calendar', href: '/dashboard/calendar' },
+    action: { label: 'Open Calendar', href: '/calendar' },
   },
   {
     id: 'sentry-intro',
     title: 'Meet Sentry 🤖',
     description: 'Try asking Sentry to draft a CAP or explain a compliance standard. Watch how it learns your facility\'s context.',
     icon: Zap,
-    action: { label: 'Open Sentry', href: '/dashboard/assistant' },
+    action: { label: 'Open Sentry', href: '/assistant' },
   },
 ];
 
