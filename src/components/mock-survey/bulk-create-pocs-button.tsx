@@ -20,14 +20,13 @@ export function BulkCreatePocsButton({ surveyId, surveyTitle, notMetCount }: Pro
     setLoading(true);
     try {
       // POST to create a POC linked to this mock survey
-      const res = await fetch('/api/quality/poc', {
+      const res = await fetch('/api/poc', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: `Mock Survey Deficiencies — ${surveyTitle}`,
-          body: 'ADHS', // default regulatory body
-          mockSurveyId: surveyId,
-          createFromMockSurvey: true,
+          regulatoryBody: 'ADHS',
+          surveyId,
         }),
       });
       if (!res.ok) throw new Error('Failed to create POC');
