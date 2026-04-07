@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
+import { logAudit } from '@/lib/audit';
 
 const UpsertSchema = z.object({
   metricName: z.string().min(1),
@@ -70,5 +71,6 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'QapiMetric', entityId: metric.id, req });
   return NextResponse.json(metric, { status: 201 });
 }

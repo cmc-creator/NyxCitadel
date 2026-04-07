@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
+import { logAudit } from '@/lib/audit';
 
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'floor-plans');
 
@@ -57,6 +58,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'FacilityFloorPlan', entityId: plan.id, req });
     return NextResponse.json(plan, { status: 201 });
   } catch (err) {
     console.error('Floor plan upload error:', err);

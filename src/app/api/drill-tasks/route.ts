@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 // GET /api/drill-tasks?drillId=xxx
 export async function GET(req: NextRequest) {
@@ -47,5 +48,6 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'DrillKillTask', entityId: task.id, req });
   return NextResponse.json(task, { status: 201 });
 }

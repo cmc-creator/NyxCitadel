@@ -30,7 +30,7 @@ const loginSchema = z.object({
 export const { handlers, auth, signIn, signOut } = NextAuth({
   basePath: '/api/nyx-auth',
   ...authConfig,
-  session: { strategy: 'jwt' },
+  session: { strategy: 'jwt', maxAge: 8 * 60 * 60 }, // 8-hour sessions
   providers: [
     Credentials({
       name: 'credentials',

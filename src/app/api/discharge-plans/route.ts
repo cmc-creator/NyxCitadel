@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 export const dynamic = 'force-dynamic';
 
@@ -69,6 +70,5 @@ export async function POST(req: NextRequest) {
       status:                'ACTIVE',
     },
   });
-
-  return NextResponse.json(plan, { status: 201 });
+  await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'DischargePlan', entityId: plan.id, req });  return NextResponse.json(plan, { status: 201 });
 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { logAudit } from '@/lib/audit';
 
 // GET /api/users - list all users in the facility
 export async function GET() {
@@ -84,5 +85,6 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'User', entityId: user.id, req });
   return NextResponse.json(user, { status: 201 });
 }

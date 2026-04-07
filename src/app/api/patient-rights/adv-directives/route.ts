@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,5 +62,6 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'AdvanceDirectiveRecord', entityId: record.id, req });
   return NextResponse.json(record, { status: 201 });
 }

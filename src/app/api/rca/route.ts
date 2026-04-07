@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 async function generateRcaNumber(facilityId: string): Promise<string> {
   const year = new Date().getFullYear();
@@ -70,5 +71,6 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'RootCauseAnalysis', entityId: rca.id, req });
   return NextResponse.json(rca, { status: 201 });
 }

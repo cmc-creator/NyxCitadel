@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 export const dynamic = 'force-dynamic';
 
@@ -103,6 +104,7 @@ export async function POST(req: NextRequest) {
     include: { hazards: true },
   });
 
+  await logAudit({ userId: session.user.id, action: 'UPSERT', entityType: 'HvaAssessment', entityId: assessment.id, req });
   return NextResponse.json(result);
 }
 

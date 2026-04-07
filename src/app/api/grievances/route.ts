@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 // Generate a unique grievance number  e.g. GR-2025-001
 async function generateGrievanceNumber(facilityId: string): Promise<string> {
@@ -77,5 +78,6 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'GrievanceRecord', entityId: grievance.id, req });
   return NextResponse.json(grievance, { status: 201 });
 }

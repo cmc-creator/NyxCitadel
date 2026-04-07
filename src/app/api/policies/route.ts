@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 const CATEGORY_PREFIX: Record<string, string> = {
   ADMINISTRATIVE:        'ADM',
@@ -89,5 +90,6 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'Policy', entityId: policy.id, req });
   return NextResponse.json(policy, { status: 201 });
 }

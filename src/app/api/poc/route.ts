@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 async function generatePocNumber(facilityId: string): Promise<string> {
   const year = new Date().getFullYear();
@@ -69,5 +70,6 @@ export async function POST(req: NextRequest) {
     include: { findings: true },
   });
 
+  await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'PlanOfCorrection', entityId: poc.id, req });
   return NextResponse.json(poc, { status: 201 });
 }

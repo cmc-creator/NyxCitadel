@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 // GET /api/facility - returns current user's facility
 export async function GET() {
@@ -79,5 +80,7 @@ export async function PATCH(req: NextRequest) {
     },
   });
 
+  await logAudit({ userId: session.user.id, action: 'UPDATE', entityType: 'Facility', entityId: updated.id, req });
   return NextResponse.json(updated);
 }
+

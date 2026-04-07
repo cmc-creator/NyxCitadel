@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { logAudit } from '@/lib/audit';
 
 export const dynamic = 'force-dynamic';
 
@@ -68,5 +69,6 @@ export async function PATCH(req: Request) {
     select: { id: true, name: true, email: true, role: true, isActive: true },
   });
 
+  await logAudit({ userId: session.user.id, action: 'UPDATE', entityType: 'User', entityId: updated.id, changes: { isActive: body.isActive, role: body.role }, req: req as unknown as import('next/server').NextRequest });
   return NextResponse.json(updated);
 }
