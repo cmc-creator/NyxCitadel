@@ -47,7 +47,7 @@ const AGENCY_COLORS: Record<string, string> = {
   CMS:     'bg-blue-500/15 text-blue-400 border border-blue-500/30',
   SAMHSA:  'bg-teal-500/15 text-teal-400 border border-teal-500/30',
   DEA:     'bg-rose-500/15 text-rose-400 border border-rose-500/30',
-  HHS_OCR: 'bg-teal-500/15 text-indigo-400 border border-teal-500/30',
+  HHS_OCR: 'bg-teal-500/15 text-teal-400 border border-teal-500/30',
   OSHA:    'bg-amber-500/15 text-amber-400 border border-amber-500/30',
   AZ_ADHS: 'bg-green-500/15 text-green-400 border border-green-500/30',
 };
@@ -451,7 +451,7 @@ export default async function IopDashboardPage() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base font-semibold text-foreground flex items-center gap-2">
-            <BookOpen className="w-4 h-4 text-indigo-400" />
+            <BookOpen className="w-4 h-4 text-teal-400" />
             IOP Regulatory Reference
           </h2>
           <span className="text-xs text-muted-foreground">Key rules for outpatient / IOP operations</span>

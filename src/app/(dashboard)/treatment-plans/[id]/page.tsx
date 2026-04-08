@@ -13,7 +13,7 @@ const STATUS_COLOR: Record<string, string> = {
   ACTIVE: 'bg-blue-100 text-blue-700',
   UPDATED: 'bg-yellow-100 text-yellow-700',
   DISCHARGED: 'bg-green-100 text-green-700',
-  TRANSFERRED: 'bg-purple-100 text-purple-700',
+  TRANSFERRED: 'bg-teal-50 text-teal-700',
 };
 
 const STATUS_OPTIONS = [

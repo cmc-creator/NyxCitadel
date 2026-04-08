@@ -141,8 +141,8 @@ export default async function GrievanceDetailPage({ params }: { params: { id: st
 
           {(g.linkedIncidentId || g.linkedCapId) && (
             <Section title="Linked Records">
-              {g.linkedIncidentId && <Link href={`/trackers/incidents/${g.linkedIncidentId}`} className="block text-xs text-purple-700 hover:underline mb-1">&#x2192; Linked Incident</Link>}
-              {g.linkedCapId && <Link href={`/trackers/caps/${g.linkedCapId}`} className="block text-xs text-purple-700 hover:underline">&#x2192; Linked CAP</Link>}
+              {g.linkedIncidentId && <Link href={`/trackers/incidents/${g.linkedIncidentId}`} className="block text-xs text-teal-600 hover:underline mb-1">&#x2192; Linked Incident</Link>}
+              {g.linkedCapId && <Link href={`/trackers/caps/${g.linkedCapId}`} className="block text-xs text-teal-600 hover:underline">&#x2192; Linked CAP</Link>}
             </Section>
           )}
         </div>

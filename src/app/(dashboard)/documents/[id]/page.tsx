@@ -98,7 +98,7 @@ export default function DocumentDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500" />
       </div>
     );
   }
@@ -108,7 +108,7 @@ export default function DocumentDetailPage() {
       <div className="text-center py-20">
         <AlertTriangle className="w-10 h-10 text-red-400 mx-auto mb-3" />
         <p className="text-slate-500">{error || 'Document not found.'}</p>
-        <button onClick={() => router.back()} className="mt-4 text-sm text-purple-600 hover:underline">
+        <button onClick={() => router.back()} className="mt-4 text-sm text-teal-500 hover:underline">
           ← Go back
         </button>
       </div>
@@ -141,8 +141,8 @@ export default function DocumentDetailPage() {
       <div className="bg-card border border-border rounded-xl p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0">
-              <FileText className="w-6 h-6 text-purple-600" />
+            <div className="w-12 h-12 rounded-xl bg-teal-950/30 flex items-center justify-center flex-shrink-0">
+              <FileText className="w-6 h-6 text-teal-400" />
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">{doc.name}</h1>
@@ -158,7 +158,7 @@ export default function DocumentDetailPage() {
               href={doc.fileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-3 py-1.5 rounded-lg transition"
+              className="inline-flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-3 py-1.5 rounded-lg transition"
             >
               <Download className="w-4 h-4" />
               Open / Download
@@ -292,7 +292,7 @@ export default function DocumentDetailPage() {
           rel="noopener noreferrer"
           aria-label="Open document file"
           title="Open document file"
-          className="shrink-0 text-purple-600 hover:text-purple-800 transition"
+          className="shrink-0 text-teal-500 hover:text-teal-300 transition"
         >
           <ExternalLink className="w-5 h-5" />
         </a>

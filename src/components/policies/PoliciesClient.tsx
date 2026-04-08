@@ -57,7 +57,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   HUMAN_RESOURCES:        'bg-teal-100 text-teal-700 border-teal-200',
   INFECTION_CONTROL:      'bg-teal-100 text-teal-700 border-teal-200',
   INFORMATION_MANAGEMENT: 'bg-cyan-100 text-cyan-700 border-cyan-200',
-  LEADERSHIP:             'bg-indigo-100 text-indigo-700 border-indigo-200',
+  LEADERSHIP:             'bg-teal-50 text-teal-700 border-teal-200',
   LIFE_SAFETY:            'bg-orange-100 text-orange-700 border-orange-200',
   MEDICATION_MANAGEMENT:  'bg-pink-100 text-pink-700 border-pink-200',
   PATIENT_RIGHTS:         'bg-teal-100 text-teal-700 border-teal-200',

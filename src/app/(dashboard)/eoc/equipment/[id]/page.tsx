@@ -13,7 +13,7 @@ const STATUS_OPTIONS = [
   { value: 'UPCOMING', label: 'Upcoming', color: 'bg-blue-100 text-blue-800' },
   { value: 'DUE_SOON', label: 'Due Soon', color: 'bg-yellow-100 text-yellow-800' },
   { value: 'OVERDUE', label: 'Overdue', color: 'bg-red-100 text-red-800' },
-  { value: 'IN_PROGRESS', label: 'In Progress', color: 'bg-purple-100 text-purple-800' },
+  { value: 'IN_PROGRESS', label: 'In Progress', color: 'bg-teal-50 text-teal-700' },
   { value: 'COMPLETED', label: 'Completed', color: 'bg-green-100 text-green-800' },
 ];
 

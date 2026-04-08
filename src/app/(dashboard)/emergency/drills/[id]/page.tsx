@@ -127,7 +127,7 @@ export default async function DrillDetailPage({
           {drill.status === 'COMPLETED' && !drill.aarGeneratedAt && (
             <Link
               href={`/emergency/drills/${drill.id}/aar`}
-              className="inline-flex items-center gap-1 text-sm font-medium bg-teal-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition-colors"
+              className="inline-flex items-center gap-1 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg transition-colors"
             >
               <FileText className="w-3.5 h-3.5" /> Generate AAR
             </Link>
@@ -143,7 +143,7 @@ export default async function DrillDetailPage({
           {(drill as any).resilienceGrade && (
             <Link
               href={`/emergency/drills/${drill.id}/scorecard`}
-              className="inline-flex items-center gap-1 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg transition-colors"
+              className="inline-flex items-center gap-1 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg transition-colors"
             >
               <CheckCircle2 className="w-3.5 h-3.5" /> Scorecard ({(drill as any).resilienceGrade})
             </Link>

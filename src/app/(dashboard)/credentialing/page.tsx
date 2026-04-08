@@ -49,9 +49,9 @@ export default async function CredentialingPage() {
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <UserCheck className="w-6 h-6 text-indigo-400" />
+            <UserCheck className="w-6 h-6 text-teal-400" />
             <h1 className="text-2xl font-bold text-white">Credentialing &amp; Privileging</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-50 text-teal-700">TJC MS.06.01</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700">CMS CoP</span>
           </div>
           <p className="text-muted-foreground/70 text-sm">Provider licenses, clinical privileges, OPPE/FPPE, and medical staff committee records.</p>
@@ -60,7 +60,7 @@ export default async function CredentialingPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Active Providers', value: totalActive, icon: UserCheck, color: 'text-indigo-400' },
+          { label: 'Active Providers', value: totalActive, icon: UserCheck, color: 'text-teal-400' },
           { label: 'Licenses Expiring <90 days', value: expiringLicenses.length, icon: Clock, color: 'text-amber-400' },
           { label: 'Active Providers', value: totalActive, icon: Award, color: 'text-emerald-400' },
           { label: 'Active FPPE', value: activeFppe, icon: FileCheck, color: 'text-blue-400' },
@@ -109,11 +109,11 @@ export default async function CredentialingPage() {
               <div className="flex items-center gap-2">
                 <span className="text-2xl">{m.icon}</span>
                 <div>
-                  <p className="font-semibold text-white group-hover:text-indigo-300 transition-colors">{m.title}</p>
+                  <p className="font-semibold text-white group-hover:text-teal-400 transition-colors">{m.title}</p>
                   <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full ${m.badgeColor}`}>{m.badge}</span>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-indigo-400 transition-colors" />
+              <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-teal-400 transition-colors" />
             </div>
             <p className="text-xs text-muted-foreground/70 mb-3">{m.description}</p>
             <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>
@@ -124,7 +124,7 @@ export default async function CredentialingPage() {
       <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
         <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
           <p className="font-semibold text-white text-sm">Active Medical Staff</p>
-          <Link href="/credentialing/providers" className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+          <Link href="/credentialing/providers" className="text-xs text-teal-400 hover:text-teal-400 flex items-center gap-1">
             View all <ChevronRight className="w-3 h-3" />
           </Link>
         </div>
@@ -142,7 +142,7 @@ export default async function CredentialingPage() {
             ) : activeProviders.map(p => (
               <tr key={p.id} className="hover:bg-white/5">
                 <td className="px-4 py-2.5 font-semibold text-white text-xs">{p.lastName}, {p.firstName}</td>
-                <td className="px-4 py-2.5 text-indigo-300 text-xs font-semibold">{p.credentials}</td>
+                <td className="px-4 py-2.5 text-teal-400 text-xs font-semibold">{p.credentials}</td>
                 <td className="px-4 py-2.5 text-slate-300 text-xs">{p.specialty}</td>
                 <td className="px-4 py-2.5 text-muted-foreground/70 text-xs">{p.providerType.replace(/_/g, ' ')}</td>
                 <td className="px-4 py-2.5 text-muted-foreground/70 text-xs">{p.reappointmentDate ? p.reappointmentDate.toLocaleDateString() : '—'}</td>

@@ -57,8 +57,8 @@ const sections = [
   },
   {
     title: '5. Leadership Workflow',
-    color: 'border-purple-500/20 bg-purple-500/5',
-    dot: 'bg-purple-400',
+    color: 'border-teal-500/20 bg-teal-500/5',
+    dot: 'bg-teal-400',
     items: [
       'Use the Board Report and Resilience views to translate operational data into executive language.',
       'Export CSV when you need raw data; use Print / Save PDF when you need polished readouts for leaders or survey prep binders.',

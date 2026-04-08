@@ -174,7 +174,7 @@ export default function HcahpsPage() {
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
             <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-              <Users className="w-6 h-6 text-violet-400" />
+              <Users className="w-6 h-6 text-teal-400" />
               CMS HCAHPS Patient Satisfaction
             </h1>
             <p className="text-sm text-slate-400 mt-1">
@@ -194,7 +194,7 @@ export default function HcahpsPage() {
             <button
               onClick={() => handleSave('READY')}
               disabled={saving}
-              className="px-4 py-2 rounded-lg text-sm bg-violet-600 hover:bg-violet-500 text-white font-medium transition-colors flex items-center gap-2 disabled:opacity-60"
+              className="px-4 py-2 rounded-lg text-sm bg-teal-600 hover:bg-teal-500 text-white font-medium transition-colors flex items-center gap-2 disabled:opacity-60"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
               Mark Ready
@@ -304,7 +304,7 @@ export default function HcahpsPage() {
             </div>
             <div className="pt-4">
               {form.overallRatingSum && form.overallRatingCount && parseFloat(form.overallRatingCount) > 0 ? (
-                <span className="text-lg font-bold text-violet-400">
+                <span className="text-lg font-bold text-teal-400">
                   {(parseFloat(form.overallRatingSum) / parseFloat(form.overallRatingCount)).toFixed(1)} / 10
                 </span>
               ) : (
@@ -377,7 +377,7 @@ export default function HcahpsPage() {
         <button
           onClick={() => handleSave('READY')}
           disabled={saving}
-          className="px-5 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors disabled:opacity-60"
+          className="px-5 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors disabled:opacity-60"
         >
           {saving ? 'Saving…' : 'Mark Ready to Submit'}
         </button>

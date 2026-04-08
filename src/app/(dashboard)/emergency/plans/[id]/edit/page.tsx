@@ -42,7 +42,7 @@ export default function EditEmergencyPlanPage() {
       .catch(() => { setError('Failed to load.'); setLoading(false); });
   }, [id]);
 
-  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">LoadingΓÇª</div>;
   if (!data || data.error) return <div className="text-red-400 p-8">{error || 'Record not found.'}</div>;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -76,7 +76,7 @@ export default function EditEmergencyPlanPage() {
           <ArrowLeft className="w-4 h-4" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <BookOpen className="w-6 h-6 text-purple-600" /> Edit Emergency Plan
+          <BookOpen className="w-6 h-6 text-teal-500" /> Edit Emergency Plan
         </h1>
       </div>
 
@@ -87,20 +87,20 @@ export default function EditEmergencyPlanPage() {
       <form key={data.id} onSubmit={handleSubmit} className="bg-card rounded-xl border border-border p-6 space-y-5">
         <div>
           <label className="block text-sm font-medium text-foreground/80 mb-1">Plan Name <span className="text-red-500">*</span></label>
-          <input name="planName" required defaultValue={data.planName ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="e.g. Annual Emergency Operations Plan 2026" />
+          <input name="planName" required defaultValue={data.planName ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="e.g. Annual Emergency Operations Plan 2026" />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-foreground/80 mb-1">Plan Type <span className="text-red-500">*</span></label>
-            <select name="planType" required defaultValue={data.planType ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+            <select name="planType" required defaultValue={data.planType ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
               <option value="">- Select type -</option>
               {PLAN_TYPES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-foreground/80 mb-1">Status</label>
-            <select name="status" defaultValue={data.status ?? 'ACTIVE'} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+            <select name="status" defaultValue={data.status ?? 'ACTIVE'} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
               {STATUSES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
           </div>
@@ -109,43 +109,43 @@ export default function EditEmergencyPlanPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-foreground/80 mb-1">Version</label>
-            <input name="version" defaultValue={data.version ?? '1.0'} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="1.0" />
+            <input name="version" defaultValue={data.version ?? '1.0'} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="1.0" />
           </div>
           <div>
             <label className="block text-sm font-medium text-foreground/80 mb-1">Approved By</label>
-            <input name="approvedBy" defaultValue={data.approvedBy ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Name or role" />
+            <input name="approvedBy" defaultValue={data.approvedBy ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Name or role" />
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-foreground/80 mb-1">Effective Date <span className="text-red-500">*</span></label>
-            <input type="date" name="effectiveDate" required defaultValue={data.effectiveDate?.split('T')[0] ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+            <input type="date" name="effectiveDate" required defaultValue={data.effectiveDate?.split('T')[0] ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
           </div>
           <div>
             <label className="block text-sm font-medium text-foreground/80 mb-1">Next Review Date <span className="text-red-500">*</span></label>
-            <input type="date" name="nextReviewDate" required defaultValue={data.nextReviewDate?.split('T')[0] ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+            <input type="date" name="nextReviewDate" required defaultValue={data.nextReviewDate?.split('T')[0] ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
           </div>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-foreground/80 mb-1">Last Reviewed Date</label>
-          <input type="date" name="lastReviewedDate" defaultValue={data.lastReviewedDate?.split('T')[0] ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+          <input type="date" name="lastReviewedDate" defaultValue={data.lastReviewedDate?.split('T')[0] ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-foreground/80 mb-1">Document URL</label>
-          <input type="url" name="documentUrl" defaultValue={data.documentUrl ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="https://..." />
+          <input type="url" name="documentUrl" defaultValue={data.documentUrl ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="https://..." />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-foreground/80 mb-1">Summary / Scope</label>
-          <textarea name="summary" rows={3} defaultValue={data.summary ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none" placeholder="Brief description of plan scope and purpose..." />
+          <textarea name="summary" rows={3} defaultValue={data.summary ?? ''} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none" placeholder="Brief description of plan scope and purpose..." />
         </div>
 
         <div className="flex gap-3 pt-2">
-          <button type="submit" disabled={saving} className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium py-2.5 rounded-lg transition-colors">
-            {saving ? 'Saving…' : 'Save Changes'}
+          <button type="submit" disabled={saving} className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-medium py-2.5 rounded-lg transition-colors">
+            {saving ? 'SavingΓÇª' : 'Save Changes'}
           </button>
           <a href={`/emergency/plans/${id}`} className="px-4 py-2.5 text-sm font-medium text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
             Cancel

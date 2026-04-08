@@ -14,7 +14,7 @@ const STATUS_OPTIONS = [
   { value: 'DRAFT_COMPLETE', label: 'Draft Complete', color: 'bg-blue-100 text-blue-700' },
   { value: 'UNDER_REVIEW', label: 'Under Review', color: 'bg-orange-100 text-orange-700' },
   { value: 'APPROVED', label: 'Approved', color: 'bg-green-100 text-green-700' },
-  { value: 'SUBMITTED_TO_JC', label: 'Submitted to JC', color: 'bg-purple-100 text-purple-700' },
+  { value: 'SUBMITTED_TO_JC', label: 'Submitted to JC', color: 'bg-teal-50 text-teal-700' },
   { value: 'CLOSED', label: 'Closed', color: 'bg-slate-100 text-slate-500' },
 ];
 
@@ -76,7 +76,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
               {rca.equipmentFactors && <Factor label="Equipment / Technology" content={rca.equipmentFactors} color="orange" />}
               {rca.environmentFactors && <Factor label="Environment" content={rca.environmentFactors} color="green" />}
               {rca.processFactors && <Factor label="Process / Protocol" content={rca.processFactors} color="yellow" />}
-              {rca.organizationalFactors && <Factor label="Organizational" content={rca.organizationalFactors} color="purple" />}
+              {rca.organizationalFactors && <Factor label="Organizational" content={rca.organizationalFactors} color="teal" />}
               {!rca.humanFactors && !rca.equipmentFactors && !rca.environmentFactors && !rca.processFactors && !rca.organizationalFactors && (
                 <p className="text-sm text-muted-foreground/70 italic">No contributing factors recorded yet.</p>
               )}
@@ -88,7 +88,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
               <ol className="space-y-3">
                 {whyAnalysis.map((item, i) => (
                   <li key={i} className="flex gap-3">
-                    <span className="flex-none w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">{i + 1}</span>
+                    <span className="flex-none w-6 h-6 rounded-full bg-teal-50 text-teal-700 text-xs font-bold flex items-center justify-center">{i + 1}</span>
                     <div>
                       <p className="text-xs font-semibold text-slate-600">Why: <span className="font-normal text-foreground">{item.why}</span></p>
                       <p className="text-xs text-foreground/80 mt-0.5">Because: {item.answer}</p>
@@ -181,7 +181,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
 
           {rca.linkedIncidentId && (
             <Section title="Linked Incident">
-              <Link href={`/trackers/incidents/${rca.linkedIncidentId}`} className="text-xs text-purple-700 hover:underline">&#x2192; View Incident</Link>
+              <Link href={`/trackers/incidents/${rca.linkedIncidentId}`} className="text-xs text-teal-600 hover:underline">&#x2192; View Incident</Link>
             </Section>
           )}
         </div>
@@ -196,7 +196,7 @@ function Factor({ label, content, color }: { label: string; content: string; col
     orange: 'bg-orange-950/20 border-orange-200',
     green: 'bg-green-50 border-green-200',
     yellow: 'bg-yellow-50 border-yellow-200',
-    purple: 'bg-purple-50 border-purple-200',
+    teal: 'bg-teal-50 border-teal-200',
   };
   return (
     <div className={`rounded-lg border p-3 ${colors[color]}`}>

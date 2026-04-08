@@ -63,7 +63,7 @@ export default async function RegulatoryUpdateDetailPage({ params }: { params: {
               href={update.sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-purple-400 hover:text-purple-300 transition-colors"
+              className="flex items-center gap-1.5 text-teal-400 hover:text-teal-300 transition-colors"
             >
               <ExternalLink className="w-3.5 h-3.5" /> Official Source
             </a>

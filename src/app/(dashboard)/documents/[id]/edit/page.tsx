@@ -61,7 +61,7 @@ export default function EditDocumentPage() {
     }
   }
 
-  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">LoadingΓÇª</div>;
   if (!data || data.error) return <div className="text-red-400 p-8">{error || 'Not found.'}</div>;
 
   return (
@@ -71,7 +71,7 @@ export default function EditDocumentPage() {
           <ArrowLeft className="w-4 h-4" /> Back to Document
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <FileText className="w-6 h-6 text-purple-600" /> Edit Document
+          <FileText className="w-6 h-6 text-teal-600" /> Edit Document
         </h1>
         <p className="text-sm text-slate-500 mt-0.5">Update document metadata. To replace the file, upload a new document.</p>
       </div>
@@ -87,7 +87,7 @@ export default function EditDocumentPage() {
             name="name"
             required
             defaultValue={data.name ?? ''}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
@@ -97,7 +97,7 @@ export default function EditDocumentPage() {
             name="category"
             required
             defaultValue={data.category ?? ''}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             <option value="">- Select category -</option>
             {CATEGORIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
@@ -110,7 +110,7 @@ export default function EditDocumentPage() {
             name="description"
             rows={2}
             defaultValue={data.description ?? ''}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
           />
         </div>
 
@@ -121,7 +121,7 @@ export default function EditDocumentPage() {
               type="date"
               name="expiryDate"
               defaultValue={data.expiryDate?.split('T')[0] ?? ''}
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
           <div>
@@ -130,7 +130,7 @@ export default function EditDocumentPage() {
               name="tags"
               defaultValue={Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags ?? '')}
               placeholder="policy, infection, 2026 (comma-separated)"
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
         </div>
@@ -139,9 +139,9 @@ export default function EditDocumentPage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium py-2.5 rounded-lg transition-colors"
+            className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-medium py-2.5 rounded-lg transition-colors"
           >
-            {saving ? 'Saving…' : 'Save Changes'}
+            {saving ? 'SavingΓÇª' : 'Save Changes'}
           </button>
           <a
             href={`/documents/${id}`}

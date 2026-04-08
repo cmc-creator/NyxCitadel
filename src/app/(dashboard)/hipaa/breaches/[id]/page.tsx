@@ -21,7 +21,7 @@ const RISK_COLOR: Record<string, string> = {
 const STATUS_COLOR: Record<string, string> = {
   UNDER_REVIEW: 'bg-blue-100 text-blue-800',
   INVESTIGATION: 'bg-yellow-100 text-yellow-800',
-  NOTIFIED: 'bg-purple-100 text-purple-800',
+  NOTIFIED: 'bg-teal-50 text-teal-700',
   REPORTED_TO_HHS: 'bg-orange-100 text-orange-800',
   CLOSED: 'bg-gray-100 text-gray-600',
 };

@@ -138,7 +138,7 @@ export default function NewRcaPage() {
       </div>
 
       {fromIr && (
-        <div className="flex items-center gap-2 bg-teal-950/20 border border-indigo-200 rounded-lg px-4 py-2.5 text-sm text-indigo-700">
+        <div className="flex items-center gap-2 bg-teal-950/20 border border-teal-200 rounded-lg px-4 py-2.5 text-sm text-teal-700">
           <Search className="w-4 h-4 shrink-0" />
           Pre-filled from Incident Report. Review and complete all sections below.
         </div>
@@ -156,7 +156,7 @@ export default function NewRcaPage() {
             type="button"
             onClick={() => setActiveTab(tab.id)}
             className={`flex-1 text-xs font-medium py-2 rounded-lg transition-colors ${
-              activeTab === tab.id ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-500 hover:text-foreground/80'
+              activeTab === tab.id ? 'bg-white text-teal-700 shadow-sm' : 'text-slate-500 hover:text-foreground/80'
             }`}
           >
             {tab.label}
@@ -293,7 +293,7 @@ export default function NewRcaPage() {
                 <button
                   type="button"
                   onClick={addWhy}
-                  className="inline-flex items-center gap-1 text-xs font-medium bg-teal-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg"
+                  className="inline-flex items-center gap-1 text-xs font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg"
                 >
                   <Plus className="w-3.5 h-3.5" /> Add Why
                 </button>
@@ -302,7 +302,7 @@ export default function NewRcaPage() {
               {whyItems.map((item, idx) => (
                 <div key={item.id} className="border border-border rounded-lg p-4 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-indigo-700">Why #{idx + 1}</span>
+                    <span className="text-sm font-semibold text-teal-700">Why #{idx + 1}</span>
                     {whyItems.length > 1 && (
                       <button
                         type="button"

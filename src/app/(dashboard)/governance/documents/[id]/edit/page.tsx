@@ -60,7 +60,7 @@ export default function EditGovernanceDocumentPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/governance/documents/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/governance/documents/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -132,7 +132,7 @@ export default function EditGovernanceDocumentPage() {
 
         <div className="px-6 py-4 flex justify-end gap-3">
           <a href={`/governance/documents/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
-          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>
         </div>

@@ -154,11 +154,11 @@ export default function EditRiskAssessmentPage() {
   return (
     <div className="max-w-4xl space-y-6">
       <div>
-        <a href={`/trackers/risk-assessments/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/trackers/risk-assessments/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <ShieldAlert className="w-6 h-6 text-purple-600" />
+          <ShieldAlert className="w-6 h-6 text-teal-500" />
           Edit Risk Assessment
         </h1>
       </div>
@@ -236,7 +236,7 @@ export default function EditRiskAssessmentPage() {
             <button
               type="button"
               onClick={() => setItems(prev => [...prev, newItem()])}
-              className="inline-flex items-center gap-1 text-sm text-purple-600 hover:text-purple-700 font-medium"
+              className="inline-flex items-center gap-1 text-sm text-teal-600 hover:text-teal-700 font-medium"
             >
               <Plus className="w-4 h-4" /> Add Risk
             </button>
@@ -361,7 +361,7 @@ export default function EditRiskAssessmentPage() {
           {items.length === 0 && (
             <div className="px-6 py-8 text-center text-muted-foreground/70 text-sm">
               No risks added yet.{' '}
-              <button type="button" onClick={() => setItems([newItem()])} className="text-purple-600 hover:underline">
+              <button type="button" onClick={() => setItems([newItem()])} className="text-teal-600 hover:underline">
                 Add your first risk
               </button>
             </div>
@@ -379,7 +379,7 @@ export default function EditRiskAssessmentPage() {
           <button
             type="submit"
             disabled={saving}
-            className="px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
+            className="px-6 py-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
           >
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

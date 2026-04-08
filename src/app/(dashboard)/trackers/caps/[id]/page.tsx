@@ -74,7 +74,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <ClipboardList className="w-5 h-5 text-purple-600" />
+              <ClipboardList className="w-5 h-5 text-teal-500" />
               <span className="text-xs font-mono text-muted-foreground/70">{cap.capNumber}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${PRIORITY_COLOR[cap.priority]}`}>
                 {cap.priority}
@@ -190,7 +190,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
               <ul className="space-y-2">
                 {cap.incidents.map(i => (
                   <li key={i.id}>
-                    <Link href={`/trackers/incidents/${i.id}`} className="text-xs text-purple-700 hover:underline font-medium">
+                    <Link href={`/trackers/incidents/${i.id}`} className="text-xs text-teal-600 hover:underline font-medium">
                       {i.incidentNumber}
                     </Link>
                     <p className="text-xs text-slate-500">{i.incidentType.replace(/_/g, ' ')} &middot; {formatDate(i.dateOccurred)}</p>
@@ -208,7 +208,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
 function PdsaBlock({ label, color, content }: { label: string; color: string; content: string }) {
   const colors: Record<string, string> = {
     blue: 'bg-blue-950/20 border-blue-200 text-blue-700',
-    purple: 'bg-purple-50 border-purple-200 text-purple-700',
+    purple: 'bg-teal-50 border-teal-200 text-teal-700',
     orange: 'bg-orange-950/20 border-orange-200 text-orange-700',
     green: 'bg-green-50 border-green-200 text-green-700',
   };

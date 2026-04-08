@@ -14,7 +14,7 @@ const STATUS_CONFIG: Record<string, { label: string; class: string }> = {
   IN_PROGRESS:        { label: 'In Progress',         class: 'status-badge-yellow' },
   COMPLETED:          { label: 'Completed',           class: 'status-badge-green'  },
   RESPONSE_DUE:       { label: 'Response Due',        class: 'status-badge-orange' },
-  RESPONSE_SUBMITTED: { label: 'Response Submitted',  class: 'status-badge-purple' },
+  RESPONSE_SUBMITTED: { label: 'Response Submitted',  class: 'status-badge-teal' },
   CLOSED:             { label: 'Closed',              class: 'status-badge-gray'   },
 };
 

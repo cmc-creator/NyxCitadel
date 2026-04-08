@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic';
 const STATUS_OPTIONS = [
   { value: 'IN_PROGRESS', label: 'In Progress', color: 'bg-yellow-100 text-yellow-700' },
   { value: 'COMPLETED', label: 'Completed', color: 'bg-blue-100 text-blue-700' },
-  { value: 'REVIEWED', label: 'Reviewed', color: 'bg-purple-100 text-purple-700' },
+  { value: 'REVIEWED', label: 'Reviewed', color: 'bg-teal-50 text-teal-700' },
   { value: 'APPROVED', label: 'Approved', color: 'bg-green-100 text-green-700' },
   { value: 'ARCHIVED', label: 'Archived', color: 'bg-slate-100 text-muted-foreground/70' },
 ];

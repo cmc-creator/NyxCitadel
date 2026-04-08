@@ -57,7 +57,7 @@ export default async function PocDetailPage({ params }: { params: { id: string }
 
   return (
     <div className="space-y-6 max-w-5xl">
-      <Link href="/quality/poc" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600">
+      <Link href="/quality/poc" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500">
         <ChevronLeft className="w-4 h-4" /> Back to Plans of Correction
       </Link>
 
@@ -65,7 +65,7 @@ export default async function PocDetailPage({ params }: { params: { id: string }
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <ClipboardCheck className="w-6 h-6 text-purple-600" />
+            <ClipboardCheck className="w-6 h-6 text-teal-500" />
             {poc.pocNumber}
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">{poc.title}</p>
@@ -160,7 +160,7 @@ export default async function PocDetailPage({ params }: { params: { id: string }
 
           <Link
             href={`/quality/responses/new?templateId=&sourceType=POC&sourceId=${poc.id}&sourceRef=${poc.pocNumber}`}
-            className="flex items-center justify-center gap-1.5 text-xs font-medium bg-purple-600 text-white px-4 py-2.5 rounded-lg hover:bg-purple-700 transition-colors"
+            className="flex items-center justify-center gap-1.5 text-xs font-medium bg-teal-600 text-white px-4 py-2.5 rounded-lg hover:bg-teal-700 transition-colors"
           >
             + Generate POC Cover Letter
           </Link>

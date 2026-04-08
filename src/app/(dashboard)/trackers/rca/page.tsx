@@ -103,12 +103,12 @@ export default async function RcaPage({
       ) : (
         <div className="space-y-3">
           {rcas.map(rca => (
-            <div key={rca.id} className="bg-card rounded-xl border border-border p-4 hover:border-indigo-300 transition-colors">
+            <div key={rca.id} className="bg-card rounded-xl border border-border p-4 hover:border-teal-300 transition-colors">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="font-mono text-xs text-slate-500">{rca.rcaNumber}</span>
-                    <span className="text-xs bg-teal-950/20 text-indigo-700 px-2 py-0.5 rounded-full">{rca.eventType}</span>
+                    <span className="text-xs bg-teal-950/20 text-teal-700 px-2 py-0.5 rounded-full">{rca.eventType}</span>
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[rca.status] ?? 'bg-slate-100 text-slate-600'}`}>
                       {rca.status.replace(/_/g, ' ')}
                     </span>
@@ -146,7 +146,7 @@ export default async function RcaPage({
 
                   <Link
                     href={`/trackers/rca/${rca.id}`}
-                    className="text-xs text-teal-600 hover:text-indigo-700 font-medium shrink-0"
+                    className="text-xs text-teal-600 hover:text-teal-600 font-medium shrink-0"
                   >
                     View →
                   </Link>

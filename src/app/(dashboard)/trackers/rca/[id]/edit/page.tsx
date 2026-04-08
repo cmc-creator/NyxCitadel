@@ -96,7 +96,7 @@ export default function EditRcaPage() {
     setActionItems(prev => [...prev, { id: crypto.randomUUID(), action: '', responsible: '', targetDate: '', status: 'OPEN' }]);
   }
 
-  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">LoadingΓÇª</div>;
   if (!data) return <div className="text-red-400 p-8">{error || 'Record not found.'}</div>;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -158,7 +158,7 @@ export default function EditRcaPage() {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <a href={`/trackers/rca/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/trackers/rca/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -179,7 +179,7 @@ export default function EditRcaPage() {
             type="button"
             onClick={() => setActiveTab(tab.id)}
             className={`flex-1 text-xs font-medium py-2 rounded-lg transition-colors ${
-              activeTab === tab.id ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-500 hover:text-foreground/80'
+              activeTab === tab.id ? 'bg-white text-teal-700 shadow-sm' : 'text-slate-500 hover:text-foreground/80'
             }`}
           >
             {tab.label}
@@ -201,7 +201,7 @@ export default function EditRcaPage() {
                   type="date"
                   required
                   defaultValue={data.eventDate ? data.eventDate.split('T')[0] : ''}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
 
@@ -211,7 +211,7 @@ export default function EditRcaPage() {
                   name="eventType"
                   required
                   defaultValue={data.eventType}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 >
                   <option value="">Select type...</option>
                   {EVENT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
@@ -224,7 +224,7 @@ export default function EditRcaPage() {
                   name="conductedDate"
                   type="date"
                   defaultValue={data.conductedDate ? data.conductedDate.split('T')[0] : ''}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
 
@@ -233,7 +233,7 @@ export default function EditRcaPage() {
                 <input
                   name="completedBy"
                   defaultValue={data.completedBy ?? ''}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
 
@@ -242,7 +242,7 @@ export default function EditRcaPage() {
                 <input
                   name="linkedIncidentId"
                   defaultValue={data.linkedIncidentId ?? ''}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
             </div>
@@ -254,7 +254,7 @@ export default function EditRcaPage() {
                 required
                 rows={4}
                 defaultValue={data.eventDescription ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
 
@@ -264,7 +264,7 @@ export default function EditRcaPage() {
                 name="eventTimeline"
                 rows={5}
                 defaultValue={data.eventTimeline ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
 
@@ -274,7 +274,7 @@ export default function EditRcaPage() {
                 name="teamMembers"
                 rows={2}
                 defaultValue={data.teamMembers ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
           </div>
@@ -300,7 +300,7 @@ export default function EditRcaPage() {
                   rows={2}
                   placeholder={factor.placeholder}
                   defaultValue={factor.defaultValue}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                 />
               </div>
             ))}
@@ -316,7 +316,7 @@ export default function EditRcaPage() {
                 <button
                   type="button"
                   onClick={addWhy}
-                  className="inline-flex items-center gap-1 text-xs font-medium bg-teal-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg"
+                  className="inline-flex items-center gap-1 text-xs font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg"
                 >
                   <Plus className="w-3.5 h-3.5" /> Add Why
                 </button>
@@ -325,7 +325,7 @@ export default function EditRcaPage() {
               {whyItems.map((item, idx) => (
                 <div key={item.id} className="border border-border rounded-lg p-4 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-indigo-700">Why #{idx + 1}</span>
+                    <span className="text-sm font-semibold text-teal-700">Why #{idx + 1}</span>
                     {whyItems.length > 1 && (
                       <button
                         type="button"
@@ -340,14 +340,14 @@ export default function EditRcaPage() {
                     value={item.why}
                     onChange={e => setWhyItems(prev => prev.map(w => w.id === item.id ? { ...w, why: e.target.value } : w))}
                     placeholder="Why question..."
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                   <textarea
                     value={item.answer}
                     onChange={e => setWhyItems(prev => prev.map(w => w.id === item.id ? { ...w, answer: e.target.value } : w))}
                     rows={2}
                     placeholder="Answer..."
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                   />
                 </div>
               ))}
@@ -359,7 +359,7 @@ export default function EditRcaPage() {
                 name="rootCauses"
                 rows={4}
                 defaultValue={Array.isArray(data.rootCauses) ? data.rootCauses.join('\n') : (data.rootCauses ?? '')}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
 
@@ -371,7 +371,7 @@ export default function EditRcaPage() {
                 <select
                   name="preventabilityRating"
                   defaultValue={data.preventabilityRating ?? ''}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 >
                   <option value="">Select...</option>
                   <option value="Preventable">Preventable</option>
@@ -384,7 +384,7 @@ export default function EditRcaPage() {
                 name="conclusion"
                 rows={3}
                 defaultValue={data.conclusion ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
 
               <div className="space-y-2">
@@ -394,7 +394,7 @@ export default function EditRcaPage() {
                     type="checkbox"
                     checked={systemChangesRequired}
                     onChange={e => setSystemChangesRequired(e.target.checked)}
-                    className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                    className="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
                   />
                   <span className="text-sm text-foreground/80">System or process changes required</span>
                 </label>
@@ -403,7 +403,7 @@ export default function EditRcaPage() {
                     type="checkbox"
                     checked={policyChangesRequired}
                     onChange={e => setPolicyChangesRequired(e.target.checked)}
-                    className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                    className="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
                   />
                   <span className="text-sm text-foreground/80">Policy or procedure changes required</span>
                 </label>
@@ -412,7 +412,7 @@ export default function EditRcaPage() {
                     type="checkbox"
                     checked={trainingRequired}
                     onChange={e => setTrainingRequired(e.target.checked)}
-                    className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                    className="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
                   />
                   <span className="text-sm text-foreground/80">Staff training / education required</span>
                 </label>
@@ -454,20 +454,20 @@ export default function EditRcaPage() {
                   onChange={e => setActionItems(prev => prev.map(a => a.id === item.id ? { ...a, action: e.target.value } : a))}
                   rows={2}
                   placeholder="Action item description..."
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                 />
                 <div className="grid grid-cols-2 gap-2">
                   <input
                     value={item.responsible}
                     onChange={e => setActionItems(prev => prev.map(a => a.id === item.id ? { ...a, responsible: e.target.value } : a))}
                     placeholder="Responsible party"
-                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                   <input
                     type="date"
                     value={item.targetDate}
                     onChange={e => setActionItems(prev => prev.map(a => a.id === item.id ? { ...a, targetDate: e.target.value } : a))}
-                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                 </div>
               </div>
@@ -479,7 +479,7 @@ export default function EditRcaPage() {
                 name="notes"
                 rows={2}
                 defaultValue={data.notes ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
           </div>
@@ -489,7 +489,7 @@ export default function EditRcaPage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
+            className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
           >
             {saving ? 'Saving...' : 'Save Changes'}
           </button>

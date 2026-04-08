@@ -54,7 +54,7 @@ const BODY_COLORS: Record<string, string> = {
   OSHA:     'bg-amber-100 text-amber-700',
   AZ_ADHS:  'bg-green-100 text-green-700',
   HIPAA:    'bg-teal-100 text-teal-700',
-  JC:       'bg-indigo-100 text-indigo-700',
+  JC:       'bg-teal-50 text-teal-700',
   NFPA:     'bg-orange-100 text-orange-700',
   FEMA:     'bg-teal-100 text-teal-700',
 };

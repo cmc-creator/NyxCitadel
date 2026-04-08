@@ -26,7 +26,7 @@ const STATUS_STYLES: Record<string, string> = {
   UNDER_REVIEW: 'bg-yellow-100 text-yellow-800',
   APPROVED:     'bg-blue-100 text-blue-800',
   SENT:         'bg-emerald-100 text-emerald-800',
-  FILED:        'bg-purple-100 text-purple-800',
+  FILED:        'bg-teal-50 text-teal-700',
 };
 
 function Field({ label, value }: { label: string; value?: React.ReactNode }) {
@@ -51,7 +51,7 @@ export default async function ResponseDetailPage({ params }: { params: { id: str
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <Link href="/quality/responses" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600">
+      <Link href="/quality/responses" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500">
         <ChevronLeft className="w-4 h-4" /> Back to Responses
       </Link>
 
@@ -59,7 +59,7 @@ export default async function ResponseDetailPage({ params }: { params: { id: str
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <Mail className="w-6 h-6 text-purple-600" />
+            <Mail className="w-6 h-6 text-teal-500" />
             {response.title}
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -124,7 +124,7 @@ export default async function ResponseDetailPage({ params }: { params: { id: str
           {response.template && (
             <div className="bg-slate-50 rounded-xl border border-border p-4">
               <p className="text-xs font-medium text-slate-500 mb-1">Template Used</p>
-              <Link href={`/quality/response-templates/${response.template.id}`} className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+              <Link href={`/quality/response-templates/${response.template.id}`} className="text-sm text-teal-600 hover:text-teal-700 font-medium">
                 {response.template.name}
               </Link>
               {response.template.regulatoryRef && <p className="text-xs text-muted-foreground/70 mt-0.5">{response.template.regulatoryRef}</p>}

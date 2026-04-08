@@ -24,7 +24,7 @@ const STATUS_OPTIONS = [
   { value: 'OPEN', label: 'Open', color: 'bg-blue-100 text-blue-800' },
   { value: 'UNDER_INVESTIGATION', label: 'Under Investigation', color: 'bg-yellow-100 text-yellow-800' },
   { value: 'RCA_IN_PROGRESS', label: 'RCA In Progress', color: 'bg-orange-100 text-orange-800' },
-  { value: 'CAP_IN_PROGRESS', label: 'CAP In Progress', color: 'bg-purple-100 text-purple-800' },
+  { value: 'CAP_IN_PROGRESS', label: 'CAP In Progress', color: 'bg-teal-50 text-teal-700' },
   { value: 'REPORTABLE_PENDING', label: 'Reportable Pending', color: 'bg-red-100 text-red-800' },
   { value: 'CLOSED', label: 'Closed', color: 'bg-gray-100 text-gray-600' },
 ];
@@ -69,7 +69,7 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <AlertTriangle className="w-5 h-5 text-purple-600" />
+              <AlertTriangle className="w-5 h-5 text-teal-500" />
               <span className="text-xs font-mono text-muted-foreground/70">{incident.incidentNumber}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${SEVERITY_COLOR[incident.severity] ?? 'bg-slate-100 text-slate-600'}`}>
                 {incident.severity}
@@ -146,7 +146,7 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
 
           {incident.cap && (
             <Section title="Linked CAP">
-              <Link href={`/trackers/caps/${incident.cap.id}`} className="flex items-center gap-2 text-sm text-purple-700 hover:text-purple-900 transition">
+              <Link href={`/trackers/caps/${incident.cap.id}`} className="flex items-center gap-2 text-sm text-teal-600 hover:text-teal-800 transition">
                 <ClipboardList className="w-4 h-4 shrink-0" />
                 <div>
                   <div className="font-medium">{incident.cap.capNumber}</div>

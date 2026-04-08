@@ -103,13 +103,13 @@ export default function EditPocPage() {
     }
   }
 
-  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">LoadingΓÇª</div>;
   if (!data || data.error) return <div className="text-red-400 p-8">{error || 'Not found.'}</div>;
 
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <a href={`/quality/poc/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/quality/poc/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to POC
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -134,7 +134,7 @@ export default function EditPocPage() {
                 name="title"
                 required
                 defaultValue={data.title ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -144,7 +144,7 @@ export default function EditPocPage() {
                 name="regulatoryBody"
                 required
                 defaultValue={data.regulatoryBody ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select...</option>
                 {REGULATORY_BODIES.map(b => (
@@ -159,7 +159,7 @@ export default function EditPocPage() {
                 name="surveyDate"
                 type="date"
                 defaultValue={data.surveyDate?.split('T')[0] ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -169,7 +169,7 @@ export default function EditPocPage() {
                 name="responseDeadline"
                 type="date"
                 defaultValue={data.responseDeadline?.split('T')[0] ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -178,7 +178,7 @@ export default function EditPocPage() {
               <input
                 name="submittedBy"
                 defaultValue={data.submittedBy ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function EditPocPage() {
               name="coverLetter"
               rows={4}
               defaultValue={data.coverLetter ?? ''}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
             />
           </div>
         </div>
@@ -231,7 +231,7 @@ export default function EditPocPage() {
                     value={finding.findingNumber}
                     onChange={e => updateFinding(finding.id, 'findingNumber', e.target.value)}
                     placeholder="e.g., A-0144, RI.01.07.01 EP2"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                 </div>
                 <div>
@@ -240,7 +240,7 @@ export default function EditPocPage() {
                     value={finding.responsibleParty}
                     onChange={e => updateFinding(finding.id, 'responsibleParty', e.target.value)}
                     placeholder="Name / title"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                 </div>
               </div>
@@ -252,7 +252,7 @@ export default function EditPocPage() {
                   onChange={e => updateFinding(finding.id, 'findingDescription', e.target.value)}
                   rows={2}
                   placeholder="What was the finding / deficiency cited?"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                 />
               </div>
 
@@ -263,7 +263,7 @@ export default function EditPocPage() {
                   onChange={e => updateFinding(finding.id, 'howCorrected', e.target.value)}
                   rows={2}
                   placeholder="What specific corrective action was taken?"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                 />
               </div>
 
@@ -274,7 +274,7 @@ export default function EditPocPage() {
                   onChange={e => updateFinding(finding.id, 'howPrevented', e.target.value)}
                   rows={2}
                   placeholder="What systemic changes / policy updates were made?"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                 />
               </div>
 
@@ -286,7 +286,7 @@ export default function EditPocPage() {
                     onChange={e => updateFinding(finding.id, 'howMonitored', e.target.value)}
                     rows={2}
                     placeholder="How will compliance be monitored / audited?"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                   />
                 </div>
                 <div>
@@ -295,7 +295,7 @@ export default function EditPocPage() {
                     type="date"
                     value={finding.targetDate}
                     onChange={e => updateFinding(finding.id, 'targetDate', e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                 </div>
               </div>
@@ -310,7 +310,7 @@ export default function EditPocPage() {
             name="notes"
             rows={2}
             defaultValue={data.notes ?? ''}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
           />
         </div>
 
@@ -318,9 +318,9 @@ export default function EditPocPage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
+            className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
           >
-            {saving ? 'Saving…' : 'Save Changes'}
+            {saving ? 'SavingΓÇª' : 'Save Changes'}
           </button>
           <a
             href={`/quality/poc/${id}`}

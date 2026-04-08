@@ -70,13 +70,13 @@ export default function PartnerAgreementPage() {
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-10 py-12">
 
-        <div className="mt-6 rounded-2xl border border-violet-500/30 bg-violet-500/10 p-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-violet-300/40 bg-violet-400/10 px-3 py-1 text-xs font-semibold text-violet-100">
+        <div className="mt-6 rounded-2xl border border-teal-500/30 bg-teal-500/10 p-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-teal-300/40 bg-teal-400/10 px-3 py-1 text-xs font-semibold text-teal-100">
             <Handshake className="h-3.5 w-3.5" />
             Partner Program Terms
           </div>
           <h1 className="mt-4 text-3xl font-extrabold tracking-tight">Priority Partner Agreement</h1>
-          <p className="mt-3 text-sm text-violet-50/95 leading-relaxed">
+          <p className="mt-3 text-sm text-teal-50/95 leading-relaxed">
             Contract-ready draft with schedules and placeholders for legal redline and procurement execution.
           </p>
         </div>

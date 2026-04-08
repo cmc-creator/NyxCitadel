@@ -14,7 +14,7 @@ const STATUS_OPTIONS = [
   { value: 'LOI_RECEIVED', label: 'LOI Received', color: 'bg-orange-100 text-orange-700' },
   { value: 'RESPONSE_SUBMITTED', label: 'Response Submitted', color: 'bg-teal-100 text-teal-700' },
   { value: 'UNDER_INVESTIGATION', label: 'Under Investigation', color: 'bg-yellow-100 text-yellow-700' },
-  { value: 'FINDINGS_ISSUED', label: 'Findings Issued', color: 'bg-purple-100 text-purple-700' },
+  { value: 'FINDINGS_ISSUED', label: 'Findings Issued', color: 'bg-teal-50 text-teal-700' },
   { value: 'SUBSTANTIATED', label: 'Substantiated', color: 'bg-red-100 text-red-700' },
   { value: 'UNSUBSTANTIATED', label: 'Unsubstantiated', color: 'bg-green-100 text-green-700' },
   { value: 'CLOSED', label: 'Closed', color: 'bg-slate-100 text-slate-500' },
@@ -54,7 +54,7 @@ export default async function QocDetailPage({ params }: { params: { id: string }
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <ClipboardCheck className="w-5 h-5 text-purple-600" />
+              <ClipboardCheck className="w-5 h-5 text-teal-500" />
               <span className="text-xs font-mono text-muted-foreground/70">{qoc.qocNumber}</span>
               {qoc.cmsComplaintNumber && <span className="text-xs text-slate-500">CMS: {qoc.cmsComplaintNumber}</span>}
               <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2.5 py-0.5">
@@ -152,8 +152,8 @@ export default async function QocDetailPage({ params }: { params: { id: string }
 
           {(qoc.linkedGrievanceId || qoc.linkedPocId || qoc.linkedRcaId) && (
             <Section title="Linked Records">
-              {qoc.linkedGrievanceId && <Link href={`/trackers/grievances/${qoc.linkedGrievanceId}`} className="block text-xs text-purple-700 hover:underline mb-1">&#x2192; Linked Grievance</Link>}
-              {qoc.linkedRcaId && <Link href={`/trackers/rca/${qoc.linkedRcaId}`} className="block text-xs text-purple-700 hover:underline">&#x2192; Linked RCA</Link>}
+              {qoc.linkedGrievanceId && <Link href={`/trackers/grievances/${qoc.linkedGrievanceId}`} className="block text-xs text-teal-600 hover:underline mb-1">&#x2192; Linked Grievance</Link>}
+              {qoc.linkedRcaId && <Link href={`/trackers/rca/${qoc.linkedRcaId}`} className="block text-xs text-teal-600 hover:underline">&#x2192; Linked RCA</Link>}
             </Section>
           )}
         </div>

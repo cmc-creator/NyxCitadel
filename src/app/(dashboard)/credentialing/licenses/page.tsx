@@ -32,9 +32,9 @@ export default async function LicensesPage() {
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <FileText className="w-5 h-5 text-indigo-400" />
+            <FileText className="w-5 h-5 text-teal-400" />
             <h1 className="text-xl font-bold text-white">License Tracker</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-50 text-teal-700">TJC MS.06.01</span>
           </div>
           <p className="text-muted-foreground/70 text-sm">Medical licenses, APRN licenses, and DEA registrations � expiry tracking with automated alerts.</p>
         </div>

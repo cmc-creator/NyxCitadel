@@ -103,7 +103,7 @@ const colorClasses = {
   red: { bg: 'bg-red-950/20 border-red-200 hover:bg-red-100', text: 'text-red-600' },
   green: { bg: 'bg-green-50 border-green-200 hover:bg-green-100', text: 'text-green-600' },
   orange: { bg: 'bg-orange-950/20 border-orange-200 hover:bg-orange-100', text: 'text-orange-600' },
-  indigo: { bg: 'bg-teal-950/20 border-indigo-200 hover:bg-indigo-100', text: 'text-teal-600' },
+  indigo: { bg: 'bg-teal-950/20 border-teal-200 hover:bg-teal-50', text: 'text-teal-600' },
 };
 
 const badgeClasses = {
@@ -112,7 +112,7 @@ const badgeClasses = {
   red: 'bg-red-100 text-red-800',
   green: 'bg-green-100 text-green-800',
   orange: 'bg-orange-100 text-orange-800',
-  indigo: 'bg-indigo-100 text-indigo-800',
+  indigo: 'bg-teal-50 text-teal-700',
 };
 
 export default function ExportPage() {

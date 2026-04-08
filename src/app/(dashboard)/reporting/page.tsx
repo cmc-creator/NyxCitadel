@@ -41,14 +41,14 @@ const SUBMISSION_TYPES = [
     label: 'CMS HCAHPS Patient Satisfaction',
     description: 'Patient satisfaction survey composite scores (quarterly)',
     href: '/reporting/hcahps',
-    color: 'text-violet-400',
+    color: 'text-teal-400',
   },
   {
     type: 'CMS_CONDITION_OF_PARTICIPATION',
     label: 'CMS Conditions of Participation',
     description: 'Psychiatric hospital CoP self-assessment and compliance tracking',
     href: '/reporting/cop',
-    color: 'text-indigo-400',
+    color: 'text-teal-400',
   },
 ];
 

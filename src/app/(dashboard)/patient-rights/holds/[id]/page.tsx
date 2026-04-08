@@ -14,7 +14,7 @@ const STATUS_OPTIONS = [
   { value: 'EXTENDED', label: 'Extended', color: 'bg-orange-100 text-orange-800' },
   { value: 'DISCHARGED', label: 'Discharged', color: 'bg-green-100 text-green-800' },
   { value: 'CONVERTED_VOLUNTARY', label: 'Converted to Voluntary', color: 'bg-blue-100 text-blue-800' },
-  { value: 'COURT_ORDERED_CONTINUED', label: 'Court Ordered – Continued', color: 'bg-purple-100 text-purple-800' },
+  { value: 'COURT_ORDERED_CONTINUED', label: 'Court Ordered – Continued', color: 'bg-teal-50 text-teal-700' },
 ];
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -65,7 +65,7 @@ export default async function HoldDetailPage({ params }: { params: { id: string 
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <Scale className="w-5 h-5 text-purple-600" />
+              <Scale className="w-5 h-5 text-teal-500" />
             </div>
             <h1 className="text-xl font-bold text-foreground">Patient {hold.patientInitials} - {hold.holdType}</h1>
             <p className="text-sm text-slate-500 mt-1">

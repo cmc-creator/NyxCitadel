@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 
 const STATUS_OPTIONS = [
   { value: 'ACTIVE', label: 'Active', color: 'bg-blue-100 text-blue-800' },
-  { value: 'UPDATED', label: 'Updated', color: 'bg-purple-100 text-purple-800' },
+  { value: 'UPDATED', label: 'Updated', color: 'bg-teal-50 text-teal-700' },
   { value: 'DISCHARGED', label: 'Discharged', color: 'bg-green-100 text-green-800' },
   { value: 'TRANSFERRED', label: 'Transferred', color: 'bg-yellow-100 text-yellow-800' },
   { value: 'AMA', label: 'AMA', color: 'bg-orange-100 text-orange-800' },

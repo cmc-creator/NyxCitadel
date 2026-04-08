@@ -48,7 +48,7 @@ const legalCards = [
     summary:
       'Early-access pricing protections, onboarding commitments, implementation milestones, and governance cadence.',
     icon: Handshake,
-    tone: 'border-violet-500/30 bg-violet-500/10 text-violet-100',
+    tone: 'border-teal-500/30 bg-teal-500/10 text-teal-100',
   },
   {
     href: '/priority-partner-portal/lease-buy-options',

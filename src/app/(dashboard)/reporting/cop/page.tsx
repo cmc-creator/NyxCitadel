@@ -210,7 +210,7 @@ export default function CopPage() {
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
             <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-              <ShieldCheck className="w-6 h-6 text-indigo-400" />
+              <ShieldCheck className="w-6 h-6 text-teal-400" />
               CMS Conditions of Participation
             </h1>
             <p className="text-sm text-slate-400 mt-1">
@@ -230,7 +230,7 @@ export default function CopPage() {
             <button
               onClick={() => handleSave('READY')}
               disabled={saving}
-              className="px-4 py-2 rounded-lg text-sm bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition-colors flex items-center gap-2 disabled:opacity-60"
+              className="px-4 py-2 rounded-lg text-sm bg-teal-600 hover:bg-teal-500 text-white font-medium transition-colors flex items-center gap-2 disabled:opacity-60"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
               Mark Ready
@@ -293,7 +293,7 @@ export default function CopPage() {
                 className="w-full px-6 py-4 flex items-center gap-4 text-left hover:bg-white/[0.02] transition-colors"
                 onClick={() => toggleExpand(cop.id)}
               >
-                <span className="font-mono text-xs text-indigo-400 w-16 shrink-0">{cop.cfr}</span>
+                <span className="font-mono text-xs text-teal-400 w-16 shrink-0">{cop.cfr}</span>
                 <span className="flex-1 text-sm font-medium text-foreground">{cop.label}</span>
                 {statusBadge(entry.status)}
                 {isOpen ? <ChevronUp className="w-4 h-4 text-slate-500 shrink-0" /> : <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />}
@@ -394,7 +394,7 @@ export default function CopPage() {
         <button
           onClick={() => handleSave('READY')}
           disabled={saving}
-          className="px-5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors disabled:opacity-60"
+          className="px-5 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors disabled:opacity-60"
         >
           {saving ? 'Saving…' : 'Mark Ready to Submit'}
         </button>

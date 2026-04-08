@@ -46,7 +46,7 @@ export default async function ComplianceItemDetailPage({ params }: { params: { i
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <ShieldCheck className="w-5 h-5 text-purple-600" />
+              <ShieldCheck className="w-5 h-5 text-teal-500" />
               {item.standardRef && <span className="text-xs font-mono text-muted-foreground/70">{item.standardRef}</span>}
               <span className="text-xs bg-blue-950/20 text-blue-700 rounded-full px-2.5 py-0.5 font-medium">
                 {item.regulatoryBody.replace(/_/g, ' ')}
@@ -73,7 +73,7 @@ export default async function ComplianceItemDetailPage({ params }: { params: { i
           )}
           {item.evidenceUrl && (
             <Section title="Evidence">
-              <a href={item.evidenceUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-700 hover:underline break-all">
+              <a href={item.evidenceUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-teal-600 hover:underline break-all">
                 {item.evidenceUrl}
               </a>
             </Section>

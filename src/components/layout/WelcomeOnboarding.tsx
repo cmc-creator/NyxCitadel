@@ -56,7 +56,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
         ))}
       </div>
 
-      <div className="relative w-full max-w-4xl rounded-3xl border border-white/10 bg-slate-950 text-white shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-4xl rounded-3xl border border-white/10 bg-[#060b16] text-white shadow-2xl overflow-hidden">
         <button
           type="button"
           onClick={() => setOpen(false)}
@@ -67,7 +67,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
         </button>
 
         <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="p-8 lg:p-10 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.22),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.18),transparent_36%)]">
+          <div className="p-8 lg:p-10 bg-[radial-gradient(circle_at_top_left,rgba(13,115,119,0.22),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.18),transparent_36%)]">
             <div className="inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-400/10 px-3 py-1.5 text-xs font-semibold text-teal-200 mb-5">
               <PartyPopper className="w-3.5 h-3.5" />
               Welcome to NyxCitadel

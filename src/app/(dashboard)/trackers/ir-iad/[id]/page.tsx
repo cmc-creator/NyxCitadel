@@ -13,7 +13,7 @@ const STATUS_OPTIONS = [
   { value: 'OPEN', label: 'Open', color: 'bg-blue-100 text-blue-700' },
   { value: 'INVESTIGATING', label: 'Investigating', color: 'bg-yellow-100 text-yellow-700' },
   { value: 'PENDING_REVIEW', label: 'Pending Review', color: 'bg-orange-100 text-orange-700' },
-  { value: 'REPORTED_TO_STATE', label: 'Reported to State', color: 'bg-purple-100 text-purple-700' },
+  { value: 'REPORTED_TO_STATE', label: 'Reported to State', color: 'bg-teal-50 text-teal-700' },
   { value: 'CLOSED', label: 'Closed', color: 'bg-slate-100 text-slate-500' },
   { value: 'REOPENED', label: 'Reopened', color: 'bg-red-100 text-red-700' },
 ];
@@ -93,14 +93,14 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
 
       {/* AI Triage */}
       {ir.aiTriageSeverity && (
-        <div className="bg-teal-950/20 border border-indigo-200 rounded-xl p-4 flex items-start gap-3">
+        <div className="bg-teal-950/20 border border-teal-200 rounded-xl p-4 flex items-start gap-3">
           <Brain className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-indigo-800">AI Triage &mdash; {ir.aiTriageSeverity}</p>
-            {ir.aiTriageReason && <p className="text-xs text-indigo-700 mt-0.5">{ir.aiTriageReason}</p>}
+            <p className="text-sm font-semibold text-teal-700">AI Triage &mdash; {ir.aiTriageSeverity}</p>
+            {ir.aiTriageReason && <p className="text-xs text-teal-700 mt-0.5">{ir.aiTriageReason}</p>}
             {aiTags && aiTags.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-1.5">
-                {aiTags.map((t, i) => <span key={i} className="text-xs bg-indigo-100 text-indigo-700 rounded px-2 py-0.5">{t}</span>)}
+                {aiTags.map((t, i) => <span key={i} className="text-xs bg-teal-50 text-teal-700 rounded px-2 py-0.5">{t}</span>)}
               </div>
             )}
             {ir.aiCascadeTriggered && <p className="text-xs text-red-600 font-semibold mt-1">&#9888; AI Cascade Protocol Triggered</p>}
@@ -177,8 +177,8 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
 
           {(ir.linkedRcaId || ir.linkedCapId) && (
             <Section title="Linked Records">
-              {ir.linkedRcaId && <Link href={`/trackers/rca/${ir.linkedRcaId}`} className="block text-xs text-purple-700 hover:underline mb-1">&#x2192; Linked RCA</Link>}
-              {ir.linkedCapId && <Link href={`/trackers/caps/${ir.linkedCapId}`} className="block text-xs text-purple-700 hover:underline">&#x2192; Linked CAP</Link>}
+              {ir.linkedRcaId && <Link href={`/trackers/rca/${ir.linkedRcaId}`} className="block text-xs text-teal-600 hover:underline mb-1">&#x2192; Linked RCA</Link>}
+              {ir.linkedCapId && <Link href={`/trackers/caps/${ir.linkedCapId}`} className="block text-xs text-teal-600 hover:underline">&#x2192; Linked CAP</Link>}
             </Section>
           )}
         </div>

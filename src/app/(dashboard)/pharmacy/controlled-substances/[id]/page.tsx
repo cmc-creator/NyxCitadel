@@ -13,7 +13,7 @@ const STATUS_COLOR: Record<string, string> = {
   RECONCILED: 'bg-green-100 text-green-700',
   DISCREPANCY_OPEN: 'bg-red-100 text-red-700',
   DISCREPANCY_EXPLAINED: 'bg-yellow-100 text-yellow-700',
-  REPORTED_DEA: 'bg-purple-100 text-purple-700',
+  REPORTED_DEA: 'bg-teal-50 text-teal-700',
   INVESTIGATION: 'bg-orange-100 text-orange-700',
 };
 
@@ -85,7 +85,7 @@ export default async function ControlledSubstanceLogDetailPage({ params }: { par
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <Shield className="w-5 h-5 text-purple-600" />
+              <Shield className="w-5 h-5 text-teal-500" />
               <span className="text-xs font-mono text-muted-foreground/70">Schedule {log.schedule}</span>
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[log.status] ?? 'bg-slate-100 text-slate-600'}`}>
                 {log.status.replace(/_/g, ' ')}

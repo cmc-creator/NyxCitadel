@@ -35,9 +35,9 @@ export default async function OppePage() {
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <Award className="w-5 h-5 text-indigo-400" />
+            <Award className="w-5 h-5 text-teal-400" />
             <h1 className="text-xl font-bold text-white">OPPE Records</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-50 text-teal-700">TJC MS.06.01</span>
           </div>
           <p className="text-muted-foreground/70 text-sm">Ongoing Professional Practice Evaluation — quarterly performance data reviewed by Medical Executive Committee.</p>
         </div>
@@ -58,7 +58,7 @@ export default async function OppePage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Providers Reviewed', value: records.length,    icon: Award,         color: 'text-indigo-400' },
+          { label: 'Providers Reviewed', value: records.length,    icon: Award,         color: 'text-teal-400' },
           { label: 'Excellent',          value: excellent,          icon: CheckCircle,   color: 'text-emerald-400' },
           { label: 'Needs Improvement',  value: needsImprovement,  icon: AlertTriangle, color: 'text-amber-400' },
           { label: 'Latest Cycle',       value: latestCycle,        icon: Clock,         color: 'text-blue-400' },

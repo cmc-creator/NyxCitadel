@@ -78,7 +78,7 @@ export default function EditIncidentPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/trackers/incidents/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/trackers/incidents/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -154,7 +154,7 @@ export default function EditIncidentPage() {
               type="checkbox"
               checked={patientInvolved}
               onChange={e => setPatientInvolved(e.target.checked)}
-              className="rounded border-slate-300 text-purple-600"
+              className="rounded border-slate-300 text-teal-600"
             />
             Patient was involved in this incident
           </label>
@@ -163,7 +163,7 @@ export default function EditIncidentPage() {
               type="checkbox"
               checked={reportableToState}
               onChange={e => setReportableToState(e.target.checked)}
-              className="rounded border-slate-300 text-purple-600"
+              className="rounded border-slate-300 text-teal-600"
             />
             Requires AZ ADHS / Regulatory Reporting (Sentinel Event, Abuse, Unexpected Death)
           </label>
@@ -171,7 +171,7 @@ export default function EditIncidentPage() {
 
         <div className="px-6 py-4 flex justify-end gap-3">
           <a href={`/trackers/incidents/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
-          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+          <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>
         </div>

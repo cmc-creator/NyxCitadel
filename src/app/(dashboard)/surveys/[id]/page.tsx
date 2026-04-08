@@ -17,7 +17,7 @@ const STATUS_COLOR: Record<string, string> = {
   IN_PROGRESS:        'bg-yellow-100 text-yellow-700',
   COMPLETED:          'bg-green-100 text-green-700',
   RESPONSE_DUE:       'bg-orange-100 text-orange-700',
-  RESPONSE_SUBMITTED: 'bg-purple-100 text-purple-700',
+  RESPONSE_SUBMITTED: 'bg-teal-50 text-teal-700',
   CLOSED:             'bg-slate-100 text-slate-500',
 };
 
@@ -68,7 +68,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
       {/* Header */}
       <div>
         <div className="flex items-center justify-between gap-2 mb-3">
-        <Link href="/surveys" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600">
+        <Link href="/surveys" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Surveys &amp; Inspections
         </Link>
         <Link href={`/surveys/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
@@ -91,7 +91,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
           )}
         </div>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <ClipboardList className="w-6 h-6 text-purple-600" />
+          <ClipboardList className="w-6 h-6 text-teal-500" />
           {SURVEY_TYPE_LABELS[survey.surveyType] ?? survey.surveyType.replace(/_/g, ' ')}
         </h1>
         {survey.conductedDate && (
@@ -142,7 +142,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
         {survey.reportUrl && (
           <div className="px-5 pb-4">
             <a href={survey.reportUrl} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-purple-600 hover:underline">
+              className="inline-flex items-center gap-1.5 text-sm text-teal-600 hover:underline">
               <ShieldCheck className="w-3.5 h-3.5" /> View Survey Report
             </a>
           </div>
@@ -154,12 +154,12 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
         <div className="bg-card rounded-xl border border-border px-5 py-4">
           <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Linked Corrective Action Plan</h2>
           <Link href={`/trackers/caps/${survey.cap.id}`}
-            className="flex items-center justify-between rounded-lg border border-border px-4 py-3 hover:border-purple-300 transition-colors group">
+            className="flex items-center justify-between rounded-lg border border-border px-4 py-3 hover:border-teal-300 transition-colors group">
             <div>
               <span className="text-xs font-mono text-slate-500 mr-2">{survey.cap.capNumber}</span>
-              <span className="text-sm font-medium text-foreground group-hover:text-purple-700">{survey.cap.title}</span>
+              <span className="text-foreground group-hover:text-teal-700">{survey.cap.title}</span>
             </div>
-            <span className={`text-xs px-2 py-0.5 rounded font-medium ${ ({OPEN:'bg-blue-100 text-blue-700',IN_PROGRESS:'bg-yellow-100 text-yellow-700',COMPLETED:'bg-green-100 text-green-700',VERIFIED:'bg-teal-100 text-teal-700',OVERDUE:'bg-red-100 text-red-700',EXTENDED:'bg-purple-100 text-purple-700'} as Record<string,string>)[survey.cap.status] ?? 'bg-slate-100 text-slate-600'}`}>
+            <span className={`text-xs px-2 py-0.5 rounded font-medium ${ ({OPEN:'bg-blue-100 text-blue-700',IN_PROGRESS:'bg-yellow-100 text-yellow-700',COMPLETED:'bg-green-100 text-green-700',VERIFIED:'bg-teal-100 text-teal-700',OVERDUE:'bg-red-100 text-red-700',EXTENDED:'bg-teal-50 text-teal-700'} as Record<string,string>)[survey.cap.status] ?? 'bg-slate-100 text-slate-600'}`}>
               {survey.cap.status.replace(/_/g, ' ')}
             </span>
           </Link>
@@ -177,14 +177,14 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
               <Link key={poc.id} href={`/quality/poc/${poc.id}`}
                 className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition-colors group">
                 <div className="text-sm">
-                  <span className="text-foreground/80 group-hover:text-purple-700">Plan of Correction</span>
+                  <span className="text-foreground/80 group-hover:text-teal-700">Plan of Correction</span>
                   <span className="ml-2 text-xs text-muted-foreground/70">created {formatDate(poc.createdAt)}</span>
                 </div>
                 <div className="flex items-center gap-3 text-xs text-slate-500">
                   {poc.findings.length > 0 && (
                     <span>{poc.findings.filter(f => f.status === 'OPEN').length} open / {poc.findings.length} total findings</span>
                   )}
-                  <span className="text-xs text-purple-600 group-hover:underline">View →</span>
+                  <span className="text-xs text-teal-600 group-hover:underline">View →</span>
                 </div>
               </Link>
             ))}

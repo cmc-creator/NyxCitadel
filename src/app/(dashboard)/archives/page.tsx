@@ -304,7 +304,7 @@ export default async function ArchivesPage({
         <DomainCard
           title="Root Cause Analyses"
           icon={Search}
-          color="indigo"
+          color="teal"
           status={rcaSign}
           href={`/trackers/rca?year=${year}`}
           rows={[
@@ -429,7 +429,7 @@ function DomainCard({
     orange: 'text-orange-400 bg-orange-950/40',
     purple: 'text-teal-400 bg-teal-950/40',
     blue:   'text-blue-400 bg-blue-950/40',
-    indigo: 'text-indigo-400 bg-indigo-950/40',
+    indigo: 'text-teal-400 bg-teal-950/40',
     teal:   'text-teal-400 bg-teal-950/40',
     slate:  'text-muted-foreground/70 bg-slate-800/50',
     amber:  'text-amber-400 bg-amber-950/40',

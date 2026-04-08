@@ -51,7 +51,7 @@ export default async function EmergencyPlanDetailPage({ params }: { params: { id
         </Link>
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-3 flex-wrap">
-            <BookOpen className="w-6 h-6 text-purple-600 flex-shrink-0" />
+            <BookOpen className="w-6 h-6 text-teal-500 flex-shrink-0" />
             <h1 className="text-2xl font-bold text-foreground">{plan.planName}</h1>
             <span className={`text-xs font-semibold px-2.5 py-1 rounded ${
               plan.status === 'ACTIVE'   ? 'bg-green-100 text-green-800' :

@@ -24,7 +24,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   INFECTION_PREVENTION: 'bg-teal-100 text-teal-700',
   PATIENT_EXPERIENCE: 'bg-green-100 text-green-700',
   STAFF_SAFETY: 'bg-teal-100 text-teal-700',
-  READMISSIONS: 'bg-indigo-100 text-indigo-700',
+  READMISSIONS: 'bg-teal-50 text-teal-700',
   COMPLIANCE: 'bg-teal-100 text-teal-700',
   WORKFORCE: 'bg-pink-100 text-pink-700',
   OTHER: 'bg-slate-100 text-slate-600',

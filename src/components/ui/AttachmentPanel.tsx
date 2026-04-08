@@ -110,7 +110,7 @@ export default function AttachmentPanel({
                   )}
                 </div>
                 <div className="shrink-0 flex items-center gap-3">
-                  <Link href={attachment.fileUrl} target="_blank" className="text-xs font-medium text-teal-600 hover:text-indigo-800">
+                  <Link href={attachment.fileUrl} target="_blank" className="text-xs font-medium text-teal-600 hover:text-teal-700">
                     Open
                   </Link>
                   <DeleteAttachmentButton id={attachment.id} />

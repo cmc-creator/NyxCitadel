@@ -98,17 +98,17 @@ export default function EditResponseTemplatePage() {
     }
   }
 
-  if (loading) return <div className="text-muted-foreground/70 p-8">Loading…</div>;
+  if (loading) return <div className="text-muted-foreground/70 p-8">LoadingΓÇª</div>;
   if (!data || data.error) return <div className="text-red-400 p-8">{error || 'Not found.'}</div>;
 
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <a href={`/quality/response-templates/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/quality/response-templates/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Template
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <FileText className="w-6 h-6 text-purple-600" />
+          <FileText className="w-6 h-6 text-teal-600" />
           Edit Response Template
         </h1>
       </div>
@@ -128,7 +128,7 @@ export default function EditResponseTemplatePage() {
                 name="name"
                 required
                 defaultValue={data.name ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -138,7 +138,7 @@ export default function EditResponseTemplatePage() {
                 name="category"
                 required
                 defaultValue={data.category ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select category...</option>
                 {CATEGORIES.map(c => (
@@ -152,7 +152,7 @@ export default function EditResponseTemplatePage() {
               <input
                 name="regulatoryRef"
                 defaultValue={data.regulatoryRef ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -161,7 +161,7 @@ export default function EditResponseTemplatePage() {
               <input
                 name="description"
                 defaultValue={data.description ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -172,7 +172,7 @@ export default function EditResponseTemplatePage() {
                 type="number"
                 min="1"
                 defaultValue={data.daysRequired ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -182,7 +182,7 @@ export default function EditResponseTemplatePage() {
             <input
               name="subject"
               defaultValue={data.subject ?? ''}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
         </div>
@@ -199,7 +199,7 @@ export default function EditResponseTemplatePage() {
                 type="button"
                 onClick={() => addVariable(v)}
                 disabled={variables.includes(v)}
-                className="text-xs bg-slate-50 hover:bg-purple-50 border border-border hover:border-purple-300 text-slate-600 hover:text-purple-700 px-2 py-1 rounded disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="text-xs bg-slate-50 hover:bg-teal-50 border border-border hover:border-teal-300 text-slate-600 hover:text-teal-500 px-2 py-1 rounded disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 {v}
               </button>
@@ -208,7 +208,7 @@ export default function EditResponseTemplatePage() {
 
           <div className="flex flex-wrap gap-2">
             {variables.map(v => (
-              <span key={v} className="inline-flex items-center gap-1 bg-purple-50 text-purple-700 border border-purple-200 text-xs px-2 py-1 rounded-full">
+              <span key={v} className="inline-flex items-center gap-1 bg-teal-50 text-teal-700 border border-teal-200 text-xs px-2 py-1 rounded-full">
                 {v}
                 <button type="button" onClick={() => removeVariable(v)} className="hover:text-red-500 ml-0.5">
                   <Trash2 className="w-3 h-3" />
@@ -222,7 +222,7 @@ export default function EditResponseTemplatePage() {
               value={newVar}
               onChange={e => setNewVar(e.target.value)}
               placeholder="Custom variable name..."
-              className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addVariable(newVar); } }}
             />
             <button
@@ -243,7 +243,7 @@ export default function EditResponseTemplatePage() {
             required
             rows={16}
             defaultValue={data.bodyTemplate ?? ''}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-purple-500 h-64 resize-y"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-500 h-64 resize-y"
           />
         </div>
 
@@ -254,7 +254,7 @@ export default function EditResponseTemplatePage() {
             name="instructions"
             rows={3}
             defaultValue={data.instructions ?? ''}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
           />
         </div>
 
@@ -262,9 +262,9 @@ export default function EditResponseTemplatePage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
+            className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white font-medium py-2.5 rounded-xl text-sm transition-colors"
           >
-            {saving ? 'Saving…' : 'Save Changes'}
+            {saving ? 'SavingΓÇª' : 'Save Changes'}
           </button>
           <a
             href={`/quality/response-templates/${id}`}

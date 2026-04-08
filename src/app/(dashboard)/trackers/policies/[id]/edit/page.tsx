@@ -162,11 +162,11 @@ export default function EditPolicyPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Policy Tracker
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <FileText className="w-6 h-6 text-purple-600" />
+          <FileText className="w-6 h-6 text-teal-500" />
           Edit Policy / Procedure
         </h1>
         <p className="text-xs text-muted-foreground/70 mt-1 font-mono">{data.policyNumber}</p>
@@ -253,8 +253,8 @@ export default function EditPolicyPage() {
                 onClick={() => toggleBody(v)}
                 className={`px-3 py-1 text-xs rounded-full border transition-colors ${
                   selectedBodies.includes(v)
-                    ? 'bg-purple-600 text-white border-purple-600'
-                    : 'bg-white text-slate-600 border-slate-200 hover:border-purple-300'
+                    ? 'bg-teal-600 text-white border-teal-600'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-teal-300'
                 }`}
               >
                 {REG_LABELS[v] ?? v}
@@ -277,7 +277,7 @@ export default function EditPolicyPage() {
                   <ExternalLink className="w-3 h-3" /> View document
                 </a>
               </div>
-              <label className="text-xs text-slate-500 hover:text-purple-600 cursor-pointer underline">
+              <label className="text-xs text-slate-500 hover:text-teal-500 cursor-pointer underline">
                 Replace
                 <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileSelect} />
               </label>
@@ -296,7 +296,7 @@ export default function EditPolicyPage() {
               </button>
             </div>
           ) : (
-            <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-purple-300 hover:bg-purple-50 transition-colors">
+            <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-teal-300 hover:bg-teal-50 transition-colors">
               <Upload className="w-5 h-5 text-muted-foreground/70 mb-1.5" />
               <span className="text-sm text-slate-500">Click to upload PDF or Word document</span>
               <span className="text-xs text-muted-foreground/70 mt-0.5">Max 20 MB</span>

@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 const STATUS_COLOR: Record<string, string> = {
   IN_PROGRESS: 'bg-blue-100 text-blue-800',
   COMPLETED: 'bg-green-100 text-green-800',
-  REVIEWED: 'bg-purple-100 text-purple-800',
+  REVIEWED: 'bg-teal-50 text-teal-700',
   APPROVED: 'bg-emerald-100 text-emerald-800',
 };
 

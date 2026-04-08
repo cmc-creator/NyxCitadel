@@ -361,8 +361,8 @@ export default function EditIrIadPage() {
         {/* NyxSentinel AI Triage Panel */}
         <div className="bg-slate-900 border border-slate-700 rounded-xl p-5 space-y-3">
           <div className="flex items-center gap-2">
-            <ShieldAlert className="w-4 h-4 text-indigo-400" />
-            <span className="text-xs font-bold text-indigo-300 uppercase tracking-widest">NyxSentinel - AI Triage Assessment</span>
+            <ShieldAlert className="w-4 h-4 text-teal-400" />
+            <span className="text-xs font-bold text-teal-400 uppercase tracking-widest">NyxSentinel - AI Triage Assessment</span>
           </div>
           <div className="flex items-center gap-3">
             <span className={`text-sm font-bold px-3 py-1.5 rounded-lg ${triageBadgeStyle(triage.severity)}`}>
@@ -396,7 +396,7 @@ export default function EditIrIadPage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition-colors disabled:opacity-50"
+            className="flex-1 sm:flex-none bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition-colors disabled:opacity-50"
           >
             {saving ? 'Saving...' : 'Save Changes'}
           </button>

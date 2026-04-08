@@ -25,11 +25,11 @@ const CATEGORY_STYLES: Record<string, string> = {
   PLAN_OF_CORRECTION:               'bg-red-100 text-red-800',
   SENTINEL_EVENT_FAMILY_NOTICE:     'bg-red-100 text-red-800',
   STATE_ADVERSE_EVENT_REPORT:       'bg-red-100 text-red-800',
-  JC_SENTINEL_EVENT_REPORT:         'bg-purple-100 text-purple-800',
+  JC_SENTINEL_EVENT_REPORT:         'bg-teal-50 text-teal-700',
   SURVEY_RESPONSE_COVER:            'bg-blue-100 text-blue-800',
   CAP_COMPLETION_NOTICE:            'bg-emerald-100 text-emerald-800',
   INCIDENT_FAMILY_NOTIFICATION:     'bg-yellow-100 text-yellow-800',
-  REGULATORY_INQUIRY_RESPONSE:      'bg-indigo-100 text-indigo-800',
+  REGULATORY_INQUIRY_RESPONSE:      'bg-teal-50 text-teal-700',
   COMPLAINT_ACKNOWLEDGMENT:         'bg-slate-100 text-foreground/80',
 };
 
@@ -45,7 +45,7 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <Link href="/quality/response-templates" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600">
+      <Link href="/quality/response-templates" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-500">
         <ChevronLeft className="w-4 h-4" /> Back to Templates
       </Link>
 
@@ -53,7 +53,7 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <FileText className="w-6 h-6 text-purple-600" />
+            <FileText className="w-6 h-6 text-teal-500" />
             {template.name}
           </h1>
           {template.description && (
@@ -129,7 +129,7 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
 
           <Link
             href={`/quality/responses/new?templateId=${template.id}`}
-            className="flex items-center justify-center gap-1.5 text-xs font-medium bg-purple-600 text-white px-4 py-2.5 rounded-lg hover:bg-purple-700 transition-colors"
+            className="flex items-center justify-center gap-1.5 text-xs font-medium bg-teal-600 text-white px-4 py-2.5 rounded-lg hover:bg-teal-700 transition-colors"
           >
             + Use This Template
           </Link>

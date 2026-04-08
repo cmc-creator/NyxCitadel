@@ -214,7 +214,7 @@ export default async function IrIadPage({
                       {(r.severity === 'SENTINEL' || r.iadRequired) && !r.linkedRcaId && r.status !== 'CLOSED' && (
                         <Link
                           href={`/trackers/rca/new?fromIr=${r.id}&type=${encodeURIComponent(r.incidentType)}&date=${r.incidentDate.toISOString()}&desc=${encodeURIComponent(r.briefDescription?.slice(0, 200) ?? '')}`}
-                          className="inline-flex items-center gap-1 text-xs font-medium text-indigo-700 bg-teal-950/20 border border-indigo-200 px-2 py-1 rounded-lg hover:bg-indigo-100 transition-colors whitespace-nowrap"
+                          className="inline-flex items-center gap-1 text-xs font-medium text-teal-700 bg-teal-950/20 border border-teal-200 px-2 py-1 rounded-lg hover:bg-teal-50 transition-colors whitespace-nowrap"
                         >
                           → Start RCA
                         </Link>

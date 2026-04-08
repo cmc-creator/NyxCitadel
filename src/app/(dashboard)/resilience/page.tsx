@@ -388,7 +388,7 @@ function QuickLink({ href, label, color }: { href: string; label: string; color:
     blue:   'bg-blue-600 hover:bg-blue-700',
     orange: 'bg-orange-600 hover:bg-orange-700',
     purple: 'bg-teal-600 hover:bg-teal-700',
-    indigo: 'bg-teal-600 hover:bg-indigo-700',
+    indigo: 'bg-teal-600 hover:bg-teal-700',
     red:    'bg-red-600 hover:bg-red-700',
   };
   return (

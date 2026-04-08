@@ -14,7 +14,7 @@ const STATUS_OPTIONS = [
   { value: 'MONITORING', label: 'Monitoring', color: 'bg-yellow-100 text-yellow-800' },
   { value: 'DEBRIEFED', label: 'Debriefed', color: 'bg-blue-100 text-blue-800' },
   { value: 'CLOSED', label: 'Closed', color: 'bg-green-100 text-green-800' },
-  { value: 'REPORTED', label: 'Reported to CMS', color: 'bg-purple-100 text-purple-800' },
+  { value: 'REPORTED', label: 'Reported to CMS', color: 'bg-teal-50 text-teal-700' },
 ];
 
 const RS_TYPE_LABEL: Record<string, string> = {
