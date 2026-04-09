@@ -73,8 +73,8 @@ export async function PATCH(req: NextRequest) {
       jcAhcId:         jcAhcId?.trim()    || null,
       licenseNumber:   licenseNumber?.trim() || null,
       licenseExpiry:   licenseExpiry ? new Date(licenseExpiry) : null,
-      primaryColor:    primaryColor?.trim()   || '#1e40af',
-      secondaryColor:  secondaryColor?.trim() || '#3b82f6',
+      primaryColor:    primaryColor?.trim()   || '#0d7377',
+      secondaryColor:  secondaryColor?.trim() || '#14a4a8',
       timezone:        timezone?.trim() || 'America/Phoenix',
     },
   });

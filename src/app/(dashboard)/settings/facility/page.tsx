@@ -55,7 +55,7 @@ const EMPTY: FacilityForm = {
   address: '', city: '', state: 'AZ', zip: '', phone: '', fax: '',
   timezone: 'America/Phoenix', npi: '', medicareId: '', medicaidId: '',
   jcAhcId: '', licenseNumber: '', licenseExpiry: '',
-  primaryColor: '#1e40af', secondaryColor: '#3b82f6',
+  primaryColor: '#0d7377', secondaryColor: '#14a4a8',
 };
 
 export default function FacilitySettingsPage() {

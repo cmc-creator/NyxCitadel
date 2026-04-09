@@ -4,6 +4,15 @@ import { getSmtpReadiness, sendEmail, verifySmtpConnection } from '@/lib/email';
 import { getOnboardingWelcomeEmail } from '@/lib/email-templates';
 import { enforceRateLimit } from '@/lib/security/rate-limit';
 
+function escHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 const schema = z.object({
   name: z.string().min(1).max(100),
   email: z.string().email().max(254),
@@ -38,10 +47,7 @@ export async function POST(req: NextRequest) {
   const smtpReadiness = getSmtpReadiness();
   if (!smtpReadiness.ok) {
     return NextResponse.json(
-      {
-        error: 'Email delivery is not configured. Please contact support.',
-        missing: smtpReadiness.missing,
-      },
+      { error: 'Email delivery is not configured. Please contact support.' },
       { status: 503 },
     );
   }
@@ -66,17 +72,24 @@ export async function POST(req: NextRequest) {
     // 2. Notify the sales/admin team
     const adminEmail = process.env.ADMIN_EMAIL;
     if (adminEmail) {
+      const sName = escHtml(name);
+      const sEmail = escHtml(email);
+      const sFacility = escHtml(facility);
+      const sFacilityType = facilityType ? escHtml(facilityType) : '';
+      const sBeds = beds ? escHtml(beds) : '';
+      const sPhone = phone ? escHtml(phone) : '';
+      const sMessage = message ? escHtml(message).replace(/\n/g, '<br>') : '';
       await sendEmail({
         to: adminEmail,
-        subject: `New demo request from ${name} - ${facility}`,
+        subject: `New demo request from ${sName} - ${sFacility}`,
         html: `
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Facility:</strong> ${facility}</p>
-          ${facilityType ? `<p><strong>Type:</strong> ${facilityType}</p>` : ''}
-          ${beds ? `<p><strong>Beds:</strong> ${beds}</p>` : ''}
-          ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
-          ${message ? `<p><strong>Message:</strong><br>${message.replace(/\n/g, '<br>')}</p>` : ''}
+          <p><strong>Name:</strong> ${sName}</p>
+          <p><strong>Email:</strong> ${sEmail}</p>
+          <p><strong>Facility:</strong> ${sFacility}</p>
+          ${sFacilityType ? `<p><strong>Type:</strong> ${sFacilityType}</p>` : ''}
+          ${sBeds ? `<p><strong>Beds:</strong> ${sBeds}</p>` : ''}
+          ${sPhone ? `<p><strong>Phone:</strong> ${sPhone}</p>` : ''}
+          ${sMessage ? `<p><strong>Message:</strong><br>${sMessage}</p>` : ''}
         `,
       });
     }
