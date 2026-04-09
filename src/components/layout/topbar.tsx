@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { Search } from 'lucide-react';
+import { Search, Zap } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import { NotificationBell } from '@/components/layout/NotificationBell';
 import { useRouter } from 'next/navigation';
-import { useState, FormEvent } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 
 interface TopBarProps {
   user: {
@@ -19,6 +19,23 @@ interface TopBarProps {
 export function TopBar({ user }: TopBarProps) {
   const router = useRouter();
   const [query, setQuery] = useState('');
+
+  // Show a "Setup Guide" pill in the topbar until setup is permanently complete.
+  const [showSetupButton, setShowSetupButton] = useState(false);
+  useEffect(() => {
+    const check = () => {
+      const done     = !!window.localStorage.getItem('nyxcitadel:setup-wizard-done:v1');
+      const welcomed = !!window.localStorage.getItem('nyxcitadel:onboarding-seen:v1');
+      setShowSetupButton(!done && welcomed);
+    };
+    check();
+    window.addEventListener('nyx:setup-wizard-done', check);
+    window.addEventListener('nyx:welcome-done', check);
+    return () => {
+      window.removeEventListener('nyx:setup-wizard-done', check);
+      window.removeEventListener('nyx:welcome-done', check);
+    };
+  }, []);
 
   function handleSearch(e: FormEvent) {
     e.preventDefault();
@@ -65,6 +82,22 @@ export function TopBar({ user }: TopBarProps) {
         <span className="text-xs text-muted-foreground hidden sm:block">
           {formatDate(new Date(), 'EEEE, MMMM d, yyyy')}
         </span>
+
+        {/* Setup Guide pill — visible until all wizard steps complete */}
+        {showSetupButton && (
+          <button
+            onClick={() => window.dispatchEvent(new Event('nyx:open-setup-wizard'))}
+            title="Reopen setup guide"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-teal-500/10 border border-teal-500/30 text-teal-400 hover:bg-teal-500/20 transition-all"
+          >
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-teal-500" />
+            </span>
+            <Zap className="w-3 h-3" />
+            Setup Guide
+          </button>
+        )}
 
         {/* Notifications */}
         <NotificationBell />

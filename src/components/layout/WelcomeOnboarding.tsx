@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Sparkles, PartyPopper, Rocket, Bot, BookOpen, PlayCircle, X } from 'lucide-react';
 
 const STORAGE_KEY = 'nyxcitadel:onboarding-seen:v1';
@@ -28,11 +28,16 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    // Show if never seen — but DON'T set localStorage yet.
+    // We set it on explicit dismiss so SetupWizard can sequence after this.
     const hasSeen = window.localStorage.getItem(STORAGE_KEY);
-    if (!hasSeen) {
-      setOpen(true);
-      window.localStorage.setItem(STORAGE_KEY, 'true');
-    }
+    if (!hasSeen) setOpen(true);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+    window.localStorage.setItem(STORAGE_KEY, 'true');
+    window.dispatchEvent(new Event('nyx:welcome-done'));
   }, []);
 
   const confettiPieces = useMemo(
@@ -59,7 +64,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
       <div className="relative w-full max-w-4xl rounded-3xl border border-white/10 bg-[#060b16] text-white shadow-2xl overflow-hidden">
         <button
           type="button"
-          onClick={() => setOpen(false)}
+          onClick={handleClose}
           className="absolute top-4 right-4 z-10 rounded-lg p-2 text-muted-foreground/70 hover:text-white hover:bg-white/5 transition"
           aria-label="Close welcome"
         >
@@ -119,7 +124,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
             <div className="grid gap-3">
               <Link
                 href="/walkthrough"
-                onClick={() => setOpen(false)}
+                onClick={handleClose}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 px-4 py-3 text-sm font-semibold text-white transition"
               >
                 <PlayCircle className="w-4 h-4" />
@@ -127,7 +132,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
               </Link>
               <Link
                 href="/guide"
-                onClick={() => setOpen(false)}
+                onClick={handleClose}
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-border hover:border-slate-300 px-4 py-3 text-sm font-semibold text-foreground transition"
               >
                 <BookOpen className="w-4 h-4" />
@@ -135,7 +140,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
               </Link>
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={handleClose}
                 className="rounded-xl px-4 py-3 text-sm font-medium text-slate-500 hover:text-foreground/80 transition"
               >
                 Go straight to the dashboard

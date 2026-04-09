@@ -1,15 +1,14 @@
 import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const dbVars = Object.keys(process.env)
-    .filter(k => k.match(/prisma|postgres|database|direct/i))
-    .map(k => {
-      const val = process.env[k] ?? '';
-      const protocol = val.split('://')[0] ?? 'empty';
-      return `${k}=${protocol}://...`;
-    });
-
-  return NextResponse.json({ vars: dbVars });
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    return NextResponse.json({ status: 'ok', db: 'connected' });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ status: 'error', db: 'failed', message }, { status: 500 });
+  }
 }

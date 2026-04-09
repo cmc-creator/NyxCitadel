@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Plug, CheckCircle2, Clock, ExternalLink, AlertCircle } from 'lucide-react';
 
 interface Integration {
@@ -16,14 +17,14 @@ interface Integration {
 
 const INTEGRATIONS: Integration[] = [
   {
-    key: 'openai',
-    name: 'OpenAI (GPT-4o)',
+    key: 'anthropic',
+    name: 'Anthropic Claude',
     description: 'Powers Sentry Assistant for plain-language compliance guidance, document drafting, and RCA assistance.',
     category: 'AI',
     status: 'connected',
     logoText: 'AI',
     logoColor: 'bg-green-600',
-    docsUrl: 'https://platform.openai.com',
+    docsUrl: 'https://docs.anthropic.com',
   },
   {
     key: 'smtp',
@@ -115,6 +116,7 @@ const CATEGORIES = ['All', ...Array.from(new Set(INTEGRATIONS.map(i => i.categor
 
 export default function IntegrationsPage() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const router = useRouter();
 
   const filtered = INTEGRATIONS.filter(
     i => activeCategory === 'All' || i.category === activeCategory
@@ -198,7 +200,10 @@ export default function IntegrationsPage() {
                   </a>
                 )}
                 {integration.status === 'available' && (
-                  <button className="text-xs bg-teal-600 text-white px-3 py-1 rounded-lg hover:bg-teal-700 transition">
+                  <button
+                    onClick={() => router.push('/settings/notifications')}
+                    className="text-xs bg-teal-600 text-white px-3 py-1 rounded-lg hover:bg-teal-700 transition"
+                  >
                     Configure
                   </button>
                 )}

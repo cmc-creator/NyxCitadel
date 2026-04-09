@@ -347,7 +347,7 @@ function NavLink({
           />
         </button>
         {open && (
-          <div className="mt-0.5 space-y-0.5">
+          <div className="mt-0.5 space-y-0.5 pl-3">
             {item.children.map((child) => (
               <NavLink key={child.href} item={child} depth={depth + 1} />
             ))}

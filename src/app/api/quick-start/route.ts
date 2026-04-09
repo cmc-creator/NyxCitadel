@@ -3,10 +3,6 @@ import { applyQuickStartTemplates } from '@/lib/quick-start-templates';
 import { NextResponse } from 'next/server';
 
 export async function POST() {
-  if (process.env.ENABLE_DEMO_TOOLS !== 'true') {
-    return NextResponse.json({ error: 'Not found' }, { status: 404 });
-  }
-
   const session = await auth();
   if (!session?.user?.facilityId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
