@@ -52,6 +52,7 @@ import {
   PlayCircle,
   Download,
   BarChart3,
+  UserCircle,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -65,74 +66,57 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  {
-    href: '/dashboard',
-    label: 'Dashboard',
-    icon: LayoutDashboard,
-  },
-  {
-    href: '/assistant',
-    label: 'Sentry Assistant 🤖',
-    icon: Sparkles,
-    badge: 'AI',
-    badgeColor: 'bg-teal-100 text-teal-700',
-  },
-  {
-    href: '/site-search',
-    label: 'Search',
-    icon: Search,
-  },
-  {
-    href: '/calendar',
-    label: 'Compliance Calendar',
-    icon: CalendarDays,
-  },
-  {
-    href: '/compliance-library',
-    label: 'Reg. Library',
-    icon: Library,
-    badge: 'REF',
-    badgeColor: 'bg-slate-100 text-slate-600',
-  },
-  {
-    href: '/trackers',
-    label: 'Trackers',
-    icon: ClipboardList,
-    children: [
-      { href: '/trackers/compliance', label: 'Compliance Items', icon: ShieldCheck },
-      { href: '/trackers/policies', label: 'Policies & Procedures', icon: FileText },
-      { href: '/trackers/training', label: 'Training & Competency', icon: GraduationCap },
-      { href: '/trackers/incidents', label: 'Incidents / Occurrences', icon: AlertTriangle },
-      { href: '/trackers/caps', label: 'Corrective Action Plans', icon: ClipboardList },
-      { href: '/trackers/risk-assessments', label: 'Risk Assessments', icon: ShieldAlert },
-      { href: '/trackers/grievances', label: 'Patient Grievances', icon: MessageSquareWarning, badge: 'CMS', badgeColor: 'bg-orange-100 text-orange-700' },
-      { href: '/trackers/qoc', label: 'QOC / LOI Complaints', icon: Scale, badge: 'CMS', badgeColor: 'bg-teal-100 text-teal-700' },
-      { href: '/trackers/ir-iad', label: 'IR / IAD Incidents', icon: FileWarning, badge: 'ADHS', badgeColor: 'bg-red-100 text-red-700' },
-      { href: '/trackers/rca', label: 'Root Cause Analyses', icon: Search },
-    ],
-  },
+  // ── Core ─────────────────────────────────────────────────────
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/assistant', label: 'Sentry Assistant 🤖', icon: Sparkles, badge: 'AI', badgeColor: 'bg-teal-100 text-teal-700' },
+  { href: '/site-search', label: 'Search', icon: Search },
+  { href: '/calendar', label: 'Compliance Calendar', icon: CalendarDays },
+  { href: '/compliance-library', label: 'Reg. Library', icon: Library, badge: 'REF', badgeColor: 'bg-slate-100 text-slate-600' },
+
+  // ── Quality & QAPI ────────────────────────────────────────────
   {
     href: '/quality',
-    label: 'Quality / QAPI',
+    label: 'Quality & QAPI',
     icon: Activity,
     children: [
-      { href: '/quality', label: 'QAPI Dashboard', icon: BarChart2 },
-      { href: '/quality/metrics', label: 'Quality Metrics', icon: Activity },
-      { href: '/quality/projects', label: 'QAPI Projects', icon: Target },
-      { href: '/quality/response-templates', label: 'Response Templates', icon: FileText },
-      { href: '/quality/responses', label: 'Generated Responses', icon: Mail },
-      { href: '/quality/poc', label: 'Plans of Correction', icon: ClipboardCheck },
+      { href: '/quality',                   label: 'QAPI Dashboard',         icon: BarChart2 },
+      { href: '/quality/metrics',           label: 'Quality Metrics',        icon: Activity },
+      { href: '/quality/projects',          label: 'QAPI Projects',          icon: Target },
+      { href: '/quality/poc',               label: 'Plans of Correction',    icon: ClipboardCheck },
+      { href: '/trackers/grievances',       label: 'Patient Grievances',     icon: MessageSquareWarning, badge: 'CMS', badgeColor: 'bg-orange-100 text-orange-700' },
+      { href: '/trackers/qoc',              label: 'QOC / LOI Complaints',   icon: Scale,               badge: 'CMS', badgeColor: 'bg-teal-100 text-teal-700' },
+      { href: '/trackers/rca',              label: 'Root Cause Analyses',    icon: Search },
+      { href: '/trackers/caps',             label: 'Corrective Action Plans',icon: ClipboardList },
+      { href: '/quality/response-templates',label: 'Response Templates',     icon: FileText },
+      { href: '/quality/responses',         label: 'Generated Responses',    icon: Mail },
     ],
   },
+
+  // ── Risk & Incidents ──────────────────────────────────────────
+  {
+    href: '/trackers',
+    label: 'Risk & Incidents',
+    icon: ShieldAlert,
+    children: [
+      { href: '/trackers/incidents',        label: 'Incidents / Occurrences', icon: AlertTriangle },
+      { href: '/trackers/ir-iad',           label: 'IR / IAD Incidents',      icon: FileWarning, badge: 'ADHS', badgeColor: 'bg-red-100 text-red-700' },
+      { href: '/trackers/risk-assessments', label: 'Risk Assessments',        icon: ShieldAlert },
+      { href: '/trackers/compliance',       label: 'Compliance Items',        icon: ShieldCheck },
+      { href: '/trackers/policies',         label: 'Policies & Procedures',   icon: FileText },
+      { href: '/trackers/training',         label: 'Training & Competency',   icon: GraduationCap },
+    ],
+  },
+
+  // ── Emergency & EOC ───────────────────────────────────────────
   {
     href: '/emergency',
     label: 'Emergency Management',
     icon: Siren,
     children: [
-      { href: '/emergency/hva',   label: 'HVA Assessment',   icon: ShieldAlert },
+      { href: '/emergency/hva',    label: 'HVA Assessment',    icon: ShieldAlert },
       { href: '/emergency/drills', label: 'Drills & Exercises', icon: Siren },
       { href: '/emergency/plans',  label: 'EM Plans',           icon: BookOpen },
-      { href: '/emergency/map',    label: 'Facility Map',       icon: Map,   badge: 'TWIN', badgeColor: 'bg-sky-100 text-sky-700' },
+      { href: '/emergency/map',    label: 'Facility Map',       icon: Map, badge: 'TWIN', badgeColor: 'bg-sky-100 text-sky-700' },
     ],
   },
   {
@@ -142,20 +126,15 @@ const navItems: NavItem[] = [
     badge: 'EOC',
     badgeColor: 'bg-amber-100 text-amber-700',
     children: [
-      { href: '/eoc/ligature',    label: 'Ligature Risk',    icon: CircleAlert,  badge: 'TJC', badgeColor: 'bg-amber-100 text-amber-700' },
-      { href: '/eoc/rounds',      label: 'Safety Rounds',   icon: ClipboardList },
-      { href: '/eoc/deficiencies',label: 'Deficiencies',    icon: AlertTriangle },
-      { href: '/eoc/equipment',   label: 'Equipment PM',    icon: Wrench },
+      { href: '/eoc/ligature',     label: 'Ligature Risk',  icon: CircleAlert,  badge: 'TJC', badgeColor: 'bg-amber-100 text-amber-700' },
+      { href: '/eoc/rounds',       label: 'Safety Rounds',  icon: ClipboardList },
+      { href: '/eoc/deficiencies', label: 'Deficiencies',   icon: AlertTriangle },
+      { href: '/eoc/equipment',    label: 'Equipment PM',   icon: Wrench },
     ],
   },
-  // ── Regulatory Compliance Modules ────────────────────────────
-  {
-    href: '/restraint-seclusion',
-    label: 'Restraint & Seclusion',
-    icon: ShieldOff,
-    badge: 'CMS',
-    badgeColor: 'bg-red-100 text-red-700',
-  },
+
+  // ── Regulatory Compliance Modules ─────────────────────────────
+  { href: '/restraint-seclusion', label: 'Restraint & Seclusion', icon: ShieldOff, badge: 'CMS', badgeColor: 'bg-red-100 text-red-700' },
   {
     href: '/infection-control',
     label: 'Infection Control',
@@ -163,10 +142,10 @@ const navItems: NavItem[] = [
     badge: 'IC',
     badgeColor: 'bg-teal-100 text-teal-700',
     children: [
-      { href: '/infection-control/icra',          label: 'ICRA Assessments', icon: TestTube2 },
-      { href: '/infection-control/hai',            label: 'HAI Surveillance',  icon: Biohazard },
-      { href: '/infection-control/outbreaks',      label: 'Outbreak Tracking', icon: AlertTriangle },
-      { href: '/infection-control/hand-hygiene',   label: 'Hand Hygiene',      icon: ShieldCheck },
+      { href: '/infection-control/icra',         label: 'ICRA Assessments', icon: TestTube2 },
+      { href: '/infection-control/hai',           label: 'HAI Surveillance', icon: Biohazard },
+      { href: '/infection-control/outbreaks',     label: 'Outbreak Tracking',icon: AlertTriangle },
+      { href: '/infection-control/hand-hygiene',  label: 'Hand Hygiene',     icon: ShieldCheck },
     ],
   },
   {
@@ -181,13 +160,7 @@ const navItems: NavItem[] = [
       { href: '/credentialing/oppe',      label: 'OPPE / FPPE',        icon: ClipboardCheck },
     ],
   },
-  {
-    href: '/treatment-plans',
-    label: 'Treatment Planning',
-    icon: ClipboardList,
-    badge: 'ADHS',
-    badgeColor: 'bg-teal-100 text-teal-700',
-  },
+  { href: '/treatment-plans', label: 'Treatment Planning', icon: ClipboardList, badge: 'ADHS', badgeColor: 'bg-teal-100 text-teal-700' },
   {
     href: '/hipaa',
     label: 'HIPAA / Privacy',
@@ -195,7 +168,7 @@ const navItems: NavItem[] = [
     badge: 'HIPAA',
     badgeColor: 'bg-blue-100 text-blue-700',
     children: [
-      { href: '/hipaa/breaches', label: 'Breach Log', icon: AlertTriangle },
+      { href: '/hipaa/breaches', label: 'Breach Log',  icon: AlertTriangle },
       { href: '/hipaa/baa',      label: 'BAA Tracker', icon: FileText },
     ],
   },
@@ -206,9 +179,9 @@ const navItems: NavItem[] = [
     badge: 'CMS',
     badgeColor: 'bg-rose-100 text-rose-700',
     children: [
-      { href: '/patient-rights/consents',             label: 'Consent Records',     icon: FileText },
-      { href: '/patient-rights/advance-directives',   label: 'Advance Directives',  icon: ClipboardCheck },
-      { href: '/patient-rights/holds',                label: 'Involuntary Holds',   icon: ShieldOff, badge: 'Title 36', badgeColor: 'bg-red-100 text-red-700' },
+      { href: '/patient-rights/consents',           label: 'Consent Records',    icon: FileText },
+      { href: '/patient-rights/advance-directives', label: 'Advance Directives', icon: ClipboardCheck },
+      { href: '/patient-rights/holds',              label: 'Involuntary Holds',  icon: ShieldOff, badge: 'Title 36', badgeColor: 'bg-red-100 text-red-700' },
     ],
   },
   {
@@ -226,8 +199,8 @@ const navItems: NavItem[] = [
     label: 'Governance',
     icon: Building2,
     children: [
-      { href: '/governance/committees', label: 'Committees',          icon: Users2 },
-      { href: '/governance/documents',  label: 'Governance Docs',     icon: FileText },
+      { href: '/governance/committees', label: 'Committees',      icon: Users2 },
+      { href: '/governance/documents',  label: 'Governance Docs', icon: FileText },
     ],
   },
   {
@@ -239,22 +212,17 @@ const navItems: NavItem[] = [
       { href: '/workforce-health/osha',            label: 'OSHA 300 Log',    icon: HardHat },
     ],
   },
-  {
-    href: '/discharge-planning',
-    label: 'Discharge Planning',
-    icon: Truck,
-    badge: 'CMS',
-    badgeColor: 'bg-sky-100 text-sky-700',
-  },
-  // ─────────────────────────────────────────────────────────────
+  { href: '/discharge-planning', label: 'Discharge Planning', icon: Truck, badge: 'CMS', badgeColor: 'bg-sky-100 text-sky-700' },
+
+  // ── Surveys, Reporting, Intelligence ──────────────────────────
   {
     href: '/surveys',
     label: 'Surveys & Inspections',
     icon: FileSearch,
     children: [
-      { href: '/surveys', label: 'All Surveys', icon: FileSearch },
+      { href: '/surveys',      label: 'All Surveys',  icon: FileSearch },
       { href: '/surveys/mock', label: 'Mock Surveys', icon: ClipboardCheck, badge: 'JC', badgeColor: 'bg-teal-100 text-teal-700' },
-      { href: '/surveys/new', label: 'Log Survey', icon: FileText },
+      { href: '/surveys/new',  label: 'Log Survey',   icon: FileText },
     ],
   },
   {
@@ -264,46 +232,49 @@ const navItems: NavItem[] = [
     badge: 'CMS/JC',
     badgeColor: 'bg-blue-100 text-blue-700',
     children: [
-      { href: '/reporting', label: 'Reporting Dashboard', icon: BarChart3 },
-      { href: '/reporting/oryx', label: 'HBIPS / ORYX', icon: BarChart3, badge: 'JC', badgeColor: 'bg-teal-100 text-teal-700' },
-      { href: '/reporting/nhsn', label: 'NHSN HAI', icon: ShieldAlert, badge: 'CDC', badgeColor: 'bg-blue-100 text-blue-700' },
-      { href: '/reporting/adhs', label: 'ADHS IR/IAD', icon: FileWarning, badge: 'ADHS', badgeColor: 'bg-orange-100 text-orange-700' },
-      { href: '/reporting/jc-sentinel', label: 'JC Sentinel Event', icon: AlertTriangle, badge: 'JC', badgeColor: 'bg-red-100 text-red-700' },
-      { href: '/reporting/hcahps', label: 'CMS HCAHPS', icon: BarChart3, badge: 'CMS', badgeColor: 'bg-violet-100 text-violet-700' },
-      { href: '/reporting/cop', label: 'CMS CoP', icon: ShieldAlert, badge: 'CMS', badgeColor: 'bg-indigo-100 text-indigo-700' },
+      { href: '/reporting',             label: 'Reporting Dashboard', icon: BarChart3 },
+      { href: '/reporting/oryx',        label: 'HBIPS / ORYX',        icon: BarChart3,    badge: 'JC',   badgeColor: 'bg-teal-100 text-teal-700' },
+      { href: '/reporting/nhsn',        label: 'NHSN HAI',             icon: ShieldAlert,  badge: 'CDC',  badgeColor: 'bg-blue-100 text-blue-700' },
+      { href: '/reporting/adhs',        label: 'ADHS IR/IAD',          icon: FileWarning,  badge: 'ADHS', badgeColor: 'bg-orange-100 text-orange-700' },
+      { href: '/reporting/jc-sentinel', label: 'JC Sentinel Event',    icon: AlertTriangle,badge: 'JC',   badgeColor: 'bg-red-100 text-red-700' },
+      { href: '/reporting/hcahps',      label: 'CMS HCAHPS',           icon: BarChart3,    badge: 'CMS',  badgeColor: 'bg-violet-100 text-violet-700' },
+      { href: '/reporting/cop',         label: 'CMS CoP',              icon: ShieldAlert,  badge: 'CMS',  badgeColor: 'bg-indigo-100 text-indigo-700' },
     ],
   },
-  {
-    href: '/archives',
-    label: 'Compliance Archive',
-    icon: Archive,
-  },
+  { href: '/archives', label: 'Compliance Archive', icon: Archive },
   {
     href: '/intelligence',
     label: 'Intelligence',
     icon: BarChart2,
     children: [
-      { href: '/resilience',          label: 'Resilience Scorecard', icon: ResilienceIcon },
-      { href: '/board-report',        label: 'Board Report',         icon: FileBarChart, badge: 'EXEC', badgeColor: 'bg-emerald-100 text-emerald-700' },
-      { href: '/regulatory-updates',  label: 'Regulatory Updates',   icon: Newspaper,    badge: 'NEW',  badgeColor: 'bg-teal-100 text-teal-700' },
-      { href: '/outpatient-iop',      label: 'Outpatient / IOP',      icon: HeartHandshake, badge: 'IOP', badgeColor: 'bg-emerald-100 text-emerald-700' },
+      { href: '/resilience',         label: 'Resilience Scorecard', icon: ResilienceIcon },
+      { href: '/board-report',       label: 'Board Report',         icon: FileBarChart, badge: 'EXEC', badgeColor: 'bg-emerald-100 text-emerald-700' },
+      { href: '/regulatory-updates', label: 'Regulatory Updates',   icon: Newspaper,    badge: 'NEW',  badgeColor: 'bg-teal-100 text-teal-700' },
+      { href: '/outpatient-iop',     label: 'Outpatient / IOP',     icon: HeartHandshake, badge: 'IOP', badgeColor: 'bg-emerald-100 text-emerald-700' },
     ],
   },
-  {
-    href: '/documents',
-    label: 'Documents',
-    icon: FileText,
-  },
+  { href: '/documents', label: 'Documents', icon: FileText },
 ];
 
 const bottomNavItems: NavItem[] = [
-  { href: '/admin', label: 'Admin Panel', icon: ShieldCheck },
-  { href: '/admin/pilot-kpis', label: 'Pilot KPIs', icon: BarChart2 },
-  { href: '/export', label: 'Export Center', icon: Download },
-  { href: '/guide', label: 'User Guide', icon: BookOpen },
-  { href: '/walkthrough', label: 'Feature Walkthrough', icon: PlayCircle },
-  { href: '/settings', label: 'Settings', icon: Settings },
-  { href: '/settings/facility', label: 'Facility Config', icon: Building2 },
+  { href: '/admin',           label: 'Admin Panel',       icon: ShieldCheck },
+  { href: '/admin/pilot-kpis',label: 'Pilot KPIs',        icon: BarChart2 },
+  { href: '/export',          label: 'Export Center',     icon: Download },
+  { href: '/guide',           label: 'User Guide',        icon: BookOpen },
+  { href: '/walkthrough',     label: 'Feature Walkthrough', icon: PlayCircle },
+  {
+    href: '/settings',
+    label: 'Settings',
+    icon: Settings,
+    children: [
+      { href: '/settings/profile',       label: 'My Profile',        icon: UserCircle },
+      { href: '/settings',               label: 'General Settings',  icon: Settings },
+      { href: '/settings/facility',      label: 'Facility Config',   icon: Building2 },
+      { href: '/settings/users',         label: 'User Management',   icon: Users2 },
+      { href: '/settings/notifications', label: 'Notifications',     icon: Mail },
+      { href: '/settings/integrations',  label: 'Integrations',      icon: Wrench },
+    ],
+  },
 ];
 
 function NavLink({

@@ -25,6 +25,7 @@ import {
 import { formatDate, getDueDateStatus } from '@/lib/utils';
 import Link from 'next/link';
 import { addDays } from 'date-fns';
+import { DepartmentPanel } from '@/components/dashboard/DepartmentPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -186,6 +187,7 @@ function ProgressBar({ value, max, label, sublabel }: { value: number; max: numb
 export default async function DashboardPage() {
   const session = await auth();
   const facilityId = session!.user.facilityId;
+  const department = (session!.user as any).department as string | null;
   const [s, facility, healthScore] = await Promise.all([
     getDashboardStats(facilityId),
     prisma.facility.findUnique({ where: { id: facilityId }, select: { name: true } }),
@@ -214,6 +216,9 @@ export default async function DashboardPage() {
         </div>
       </div>
 
+      {/* Department Quick-Start Panel */}
+      <DepartmentPanel department={department} />
+
       {/* RED ZONE */}
       {urgentCount > 0 && (
         <div className="citadel-alert-red rounded-xl p-4 space-y-2">
@@ -231,7 +236,7 @@ export default async function DashboardPage() {
             {s.overdueCapCount > 0 && <UrgentChip href="/trackers/caps" label={`${s.overdueCapCount} CAP${s.overdueCapCount > 1 ? 's' : ''} past target date`} subtitle="Corrective action overdue" />}
             {s.restraintDeathsYtd > 0 && <UrgentChip href="/restraint-seclusion" label={`${s.restraintDeathsYtd} restraint/seclusion death${s.restraintDeathsYtd > 1 ? 's' : ''} YTD`} subtitle="CMS reporting required within 24 hrs" />}
             {s.csDiscrepancies > 0 && <UrgentChip href="/pharmacy/controlled-substances" label={`${s.csDiscrepancies} CS discrepanc${s.csDiscrepancies > 1 ? 'ies' : 'y'} open`} subtitle="DEA-auditable - resolve immediately" />}
-            {s.eocOverdueDeficiencies > 0 && <UrgentChip href="/emergency/map" label={`${s.eocOverdueDeficiencies} EOC deficienc${s.eocOverdueDeficiencies > 1 ? 'ies' : 'y'} past due date`} subtitle="Environment of Care - overdue fix" />}
+            {s.eocOverdueDeficiencies > 0 && <UrgentChip href="/eoc/deficiencies" label={`${s.eocOverdueDeficiencies} EOC deficienc${s.eocOverdueDeficiencies > 1 ? 'ies' : 'y'} past due date`} subtitle="Environment of Care - overdue fix" />}
           </div>
         </div>
       )}
@@ -253,7 +258,7 @@ export default async function DashboardPage() {
             {s.openHipaaBreaches > 0 && <WatchChip href="/hipaa/breaches" label={`${s.openHipaaBreaches} open HIPAA breach${s.openHipaaBreaches > 1 ? 'es' : ''}`} />}
             {s.tbOverdue > 0 && <WatchChip href="/workforce-health/employee-health" label={`${s.tbOverdue} TB screening${s.tbOverdue > 1 ? 's' : ''} overdue`} />}
             {s.expiringLicenses > 0 && <WatchChip href="/credentialing/licenses" label={`${s.expiringLicenses} license${s.expiringLicenses > 1 ? 's' : ''} expiring (90d)`} />}
-            {s.eocHighSeverity > 0 && <WatchChip href="/emergency/map" label={`${s.eocHighSeverity} high/critical EOC deficienc${s.eocHighSeverity > 1 ? 'ies' : 'y'}`} />}
+            {s.eocHighSeverity > 0 && <WatchChip href="/eoc/deficiencies" label={`${s.eocHighSeverity} high/critical EOC deficienc${s.eocHighSeverity > 1 ? 'ies' : 'y'}`} />}
           </div>
         </div>
       )}
@@ -312,10 +317,10 @@ export default async function DashboardPage() {
         <div className="flex items-center gap-2 mb-4">
           <ShieldCheck className="w-4 h-4 text-teal-400" />
           <h3 className="text-sm font-semibold text-foreground">Environment of Care (EOC) Health</h3>
-          <Link href="/emergency/map" className="ml-auto text-xs text-teal-400 hover:underline">View rounds →</Link>
+          <Link href="/eoc/rounds" className="ml-auto text-xs text-teal-400 hover:underline">View rounds →</Link>
         </div>
         {s.eocOpenDeficiencies === 0 && !s.lastEocRound ? (
-          <p className="text-sm text-muted-foreground">No EOC data yet. <Link href="/emergency/map" className="text-teal-400 hover:underline">Start an EOC round</Link></p>
+          <p className="text-sm text-muted-foreground">No EOC data yet. <Link href="/eoc/rounds" className="text-teal-400 hover:underline">Start an EOC round</Link></p>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {/* Open deficiencies */}

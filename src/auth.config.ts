@@ -41,14 +41,16 @@ export const authConfig: NextAuthConfig = {
         token.id         = user.id;
         token.role       = (user as any).role;
         token.facilityId = (user as any).facilityId;
+        token.department = (user as any).department ?? null;
       }
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
       if (token) {
-        session.user.id         = token.id as string;
-        (session.user as any).role       = token.role;
-        (session.user as any).facilityId = token.facilityId;
+        session.user.id                   = token.id as string;
+        (session.user as any).role        = token.role;
+        (session.user as any).facilityId  = token.facilityId;
+        (session.user as any).department  = token.department ?? null;
       }
       return session;
     },

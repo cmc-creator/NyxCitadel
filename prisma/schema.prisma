@@ -399,6 +399,7 @@ model ComplianceItem {
   responsibleRole UserRole?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+  deletedAt      DateTime?
 
   @@map("compliance_items")
 }
@@ -501,6 +502,7 @@ model Policy {
   revisionHistory Json?         // Array of {version, date, changedBy, summary}
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+  deletedAt       DateTime?
 
   @@map("policies")
 }
@@ -828,6 +830,7 @@ model Drill {
   drillActions      DrillAction[]
   killTasks         DrillKillTask[]
   musterEntries     DrillMusterEntry[]
+  deletedAt         DateTime?
 
   @@map("drills")
 }
@@ -950,6 +953,7 @@ model EmergencyPlan {
   summary         String?   @db.Text
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
 
   @@map("emergency_plans")
 }
@@ -1040,6 +1044,7 @@ model Document {
   tags        String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
 
   @@map("documents")
 }
@@ -1217,6 +1222,7 @@ model RiskAssessment {
   items           RiskAssessmentItem[]
   createdAt       DateTime             @default(now())
   updatedAt       DateTime             @updatedAt
+  deletedAt       DateTime?
 
   @@map("risk_assessments")
 }
@@ -1334,6 +1340,7 @@ model QapiProject {
   standardRef     String?
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
 
   @@map("qapi_projects")
 }
@@ -1704,6 +1711,7 @@ model QocComplaint {
   notes                 String?             @db.Text
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @updatedAt
+  deletedAt             DateTime?
 
   @@map("qoc_complaints")
 }
@@ -1821,6 +1829,7 @@ model IncidentReport {
   aiTriageTags      String?   // Comma-separated: "medication_security,repeat_offense,regulatory_exposure"
   aiCascadeTriggered Boolean  @default(false) // True if auto-RCA was triggered
   aiTriageReason    String?   // Human-readable explanation of the triage decision
+  deletedAt    DateTime?
 
   @@map("incident_reports")
 }
@@ -1944,6 +1953,7 @@ model EocRound {
   deficiencies  EocDeficiency[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  deletedAt     DateTime?
 
   @@map("eoc_rounds")
 }
@@ -1990,6 +2000,7 @@ model EocDeficiency {
   photoUrls       String[]
   createdAt       DateTime              @default(now())
   updatedAt       DateTime              @updatedAt
+  deletedAt       DateTime?
 
   @@map("eoc_deficiencies")
 }
@@ -2042,6 +2053,7 @@ model EquipmentPm {
   notes           String?           @db.Text
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
 
   @@map("equipment_pm")
 }
@@ -2124,6 +2136,7 @@ model RestraintEvent {
   status              RsStatus         @default(OPEN)
   createdAt           DateTime         @default(now())
   updatedAt           DateTime         @updatedAt
+  deletedAt           DateTime?
 
   @@map("restraint_events")
 }
@@ -2172,6 +2185,7 @@ model IcRiskAssessment {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("ic_risk_assessments")
 }
@@ -2199,6 +2213,7 @@ model HaiSurveillance {
   submittedToNhsn Boolean         @default(false)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("hai_surveillance")
 }
@@ -2232,6 +2247,7 @@ model IcOutbreak {
   summary         String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("ic_outbreaks")
 }
@@ -2257,6 +2273,7 @@ model HandHygieneAudit {
   notes           String?
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("hand_hygiene_audits")
 }
@@ -2287,6 +2304,7 @@ model Provider {
   fppeRecords     FppeRecord[]
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
 
   @@map("providers")
 }
@@ -2324,6 +2342,7 @@ model ProviderLicense {
   status          LicenseStatus       @default(ACTIVE)
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
+  deletedAt       DateTime?
 
   @@map("provider_licenses")
 }
@@ -2377,6 +2396,7 @@ model OppeRecord {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("oppe_records")
 }
@@ -2448,6 +2468,7 @@ model TreatmentPlan {
   reviews             TreatmentPlanReview[]
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @updatedAt
+  deletedAt           DateTime?
 
   @@map("treatment_plans")
 }
@@ -2502,6 +2523,7 @@ model HipaaBreachLog {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("hipaa_breach_log")
 }
@@ -2549,6 +2571,7 @@ model BaaTracker {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("baa_tracker")
 }
@@ -2583,6 +2606,7 @@ model ConsentRecord {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("consent_records")
 }
@@ -2625,6 +2649,7 @@ model AdvanceDirectiveRecord {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("advance_directive_records")
 }
@@ -2675,6 +2700,7 @@ model InvoluntaryHoldLog {
   status          HoldStatus      @default(ACTIVE)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("involuntary_hold_log")
 }
@@ -2712,6 +2738,7 @@ model ControlledSubstanceLog {
   status          CsLogStatus     @default(RECONCILED)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("controlled_substance_log")
 }
@@ -2861,6 +2888,7 @@ model HighAlertMedAudit {
   actionTaken     String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("high_alert_med_audits")
 }
@@ -2879,6 +2907,7 @@ model PdmpCheck {
   actionTaken     String?
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("pdmp_checks")
 }
@@ -2926,6 +2955,7 @@ model CommitteeMeeting {
   notes           String?           @db.Text
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
 
   @@map("committee_meetings")
 }
@@ -2960,6 +2990,7 @@ model GovernanceDocument {
   notes           String?             @db.Text
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
+  deletedAt       DateTime?
 
   @@map("governance_documents")
 }
@@ -3017,6 +3048,7 @@ model EmployeeHealthRecord {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("employee_health_records")
 }
@@ -3044,6 +3076,7 @@ model OshaLog {
   correctiveAction String?        @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 
   @@map("osha_log")
 }
@@ -3107,6 +3140,7 @@ model DischargePlan {
   status              DischargePlanStatus @default(ACTIVE)
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @updatedAt
+  deletedAt           DateTime?
 
   @@map("discharge_plans")
 }

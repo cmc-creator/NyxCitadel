@@ -3,6 +3,39 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 
+// GET /api/users/[id] - fetch a single user
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const session = await auth();
+  if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const facilityId = session.user.facilityId as string;
+  const role = session.user.role as string;
+  const selfId = session.user.id as string;
+
+  const isAdmin = ['ADMIN', 'SUPER_ADMIN'].includes(role);
+  if (!isAdmin && params.id !== selfId) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: params.id },
+    select: {
+      id: true, name: true, email: true, role: true,
+      title: true, department: true, isActive: true,
+      lastLoginAt: true, createdAt: true, facilityId: true,
+    },
+  });
+
+  if (!user || user.facilityId !== facilityId) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
+  return NextResponse.json(user);
+}
+
 // PATCH /api/users/[id] - update a user
 export async function PATCH(
   req: NextRequest,

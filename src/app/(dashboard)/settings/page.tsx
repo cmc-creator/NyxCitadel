@@ -4,6 +4,11 @@ export const metadata = { title: 'Settings' };
 
 const sections: { href: string; title: string; description: string; soon?: boolean }[] = [
   {
+    href: '/settings/profile',
+    title: 'My Profile',
+    description: 'Update your name, job title, department, and password.',
+  },
+  {
     href: '/settings/facility',
     title: 'Facility Configuration',
     description: 'Name, address, NPI, Medicare/Medicaid IDs, ADHS license, branding colors.',

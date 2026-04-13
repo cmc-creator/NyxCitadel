@@ -29,6 +29,34 @@ const ROLES = [
   { value: 'READ_ONLY',           label: 'Read Only' },
 ];
 
+const DEPARTMENTS = [
+  'Administration',
+  'Executive',
+  'Nursing',
+  'Social Services',
+  'Human Resources',
+  'Culinary / Food Services',
+  'Plant Operations',
+  'Environmental Services (EVS)',
+  'Pharmacy',
+  'Quality / QAPI',
+  'Risk Management',
+  'Compliance',
+  'Infection Control',
+  'Emergency Management',
+  'Medical Staff',
+  'Case Management',
+  'Radiology',
+  'Laboratory',
+  'Respiratory Therapy',
+  'Physical / Occupational Therapy',
+  'Behavioral Health',
+  'Security',
+  'Finance',
+  'IT / Health Informatics',
+  'Other',
+];
+
 const ROLE_COLORS: Record<string, string> = {
   SUPER_ADMIN:       'bg-red-100    text-red-800',
   ADMIN:             'bg-teal-100 text-teal-800',
@@ -205,7 +233,14 @@ export default function UsersSettingsPage() {
             </div>
             <div>
               <label className="block text-xs font-medium text-foreground/80 mb-1">Department</label>
-              <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.department} onChange={e => setForm(f => ({ ...f, department: e.target.value }))} placeholder="Risk Management" />
+              <select
+                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                value={form.department}
+                onChange={e => setForm(f => ({ ...f, department: e.target.value }))}
+              >
+                <option value="">— Select department —</option>
+                {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
+              </select>
             </div>
           </div>
           <div className="flex gap-3 mt-5">
