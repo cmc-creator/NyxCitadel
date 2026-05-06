@@ -182,6 +182,9 @@ export default function AssistantPage() {
   function actionLabel(type: DraftActionType) {
     if (type === 'CREATE_CAP_DRAFT') return 'Create draft CAP';
     if (type === 'CREATE_INCIDENT_DRAFT') return 'Create draft incident report';
+    if (type === 'CREATE_RCA_DRAFT') return 'Create draft RCA';
+    if (type === 'CREATE_GRIEVANCE_DRAFT') return 'Create draft grievance';
+    if (type === 'CREATE_POC_DRAFT') return 'Create draft plan of correction';
     return 'Create draft calendar event';
   }
 

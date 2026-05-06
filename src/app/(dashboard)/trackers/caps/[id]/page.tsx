@@ -3,12 +3,15 @@ import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
-import { ArrowLeft, ClipboardList, AlertTriangle , Pencil } from 'lucide-react';
+import { ArrowLeft, ClipboardList, AlertTriangle , Pencil, FileText } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
 import { DeleteButton } from '@/components/ui/DeleteButton';
 import AttachmentPanel from '@/components/ui/AttachmentPanel';
 import AttachmentComposer from '@/components/ui/AttachmentComposer';
+import { ApprovalPanel, type ApprovalHistoryEntry } from '@/components/shared/ApprovalPanel';
+import { CommentThread } from '@/components/shared/CommentThread';
+import { CapAuditLog } from '@/components/shared/CapAuditLog';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,6 +57,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
 
   const isOverdue = new Date() > cap.targetDate && !['COMPLETED', 'VERIFIED'].includes(cap.status);
   const vigilanceActive = cap.vigilanceEndDate && new Date() <= cap.vigilanceEndDate;
+  const canApprove = ['ADMIN', 'SUPER_ADMIN'].includes(session.user.role);
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -64,6 +68,9 @@ export default async function CapDetailPage({ params }: { params: { id: string }
         <div className="flex items-center gap-2">
           <Link href={`/trackers/caps/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
+          </Link>
+          <Link href={`/trackers/caps/${params.id}/audit-report`} target="_blank" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+            <FileText className="w-3.5 h-3.5" /> Audit Report
           </Link>
           <DeleteButton apiPath={`/api/caps/${params.id}`} redirectPath="/trackers/caps" label="CAP" />
           <PrintButton />
@@ -158,6 +165,19 @@ export default async function CapDetailPage({ params }: { params: { id: string }
             sourceLabel={cap.capNumber}
             title="Add CAP Evidence"
           />
+
+          <CommentThread
+            recordType="CAP"
+            recordId={cap.id}
+            currentUserId={session.user.id}
+            currentUserRole={session.user.role}
+          />
+
+          <CapAuditLog
+            capId={cap.id}
+            currentUserId={session.user.id}
+            currentUserRole={session.user.role}
+          />
         </div>
 
         <div className="space-y-5">
@@ -199,6 +219,18 @@ export default async function CapDetailPage({ params }: { params: { id: string }
               </ul>
             </Section>
           )}
+
+          <ApprovalPanel
+            recordId={cap.id}
+            approveApiPath={`/api/caps/${cap.id}/approve`}
+            returnApiPath={`/api/caps/${cap.id}/return`}
+            approvalStatus={cap.approvalStatus as 'DRAFT' | 'PENDING_REVIEW' | 'APPROVED' | 'RETURNED' | 'REJECTED'}
+            approvalHistory={cap.approvalHistory as ApprovalHistoryEntry[] | null}
+            reviewedBy={cap.reviewedBy}
+            reviewedAt={cap.reviewedAt}
+            reviewNote={cap.reviewNote}
+            canApprove={canApprove}
+          />
         </div>
       </div>
     </div>

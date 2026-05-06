@@ -1,10 +1,12 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
-import { GraduationCap, Plus, AlertTriangle, Download } from 'lucide-react';
+import { GraduationCap, Plus, AlertTriangle, Download, Grid3x3 } from 'lucide-react';
 import Link from 'next/link';
 import { isPast, isWithinInterval, addDays } from 'date-fns';
 import { PrintButton } from '@/components/ui/PrintButton';
+import { TrainingCsvImport } from '@/components/trackers/TrainingCsvImport';
+import { TrainingAssignButton } from '@/components/trackers/TrainingAssignButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -87,6 +89,15 @@ export default async function TrainingPage({
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <Link
+            href="/trackers/training/matrix"
+            className="inline-flex items-center gap-1.5 text-sm bg-card border border-border hover:bg-muted/30 text-foreground/80 px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <Grid3x3 className="w-3.5 h-3.5" />
+            Matrix View
+          </Link>
+          <TrainingCsvImport />
+          <TrainingAssignButton />
           <Link
             href="/api/export/training"
             className="inline-flex items-center gap-1.5 text-sm bg-card border border-border hover:bg-muted/30 text-foreground/80 px-3 py-1.5 rounded-lg font-medium transition-colors"

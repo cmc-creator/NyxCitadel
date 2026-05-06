@@ -6,6 +6,7 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, MessageSquareWarning, Clock, AlertTriangle , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import { CommentThread } from '@/components/shared/CommentThread';
 
 export const dynamic = 'force-dynamic';
 
@@ -145,6 +146,13 @@ export default async function GrievanceDetailPage({ params }: { params: { id: st
               {g.linkedCapId && <Link href={`/trackers/caps/${g.linkedCapId}`} className="block text-xs text-purple-700 hover:underline">&#x2192; Linked CAP</Link>}
             </Section>
           )}
+
+          <CommentThread
+            recordType="GRIEVANCE"
+            recordId={g.id}
+            currentUserId={session.user.id}
+            currentUserRole={session.user.role}
+          />
         </div>
       </div>
     </div>

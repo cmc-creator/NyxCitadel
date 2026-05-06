@@ -3,6 +3,8 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { generateCapNumber } from '@/lib/utils';
 import { logAudit } from '@/lib/audit';
+import { sendEmail } from '@/lib/email';
+import { getCapCreatedEmail } from '@/lib/email-templates';
 
 export async function GET() {
   const session = await auth();
@@ -65,6 +67,19 @@ export async function POST(req: NextRequest) {
     });
   } catch {
     // Non-fatal - CAP was saved, calendar event creation failed silently
+  }
+
+  // Fire-and-forget confirmation email to creator
+  if (session.user.email) {
+    const emailData = getCapCreatedEmail({
+      recipientName: session.user.name ?? session.user.email,
+      capNumber: cap.capNumber,
+      title,
+      source,
+      priority,
+      targetDate: new Date(targetDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    });
+    sendEmail({ to: session.user.email, subject: emailData.subject, html: emailData.html }).catch(() => {});
   }
 
   return NextResponse.json(cap, { status: 201 });

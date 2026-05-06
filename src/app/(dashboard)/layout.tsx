@@ -1,8 +1,7 @@
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
-import { Sidebar } from '@/components/layout/sidebar';
-import { TopBar } from '@/components/layout/topbar';
+import { LayoutShell } from '@/components/layout/LayoutShell';
 import { AssistantChat } from '@/components/ai/assistant-chat';
 import { WelcomeOnboarding } from '@/components/layout/WelcomeOnboarding';
 import { WhatsNew } from '@/components/layout/WhatsNew';
@@ -23,13 +22,9 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      <div className="flex-1 ml-64 flex flex-col">
-        <TopBar user={session.user} />
-        <main className="flex-1 p-6 overflow-auto">
-          {children}
-        </main>
-      </div>
+      <LayoutShell user={session.user}>
+        {children}
+      </LayoutShell>
       <WelcomeOnboarding userName={session.user.name} />
       <WhatsNew />
       <SetupWizard />

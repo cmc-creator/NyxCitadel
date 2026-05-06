@@ -126,6 +126,9 @@ model Facility {
   // Regulatory Reporting Submissions
   regulatorySubmissions RegulatorySubmission[]
 
+  // Policy Acknowledgments
+  policyAcknowledgments PolicyAcknowledgment[]
+
   @@map("facilities")
 }
 
@@ -160,6 +163,15 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
+  // 2FA / MFA
+  totpSecret    String?
+  totpEnabled   Boolean   @default(false)
+  backupCodes   String[]
+
+  // Password Reset
+  resetPasswordToken  String?   @unique
+  resetPasswordExpiry DateTime?
+
   // NextAuth relations
   accounts      Account[]
   sessions      Session[]
@@ -168,9 +180,11 @@ model User {
   assignedItems       TrackerItem[]          @relation("AssignedTo")
   createdItems        TrackerItem[]          @relation("CreatedBy")
   assignedCaps        CorrectiveActionPlan[] @relation("CAPAssignee")
+  capAuditEntries     CapAuditEntry[]        @relation("CapAuditor")
   notifications       Notification[]
   auditLogs           AuditLog[]
   publishedUpdates    RegulatoryUpdate[]     @relation("PublishedBy")
+  comments            Comment[]              @relation("CommentAuthor")
 
   @@map("users")
 }
@@ -399,7 +413,6 @@ model ComplianceItem {
   responsibleRole UserRole?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  deletedAt      DateTime?
 
   @@map("compliance_items")
 }
@@ -500,9 +513,9 @@ model Policy {
   documentUrl     String?
   summary         String?       @db.Text
   revisionHistory Json?         // Array of {version, date, changedBy, summary}
+  acknowledgments PolicyAcknowledgment[]
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
-  deletedAt       DateTime?
 
   @@map("policies")
 }
@@ -533,6 +546,30 @@ enum PolicyStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// POLICY ACKNOWLEDGMENTS
+// Track staff read-and-acknowledge for amended policies (survey evidence)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PolicyAcknowledgment {
+  id             String    @id @default(cuid())
+  facilityId     String
+  facility       Facility  @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  policyId       String
+  policy         Policy    @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  staffName      String
+  staffEmail     String
+  token          String    @unique @default(cuid())
+  sentAt         DateTime  @default(now())
+  sentBy         String    // display name of the sender
+  acknowledgedAt DateTime?
+  acknowledgedIp String?
+
+  @@index([policyId])
+  @@index([token])
+  @@map("policy_acknowledgments")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // STAFF TRAINING & COMPETENCY TRACKER
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -542,6 +579,7 @@ model TrainingRecord {
   facility        Facility      @relation(fields: [facilityId], references: [id])
   staffName       String
   staffId         String?       // Employee ID
+  staffEmail      String?       // For assignment email flow
   department      String?
   jobTitle        String?
   trainingName    String
@@ -558,6 +596,7 @@ model TrainingRecord {
   sourceId        String?
   assignedBy      String?
   assignedReason  String?
+  completionToken String?       @unique  // For email-based self-reporting flow
   notes           String?
   regulatoryBody  RegulatoryBody?
   createdAt       DateTime      @default(now())
@@ -705,13 +744,48 @@ model CorrectiveActionPlan {
   vigilanceStatus  String?  @default("PENDING") // PENDING | ACTIVE | BREACH | COMPLETE
   vigilanceBreaches Int?    @default(0)
 
+  // Approval workflow
+  approvalStatus    ApprovalStatus @default(PENDING_REVIEW)
+  approvalHistory   Json?
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  reviewNote        String?        @db.Text
+
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
   incidents       Incident[]
   surveys         Survey[]
+  auditEntries    CapAuditEntry[]
 
   @@map("corrective_action_plans")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CAP EFFECTIVENESS AUDIT LOG
+// ─────────────────────────────────────────────────────────────────────────────
+
+model CapAuditEntry {
+  id            String               @id @default(cuid())
+  capId         String
+  cap           CorrectiveActionPlan @relation(fields: [capId], references: [id], onDelete: Cascade)
+  facilityId    String
+  auditDate     DateTime             @default(now())
+  auditorId     String
+  auditor       User                 @relation("CapAuditor", fields: [auditorId], references: [id])
+  result        AuditResult
+  notes         String?              @db.Text
+  nextAuditDate DateTime?
+  createdAt     DateTime             @default(now())
+
+  @@index([capId])
+  @@map("cap_audit_entries")
+}
+
+enum AuditResult {
+  PASS
+  FAIL
+  NEEDS_IMPROVEMENT
 }
 
 enum CapSource {
@@ -830,7 +904,6 @@ model Drill {
   drillActions      DrillAction[]
   killTasks         DrillKillTask[]
   musterEntries     DrillMusterEntry[]
-  deletedAt         DateTime?
 
   @@map("drills")
 }
@@ -953,7 +1026,6 @@ model EmergencyPlan {
   summary         String?   @db.Text
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
-  deletedAt       DateTime?
 
   @@map("emergency_plans")
 }
@@ -1044,7 +1116,6 @@ model Document {
   tags        String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  deletedAt   DateTime?
 
   @@map("documents")
 }
@@ -1222,7 +1293,6 @@ model RiskAssessment {
   items           RiskAssessmentItem[]
   createdAt       DateTime             @default(now())
   updatedAt       DateTime             @updatedAt
-  deletedAt       DateTime?
 
   @@map("risk_assessments")
 }
@@ -1340,7 +1410,6 @@ model QapiProject {
   standardRef     String?
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  deletedAt       DateTime?
 
   @@map("qapi_projects")
 }
@@ -1564,6 +1633,14 @@ model PlanOfCorrection {
   submittedBy     String?
   approvedBy      String?
   notes           String?       @db.Text
+
+  // Approval workflow
+  approvalStatus    ApprovalStatus @default(PENDING_REVIEW)
+  approvalHistory   Json?
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  reviewNote        String?        @db.Text
+
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
@@ -1711,7 +1788,6 @@ model QocComplaint {
   notes                 String?             @db.Text
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @updatedAt
-  deletedAt             DateTime?
 
   @@map("qoc_complaints")
 }
@@ -1829,7 +1905,13 @@ model IncidentReport {
   aiTriageTags      String?   // Comma-separated: "medication_security,repeat_offense,regulatory_exposure"
   aiCascadeTriggered Boolean  @default(false) // True if auto-RCA was triggered
   aiTriageReason    String?   // Human-readable explanation of the triage decision
-  deletedAt    DateTime?
+
+  // Approval workflow
+  approvalStatus    ApprovalStatus @default(PENDING_REVIEW)
+  approvalHistory   Json?
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  reviewNote        String?        @db.Text
 
   @@map("incident_reports")
 }
@@ -1953,7 +2035,6 @@ model EocRound {
   deficiencies  EocDeficiency[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  deletedAt     DateTime?
 
   @@map("eoc_rounds")
 }
@@ -2000,7 +2081,6 @@ model EocDeficiency {
   photoUrls       String[]
   createdAt       DateTime              @default(now())
   updatedAt       DateTime              @updatedAt
-  deletedAt       DateTime?
 
   @@map("eoc_deficiencies")
 }
@@ -2053,7 +2133,6 @@ model EquipmentPm {
   notes           String?           @db.Text
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  deletedAt       DateTime?
 
   @@map("equipment_pm")
 }
@@ -2136,7 +2215,6 @@ model RestraintEvent {
   status              RsStatus         @default(OPEN)
   createdAt           DateTime         @default(now())
   updatedAt           DateTime         @updatedAt
-  deletedAt           DateTime?
 
   @@map("restraint_events")
 }
@@ -2185,7 +2263,6 @@ model IcRiskAssessment {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("ic_risk_assessments")
 }
@@ -2213,7 +2290,6 @@ model HaiSurveillance {
   submittedToNhsn Boolean         @default(false)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("hai_surveillance")
 }
@@ -2247,7 +2323,6 @@ model IcOutbreak {
   summary         String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("ic_outbreaks")
 }
@@ -2273,7 +2348,6 @@ model HandHygieneAudit {
   notes           String?
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("hand_hygiene_audits")
 }
@@ -2304,7 +2378,6 @@ model Provider {
   fppeRecords     FppeRecord[]
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  deletedAt       DateTime?
 
   @@map("providers")
 }
@@ -2342,7 +2415,6 @@ model ProviderLicense {
   status          LicenseStatus       @default(ACTIVE)
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
-  deletedAt       DateTime?
 
   @@map("provider_licenses")
 }
@@ -2396,7 +2468,6 @@ model OppeRecord {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("oppe_records")
 }
@@ -2468,7 +2539,6 @@ model TreatmentPlan {
   reviews             TreatmentPlanReview[]
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @updatedAt
-  deletedAt           DateTime?
 
   @@map("treatment_plans")
 }
@@ -2523,7 +2593,6 @@ model HipaaBreachLog {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("hipaa_breach_log")
 }
@@ -2571,7 +2640,6 @@ model BaaTracker {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("baa_tracker")
 }
@@ -2606,7 +2674,6 @@ model ConsentRecord {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("consent_records")
 }
@@ -2649,7 +2716,6 @@ model AdvanceDirectiveRecord {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("advance_directive_records")
 }
@@ -2700,7 +2766,6 @@ model InvoluntaryHoldLog {
   status          HoldStatus      @default(ACTIVE)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("involuntary_hold_log")
 }
@@ -2738,7 +2803,6 @@ model ControlledSubstanceLog {
   status          CsLogStatus     @default(RECONCILED)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("controlled_substance_log")
 }
@@ -2888,7 +2952,6 @@ model HighAlertMedAudit {
   actionTaken     String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("high_alert_med_audits")
 }
@@ -2907,7 +2970,6 @@ model PdmpCheck {
   actionTaken     String?
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("pdmp_checks")
 }
@@ -2955,7 +3017,6 @@ model CommitteeMeeting {
   notes           String?           @db.Text
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  deletedAt       DateTime?
 
   @@map("committee_meetings")
 }
@@ -2990,7 +3051,6 @@ model GovernanceDocument {
   notes           String?             @db.Text
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
-  deletedAt       DateTime?
 
   @@map("governance_documents")
 }
@@ -3048,7 +3108,6 @@ model EmployeeHealthRecord {
   notes           String?         @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("employee_health_records")
 }
@@ -3076,7 +3135,6 @@ model OshaLog {
   correctiveAction String?        @db.Text
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
 
   @@map("osha_log")
 }
@@ -3140,7 +3198,6 @@ model DischargePlan {
   status              DischargePlanStatus @default(ACTIVE)
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @updatedAt
-  deletedAt           DateTime?
 
   @@map("discharge_plans")
 }
@@ -3223,4 +3280,34 @@ model RegulatoryUpdate {
   updatedAt      DateTime      @updatedAt
 
   @@map("regulatory_updates")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Approval Workflow
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum ApprovalStatus {
+  DRAFT
+  PENDING_REVIEW
+  APPROVED
+  RETURNED
+  REJECTED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Record-Level Comments
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Comment {
+  id         String   @id @default(cuid())
+  recordType String   // 'CAP' | 'INCIDENT' | 'GRIEVANCE' | 'POC' | 'RCA'
+  recordId   String
+  body       String   @db.Text
+  authorId   String
+  author     User     @relation("CommentAuthor", fields: [authorId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([recordType, recordId])
+  @@map("comments")
 }

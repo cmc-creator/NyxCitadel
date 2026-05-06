@@ -6,6 +6,8 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, FileWarning, AlertTriangle, Brain , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import { ApprovalPanel, type ApprovalHistoryEntry } from '@/components/shared/ApprovalPanel';
+import { CommentThread } from '@/components/shared/CommentThread';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,6 +36,7 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
   if (!ir || ir.facilityId !== session.user.facilityId) notFound();
 
   const aiTags = ir.aiTriageTags as string[] | null;
+  const canApprove = ['ADMIN', 'SUPER_ADMIN'].includes(session.user.role);
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -140,6 +143,13 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ir.preventiveActions}</p>
             </Section>
           )}
+
+          <CommentThread
+            recordType="INCIDENT_REPORT"
+            recordId={ir.id}
+            currentUserId={session.user.id}
+            currentUserRole={session.user.role}
+          />
         </div>
 
         <div className="space-y-5">
@@ -181,6 +191,18 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
               {ir.linkedCapId && <Link href={`/trackers/caps/${ir.linkedCapId}`} className="block text-xs text-purple-700 hover:underline">&#x2192; Linked CAP</Link>}
             </Section>
           )}
+
+          <ApprovalPanel
+            recordId={ir.id}
+            approveApiPath={`/api/incident-reports/${ir.id}/approve`}
+            returnApiPath={`/api/incident-reports/${ir.id}/return`}
+            approvalStatus={ir.approvalStatus as 'DRAFT' | 'PENDING_REVIEW' | 'APPROVED' | 'RETURNED' | 'REJECTED'}
+            approvalHistory={ir.approvalHistory as ApprovalHistoryEntry[] | null}
+            reviewedBy={ir.reviewedBy}
+            reviewedAt={ir.reviewedAt}
+            reviewNote={ir.reviewNote}
+            canApprove={canApprove}
+          />
         </div>
       </div>
     </div>

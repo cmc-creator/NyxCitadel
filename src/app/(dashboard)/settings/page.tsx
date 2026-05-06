@@ -9,6 +9,11 @@ const sections: { href: string; title: string; description: string; soon?: boole
     description: 'Update your name, job title, department, and password.',
   },
   {
+    href: '/settings/security',
+    title: 'Security (Two-Factor Auth)',
+    description: 'Enable TOTP-based 2FA to protect your account with an authenticator app.',
+  },
+  {
     href: '/settings/facility',
     title: 'Facility Configuration',
     description: 'Name, address, NPI, Medicare/Medicaid IDs, ADHS license, branding colors.',

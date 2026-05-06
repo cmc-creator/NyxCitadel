@@ -9,6 +9,7 @@ import PrintButton from '@/components/ui/PrintButton';
 import { DeleteButton } from '@/components/ui/DeleteButton';
 import AttachmentPanel from '@/components/ui/AttachmentPanel';
 import AttachmentComposer from '@/components/ui/AttachmentComposer';
+import { CommentThread } from '@/components/shared/CommentThread';
 
 export const dynamic = 'force-dynamic';
 
@@ -113,6 +114,13 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
             sourceId={incident.id}
             sourceLabel={incident.incidentNumber}
             title="Add Incident Evidence"
+          />
+
+          <CommentThread
+            recordType="INCIDENT"
+            recordId={incident.id}
+            currentUserId={session.user.id}
+            currentUserRole={session.user.role}
           />
         </div>
 

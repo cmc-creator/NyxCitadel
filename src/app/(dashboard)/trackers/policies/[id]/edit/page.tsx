@@ -141,6 +141,7 @@ export default function EditPolicyPage() {
       documentUrl:      documentUrl || null,
       status:           get('status'),
       regulatoryBodies: selectedBodies,
+      changeNote:       get('changeNote') || null,
     };
 
     const res = await fetch(`/api/policies/${id}`, {
@@ -309,6 +310,15 @@ export default function EditPolicyPage() {
         <div className="px-6 py-5 space-y-3">
           <h2 className="text-sm font-semibold text-foreground">Summary / Description <span className="font-normal text-muted-foreground/70">(optional)</span></h2>
           <textarea name="description" rows={3} defaultValue={data.summary ?? ''} className="form-input w-full resize-none" />
+        </div>
+
+        {/* Version change note */}
+        <div className="px-6 py-5 space-y-3">
+          <h2 className="text-sm font-semibold text-foreground">
+            Change Note <span className="font-normal text-muted-foreground/70">(optional &mdash; leave blank to save without creating a new version)</span>
+          </h2>
+          <textarea name="changeNote" rows={2} placeholder="Briefly describe what changed (e.g. Updated restraint criteria per CMS update)" className="form-input w-full resize-none" />
+          <p className="text-xs text-muted-foreground/70">If provided, the policy version will be incremented and this note will appear in the Revision History on the detail page.</p>
         </div>
 
         {/* Actions */}

@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ClipboardCheck, ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { AiFieldHelper } from '@/components/ai/AiFieldHelper';
+import { SentryPageGuide } from '@/components/ai/SentryPageGuide';
 
 interface Finding {
   id: string;
@@ -27,6 +29,8 @@ export default function NewPocPage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [regulatoryBody, setRegulatoryBody] = useState('');
+  const [coverLetter, setCoverLetter] = useState('');
   const [findings, setFindings] = useState<Finding[]>([{
     id: crypto.randomUUID(),
     findingNumber: '', findingDescription: '',
@@ -59,13 +63,13 @@ export default function NewPocPage() {
 
     const data = {
       title:            (f.elements.namedItem('title') as HTMLInputElement).value,
-      regulatoryBody:   (f.elements.namedItem('regulatoryBody') as HTMLSelectElement).value,
+      regulatoryBody,
       surveyDate:       (f.elements.namedItem('surveyDate') as HTMLInputElement).value || null,
       responseDeadline: (f.elements.namedItem('responseDeadline') as HTMLInputElement).value || null,
-      coverLetter:      (f.elements.namedItem('coverLetter') as HTMLTextAreaElement).value || null,
+      coverLetter:      coverLetter || null,
       submittedBy:      (f.elements.namedItem('submittedBy') as HTMLInputElement).value || null,
       notes:            (f.elements.namedItem('notes') as HTMLTextAreaElement).value || null,
-      findings: findings.map(({ id: _id, ...rest }) => rest),
+      findings: findings.map(({ id: _, ...rest }) => rest),
     };
 
     const res = await fetch('/api/poc', {
@@ -99,6 +103,18 @@ export default function NewPocPage() {
         </p>
       </div>
 
+      <SentryPageGuide
+        pageKey="poc-new"
+        title="Plan of Correction"
+        body="A POC is your official written response to survey deficiencies. Each finding must answer three questions: How was this corrected? How will it be prevented from recurring? How will compliance be monitored? Use the sparkle button to get Sentry's help on each section."
+        tips={[
+          "How Corrected: describe the immediate actions already taken for this specific patient/situation",
+          "How Prevented: describe systemic changes -- policy updates, training, process redesign",
+          "Monitoring: describe ongoing audits, who will audit, how often, and what threshold triggers action",
+          "CMS expects specific dates and responsible parties for every corrective action",
+        ]}
+      />
+
       {error && (
         <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
@@ -124,6 +140,8 @@ export default function NewPocPage() {
               <select
                 name="regulatoryBody"
                 required
+                value={regulatoryBody}
+                onChange={e => setRegulatoryBody(e.target.value)}
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select...</option>
@@ -161,15 +179,16 @@ export default function NewPocPage() {
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-foreground/80 mb-1">Cover Letter</label>
-            <textarea
-              name="coverLetter"
-              rows={4}
-              placeholder="Optional cover letter to the regulatory body..."
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
-            />
-          </div>
+          <AiFieldHelper
+            fieldLabel="Cover Letter"
+            pageContext="New Plan of Correction"
+            value={coverLetter}
+            onChange={setCoverLetter}
+            rows={4}
+            name="coverLetter"
+            placeholder="Optional cover letter to the regulatory body..."
+            formHints={{ regulatoryBody }}
+          />
         </div>
 
         {/* Findings */}
@@ -224,60 +243,64 @@ export default function NewPocPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">Deficiency Description</label>
-                <textarea
-                  value={finding.findingDescription}
-                  onChange={e => updateFinding(finding.id, 'findingDescription', e.target.value)}
-                  rows={2}
-                  placeholder="What was the finding / deficiency cited?"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
-                />
-              </div>
+              <AiFieldHelper
+                fieldLabel="Deficiency Description"
+                pageContext="Plan of Correction - Finding"
+                value={finding.findingDescription}
+                onChange={v => updateFinding(finding.id, 'findingDescription', v)}
+                rows={2}
+                placeholder="What was the finding / deficiency cited?"
+                formHints={{ regulatoryBody, citationNumber: finding.findingNumber }}
+              />
+
+              <AiFieldHelper
+                fieldLabel="How Corrected"
+                pageContext="Plan of Correction - How Corrected"
+                value={finding.howCorrected}
+                onChange={v => updateFinding(finding.id, 'howCorrected', v)}
+                rows={2}
+                placeholder="What specific corrective action was taken?"
+                formHints={{
+                  regulatoryBody,
+                  deficiency: finding.findingDescription.slice(0, 200),
+                }}
+              />
+
+              <AiFieldHelper
+                fieldLabel="How Recurrence is Prevented"
+                pageContext="Plan of Correction - How Prevented"
+                value={finding.howPrevented}
+                onChange={v => updateFinding(finding.id, 'howPrevented', v)}
+                rows={2}
+                placeholder="What systemic changes / policy updates were made?"
+                formHints={{
+                  regulatoryBody,
+                  deficiency: finding.findingDescription.slice(0, 200),
+                  howCorrected: finding.howCorrected.slice(0, 150),
+                }}
+              />
+
+              <AiFieldHelper
+                fieldLabel="Monitoring Strategy"
+                pageContext="Plan of Correction - Monitoring"
+                value={finding.howMonitored}
+                onChange={v => updateFinding(finding.id, 'howMonitored', v)}
+                rows={2}
+                placeholder="How will compliance be monitored / audited?"
+                formHints={{
+                  regulatoryBody,
+                  deficiency: finding.findingDescription.slice(0, 200),
+                }}
+              />
 
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">How Corrected</label>
-                <textarea
-                  value={finding.howCorrected}
-                  onChange={e => updateFinding(finding.id, 'howCorrected', e.target.value)}
-                  rows={2}
-                  placeholder="What specific corrective action was taken?"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                <label className="block text-xs font-medium text-slate-600 mb-1">Target Completion Date</label>
+                <input
+                  type="date"
+                  value={finding.targetDate}
+                  onChange={e => updateFinding(finding.id, 'targetDate', e.target.value)}
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">How Recurrence is Prevented</label>
-                <textarea
-                  value={finding.howPrevented}
-                  onChange={e => updateFinding(finding.id, 'howPrevented', e.target.value)}
-                  rows={2}
-                  placeholder="What systemic changes / policy updates were made?"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">Monitoring Strategy</label>
-                  <textarea
-                    value={finding.howMonitored}
-                    onChange={e => updateFinding(finding.id, 'howMonitored', e.target.value)}
-                    rows={2}
-                    placeholder="How will compliance be monitored / audited?"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">Target Completion Date</label>
-                  <input
-                    type="date"
-                    value={finding.targetDate}
-                    onChange={e => updateFinding(finding.id, 'targetDate', e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  />
-                </div>
               </div>
             </div>
           ))}

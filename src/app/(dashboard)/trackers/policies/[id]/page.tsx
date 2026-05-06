@@ -6,6 +6,7 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, BookOpen, AlertTriangle, ExternalLink , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import PolicyAckPanel from '@/components/trackers/PolicyAckPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -116,6 +117,8 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
               </div>
             </Section>
           )}
+
+          <PolicyAckPanel policyId={policy.id} />
         </div>
 
         <div className="space-y-5">

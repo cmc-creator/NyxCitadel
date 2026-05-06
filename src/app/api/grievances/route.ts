@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { logAudit } from '@/lib/audit';
+import { sendEmail } from '@/lib/email';
+import { getGrievanceCreatedEmail } from '@/lib/email-templates';
 
 // Generate a unique grievance number  e.g. GR-2025-001
 async function generateGrievanceNumber(facilityId: string): Promise<string> {
@@ -20,7 +22,7 @@ export async function GET(req: NextRequest) {
   const grievances = await prisma.grievanceRecord.findMany({
     where: {
       facilityId: session.user.facilityId,
-      ...(status ? { status: status as any } : {}),
+      ...(status ? { status: status as never } : {}),
     },
     orderBy: { dateReceived: 'desc' },
   });
@@ -79,5 +81,23 @@ export async function POST(req: NextRequest) {
   });
 
   await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'GrievanceRecord', entityId: grievance.id, req });
+
+  // Email the assigned staff member if set
+  if (assignedTo) {
+    const assignee = await prisma.user.findUnique({ where: { id: assignedTo }, select: { email: true, name: true } });
+    if (assignee?.email) {
+      const emailData = getGrievanceCreatedEmail({
+        recipientName: assignee.name ?? assignee.email,
+        grievanceNumber,
+        complainantName,
+        category,
+        severity: severity ?? 'STANDARD',
+        ackDueDate: acknowledgmentDueDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        resDueDate: resolutionDueDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+      });
+      sendEmail({ to: assignee.email, subject: emailData.subject, html: emailData.html }).catch(() => {});
+    }
+  }
+
   return NextResponse.json(grievance, { status: 201 });
 }

@@ -1,9 +1,9 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { formatDate } from '@/lib/utils';
 import { AlertTriangle, Plus, Download } from 'lucide-react';
 import Link from 'next/link';
 import { PrintButton } from '@/components/ui/PrintButton';
+import { IncidentsListClient } from '@/components/trackers/IncidentsListClient';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,23 +31,6 @@ export default async function IncidentsPage({
   const reportableCount = incidents.filter(
     (i) => i.reportableToState && !i.reportedToState
   ).length;
-
-  const severityColor: Record<string, string> = {
-    MINOR: 'bg-green-100 text-green-800',
-    MODERATE: 'bg-yellow-100 text-yellow-800',
-    MAJOR: 'bg-orange-100 text-orange-800',
-    CATASTROPHIC: 'bg-red-100 text-red-800',
-    SENTINEL: 'bg-red-600 text-white',
-  };
-
-  const statusColor: Record<string, string> = {
-    OPEN: 'bg-blue-100 text-blue-800',
-    UNDER_INVESTIGATION: 'bg-yellow-100 text-yellow-800',
-    RCA_IN_PROGRESS: 'bg-orange-100 text-orange-800',
-    CAP_IN_PROGRESS: 'bg-teal-100 text-teal-800',
-    CLOSED: 'bg-gray-100 text-gray-600',
-    REPORTABLE_PENDING: 'bg-red-100 text-red-800',
-  };
 
   return (
     <div className="space-y-6">
@@ -111,82 +94,7 @@ export default async function IncidentsPage({
       </div>
 
       {/* Table */}
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 border-b border-slate-200">
-            <tr>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Incident #</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Date</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Type</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Severity</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Description</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Reportable</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">CAP</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Status</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-50">
-            {incidents.length === 0 ? (
-              <tr>
-                <td colSpan={8} className="text-center py-12 text-muted-foreground/70">
-                  No incidents found. <Link href="/trackers/incidents/new" className="text-teal-600 hover:underline">File a new incident report</Link>
-                </td>
-              </tr>
-            ) : (
-              incidents.map((incident) => (
-                <tr key={incident.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-4 py-3 font-mono text-xs text-slate-600">
-                    <Link href={`/trackers/incidents/${incident.id}`} className="text-teal-600 hover:underline">
-                      {incident.incidentNumber}
-                    </Link>
-                  </td>
-                  <td className="px-4 py-3 text-xs text-slate-600">
-                    {formatDate(incident.dateOccurred)}
-                  </td>
-                  <td className="px-4 py-3 text-xs text-foreground/80">
-                    {incident.incidentType.replace(/_/g, ' ')}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded ${severityColor[incident.severity] ?? ''}`}>
-                      {incident.severity}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-xs text-slate-600 max-w-xs truncate">
-                    {incident.description}
-                  </td>
-                  <td className="px-4 py-3 text-xs">
-                    {incident.reportableToState ? (
-                      <span className={`font-medium ${incident.reportedToState ? 'text-green-600' : 'text-red-600'}`}>
-                        {incident.reportedToState ? `Reported ${formatDate(incident.stateReportDate)}` : '⚠ Not Reported'}
-                      </span>
-                    ) : (
-                      <span className="text-muted-foreground/70">N/A</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-xs">
-                    {incident.cap ? (
-                      <Link href={`/trackers/caps`} className="text-teal-600 hover:underline font-mono">
-                        {incident.cap.capNumber}
-                      </Link>
-                    ) : incident.correctionRequired ? (
-                      <Link href={`/trackers/caps/new?incidentId=${incident.id}`} className="text-orange-600 hover:underline">
-                        Create CAP
-                      </Link>
-                    ) : (
-                      <span className="text-muted-foreground/70">-</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded ${statusColor[incident.status] ?? ''}`}>
-                      {incident.status.replace(/_/g, ' ')}
-                    </span>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      <IncidentsListClient incidents={incidents} />
     </div>
   );
 }

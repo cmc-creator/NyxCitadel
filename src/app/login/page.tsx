@@ -38,6 +38,7 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') ?? '/dashboard';
+  const reason = searchParams.get('reason');
 
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
@@ -45,23 +46,58 @@ function LoginForm() {
   const [error, setError]     = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Two-factor auth state
+  const [totpRequired, setTotpRequired] = useState(false);
+  const [totpToken, setTotpToken]       = useState('');
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError('');
 
+    // If we already know TOTP is required, skip the check and go straight to signIn
+    if (!totpRequired) {
+      // Phase 1: check if this account needs a TOTP challenge
+      try {
+        const checkRes = await fetch('/api/auth/2fa-check', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const checkData = await checkRes.json() as { requiresTotp?: boolean };
+        if (checkData.requiresTotp) {
+          setTotpRequired(true);
+          setLoading(false);
+          return;
+        }
+      } catch {
+        // fall through to normal sign-in on network error
+      }
+    }
+
     const result = await signIn('credentials', {
       email,
       password,
+      totpToken: totpRequired ? totpToken.trim() : undefined,
       redirect: false,
     });
 
     if (result?.error) {
-      setError('Invalid email or password. Please try again.');
+      if (totpRequired) {
+        setError('Invalid authenticator code. Please try again.');
+      } else {
+        setError('Invalid email or password. Please try again.');
+      }
       setLoading(false);
     } else {
       router.push(callbackUrl);
     }
+  }
+
+  function handleBackToPassword() {
+    setTotpRequired(false);
+    setTotpToken('');
+    setError('');
   }
 
   return (
@@ -191,6 +227,13 @@ function LoginForm() {
               <p className="text-muted-foreground/70 text-sm mt-1">Sign in to access your facility portal</p>
             </div>
 
+            {reason === 'idle' && (
+              <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 mb-5 text-amber-400 text-sm">
+                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                You were signed out due to inactivity. Please sign in again.
+              </div>
+            )}
+
             {error && (
               <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl p-3.5 mb-5 text-red-400 text-sm">
                 <AlertCircle className="w-4 h-4 flex-shrink-0" />
@@ -199,47 +242,93 @@ function LoginForm() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Email */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  required
-                  autoComplete="email"
-                  placeholder="you@facility.com"
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm"
-                />
-              </div>
-
-              {/* Password */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPw ? 'text' : 'password'}
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                    autoComplete="current-password"
-                    placeholder="••••••••"
-                    className="w-full px-4 py-2.5 pr-11 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm"
-                  />
+              {totpRequired ? (
+                /* ── TOTP Challenge Step ── */
+                <>
+                  <div className="flex items-center gap-2 bg-teal-500/10 border border-teal-500/20 rounded-xl p-3.5 text-teal-300 text-sm">
+                    <Shield className="w-4 h-4 flex-shrink-0" />
+                    Enter the 6-digit code from your authenticator app.
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-1.5">
+                      Authenticator code
+                    </label>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9A-Za-z]+"
+                      value={totpToken}
+                      onChange={e => setTotpToken(e.target.value)}
+                      required
+                      autoFocus
+                      autoComplete="one-time-code"
+                      placeholder="000000"
+                      maxLength={8}
+                      className="w-full px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm tracking-widest text-center"
+                    />
+                    <p className="text-xs text-slate-500 mt-1.5">
+                      Or enter a backup code if you lost access to your device.
+                    </p>
+                  </div>
                   <button
                     type="button"
-                    onClick={() => setShowPw(v => !v)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
-                    tabIndex={-1}
+                    onClick={handleBackToPassword}
+                    className="text-xs text-slate-500 hover:text-slate-400 transition-colors"
                   >
-                    {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    ← Use a different account
                   </button>
-                </div>
-              </div>
+                </>
+              ) : (
+                /* ── Password Step ── */
+                <>
+                  {/* Email */}
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-1.5">
+                      Email address
+                    </label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      required
+                      autoComplete="email"
+                      placeholder="you@facility.com"
+                      className="w-full px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm"
+                    />
+                  </div>
+
+                  {/* Password */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-sm font-medium text-slate-300">
+                        Password
+                      </label>
+                      <Link href="/forgot-password" className="text-xs text-teal-500 hover:text-teal-400 transition-colors">
+                        Forgot password?
+                      </Link>
+                    </div>
+                    <div className="relative">
+                      <input
+                        type={showPw ? 'text' : 'password'}
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        required
+                        autoComplete="current-password"
+                        placeholder="••••••••"
+                        className="w-full px-4 py-2.5 pr-11 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPw(v => !v)}
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                        tabIndex={-1}
+                      >
+                        {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
 
               {/* Submit */}
               <button
@@ -251,10 +340,10 @@ function LoginForm() {
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    Signing in…
+                    {totpRequired ? 'Verifying…' : 'Signing in…'}
                   </>
                 ) : (
-                  'Sign in'
+                  totpRequired ? 'Verify & sign in' : 'Sign in'
                 )}
               </button>
             </form>
@@ -264,10 +353,6 @@ function LoginForm() {
                 Need access?{' '}
                 <a href="/signup" className="text-teal-500 hover:text-teal-400 transition-colors">Request a demo</a>
               </p>
-              <div className="mt-4 flex items-center justify-center gap-4 text-xs">
-                <Link href="/guide" className="text-slate-500 hover:text-white transition-colors">User Guide</Link>
-                <Link href="/walkthrough" className="text-slate-500 hover:text-white transition-colors">Feature Walkthrough</Link>
-              </div>
             </div>
           </div>
 

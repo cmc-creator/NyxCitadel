@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MessageSquareWarning, ArrowLeft, Info } from 'lucide-react';
+import { AiFieldHelper } from '@/components/ai/AiFieldHelper';
+import { SentryPageGuide } from '@/components/ai/SentryPageGuide';
 
 const COMPLAINANT_TYPES = [
   { value: 'PATIENT',              label: 'Patient' },
@@ -41,6 +43,10 @@ export default function NewGrievancePage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [category, setCategory] = useState('');
+  const [severity, setSeverity] = useState('STANDARD');
+  const [summary, setSummary] = useState('');
+  const [notes, setNotes] = useState('');
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -56,12 +62,12 @@ export default function NewGrievancePage() {
       complainantEmail: (f.elements.namedItem('complainantEmail') as HTMLInputElement).value,
       patientName:      (f.elements.namedItem('patientName') as HTMLInputElement).value,
       patientMRN:       (f.elements.namedItem('patientMRN') as HTMLInputElement).value,
-      summary:          (f.elements.namedItem('summary') as HTMLTextAreaElement).value,
-      category:         (f.elements.namedItem('category') as HTMLSelectElement).value,
-      severity:         (f.elements.namedItem('severity') as HTMLSelectElement).value,
+      summary,
+      category,
+      severity,
       assignedTo:       (f.elements.namedItem('assignedTo') as HTMLInputElement).value,
       reportableToAdhs: (f.elements.namedItem('reportableToAdhs') as HTMLInputElement).checked,
-      notes:            (f.elements.namedItem('notes') as HTMLTextAreaElement).value,
+      notes,
     };
 
     const res = await fetch('/api/grievances', {
@@ -94,6 +100,18 @@ export default function NewGrievancePage() {
           CMS 482.13(e) requires written acknowledgment within 7 days and resolution within 30 days.
         </p>
       </div>
+
+      <SentryPageGuide
+        pageKey="grievances-new"
+        title="Patient Grievance"
+        body="A grievance is a formal written complaint from a patient, family member, or representative. Document the concern clearly and neutrally -- you are creating the official record. Use the sparkle button to get Sentry's help writing the summary."
+        tips={[
+          "A verbal complaint becomes a grievance when a patient requests a formal response or if staff cannot resolve it immediately",
+          "Expedited review is required when the patient's clinical condition demands a faster response",
+          "Neglect or abuse allegations are reportable to AZ ADHS regardless of outcome",
+          "Your written resolution must include what you investigated and what the outcome was",
+        ]}
+      />
 
       <div className="bg-blue-950/20 border border-blue-200 rounded-xl px-4 py-3 flex gap-3">
         <Info className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
@@ -129,6 +147,8 @@ export default function NewGrievancePage() {
               <select
                 name="severity"
                 required
+                value={severity}
+                onChange={e => setSeverity(e.target.value)}
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 {SEVERITIES.map(s => (
@@ -142,6 +162,8 @@ export default function NewGrievancePage() {
               <select
                 name="category"
                 required
+                value={category}
+                onChange={e => setCategory(e.target.value)}
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select category...</option>
@@ -161,16 +183,20 @@ export default function NewGrievancePage() {
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-foreground/80 mb-1">Grievance Summary *</label>
-            <textarea
-              name="summary"
-              required
-              rows={4}
-              placeholder="Describe the grievance - what is the complaint, what happened, and what outcome is the complainant seeking?"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
-            />
-          </div>
+          <AiFieldHelper
+            fieldLabel="Grievance Summary"
+            pageContext="New Patient Grievance"
+            value={summary}
+            onChange={setSummary}
+            rows={4}
+            required
+            name="summary"
+            placeholder="Describe the grievance - what is the complaint, what happened, and what outcome is the complainant seeking?"
+            formHints={{
+              category: CATEGORIES.find(c => c.value === category)?.label ?? category,
+              severity,
+            }}
+          />
         </div>
 
         {/* Complainant info */}
@@ -264,15 +290,16 @@ export default function NewGrievancePage() {
             </span>
           </label>
 
-          <div>
-            <label className="block text-sm font-medium text-foreground/80 mb-1">Internal Notes</label>
-            <textarea
-              name="notes"
-              rows={2}
-              placeholder="Any additional notes..."
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
-            />
-          </div>
+          <AiFieldHelper
+            fieldLabel="Internal Notes"
+            pageContext="New Patient Grievance"
+            value={notes}
+            onChange={setNotes}
+            rows={2}
+            name="notes"
+            placeholder="Any additional notes..."
+            formHints={{ category, severity }}
+          />
         </div>
 
         <div className="flex gap-3">

@@ -1,4 +1,10 @@
-export type DraftActionType = 'CREATE_CAP_DRAFT' | 'CREATE_INCIDENT_DRAFT' | 'CREATE_CALENDAR_DRAFT';
+export type DraftActionType =
+  | 'CREATE_CAP_DRAFT'
+  | 'CREATE_INCIDENT_DRAFT'
+  | 'CREATE_CALENDAR_DRAFT'
+  | 'CREATE_RCA_DRAFT'
+  | 'CREATE_GRIEVANCE_DRAFT'
+  | 'CREATE_POC_DRAFT';
 
 export type DraftActionRequest = {
   type: DraftActionType;
@@ -13,6 +19,9 @@ const ALLOWED_TYPES: DraftActionType[] = [
   'CREATE_CAP_DRAFT',
   'CREATE_INCIDENT_DRAFT',
   'CREATE_CALENDAR_DRAFT',
+  'CREATE_RCA_DRAFT',
+  'CREATE_GRIEVANCE_DRAFT',
+  'CREATE_POC_DRAFT',
 ];
 
 const ACTION_ALLOWED_ROLES = new Set<string>([
@@ -28,6 +37,9 @@ const ACTION_PREVIEW_FIELDS: Record<DraftActionType, string[]> = {
   CREATE_CAP_DRAFT: ['title', 'priority', 'source', 'targetDate', 'description'],
   CREATE_INCIDENT_DRAFT: ['incidentType', 'severity', 'incidentDate', 'location', 'briefDescription'],
   CREATE_CALENDAR_DRAFT: ['title', 'category', 'priority', 'dueDate', 'description'],
+  CREATE_RCA_DRAFT: ['eventType', 'eventDate', 'eventDescription'],
+  CREATE_GRIEVANCE_DRAFT: ['complainantName', 'category', 'severity', 'summary'],
+  CREATE_POC_DRAFT: ['title', 'regulatoryBody', 'surveyDate', 'responseDeadline'],
 };
 
 export function canRunSentryDraftAction(role: string | null | undefined): boolean {

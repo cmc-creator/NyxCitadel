@@ -2,6 +2,7 @@
 import { NotificationType } from '@prisma/client';
 import { sendNotificationEmail } from '@/lib/notifications/email';
 import { getNotificationPreferences } from '@/lib/notifications/preferences';
+import { getCapDueSoonEmail, getGrievanceDeadlineEmail } from '@/lib/email-templates';
 
 interface AlertInput {
   userId: string;
@@ -30,8 +31,8 @@ export async function generateComplianceAlerts({ userId, facilityId, deliverEmai
     return Math.max(0, Math.floor(configured));
   }
 
-  const alerts: { type: NotificationType; title: string; message: string; linkUrl: string }[] = [];
-  const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true } });
+  const alerts: { type: NotificationType; title: string; message: string; linkUrl: string; html?: string }[] = [];
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, name: true } });
 
   // ΓöÇΓöÇ 1. Expiring provider licenses (within 90 days) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   if (prefEnabled('LICENSE_EXPIRING')) {
@@ -250,7 +251,79 @@ export async function generateComplianceAlerts({ userId, facilityId, deliverEmai
     }
   }
 
-  // ΓöÇΓöÇ Upsert (deduplicate within 3-day window) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+  // ── 12. CAP due soon (1 day and 7 days) ───────────────────────────────────
+  if (prefEnabled('CAP_OVERDUE')) {
+    const in7 = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const dueSoonCaps = await prisma.correctiveActionPlan.findMany({
+      where: {
+        facilityId,
+        targetDate: { gte: now, lte: in7 },
+        status: { notIn: ['COMPLETED', 'VERIFIED'] },
+      },
+      orderBy: { targetDate: 'asc' },
+    });
+    const recipientName = user?.name ?? user?.email ?? 'Team';
+    for (const cap of dueSoonCaps) {
+      const daysUntilDue = Math.ceil((cap.targetDate!.getTime() - now.getTime()) / 86400000);
+      const targetDateStr = cap.targetDate!.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const emailData = getCapDueSoonEmail({
+        recipientName,
+        capNumber: cap.capNumber,
+        title: cap.title,
+        priority: cap.priority,
+        daysUntilDue,
+        targetDate: targetDateStr,
+      });
+      alerts.push({
+        type: NotificationType.CAP_UPDATE,
+        title: `CAP Due ${daysUntilDue <= 1 ? 'Tomorrow' : `in ${daysUntilDue} Days`}: ${cap.capNumber}`,
+        message: `"${cap.title}" (${cap.priority}) is due ${daysUntilDue <= 1 ? 'tomorrow' : `in ${daysUntilDue} days`} on ${targetDateStr}.`,
+        linkUrl: '/trackers/caps',
+        html: emailData.html,
+      });
+    }
+  }
+
+  // ── 13. Grievance acknowledgment and resolution deadlines ─────────────────
+  if (prefEnabled('CAP_OVERDUE')) {
+    const in3  = new Date(now.getTime() + 3  * 24 * 60 * 60 * 1000);
+    const in7g = new Date(now.getTime() + 7  * 24 * 60 * 60 * 1000);
+    const recipientName = user?.name ?? user?.email ?? 'Team';
+
+    const ackDue = await prisma.grievanceRecord.findMany({
+      where: { facilityId, acknowledgmentDueDate: { gte: now, lte: in3 }, status: { notIn: ['CLOSED', 'RESOLVED'] } },
+      orderBy: { acknowledgmentDueDate: 'asc' },
+    });
+    for (const g of ackDue) {
+      const dueDateStr = g.acknowledgmentDueDate!.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const emailData = getGrievanceDeadlineEmail({ recipientName, grievanceNumber: g.grievanceNumber, type: 'acknowledgment', dueDate: dueDateStr, complainantName: g.complainantName });
+      alerts.push({
+        type: NotificationType.DEADLINE_REMINDER,
+        title: `Grievance Ack. Due: ${g.grievanceNumber}`,
+        message: `CMS 7-day acknowledgment for grievance ${g.grievanceNumber} (${g.complainantName}) is due ${dueDateStr}.`,
+        linkUrl: '/trackers/grievances',
+        html: emailData.html,
+      });
+    }
+
+    const resDue = await prisma.grievanceRecord.findMany({
+      where: { facilityId, resolutionDueDate: { gte: now, lte: in7g }, status: { notIn: ['CLOSED', 'RESOLVED'] } },
+      orderBy: { resolutionDueDate: 'asc' },
+    });
+    for (const g of resDue) {
+      const dueDateStr = g.resolutionDueDate!.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const emailData = getGrievanceDeadlineEmail({ recipientName, grievanceNumber: g.grievanceNumber, type: 'resolution', dueDate: dueDateStr, complainantName: g.complainantName });
+      alerts.push({
+        type: NotificationType.DEADLINE_REMINDER,
+        title: `Grievance Resolution Due: ${g.grievanceNumber}`,
+        message: `CMS 30-day resolution for grievance ${g.grievanceNumber} (${g.complainantName}) is due ${dueDateStr}.`,
+        linkUrl: '/trackers/grievances',
+        html: emailData.html,
+      });
+    }
+  }
+
+  // ── Upsert (deduplicate within 3-day window) ──────────────────────────────
   let createdCount = 0;
 
   for (const alert of alerts) {
@@ -283,6 +356,7 @@ export async function generateComplianceAlerts({ userId, facilityId, deliverEmai
           to: user.email,
           subject: `[NyxCitadel] ${alert.title}`,
           text: `${alert.message}\n\nOpen in NyxCitadel: ${alert.linkUrl}`,
+          html: alert.html,
         });
       }
     }
