@@ -88,7 +88,7 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
             facilityName: facility?.name ?? 'Your Facility',
             policyTitle: policy.title,
             policyNumber: policy.policyNumber ?? '',
-            newVersion,
+            newVersion: Number(newVersion),
             changedBy: session.user.name ?? session.user.email ?? 'Staff',
             changeNote: body.changeNote,
             effectiveDate: policy.effectiveDate

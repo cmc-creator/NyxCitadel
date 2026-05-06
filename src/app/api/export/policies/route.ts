@@ -12,7 +12,7 @@ export async function GET() {
   if (!session?.user?.facilityId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const rows = await prisma.policy.findMany({
-    where: { facilityId: session.user.facilityId },
+    where: { facilityId: session.user.facilityId, deletedAt: null },
     orderBy: { nextReviewDate: 'asc' },
   });
 

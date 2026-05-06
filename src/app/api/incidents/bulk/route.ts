@@ -14,14 +14,14 @@ export async function POST(req: NextRequest) {
 
   const owned = await prisma.incident.findMany({
     where: { id: { in: ids }, facilityId: session.user.facilityId },
-    select: { id: true, incidentNumber: true, title: true, status: true, severity: true, incidentType: true, dateOccurred: true },
+    select: { id: true, incidentNumber: true, description: true, status: true, severity: true, incidentType: true, dateOccurred: true },
   });
   const ownedIds = owned.map(i => i.id);
 
   if (action === 'export') {
     const header = 'Incident Number,Title,Status,Severity,Type,Date Occurred';
     const rows = owned.map(i =>
-      `"${i.incidentNumber}","${i.title}","${i.status}","${i.severity}","${i.incidentType}","${i.dateOccurred?.toLocaleDateString() ?? ''}"`
+      `"${i.incidentNumber}","${i.description}","${i.status}","${i.severity}","${i.incidentType}","${i.dateOccurred?.toLocaleDateString() ?? ''}"` 
     );
     return NextResponse.json({ csv: [header, ...rows].join('\n') });
   }

@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
   ] = await Promise.all([
     // Policies
     prisma.policy.findMany({
-      where: { facilityId, OR: [{ title: search }, { summary: search }, { policyNumber: search }] },
+      where: { facilityId, deletedAt: null, OR: [{ title: search }, { summary: search }, { policyNumber: search }] },
       select: { id: true, title: true, policyNumber: true, status: true, category: true },
       take: 5,
     }),
@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
     }),
     // IR/IAD
     prisma.incidentReport.findMany({
-      where: { facilityId, OR: [{ irNumber: search }, { briefDescription: search }, { patientName: search }] },
+      where: { facilityId, deletedAt: null, OR: [{ irNumber: search }, { briefDescription: search }, { patientName: search }] },
       select: { id: true, irNumber: true, incidentType: true, severity: true, status: true },
       take: 5,
     }),
@@ -74,13 +74,13 @@ export async function GET(req: NextRequest) {
     }),
     // Risk Assessments
     prisma.riskAssessment.findMany({
-      where: { facilityId, OR: [{ title: search }, { scope: search }, { summary: search }] },
+      where: { facilityId, deletedAt: null, OR: [{ title: search }, { scope: search }, { summary: search }] },
       select: { id: true, title: true, assessmentType: true, status: true },
       take: 5,
     }),
     // Documents
     prisma.document.findMany({
-      where: { facilityId, OR: [{ name: search }, { description: search }, { category: search }] },
+      where: { facilityId, deletedAt: null, OR: [{ name: search }, { description: search }, { category: search }] },
       select: { id: true, name: true, category: true, fileUrl: true },
       take: 5,
     }),
@@ -98,7 +98,7 @@ export async function GET(req: NextRequest) {
     }),
     // HIPAA Breaches
     prisma.hipaaBreachLog.findMany({
-      where: { facilityId, OR: [{ incidentNumber: search }, { description: search }] },
+      where: { facilityId, deletedAt: null, OR: [{ incidentNumber: search }, { description: search }] },
       select: { id: true, incidentNumber: true, discoveryDate: true, status: true },
       take: 5,
     }),
@@ -116,13 +116,13 @@ export async function GET(req: NextRequest) {
     }),
     // OSHA Log
     prisma.oshaLog.findMany({
-      where: { facilityId, OR: [{ caseNumber: search }, { employeeName: search }, { jobTitle: search }, { department: search }, { bodyPart: search }, { description: search }] },
+      where: { facilityId, deletedAt: null, OR: [{ caseNumber: search }, { employeeName: search }, { jobTitle: search }, { department: search }, { bodyPart: search }, { description: search }] },
       select: { id: true, caseNumber: true, employeeName: true, injuryType: true, recordable: true },
       take: 5,
     }),
     // Treatment Plans
     prisma.treatmentPlan.findMany({
-      where: { facilityId, OR: [{ patientInitials: search }, { primaryDx: search }, { unit: search }] },
+      where: { facilityId, deletedAt: null, OR: [{ patientInitials: search }, { primaryDx: search }, { unit: search }] },
       select: { id: true, patientInitials: true, primaryDx: true, status: true },
       take: 5,
     }),

@@ -135,22 +135,22 @@ async function getDashboardStats(facilityId: string) {
     }),
     prisma.grievanceRecord.findMany({
       where: { facilityId, status: { notIn: ['CLOSED', 'RESOLVED'] } },
-      select: { id: true, grievanceNumber: true, chiefComplaint: true, resolutionDueDate: true, acknowledgmentDueDate: true, acknowledgmentDate: true, resolutionDate: true },
+      select: { id: true, grievanceNumber: true, summary: true, resolutionDueDate: true, acknowledgmentDueDate: true, acknowledgmentDate: true, resolutionDate: true },
       orderBy: { acknowledgmentDueDate: 'asc' }, take: 10,
     }),
     prisma.incidentReport.findMany({
       where: { facilityId, adhsReportable: true, adhsReported: false, adhsReportDue: { lt: new Date() } },
-      select: { id: true, reportNumber: true, incidentType: true, adhsReportDue: true },
+      select: { id: true, irNumber: true, incidentType: true, adhsReportDue: true },
       orderBy: { adhsReportDue: 'asc' }, take: 5,
     }),
     prisma.incidentReport.findMany({
       where: { facilityId, iadRequired: true, iadSubmitted: false, status: { not: 'CLOSED' } },
-      select: { id: true, reportNumber: true, incidentType: true },
+      select: { id: true, irNumber: true, incidentType: true },
       take: 5,
     }),
     prisma.qocComplaint.findMany({
       where: { facilityId, status: 'LOI_RECEIVED', responseSubmittedDate: null, responseDueDate: { lt: new Date() } },
-      select: { id: true, cmsComplaintNumber: true, complainantName: true, responseDueDate: true },
+      select: { id: true, cmsComplaintNumber: true, complainantType: true, responseDueDate: true },
       orderBy: { responseDueDate: 'asc' }, take: 5,
     }),
     prisma.correctiveActionPlan.findMany({

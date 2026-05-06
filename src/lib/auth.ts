@@ -5,7 +5,7 @@ import { compare } from 'bcryptjs';
 import { z } from 'zod';
 import type { UserRole } from '@prisma/client';
 import { authConfig } from '@/auth.config';
-import { authenticator } from 'otplib';
+import { verifySync } from 'otplib';
 
 // Extend the session and JWT types to include role, facilityId, and department
 declare module 'next-auth' {
@@ -75,7 +75,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           } else {
             // Verify TOTP
             const isValid = user.totpSecret
-              ? authenticator.verify({ token, secret: user.totpSecret })
+              ? verifySync({ token, secret: user.totpSecret }).valid
               : false;
             if (!isValid) return null;
           }
