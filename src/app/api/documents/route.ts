@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
   const documents = await prisma.document.findMany({
     where: {
       facilityId: session.user.facilityId,
+      deletedAt: null,
       ...(category ? { category } : {}),
     },
     orderBy: { updatedAt: 'desc' },

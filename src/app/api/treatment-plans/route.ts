@@ -8,7 +8,7 @@ export async function GET() {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const records = await prisma.treatmentPlan.findMany({
-    where: { facilityId: session.user.facilityId },
+    where: { facilityId: session.user.facilityId, deletedAt: null },
     include: { reviews: { orderBy: { reviewDate: 'desc' }, take: 1 } },
     orderBy: { admitDate: 'desc' },
   });

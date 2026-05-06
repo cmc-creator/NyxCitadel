@@ -33,6 +33,7 @@ export async function GET(req: NextRequest) {
   const policies = await prisma.policy.findMany({
     where: {
       facilityId: session.user.facilityId,
+      deletedAt: null,
       ...(category ? { category: category as never } : {}),
       ...(status   ? { status:   status   as never } : {}),
     },

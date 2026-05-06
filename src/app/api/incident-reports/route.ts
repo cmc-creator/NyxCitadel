@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { logAudit } from '@/lib/audit';
-import { sendEmail } from '@/lib/email';
-import { getIncidentCreatedEmail } from '@/lib/email-templates';
 
 async function generateIrNumber(facilityId: string): Promise<string> {
   const year = new Date().getFullYear();
@@ -38,6 +36,7 @@ export async function GET(req: NextRequest) {
   const items = await prisma.incidentReport.findMany({
     where: {
       facilityId: session.user.facilityId,
+      deletedAt: null,
       ...(status ? { status: status as never } : {}),
       ...(type   ? { incidentType: type as never } : {}),
       ...(from || to ? {
@@ -132,33 +131,6 @@ export async function POST(req: NextRequest) {
     changes: { irNumber: item.irNumber, incidentType, severity, incidentDate },
     req,
   });
-
-  // Email facility admins about the new incident report
-  try {
-    const [admins, facility] = await Promise.all([
-      prisma.user.findMany({
-        where: { facilityId: session.user.facilityId, role: { in: ['ADMIN', 'SUPER_ADMIN'] } },
-        select: { email: true, name: true },
-      }),
-      prisma.facility.findUnique({ where: { id: session.user.facilityId }, select: { name: true } }),
-    ]);
-    for (const admin of admins) {
-      if (admin.email) {
-        const emailData = getIncidentCreatedEmail({
-          facilityName: facility?.name ?? 'Your Facility',
-          reportNumber: item.irNumber,
-          incidentType,
-          severity,
-          dateOccurred: incDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-          reportedBy: session.user.name ?? session.user.email ?? 'Staff',
-          description: briefDescription,
-        });
-        sendEmail({ to: admin.email, subject: emailData.subject, html: emailData.html }).catch(() => {});
-      }
-    }
-  } catch {
-    // Non-fatal — IR was saved
-  }
 
   return NextResponse.json(item, { status: 201 });
 }

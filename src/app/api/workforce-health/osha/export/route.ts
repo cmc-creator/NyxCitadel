@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
   const logs = await prisma.oshaLog.findMany({
     where: {
       facilityId: session.user.facilityId,
+      deletedAt: null,
       injuryDate: { gte: yearStart, lt: yearEnd },
       recordable: true,
     },

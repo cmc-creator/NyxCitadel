@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
   if (!session?.user?.facilityId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const assessments = await prisma.riskAssessment.findMany({
-    where: { facilityId: session.user.facilityId },
+    where: { facilityId: session.user.facilityId, deletedAt: null },
     include: {
       items: { orderBy: { riskScore: 'desc' } },
       _count: { select: { items: true } },

@@ -117,10 +117,10 @@ export async function DELETE(_req: NextRequest, { params }: Ctx) {
 
   // Verify ownership
   const existing = await prisma.policy.findFirst({
-    where: { id: params.id, facilityId: session.user.facilityId },
+    where: { id: params.id, facilityId: session.user.facilityId, deletedAt: null },
   });
   if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
-  await prisma.policy.delete({ where: { id: params.id } });
+  await prisma.policy.update({ where: { id: params.id }, data: { deletedAt: new Date() } });
   return NextResponse.json({ success: true });
 }

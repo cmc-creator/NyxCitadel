@@ -11,7 +11,7 @@ export async function GET(
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const item = await prisma.incidentReport.findFirst({
-    where: { id: params.id, facilityId: session.user.facilityId },
+    where: { id: params.id, facilityId: session.user.facilityId, deletedAt: null },
   });
   if (!item) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   return NextResponse.json(item);
@@ -64,11 +64,11 @@ export async function DELETE(
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   const existing = await prisma.incidentReport.findFirst({
-    where: { id: params.id, facilityId: session.user.facilityId },
+    where: { id: params.id, facilityId: session.user.facilityId, deletedAt: null },
   });
   if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
-  await prisma.incidentReport.delete({ where: { id: params.id } });
+  await prisma.incidentReport.update({ where: { id: params.id }, data: { deletedAt: new Date() } });
 
   await logAudit({
     userId: session.user.id,

@@ -13,6 +13,6 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  await (prisma as any)['consentRecord'].delete({ where: { id: params.id, facilityId: session.user.facilityId } });
+  await (prisma as any)['consentRecord'].update({ where: { id: params.id, facilityId: session.user.facilityId }, data: { deletedAt: new Date() } });
   return new NextResponse(null, { status: 204 });
 }

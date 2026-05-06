@@ -10,7 +10,7 @@ export async function GET(
   if (!session?.user?.facilityId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const item = await prisma.complianceItem.findFirst({
-    where: { id: params.id, facilityId: session.user.facilityId },
+    where: { id: params.id, facilityId: session.user.facilityId, deletedAt: null },
   });
   if (!item) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   return NextResponse.json(item);
@@ -42,6 +42,6 @@ export async function DELETE(
   const session = await auth();
   if (!session?.user?.facilityId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  await prisma.complianceItem.delete({ where: { id: params.id } });
+  await prisma.complianceItem.update({ where: { id: params.id }, data: { deletedAt: new Date() } });
   return NextResponse.json({ success: true });
 }

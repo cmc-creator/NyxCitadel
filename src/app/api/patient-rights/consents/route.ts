@@ -8,7 +8,7 @@ export async function GET() {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const records = await prisma.consentRecord.findMany({
-    where: { facilityId: session.user.facilityId },
+    where: { facilityId: session.user.facilityId, deletedAt: null },
     orderBy: { consentDate: 'desc' },
   });
 
