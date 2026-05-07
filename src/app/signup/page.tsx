@@ -321,7 +321,15 @@ export default function SignupPage() {
                   </button>
 
                   {submitError && (
-                    <p className="text-xs text-rose-300 text-center">{submitError}</p>
+                    <div className="rounded-xl border border-rose-500/25 bg-rose-500/8 p-4">
+                      <p className="text-xs text-rose-300 text-center mb-2">{submitError}</p>
+                      {(submitError.toLowerCase().includes('email') || submitError.toLowerCase().includes('delivery') || submitError.toLowerCase().includes('unavailable')) && (
+                        <p className="text-xs text-slate-400 text-center">
+                          You can reach us directly at{' '}
+                          <a href="mailto:sales@nyxcitadel.com" className="text-teal-400 hover:text-teal-300 underline">sales@nyxcitadel.com</a>
+                        </p>
+                      )}
+                    </div>
                   )}
 
                   <p className="text-xs text-slate-600 text-center">

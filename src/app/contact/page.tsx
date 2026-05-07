@@ -84,7 +84,7 @@ export default function ContactPage() {
           <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/25 rounded-full px-4 py-1.5 text-xs font-medium text-teal-300 mb-6">
             <MessageSquare className="w-3.5 h-3.5" /> We respond fast. Always.
           </div>
-          <h1 className="text-5xl font-extrabold tracking-tight leading-[1.08] mb-5">
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.08] mb-5">
             Talk to{' '}
             <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
               NyxCitadel
