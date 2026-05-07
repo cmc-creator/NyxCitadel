@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -20,6 +20,13 @@ const PLAN_FEATURES = {
 
 export default function SignupPage() {
   const [tab, setTab] = useState<'demo' | 'request'>('demo');
+
+  // Activate the correct tab from the URL hash (#demo or #request)
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash === 'request') setTab('request');
+    else if (hash === 'demo') setTab('demo');
+  }, []);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState('');
