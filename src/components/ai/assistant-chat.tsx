@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import { X, Send, Bot, User, Loader2 } from 'lucide-react';
 
 interface Message {
@@ -9,7 +8,7 @@ interface Message {
   content: string;
 }
 
-const DEFAULT_PROMPTS = [
+const SUGGESTED_PROMPTS = [
   "What's overdue in my compliance calendar?",
   "Help me write a CAP for a restraint event",
   "What does JC standard EM.03.01.03 require?",
@@ -18,80 +17,18 @@ const DEFAULT_PROMPTS = [
   "What are the HBIPS quality measures I must track?",
 ];
 
-const PAGE_PROMPTS: Record<string, string[]> = {
-  '/trackers/incidents': [
-    "Help me describe this incident clearly for the record",
-    "What makes an incident a sentinel event requiring RCA?",
-    "What incidents must be reported to AZ ADHS within 24 hours?",
-    "What should I include in Immediate Actions Taken?",
-  ],
-  '/trackers/rca': [
-    "Walk me through the 5-Whys methodology",
-    "What are common contributing factors for patient falls?",
-    "Help me write the Human Factors section for an elopement",
-    "What JC standard requires an RCA for sentinel events?",
-  ],
-  '/trackers/caps': [
-    "Help me write a corrective action plan description",
-    "What makes a good Measure of Success for a CAP?",
-    "What are SMART goals for a compliance CAP?",
-  ],
-  '/trackers/grievances': [
-    "What is the CMS grievance resolution timeline?",
-    "What categories require expedited grievance review?",
-    "Help me summarize this grievance professionally",
-    "When is a grievance reportable to AZ ADHS?",
-  ],
-  '/quality/poc': [
-    "Explain how to write a Plan of Correction",
-    "What does CMS expect for the 'How Prevented' section?",
-    "Help me write the monitoring strategy for a finding",
-  ],
-  '/quality/': [
-    "What QAPI indicators should a psych hospital track?",
-    "Explain HBIPS measures for behavioral health",
-    "How do PDSA cycles work in quality improvement?",
-  ],
-  '/eoc/': [
-    "What EOC standards does Joint Commission survey?",
-    "Help me write a deficiency correction plan",
-    "What is required in an EOC rounding program?",
-  ],
-  '/settings/': [
-    "How do I set up my department in my profile?",
-    "What do the user roles mean in NyxCitadel?",
-    "How do I add a new staff member?",
-  ],
-  '/assistant': [
-    "What JC standards should I focus on for my next survey?",
-    "Help me create a CAP draft for a medication error",
-    "What are the most common CMS deficiencies in psych hospitals?",
-    "Draft a new incident report for a patient fall",
-  ],
-};
-
-function getPagePrompts(pathname: string): string[] {
-  for (const [prefix, prompts] of Object.entries(PAGE_PROMPTS)) {
-    if (pathname.startsWith(prefix)) return prompts;
-  }
-  return DEFAULT_PROMPTS;
-}
-
 export function AssistantChat() {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm Sentry \uD83E\uDD16, your compliance assistant. I can help with JC/CMS regulatory questions, draft CAP language, explain QAPI methodology, and more. What can I help you with?",
+      content: "Hi! I'm Sentry 🤖, your compliance assistant. I can help with JC/CMS regulatory questions, draft CAP language, explain QAPI methodology, and more. What can I help you with?",
     },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const suggestedPrompts = getPagePrompts(pathname);
 
   useEffect(() => {
     if (open) {
@@ -114,7 +51,7 @@ export function AssistantChat() {
       const res = await fetch('/api/ai-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: msg, history, pageContext: pathname }),
+        body: JSON.stringify({ message: msg, history }),
       });
 
       const data = await res.json() as { reply?: string; error?: string };
@@ -132,7 +69,7 @@ export function AssistantChat() {
       {/* Floating button */}
       <button
         onClick={() => setOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-teal-600 hover:bg-teal-700 shadow-lg hover:shadow-xl flex items-center justify-center text-white transition-all ${open ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
+        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-14 h-14 rounded-full bg-teal-600 hover:bg-teal-700 shadow-lg hover:shadow-xl flex items-center justify-center text-white transition-all ${open ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
         aria-label="Open compliance assistant"
       >
         <Bot className="w-6 h-6" />
@@ -140,10 +77,10 @@ export function AssistantChat() {
 
       {/* Chat panel */}
       <div
-        className={`fixed bottom-6 right-6 z-50 w-96 bg-white rounded-2xl shadow-2xl border border-border flex flex-col transition-all duration-200 ${
+        className={`fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-50 w-full sm:w-96 bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl border border-border flex flex-col transition-all duration-200 ${
           open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
-        style={{ height: '520px' }}
+        style={{ height: '520px', maxHeight: 'calc(100dvh - 1rem)' }}
       >
         {/* Header */}
         <div className="flex items-center gap-3 px-4 py-3 bg-teal-600 rounded-t-2xl flex-shrink-0">
@@ -151,7 +88,7 @@ export function AssistantChat() {
             <Bot className="w-4 h-4 text-white" />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-semibold text-white leading-none">Sentry \uD83E\uDD16</p>
+            <p className="text-sm font-semibold text-white leading-none">Sentry 🤖</p>
             <p className="text-xs text-teal-200 leading-none mt-0.5">Compliance Assistant</p>
           </div>
           <button
@@ -195,11 +132,11 @@ export function AssistantChat() {
             </div>
           )}
 
-          {/* Page-aware suggested prompts - show only when just greeting */}
+          {/* Suggested prompts - show only when just greeting */}
           {messages.length === 1 && !loading && (
             <div className="space-y-1.5 pt-1">
               <p className="text-xs text-muted-foreground/70 font-medium">Try asking:</p>
-              {suggestedPrompts.map(p => (
+              {SUGGESTED_PROMPTS.map(p => (
                 <button
                   key={p}
                   onClick={() => sendMessage(p)}
@@ -221,7 +158,7 @@ export function AssistantChat() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
-            placeholder="Ask about compliance, standards, CAPs..."
+            placeholder="Ask about compliance, standards, CAPs…"
             disabled={loading}
             className="flex-1 text-sm bg-slate-100 rounded-xl px-3.5 py-2 outline-none focus:ring-2 focus:ring-teal-500 transition placeholder-slate-400 disabled:opacity-60"
           />

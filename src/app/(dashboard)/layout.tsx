@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
-import { LayoutShell } from '@/components/layout/LayoutShell';
+import { DashboardShell } from '@/components/layout/DashboardShell';
 import { AssistantChat } from '@/components/ai/assistant-chat';
 import { WelcomeOnboarding } from '@/components/layout/WelcomeOnboarding';
 import { WhatsNew } from '@/components/layout/WhatsNew';
@@ -21,15 +21,13 @@ export default async function DashboardLayout({
   if (!session) redirect('/login');
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <LayoutShell user={session.user}>
-        {children}
-      </LayoutShell>
+    <DashboardShell user={session.user}>
+      {children}
       <WelcomeOnboarding userName={session.user.name} />
       <WhatsNew />
       <SetupWizard />
       <AssistantChat />
       <IdleTimeout />
-    </div>
+    </DashboardShell>
   );
 }

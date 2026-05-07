@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  Mail, Phone, Clock3, ShieldCheck, ArrowLeft,
+  Mail, Clock3, ShieldCheck, ArrowLeft,
   MessageSquare, ChevronRight, Lock, CheckCircle,
 } from 'lucide-react';
 
@@ -44,15 +44,6 @@ const contacts = [
     icon: Mail,
     color: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400',
     response: 'Same business day',
-  },
-  {
-    label: 'Main Line',
-    detail: 'Speak directly with our team during business hours',
-    value: '(602) 555-0100',
-    href: 'tel:+16025550100',
-    icon: Phone,
-    color: 'bg-amber-500/15 border-amber-500/30 text-amber-400',
-    response: 'M–F, 8am–5pm MST',
   },
 ];
 

@@ -16,10 +16,10 @@ interface TopBarProps {
     role?: string;
     department?: string | null;
   };
-  onMenuClick?: () => void;
+  onMenuToggle?: () => void;
 }
 
-export function TopBar({ user, onMenuClick }: TopBarProps) {
+export function TopBar({ user, onMenuToggle }: TopBarProps) {
   const router = useRouter();
   const [query, setQuery] = useState('');
 
@@ -47,18 +47,18 @@ export function TopBar({ user, onMenuClick }: TopBarProps) {
   }
 
   return (
-    <header className="h-14 bg-background/95 backdrop-blur-sm border-b border-border flex items-center px-4 md:px-6 gap-3 sticky top-0 z-20">
+    <header className="h-14 bg-background/95 backdrop-blur-sm border-b border-border flex items-center px-4 gap-3 sticky top-0 z-20">
       {/* Hamburger — mobile only */}
       <button
-        onClick={onMenuClick}
-        className="md:hidden flex-shrink-0 p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
-        aria-label="Open menu"
+        onClick={onMenuToggle}
+        className="lg:hidden flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-lg hover:bg-muted transition-colors text-foreground"
+        aria-label="Open navigation menu"
       >
         <Menu className="w-5 h-5" />
       </button>
 
-      {/* Mobile logo - shown alongside hamburger */}
-      <div className="md:hidden flex-shrink-0 flex items-center">
+      {/* Mobile logo - hidden on desktop (sidebar shows it there) */}
+      <div className="lg:hidden flex-shrink-0 flex items-center gap-2">
         <Image
           src="/citadellogo-clean.png"
           alt="NyxCitadel"

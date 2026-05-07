@@ -238,13 +238,13 @@ export default async function RootPage() {
       </div>
 
       <header className="z-20 sticky top-0" style={{borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(6,11,22,0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)'}}>
-        <div className="max-w-7xl mx-auto px-8 h-[100px] flex items-center justify-between gap-8">
+<div className="max-w-7xl mx-auto px-4 sm:px-8 h-[72px] sm:h-[100px] flex items-center justify-between gap-4 sm:gap-8">
 
           {/* ── Brand ── */}
           <Link href="/" className="flex items-center gap-3.5 flex-shrink-0 group">
             <div className="relative">
               <div className="absolute inset-0 rounded-xl bg-teal-500/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <LogoImage width={96} height={96} priority className="h-[96px] w-[96px] flex-shrink-0 drop-shadow-[0_0_24px_rgba(13,115,119,0.75)] relative" />
+              <LogoImage width={96} height={96} priority className="h-12 w-12 sm:h-[96px] sm:w-[96px] flex-shrink-0 drop-shadow-[0_0_24px_rgba(13,115,119,0.75)] relative" />
             </div>
             <div className="flex flex-col leading-none">
               <span className="font-extrabold text-[1.15rem] tracking-tight text-white">
@@ -319,7 +319,7 @@ export default async function RootPage() {
               <Sparkles className="w-3.5 h-3.5 animate-pulse" />
               The Only Healthcare Compliance Platform That Never Sleeps
             </div>
-            <h1 className="text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-6 animate-fade-in-up delay-100">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-6 animate-fade-in-up delay-100">
               Stop Chasing{' '}
               <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
                 Regulations.
@@ -342,7 +342,7 @@ export default async function RootPage() {
               Built from the ground up for long-term care, skilled nursing, and healthcare
               facilities that refuse to be caught off guard.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4">
               {isLoggedIn ? (
                 <Link
                   href="/dashboard"

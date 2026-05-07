@@ -71,29 +71,37 @@ export default async function ComplianceTrackerPage({
 
       {/* Table */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-muted/50 border-b border-border">
-            <tr>
-              <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Requirement</th>
-              <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Regulatory Body</th>
-              <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Standard</th>
-              <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Frequency</th>
-              <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Next Due</th>
-              <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Status</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border/30">
-            {items.length === 0 ? (
+        {items.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
+            <div className="w-16 h-16 rounded-full bg-teal-600/10 flex items-center justify-center mb-4">
+              <ShieldCheck className="w-8 h-8 text-teal-600/70" />
+            </div>
+            <h3 className="text-lg font-semibold text-foreground mb-1">No compliance requirements tracked</h3>
+            <p className="text-sm text-muted-foreground max-w-sm mb-6">
+              Start by adding the regulatory requirements your facility must meet — ADHS, CMS, Joint Commission, and more. NyxCitadel will track due dates and send alerts.
+            </p>
+            <Link
+              href="/trackers/compliance/new"
+              className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              Add First Requirement
+            </Link>
+          </div>
+        ) : (
+              <table className="w-full text-sm">
+            <thead className="bg-muted/50 border-b border-border">
               <tr>
-                <td colSpan={6} className="text-center py-12 text-muted-foreground">
-                  No compliance items found.{' '}
-                  <Link href="/trackers/compliance/new" className="text-teal-400 hover:underline">
-                    Add your first requirement
-                  </Link>
-                </td>
+                <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Requirement</th>
+                <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Regulatory Body</th>
+                <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Standard</th>
+                <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Frequency</th>
+                <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Next Due</th>
+                <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Status</th>
               </tr>
-            ) : (
-              items.map((item) => {
+            </thead>
+            <tbody className="divide-y divide-border/30">
+              {items.map((item) => {
                 const { label, className } = getDueDateStatus(item.nextDueDate);
                 return (
                   <tr key={item.id} className="hover:bg-muted/30 transition-colors cursor-pointer">
@@ -126,10 +134,10 @@ export default async function ComplianceTrackerPage({
                     </td>
                   </tr>
                 );
-              })
-            )}
-          </tbody>
-        </table>
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

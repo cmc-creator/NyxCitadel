@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
-import { CheckSquare, Square, CheckCheck, Trash2, Download, X } from 'lucide-react';
+import { CheckSquare, Square, CheckCheck, Trash2, Download, X, Plus } from 'lucide-react';
 import { AlertTriangle } from 'lucide-react';
 
 interface Incident {
@@ -67,12 +67,21 @@ export function IncidentsListClient({ incidents }: { incidents: Incident[] }) {
 
   if (incidents.length === 0) {
     return (
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <table className="w-full text-sm"><tbody>
-          <tr><td colSpan={9} className="text-center py-12 text-muted-foreground/70">
-            No incidents found. <Link href="/trackers/incidents/new" className="text-teal-600 hover:underline">File a new incident report</Link>
-          </td></tr>
-        </tbody></table>
+      <div className="flex flex-col items-center justify-center py-20 px-4 bg-card rounded-xl border border-border text-center">
+        <div className="w-16 h-16 rounded-full bg-teal-600/10 flex items-center justify-center mb-4">
+          <AlertTriangle className="w-8 h-8 text-teal-600/70" />
+        </div>
+        <h3 className="text-lg font-semibold text-foreground mb-1">No incidents found</h3>
+        <p className="text-sm text-muted-foreground max-w-xs mb-6">
+          Your incident tracker is clear. When an event occurs, file a report to start tracking it through investigation and closure.
+        </p>
+        <Link
+          href="/trackers/incidents/new"
+          className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+        >
+          <Plus className="w-4 h-4" />
+          File New Incident Report
+        </Link>
       </div>
     );
   }
