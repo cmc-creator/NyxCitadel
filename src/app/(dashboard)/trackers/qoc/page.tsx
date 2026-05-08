@@ -150,15 +150,15 @@ export default async function QocPage({
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-muted/30 border-b border-border">
               <tr>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">QOC #</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Received</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Complainant</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Allegation Summary</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Investigation Type</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Response Due</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Status</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">QOC #</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Received</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Complainant</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Allegation Summary</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Investigation Type</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Response Due</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/30">
@@ -171,7 +171,7 @@ export default async function QocPage({
                 </tr>
               ) : (
                 complaints.map(c => (
-                  <tr key={c.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
+                  <tr key={c.id} className="hover:bg-accent/50 transition-colors cursor-pointer">
                     <td className="px-4 py-3 font-mono text-xs font-semibold text-teal-700">
                       <Link href={`/trackers/qoc/${c.id}`} className="hover:underline">{c.qocNumber}</Link>
                     </td>

@@ -458,7 +458,7 @@ export default function NewRcaPage() {
           </button>
           <a
             href="/trackers/rca"
-            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors"
+            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-accent/50 transition-colors"
           >
             Cancel
           </a>

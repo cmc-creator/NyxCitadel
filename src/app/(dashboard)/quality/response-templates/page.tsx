@@ -134,11 +134,11 @@ export default async function ResponseTemplatesPage() {
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <span className="font-medium text-foreground text-sm leading-snug">{t.name}</span>
                     {t.isDefault && (
-                      <span className="text-xs bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded shrink-0">Default</span>
+                      <span className="text-xs bg-muted/30 text-muted-foreground/70 px-1.5 py-0.5 rounded shrink-0">Default</span>
                     )}
                   </div>
                   {t.description && (
-                    <p className="text-xs text-slate-500 mb-2 line-clamp-2">{t.description}</p>
+                    <p className="text-xs text-muted-foreground/70 mb-2 line-clamp-2">{t.description}</p>
                   )}
                   <div className="flex flex-wrap gap-2 mb-3">
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${CATEGORY_COLORS[t.category] ?? 'bg-slate-100 text-slate-600'}`}>
@@ -150,7 +150,7 @@ export default async function ResponseTemplatesPage() {
                       </span>
                     )}
                     {t.regulatoryRef && (
-                      <span className="text-xs bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full">{t.regulatoryRef}</span>
+                      <span className="text-xs bg-muted/30 text-muted-foreground/70 px-2 py-0.5 rounded-full">{t.regulatoryRef}</span>
                     )}
                   </div>
                   <div className="flex gap-2">

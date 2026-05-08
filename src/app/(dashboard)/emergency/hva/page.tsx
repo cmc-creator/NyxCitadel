@@ -75,7 +75,7 @@ export default async function HvaPage() {
                 className={`inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg font-medium border transition-colors ${
                   yearHasData(y)
                     ? 'bg-amber-950/20 text-amber-700 border-amber-300 hover:bg-amber-100'
-                    : 'text-slate-500 border-slate-200 hover:bg-slate-50'
+                    : 'text-muted-foreground border-border hover:bg-accent/50'
                 }`}>
                 {y}
                 {yearHasData(y)
@@ -84,8 +84,8 @@ export default async function HvaPage() {
               </Link>
             ))}
           </div>
-          <div className="flex items-center gap-2 ml-auto border-l border-slate-100 pl-4">
-            <span className="text-xs text-slate-500 whitespace-nowrap">Other year:</span>
+          <div className="flex items-center gap-2 ml-auto border-l border-border/50 pl-4">
+            <span className="text-xs text-muted-foreground/70 whitespace-nowrap">Other year:</span>
             <HvaYearInput />
           </div>
         </div>
@@ -170,14 +170,14 @@ export default async function HvaPage() {
         assessments.map((assessment) => (
           <div key={assessment.id} className="bg-card rounded-xl border border-border overflow-hidden">
             {/* Assessment Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-muted/30">
               <div className="flex items-center gap-3">
                 <h2 className="text-base font-bold text-foreground">{assessment.assessmentYear} HVA</h2>
                 <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                  assessment.status === 'APPROVED'   ? 'bg-green-100 text-green-800' :
-                  assessment.status === 'COMPLETED'  ? 'bg-blue-100 text-blue-800' :
-                  assessment.status === 'REVIEWED'   ? 'bg-teal-100 text-teal-800' :
-                  'bg-yellow-100 text-yellow-800'
+                  assessment.status === 'APPROVED'   ? 'bg-green-500/10 text-green-300' :
+                  assessment.status === 'COMPLETED'  ? 'bg-blue-500/10 text-blue-300' :
+                  assessment.status === 'REVIEWED'   ? 'bg-teal-500/10 text-teal-300' :
+                  'bg-yellow-500/10 text-yellow-300'
                 }`}>
                   {assessment.status.replace('_',' ')}
                 </span>
@@ -201,7 +201,7 @@ export default async function HvaPage() {
                   </a>
                 )}
                 <Link href={`/emergency/hva/${assessment.assessmentYear}/edit`}
-                  className="text-xs text-slate-600 hover:text-foreground border border-border px-2 py-1 rounded hover:bg-slate-50 transition-colors">
+                  className="text-xs text-muted-foreground hover:text-foreground border border-border px-2 py-1 rounded hover:bg-accent/50 transition-colors">
                   Edit
                 </Link>
               </div>
@@ -216,8 +216,8 @@ export default async function HvaPage() {
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
-                  <thead className="border-b border-slate-100">
-                    <tr className="text-xs text-slate-500 uppercase tracking-wide">
+                  <thead className="border-b border-border">
+                    <tr className="text-xs text-muted-foreground/70 uppercase tracking-wide">
                       <th className="text-left px-6 py-2 font-semibold">Hazard</th>
                       <th className="text-left px-4 py-2 font-semibold">Type</th>
                       <th className="text-center px-4 py-2 font-semibold">Probability</th>
@@ -227,11 +227,11 @@ export default async function HvaPage() {
                       <th className="text-left px-4 py-2 font-semibold">Mitigation</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-50">
+                  <tbody className="divide-y divide-border/30">
                     {assessment.hazards.map((hazard) => {
                       const risk = riskLevel(hazard.riskScore);
                       return (
-                        <tr key={hazard.id} className="hover:bg-slate-50 transition-colors">
+                        <tr key={hazard.id} className="hover:bg-accent/50 transition-colors">
                           <td className="px-6 py-3 font-medium text-foreground">{hazard.hazardName}</td>
                           <td className="px-4 py-3">
                             <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${hazardTypeColor[hazard.hazardType] ?? ''}`}>
@@ -243,18 +243,18 @@ export default async function HvaPage() {
                           <td className="px-4 py-3 text-center text-foreground/80">{hazard.preparedness}/3</td>
                           <td className="px-4 py-3">
                             <div className="flex items-center gap-2">
-                              <div className="w-16 bg-slate-100 rounded-full h-1.5">
+                              <div className="w-16 bg-muted rounded-full h-1.5">
                                 <div className={`h-1.5 rounded-full ${risk.color}`} style={{ width: `${hazard.riskScore * 100}%` }} />
                               </div>
                               <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${
-                                risk.label === 'HIGH'   ? 'bg-red-100 text-red-800' :
-                                risk.label === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'
+                                risk.label === 'HIGH'   ? 'bg-red-500/10 text-red-300' :
+                                risk.label === 'MEDIUM' ? 'bg-yellow-500/10 text-yellow-300' : 'bg-green-500/10 text-green-300'
                               }`}>
                                 {risk.label} ({(hazard.riskScore * 100).toFixed(0)}%)
                               </span>
                             </div>
                           </td>
-                          <td className="px-4 py-3 text-xs text-slate-500 max-w-xs truncate">
+                          <td className="px-4 py-3 text-xs text-muted-foreground/70 max-w-xs truncate">
                             {hazard.mitigationPlan ?? '-'}
                           </td>
                         </tr>

@@ -143,16 +143,16 @@ export default async function IrIadPage({
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-muted/30 border-b border-border">
               <tr>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">IR #</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Date</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Type</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Severity</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Patient / MRN</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Reporting</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Status</th>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Actions</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">IR #</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Date</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Type</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Severity</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Patient / MRN</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Reporting</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Status</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground/70">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/30">
@@ -165,7 +165,7 @@ export default async function IrIadPage({
                 </tr>
               ) : (
                 reports.map(r => (
-                  <tr key={r.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
+                  <tr key={r.id} className="hover:bg-accent/50 transition-colors cursor-pointer">
                     <td className="px-4 py-3 font-mono text-xs font-semibold text-red-700">
                       <Link href={`/trackers/ir-iad/${r.id}`} className="hover:underline">{r.irNumber}</Link>
                     </td>

@@ -146,12 +146,12 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
 
           <div className="bg-card rounded-xl border border-border p-5">
             <h3 className="text-sm font-semibold text-foreground mb-4">Template Body</h3>
-            <pre className="text-sm text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono bg-slate-50 rounded-lg p-4 overflow-x-auto">
+            <pre className="text-sm text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono bg-muted/30 rounded-lg p-4 overflow-x-auto">
               {template.bodyTemplate}
             </pre>
           </div>
 
-          <div className="bg-slate-50 rounded-xl border border-border px-5 py-3 flex items-center justify-between text-xs text-slate-500">
+          <div className="bg-muted/30 rounded-xl border border-border px-5 py-3 flex items-center justify-between text-xs text-muted-foreground/70">
             <span>Created {formatDate(template.createdAt)}</span>
             <span>Last updated {formatDate(template.updatedAt)}</span>
           </div>

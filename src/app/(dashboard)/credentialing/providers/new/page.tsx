@@ -138,7 +138,7 @@ export default function NewProviderPage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/credentialing/providers" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/credentialing/providers" className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-accent/50">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Add Provider'}
           </button>

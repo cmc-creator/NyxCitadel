@@ -115,15 +115,15 @@ export default async function ResponseDetailPage({ params }: { params: { id: str
           </div>
 
           {response.sourceRef && (
-            <div className="bg-slate-50 rounded-xl border border-border p-4">
-              <p className="text-xs font-medium text-slate-500 mb-1">Source Reference</p>
+            <div className="bg-muted/30 rounded-xl border border-border p-4">
+              <p className="text-xs font-medium text-muted-foreground/70 mb-1">Source Reference</p>
               <p className="text-sm text-foreground font-medium">{response.sourceType?.replace(/_/g, ' ')} – {response.sourceRef}</p>
             </div>
           )}
 
           {response.template && (
-            <div className="bg-slate-50 rounded-xl border border-border p-4">
-              <p className="text-xs font-medium text-slate-500 mb-1">Template Used</p>
+            <div className="bg-muted/30 rounded-xl border border-border p-4">
+              <p className="text-xs font-medium text-muted-foreground/70 mb-1">Template Used</p>
               <Link href={`/quality/response-templates/${response.template.id}`} className="text-sm text-purple-600 hover:text-purple-700 font-medium">
                 {response.template.name}
               </Link>
@@ -149,7 +149,7 @@ export default async function ResponseDetailPage({ params }: { params: { id: str
             </div>
           )}
 
-          <div className="bg-slate-50 rounded-xl border border-border px-5 py-3 flex items-center justify-between text-xs text-slate-500">
+          <div className="bg-muted/30 rounded-xl border border-border px-5 py-3 flex items-center justify-between text-xs text-muted-foreground/70">
             <span>Created {formatDate(response.createdAt)}</span>
             <span>Last updated {formatDate(response.updatedAt)}</span>
           </div>

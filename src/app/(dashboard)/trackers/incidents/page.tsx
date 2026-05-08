@@ -47,7 +47,7 @@ export default async function IncidentsPage({
         <div className="flex items-center gap-2">
           <Link
             href="/api/export/incidents"
-            className="inline-flex items-center gap-1.5 text-sm bg-card border border-border hover:bg-slate-50 text-foreground/80 px-3 py-1.5 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm bg-card border border-border hover:bg-accent/50 text-foreground/80 px-3 py-1.5 rounded-lg font-medium transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
             Export CSV
@@ -85,7 +85,7 @@ export default async function IncidentsPage({
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
               tab.active
                 ? 'bg-teal-600 text-white'
-                : 'bg-card border border-border text-slate-600 hover:bg-slate-50'
+                : 'bg-card border border-border text-muted-foreground hover:bg-accent/50'
             }`}
           >
             {tab.label}

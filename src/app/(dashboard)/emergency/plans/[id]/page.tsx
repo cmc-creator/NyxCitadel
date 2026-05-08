@@ -159,7 +159,7 @@ export default async function EmergencyPlanDetailPage({ params }: { params: { id
         </Link>
         <Link
           href="/emergency/plans"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 bg-card border border-border px-3 py-2 rounded-lg hover:bg-slate-50"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground bg-card border border-border px-3 py-2 rounded-lg hover:bg-accent/50"
         >
           ← All Plans
         </Link>

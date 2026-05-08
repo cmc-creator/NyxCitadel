@@ -271,7 +271,7 @@ export default function FacilityMapPage() {
                   )}
                 </div>
               </div>
-              <div className="p-4 bg-slate-50 min-h-[500px] flex items-center justify-center">
+              <div className="p-4 bg-muted/30 min-h-[500px] flex items-center justify-center">
                 {selected.imageUrl && selected.imageUrl !== '/images/placeholder-floorplan.svg' ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img

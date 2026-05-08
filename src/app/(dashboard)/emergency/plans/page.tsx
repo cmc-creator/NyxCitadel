@@ -102,19 +102,19 @@ export default async function EmergencyPlansPage() {
       {/* Table */}
       <div className="bg-card rounded-xl border border-border overflow-x-auto">
         <table className="w-full text-sm min-w-[640px]">
-          <thead className="bg-slate-50 border-b border-slate-200">
+          <thead className="bg-muted/30 border-b border-border">
             <tr>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Plan Name</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Type</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Version</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Effective Date</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Last Reviewed</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Next Review</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Status</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Document</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Plan Name</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Type</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Version</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Effective Date</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Last Reviewed</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Next Review</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Status</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Document</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody className="divide-y divide-border/30">
             {plans.length === 0 ? (
               <tr>
                 <td colSpan={8} className="text-center py-12 text-muted-foreground/70">
@@ -130,7 +130,7 @@ export default async function EmergencyPlansPage() {
                   plan.nextReviewDate && isPast(plan.nextReviewDate) && plan.status === 'ACTIVE';
                 const { label, className } = getDueDateStatus(plan.nextReviewDate);
                 return (
-                  <tr key={plan.id} className="hover:bg-slate-50 transition-colors cursor-pointer">
+                  <tr key={plan.id} className="hover:bg-accent/50 transition-colors cursor-pointer">
                     <td className="px-4 py-3">
                       <Link href={`/emergency/plans/${plan.id}`} className="font-medium text-foreground hover:underline hover:text-teal-700">{plan.planName}</Link>
                     </td>

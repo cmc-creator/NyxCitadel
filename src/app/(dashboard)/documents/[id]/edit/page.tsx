@@ -145,7 +145,7 @@ export default function EditDocumentPage() {
           </button>
           <a
             href={`/documents/${id}`}
-            className="px-4 py-2.5 text-sm font-medium text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+            className="px-4 py-2.5 text-sm font-medium text-muted-foreground border border-border rounded-lg hover:bg-accent/50 transition-colors"
           >
             Cancel
           </a>

@@ -147,7 +147,7 @@ export default function NewEmergencyPlanPage() {
           <button type="submit" disabled={saving} className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-medium py-2.5 rounded-lg transition-colors">
             {saving ? 'Saving…' : 'Add Emergency Plan'}
           </button>
-          <Link href="/emergency/plans" className="px-4 py-2.5 text-sm font-medium text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
+          <Link href="/emergency/plans" className="px-4 py-2.5 text-sm font-medium text-muted-foreground border border-border rounded-lg hover:bg-accent/50 transition-colors">
             Cancel
           </Link>
         </div>

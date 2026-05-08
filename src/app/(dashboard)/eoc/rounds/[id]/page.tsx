@@ -84,12 +84,12 @@ export default async function EocRoundDetailPage({ params }: { params: { id: str
             </p>
           </div>
           <div className="flex gap-4 text-center shrink-0">
-            <div className="bg-slate-50 rounded-xl px-4 py-2">
+            <div className="bg-muted/30 rounded-xl px-4 py-2">
               <p className="text-2xl font-bold text-foreground">{round.totalItems}</p>
               <p className="text-xs text-muted-foreground/70">Total Items</p>
             </div>
-            <div className={`rounded-xl px-4 py-2 ${openDefs.length > 0 ? 'bg-red-950/20' : 'bg-green-50'}`}>
-              <p className={`text-2xl font-bold ${openDefs.length > 0 ? 'text-red-700' : 'text-green-700'}`}>{openDefs.length}</p>
+            <div className={`rounded-xl px-4 py-2 ${openDefs.length > 0 ? 'bg-red-950/20' : 'bg-green-500/10'}`}>
+              <p className={`text-2xl font-bold ${openDefs.length > 0 ? 'text-red-400' : 'text-green-300'}`}>{openDefs.length}</p>
               <p className="text-xs text-muted-foreground/70">Open Deficiencies</p>
             </div>
           </div>

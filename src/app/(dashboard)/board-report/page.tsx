@@ -480,9 +480,9 @@ export default async function BoardReportPage() {
         </ReportSection>
 
         {/* Closing Statement */}
-        <div className="bg-slate-50 border border-border rounded-xl p-5">
+        <div className="bg-muted/30 border border-border rounded-xl p-5">
           <h3 className="text-sm font-bold text-foreground/80 mb-2">Closing Statement</h3>
-          <p className="text-sm text-slate-600 leading-relaxed">
+          <p className="text-sm text-muted-foreground/70 leading-relaxed">
             {facility?.name} presents this compliance report for the period ending {reportDate}.
             The facility&apos;s overall Resilience Grade is <strong>{resGrade} ({resilience}/100)</strong>.{' '}
             {criticalIR.length > 0
@@ -536,15 +536,15 @@ function ReportSection({ icon, title, children }: { icon: React.ReactNode; title
 
 function StatBox({ label, value, highlight = false }: { label: string; value: number | string; highlight?: boolean }) {
   return (
-    <div className={`rounded-lg border p-3 ${highlight ? 'bg-orange-950/20 border-orange-200' : 'bg-slate-50 border-slate-200'}`}>
-      <p className={`text-2xl font-bold ${highlight ? 'text-orange-700' : 'text-foreground'}`}>{value}</p>
-      <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+    <div className={`rounded-lg border p-3 ${highlight ? 'bg-orange-950/20 border-orange-200' : 'bg-muted/30 border-border'}`}>
+      <p className={`text-2xl font-bold ${highlight ? 'text-orange-400' : 'text-foreground'}`}>{value}</p>
+      <p className="text-xs text-muted-foreground/70 mt-0.5">{label}</p>
     </div>
   );
 }
 
 function ScorePill({ label, pct }: { label: string; pct: number }) {
-  const color = pct >= 80 ? 'bg-emerald-100 text-emerald-700' : pct >= 65 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700';
+  const color = pct >= 80 ? 'bg-emerald-500/10 text-emerald-300' : pct >= 65 ? 'bg-yellow-500/10 text-yellow-300' : 'bg-red-500/10 text-red-300';
   return (
     <div className={`text-xs font-medium px-3 py-1 rounded-full ${color}`}>
       {label}: {pct}%

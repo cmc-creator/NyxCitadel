@@ -64,7 +64,7 @@ export default async function DrillsPage({
         <div className="flex items-center gap-2">
           <Link
             href="/api/export/drills"
-            className="inline-flex items-center gap-1.5 text-sm bg-card border border-border hover:bg-slate-50 text-foreground/80 px-3 py-1.5 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm bg-card border border-border hover:bg-accent/50 text-foreground/80 px-3 py-1.5 rounded-lg font-medium transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
             Export CSV
@@ -123,7 +123,7 @@ export default async function DrillsPage({
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
               tab.active
                 ? 'bg-teal-600 text-white'
-                : 'bg-card border border-border text-slate-600 hover:bg-slate-50'
+                : 'bg-card border border-border text-muted-foreground hover:bg-accent/50'
             }`}
           >
             {tab.label}
@@ -134,18 +134,18 @@ export default async function DrillsPage({
       {/* Table */}
       <div className="bg-card rounded-xl border border-border overflow-x-auto">
         <table className="w-full text-sm min-w-[640px]">
-          <thead className="bg-slate-50 border-b border-slate-200">
+          <thead className="bg-muted/30 border-b border-border">
             <tr>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Drill Name</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Type</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Scheduled</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Conducted</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Participants</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">AAR Due</th>
-              <th className="text-left px-4 py-3 font-semibold text-slate-600">Status</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Drill Name</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Type</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Scheduled</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Conducted</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Participants</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">AAR Due</th>
+              <th className="text-left px-4 py-3 font-semibold text-muted-foreground/70">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody className="divide-y divide-border/30">
             {drills.length === 0 ? (
               <tr>
                 <td colSpan={7} className="text-center py-12 text-muted-foreground/70">
@@ -165,7 +165,7 @@ export default async function DrillsPage({
                   new Date() > aarDue &&
                   drill.status !== 'COMPLETED';
                 return (
-                  <tr key={drill.id} className="hover:bg-slate-50 transition-colors">
+                  <tr key={drill.id} className="hover:bg-accent/50 transition-colors">
                     <td className="px-4 py-3">
                       <p className="font-medium text-foreground">{drill.drillName}</p>
                       {drill.location && (

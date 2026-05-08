@@ -6,6 +6,8 @@ import {
   ClipboardCheck,
   ChevronLeft,
   Calendar,
+  User,
+  FileText,
   CheckCircle2,
   Circle,
   AlertTriangle,
@@ -13,8 +15,6 @@ import {
   Pencil,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
-import { ApprovalPanel, type ApprovalHistoryEntry } from '@/components/shared/ApprovalPanel';
-import { CommentThread } from '@/components/shared/CommentThread';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,7 +54,6 @@ export default async function PocDetailPage({ params }: { params: { id: string }
                     poc.status !== 'ACCEPTED' &&
                     poc.status !== 'CLOSED' &&
                     new Date() > poc.responseDeadline;
-  const canApprove = ['ADMIN', 'SUPER_ADMIN'].includes(session!.user.role);
 
   return (
     <div className="space-y-6 max-w-5xl">
@@ -165,18 +164,6 @@ export default async function PocDetailPage({ params }: { params: { id: string }
           >
             + Generate POC Cover Letter
           </Link>
-
-          <ApprovalPanel
-            recordId={poc.id}
-            approveApiPath={`/api/poc/${poc.id}/approve`}
-            returnApiPath={`/api/poc/${poc.id}/return`}
-            approvalStatus={poc.approvalStatus as 'DRAFT' | 'PENDING_REVIEW' | 'APPROVED' | 'RETURNED' | 'REJECTED'}
-            approvalHistory={poc.approvalHistory as ApprovalHistoryEntry[] | null}
-            reviewedBy={poc.reviewedBy}
-            reviewedAt={poc.reviewedAt}
-            reviewNote={poc.reviewNote}
-            canApprove={canApprove}
-          />
         </div>
 
         {/* Right: Findings */}
@@ -258,23 +245,16 @@ export default async function PocDetailPage({ params }: { params: { id: string }
           </div>
 
           {poc.certificationStatement && (
-            <div className="bg-slate-50 rounded-xl border border-border p-5">
+            <div className="bg-muted/30 rounded-xl border border-border p-5">
               <h3 className="text-sm font-semibold text-foreground mb-3">Certification Statement</h3>
               <p className="text-sm text-foreground/80 whitespace-pre-wrap leading-relaxed italic">{poc.certificationStatement}</p>
             </div>
           )}
 
-          <div className="bg-slate-50 rounded-xl border border-border px-5 py-3 flex items-center justify-between text-xs text-slate-500">
+          <div className="bg-muted/30 rounded-xl border border-border px-5 py-3 flex items-center justify-between text-xs text-muted-foreground/70">
             <span>Created {formatDate(poc.createdAt)}</span>
             <span>Last updated {formatDate(poc.updatedAt)}</span>
           </div>
-
-          <CommentThread
-            recordType="POC"
-            recordId={poc.id}
-            currentUserId={session!.user.id}
-            currentUserRole={session!.user.role}
-          />
         </div>
       </div>
     </div>

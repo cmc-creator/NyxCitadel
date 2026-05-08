@@ -184,7 +184,7 @@ export default function NewResponseTemplatePage() {
                 type="button"
                 onClick={() => addVariable(v)}
                 disabled={variables.includes(v)}
-                className="text-xs bg-slate-50 hover:bg-teal-950/20 border border-border hover:border-teal-300 text-slate-600 hover:text-teal-700 px-2 py-1 rounded disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="text-xs bg-muted/30 hover:bg-teal-950/20 border border-border hover:border-teal-300 text-muted-foreground hover:text-teal-400 px-2 py-1 rounded disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 {v}
               </button>
@@ -258,7 +258,7 @@ export default function NewResponseTemplatePage() {
           </button>
           <a
             href="/quality/response-templates"
-            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors"
+            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-accent/50 transition-colors"
           >
             Cancel
           </a>

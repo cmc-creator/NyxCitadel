@@ -289,7 +289,7 @@ export default function ImportPoliciesPage() {
             Dates must be in <strong>YYYY-MM-DD</strong> or <strong>MM/DD/YYYY</strong> format.
             Policy numbers are auto-generated if omitted.
           </p>
-          <button onClick={downloadTemplate} className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-700 border border-blue-300 bg-white hover:bg-blue-950/20 px-3 py-1.5 rounded-lg transition">
+          <button onClick={downloadTemplate} className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-400 border border-blue-800/50 bg-blue-950/20 hover:bg-blue-950/40 px-3 py-1.5 rounded-lg transition">
             <Download className="w-3.5 h-3.5" /> Download Template CSV
           </button>
         </div>
@@ -299,9 +299,9 @@ export default function ImportPoliciesPage() {
       <div className="bg-card rounded-xl border border-border p-6 space-y-4">
         <h2 className="text-sm font-semibold text-foreground">Upload CSV File</h2>
         {!fileName ? (
-          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-teal-300 hover:bg-teal-950/20 transition-colors">
+          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-border rounded-xl cursor-pointer hover:border-teal-300 hover:bg-teal-950/20 transition-colors">
             <Upload className="w-6 h-6 text-muted-foreground/70 mb-2" />
-            <span className="text-sm text-slate-500">Click to upload your policies CSV</span>
+            <span className="text-sm text-muted-foreground/70">Click to upload your policies CSV</span>
             <span className="text-xs text-muted-foreground/70 mt-1">CSV files only</span>
             <input ref={fileRef} type="file" accept=".csv,text/csv" className="hidden" onChange={handleFile} />
           </label>

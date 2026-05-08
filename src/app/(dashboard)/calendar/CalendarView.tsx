@@ -157,9 +157,9 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
       <div className="overflow-x-auto">
         <div style={{ minWidth: 700 }}>
           {/* Day headers */}
-          <div className="grid grid-cols-7 border-b border-slate-200 bg-slate-50">
+          <div className="grid grid-cols-7 border-b border-border bg-muted/30">
             {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => (
-              <div key={d} className="py-2 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">{d}</div>
+              <div key={d} className="py-2 text-center text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider">{d}</div>
             ))}
           </div>
           {/* Grid */}
@@ -176,8 +176,8 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                   onDragOver={e => { e.preventDefault(); setDragOverDay(dayKey); }}
                   onDragLeave={() => setDragOverDay(null)}
                   onDrop={() => handleDrop(day)}
-                  className={`min-h-[110px] border-b border-r border-slate-100 p-1.5 relative group/cell transition-colors ${
-                    !inMonth ? 'bg-slate-50/70' : ''
+                  className={`min-h-[110px] border-b border-r border-border/30 p-1.5 relative group/cell transition-colors ${
+                    !inMonth ? 'bg-muted/20' : ''
                   } ${isDragOver ? 'bg-teal-950/20 ring-2 ring-inset ring-teal-300' : ''}`}
                 >
                   <div className="flex items-center justify-between mb-1">
@@ -203,7 +203,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                           dragId === ev.id ? 'opacity-40' : ''
                         } ${
                           ev.status === 'COMPLETED'
-                            ? 'line-through opacity-50 bg-slate-100 text-muted-foreground/70'
+                            ? 'line-through opacity-50 bg-muted text-muted-foreground/70'
                             : PRIORITY_CHIP[ev.priority]
                         }`}
                         title={ev.title}
@@ -236,7 +236,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
     });
     return (
       <div className="overflow-x-auto">
-        <div style={{ minWidth: 700 }} className="grid grid-cols-7 divide-x divide-slate-100">
+        <div style={{ minWidth: 700 }} className="grid grid-cols-7 divide-x divide-border/30">
           {days.map(day => {
             const dayEvents = eventsOnDay(day);
             const today     = isToday(day);
@@ -248,12 +248,12 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                 onDragOver={e => { e.preventDefault(); setDragOverDay(dayKey); }}
                 onDragLeave={() => setDragOverDay(null)}
                 onDrop={() => handleDrop(day)}
-                className={`min-h-[360px] p-2 hover:bg-slate-50/50 group/cell transition-colors ${
+                className={`min-h-[360px] p-2 hover:bg-accent/30 group/cell transition-colors ${
                   isDragOver ? 'bg-teal-950/20 ring-2 ring-inset ring-teal-300' : ''
                 }`}
               >
                 {/* Column header */}
-                <div className="text-center pb-2 mb-2 border-b border-slate-100">
+                <div className="text-center pb-2 mb-2 border-b border-border/50">
                   <div className="text-[10px] font-semibold text-muted-foreground/70 uppercase tracking-wide">
                     {format(day, 'EEE')}
                   </div>
@@ -278,7 +278,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                         dragId === ev.id ? 'opacity-40' : ''
                       } ${
                         ev.status === 'COMPLETED'
-                          ? 'bg-slate-100 text-muted-foreground/70 line-through'
+                          ? 'bg-muted text-muted-foreground/70 line-through'
                           : PRIORITY_CHIP[ev.priority]
                       }`}
                     >
@@ -320,16 +320,16 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
       <div className="divide-y divide-border/30">
         {Object.entries(grouped).map(([month, monthEvents]) => (
           <div key={month}>
-            <div className="bg-slate-50 px-5 py-2.5 flex items-center justify-between border-b border-slate-100">
+            <div className="bg-muted/30 px-5 py-2.5 flex items-center justify-between border-b border-border/50">
               <h3 className="text-sm font-semibold text-foreground/80">{month}</h3>
               <span className="text-xs text-muted-foreground/70">{monthEvents.length} event{monthEvents.length !== 1 ? 's' : ''}</span>
             </div>
-            <div className="divide-y divide-slate-50">
+            <div className="divide-y divide-border/30">
               {monthEvents.map(ev => {
                 const due     = parseISO(ev.dueDate);
                 const overdue = isPast(due) && ev.status !== 'COMPLETED';
                 return (
-                  <div key={ev.id} className="flex items-center gap-4 px-5 py-3 hover:bg-slate-50 transition-colors group">
+                  <div key={ev.id} className="flex items-center gap-4 px-5 py-3 hover:bg-accent/50 transition-colors group">
                     {/* Date bubble */}
                     <div className={`w-11 h-11 rounded-xl flex flex-col items-center justify-center flex-shrink-0 border ${
                       isToday(due)  ? 'bg-teal-600 border-teal-600 text-white' :
@@ -370,7 +370,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
                       </button>
                     )}
                     <Link href={`/calendar/${ev.id}/edit`}
-                      className="opacity-0 group-hover:opacity-100 text-xs text-slate-500 border border-border rounded-lg px-2.5 py-1.5 hover:bg-slate-50 transition-all">
+                      className="opacity-0 group-hover:opacity-100 text-xs text-muted-foreground/70 border border-border rounded-lg px-2.5 py-1.5 hover:bg-accent/50 transition-all">
                       Edit
                     </Link>
                   </div>
@@ -438,7 +438,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
         {FILTER_OPTS.map(o => (
           <button key={o.value} onClick={() => setFilter(o.value)}
             className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
-              filter === o.value ? 'bg-teal-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              filter === o.value ? 'bg-teal-600 text-white shadow-sm' : 'bg-card border border-border text-muted-foreground hover:bg-accent/50'
             }`}>
             {o.label}
           </button>
@@ -450,11 +450,11 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
       {/* ── View controls bar ── */}
       <div className="bg-card rounded-xl border border-border px-4 py-3 flex flex-wrap items-center gap-3">
         {/* View tabs */}
-        <div className="flex items-center gap-0.5 bg-slate-100 rounded-lg p-0.5">
+        <div className="flex items-center gap-0.5 bg-muted/50 rounded-lg p-0.5">
           {(['month','week','list'] as ViewMode[]).map(v => (
             <button key={v} onClick={() => setView(v)}
               className={`px-3 py-1.5 text-xs font-semibold rounded transition-colors ${
-                view === v ? 'bg-white shadow-sm text-teal-700' : 'text-slate-500 hover:text-foreground/80'
+                view === v ? 'bg-background shadow-sm text-teal-500' : 'text-muted-foreground hover:text-foreground/80'
               }`}>
               {v === 'month' ? '📅 Month' : v === 'week' ? '🗓 Week' : '📋 List'}
             </button>
@@ -463,11 +463,11 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
         {/* Navigation (month + week only) */}
         {view !== 'list' && (
           <div className="flex items-center gap-1">
-            <button onClick={prev} className="p-1.5 rounded hover:bg-slate-100 text-slate-600 transition-colors">
+            <button onClick={prev} className="p-1.5 rounded hover:bg-accent/50 text-muted-foreground transition-colors">
               <ChevronLeft className="w-4 h-4" />
             </button>
             <span className="text-sm font-semibold text-foreground/80 min-w-[180px] text-center">{navLabel()}</span>
-            <button onClick={next} className="p-1.5 rounded hover:bg-slate-100 text-slate-600 transition-colors">
+            <button onClick={next} className="p-1.5 rounded hover:bg-accent/50 text-muted-foreground transition-colors">
               <ChevronRight className="w-4 h-4" />
             </button>
             <button onClick={() => setCurrent(new Date())}

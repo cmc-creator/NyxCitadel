@@ -147,7 +147,7 @@ export default async function QualityPage() {
           <Link href="/quality/projects" className="text-xs text-muted-foreground/70 hover:text-teal-600">View projects →</Link>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Incidents (This Month)</p>
+          <p className="text-xs font-medium text-muted-foreground/70 uppercase tracking-wide">Incidents (This Month)</p>
           <p className="text-3xl font-bold mt-1 text-red-600">{monthlyIncidentCounts[5]}</p>
           <Link href="/trackers/incidents" className="text-xs text-muted-foreground/70 hover:text-teal-600">View incidents →</Link>
         </div>
@@ -224,7 +224,7 @@ export default async function QualityPage() {
                 {ind.required && (
                   <span className="text-xs font-medium bg-teal-950/20 text-teal-700 px-2 py-0.5 rounded-full">Required</span>
                 )}
-                <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${hasData ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-500'}`}>
+                <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${hasData ? 'bg-green-500/10 text-green-300' : 'bg-muted/30 text-muted-foreground/70'}`}>
                   {hasData ? `${thisYear} ✓` : 'No data'}
                 </span>
               </div>

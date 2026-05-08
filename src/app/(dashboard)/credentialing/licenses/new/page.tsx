@@ -129,7 +129,7 @@ export default function NewProviderLicensePage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/credentialing/licenses" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/credentialing/licenses" className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-accent/50">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Add License'}
           </button>

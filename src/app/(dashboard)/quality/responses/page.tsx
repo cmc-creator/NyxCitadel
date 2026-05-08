@@ -103,14 +103,14 @@ export default async function ResponsesPage() {
       ) : (
         <div className="bg-card rounded-xl border border-border overflow-x-auto">
           <table className="w-full text-sm min-w-[640px]">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-muted/30 border-b border-border">
               <tr>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Title</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Template</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Recipient</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Status</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Due / Sent</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Created</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide">Title</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide">Template</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide">Recipient</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide">Status</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide">Due / Sent</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wide">Created</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -119,7 +119,7 @@ export default async function ResponsesPage() {
                 const StatusIcon = STATUS_ICONS[r.status] ?? FileEdit;
                 const isOverdue = r.dueDate && r.dueDate < new Date() && r.status !== 'SENT' && r.status !== 'FILED';
                 return (
-                  <tr key={r.id} className="hover:bg-slate-50 transition-colors">
+                  <tr key={r.id} className="hover:bg-accent/50 transition-colors">
                     <td className="px-4 py-3">
                       <div className="font-medium text-foreground">{r.title}</div>
                       {r.aiGenerated && <span className="text-xs text-teal-500">✦ AI drafted</span>}

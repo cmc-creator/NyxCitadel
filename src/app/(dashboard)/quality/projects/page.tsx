@@ -124,7 +124,7 @@ function ProjectRow({ project }: { project: any }) {
   const progress = project.baselineValue !== null && project.targetValue !== null;
 
   return (
-    <Link href={`/quality/projects/${project.id}`} className="block px-6 py-4 hover:bg-slate-50 transition-colors">
+    <Link href={`/quality/projects/${project.id}`} className="block px-6 py-4 hover:bg-accent/50 transition-colors">
       <div className="flex items-start gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
