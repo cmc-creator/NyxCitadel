@@ -100,8 +100,8 @@ export default async function EmergencyPlansPage() {
       )}
 
       {/* Table */}
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-card rounded-xl border border-border overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
               <th className="text-left px-4 py-3 font-semibold text-slate-600">Plan Name</th>

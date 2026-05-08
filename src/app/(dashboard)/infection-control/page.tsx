@@ -93,14 +93,14 @@ export default async function InfectionControlPage() {
 
       {/* HAI Snapshot */}
       {haiSnapshot.length > 0 && (
-        <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
+        <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-x-auto">
           <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
             <p className="font-semibold text-white text-sm">HAI Snapshot - Latest Data</p>
             <Link href="/infection-control/hai" className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1">
               Full Dashboard <ChevronRight className="w-3 h-3" />
             </Link>
           </div>
-          <table className="w-full text-sm">
+          <table className="w-full text-sm min-w-[640px]">
             <thead className="bg-slate-900/40">
               <tr>
                 {['HAI Type', 'Month', 'Cases', 'Rate / 1000 pt-days', 'NHSN Benchmark', 'SIR', 'Status'].map(h => (

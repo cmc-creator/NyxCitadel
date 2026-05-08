@@ -108,7 +108,7 @@ const STATUS_CONFIG = {
     label: 'Coming Soon',
     icon: AlertCircle,
     color: 'text-muted-foreground/70',
-    bg: 'bg-slate-50 border-slate-200',
+    bg: 'bg-card border-border',
   },
 };
 
@@ -144,7 +144,7 @@ export default function IntegrationsPage() {
             className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
               activeCategory === cat
                 ? 'bg-teal-600 text-white border-teal-600'
-                : 'bg-white text-slate-600 border-slate-200 hover:border-teal-300'
+                : 'bg-card text-muted-foreground border-border hover:border-teal-500/50'
             }`}
           >
             {cat}
@@ -160,7 +160,7 @@ export default function IntegrationsPage() {
           return (
             <div
               key={integration.key}
-              className={`bg-white border rounded-xl px-5 py-4 flex items-start gap-4 ${cfg.bg}`}
+              className={`bg-card border rounded-xl px-5 py-4 flex items-start gap-4 ${cfg.bg}`}
             >
               {/* Logo */}
               <div
@@ -173,7 +173,7 @@ export default function IntegrationsPage() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="text-sm font-semibold text-foreground">{integration.name}</p>
-                  <span className="text-xs text-muted-foreground/70 bg-slate-100 rounded-full px-2 py-0.5">
+                  <span className="text-xs text-muted-foreground/70 bg-accent/50 rounded-full px-2 py-0.5">
                     {integration.category}
                   </span>
                 </div>

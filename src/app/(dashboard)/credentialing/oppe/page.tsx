@@ -73,11 +73,11 @@ export default async function OppePage() {
         ))}
       </div>
 
-      <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
+      <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-x-auto">
         <div className="px-5 py-3 border-b border-white/10">
           <p className="font-semibold text-white text-sm">OPPE Results</p>
         </div>
-        <table className="w-full text-sm">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-slate-900/40">
             <tr>
               {['Provider', 'Period', 'Cases Reviewed', 'Compliance Rate', 'Overall Rating', 'MEC Approved'].map(h => (

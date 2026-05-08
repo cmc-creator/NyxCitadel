@@ -58,15 +58,15 @@ const DEPARTMENTS = [
 ];
 
 const ROLE_COLORS: Record<string, string> = {
-  SUPER_ADMIN:       'bg-red-100    text-red-800',
-  ADMIN:             'bg-teal-100 text-teal-800',
-  COMPLIANCE_OFFICER:'bg-blue-100   text-blue-800',
-  RISK_MANAGER:      'bg-orange-100 text-orange-800',
-  EM_COORDINATOR:    'bg-teal-100   text-teal-800',
-  QUALITY:           'bg-green-100  text-green-800',
-  EDUCATION:         'bg-yellow-100 text-yellow-800',
-  STAFF:             'bg-slate-100  text-foreground/80',
-  READ_ONLY:         'bg-gray-100   text-gray-600',
+  SUPER_ADMIN:       'bg-red-500/10    text-red-300',
+  ADMIN:             'bg-teal-500/10   text-teal-300',
+  COMPLIANCE_OFFICER:'bg-blue-500/10   text-blue-300',
+  RISK_MANAGER:      'bg-orange-500/10 text-orange-300',
+  EM_COORDINATOR:    'bg-teal-500/10   text-teal-300',
+  QUALITY:           'bg-green-500/10  text-green-300',
+  EDUCATION:         'bg-yellow-500/10 text-yellow-300',
+  STAFF:             'bg-muted/50      text-foreground/80',
+  READ_ONLY:         'bg-muted/30      text-muted-foreground',
 };
 
 const EMPTY_FORM = {
@@ -172,7 +172,7 @@ export default function UsersSettingsPage() {
 
       {/* Flash */}
       {flash && (
-        <div className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium ${flash.type === 'ok' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-950/20 text-red-800 border border-red-200'}`}>
+        <div className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium ${flash.type === 'ok' ? 'bg-green-500/10 text-green-300 border border-green-500/20' : 'bg-red-500/10 text-red-300 border border-red-500/20'}`}>
           {flash.type === 'ok' ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
           {flash.msg}
           <button onClick={() => setFlash(null)} className="ml-auto"><X className="w-4 h-4" /></button>
@@ -180,7 +180,7 @@ export default function UsersSettingsPage() {
       )}
 
       {error && (
-        <div className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm bg-red-950/20 text-red-800 border border-red-200">
+        <div className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm bg-red-500/10 text-red-300 border border-red-500/20">
           <AlertCircle className="w-4 h-4" />{error}
         </div>
       )}
@@ -192,12 +192,12 @@ export default function UsersSettingsPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-foreground/80 mb-1">Full Name</label>
-              <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Jane Smith" />
+              <input className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Jane Smith" />
             </div>
             <div>
               <label className="block text-xs font-medium text-foreground/80 mb-1">Email <span className="text-red-500">*</span></label>
               <input
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-teal-500"
                 value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                 type="email"
@@ -210,7 +210,7 @@ export default function UsersSettingsPage() {
               </label>
               <div className="relative">
                 <input
-                  className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 pr-10"
+                  className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-teal-500 pr-10"
                   type={showPw ? 'text' : 'password'}
                   value={form.password}
                   onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
@@ -223,18 +223,18 @@ export default function UsersSettingsPage() {
             </div>
             <div>
               <label className="block text-xs font-medium text-foreground/80 mb-1">Role *</label>
-              <select className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))}>
+              <select className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))}>
                 {ROLES.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-xs font-medium text-foreground/80 mb-1">Job Title</label>
-              <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Compliance Officer" />
+              <input className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-teal-500" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Compliance Officer" />
             </div>
             <div>
               <label className="block text-xs font-medium text-foreground/80 mb-1">Department</label>
               <select
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-teal-500"
                 value={form.department}
                 onChange={e => setForm(f => ({ ...f, department: e.target.value }))}
               >
@@ -252,7 +252,7 @@ export default function UsersSettingsPage() {
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
               {editUser ? 'Save Changes' : 'Create User'}
             </button>
-            <button onClick={() => setShowForm(false)} className="px-5 py-2 text-sm font-medium text-slate-600 hover:text-foreground border border-slate-300 rounded-lg hover:bg-slate-50 transition">Cancel</button>
+            <button onClick={() => setShowForm(false)} className="px-5 py-2 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-lg hover:bg-accent transition">Cancel</button>
           </div>
         </div>
       )}
@@ -269,40 +269,40 @@ export default function UsersSettingsPage() {
             <div className="bg-card border border-border rounded-xl overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-slate-100">
-                    <th className="text-left text-xs font-semibold text-slate-500 px-4 py-3 w-1/3">Name / Email</th>
-                    <th className="text-left text-xs font-semibold text-slate-500 px-4 py-3">Role</th>
-                    <th className="text-left text-xs font-semibold text-slate-500 px-4 py-3">Department</th>
-                    <th className="text-left text-xs font-semibold text-slate-500 px-4 py-3">Last Login</th>
-                    <th className="text-left text-xs font-semibold text-slate-500 px-4 py-3">Since</th>
+                  <tr className="border-b border-border">
+                    <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3 w-1/3">Name / Email</th>
+                    <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">Role</th>
+                    <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">Department</th>
+                    <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">Last Login</th>
+                    <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">Since</th>
                     <th className="px-4 py-3 w-20" />
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-50">
+                <tbody className="divide-y divide-border/30">
                   {active.length === 0 && (
                     <tr><td colSpan={6} className="text-center text-muted-foreground/70 text-sm py-6">No active users.</td></tr>
                   )}
                   {active.map(u => (
-                    <tr key={u.id} className="hover:bg-slate-50 transition">
+                    <tr key={u.id} className="hover:bg-accent/50 transition">
                       <td className="px-4 py-3">
                         <p className="font-medium text-foreground">{u.name ?? '-'}</p>
                         <p className="text-xs text-muted-foreground/70">{u.email}</p>
                         {u.title && <p className="text-xs text-slate-500 mt-0.5">{u.title}</p>}
                       </td>
                       <td className="px-4 py-3">
-                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ROLE_COLORS[u.role] ?? 'bg-slate-100 text-foreground/80'}`}>
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ROLE_COLORS[u.role] ?? 'bg-muted/50 text-foreground/80'}`}>
                           {ROLES.find(r => r.value === u.role)?.label ?? u.role}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-xs text-slate-600">{u.department ?? '-'}</td>
-                      <td className="px-4 py-3 text-xs text-slate-500">{fmtDate(u.lastLoginAt)}</td>
-                      <td className="px-4 py-3 text-xs text-slate-500">{fmtDate(u.createdAt)}</td>
+                      <td className="px-4 py-3 text-xs text-muted-foreground/70">{u.department ?? '-'}</td>
+                      <td className="px-4 py-3 text-xs text-muted-foreground/70">{fmtDate(u.lastLoginAt)}</td>
+                      <td className="px-4 py-3 text-xs text-muted-foreground/70">{fmtDate(u.createdAt)}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-1">
-                          <button onClick={() => openEdit(u)} className="p-1.5 rounded hover:bg-slate-200 text-slate-500 hover:text-teal-700 transition" title="Edit">
+                          <button onClick={() => openEdit(u)} className="p-1.5 rounded hover:bg-accent text-muted-foreground/70 hover:text-teal-400 transition" title="Edit">
                             <PencilLine className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => void toggleActive(u)} className="p-1.5 rounded hover:bg-red-100 text-slate-500 hover:text-red-700 transition" title="Deactivate">
+                          <button onClick={() => void toggleActive(u)} className="p-1.5 rounded hover:bg-red-500/10 text-muted-foreground/70 hover:text-red-400 transition" title="Deactivate">
                             <ShieldOff className="w-3.5 h-3.5" />
                           </button>
                         </div>
@@ -320,28 +320,28 @@ export default function UsersSettingsPage() {
               <div className="bg-card border border-border rounded-xl overflow-hidden opacity-70">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-slate-100">
+                    <tr className="border-b border-border">
                       <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3 w-1/3">Name / Email</th>
                       <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">Role</th>
                       <th className="text-left text-xs font-semibold text-muted-foreground/70 px-4 py-3">Department</th>
                       <th className="px-4 py-3 w-20" />
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-50">
+                  <tbody className="divide-y divide-border/30">
                     {inactive.map(u => (
-                      <tr key={u.id} className="hover:bg-slate-50">
+                      <tr key={u.id} className="hover:bg-accent/50">
                         <td className="px-4 py-3">
                           <p className="font-medium text-slate-500">{u.name ?? '-'}</p>
                           <p className="text-xs text-muted-foreground/70">{u.email}</p>
                         </td>
                         <td className="px-4 py-3">
-                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">
+                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-muted/30 text-muted-foreground">
                             {ROLES.find(r => r.value === u.role)?.label ?? u.role}
                           </span>
                         </td>
                         <td className="px-4 py-3 text-xs text-muted-foreground/70">{u.department ?? '-'}</td>
                         <td className="px-4 py-3">
-                          <button onClick={() => void toggleActive(u)} className="p-1.5 rounded hover:bg-green-100 text-muted-foreground/70 hover:text-green-700 transition" title="Reactivate">
+                          <button onClick={() => void toggleActive(u)} className="p-1.5 rounded hover:bg-green-500/10 text-muted-foreground/70 hover:text-green-400 transition" title="Reactivate">
                             <ShieldCheck className="w-3.5 h-3.5" />
                           </button>
                         </td>
@@ -357,3 +357,5 @@ export default function UsersSettingsPage() {
     </div>
   );
 }
+
+

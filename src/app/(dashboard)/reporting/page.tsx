@@ -141,11 +141,11 @@ export default async function ReportingPage() {
 
       {/* Recent submissions */}
       {submissions.length > 0 && (
-        <div className="bg-card border border-border rounded-xl overflow-hidden">
+        <div className="bg-card border border-border rounded-xl overflow-x-auto">
           <div className="px-4 py-3 border-b border-border">
             <h2 className="text-sm font-semibold text-foreground">Recent Submissions</h2>
           </div>
-          <table className="w-full text-sm">
+          <table className="w-full text-sm min-w-[640px]">
             <thead>
               <tr className="border-b border-border bg-slate-900/40">
                 <th className="text-left p-3 text-slate-400 font-medium">Type</th>

@@ -206,7 +206,7 @@ export default function NotificationPreferencesPage() {
                 setQuietStartHour(Number(e.target.value));
                 setSaved(false);
               }}
-              className="border border-border rounded-md px-2 py-1 bg-white disabled:opacity-40"
+              className="border border-border rounded-md px-2 py-1 bg-background disabled:opacity-40"
             >
               {Array.from({ length: 24 }, (_, h) => (
                 <option key={`start-${h}`} value={h}>{h.toString().padStart(2, '0')}:00</option>
@@ -222,7 +222,7 @@ export default function NotificationPreferencesPage() {
                 setQuietEndHour(Number(e.target.value));
                 setSaved(false);
               }}
-              className="border border-border rounded-md px-2 py-1 bg-white disabled:opacity-40"
+              className="border border-border rounded-md px-2 py-1 bg-background disabled:opacity-40"
             >
               {Array.from({ length: 24 }, (_, h) => (
                 <option key={`end-${h}`} value={h}>{h.toString().padStart(2, '0')}:00</option>
@@ -250,14 +250,14 @@ export default function NotificationPreferencesPage() {
           <button
             type="button"
             onClick={() => { setExportFrequency('daily'); setSaved(false); }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${exportFrequency === 'daily' ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-foreground/80 border-slate-200 hover:border-slate-300'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${exportFrequency === 'daily' ? 'bg-teal-600 text-white border-teal-600' : 'bg-card text-foreground/80 border-border hover:border-border/60'}`}
           >
             Daily
           </button>
           <button
             type="button"
             onClick={() => { setExportFrequency('weekly'); setSaved(false); }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${exportFrequency === 'weekly' ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-foreground/80 border-slate-200 hover:border-slate-300'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${exportFrequency === 'weekly' ? 'bg-teal-600 text-white border-teal-600' : 'bg-card text-foreground/80 border-border hover:border-border/60'}`}
           >
             Weekly
           </button>
@@ -272,14 +272,14 @@ export default function NotificationPreferencesPage() {
           <button
             type="button"
             onClick={() => { setDigestMode('immediate'); setSaved(false); }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${digestMode === 'immediate' ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-foreground/80 border-slate-200 hover:border-slate-300'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${digestMode === 'immediate' ? 'bg-teal-600 text-white border-teal-600' : 'bg-card text-foreground/80 border-border hover:border-border/60'}`}
           >
             Immediate Emails
           </button>
           <button
             type="button"
             onClick={() => { setDigestMode('daily'); setSaved(false); }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${digestMode === 'daily' ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-foreground/80 border-slate-200 hover:border-slate-300'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${digestMode === 'daily' ? 'bg-teal-600 text-white border-teal-600' : 'bg-card text-foreground/80 border-border hover:border-border/60'}`}
           >
             Daily Digest
           </button>
@@ -297,7 +297,7 @@ export default function NotificationPreferencesPage() {
             <button
               onClick={() => toggleRule(rule.key)}
               className={`mt-0.5 w-10 h-6 flex-shrink-0 rounded-full transition-colors relative ${
-                rule.enabled ? 'bg-teal-600' : 'bg-slate-200'
+                rule.enabled ? 'bg-teal-600' : 'bg-muted'
               }`}
             >
               <span
@@ -323,7 +323,7 @@ export default function NotificationPreferencesPage() {
                   value={rule.daysAhead}
                   disabled={!rule.enabled}
                   onChange={e => setDays(rule.key, Number(e.target.value))}
-                  className="text-xs border border-border rounded-md px-2 py-1 bg-white disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  className="text-xs border border-border rounded-md px-2 py-1 bg-background disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-teal-400"
                 >
                   {DAY_OPTIONS.filter(d => d > 0).map(d => (
                     <option key={d} value={d}>

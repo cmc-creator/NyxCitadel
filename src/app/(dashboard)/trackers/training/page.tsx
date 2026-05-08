@@ -196,8 +196,8 @@ export default async function TrainingPage({
       </div>
 
       {/* Table */}
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-card rounded-xl border border-border overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-muted/30 border-b border-border">
             <tr>
               <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Staff Name</th>
@@ -209,7 +209,7 @@ export default async function TrainingPage({
               <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody className="divide-y divide-border/30">
             {records.length === 0 ? (
               <tr>
                 <td colSpan={7} className="text-center py-12 text-muted-foreground/70">

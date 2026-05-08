@@ -121,14 +121,14 @@ export default async function CredentialingPage() {
         ))}
       </div>
 
-      <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
+      <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-x-auto">
         <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
           <p className="font-semibold text-white text-sm">Active Medical Staff</p>
           <Link href="/credentialing/providers" className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
             View all <ChevronRight className="w-3 h-3" />
           </Link>
         </div>
-        <table className="w-full text-sm">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-slate-900/40">
             <tr>
               {['Provider', 'Credentials', 'Specialty', 'Type', 'Reappointment', 'Status'].map(h => (

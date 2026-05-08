@@ -53,8 +53,8 @@ export default async function OshaLogPage() {
         ))}
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-slate-800/50 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="rounded-xl border border-white/10 bg-slate-800/50 overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead>
             <tr className="border-b border-white/10 text-muted-foreground/70 text-xs">
               <th className="text-left px-4 py-3">Case #</th>

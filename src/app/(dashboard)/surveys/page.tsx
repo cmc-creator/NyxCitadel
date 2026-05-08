@@ -71,7 +71,7 @@ export default async function SurveysPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-x-auto">
         {surveys.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-muted-foreground/70">
             <ClipboardList className="w-10 h-10 mb-2 opacity-30" />

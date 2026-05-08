@@ -74,11 +74,11 @@ export default async function IcraPage() {
       )}
 
       {riskAreas.length > 0 && (
-        <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
+        <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-x-auto">
           <div className="px-5 py-3 border-b border-white/10">
             <p className="font-semibold text-white text-sm">{current?.assessmentYear} Risk Areas ({riskAreas.length} identified)</p>
           </div>
-          <table className="w-full text-sm">
+          <table className="w-full text-sm min-w-[640px]">
             <thead className="bg-slate-900/40">
               <tr>
                 {['Risk Area', 'Risk Description', 'Rating', 'Mitigation Goal', 'Owner'].map(h => (
@@ -104,11 +104,11 @@ export default async function IcraPage() {
       )}
 
       {assessments.length > 1 && (
-        <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
+        <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-x-auto">
           <div className="px-5 py-3 border-b border-white/10">
             <p className="font-semibold text-white text-sm">Assessment History</p>
           </div>
-          <table className="w-full text-sm">
+          <table className="w-full text-sm min-w-[640px]">
             <thead className="bg-slate-900/40">
               <tr>
                 {['Year', 'Conducted', 'Conducted By', 'Status', 'Approved By'].map(h => (

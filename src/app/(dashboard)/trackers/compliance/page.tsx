@@ -70,7 +70,7 @@ export default async function ComplianceTrackerPage({
       </div>
 
       {/* Table */}
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-x-auto">
         {items.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
             <div className="w-16 h-16 rounded-full bg-teal-600/10 flex items-center justify-center mb-4">
@@ -89,7 +89,7 @@ export default async function ComplianceTrackerPage({
             </Link>
           </div>
         ) : (
-              <table className="w-full text-sm">
+              <table className="w-full text-sm min-w-[640px]">
             <thead className="bg-muted/50 border-b border-border">
               <tr>
                 <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Requirement</th>

@@ -64,8 +64,8 @@ export default async function ControlledSubstancesPage() {
         ))}
       </div>
 
-      <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-slate-900/40 border-b border-white/10">
             <tr>
               {['Date', 'Unit', 'Shift', 'Medication', 'Schedule', 'Expected', 'Counted', 'Difference', 'Status'].map(h => (

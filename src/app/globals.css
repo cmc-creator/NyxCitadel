@@ -460,7 +460,7 @@
   .priority-medium   { @apply bg-amber-500/80  text-white; }
   .priority-low      { @apply bg-slate-500/60  text-white; }
 
-  .data-table      { @apply min-w-full divide-y divide-border text-sm; }
+  .data-table      { @apply min-w-[640px] w-full divide-y divide-border text-sm; }
   .data-table-head { @apply bg-muted/30; }
   .data-table-th   { @apply px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider; }
   .data-table-row  { @apply hover:bg-muted/20 transition-colors; }

@@ -64,7 +64,7 @@ export default async function AdhsPage() {
       </div>
 
       {/* Incidents to report */}
-      <div className="bg-card border border-border rounded-xl overflow-hidden">
+      <div className="bg-card border border-border rounded-xl overflow-x-auto">
         <div className="px-4 py-3 border-b border-border flex items-center justify-between">
           <h2 className="text-sm font-semibold text-foreground">IAD-Required Incidents (Last 90 Days)</h2>
           <div className="flex gap-2">
@@ -91,7 +91,7 @@ export default async function AdhsPage() {
             <Link href="/incidents" className="text-teal-400 hover:underline">View all incidents</Link> to flag them.
           </div>
         ) : (
-          <table className="w-full text-sm">
+          <table className="w-full text-sm min-w-[640px]">
             <thead>
               <tr className="border-b border-border bg-slate-900/40">
                 <th className="text-left p-3 text-slate-400 font-medium">Incident</th>
@@ -141,11 +141,11 @@ export default async function AdhsPage() {
 
       {/* Previous submissions */}
       {submissions.length > 0 && (
-        <div className="bg-card border border-border rounded-xl overflow-hidden">
+        <div className="bg-card border border-border rounded-xl overflow-x-auto">
           <div className="px-4 py-3 border-b border-border">
             <h2 className="text-sm font-semibold text-foreground">Previous ADHS Submissions</h2>
           </div>
-          <table className="w-full text-sm">
+          <table className="w-full text-sm min-w-[640px]">
             <thead>
               <tr className="border-b border-border bg-slate-900/40">
                 <th className="text-left p-3 text-slate-400 font-medium">Period</th>
