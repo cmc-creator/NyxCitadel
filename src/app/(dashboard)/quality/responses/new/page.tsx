@@ -178,7 +178,7 @@ export default function NewResponsePage() {
                     value={varValues[v]}
                     onChange={e => setVarValues(prev => ({ ...prev, [v]: e.target.value }))}
                     placeholder={`Value for ${v}`}
-                    className="w-full rounded-lg border border-teal-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
+                    className="w-full rounded-lg border border-teal-700/40 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-teal-950/30"
                   />
                 </div>
               ))}
@@ -199,7 +199,7 @@ export default function NewResponsePage() {
                 required
                 defaultValue={selectedTemplate ? `Response: ${selectedTemplate.name}` : ''}
                 placeholder="Internal title for this response"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -209,7 +209,7 @@ export default function NewResponsePage() {
                 name="category"
                 required
                 defaultValue={selectedTemplate?.category ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select category...</option>
                 {CATEGORIES.map(c => (
@@ -223,7 +223,7 @@ export default function NewResponsePage() {
               <input
                 name="dueDate"
                 type="date"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -231,7 +231,7 @@ export default function NewResponsePage() {
               <label className="block text-sm font-medium text-foreground/80 mb-1">Source Type</label>
               <select
                 name="sourceType"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">-</option>
                 <option value="INCIDENT">Incident</option>
@@ -246,7 +246,7 @@ export default function NewResponsePage() {
               <input
                 name="sourceRef"
                 placeholder="e.g., GR-2025-001"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -255,7 +255,7 @@ export default function NewResponsePage() {
               <input
                 name="recipientName"
                 placeholder="Full name"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -264,7 +264,7 @@ export default function NewResponsePage() {
               <input
                 name="recipientRole"
                 placeholder="e.g., Patient, AZ ADHS, The Joint Commission"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -273,7 +273,7 @@ export default function NewResponsePage() {
               <input
                 name="recipientAddress"
                 placeholder="Mailing address (optional)"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -282,7 +282,7 @@ export default function NewResponsePage() {
               <input
                 name="draftedBy"
                 placeholder="Your name / role"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -298,7 +298,7 @@ export default function NewResponsePage() {
               value={subject}
               onChange={e => setSubject(e.target.value)}
               placeholder="Subject line"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
 
@@ -310,7 +310,7 @@ export default function NewResponsePage() {
               required
               rows={20}
               placeholder="Type or paste your response here..."
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-500 resize-y h-80"
+              className="w-full rounded-lg border border-border px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-500 resize-y h-80"
             />
           </div>
         </div>
@@ -322,7 +322,7 @@ export default function NewResponsePage() {
             name="notes"
             rows={2}
             placeholder="Any internal notes about this response..."
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+            className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
           />
         </div>
 

@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, ArrowLeft, Plus, Trash2 } from 'lucide-react';
-import { AiFieldHelper } from '@/components/ai/AiFieldHelper';
-import { SentryPageGuide } from '@/components/ai/SentryPageGuide';
 
 interface WhyItem {
   id: string;
@@ -39,26 +37,14 @@ const EVENT_TYPES = [
 export default function NewRcaPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const fromIr      = searchParams.get('fromIr')   ?? '';
-  const prefillDate = searchParams.get('date')      ? new Date(searchParams.get('date')!).toISOString().slice(0, 10) : '';
-  const prefillType = searchParams.get('type')      ?? '';
-  const prefillDesc = searchParams.get('desc')      ?? '';
+  const fromIr    = searchParams.get('fromIr')    ?? '';
+  const prefillDate = searchParams.get('date')    ? new Date(searchParams.get('date')!).toISOString().slice(0, 10) : '';
+  const prefillType = searchParams.get('type')    ?? '';
+  const prefillDesc = searchParams.get('desc')    ?? '';
 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState<'event' | 'factors' | 'analysis' | 'actions'>('event');
-  const [eventType, setEventType] = useState(prefillType);
-
-  // Controlled textarea values for AI assistance
-  const [eventDescription, setEventDescription] = useState(prefillDesc);
-  const [eventTimeline, setEventTimeline] = useState('');
-  const [humanFactors, setHumanFactors] = useState('');
-  const [processFactors, setProcessFactors] = useState('');
-  const [environmentFactors, setEnvironmentFactors] = useState('');
-  const [equipmentFactors, setEquipmentFactors] = useState('');
-  const [organizationalFactors, setOrganizationalFactors] = useState('');
-  const [rootCauses, setRootCauses] = useState('');
-  const [conclusion, setConclusion] = useState('');
 
   const [whyItems, setWhyItems] = useState<WhyItem[]>([
     { id: crypto.randomUUID(), why: 'Why did this event occur?', answer: '' },
@@ -87,28 +73,30 @@ export default function NewRcaPage() {
     const f = e.currentTarget;
 
     const data = {
-      eventDate:             (f.elements.namedItem('eventDate') as HTMLInputElement).value,
-      eventDescription,
-      eventType,
-      linkedIncidentId:      (f.elements.namedItem('linkedIncidentId') as HTMLInputElement).value || null,
-      teamMembers:           (f.elements.namedItem('teamMembers') as HTMLTextAreaElement).value || null,
-      completedBy:           (f.elements.namedItem('completedBy') as HTMLInputElement).value || null,
-      conductedDate:         (f.elements.namedItem('conductedDate') as HTMLInputElement).value || null,
-      eventTimeline:         eventTimeline || null,
-      humanFactors:          humanFactors || null,
-      equipmentFactors:      equipmentFactors || null,
-      environmentFactors:    environmentFactors || null,
-      processFactors:        processFactors || null,
-      organizationalFactors: organizationalFactors || null,
-      whyAnalysis:           whyItems.filter(w => w.answer).map(({ id: _, ...rest }) => rest),
-      rootCauses:            rootCauses ? [rootCauses] : null,
-      actionItems:           actionItems.filter(a => a.action).map(({ id: _, ...rest }) => rest),
-      conclusion:            conclusion || null,
-      preventabilityRating:  (f.elements.namedItem('preventabilityRating') as HTMLSelectElement).value || null,
-      systemChangesRequired: (f.elements.namedItem('systemChangesRequired') as HTMLInputElement).checked,
-      policyChangesRequired: (f.elements.namedItem('policyChangesRequired') as HTMLInputElement).checked,
-      trainingRequired:      (f.elements.namedItem('trainingRequired') as HTMLInputElement).checked,
-      notes:                 (f.elements.namedItem('notes') as HTMLTextAreaElement).value || null,
+      eventDate:              (f.elements.namedItem('eventDate') as HTMLInputElement).value,
+      eventDescription:       (f.elements.namedItem('eventDescription') as HTMLTextAreaElement).value,
+      eventType:              (f.elements.namedItem('eventType') as HTMLSelectElement).value,
+      linkedIncidentId:       (f.elements.namedItem('linkedIncidentId') as HTMLInputElement).value || null,
+      teamMembers:            (f.elements.namedItem('teamMembers') as HTMLTextAreaElement).value || null,
+      completedBy:            (f.elements.namedItem('completedBy') as HTMLInputElement).value || null,
+      conductedDate:          (f.elements.namedItem('conductedDate') as HTMLInputElement).value || null,
+      eventTimeline:          (f.elements.namedItem('eventTimeline') as HTMLTextAreaElement).value || null,
+      humanFactors:           (f.elements.namedItem('humanFactors') as HTMLTextAreaElement).value || null,
+      equipmentFactors:       (f.elements.namedItem('equipmentFactors') as HTMLTextAreaElement).value || null,
+      environmentFactors:     (f.elements.namedItem('environmentFactors') as HTMLTextAreaElement).value || null,
+      processFactors:         (f.elements.namedItem('processFactors') as HTMLTextAreaElement).value || null,
+      organizationalFactors:  (f.elements.namedItem('organizationalFactors') as HTMLTextAreaElement).value || null,
+      whyAnalysis:            whyItems.filter(w => w.answer).map(({ id: _id, ...rest }) => rest),
+      rootCauses:             (f.elements.namedItem('rootCauses') as HTMLTextAreaElement).value
+                                ? [(f.elements.namedItem('rootCauses') as HTMLTextAreaElement).value]
+                                : null,
+      actionItems:            actionItems.filter(a => a.action).map(({ id: _id, ...rest }) => rest),
+      conclusion:             (f.elements.namedItem('conclusion') as HTMLTextAreaElement).value || null,
+      preventabilityRating:   (f.elements.namedItem('preventabilityRating') as HTMLSelectElement).value || null,
+      systemChangesRequired:  (f.elements.namedItem('systemChangesRequired') as HTMLInputElement).checked,
+      policyChangesRequired:  (f.elements.namedItem('policyChangesRequired') as HTMLInputElement).checked,
+      trainingRequired:       (f.elements.namedItem('trainingRequired') as HTMLInputElement).checked,
+      notes:                  (f.elements.namedItem('notes') as HTMLTextAreaElement).value || null,
     };
 
     const res = await fetch('/api/rca', {
@@ -134,11 +122,6 @@ export default function NewRcaPage() {
     { id: 'actions',  label: '4. Action Items' },
   ] as const;
 
-  const rcaHints = {
-    eventType,
-    eventDescription: eventDescription.slice(0, 200),
-  };
-
   return (
     <div className="max-w-3xl space-y-6">
       <div>
@@ -153,18 +136,6 @@ export default function NewRcaPage() {
           JC LD.04.04.05 - Complete RCA for sentinel events using the 5-Whys methodology.
         </p>
       </div>
-
-      <SentryPageGuide
-        pageKey="rca-new"
-        title="Root Cause Analysis"
-        body="An RCA uncovers why an event happened so it can be prevented. Work through each tab: describe the event, identify contributing factors across 5 categories, run the 5-Whys drill-down, then define action items. Use the sparkle button on any text field to get Sentry's help."
-        tips={[
-          "Contributing factors are not root causes -- they are conditions that made the event possible",
-          "5-Whys: keep asking 'why' until you reach a system or process failure, not a person",
-          "Each root cause should have at least one specific action item with an owner and due date",
-          "JC requires RCA for all sentinel events within 45 days of discovery",
-        ]}
-      />
 
       {fromIr && (
         <div className="flex items-center gap-2 bg-teal-950/20 border border-indigo-200 rounded-lg px-4 py-2.5 text-sm text-indigo-700">
@@ -185,7 +156,7 @@ export default function NewRcaPage() {
             type="button"
             onClick={() => setActiveTab(tab.id)}
             className={`flex-1 text-xs font-medium py-2 rounded-lg transition-colors ${
-              activeTab === tab.id ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-500 hover:text-foreground/80'
+              activeTab === tab.id ? 'bg-teal-600/20 text-teal-300 shadow-sm' : 'text-slate-500 hover:text-foreground/80'
             }`}
           >
             {tab.label}
@@ -207,7 +178,7 @@ export default function NewRcaPage() {
                   type="date"
                   required
                   defaultValue={prefillDate}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
 
@@ -216,9 +187,8 @@ export default function NewRcaPage() {
                 <select
                   name="eventType"
                   required
-                  value={eventType}
-                  onChange={e => setEventType(e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  defaultValue={prefillType}
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 >
                   <option value="">Select type...</option>
                   {EVENT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
@@ -230,7 +200,7 @@ export default function NewRcaPage() {
                 <input
                   name="conductedDate"
                   type="date"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
 
@@ -239,7 +209,7 @@ export default function NewRcaPage() {
                 <input
                   name="completedBy"
                   placeholder="Name / title"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
 
@@ -249,33 +219,32 @@ export default function NewRcaPage() {
                   name="linkedIncidentId"
                   placeholder="Incident record ID (if applicable)"
                   defaultValue={fromIr}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
             </div>
 
-            <AiFieldHelper
-              fieldLabel="Event Description"
-              pageContext="Root Cause Analysis"
-              value={eventDescription}
-              onChange={setEventDescription}
-              rows={4}
-              required
-              name="eventDescription"
-              placeholder="Describe what happened - what was the adverse event or sentinel event?"
-              formHints={{ eventType }}
-            />
+            <div>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Event Description *</label>
+              <textarea
+                name="eventDescription"
+                required
+                rows={4}
+                defaultValue={prefillDesc}
+                placeholder="Describe what happened - what was the adverse event or sentinel event?"
+                className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+              />
+            </div>
 
-            <AiFieldHelper
-              fieldLabel="Event Timeline"
-              pageContext="Root Cause Analysis"
-              value={eventTimeline}
-              onChange={setEventTimeline}
-              rows={5}
-              name="eventTimeline"
-              placeholder="Chronological timeline of events leading up to and following the incident..."
-              formHints={rcaHints}
-            />
+            <div>
+              <label className="block text-sm font-medium text-foreground/80 mb-1">Event Timeline</label>
+              <textarea
+                name="eventTimeline"
+                rows={5}
+                placeholder="Chronological timeline of events leading up to and following the incident..."
+                className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+              />
+            </div>
 
             <div>
               <label className="block text-sm font-medium text-foreground/80 mb-1">RCA Team Members</label>
@@ -283,7 +252,7 @@ export default function NewRcaPage() {
                 name="teamMembers"
                 rows={2}
                 placeholder="Names and roles of team members who participated in the RCA..."
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
           </div>
@@ -293,58 +262,25 @@ export default function NewRcaPage() {
         {activeTab === 'factors' && (
           <div className="bg-card rounded-xl border border-border p-6 space-y-4">
             <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Contributing Factors (JC Framework)</h2>
-            <p className="text-xs text-slate-500">Identify contributing factors in each category. Not all categories may apply. Use Sentry to help draft each one.</p>
+            <p className="text-xs text-slate-500">Identify contributing factors in each category. Not all categories may apply.</p>
 
-            <AiFieldHelper
-              fieldLabel="Human Factors"
-              pageContext="Root Cause Analysis - Contributing Factors"
-              value={humanFactors}
-              onChange={setHumanFactors}
-              rows={2}
-              name="humanFactors"
-              placeholder="Staff performance, communication, training, fatigue, supervision..."
-              formHints={rcaHints}
-            />
-            <AiFieldHelper
-              fieldLabel="Process / Workflow Factors"
-              pageContext="Root Cause Analysis - Contributing Factors"
-              value={processFactors}
-              onChange={setProcessFactors}
-              rows={2}
-              name="processFactors"
-              placeholder="Workflow breakdowns, policy gaps, procedure failures..."
-              formHints={rcaHints}
-            />
-            <AiFieldHelper
-              fieldLabel="Environment Factors"
-              pageContext="Root Cause Analysis - Contributing Factors"
-              value={environmentFactors}
-              onChange={setEnvironmentFactors}
-              rows={2}
-              name="environmentFactors"
-              placeholder="Physical environment issues, space, lighting, equipment placement..."
-              formHints={rcaHints}
-            />
-            <AiFieldHelper
-              fieldLabel="Equipment / Technology Factors"
-              pageContext="Root Cause Analysis - Contributing Factors"
-              value={equipmentFactors}
-              onChange={setEquipmentFactors}
-              rows={2}
-              name="equipmentFactors"
-              placeholder="Device failures, missing equipment, technology issues..."
-              formHints={rcaHints}
-            />
-            <AiFieldHelper
-              fieldLabel="Organizational Factors"
-              pageContext="Root Cause Analysis - Contributing Factors"
-              value={organizationalFactors}
-              onChange={setOrganizationalFactors}
-              rows={2}
-              name="organizationalFactors"
-              placeholder="Leadership decisions, culture, resource allocation, staffing levels..."
-              formHints={rcaHints}
-            />
+            {[
+              { name: 'humanFactors',          label: 'Human Factors',          placeholder: 'Staff performance, communication, training, fatigue, supervision...' },
+              { name: 'processFactors',         label: 'Process / Workflow',     placeholder: 'Workflow breakdowns, policy gaps, procedure failures...' },
+              { name: 'environmentFactors',     label: 'Environment',            placeholder: 'Physical environment issues, space, lighting, equipment placement...' },
+              { name: 'equipmentFactors',       label: 'Equipment / Technology', placeholder: 'Device failures, missing equipment, technology issues...' },
+              { name: 'organizationalFactors',  label: 'Organizational',         placeholder: 'Leadership decisions, culture, resource allocation, staffing levels...' },
+            ].map(factor => (
+              <div key={factor.name}>
+                <label className="block text-sm font-medium text-foreground/80 mb-1">{factor.label}</label>
+                <textarea
+                  name={factor.name}
+                  rows={2}
+                  placeholder={factor.placeholder}
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                />
+              </div>
+            ))}
           </div>
         )}
 
@@ -381,14 +317,14 @@ export default function NewRcaPage() {
                     value={item.why}
                     onChange={e => setWhyItems(prev => prev.map(w => w.id === item.id ? { ...w, why: e.target.value } : w))}
                     placeholder="Why question..."
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                   <textarea
                     value={item.answer}
                     onChange={e => setWhyItems(prev => prev.map(w => w.id === item.id ? { ...w, answer: e.target.value } : w))}
                     rows={2}
                     placeholder="Answer..."
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                    className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                   />
                 </div>
               ))}
@@ -396,30 +332,22 @@ export default function NewRcaPage() {
 
             <div className="bg-card rounded-xl border border-border p-6 space-y-4">
               <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Root Causes Identified</h2>
-              <AiFieldHelper
-                fieldLabel="Root Causes"
-                pageContext="Root Cause Analysis - Root Causes Identified"
-                value={rootCauses}
-                onChange={setRootCauses}
-                rows={4}
+              <textarea
                 name="rootCauses"
+                rows={4}
                 placeholder="Based on the 5-Whys analysis, what are the identified root causes?"
-                formHints={{
-                  ...rcaHints,
-                  humanFactors: humanFactors.slice(0, 100),
-                  processFactors: processFactors.slice(0, 100),
-                }}
+                className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
 
             <div className="bg-card rounded-xl border border-border p-6 space-y-4">
-              <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Conclusion &amp; Preventability</h2>
+              <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Conclusion & Preventability</h2>
 
               <div>
                 <label className="block text-sm font-medium text-foreground/80 mb-1">Preventability Rating</label>
                 <select
                   name="preventabilityRating"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 >
                   <option value="">Select...</option>
                   <option value="Preventable">Preventable</option>
@@ -428,18 +356,11 @@ export default function NewRcaPage() {
                 </select>
               </div>
 
-              <AiFieldHelper
-                fieldLabel="Conclusion"
-                pageContext="Root Cause Analysis - Conclusion"
-                value={conclusion}
-                onChange={setConclusion}
-                rows={3}
+              <textarea
                 name="conclusion"
+                rows={3}
                 placeholder="Overall conclusion of the RCA..."
-                formHints={{
-                  ...rcaHints,
-                  rootCauses: rootCauses.slice(0, 200),
-                }}
+                className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
 
               <div className="space-y-2">
@@ -496,20 +417,20 @@ export default function NewRcaPage() {
                   onChange={e => setActionItems(prev => prev.map(a => a.id === item.id ? { ...a, action: e.target.value } : a))}
                   rows={2}
                   placeholder="Action item description..."
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                 />
                 <div className="grid grid-cols-2 gap-2">
                   <input
                     value={item.responsible}
                     onChange={e => setActionItems(prev => prev.map(a => a.id === item.id ? { ...a, responsible: e.target.value } : a))}
                     placeholder="Responsible party"
-                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                   <input
                     type="date"
                     value={item.targetDate}
                     onChange={e => setActionItems(prev => prev.map(a => a.id === item.id ? { ...a, targetDate: e.target.value } : a))}
-                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                 </div>
               </div>
@@ -521,7 +442,7 @@ export default function NewRcaPage() {
                 name="notes"
                 rows={2}
                 placeholder="Any additional notes..."
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
               />
             </div>
           </div>

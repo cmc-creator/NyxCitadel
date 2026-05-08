@@ -182,9 +182,6 @@ export default function AssistantPage() {
   function actionLabel(type: DraftActionType) {
     if (type === 'CREATE_CAP_DRAFT') return 'Create draft CAP';
     if (type === 'CREATE_INCIDENT_DRAFT') return 'Create draft incident report';
-    if (type === 'CREATE_RCA_DRAFT') return 'Create draft RCA';
-    if (type === 'CREATE_GRIEVANCE_DRAFT') return 'Create draft grievance';
-    if (type === 'CREATE_POC_DRAFT') return 'Create draft plan of correction';
     return 'Create draft calendar event';
   }
 
@@ -249,7 +246,7 @@ export default function AssistantPage() {
           <div className="rounded-xl border border-teal-800/50 bg-teal-950/20 px-4 py-3">
             <p className="text-xs font-semibold text-teal-700 mb-2">Sentry prepared a safe draft action</p>
             <p className="text-xs text-teal-700/80 mb-2">Review and edit these fields before creating the draft record.</p>
-            <div className="rounded-lg border border-teal-800/50 bg-white px-3 py-2 mb-3 space-y-2">
+            <div className="rounded-lg border border-teal-800/30 bg-teal-950/30 px-3 py-2 mb-3 space-y-2">
               {buildActionPreview(pendingAction).map((item) => (
                 <div key={item.key} className="grid grid-cols-[120px_1fr] gap-2 items-center text-xs">
                   <label className="font-semibold text-teal-900" htmlFor={`action-${item.key}`}>{item.label}</label>
@@ -273,7 +270,7 @@ export default function AssistantPage() {
               </button>
               <button
                 onClick={() => setPendingAction(null)}
-                className="rounded-lg border border-teal-800/50 bg-white px-3 py-2 text-xs font-medium text-teal-700 hover:bg-teal-100 transition"
+                className="rounded-lg border border-teal-700/40 bg-teal-900/30 px-3 py-2 text-xs font-medium text-teal-300 hover:bg-teal-800/40 transition"
               >
                 Dismiss
               </button>

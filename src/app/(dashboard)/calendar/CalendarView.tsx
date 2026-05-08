@@ -421,10 +421,10 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
       {/* ── Stats strip ── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Total', value: stats.total, color: 'text-foreground/80', bg: 'bg-white' },
-          { label: 'Overdue', value: stats.overdue, color: stats.overdue > 0 ? 'text-red-700' : 'text-slate-500', bg: stats.overdue > 0 ? 'bg-red-950/20' : 'bg-white' },
-          { label: 'Due in 30 Days', value: stats.due30, color: stats.due30 > 0 ? 'text-orange-700' : 'text-slate-500', bg: stats.due30 > 0 ? 'bg-orange-950/20' : 'bg-white' },
-          { label: 'Completed', value: stats.completed, color: 'text-green-700', bg: 'bg-green-50' },
+          { label: 'Total', value: stats.total, color: 'text-foreground/80', bg: 'bg-card' },
+          { label: 'Overdue', value: stats.overdue, color: stats.overdue > 0 ? 'text-red-700' : 'text-slate-500', bg: stats.overdue > 0 ? 'bg-red-950/20' : 'bg-card' },
+          { label: 'Due in 30 Days', value: stats.due30, color: stats.due30 > 0 ? 'text-orange-700' : 'text-slate-500', bg: stats.due30 > 0 ? 'bg-orange-950/20' : 'bg-card' },
+          { label: 'Completed', value: stats.completed, color: 'text-green-400', bg: 'bg-green-500/10' },
         ].map(s => (
           <div key={s.label} className={`${s.bg} rounded-xl border border-border px-4 py-3 text-center`}>
             <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>

@@ -131,7 +131,7 @@ export default function NewPocPage() {
                 name="title"
                 required
                 placeholder="e.g., CMS Triennial Survey - November 2025 POC"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -142,7 +142,7 @@ export default function NewPocPage() {
                 required
                 value={regulatoryBody}
                 onChange={e => setRegulatoryBody(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select...</option>
                 {REGULATORY_BODIES.map(b => (
@@ -156,7 +156,7 @@ export default function NewPocPage() {
               <input
                 name="surveyDate"
                 type="date"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -165,7 +165,7 @@ export default function NewPocPage() {
               <input
                 name="responseDeadline"
                 type="date"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -174,7 +174,7 @@ export default function NewPocPage() {
               <input
                 name="submittedBy"
                 placeholder="Name / title"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -228,7 +228,7 @@ export default function NewPocPage() {
                     value={finding.findingNumber}
                     onChange={e => updateFinding(finding.id, 'findingNumber', e.target.value)}
                     placeholder="e.g., A-0144, RI.01.07.01 EP2"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                 </div>
 
@@ -238,7 +238,7 @@ export default function NewPocPage() {
                     value={finding.responsibleParty}
                     onChange={e => updateFinding(finding.id, 'responsibleParty', e.target.value)}
                     placeholder="Name / title"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                 </div>
               </div>
@@ -299,7 +299,7 @@ export default function NewPocPage() {
                   type="date"
                   value={finding.targetDate}
                   onChange={e => updateFinding(finding.id, 'targetDate', e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
             </div>
@@ -313,7 +313,7 @@ export default function NewPocPage() {
             name="notes"
             rows={2}
             placeholder="Any additional notes..."
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+            className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
           />
         </div>
 

@@ -138,7 +138,7 @@ export default function NewGrievancePage() {
                 type="date"
                 required
                 defaultValue={new Date().toISOString().split('T')[0]}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -149,7 +149,7 @@ export default function NewGrievancePage() {
                 required
                 value={severity}
                 onChange={e => setSeverity(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 {SEVERITIES.map(s => (
                   <option key={s.value} value={s.value}>{s.label}</option>
@@ -164,7 +164,7 @@ export default function NewGrievancePage() {
                 required
                 value={category}
                 onChange={e => setCategory(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select category...</option>
                 {CATEGORIES.map(c => (
@@ -178,7 +178,7 @@ export default function NewGrievancePage() {
               <input
                 name="assignedTo"
                 placeholder="Staff member name or role"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function NewGrievancePage() {
                 name="complainantName"
                 required
                 placeholder="Full name"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -219,7 +219,7 @@ export default function NewGrievancePage() {
               <select
                 name="complainantType"
                 required
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select type...</option>
                 {COMPLAINANT_TYPES.map(t => (
@@ -234,7 +234,7 @@ export default function NewGrievancePage() {
                 name="complainantPhone"
                 type="tel"
                 placeholder="(xxx) xxx-xxxx"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -244,7 +244,7 @@ export default function NewGrievancePage() {
                 name="complainantEmail"
                 type="email"
                 placeholder="email@example.com"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -260,7 +260,7 @@ export default function NewGrievancePage() {
               <input
                 name="patientName"
                 placeholder="Full name"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -269,7 +269,7 @@ export default function NewGrievancePage() {
               <input
                 name="patientMRN"
                 placeholder="Medical record number"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>

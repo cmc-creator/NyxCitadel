@@ -6,7 +6,6 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, MessageSquareWarning, Clock, AlertTriangle , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
-import { CommentThread } from '@/components/shared/CommentThread';
 
 export const dynamic = 'force-dynamic';
 
@@ -146,13 +145,6 @@ export default async function GrievanceDetailPage({ params }: { params: { id: st
               {g.linkedCapId && <Link href={`/trackers/caps/${g.linkedCapId}`} className="block text-xs text-purple-700 hover:underline">&#x2192; Linked CAP</Link>}
             </Section>
           )}
-
-          <CommentThread
-            recordType="GRIEVANCE"
-            recordId={g.id}
-            currentUserId={session.user.id}
-            currentUserRole={session.user.role}
-          />
         </div>
       </div>
     </div>
@@ -165,16 +157,16 @@ function DeadlineCard({ title, subtitle, dueDate, completedDate, completedBy, da
 }) {
   const done = !!completedDate;
   return (
-    <div className={`rounded-xl border p-4 ${done ? 'bg-green-50 border-green-200' : overdue ? 'bg-red-950/20 border-red-200' : 'bg-white border-slate-200'}`}>
+    <div className={`rounded-xl border p-4 ${done ? 'bg-green-500/10 border-green-500/20' : overdue ? 'bg-red-950/20 border-red-200' : 'bg-card border-border'}`}>
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="text-sm font-semibold text-foreground">{title}</p>
           <p className="text-xs text-slate-500 mt-0.5">{subtitle}</p>
         </div>
         {done ? (
-          <span className="text-xs bg-green-100 text-green-700 rounded-full px-2 py-0.5 font-medium">&#x2713; Done</span>
+          <span className="text-xs bg-green-500/10 text-green-400 rounded-full px-2 py-0.5 font-medium">&#x2713; Done</span>
         ) : (
-          <span className={`inline-flex items-center gap-1 text-xs rounded-full px-2 py-0.5 font-medium ${overdue ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-600'}`}>
+            <span className={`inline-flex items-center gap-1 text-xs rounded-full px-2 py-0.5 font-medium ${overdue ? 'bg-red-500/10 text-red-400' : 'bg-muted text-muted-foreground'}`}>
             <Clock className="w-3 h-3" />
             {overdue ? `OVERDUE ${Math.abs(daysLeft)}d` : `${daysLeft}d left`}
           </span>

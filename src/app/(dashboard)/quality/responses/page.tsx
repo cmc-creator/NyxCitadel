@@ -82,7 +82,7 @@ export default async function ResponsesPage() {
           <div className="text-2xl font-bold text-green-600">{sent.length}</div>
           <div className="text-sm text-slate-500">Sent</div>
         </div>
-        <div className={`rounded-xl border p-4 ${overdue.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-white border-slate-200'}`}>
+        <div className={`rounded-xl border p-4 ${overdue.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${overdue.length > 0 ? 'text-red-600' : 'text-foreground'}`}>{overdue.length}</div>
           <div className="text-sm text-slate-500">Overdue</div>
         </div>

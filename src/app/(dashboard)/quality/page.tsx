@@ -212,10 +212,10 @@ export default async function QualityPage() {
           ].map(ind => {
             const hasData = recentMetrics.some(m => m.metricKey === ind.key && m.year === thisYear);
             return (
-              <div key={ind.key} className="flex items-center gap-4 px-6 py-3 hover:bg-slate-50 transition-colors">
+              <div key={ind.key} className="flex items-center gap-4 px-6 py-3 hover:bg-accent/50 transition-colors">
                 {hasData
                   ? <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-                  : <div className="w-4 h-4 rounded-full border-2 border-slate-300 flex-shrink-0" />
+                  : <div className="w-4 h-4 rounded-full border-2 border-border flex-shrink-0" />
                 }
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground">{ind.label}</p>

@@ -104,7 +104,7 @@ export default async function RiskAssessmentsPage() {
         {requiredTypes.map(t => {
           const done = completedTypesThisYear.has(t as any);
           return (
-            <div key={t} className={`rounded-xl border p-3 ${done ? 'bg-green-50 border-green-200' : 'bg-white border-slate-200'}`}>
+            <div key={t} className={`rounded-xl border p-3 ${done ? 'bg-green-500/10 border-green-500/20' : 'bg-card border-border'}`}>
               {done ? (
                 <CheckCircle2 className="w-5 h-5 text-green-600 mb-1" />
               ) : (

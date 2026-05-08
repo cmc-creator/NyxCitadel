@@ -155,7 +155,7 @@ export default function NewQocPage() {
                   className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
                     form.allegationCategories.includes(cat)
                       ? 'bg-teal-600 text-white border-teal-600'
-                      : 'bg-white text-slate-600 border-slate-300 hover:border-teal-400'
+                      : 'bg-card text-muted-foreground border-border hover:border-teal-400'
                   }`}
                 >
                   {cat}
@@ -224,7 +224,7 @@ export default function NewQocPage() {
           >
             {saving ? 'Saving...' : 'Log Complaint'}
           </button>
-          <Link href="/trackers/qoc" className="px-4 py-2.5 text-sm text-slate-600 hover:text-foreground rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
+          <Link href="/trackers/qoc" className="px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground rounded-lg border border-border hover:border-border/80 transition-colors">
             Cancel
           </Link>
         </div>

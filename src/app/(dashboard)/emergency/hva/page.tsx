@@ -121,7 +121,7 @@ export default async function HvaPage() {
               {topHazards.map((hazard, i) => {
                 const risk = riskLevel(hazard.riskScore);
                 return (
-                  <div key={hazard.id} className="flex items-start gap-3 bg-white rounded-lg p-3 border border-white/60">
+                  <div key={hazard.id} className="flex items-start gap-3 bg-card rounded-lg p-3 border border-border">
                     <span className={`text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
                       risk.label === 'HIGH' ? 'bg-red-100 text-red-700' :
                       risk.label === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'

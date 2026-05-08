@@ -125,15 +125,15 @@ export default async function IrIadPage({
           <div className="text-2xl font-bold text-foreground">{open.length}</div>
           <div className="text-sm text-slate-500">Open Incidents</div>
         </div>
-        <div className={`rounded-xl border p-4 ${sentinel.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-white border-slate-200'}`}>
+        <div className={`rounded-xl border p-4 ${sentinel.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${sentinel.length > 0 ? 'text-red-600' : 'text-foreground'}`}>{sentinel.length}</div>
           <div className="text-sm text-slate-500">Sentinel Events</div>
         </div>
-        <div className={`rounded-xl border p-4 ${overdueAdhs.length > 0 ? 'bg-orange-950/20 border-orange-200' : 'bg-white border-slate-200'}`}>
+        <div className={`rounded-xl border p-4 ${overdueAdhs.length > 0 ? 'bg-orange-950/20 border-orange-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${overdueAdhs.length > 0 ? 'text-orange-600' : 'text-foreground'}`}>{overdueAdhs.length}</div>
           <div className="text-sm text-slate-500">Overdue ADHS Reports</div>
         </div>
-        <div className={`rounded-xl border p-4 ${pendingIad.length > 0 ? 'bg-blue-950/20 border-blue-200' : 'bg-white border-slate-200'}`}>
+        <div className={`rounded-xl border p-4 ${pendingIad.length > 0 ? 'bg-blue-950/20 border-blue-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${pendingIad.length > 0 ? 'text-blue-600' : 'text-foreground'}`}>{pendingIad.length}</div>
           <div className="text-sm text-slate-500">Pending IAD Submissions</div>
         </div>

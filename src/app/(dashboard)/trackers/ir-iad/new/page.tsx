@@ -368,7 +368,7 @@ export default function NewIrIadPage() {
           >
             {saving ? 'Saving...' : 'Log Incident Report'}
           </button>
-          <Link href="/trackers/ir-iad" className="px-4 py-2.5 text-sm text-slate-600 hover:text-foreground rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
+          <Link href="/trackers/ir-iad" className="px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground rounded-lg border border-border hover:border-border/80 transition-colors">
             Cancel
           </Link>
         </div>

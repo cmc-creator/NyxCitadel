@@ -261,7 +261,7 @@ function InfoCard({
   highlight?: boolean;
 }) {
   return (
-    <div className={`rounded-xl border p-3 ${highlight ? 'bg-orange-950/20 border-orange-200' : 'bg-white border-slate-200'}`}>
+    <div className={`rounded-xl border p-3 ${highlight ? 'bg-orange-950/20 border-orange-200' : 'bg-card border-border'}`}>
       <div className="flex items-center gap-1.5 mb-1">{icon}</div>
       <p className={`text-sm font-semibold ${highlight ? 'text-orange-700' : 'text-foreground'}`}>{value}</p>
       <p className="text-xs text-slate-500">{label}</p>

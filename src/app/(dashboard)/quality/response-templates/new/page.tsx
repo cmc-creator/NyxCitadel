@@ -113,7 +113,7 @@ export default function NewResponseTemplatePage() {
                 name="name"
                 required
                 placeholder="e.g., Patient Grievance Acknowledgment Letter"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -122,7 +122,7 @@ export default function NewResponseTemplatePage() {
               <select
                 name="category"
                 required
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">Select category...</option>
                 {CATEGORIES.map(c => (
@@ -136,7 +136,7 @@ export default function NewResponseTemplatePage() {
               <input
                 name="regulatoryRef"
                 placeholder="e.g., 42 CFR 482.13(e)"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -145,7 +145,7 @@ export default function NewResponseTemplatePage() {
               <input
                 name="description"
                 placeholder="Brief description of when to use this template"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -156,7 +156,7 @@ export default function NewResponseTemplatePage() {
                 type="number"
                 min="1"
                 placeholder="e.g., 7, 30"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>
@@ -166,7 +166,7 @@ export default function NewResponseTemplatePage() {
             <input
               name="subject"
               placeholder="e.g., Acknowledgment of Your Grievance {{GRIEVANCE_NUMBER}}"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
         </div>
@@ -209,7 +209,7 @@ export default function NewResponseTemplatePage() {
               value={newVar}
               onChange={e => setNewVar(e.target.value)}
               placeholder="Custom variable name..."
-              className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="flex-1 rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addVariable(newVar); } }}
             />
             <button
@@ -233,7 +233,7 @@ export default function NewResponseTemplatePage() {
             required
             rows={16}
             placeholder={`Dear {{PATIENT_NAME}} / {{COMPLAINANT_NAME}},\n\nWe are writing to acknowledge receipt of your grievance received on {{DATE_RECEIVED}}...\n\nYour grievance has been assigned number {{GRIEVANCE_NUMBER}} and has been assigned to {{ASSIGNED_TO}} for investigation.\n\nWe will provide you with our written resolution within 30 days...\n\nSincerely,\n{{FACILITY_NAME}}\nPatient Rights Officer`}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-500 h-64 resize-y"
+            className="w-full rounded-lg border border-border px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-500 h-64 resize-y"
           />
         </div>
 
@@ -244,7 +244,7 @@ export default function NewResponseTemplatePage() {
             name="instructions"
             rows={3}
             placeholder="Internal notes - when to use this template, who should review, etc."
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+            className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
           />
         </div>
 

@@ -155,7 +155,7 @@ export default function ProfilePage() {
 
       {/* Flash */}
       {flash && (
-        <div className={`flex items-start gap-2 px-4 py-3 rounded-lg text-sm font-medium ${flash.type === 'ok' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-950/20 text-red-800 border border-red-200'}`}>
+        <div className={`flex items-start gap-2 px-4 py-3 rounded-lg text-sm font-medium ${flash.type === 'ok' ? 'bg-green-500/10 text-green-300 border border-green-500/20' : 'bg-red-500/10 text-red-300 border border-red-500/20'}`}>
           {flash.type === 'ok' ? <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" /> : <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />}
           <span className="flex-1">{flash.msg}</span>
           <button onClick={() => setFlash(null)}><X className="w-4 h-4" /></button>
@@ -166,7 +166,7 @@ export default function ProfilePage() {
       <div className="bg-card border border-border rounded-xl p-6 space-y-5">
         <h2 className="text-base font-semibold text-foreground">Profile Information</h2>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-medium text-foreground/80 mb-1">Full Name</label>
             <input
@@ -221,7 +221,7 @@ export default function ProfilePage() {
       {/* Password Change */}
       <div className="bg-card border border-border rounded-xl p-6 space-y-4">
         <h2 className="text-base font-semibold text-foreground">Change Password</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-medium text-foreground/80 mb-1">New Password</label>
             <div className="relative">

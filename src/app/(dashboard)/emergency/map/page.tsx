@@ -137,7 +137,7 @@ export default function FacilityMapPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Unit 2 North Wing"
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
             </div>
             <div>
@@ -147,7 +147,7 @@ export default function FacilityMapPage() {
                 min={1}
                 value={floor}
                 onChange={(e) => setFloor(e.target.value)}
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
             </div>
             <div>
@@ -167,7 +167,7 @@ export default function FacilityMapPage() {
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Optional description"
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
             </div>
             <div className="col-span-full flex gap-3">
@@ -288,7 +288,7 @@ export default function FacilityMapPage() {
                 )}
               </div>
               {/* Emergency Zone Legend */}
-              <div className="px-4 py-3 border-t border-slate-100 bg-white">
+              <div className="px-4 py-3 border-t border-border bg-card">
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Emergency Zone Legend</p>
                 <div className="flex flex-wrap gap-2">
                   {[

@@ -130,11 +130,11 @@ export default async function QocPage({
           <div className="text-2xl font-bold text-foreground">{open.length}</div>
           <div className="text-sm text-slate-500">Open Complaints</div>
         </div>
-        <div className={`rounded-xl border p-4 ${ij.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-white border-slate-200'}`}>
+        <div className={`rounded-xl border p-4 ${ij.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${ij.length > 0 ? 'text-red-600' : 'text-foreground'}`}>{ij.length}</div>
           <div className="text-sm text-slate-500">Immediate Jeopardy</div>
         </div>
-        <div className={`rounded-xl border p-4 ${overdueResponse.length > 0 ? 'bg-orange-950/20 border-orange-200' : 'bg-white border-slate-200'}`}>
+        <div className={`rounded-xl border p-4 ${overdueResponse.length > 0 ? 'bg-orange-950/20 border-orange-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${overdueResponse.length > 0 ? 'text-orange-600' : 'text-foreground'}`}>{overdueResponse.length}</div>
           <div className="text-sm text-slate-500">Overdue Responses</div>
         </div>

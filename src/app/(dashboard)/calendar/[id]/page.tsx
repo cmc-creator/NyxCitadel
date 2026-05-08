@@ -218,12 +218,12 @@ export default function CalendarEventDetailPage() {
             ) : (
               <div className="space-y-3 w-full">
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">Title *</label>
-                  <input className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} />
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Title *</label>
+                  <input className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">Description</label>
-                  <textarea rows={2} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Description</label>
+                  <textarea rows={2} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
                 </div>
               </div>
             )}
@@ -274,48 +274,48 @@ export default function CalendarEventDetailPage() {
 
         {/* Edit form fields */}
         {editing && (
-          <div className="mt-5 grid grid-cols-2 gap-4 border-t border-slate-100 pt-5">
+          <div className="mt-5 grid grid-cols-2 gap-4 border-t border-border pt-5">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Due Date *</label>
-              <input type="date" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.dueDate} onChange={e => setForm(f => ({ ...f, dueDate: e.target.value }))} />
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Due Date *</label>
+              <input type="date" className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.dueDate} onChange={e => setForm(f => ({ ...f, dueDate: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Status</label>
-              <select className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value }))}>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status</label>
+              <select className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value }))}>
                 {STATUSES.map(s => <option key={s}>{s}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
-              <select className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
+              <select className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}>
                 {EVENT_CATEGORIES.map(c => <option key={c} value={c}>{fmtCat(c)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Priority</label>
-              <select className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.priority} onChange={e => setForm(f => ({ ...f, priority: e.target.value }))}>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Priority</label>
+              <select className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.priority} onChange={e => setForm(f => ({ ...f, priority: e.target.value }))}>
                 {PRIORITY_LEVELS.map(p => <option key={p}>{p}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
-              <select className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.regulatoryBody} onChange={e => setForm(f => ({ ...f, regulatoryBody: e.target.value }))}>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body</label>
+              <select className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.regulatoryBody} onChange={e => setForm(f => ({ ...f, regulatoryBody: e.target.value }))}>
                 {REGULATORY_BODIES.map(b => <option key={b} value={b}>{b ? b.replace(/_/g, ' ') : '- None -'}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Document URL</label>
-              <input type="url" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.documentUrl} onChange={e => setForm(f => ({ ...f, documentUrl: e.target.value }))} placeholder="https://…" />
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Document URL</label>
+              <input type="url" className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.documentUrl} onChange={e => setForm(f => ({ ...f, documentUrl: e.target.value }))} placeholder="https://…" />
             </div>
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
-              <textarea rows={3} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
+              <textarea rows={3} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
             </div>
           </div>
         )}
 
         {/* Actions */}
-        <div className="mt-5 flex items-center gap-3 flex-wrap border-t border-slate-100 pt-5">
+        <div className="mt-5 flex items-center gap-3 flex-wrap border-t border-border pt-5">
           {!editing && event.status !== 'COMPLETED' && (
             <button
               onClick={markComplete}
@@ -329,7 +329,7 @@ export default function CalendarEventDetailPage() {
           {!editing && (
             <button
               onClick={() => setEditing(true)}
-              className="flex items-center gap-2 border border-slate-300 hover:border-purple-400 text-foreground/80 hover:text-purple-700 text-sm font-medium px-4 py-2 rounded-lg transition"
+              className="flex items-center gap-2 border border-border hover:border-purple-400 text-foreground/80 hover:text-purple-600 text-sm font-medium px-4 py-2 rounded-lg transition"
             >
               <PencilLine className="w-4 h-4" /> Edit Event
             </button>
@@ -344,7 +344,7 @@ export default function CalendarEventDetailPage() {
                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                 Save Changes
               </button>
-              <button onClick={() => { setEditing(false); void load(); }} className="px-4 py-2 text-sm text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-50 transition">
+              <button onClick={() => { setEditing(false); void load(); }} className="px-4 py-2 text-sm text-muted-foreground border border-border rounded-lg hover:bg-accent transition">
                 Cancel
               </button>
             </>
