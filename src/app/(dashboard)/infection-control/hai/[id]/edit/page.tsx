@@ -59,7 +59,7 @@ export default function EditHaiSurveillancePage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/infection-control/hai/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/infection-control/hai/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -75,17 +75,17 @@ export default function EditHaiSurveillancePage() {
           <h2 className="text-sm font-semibold text-foreground">Reporting Period &amp; Type</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Month *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Month *</label>
               <select name="reportMonth" required defaultValue={data.reportMonth} className="form-input w-full">
                 {MONTHS.map((m, i) => <option key={i + 1} value={i + 1}>{m}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Year *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Year *</label>
               <input name="reportYear" type="number" required defaultValue={data.reportYear} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">HAI Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">HAI Type *</label>
               <select name="haiType" required defaultValue={data.haiType} className="form-input w-full">
                 <option value="">Select…</option>
                 {HAI_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
@@ -98,21 +98,21 @@ export default function EditHaiSurveillancePage() {
           <h2 className="text-sm font-semibold text-foreground">Counts &amp; Rate</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Case Count *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Case Count *</label>
               <input name="caseCount" type="number" min="0" required defaultValue={data.caseCount ?? 0} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient-Days</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient-Days</label>
               <input name="patientDays" type="number" min="0" defaultValue={data.patientDays ?? ''} className="form-input w-full" placeholder="Used to calculate rate" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">NHSN Benchmark</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">NHSN Benchmark</label>
               <input name="nhsnBenchmark" type="number" step="0.001" defaultValue={data.nhsnBenchmark ?? ''} className="form-input w-full" placeholder="SIR pooled mean" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">SIR (Standardized Infection Ratio)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">SIR (Standardized Infection Ratio)</label>
               <input name="sir" type="number" step="0.001" defaultValue={data.sir ?? ''} className="form-input w-full" />
             </div>
           </div>
@@ -123,12 +123,12 @@ export default function EditHaiSurveillancePage() {
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
           <textarea name="notes" rows={2} defaultValue={data.notes ?? ''} className="form-input w-full" />
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/infection-control/hai/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href={`/infection-control/hai/${id}`} className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

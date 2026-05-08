@@ -59,14 +59,14 @@ export default function NewOshaLogPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/workforce-health/osha" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/workforce-health/osha" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to OSHA 300 Log
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <HardHat className="w-6 h-6 text-orange-600" />
           New OSHA Incident Entry
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Log a recordable workplace injury or illness for OSHA 300 reporting.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Log a recordable workplace injury or illness for OSHA 300 reporting.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -76,29 +76,29 @@ export default function NewOshaLogPage() {
           <h2 className="text-sm font-semibold text-foreground">Case &amp; Employee</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Case Number *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Case Number *</label>
               <input name="caseNumber" type="text" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Year *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Year *</label>
               <input name="caseYear" type="number" required defaultValue={new Date().getFullYear()} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Injury Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Injury Date *</label>
               <input name="injuryDate" type="date" required className="form-input w-full" />
             </div>
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Employee Name *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Employee Name *</label>
               <input name="employeeName" type="text" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Job Title *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Job Title *</label>
               <input name="jobTitle" type="text" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Department *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Department *</label>
               <input name="department" type="text" required className="form-input w-full" />
             </div>
           </div>
@@ -108,19 +108,19 @@ export default function NewOshaLogPage() {
           <h2 className="text-sm font-semibold text-foreground">Incident Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Injury/Illness Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Injury/Illness Type *</label>
               <select name="injuryType" required className="form-input w-full">
                 <option value="">Select…</option>
                 {INJURY_TYPES.map(t => <option key={t} value={t}>{formatLabel(t)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Body Part *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Body Part *</label>
               <input name="bodyPart" type="text" required className="form-input w-full" placeholder="e.g. Lower back, Left hand" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Description *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Description *</label>
             <textarea name="description" rows={3} required className="form-input w-full" />
           </div>
         </div>
@@ -129,18 +129,18 @@ export default function NewOshaLogPage() {
           <h2 className="text-sm font-semibold text-foreground">Outcome &amp; Classification</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Outcome *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Outcome *</label>
               <select name="outcome" required className="form-input w-full">
                 <option value="">Select…</option>
                 {OUTCOMES.map(o => <option key={o} value={o}>{formatLabel(o)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Days Away</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Days Away</label>
               <input name="daysAway" type="number" min="0" defaultValue="0" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Days Restricted</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Days Restricted</label>
               <input name="daysRestriction" type="number" min="0" defaultValue="0" className="form-input w-full" />
             </div>
           </div>
@@ -158,11 +158,11 @@ export default function NewOshaLogPage() {
 
         <div className="px-6 py-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Root Cause</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Root Cause</label>
             <textarea name="rootCause" rows={2} className="form-input w-full" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Corrective Action</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Corrective Action</label>
             <textarea name="correctiveAction" rows={2} className="form-input w-full" />
           </div>
         </div>

@@ -125,20 +125,20 @@ export default function NewRcaPage() {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <a href="/trackers/rca" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/trackers/rca" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to RCAs
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Search className="w-6 h-6 text-teal-600" />
           New Root Cause Analysis
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           JC LD.04.04.05 - Complete RCA for sentinel events using the 5-Whys methodology.
         </p>
       </div>
 
       {fromIr && (
-        <div className="flex items-center gap-2 bg-teal-950/20 border border-indigo-200 rounded-lg px-4 py-2.5 text-sm text-indigo-700">
+        <div className="flex items-center gap-2 bg-teal-950/20 border border-teal-800/40 rounded-lg px-4 py-2.5 text-sm text-teal-300">
           <Search className="w-4 h-4 shrink-0" />
           Pre-filled from Incident Report. Review and complete all sections below.
         </div>
@@ -149,14 +149,14 @@ export default function NewRcaPage() {
       )}
 
       {/* Tab navigation */}
-      <div className="flex gap-1 bg-slate-100 rounded-xl p-1">
+      <div className="flex gap-1 bg-muted/30 rounded-xl p-1">
         {tabs.map(tab => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
             className={`flex-1 text-xs font-medium py-2 rounded-lg transition-colors ${
-              activeTab === tab.id ? 'bg-teal-600/20 text-teal-300 shadow-sm' : 'text-slate-500 hover:text-foreground/80'
+              activeTab === tab.id ? 'bg-teal-600/20 text-teal-300 shadow-sm' : 'text-muted-foreground hover:text-foreground/80'
             }`}
           >
             {tab.label}
@@ -262,7 +262,7 @@ export default function NewRcaPage() {
         {activeTab === 'factors' && (
           <div className="bg-card rounded-xl border border-border p-6 space-y-4">
             <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Contributing Factors (JC Framework)</h2>
-            <p className="text-xs text-slate-500">Identify contributing factors in each category. Not all categories may apply.</p>
+            <p className="text-xs text-muted-foreground">Identify contributing factors in each category. Not all categories may apply.</p>
 
             {[
               { name: 'humanFactors',          label: 'Human Factors',          placeholder: 'Staff performance, communication, training, fatigue, supervision...' },
@@ -293,7 +293,7 @@ export default function NewRcaPage() {
                 <button
                   type="button"
                   onClick={addWhy}
-                  className="inline-flex items-center gap-1 text-xs font-medium bg-teal-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg"
+                  className="inline-flex items-center gap-1 text-xs font-medium bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg"
                 >
                   <Plus className="w-3.5 h-3.5" /> Add Why
                 </button>
@@ -302,7 +302,7 @@ export default function NewRcaPage() {
               {whyItems.map((item, idx) => (
                 <div key={item.id} className="border border-border rounded-lg p-4 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-indigo-700">Why #{idx + 1}</span>
+                    <span className="text-sm font-semibold text-teal-400">Why #{idx + 1}</span>
                     {whyItems.length > 1 && (
                       <button
                         type="button"
@@ -374,7 +374,7 @@ export default function NewRcaPage() {
                     <input
                       name={c.name}
                       type="checkbox"
-                      className="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
+                      className="w-4 h-4 rounded border-border text-teal-600 focus:ring-teal-500"
                     />
                     <span className="text-sm text-foreground/80">{c.label}</span>
                   </label>
@@ -401,7 +401,7 @@ export default function NewRcaPage() {
             {actionItems.map((item, idx) => (
               <div key={item.id} className="border border-border rounded-lg p-4 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-slate-600">Action #{idx + 1}</span>
+                  <span className="text-sm font-semibold text-muted-foreground">Action #{idx + 1}</span>
                   {actionItems.length > 1 && (
                     <button
                       type="button"

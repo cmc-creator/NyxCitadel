@@ -9,7 +9,7 @@ const statusConfig: Record<string, { label: string; classes: string }> = {
   DRAFT:     { label: 'Draft',     classes: 'bg-blue-100 text-blue-700' },
   UNDER_REVIEW: { label: 'Under Review', classes: 'bg-yellow-100 text-yellow-700' },
   SUPERSEDED: { label: 'Superseded', classes: 'bg-slate-200 text-foreground/80' },
-  ARCHIVED:  { label: 'Archived',  classes: 'bg-slate-100 text-foreground/80' },
+  ARCHIVED:  { label: 'Archived',  classes: 'bg-muted/30 text-foreground/80' },
 };
 
 export default async function GovernanceDocumentsPage() {
@@ -76,9 +76,9 @@ export default async function GovernanceDocumentsPage() {
           </thead>
           <tbody>
             {docs.length === 0 ? (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">No governance documents on record.</td></tr>
+              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">No governance documents on record.</td></tr>
             ) : docs.map(d => {
-              const cfg = statusConfig[d.status] ?? { label: d.status, classes: 'bg-slate-100 text-foreground/80' };
+              const cfg = statusConfig[d.status] ?? { label: d.status, classes: 'bg-muted/30 text-foreground/80' };
               const isOverdue = d.reviewDate && d.reviewDate < now;
               return (
                 <tr key={d.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">

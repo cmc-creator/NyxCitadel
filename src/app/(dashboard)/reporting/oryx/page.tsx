@@ -165,7 +165,7 @@ export default function OryxPage() {
           <BarChart3 className="w-6 h-6 text-teal-400" />
           HBIPS / ORYX Measures
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Enter monthly HBIPS core measure data and export an XML file for upload to the Joint Commission ORYX portal.
         </p>
       </div>
@@ -181,7 +181,7 @@ export default function OryxPage() {
               value={period}
               onChange={e => setPeriod(e.target.value)}
               placeholder="e.g. 2026-03 or 2026-Q1"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
           <div>
@@ -191,7 +191,7 @@ export default function OryxPage() {
               value={facilityName}
               onChange={e => setFacility(e.target.value)}
               placeholder="Your hospital name"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
         </div>
@@ -202,7 +202,7 @@ export default function OryxPage() {
         <div key={m.id} className="bg-card border border-border rounded-xl p-5 space-y-3">
           <div>
             <div className="font-semibold text-sm text-foreground">{m.label}</div>
-            <p className="text-xs text-slate-500 mt-0.5">{m.description}</p>
+            <p className="text-xs text-muted-foreground mt-0.5">{m.description}</p>
           </div>
           <div className="grid grid-cols-2 gap-4">
             {m.fields.map(f => (
@@ -214,7 +214,7 @@ export default function OryxPage() {
                   value={data[f.key] ?? ''}
                   onChange={e => setField(f.key, e.target.value)}
                   placeholder="0"
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
             ))}
@@ -233,7 +233,7 @@ export default function OryxPage() {
 
       {/* Actions */}
       <div className="flex items-center justify-between">
-        <div className="text-xs text-slate-500">
+        <div className="text-xs text-muted-foreground">
           ⓘ Export XML for manual upload to the{' '}
           <a href="https://www.jointcommission.org/measurement/oryx/" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">
             JC ORYX portal

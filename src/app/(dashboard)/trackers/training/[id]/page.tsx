@@ -13,12 +13,12 @@ import AttachmentComposerClient from './AttachmentComposerClient';
 export const dynamic = 'force-dynamic';
 
 const STATUS_OPTIONS = [
-  { value: 'PENDING', label: 'Pending', color: 'bg-slate-100 text-slate-600' },
+  { value: 'PENDING', label: 'Pending', color: 'bg-muted/30 text-muted-foreground' },
   { value: 'IN_PROGRESS', label: 'In Progress', color: 'bg-yellow-100 text-yellow-700' },
   { value: 'COMPLETED', label: 'Completed', color: 'bg-green-100 text-green-700' },
   { value: 'EXPIRED', label: 'Expired', color: 'bg-red-100 text-red-700' },
   { value: 'OVERDUE', label: 'Overdue', color: 'bg-orange-100 text-orange-700' },
-  { value: 'EXEMPT', label: 'Exempt', color: 'bg-slate-100 text-muted-foreground/70' },
+  { value: 'EXEMPT', label: 'Exempt', color: 'bg-muted/30 text-muted-foreground/70' },
 ];
 
 export default async function TrainingDetailPage({ params }: { params: { id: string } }) {
@@ -45,11 +45,11 @@ export default async function TrainingDetailPage({ params }: { params: { id: str
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/training" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/trackers/training" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Training Records
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/training/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/training/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/training/${params.id}`} redirectPath="/trackers/training" label="training record" />
@@ -66,7 +66,7 @@ export default async function TrainingDetailPage({ params }: { params: { id: str
               {record.isRequired && <span className="text-xs bg-red-950/20 text-red-600 rounded-full px-2.5 py-0.5 font-medium">Required</span>}
             </div>
             <h1 className="text-xl font-bold text-foreground">{record.trainingName}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               <strong>{record.staffName}</strong>
               {record.jobTitle && <> &middot; {record.jobTitle}</>}
               {record.department && <> &middot; {record.department}</>}
@@ -96,7 +96,7 @@ export default async function TrainingDetailPage({ params }: { params: { id: str
                   <span className="text-sm text-muted-foreground/70 mb-1">Passing: {record.passingScore}%</span>
                 )}
               </div>
-              <p className={`text-xs mt-1 font-medium ${passed === true ? 'text-green-700' : passed === false ? 'text-red-700' : 'text-slate-500'}`}>
+              <p className={`text-xs mt-1 font-medium ${passed === true ? 'text-green-700' : passed === false ? 'text-red-700' : 'text-muted-foreground'}`}>
                 {passed === true ? '&#x2713; Passed' : passed === false ? '&#x2717; Did Not Pass' : ''}
               </p>
             </Section>
@@ -177,7 +177,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <>
-      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
+      <dt className="text-xs text-muted-foreground shrink-0">{label}</dt>
       <dd className={`text-xs font-medium text-right mb-2 ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </>
   );

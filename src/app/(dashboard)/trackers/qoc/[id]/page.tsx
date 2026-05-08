@@ -17,7 +17,7 @@ const STATUS_OPTIONS = [
   { value: 'FINDINGS_ISSUED', label: 'Findings Issued', color: 'bg-purple-100 text-purple-700' },
   { value: 'SUBSTANTIATED', label: 'Substantiated', color: 'bg-red-100 text-red-700' },
   { value: 'UNSUBSTANTIATED', label: 'Unsubstantiated', color: 'bg-green-100 text-green-700' },
-  { value: 'CLOSED', label: 'Closed', color: 'bg-slate-100 text-slate-500' },
+  { value: 'CLOSED', label: 'Closed', color: 'bg-muted/30 text-muted-foreground' },
 ];
 
 interface Citation { tag: string; description?: string; poC?: string }
@@ -39,11 +39,11 @@ export default async function QocDetailPage({ params }: { params: { id: string }
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/qoc" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/trackers/qoc" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to QoC Complaints
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/qoc/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/qoc/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -56,13 +56,13 @@ export default async function QocDetailPage({ params }: { params: { id: string }
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <ClipboardCheck className="w-5 h-5 text-purple-600" />
               <span className="text-xs font-mono text-muted-foreground/70">{qoc.qocNumber}</span>
-              {qoc.cmsComplaintNumber && <span className="text-xs text-slate-500">CMS: {qoc.cmsComplaintNumber}</span>}
-              <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2.5 py-0.5">
+              {qoc.cmsComplaintNumber && <span className="text-xs text-muted-foreground">CMS: {qoc.cmsComplaintNumber}</span>}
+              <span className="text-xs bg-muted/30 text-muted-foreground rounded-full px-2.5 py-0.5">
                 {qoc.complainantType.replace(/_/g, ' ')}
               </span>
             </div>
             <h1 className="text-xl font-bold text-foreground line-clamp-2">{qoc.allegationSummary}</h1>
-            <p className="text-sm text-slate-500 mt-1">Received: <strong>{formatDate(qoc.dateReceived)}</strong></p>
+            <p className="text-sm text-muted-foreground mt-1">Received: <strong>{formatDate(qoc.dateReceived)}</strong></p>
           </div>
           <StatusUpdater apiPath={`/api/qoc-complaints/${qoc.id}`} currentStatus={qoc.status} options={STATUS_OPTIONS} />
         </div>
@@ -79,7 +79,7 @@ export default async function QocDetailPage({ params }: { params: { id: string }
         <div className={`rounded-xl border p-4 flex items-start justify-between gap-4 ${responseOverdue ? 'bg-red-950/20 border-red-200' : qoc.responseSubmittedDate ? 'bg-green-50 border-green-200' : 'bg-orange-950/20 border-orange-200'}`}>
           <div>
             <p className="text-sm font-semibold text-foreground">LOI Response Deadline</p>
-            <p className="text-xs text-slate-500 mt-0.5">LOI received {formatDate(qoc.loiReceivedDate)} &middot; 10 business days to respond</p>
+            <p className="text-xs text-muted-foreground mt-0.5">LOI received {formatDate(qoc.loiReceivedDate)} &middot; 10 business days to respond</p>
           </div>
           {qoc.responseSubmittedDate ? (
             <span className="text-xs bg-green-100 text-green-700 rounded-full px-2.5 py-1 font-medium whitespace-nowrap">Submitted {formatDate(qoc.responseSubmittedDate)}</span>
@@ -109,7 +109,7 @@ export default async function QocDetailPage({ params }: { params: { id: string }
             <Section title="Findings Summary">
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{qoc.findingsSummary}</p>
               {qoc.deficienciesFound !== null && (
-                <p className="mt-2 text-xs text-slate-500">Deficiencies found: <strong className={qoc.deficienciesFound ? 'text-red-600' : 'text-green-600'}>{qoc.deficienciesFound ? 'Yes' : 'No'}</strong></p>
+                <p className="mt-2 text-xs text-muted-foreground">Deficiencies found: <strong className={qoc.deficienciesFound ? 'text-red-600' : 'text-green-600'}>{qoc.deficienciesFound ? 'Yes' : 'No'}</strong></p>
               )}
             </Section>
           )}
@@ -120,8 +120,8 @@ export default async function QocDetailPage({ params }: { params: { id: string }
                 {citations.map((c, i) => (
                   <div key={i} className="rounded-lg bg-red-950/20 border border-red-100 p-3">
                     <p className="text-xs font-bold text-red-700">{c.tag}</p>
-                    {c.description && <p className="text-xs text-slate-600 mt-0.5">{c.description}</p>}
-                    {c.poC && <p className="text-xs text-slate-500 mt-1">PoC: {c.poC}</p>}
+                    {c.description && <p className="text-xs text-muted-foreground mt-0.5">{c.description}</p>}
+                    {c.poC && <p className="text-xs text-muted-foreground mt-1">PoC: {c.poC}</p>}
                   </div>
                 ))}
               </div>
@@ -174,7 +174,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div className="flex justify-between gap-2">
-      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
+      <dt className="text-xs text-muted-foreground shrink-0">{label}</dt>
       <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );

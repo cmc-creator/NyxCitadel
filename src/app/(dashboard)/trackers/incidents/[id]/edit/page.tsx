@@ -78,7 +78,7 @@ export default function EditIncidentPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/trackers/incidents/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/trackers/incidents/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -97,7 +97,7 @@ export default function EditIncidentPage() {
           <h2 className="text-sm font-semibold text-foreground">Incident Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Incident Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Incident Type *</label>
               <select name="incidentType" required defaultValue={data.incidentType} className="form-input w-full">
                 <option value="">Select type…</option>
                 {INCIDENT_TYPES.map(t => (
@@ -106,7 +106,7 @@ export default function EditIncidentPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Severity *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Severity *</label>
               <select name="severity" required defaultValue={data.severity} className="form-input w-full">
                 <option value="">Select severity…</option>
                 {SEVERITY_LEVELS.map(s => (
@@ -117,7 +117,7 @@ export default function EditIncidentPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Date &amp; Time of Incident *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Date &amp; Time of Incident *</label>
               <input
                 name="dateOccurred"
                 type="datetime-local"
@@ -127,7 +127,7 @@ export default function EditIncidentPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Location</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Location</label>
               <input name="location" defaultValue={data.location ?? ''} className="form-input w-full" />
             </div>
           </div>
@@ -137,11 +137,11 @@ export default function EditIncidentPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Narrative &amp; Actions</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Description of Incident *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Description of Incident *</label>
             <textarea name="description" required rows={5} defaultValue={data.description ?? ''} className="form-input w-full" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Immediate Actions Taken</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Immediate Actions Taken</label>
             <textarea name="immediateActions" rows={3} defaultValue={data.immediateActions ?? ''} className="form-input w-full" />
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function EditIncidentPage() {
               type="checkbox"
               checked={patientInvolved}
               onChange={e => setPatientInvolved(e.target.checked)}
-              className="rounded border-slate-300 text-purple-600"
+              className="rounded border-border text-purple-600"
             />
             Patient was involved in this incident
           </label>
@@ -163,14 +163,14 @@ export default function EditIncidentPage() {
               type="checkbox"
               checked={reportableToState}
               onChange={e => setReportableToState(e.target.checked)}
-              className="rounded border-slate-300 text-purple-600"
+              className="rounded border-border text-purple-600"
             />
             Requires AZ ADHS / Regulatory Reporting (Sentinel Event, Abuse, Unexpected Death)
           </label>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/trackers/incidents/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href={`/trackers/incidents/${id}`} className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

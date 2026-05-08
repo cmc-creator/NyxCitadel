@@ -28,7 +28,7 @@ const RS_TYPE_LABEL: Record<string, string> = {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -57,11 +57,11 @@ export default async function RestraintDetailPage({ params }: { params: { id: st
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/restraint-seclusion" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/restraint-seclusion" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Restraint & Seclusion
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/restraint-seclusion/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/restraint-seclusion/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -76,7 +76,7 @@ export default async function RestraintDetailPage({ params }: { params: { id: st
               <span className="text-xs font-mono text-muted-foreground/70">{event.eventNumber}</span>
             </div>
             <h1 className="text-xl font-bold text-foreground">{RS_TYPE_LABEL[event.rsType] ?? event.rsType}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Patient: <strong>{event.patientInitials}</strong>
               {event.patientMrn && <> &middot; MRN: <strong>{event.patientMrn}</strong></>}
               &middot; Unit: <strong>{event.unit}</strong>
@@ -115,7 +115,7 @@ export default async function RestraintDetailPage({ params }: { params: { id: st
               <div className="divide-y divide-border/30">
                 {monitoringLogs.map((log, i) => (
                   <div key={i} className="py-2">
-                    <div className="flex justify-between text-xs text-slate-500 mb-0.5">
+                    <div className="flex justify-between text-xs text-muted-foreground mb-0.5">
                       <span>{log.time}</span>
                       <span>{log.staff}</span>
                     </div>

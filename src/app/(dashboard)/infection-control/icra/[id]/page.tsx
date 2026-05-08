@@ -18,7 +18,7 @@ const STATUS_COLOR: Record<string, string> = {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -48,11 +48,11 @@ export default async function IcraDetailPage({ params }: { params: { id: string 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/infection-control/icra" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/infection-control/icra" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to ICRA
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/infection-control/icra/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/infection-control/icra/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -64,12 +64,12 @@ export default async function IcraDetailPage({ params }: { params: { id: string 
           <div>
             <div className="flex items-center gap-2 mb-1">
               <ShieldCheck className="w-5 h-5 text-teal-600" />
-              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[icra.status] ?? 'bg-slate-100 text-slate-600'}`}>
+              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[icra.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                 {icra.status.replace(/_/g, ' ')}
               </span>
             </div>
             <h1 className="text-xl font-bold text-foreground">IC Risk Assessment - {icra.assessmentYear}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Conducted: <strong>{formatDate(icra.conductedDate)}</strong>
               &middot; By: <strong>{icra.conductedBy}</strong>
             </p>
@@ -83,12 +83,12 @@ export default async function IcraDetailPage({ params }: { params: { id: string 
             <Section title={`Risk Areas (${riskAreas.length})`}>
               <div className="space-y-3">
                 {riskAreas.map((ra, i) => (
-                  <div key={i} className="border border-slate-100 rounded-lg p-3">
+                  <div key={i} className="border border-border/30 rounded-lg p-3">
                     <div className="flex items-start justify-between gap-2">
                       <p className="text-sm font-medium text-foreground">{ra.area}</p>
                       <span className="shrink-0 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full px-2 py-0.5">{ra.rating}</span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-1">{ra.risk}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{ra.risk}</p>
                     {ra.mitigationGoal && <p className="text-xs text-muted-foreground/70 mt-1 italic">{ra.mitigationGoal}</p>}
                   </div>
                 ))}

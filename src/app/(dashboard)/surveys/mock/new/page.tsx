@@ -73,7 +73,7 @@ export default function NewMockSurveyPage() {
           <ClipboardCheck className="w-6 h-6 text-teal-400" />
           New Mock Survey
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Configure the survey scope then begin scoring EPs chapter by chapter.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Configure the survey scope then begin scoring EPs chapter by chapter.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -89,7 +89,7 @@ export default function NewMockSurveyPage() {
               value={title}
               onChange={e => setTitle(e.target.value)}
               placeholder="e.g. Q2 2026 Mock JC Survey"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
 
@@ -126,7 +126,7 @@ export default function NewMockSurveyPage() {
               value={surveyorName}
               onChange={e => setSurveyorName(e.target.value)}
               placeholder="Name or role"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
 
@@ -137,7 +137,7 @@ export default function NewMockSurveyPage() {
               onChange={e => setSummaryNotes(e.target.value)}
               rows={3}
               placeholder="Scope rationale, focus areas, prior deficiencies to watch..."
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
             />
           </div>
         </div>
@@ -150,11 +150,11 @@ export default function NewMockSurveyPage() {
             </h2>
             <div className="flex gap-2 text-xs">
               <button type="button" onClick={selectAll} className="text-teal-400 hover:text-teal-300">All</button>
-              <span className="text-slate-600">|</span>
+              <span className="text-muted-foreground">|</span>
               <button type="button" onClick={clearAll} className="text-slate-400 hover:text-slate-300">Clear</button>
             </div>
           </div>
-          <p className="text-xs text-slate-500">Select the JC CAMH chapters you want to score in this survey session.</p>
+          <p className="text-xs text-muted-foreground">Select the JC CAMH chapters you want to score in this survey session.</p>
           <div className="grid grid-cols-2 gap-2">
             {CHAPTER_CODES.map(code => (
               <label
@@ -176,7 +176,7 @@ export default function NewMockSurveyPage() {
               </label>
             ))}
           </div>
-          <p className="text-xs text-slate-500">{chaptersScoped.length} chapter{chaptersScoped.length !== 1 ? 's' : ''} selected</p>
+          <p className="text-xs text-muted-foreground">{chaptersScoped.length} chapter{chaptersScoped.length !== 1 ? 's' : ''} selected</p>
         </div>
 
         {error && (

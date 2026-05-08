@@ -36,7 +36,7 @@ const PRIVILEGE_STATUS_COLOR: Record<string, string> = {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -75,11 +75,11 @@ export default async function ProviderDetailPage({ params }: { params: { id: str
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/credentialing/providers" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/credentialing/providers" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Providers
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/credentialing/providers/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/credentialing/providers/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -92,12 +92,12 @@ export default async function ProviderDetailPage({ params }: { params: { id: str
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <UserCheck className="w-5 h-5 text-teal-600" />
               <span className="text-xs font-mono text-muted-foreground/70">{provider.credentials}</span>
-              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${PROVIDER_STATUS_COLOR[provider.status] ?? 'bg-slate-100 text-slate-600'}`}>
+              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${PROVIDER_STATUS_COLOR[provider.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                 {provider.status}
               </span>
             </div>
             <h1 className="text-xl font-bold text-foreground">{provider.firstName} {provider.lastName}, {provider.credentials}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               {provider.specialty} &middot; {provider.providerType.replace(/_/g, ' ')}
               {provider.department && <> &middot; {provider.department}</>}
             </p>
@@ -127,10 +127,10 @@ export default async function ProviderDetailPage({ params }: { params: { id: str
                   <div key={lic.id} className="py-3 flex items-start justify-between gap-4">
                     <div>
                       <p className="text-sm font-medium text-foreground">{lic.licenseType}</p>
-                      <p className="text-xs text-slate-500">{lic.licenseNumber} &middot; {lic.state}</p>
+                      <p className="text-xs text-muted-foreground">{lic.licenseNumber} &middot; {lic.state}</p>
                       {lic.expiryDate && <p className="text-xs text-muted-foreground/70 mt-0.5">Expires: {formatDate(lic.expiryDate)}</p>}
                     </div>
-                    <span className={`shrink-0 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${LICENSE_STATUS_COLOR[lic.status] ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`shrink-0 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${LICENSE_STATUS_COLOR[lic.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {lic.status.replace(/_/g, ' ')}
                     </span>
                   </div>
@@ -148,11 +148,11 @@ export default async function ProviderDetailPage({ params }: { params: { id: str
                   <div key={priv.id} className="py-3">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-medium text-foreground">{priv.category}</p>
-                      <span className={`shrink-0 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${PRIVILEGE_STATUS_COLOR[priv.status] ?? 'bg-slate-100 text-slate-600'}`}>
+                      <span className={`shrink-0 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${PRIVILEGE_STATUS_COLOR[priv.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                         {priv.status}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-1">{priv.description}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{priv.description}</p>
                     <p className="text-xs text-muted-foreground/70 mt-0.5">Granted: {formatDate(priv.grantedDate)}
                       {priv.expiryDate && <> &middot; Expires: {formatDate(priv.expiryDate)}</>}
                     </p>
@@ -180,9 +180,9 @@ export default async function ProviderDetailPage({ params }: { params: { id: str
           {provider.oppeRecords.length > 0 && (
             <Section title="Recent OPPE">
               {provider.oppeRecords.map(oppe => (
-                <div key={oppe.id} className="py-2 border-b border-slate-100 last:border-0">
+                <div key={oppe.id} className="py-2 border-b border-border/30 last:border-0">
                   <p className="text-xs font-medium text-foreground/80">{oppe.reviewCycle}</p>
-                  <p className="text-xs text-slate-500">{oppe.totalCases} cases &middot; Rating: <span className="font-semibold">{oppe.overallRating}</span></p>
+                  <p className="text-xs text-muted-foreground">{oppe.totalCases} cases &middot; Rating: <span className="font-semibold">{oppe.overallRating}</span></p>
                 </div>
               ))}
               <Link href={`/credentialing/oppe?provider=${provider.id}`} className="block mt-2 text-xs text-teal-600 hover:underline">

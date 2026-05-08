@@ -15,7 +15,7 @@ const STATUS_OPTIONS = [
   { value: 'UNDER_REVIEW', label: 'Under Review', color: 'bg-orange-100 text-orange-700' },
   { value: 'APPROVED', label: 'Approved', color: 'bg-green-100 text-green-700' },
   { value: 'SUBMITTED_TO_JC', label: 'Submitted to JC', color: 'bg-purple-100 text-purple-700' },
-  { value: 'CLOSED', label: 'Closed', color: 'bg-slate-100 text-slate-500' },
+  { value: 'CLOSED', label: 'Closed', color: 'bg-muted/30 text-muted-foreground' },
 ];
 
 interface WhyItem { why: string; answer: string }
@@ -36,11 +36,11 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/rca" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/trackers/rca" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to RCAs
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/rca/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/rca/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -53,10 +53,10 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <Search className="w-5 h-5 text-teal-600" />
               <span className="text-xs font-mono text-muted-foreground/70">{rca.rcaNumber}</span>
-              <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2.5 py-0.5">{rca.eventType}</span>
+              <span className="text-xs bg-muted/30 text-muted-foreground rounded-full px-2.5 py-0.5">{rca.eventType}</span>
             </div>
             <h1 className="text-xl font-bold text-foreground line-clamp-2">{rca.eventDescription}</h1>
-            <p className="text-sm text-slate-500 mt-1">Event date: <strong>{formatDate(rca.eventDate)}</strong></p>
+            <p className="text-sm text-muted-foreground mt-1">Event date: <strong>{formatDate(rca.eventDate)}</strong></p>
           </div>
           <StatusUpdater apiPath={`/api/rca/${rca.id}`} currentStatus={rca.status} options={STATUS_OPTIONS} />
         </div>
@@ -90,7 +90,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
                   <li key={i} className="flex gap-3">
                     <span className="flex-none w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">{i + 1}</span>
                     <div>
-                      <p className="text-xs font-semibold text-slate-600">Why: <span className="font-normal text-foreground">{item.why}</span></p>
+                      <p className="text-xs font-semibold text-muted-foreground">Why: <span className="font-normal text-foreground">{item.why}</span></p>
                       <p className="text-xs text-foreground/80 mt-0.5">Because: {item.answer}</p>
                     </div>
                   </li>
@@ -117,7 +117,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="text-left text-muted-foreground/70 border-b border-slate-100">
+                    <tr className="text-left text-muted-foreground/70 border-b border-border/30">
                       <th className="pb-2 pr-3">Action</th>
                       <th className="pb-2 pr-3">Responsible</th>
                       <th className="pb-2 pr-3">Target Date</th>
@@ -128,8 +128,8 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
                     {actionItems.map((a, i) => (
                       <tr key={i} className="text-foreground/80">
                         <td className="py-2 pr-3">{a.action}</td>
-                        <td className="py-2 pr-3 text-slate-500">{a.responsible}</td>
-                        <td className="py-2 pr-3 text-slate-500 whitespace-nowrap">{a.targetDate}</td>
+                        <td className="py-2 pr-3 text-muted-foreground">{a.responsible}</td>
+                        <td className="py-2 pr-3 text-muted-foreground whitespace-nowrap">{a.targetDate}</td>
                         <td className="py-2">
                           <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${a.status === 'COMPLETED' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
                             {a.status}
@@ -147,7 +147,7 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
             <Section title="Conclusion">
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{rca.conclusion}</p>
               {rca.preventabilityRating && (
-                <p className="mt-2 text-xs text-slate-500">Preventability: <span className="font-medium text-foreground">{rca.preventabilityRating}</span></p>
+                <p className="mt-2 text-xs text-muted-foreground">Preventability: <span className="font-medium text-foreground">{rca.preventabilityRating}</span></p>
               )}
             </Section>
           )}
@@ -200,7 +200,7 @@ function Factor({ label, content, color }: { label: string; content: string; col
   };
   return (
     <div className={`rounded-lg border p-3 ${colors[color]}`}>
-      <p className="text-xs font-semibold text-slate-600 mb-1">{label}</p>
+      <p className="text-xs font-semibold text-muted-foreground mb-1">{label}</p>
       <p className="text-xs text-foreground/80 whitespace-pre-wrap">{content}</p>
     </div>
   );
@@ -218,7 +218,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div className="flex justify-between gap-2">
-      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
+      <dt className="text-xs text-muted-foreground shrink-0">{label}</dt>
       <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );

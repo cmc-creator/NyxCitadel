@@ -20,7 +20,7 @@ const STATUS_OPTIONS = [
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -49,11 +49,11 @@ export default async function EquipmentPmDetailPage({ params }: { params: { id: 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/eoc/equipment" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/eoc/equipment" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Equipment PM
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/eoc/equipment/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/eoc/equipment/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -71,7 +71,7 @@ export default async function EquipmentPmDetailPage({ params }: { params: { id: 
               )}
             </div>
             <h1 className="text-xl font-bold text-foreground">{eq.equipmentName}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               {eq.category.replace(/_/g, ' ')} &middot; {eq.location}
             </p>
           </div>

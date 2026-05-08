@@ -148,7 +148,7 @@ export default function NotificationPreferencesPage() {
             <Bell className="w-6 h-6 text-teal-600" />
             Notification Preferences
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Configure which alerts you receive and how far in advance to be notified.
           </p>
         </div>
@@ -198,7 +198,7 @@ export default function NotificationPreferencesPage() {
         </label>
         <div className="flex items-center gap-3 text-xs">
           <div className="flex items-center gap-1.5">
-            <span className="text-slate-500">Start</span>
+            <span className="text-muted-foreground">Start</span>
             <select
               value={quietStartHour}
               disabled={!quietEnabled}
@@ -214,7 +214,7 @@ export default function NotificationPreferencesPage() {
             </select>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-slate-500">End</span>
+            <span className="text-muted-foreground">End</span>
             <select
               value={quietEndHour}
               disabled={!quietEnabled}
@@ -267,7 +267,7 @@ export default function NotificationPreferencesPage() {
       {/* Digest Mode */}
       <div className="bg-card border border-border rounded-xl px-5 py-4">
         <p className="text-sm font-semibold text-foreground">Email Delivery Mode</p>
-        <p className="text-xs text-slate-500 mt-0.5">Choose whether alert emails are sent immediately or grouped into one daily digest.</p>
+        <p className="text-xs text-muted-foreground mt-0.5">Choose whether alert emails are sent immediately or grouped into one daily digest.</p>
         <div className="mt-3 flex flex-wrap gap-2">
           <button
             type="button"
@@ -289,7 +289,7 @@ export default function NotificationPreferencesPage() {
       {/* Alert Rules */}
       <div className="bg-card border border-border rounded-xl divide-y divide-border/30">
         {loading && (
-          <div className="px-5 py-4 text-xs text-slate-500">Loading your saved preferences...</div>
+          <div className="px-5 py-4 text-xs text-muted-foreground">Loading your saved preferences...</div>
         )}
         {rules.map(rule => (
           <div key={rule.key} className="flex items-start gap-4 px-5 py-4">
@@ -312,13 +312,13 @@ export default function NotificationPreferencesPage() {
               <p className={`text-sm font-semibold ${rule.enabled ? 'text-foreground' : 'text-muted-foreground/70'}`}>
                 {rule.label}
               </p>
-              <p className="text-xs text-slate-500 mt-0.5">{rule.description}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{rule.description}</p>
             </div>
 
             {/* Days-ahead selector */}
             {rule.daysAhead > 0 && (
               <div className="shrink-0 flex items-center gap-2">
-                <label className="text-xs text-slate-500 whitespace-nowrap">Days before</label>
+                <label className="text-xs text-muted-foreground whitespace-nowrap">Days before</label>
                 <select
                   value={rule.daysAhead}
                   disabled={!rule.enabled}

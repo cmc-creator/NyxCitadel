@@ -115,7 +115,7 @@ export default function NewIrIadPage() {
           type="checkbox"
           checked={form[field]}
           onChange={toggle(field)}
-          className="w-4 h-4 rounded border-slate-300 text-red-600 focus:ring-red-500"
+          className="w-4 h-4 rounded border-border text-red-600 focus:ring-red-500"
         />
         <span className="text-sm font-medium text-foreground/80">{label}</span>
       </label>
@@ -126,14 +126,14 @@ export default function NewIrIadPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <Link href="/trackers/ir-iad" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-foreground/80 mb-3">
+        <Link href="/trackers/ir-iad" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground/80 mb-3">
           <ArrowLeft className="w-4 h-4" /> Back to IR / IAD Tracker
         </Link>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <FileWarning className="w-6 h-6 text-red-500" />
           Log Incident Report
         </h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           ADHS ARS 36-2402 · AHCCCS ACOM · JC Sentinel Event Policy
         </p>
       </div>
@@ -272,7 +272,7 @@ export default function NewIrIadPage() {
           </CheckRow>
           <CheckRow label="Family / Guardian Notified" field="familyNotified">
             <div>
-              <label className="block text-xs text-slate-500 mb-1">Date notified</label>
+              <label className="block text-xs text-muted-foreground mb-1">Date notified</label>
               <input type="date" value={form.familyNotifiedDate} onChange={set('familyNotifiedDate')}
                 className="input-field w-44 text-sm" />
             </div>
@@ -285,7 +285,7 @@ export default function NewIrIadPage() {
 
           <CheckRow label="ADHS Reportable (ARS 36-2402)" field="adhsReportable">
             <div className="ml-6">
-              <label className="block text-xs text-slate-500 mb-1">Reporting category</label>
+              <label className="block text-xs text-muted-foreground mb-1">Reporting category</label>
               <select value={form.adhsReportableCategory} onChange={set('adhsReportableCategory')}
                 className="input-field w-full sm:w-56 text-sm">
                 <option value="24-hour">24-Hour Reportable (death, serious injury)</option>
@@ -298,12 +298,12 @@ export default function NewIrIadPage() {
           <CheckRow label="AHCCCS Reportable (SMI / RBHA)" field="ahcccsReportable" />
 
           <CheckRow label="Joint Commission Reportable (Sentinel Event)" field="jcReportable">
-            <p className="ml-6 text-xs text-slate-500">JC requires RCA within 45 days of sentinel event.</p>
+            <p className="ml-6 text-xs text-muted-foreground">JC requires RCA within 45 days of sentinel event.</p>
           </CheckRow>
 
           <CheckRow label="IAD Submission Required (state adverse data)" field="iadRequired">
             <div className="ml-6">
-              <label className="block text-xs text-slate-500 mb-1">IAD Period</label>
+              <label className="block text-xs text-muted-foreground mb-1">IAD Period</label>
               <input type="text" value={form.iadPeriod} onChange={set('iadPeriod')}
                 placeholder="e.g. Q1 2026" className="input-field w-full sm:w-44 text-sm" />
             </div>

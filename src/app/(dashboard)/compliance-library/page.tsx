@@ -59,7 +59,7 @@ export default async function ComplianceLibraryPage() {
           <h1 className="text-2xl font-bold text-foreground tracking-tight">
             Regulatory Reference Library
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             All regulations, laws, accreditation standards, and internal requirements in one
             searchable, annotatable reference.
           </p>

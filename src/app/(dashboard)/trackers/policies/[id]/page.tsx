@@ -11,10 +11,10 @@ import PolicyAckPanel from '@/components/trackers/PolicyAckPanel';
 export const dynamic = 'force-dynamic';
 
 const STATUS_OPTIONS = [
-  { value: 'DRAFT', label: 'Draft', color: 'bg-slate-100 text-slate-600' },
+  { value: 'DRAFT', label: 'Draft', color: 'bg-muted/30 text-muted-foreground' },
   { value: 'UNDER_REVIEW', label: 'Under Review', color: 'bg-yellow-100 text-yellow-700' },
   { value: 'ACTIVE', label: 'Active', color: 'bg-green-100 text-green-700' },
-  { value: 'ARCHIVED', label: 'Archived', color: 'bg-slate-100 text-muted-foreground/70' },
+  { value: 'ARCHIVED', label: 'Archived', color: 'bg-muted/30 text-muted-foreground/70' },
   { value: 'OVERDUE_REVIEW', label: 'Overdue Review', color: 'bg-red-100 text-red-700' },
 ];
 
@@ -36,11 +36,11 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/policies" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/trackers/policies" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Policies
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/policies/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/policies/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -59,7 +59,7 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
               )}
             </div>
             <h1 className="text-xl font-bold text-foreground">{policy.title}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Effective: <strong>{formatDate(policy.effectiveDate)}</strong>
               {policy.owner && <> &middot; Owner: <strong>{policy.owner}</strong></>}
             </p>
@@ -108,9 +108,9 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-semibold text-foreground/80">v{r.version}</span>
                         <span className="text-xs text-muted-foreground/70">{r.date}</span>
-                        <span className="text-xs text-slate-500">&mdash; {r.changedBy}</span>
+                        <span className="text-xs text-muted-foreground">&mdash; {r.changedBy}</span>
                       </div>
-                      <p className="text-xs text-slate-600 mt-0.5">{r.summary}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{r.summary}</p>
                     </div>
                   </div>
                 ))}
@@ -172,7 +172,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div className="flex justify-between gap-2">
-      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
+      <dt className="text-xs text-muted-foreground shrink-0">{label}</dt>
       <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );

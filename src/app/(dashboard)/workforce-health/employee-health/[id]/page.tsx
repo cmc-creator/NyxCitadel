@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -51,11 +51,11 @@ export default async function EmployeeHealthDetailPage({ params }: { params: { i
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/workforce-health/employee-health" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/workforce-health/employee-health" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Employee Health
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/workforce-health/employee-health/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/workforce-health/employee-health/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -67,7 +67,7 @@ export default async function EmployeeHealthDetailPage({ params }: { params: { i
           <HeartPulse className="w-5 h-5 text-rose-600 mt-0.5 shrink-0" />
           <div>
             <h1 className="text-xl font-bold text-foreground">{record.employeeName}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               {record.department}
               {record.employeeId && <> &middot; ID: <strong>{record.employeeId}</strong></>}
               {record.hireDate && <> &middot; Hire Date: <strong>{formatDate(record.hireDate)}</strong></>}

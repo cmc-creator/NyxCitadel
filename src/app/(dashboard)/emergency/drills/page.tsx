@@ -57,7 +57,7 @@ export default async function DrillsPage({
             <Siren className="w-6 h-6 text-blue-600" />
             Drills &amp; Exercises
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Track all emergency drills, exercises, and after-action reviews
           </p>
         </div>
@@ -172,21 +172,21 @@ export default async function DrillsPage({
                         <p className="text-xs text-muted-foreground/70">{drill.location}</p>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-600">
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
                       {drill.drillType.replace(/_/g, ' ')}
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-600">
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
                       {formatDate(drill.scheduledDate)}
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-600">
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
                       {drill.conductedDate ? formatDate(drill.conductedDate) : '-'}
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-600">
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
                       {drill.participantCount ?? '-'}
                     </td>
                     <td className="px-4 py-3 text-xs">
                       {aarDue ? (
-                        <span className={aarOverdue ? 'text-red-600 font-medium' : 'text-slate-600'}>
+                        <span className={aarOverdue ? 'text-red-600 font-medium' : 'text-muted-foreground'}>
                           {aarOverdue ? '⚠ ' : ''}{formatDate(aarDue)}
                         </span>
                       ) : (
@@ -230,7 +230,7 @@ function DrillRequirementBar({
           {completed}/{required}
         </span>
       </div>
-      <div className="w-full bg-slate-100 rounded-full h-2 mb-1">
+      <div className="w-full bg-muted/30 rounded-full h-2 mb-1">
         <div
           className={`h-2 rounded-full transition-all ${isDone ? 'bg-green-500' : 'bg-amber-500'}`}
           style={{ width: `${pct}%` }}

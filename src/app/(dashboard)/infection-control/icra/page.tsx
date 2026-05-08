@@ -12,10 +12,10 @@ const ratingColor: Record<string, string> = {
 };
 
 const statusConfig: Record<string, { label: string; color: string }> = {
-  DRAFT:      { label: 'Draft',      color: 'bg-slate-100 text-slate-600' },
+  DRAFT:      { label: 'Draft',      color: 'bg-muted/30 text-muted-foreground' },
   IN_REVIEW:  { label: 'In Review',  color: 'bg-amber-100 text-amber-700' },
   APPROVED:   { label: 'Approved',   color: 'bg-emerald-100 text-emerald-700' },
-  SUPERSEDED: { label: 'Superseded', color: 'bg-slate-100 text-slate-500' },
+  SUPERSEDED: { label: 'Superseded', color: 'bg-muted/30 text-muted-foreground' },
 };
 
 export default async function IcraPage() {
@@ -92,7 +92,7 @@ export default async function IcraPage() {
                   <td className="px-4 py-3 font-semibold text-white text-xs">{r.area}</td>
                   <td className="px-4 py-3 text-muted-foreground/70 text-xs max-w-xs">{r.risk}</td>
                   <td className="px-4 py-3">
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ratingColor[r.rating] ?? 'bg-slate-100 text-slate-600'}`}>{r.rating}</span>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ratingColor[r.rating] ?? 'bg-muted/30 text-muted-foreground'}`}>{r.rating}</span>
                   </td>
                   <td className="px-4 py-3 text-slate-300 text-xs max-w-sm">{r.mitigationGoal}</td>
                   <td className="px-4 py-3 text-muted-foreground/70 text-xs">{r.owner ?? '-'}</td>
@@ -123,7 +123,7 @@ export default async function IcraPage() {
                   <td className="px-4 py-3 text-muted-foreground/70 text-xs">{new Date(a.conductedDate).toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{a.conductedBy}</td>
                   <td className="px-4 py-3">
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[a.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[a.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {statusConfig[a.status]?.label ?? a.status}
                     </span>
                   </td>
@@ -136,7 +136,7 @@ export default async function IcraPage() {
       )}
 
       {assessments.length === 0 && (
-        <div className="text-center py-12 text-slate-500">
+        <div className="text-center py-12 text-muted-foreground">
           <ClipboardList className="w-10 h-10 mx-auto mb-3 opacity-30" />
           <p className="text-sm">No IC risk assessments on record.</p>
         </div>

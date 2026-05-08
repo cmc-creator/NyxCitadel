@@ -114,7 +114,7 @@ export default function EditTrainingPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/trackers/training/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/trackers/training/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -134,19 +134,19 @@ export default function EditTrainingPage() {
           <h2 className="text-sm font-semibold text-foreground">Staff Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-slate-600 mb-1">Full Name *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Full Name *</label>
               <input name="staffName" required defaultValue={data.staffName} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Employee ID</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Employee ID</label>
               <input name="staffId" defaultValue={data.staffId ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Job Title</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Job Title</label>
               <input name="jobTitle" defaultValue={data.jobTitle ?? ''} className="form-input w-full" />
             </div>
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-slate-600 mb-1">Department</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Department</label>
               <input name="department" defaultValue={data.department ?? ''} className="form-input w-full" />
             </div>
           </div>
@@ -156,12 +156,12 @@ export default function EditTrainingPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Training Details</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Training Name *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Training Name *</label>
             <input name="trainingName" required defaultValue={data.trainingName} className="form-input w-full" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
               <select name="category" required defaultValue={data.category} className="form-input w-full">
                 <option value="">Select category…</option>
                 {CATEGORIES.map(([v, l]) => (
@@ -170,7 +170,7 @@ export default function EditTrainingPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Status</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status</label>
               <select name="status" defaultValue={data.status} className="form-input w-full">
                 {STATUSES.map(([v, l]) => (
                   <option key={v} value={v}>{l}</option>
@@ -178,16 +178,16 @@ export default function EditTrainingPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Completed Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Completed Date</label>
               <input type="date" name="completedDate" defaultValue={data.completedDate ? data.completedDate.split('T')[0] : ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Expiry / Renewal Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Expiry / Renewal Date</label>
               <input type="date" name="expiryDate" defaultValue={data.expiryDate ? data.expiryDate.split('T')[0] : ''} className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Training Provider / Vendor</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Training Provider / Vendor</label>
             <input name="provider" defaultValue={data.provider ?? ''} className="form-input w-full" />
           </div>
         </div>
@@ -197,11 +197,11 @@ export default function EditTrainingPage() {
           <h2 className="text-sm font-semibold text-foreground">Assessment Score <span className="font-normal text-muted-foreground/70">(optional)</span></h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Score Achieved (%)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Score Achieved (%)</label>
               <input type="number" name="score" min="0" max="100" step="0.1" defaultValue={data.score ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Passing Score (%)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Passing Score (%)</label>
               <input type="number" name="passingScore" min="0" max="100" step="0.1" defaultValue={data.passingScore ?? ''} className="form-input w-full" />
             </div>
           </div>
@@ -211,7 +211,7 @@ export default function EditTrainingPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Compliance Flags</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body</label>
             <select name="regulatoryBody" defaultValue={data.regulatoryBody ?? ''} className="form-input w-full">
               {REGULATORY_BODIES.map(([v, l]) => (
                 <option key={v} value={v}>{l}</option>
@@ -229,13 +229,13 @@ export default function EditTrainingPage() {
             <label htmlFor="isRequired" className="text-sm text-foreground/80">This is a required / mandatory training</label>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} defaultValue={data.notes ?? ''} className="form-input w-full resize-none" />
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/trackers/training/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href={`/trackers/training/${id}`} className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

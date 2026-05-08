@@ -18,7 +18,7 @@ const RATING_COLOR: Record<string, string> = {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -52,11 +52,11 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/credentialing/oppe" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/credentialing/oppe" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to OPPE Records
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/credentialing/oppe/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/credentialing/oppe/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -69,14 +69,14 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <BarChart3 className="w-5 h-5 text-teal-600" />
               <span className="text-xs text-muted-foreground/70 font-mono">{oppe.reviewCycle}</span>
-              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${RATING_COLOR[oppe.overallRating] ?? 'bg-slate-100 text-slate-600'}`}>
+              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${RATING_COLOR[oppe.overallRating] ?? 'bg-muted/30 text-muted-foreground'}`}>
                 {oppe.overallRating.replace(/_/g, ' ')}
               </span>
             </div>
             <h1 className="text-xl font-bold text-foreground">
               OPPE - {oppe.provider.firstName} {oppe.provider.lastName}, {oppe.provider.credentials}
             </h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               {oppe.provider.specialty} &middot; {formatDate(oppe.periodStart)} – {formatDate(oppe.periodEnd)}
             </p>
           </div>
@@ -90,21 +90,21 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-slate-100">
-                      <th className="text-left py-2 text-xs font-semibold text-slate-500">Metric</th>
-                      <th className="text-right py-2 text-xs font-semibold text-slate-500">Numerator</th>
-                      <th className="text-right py-2 text-xs font-semibold text-slate-500">Denominator</th>
-                      <th className="text-right py-2 text-xs font-semibold text-slate-500">Rate</th>
-                      <th className="text-right py-2 text-xs font-semibold text-slate-500">Benchmark</th>
+                    <tr className="border-b border-border/30">
+                      <th className="text-left py-2 text-xs font-semibold text-muted-foreground">Metric</th>
+                      <th className="text-right py-2 text-xs font-semibold text-muted-foreground">Numerator</th>
+                      <th className="text-right py-2 text-xs font-semibold text-muted-foreground">Denominator</th>
+                      <th className="text-right py-2 text-xs font-semibold text-muted-foreground">Rate</th>
+                      <th className="text-right py-2 text-xs font-semibold text-muted-foreground">Benchmark</th>
                     </tr>
                   </thead>
                   <tbody>
                     {metrics.map((m, i) => (
-                      <tr key={i} className="border-b border-slate-50">
+                      <tr key={i} className="border-b border-border/20">
                         <td className="py-2 text-foreground/80 font-medium">{m.metric}</td>
-                        <td className="py-2 text-right text-slate-600">{m.numerator}</td>
-                        <td className="py-2 text-right text-slate-600">{m.denominator}</td>
-                        <td className="py-2 text-right text-slate-600">{m.rate?.toFixed(1)}%</td>
+                        <td className="py-2 text-right text-muted-foreground">{m.numerator}</td>
+                        <td className="py-2 text-right text-muted-foreground">{m.denominator}</td>
+                        <td className="py-2 text-right text-muted-foreground">{m.rate?.toFixed(1)}%</td>
                         <td className="py-2 text-right text-muted-foreground/70">{m.benchmark != null ? `${m.benchmark}%` : '-'}</td>
                       </tr>
                     ))}
@@ -138,7 +138,7 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
               {oppe.reviewedBy && <Field label="Reviewed By" value={oppe.reviewedBy} />}
               <div>
                 <dt className="text-xs text-muted-foreground/70">MEC Approved</dt>
-                <dd className={`text-sm font-semibold mt-0.5 ${oppe.approvedByMec ? 'text-green-600' : 'text-slate-500'}`}>
+                <dd className={`text-sm font-semibold mt-0.5 ${oppe.approvedByMec ? 'text-green-600' : 'text-muted-foreground'}`}>
                   {oppe.approvedByMec ? 'Yes' : 'Pending'}
                 </dd>
               </div>

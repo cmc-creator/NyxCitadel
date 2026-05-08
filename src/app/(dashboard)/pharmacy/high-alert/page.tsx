@@ -41,7 +41,7 @@ export default async function HighAlertMedsPage() {
 
       <div className="space-y-4">
         {audits.length === 0 ? (
-          <div className="rounded-xl border border-white/10 bg-slate-800/50 p-8 text-center text-slate-500 text-sm">No high-alert medication audits on record.</div>
+          <div className="rounded-xl border border-white/10 bg-slate-800/50 p-8 text-center text-muted-foreground text-sm">No high-alert medication audits on record.</div>
         ) : audits.map(a => (
           <div key={a.id} className={`rounded-xl border p-4 ${a.actionRequired ? 'border-amber-500/30 bg-amber-500/5' : 'border-white/10 bg-slate-800/50'}`}>
             <div className="flex items-start justify-between mb-3">

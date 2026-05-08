@@ -55,7 +55,7 @@ export default function EditBaaPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/hipaa/baa/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/hipaa/baa/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -70,21 +70,21 @@ export default function EditBaaPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Vendor Information</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Vendor / Associate Name *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Vendor / Associate Name *</label>
             <input name="vendorName" required defaultValue={data.vendorName} className="form-input w-full" placeholder="e.g. Epic Systems, LabCorp, Transcription Co." />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Contact Name</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Contact Name</label>
               <input name="vendorContact" defaultValue={data.vendorContact ?? ''} className="form-input w-full" placeholder="Primary contact" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Contact Email</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Contact Email</label>
               <input name="vendorEmail" type="email" defaultValue={data.vendorEmail ?? ''} className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Services Providing Access to PHI *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Services Providing Access to PHI *</label>
             <textarea name="serviceDescription" required rows={3} defaultValue={data.serviceDescription} className="form-input w-full" placeholder="Describe the services and how PHI is accessed or handled…" />
           </div>
         </div>
@@ -93,16 +93,16 @@ export default function EditBaaPage() {
           <h2 className="text-sm font-semibond text-foreground">Agreement Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Agreement Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Agreement Date *</label>
               <input name="agreementDate" type="date" required defaultValue={data.agreementDate ? data.agreementDate.split('T')[0] : ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Expiry Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Expiry Date</label>
               <input name="expiryDate" type="date" defaultValue={data.expiryDate ? data.expiryDate.split('T')[0] : ''} className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Document URL / File Link</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Document URL / File Link</label>
             <input name="documentUrl" type="url" defaultValue={data.documentUrl ?? ''} className="form-input w-full" placeholder="https://…" />
           </div>
           <div className="flex flex-col gap-2">
@@ -118,12 +118,12 @@ export default function EditBaaPage() {
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
           <textarea name="notes" rows={3} defaultValue={data.notes ?? ''} className="form-input w-full" />
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/hipaa/baa/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href={`/hipaa/baa/${id}`} className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

@@ -18,7 +18,7 @@ const STATUS_COLORS: Record<string, string> = {
   MONITORING: 'bg-purple-50 text-purple-700',
   COMPLETED:  'bg-green-50 text-green-700',
   SUSPENDED:  'bg-yellow-50 text-yellow-700',
-  CANCELLED:  'bg-slate-100 text-slate-500',
+  CANCELLED:  'bg-muted/30 text-muted-foreground',
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -33,7 +33,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   COMPLIANCE:           'bg-teal-100 text-teal-700',
   WORKFORCE:            'bg-pink-100 text-pink-700',
   THROUGHPUT:           'bg-cyan-100 text-cyan-700',
-  OTHER:                'bg-slate-100 text-slate-600',
+  OTHER:                'bg-muted/30 text-muted-foreground',
 };
 
 export default async function QapiProjectDetailPage({ params }: { params: { id: string } }) {
@@ -55,7 +55,7 @@ export default async function QapiProjectDetailPage({ params }: { params: { id: 
     <div className="space-y-6 max-w-4xl">
       {/* Back + header */}
       <div>
-        <Link href="/quality/projects" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground/80 mb-4">
+        <Link href="/quality/projects" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground/80 mb-4">
           <ArrowLeft className="w-4 h-4" /> Back to QAPI Projects
         </Link>
         <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -69,18 +69,18 @@ export default async function QapiProjectDetailPage({ params }: { params: { id: 
             </div>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
-            <Link href={`/quality/projects/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+            <Link href={`/quality/projects/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
               <Pencil className="w-3.5 h-3.5" /> Edit
             </Link>
-            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${CATEGORY_COLORS[p.category] ?? 'bg-slate-100 text-slate-600'}`}>
+            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${CATEGORY_COLORS[p.category] ?? 'bg-muted/30 text-muted-foreground'}`}>
               {p.category.replace(/_/g, ' ')}
             </span>
-            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${STATUS_COLORS[p.status] ?? 'bg-slate-100 text-slate-500'}`}>
+            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${STATUS_COLORS[p.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
               {p.status}
             </span>
           </div>
         </div>
-        <p className="text-sm text-slate-500 mt-1 ml-9">
+        <p className="text-sm text-muted-foreground mt-1 ml-9">
           CMS 42 CFR 482.21 · Performance Improvement Project
           {p.regulatoryBody && ` · ${p.regulatoryBody.replace(/_/g, ' ')}`}
           {p.standardRef && ` · ${p.standardRef}`}
@@ -110,14 +110,14 @@ export default async function QapiProjectDetailPage({ params }: { params: { id: 
         {/* Key info panel */}
         <div className="lg:col-span-1 space-y-5">
           <div className="bg-card rounded-xl border border-border p-4">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Project Info</h3>
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Project Info</h3>
             <dl className="space-y-3 text-sm">
               <div>
-                <dt className="text-xs text-slate-500 flex items-center gap-1"><Calendar className="w-3 h-3" /> Start Date</dt>
+                <dt className="text-xs text-muted-foreground flex items-center gap-1"><Calendar className="w-3 h-3" /> Start Date</dt>
                 <dd className="text-foreground font-medium mt-0.5">{formatDate(p.startDate)}</dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-500 flex items-center gap-1">
+                <dt className="text-xs text-muted-foreground flex items-center gap-1">
                   <Clock className="w-3 h-3" /> Target Date
                 </dt>
                 <dd className={`font-medium mt-0.5 ${isOverdue ? 'text-orange-600' : 'text-foreground'}`}>
@@ -126,26 +126,26 @@ export default async function QapiProjectDetailPage({ params }: { params: { id: 
               </div>
               {p.completedDate && (
                 <div>
-                  <dt className="text-xs text-slate-500 flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-green-500" /> Completed</dt>
+                  <dt className="text-xs text-muted-foreground flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-green-500" /> Completed</dt>
                   <dd className="text-green-700 font-medium mt-0.5">{formatDate(p.completedDate)}</dd>
                 </div>
               )}
               {p.owner && (
                 <div>
-                  <dt className="text-xs text-slate-500 flex items-center gap-1"><User className="w-3 h-3" /> Owner</dt>
+                  <dt className="text-xs text-muted-foreground flex items-center gap-1"><User className="w-3 h-3" /> Owner</dt>
                   <dd className="text-foreground mt-0.5">{p.owner}</dd>
                 </div>
               )}
               {p.team && (
                 <div>
-                  <dt className="text-xs text-slate-500 flex items-center gap-1"><Users className="w-3 h-3" /> Team</dt>
+                  <dt className="text-xs text-muted-foreground flex items-center gap-1"><Users className="w-3 h-3" /> Team</dt>
                   <dd className="text-foreground/80 text-xs mt-0.5 whitespace-pre-wrap">{p.team}</dd>
                 </div>
               )}
               {p.relatedMetricKey && (
                 <div>
-                  <dt className="text-xs text-slate-500 flex items-center gap-1"><Activity className="w-3 h-3" /> Metric Key</dt>
-                  <dd className="font-mono text-xs text-slate-600 mt-0.5">{p.relatedMetricKey}</dd>
+                  <dt className="text-xs text-muted-foreground flex items-center gap-1"><Activity className="w-3 h-3" /> Metric Key</dt>
+                  <dd className="font-mono text-xs text-muted-foreground mt-0.5">{p.relatedMetricKey}</dd>
                 </div>
               )}
             </dl>
@@ -154,24 +154,24 @@ export default async function QapiProjectDetailPage({ params }: { params: { id: 
           {/* Metrics */}
           {hasProgress && (
             <div className="bg-card rounded-xl border border-border p-4">
-              <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Metrics</h3>
+              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Metrics</h3>
               <dl className="space-y-3 text-sm">
                 <div>
-                  <dt className="text-xs text-slate-500">Baseline</dt>
+                  <dt className="text-xs text-muted-foreground">Baseline</dt>
                   <dd className="text-2xl font-bold text-foreground mt-0.5">
                     {p.baselineValue}{p.targetUnit ?? ''}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-slate-500">Goal</dt>
+                  <dt className="text-xs text-muted-foreground">Goal</dt>
                   <dd className="text-2xl font-bold text-purple-700 mt-0.5">
                     {p.targetValue}{p.targetUnit ?? ''}
                   </dd>
                 </div>
                 {p.measure && (
                   <div>
-                    <dt className="text-xs text-slate-500">Measure</dt>
-                    <dd className="text-xs text-slate-600 mt-0.5">{p.measure}</dd>
+                    <dt className="text-xs text-muted-foreground">Measure</dt>
+                    <dd className="text-xs text-muted-foreground mt-0.5">{p.measure}</dd>
                   </div>
                 )}
               </dl>
@@ -186,12 +186,12 @@ export default async function QapiProjectDetailPage({ params }: { params: { id: 
               <FileText className="w-4 h-4 text-muted-foreground/70" /> Problem & Aim
             </h2>
             <div>
-              <p className="text-xs font-medium text-slate-500 mb-1">Problem Statement</p>
-              <p className="text-sm text-foreground/80 bg-slate-50 rounded-lg p-3 whitespace-pre-wrap">{p.problemStatement}</p>
+              <p className="text-xs font-medium text-muted-foreground mb-1">Problem Statement</p>
+              <p className="text-sm text-foreground/80 bg-muted/20 rounded-lg p-3 whitespace-pre-wrap">{p.problemStatement}</p>
             </div>
             <div>
-              <p className="text-xs font-medium text-slate-500 mb-1">Project Aim</p>
-              <p className="text-sm text-foreground/80 bg-slate-50 rounded-lg p-3 whitespace-pre-wrap">{p.aim}</p>
+              <p className="text-xs font-medium text-muted-foreground mb-1">Project Aim</p>
+              <p className="text-sm text-foreground/80 bg-muted/20 rounded-lg p-3 whitespace-pre-wrap">{p.aim}</p>
             </div>
           </div>
 
@@ -230,7 +230,7 @@ export default async function QapiProjectDetailPage({ params }: { params: { id: 
         </Link>
         <Link
           href="/quality/metrics"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 bg-card border border-border px-3 py-2 rounded-lg hover:bg-slate-50"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground bg-card border border-border px-3 py-2 rounded-lg hover:bg-muted/20"
         >
           <Activity className="w-3.5 h-3.5" /> View Metrics
         </Link>

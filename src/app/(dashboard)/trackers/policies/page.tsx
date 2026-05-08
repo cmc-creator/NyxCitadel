@@ -41,7 +41,7 @@ export default async function PoliciesPage() {
           <FileText className="w-6 h-6 text-teal-600" />
           Policies &amp; Procedures
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Track, review, upload, and manage all facility policies and procedures.
         </p>
       </div>

@@ -64,7 +64,7 @@ export default async function DrillAARPage({
       <div className="flex items-center justify-between print:hidden">
         <Link
           href={`/emergency/drills/${drill.id}`}
-          className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600"
+          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600"
         >
           <ChevronLeft className="w-4 h-4" /> Back to Drill
         </Link>
@@ -75,7 +75,7 @@ export default async function DrillAARPage({
       <div className="bg-card border border-border rounded-xl p-8 space-y-8 print:border-0 print:shadow-none print:p-0">
 
         {/* Cover */}
-        <div className="border-b border-slate-200 pb-6">
+        <div className="border-b border-border pb-6">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-center gap-2 mb-2">
@@ -83,10 +83,10 @@ export default async function DrillAARPage({
                 <span className="text-xs font-semibold text-teal-600 uppercase tracking-widest">NyxCitadel</span>
               </div>
               <h1 className="text-2xl font-bold text-foreground">After-Action Report (AAR)</h1>
-              <p className="text-slate-600 mt-1">{drill.drillName}</p>
-              <p className="text-sm text-slate-500 mt-0.5">{drill.drillType.replace(/_/g, ' ')} - {facility?.name ?? ''}, {facility?.city}, {facility?.state}</p>
+              <p className="text-muted-foreground mt-1">{drill.drillName}</p>
+              <p className="text-sm text-muted-foreground mt-0.5">{drill.drillType.replace(/_/g, ' ')} - {facility?.name ?? ''}, {facility?.city}, {facility?.state}</p>
             </div>
-            <div className="text-right text-sm text-slate-500 space-y-0.5">
+            <div className="text-right text-sm text-muted-foreground space-y-0.5">
               <p>Report Generated: {formatDate(generatedDate)}</p>
               <p>Drill Date: {formatDate(drill.conductedDate ?? drill.scheduledDate)}</p>
               {drill.observer && <p>Observer: {drill.observer}</p>}
@@ -109,7 +109,7 @@ export default async function DrillAARPage({
             <SummaryBox label="Notifications" value={String(notifications.length)} />
             <SummaryBox label="All-Clears" value={String(allClears.length)} />
           </div>
-          <div className="mt-4 grid md:grid-cols-2 gap-3 text-sm text-slate-600">
+          <div className="mt-4 grid md:grid-cols-2 gap-3 text-sm text-muted-foreground">
             <div>
               <span className="font-semibold">Location: </span>{drill.location ?? 'Not specified'}
             </div>
@@ -125,13 +125,13 @@ export default async function DrillAARPage({
           <Section title="Drill Objectives & Scenario">
             {drill.objectives && (
               <div className="mb-3">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Objectives</p>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Objectives</p>
                 <p className="text-sm text-foreground/80 whitespace-pre-wrap">{drill.objectives}</p>
               </div>
             )}
             {drill.scenario && (
               <div>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Scenario Description</p>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Scenario Description</p>
                 <p className="text-sm text-foreground/80 whitespace-pre-wrap">{drill.scenario}</p>
               </div>
             )}
@@ -145,7 +145,7 @@ export default async function DrillAARPage({
           ) : (
             <table className="min-w-full text-sm border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 text-xs text-slate-500 uppercase tracking-wide">
+                <tr className="border-b border-border text-xs text-muted-foreground uppercase tracking-wide">
                   <th className="py-2 text-left w-28">Time</th>
                   <th className="py-2 text-left w-36">Actor</th>
                   <th className="py-2 text-left w-36">Type</th>
@@ -155,15 +155,15 @@ export default async function DrillAARPage({
               </thead>
               <tbody>
                 {drill.drillActions.map((a) => (
-                  <tr key={a.id} className={`border-b border-slate-100 ${a.issueFlag ? 'bg-red-950/20' : ''}`}>
-                    <td className="py-2 text-slate-500 text-xs">
+                  <tr key={a.id} className={`border-b border-border/30 ${a.issueFlag ? 'bg-red-950/20' : ''}`}>
+                    <td className="py-2 text-muted-foreground text-xs">
                       {new Date(a.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                     </td>
                     <td className="py-2 text-foreground/80 text-xs">{a.actor}</td>
-                    <td className="py-2 text-slate-600 text-xs">{a.actionType.replace(/_/g, ' ')}</td>
+                    <td className="py-2 text-muted-foreground text-xs">{a.actionType.replace(/_/g, ' ')}</td>
                     <td className="py-2 text-foreground">
                       {a.description}
-                      {a.outcomeNotes && <span className="block text-xs text-slate-500 italic">{a.outcomeNotes}</span>}
+                      {a.outcomeNotes && <span className="block text-xs text-muted-foreground italic">{a.outcomeNotes}</span>}
                     </td>
                     <td className="py-2 text-center">
                       {a.issueFlag && <Flag className="w-3.5 h-3.5 text-red-500 mx-auto" />}
@@ -187,13 +187,13 @@ export default async function DrillAARPage({
                 <li key={issue.id} className="border border-red-200 bg-red-950/20 rounded-lg p-3">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-xs font-bold text-red-700">Issue #{i + 1}</span>
-                    <span className="text-xs text-slate-500">
+                    <span className="text-xs text-muted-foreground">
                       {new Date(issue.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} - {issue.actor}
                     </span>
                   </div>
                   <p className="text-sm text-foreground font-medium">{issue.description}</p>
                   {issue.outcomeNotes && (
-                    <p className="text-xs text-slate-600 mt-1">Note: {issue.outcomeNotes}</p>
+                    <p className="text-xs text-muted-foreground mt-1">Note: {issue.outcomeNotes}</p>
                   )}
                 </li>
               ))}
@@ -225,7 +225,7 @@ export default async function DrillAARPage({
             <p className="text-sm text-emerald-700">No corrective actions required.</p>
           ) : (
             <>
-              <p className="text-sm text-slate-600 mb-3">
+              <p className="text-sm text-muted-foreground mb-3">
                 The following items require a Corrective Action Plan (CAP) based on issues identified:
               </p>
               <ol className="list-decimal list-inside space-y-2 text-sm text-foreground/80">
@@ -233,7 +233,7 @@ export default async function DrillAARPage({
                   <li key={issue.id}>
                     <span className="font-medium">Issue #{i + 1}:</span> {issue.description}
                     {drill.correctionsDue && (
-                      <span className="text-xs text-slate-500 ml-2">(Due: {formatDate(drill.correctionsDue)})</span>
+                      <span className="text-xs text-muted-foreground ml-2">(Due: {formatDate(drill.correctionsDue)})</span>
                     )}
                   </li>
                 ))}
@@ -253,21 +253,21 @@ export default async function DrillAARPage({
           <div className="grid md:grid-cols-3 gap-6 text-sm">
             {['Drill Observer / Evaluator', 'Department Director', 'Compliance Officer'].map((role) => (
               <div key={role} className="space-y-4">
-                <div className="border-b border-slate-300 pb-1">
-                  <p className="text-xs text-slate-500">&nbsp;</p>
+                <div className="border-b border-border pb-1">
+                  <p className="text-xs text-muted-foreground">&nbsp;</p>
                 </div>
-                <p className="text-xs text-slate-500">{role}</p>
-                <div className="border-b border-slate-300 pb-1">
-                  <p className="text-xs text-slate-500">&nbsp;</p>
+                <p className="text-xs text-muted-foreground">{role}</p>
+                <div className="border-b border-border pb-1">
+                  <p className="text-xs text-muted-foreground">&nbsp;</p>
                 </div>
-                <p className="text-xs text-slate-500">Date</p>
+                <p className="text-xs text-muted-foreground">Date</p>
               </div>
             ))}
           </div>
         </Section>
 
         {/* Footer */}
-        <div className="border-t border-slate-100 pt-4 text-xs text-muted-foreground/70 flex items-center justify-between">
+        <div className="border-t border-border/30 pt-4 text-xs text-muted-foreground/70 flex items-center justify-between">
           <span>Generated by NyxCitadel · {facility?.name}</span>
           <span>JC EM.03.01.03 / EC.02.02.01 · {formatDate(generatedDate)}</span>
         </div>
@@ -279,7 +279,7 @@ export default async function DrillAARPage({
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="text-sm font-bold text-foreground/80 uppercase tracking-wide border-b border-slate-200 pb-1 mb-3">
+      <h2 className="text-sm font-bold text-foreground/80 uppercase tracking-wide border-b border-border pb-1 mb-3">
         {title}
       </h2>
       {children}
@@ -297,9 +297,9 @@ function SummaryBox({
   highlight?: boolean;
 }) {
   return (
-    <div className={`rounded-lg border p-3 ${highlight ? 'bg-orange-950/20 border-orange-200' : 'bg-slate-50 border-slate-200'}`}>
+    <div className={`rounded-lg border p-3 ${highlight ? 'bg-orange-950/20 border-orange-200' : 'bg-slate-50 border-border'}`}>
       <p className={`text-lg font-bold ${highlight ? 'text-orange-700' : 'text-foreground'}`}>{value}</p>
-      <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+      <p className="text-xs text-muted-foreground mt-0.5">{label}</p>
     </div>
   );
 }

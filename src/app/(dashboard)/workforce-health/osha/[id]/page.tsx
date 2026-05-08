@@ -19,7 +19,7 @@ const OUTCOME_COLOR: Record<string, string> = {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -46,11 +46,11 @@ export default async function OshaLogDetailPage({ params }: { params: { id: stri
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/workforce-health/osha" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/workforce-health/osha" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to OSHA 300 Log
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/workforce-health/osha/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/workforce-health/osha/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -63,7 +63,7 @@ export default async function OshaLogDetailPage({ params }: { params: { id: stri
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <HardHat className="w-5 h-5 text-yellow-600" />
               <span className="text-xs font-mono text-muted-foreground/70">{log.caseNumber}</span>
-              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${OUTCOME_COLOR[log.outcome] ?? 'bg-slate-100 text-slate-600'}`}>
+              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${OUTCOME_COLOR[log.outcome] ?? 'bg-muted/30 text-muted-foreground'}`}>
                 {log.outcome.replace(/_/g, ' ')}
               </span>
               {!log.recordable && (
@@ -71,7 +71,7 @@ export default async function OshaLogDetailPage({ params }: { params: { id: stri
               )}
             </div>
             <h1 className="text-xl font-bold text-foreground">{log.injuryType.replace(/_/g, ' ')}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               {log.employeeName} &middot; {log.jobTitle} &middot; {log.department}
             </p>
           </div>
@@ -121,7 +121,7 @@ export default async function OshaLogDetailPage({ params }: { params: { id: stri
               </div>
               <div>
                 <dt className="text-xs text-muted-foreground/70">Privacy Case</dt>
-                <dd className={`text-sm font-semibold mt-0.5 ${log.privacyCase ? 'text-blue-600' : 'text-slate-500'}`}>
+                <dd className={`text-sm font-semibold mt-0.5 ${log.privacyCase ? 'text-blue-600' : 'text-muted-foreground'}`}>
                   {log.privacyCase ? 'Yes' : 'No'}
                 </dd>
               </div>

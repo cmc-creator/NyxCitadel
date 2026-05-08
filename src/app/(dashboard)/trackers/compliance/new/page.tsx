@@ -96,14 +96,14 @@ export default function NewComplianceItemPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/compliance" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/trackers/compliance" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Compliance Tracker
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ShieldCheck className="w-6 h-6 text-teal-600" />
           Add Compliance Item
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Track recurring regulatory requirements, inspections, and compliance activities.
         </p>
       </div>
@@ -118,12 +118,12 @@ export default function NewComplianceItemPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Compliance Requirement</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Title *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Title *</label>
             <input name="title" required className="form-input w-full" placeholder="e.g., Fire Extinguisher Monthly Inspection, Nursing License Verification" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body *</label>
               <select name="regulatoryBody" required className="form-input w-full">
                 <option value="">Select body…</option>
                 {REGULATORY_BODIES.map(([v, l]) => (
@@ -132,16 +132,16 @@ export default function NewComplianceItemPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
               <input name="category" required className="form-input w-full" placeholder="e.g., Life Safety, Licensure, HR" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Standard / Regulatory Reference</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Standard / Regulatory Reference</label>
             <input name="standardRef" className="form-input w-full" placeholder="e.g., EC.02.03.05, 42 CFR 482.41" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Description</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Description</label>
             <textarea name="description" rows={2} className="form-input w-full resize-none" placeholder="What is required and how is compliance demonstrated?" />
           </div>
         </div>
@@ -151,7 +151,7 @@ export default function NewComplianceItemPage() {
           <h2 className="text-sm font-semibold text-foreground">Schedule &amp; Status</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Frequency *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Frequency *</label>
               <select name="frequency" required className="form-input w-full">
                 <option value="">Select frequency…</option>
                 {FREQUENCIES.map(([v, l]) => (
@@ -160,7 +160,7 @@ export default function NewComplianceItemPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Status</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status</label>
               <select name="status" defaultValue="ACTIVE" className="form-input w-full">
                 {STATUSES.map(([v, l]) => (
                   <option key={v} value={v}>{l}</option>
@@ -168,11 +168,11 @@ export default function NewComplianceItemPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Last Completed Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Last Completed Date</label>
               <input type="date" name="lastDoneDate" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Next Due Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Next Due Date</label>
               <input type="date" name="nextDueDate" className="form-input w-full" />
             </div>
           </div>
@@ -182,7 +182,7 @@ export default function NewComplianceItemPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Ownership &amp; Flags</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Responsible Role</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Responsible Role</label>
             <select name="responsibleRole" className="form-input w-full">
               {RESPONSIBLE_ROLES.map(([v, l]) => (
                 <option key={v} value={v}>{l}</option>
@@ -194,7 +194,7 @@ export default function NewComplianceItemPage() {
             <label htmlFor="isRequired" className="text-sm text-foreground/80">This is a mandatory compliance requirement</label>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes <span className="font-normal text-muted-foreground/70">(optional)</span></label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes <span className="font-normal text-muted-foreground/70">(optional)</span></label>
             <textarea name="notes" rows={2} className="form-input w-full resize-none" placeholder="Additional context, evidence location, responsible parties…" />
           </div>
         </div>

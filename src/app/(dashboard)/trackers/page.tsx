@@ -231,7 +231,7 @@ export default async function TrackersPage() {
                   {m.badge} open
                 </span>
               )}
-              <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
+              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-white transition-colors" />
             </div>
           </Link>
         ))}

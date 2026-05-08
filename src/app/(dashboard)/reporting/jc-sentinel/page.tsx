@@ -32,7 +32,7 @@ export default async function JcSentinelPage() {
           <AlertOctagon className="w-6 h-6 text-red-400" />
           JC Sentinel Event Disclosure
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Build the Joint Commission sentinel event self-disclosure package. Events must be self-reported within 45 days of RCA completion.
         </p>
       </div>
@@ -65,7 +65,7 @@ export default async function JcSentinelPage() {
         </div>
 
         {sentinelIncidents.length === 0 ? (
-          <div className="p-10 text-center text-slate-500 text-sm">
+          <div className="p-10 text-center text-muted-foreground text-sm">
             No JC-reportable incidents in the past 12 months.{' '}
             <Link href="/incidents" className="text-teal-400 hover:underline">Mark incidents as JC-reportable</Link> in the incident tracker.
           </div>
@@ -77,7 +77,7 @@ export default async function JcSentinelPage() {
                   <div className="font-medium text-foreground text-sm">
                   {incident.briefDescription.slice(0, 80)}
                 </div>
-                <div className="text-xs text-slate-500 mt-0.5">
+                <div className="text-xs text-muted-foreground mt-0.5">
                   {formatDate(incident.incidentDate)} &middot;{' '}
                   {incident.incidentType} &middot;{' '}
                   Severity: {incident.severity}

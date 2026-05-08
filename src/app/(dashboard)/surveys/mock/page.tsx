@@ -46,7 +46,7 @@ export default async function MockSurveyListPage() {
             <ClipboardCheck className="w-6 h-6 text-teal-400" />
             Mock Surveys
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Chapter-by-chapter tracer tool — score each Element of Performance, generate findings reports, and link deficiencies to the POC tracker.
           </p>
         </div>
@@ -64,21 +64,21 @@ export default async function MockSurveyListPage() {
         <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3">
           <Clock className="w-5 h-5 text-blue-400" />
           <div>
-            <p className="text-xs text-slate-500">Scheduled</p>
+            <p className="text-xs text-muted-foreground">Scheduled</p>
             <p className="text-2xl font-bold text-foreground">{scheduled}</p>
           </div>
         </div>
         <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3">
           <ListChecks className="w-5 h-5 text-yellow-400" />
           <div>
-            <p className="text-xs text-slate-500">In Progress</p>
+            <p className="text-xs text-muted-foreground">In Progress</p>
             <p className="text-2xl font-bold text-foreground">{inProgress}</p>
           </div>
         </div>
         <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3">
           <CheckCircle2 className="w-5 h-5 text-green-400" />
           <div>
-            <p className="text-xs text-slate-500">Completed</p>
+            <p className="text-xs text-muted-foreground">Completed</p>
             <p className="text-2xl font-bold text-foreground">{complete}</p>
           </div>
         </div>
@@ -87,9 +87,9 @@ export default async function MockSurveyListPage() {
       {/* Survey table */}
       {surveys.length === 0 ? (
         <div className="bg-card border border-border rounded-xl p-12 text-center">
-          <ClipboardCheck className="w-10 h-10 text-slate-600 mx-auto mb-3" />
+          <ClipboardCheck className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
           <p className="text-slate-400 font-medium">No mock surveys yet</p>
-          <p className="text-slate-500 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             Create your first mock survey to begin chapter-by-chapter EP scoring.
           </p>
           <Link
@@ -131,10 +131,10 @@ export default async function MockSurveyListPage() {
                     <td className="p-3">
                       {pct !== null ? (
                         <span className={`font-semibold ${pct >= 80 ? 'text-green-400' : pct >= 60 ? 'text-yellow-400' : 'text-red-400'}`}>
-                          {pct}% <span className="text-xs text-slate-500 font-normal">({metCount}/{scored})</span>
+                          {pct}% <span className="text-xs text-muted-foreground font-normal">({metCount}/{scored})</span>
                         </span>
                       ) : (
-                        <span className="text-slate-600 text-xs">—</span>
+                        <span className="text-muted-foreground text-xs">—</span>
                       )}
                     </td>
                     <td className="p-3">

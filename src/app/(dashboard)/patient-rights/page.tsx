@@ -95,7 +95,7 @@ export default async function PatientRightsPage() {
                   : <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />}
                 <p className={`text-xs ${r.status ? 'text-slate-300' : 'text-amber-300'}`}>{r.right}</p>
               </div>
-              <span className="text-xs text-slate-500 flex-shrink-0">{r.required}</span>
+              <span className="text-xs text-muted-foreground flex-shrink-0">{r.required}</span>
             </div>
           ))}
         </div>
@@ -113,7 +113,7 @@ export default async function PatientRightsPage() {
                   <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full ${m.badgeColor}`}>{m.badge}</span>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-rose-400 transition-colors" />
+              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-rose-400 transition-colors" />
             </div>
             <p className="text-xs text-muted-foreground/70 mb-3">{m.description}</p>
             <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>

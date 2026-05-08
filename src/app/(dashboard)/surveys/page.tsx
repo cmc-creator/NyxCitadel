@@ -40,7 +40,7 @@ export default async function SurveysPage() {
             <ClipboardList className="w-6 h-6 text-teal-400" />
             Surveys &amp; Inspections
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Track regulatory surveys, mock surveys, fire inspections, and ADHS visits.
           </p>
         </div>
@@ -64,7 +64,7 @@ export default async function SurveysPage() {
             <card.icon className={cn('w-5 h-5 mt-0.5', card.color)} />
             <div>
               <p className="text-2xl font-bold text-foreground">{card.value}</p>
-              <p className="text-xs text-slate-500">{card.label}</p>
+              <p className="text-xs text-muted-foreground">{card.label}</p>
             </div>
           </div>
         ))}
@@ -100,8 +100,8 @@ export default async function SurveysPage() {
                     <td className="data-table-td font-medium text-foreground">
                       <Link href={`/surveys/${survey.id}`} className="hover:underline">{survey.surveyType.replace(/_/g, ' ')}</Link>
                     </td>
-                    <td className="data-table-td text-slate-600">{survey.regulatoryBody.replace(/_/g, ' ')}</td>
-                    <td className="data-table-td text-slate-600">
+                    <td className="data-table-td text-muted-foreground">{survey.regulatoryBody.replace(/_/g, ' ')}</td>
+                    <td className="data-table-td text-muted-foreground">
                       {survey.conductedDate
                         ? new Date(survey.conductedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
                         : '-'}
@@ -109,8 +109,8 @@ export default async function SurveysPage() {
                     <td className="data-table-td">
                       <span className={cn('status-badge', cfg.class)}>{cfg.label}</span>
                     </td>
-                    <td className="data-table-td text-slate-600">{survey.findingCount ?? 0}</td>
-                    <td className="data-table-td text-slate-600">
+                    <td className="data-table-td text-muted-foreground">{survey.findingCount ?? 0}</td>
+                    <td className="data-table-td text-muted-foreground">
                       {survey.responseDeadline
                         ? new Date(survey.responseDeadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
                         : '-'}

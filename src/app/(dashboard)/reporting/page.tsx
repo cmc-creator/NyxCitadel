@@ -92,7 +92,7 @@ export default async function ReportingPage() {
           <BarChart3 className="w-6 h-6 text-teal-400" />
           Regulatory Reporting
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Prepare and export formatted submission files for CMS, Joint Commission, ADHS, and NHSN portals.
         </p>
       </div>
@@ -102,21 +102,21 @@ export default async function ReportingPage() {
         <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3">
           <AlertTriangle className="w-5 h-5 text-orange-400" />
           <div>
-            <p className="text-xs text-slate-500">Overdue</p>
+            <p className="text-xs text-muted-foreground">Overdue</p>
             <p className="text-2xl font-bold text-foreground">{overdue}</p>
           </div>
         </div>
         <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3">
           <Clock className="w-5 h-5 text-teal-400" />
           <div>
-            <p className="text-xs text-slate-500">Ready to Submit</p>
+            <p className="text-xs text-muted-foreground">Ready to Submit</p>
             <p className="text-2xl font-bold text-foreground">{ready}</p>
           </div>
         </div>
         <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3">
           <CheckCircle2 className="w-5 h-5 text-green-400" />
           <div>
-            <p className="text-xs text-slate-500">Submitted</p>
+            <p className="text-xs text-muted-foreground">Submitted</p>
             <p className="text-2xl font-bold text-foreground">{submitted}</p>
           </div>
         </div>
@@ -132,9 +132,9 @@ export default async function ReportingPage() {
           >
             <div>
               <div className={`font-semibold text-sm mb-1 ${st.color}`}>{st.label}</div>
-              <p className="text-xs text-slate-500">{st.description}</p>
+              <p className="text-xs text-muted-foreground">{st.description}</p>
             </div>
-            <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 flex-shrink-0 mt-0.5 transition-colors" />
+            <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-slate-400 flex-shrink-0 mt-0.5 transition-colors" />
           </Link>
         ))}
       </div>
@@ -185,9 +185,9 @@ export default async function ReportingPage() {
 
       {submissions.length === 0 && (
         <div className="bg-card border border-border rounded-xl p-10 text-center">
-          <FileText className="w-8 h-8 text-slate-600 mx-auto mb-3" />
+          <FileText className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
           <p className="text-slate-400 font-medium">No submissions yet</p>
-          <p className="text-slate-500 text-sm mt-1">Use the modules above to begin building your first export file.</p>
+          <p className="text-muted-foreground text-sm mt-1">Use the modules above to begin building your first export file.</p>
         </div>
       )}
     </div>

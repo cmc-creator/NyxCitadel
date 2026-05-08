@@ -77,14 +77,14 @@ export function LigatureEditForm({ item }: { item: LigatureItem }) {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <Link href="/eoc/ligature" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-400 mb-3">
+        <Link href="/eoc/ligature" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-400 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Ligature Risk
         </Link>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ShieldAlert className="w-6 h-6 text-amber-400" />
           Edit Ligature Risk Item
         </h1>
-        <p className="text-xs font-mono text-slate-500 mt-0.5">{item.itemNumber}</p>
+        <p className="text-xs font-mono text-muted-foreground mt-0.5">{item.itemNumber}</p>
       </div>
 
       {error && (
@@ -96,30 +96,30 @@ export function LigatureEditForm({ item }: { item: LigatureItem }) {
           <h2 className="text-sm font-semibold text-foreground">Item Details</h2>
 
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Item Description *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Item Description *</label>
             <input name="itemDescription" required className="form-input w-full" defaultValue={item.itemDescription} />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Location *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Location *</label>
               <input name="location" required className="form-input w-full" defaultValue={item.location} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Unit / Zone</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit / Zone</label>
               <input name="unit" className="form-input w-full" defaultValue={item.unit ?? ''} />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Risk Level *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Risk Level *</label>
               <select name="riskLevel" required className="form-input w-full" defaultValue={item.riskLevel}>
                 {RISK_LEVELS.map(r => <option key={r} value={r}>{r}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Status *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status *</label>
               <select name="status" required className="form-input w-full" defaultValue={item.status}>
                 {STATUSES.map(s => <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>)}
               </select>
@@ -131,16 +131,16 @@ export function LigatureEditForm({ item }: { item: LigatureItem }) {
           <h2 className="text-sm font-semibold text-foreground">Identification</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Identified Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Identified Date *</label>
               <input name="identifiedDate" type="date" required className="form-input w-full" defaultValue={toDateInput(item.identifiedDate)} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Identified By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Identified By *</label>
               <input name="identifiedBy" required className="form-input w-full" defaultValue={item.identifiedBy} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Target Resolution Date</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Target Resolution Date</label>
             <input name="targetDate" type="date" className="form-input w-full" defaultValue={toDateInput(item.targetDate)} />
           </div>
         </div>
@@ -148,25 +148,25 @@ export function LigatureEditForm({ item }: { item: LigatureItem }) {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Mitigation & Resolution</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Mitigation Plan</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Mitigation Plan</label>
             <textarea name="mitigationPlan" rows={3} className="form-input w-full" defaultValue={item.mitigationPlan ?? ''} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Resolved Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Resolved Date</label>
               <input name="resolvedDate" type="date" className="form-input w-full" defaultValue={toDateInput(item.resolvedDate)} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Resolved By</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Resolved By</label>
               <input name="resolvedBy" className="form-input w-full" defaultValue={item.resolvedBy ?? ''} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Verified By</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Verified By</label>
             <input name="verifiedBy" className="form-input w-full" defaultValue={item.verifiedBy ?? ''} placeholder="Name of verifier (post-resolution)" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} className="form-input w-full" defaultValue={item.notes ?? ''} />
           </div>
         </div>

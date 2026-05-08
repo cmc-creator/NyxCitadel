@@ -159,7 +159,7 @@ export default function UsersSettingsPage() {
             <Users className="w-6 h-6 text-teal-600" />
             User Management
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">Manage staff accounts and role-based access for your facility.</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Manage staff accounts and role-based access for your facility.</p>
         </div>
         <button
           onClick={openNew}
@@ -287,7 +287,7 @@ export default function UsersSettingsPage() {
                       <td className="px-4 py-3">
                         <p className="font-medium text-foreground">{u.name ?? '-'}</p>
                         <p className="text-xs text-muted-foreground/70">{u.email}</p>
-                        {u.title && <p className="text-xs text-slate-500 mt-0.5">{u.title}</p>}
+                        {u.title && <p className="text-xs text-muted-foreground mt-0.5">{u.title}</p>}
                       </td>
                       <td className="px-4 py-3">
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ROLE_COLORS[u.role] ?? 'bg-muted/50 text-foreground/80'}`}>
@@ -316,7 +316,7 @@ export default function UsersSettingsPage() {
 
           {inactive.length > 0 && (
             <section>
-              <h2 className="text-sm font-semibold text-slate-500 mb-3">Inactive / Deactivated ({inactive.length})</h2>
+              <h2 className="text-sm font-semibold text-muted-foreground mb-3">Inactive / Deactivated ({inactive.length})</h2>
               <div className="bg-card border border-border rounded-xl overflow-hidden opacity-70">
                 <table className="w-full text-sm">
                   <thead>
@@ -331,7 +331,7 @@ export default function UsersSettingsPage() {
                     {inactive.map(u => (
                       <tr key={u.id} className="hover:bg-accent/50">
                         <td className="px-4 py-3">
-                          <p className="font-medium text-slate-500">{u.name ?? '-'}</p>
+                          <p className="font-medium text-muted-foreground">{u.name ?? '-'}</p>
                           <p className="text-xs text-muted-foreground/70">{u.email}</p>
                         </td>
                         <td className="px-4 py-3">

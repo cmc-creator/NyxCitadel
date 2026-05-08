@@ -68,7 +68,7 @@ export default async function OshaLogPage() {
           </thead>
           <tbody>
             {logs.length === 0 ? (
-              <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">No OSHA log entries on record.</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">No OSHA log entries on record.</td></tr>
             ) : logs.map(l => (
               <tr key={l.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                 <td className="px-4 py-3 text-slate-300">{l.caseNumber}</td>
@@ -80,7 +80,7 @@ export default async function OshaLogPage() {
                 <td className="px-4 py-3">
                   {l.recordable
                     ? <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Yes</span>
-                    : <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">No</span>}
+                    : <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-muted/30 text-muted-foreground">No</span>}
                 </td>
               </tr>
             ))}

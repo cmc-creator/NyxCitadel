@@ -108,7 +108,7 @@ export default function FacilityMapPage() {
             <Map className="w-6 h-6 text-teal-600" />
             Facility Map - Digital Twin
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Upload floor plans and zone maps for emergency overlay and drill activation.
           </p>
         </div>
@@ -131,7 +131,7 @@ export default function FacilityMapPage() {
           )}
           <form onSubmit={handleUpload} className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Plan Name *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Plan Name *</label>
               <input
                 type="text"
                 value={name}
@@ -141,7 +141,7 @@ export default function FacilityMapPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Floor / Level</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Floor / Level</label>
               <input
                 type="number"
                 min={1}
@@ -151,17 +151,17 @@ export default function FacilityMapPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Image File (PNG, JPG, PDF)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Image File (PNG, JPG, PDF)</label>
               <input
                 ref={fileRef}
                 type="file"
                 accept="image/*,.pdf"
                 onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-                className="w-full text-sm text-slate-600 file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-medium file:bg-indigo-100 file:text-indigo-700 hover:file:bg-indigo-200"
+                className="w-full text-sm text-muted-foreground file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-medium file:bg-indigo-100 file:text-indigo-700 hover:file:bg-indigo-200"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
               <input
                 type="text"
                 value={notes}
@@ -182,7 +182,7 @@ export default function FacilityMapPage() {
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="text-sm text-slate-500 hover:text-foreground/80 px-3 py-2"
+                className="text-sm text-muted-foreground hover:text-foreground/80 px-3 py-2"
               >
                 Cancel
               </button>
@@ -194,7 +194,7 @@ export default function FacilityMapPage() {
       <div className="grid md:grid-cols-4 gap-5">
         {/* Sidebar - Floor List */}
         <div className="md:col-span-1 space-y-3">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Floor Plans</h3>
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Floor Plans</h3>
           {loading ? (
             <div className="flex items-center gap-2 text-muted-foreground/70 text-sm py-4">
               <Loader2 className="w-4 h-4 animate-spin" /> Loading…
@@ -217,7 +217,7 @@ export default function FacilityMapPage() {
                     <div
                       key={fp.id}
                       onClick={() => setSelected(fp)}
-                      className={`group flex items-center justify-between p-2.5 rounded-lg cursor-pointer transition-colors ${selected?.id === fp.id ? 'bg-indigo-100 border border-indigo-300' : 'hover:bg-slate-100'}`}
+                      className={`group flex items-center justify-between p-2.5 rounded-lg cursor-pointer transition-colors ${selected?.id === fp.id ? 'bg-indigo-100 border border-indigo-300' : 'hover:bg-muted/30'}`}
                     >
                       <div className="flex items-center gap-2 min-w-0">
                         <Map className="w-3.5 h-3.5 text-teal-500 shrink-0" />
@@ -240,7 +240,7 @@ export default function FacilityMapPage() {
         <div className="md:col-span-3 bg-card border border-border rounded-xl overflow-hidden">
           {selected ? (
             <>
-              <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+              <div className="px-4 py-3 border-b border-border/30 flex items-center justify-between">
                 <div>
                   <p className="font-semibold text-foreground">{selected.name}</p>
                   <p className="text-xs text-muted-foreground/70">Floor {selected.floor}{selected.notes ? ` · ${selected.notes}` : ''}</p>
@@ -254,7 +254,7 @@ export default function FacilityMapPage() {
                           const idx = plans.findIndex((p) => p.id === selected.id);
                           setSelected(plans[(idx - 1 + plans.length) % plans.length]);
                         }}
-                        className="p-1.5 rounded hover:bg-slate-100 text-slate-500"
+                        className="p-1.5 rounded hover:bg-muted/30 text-muted-foreground"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
@@ -263,7 +263,7 @@ export default function FacilityMapPage() {
                           const idx = plans.findIndex((p) => p.id === selected.id);
                           setSelected(plans[(idx + 1) % plans.length]);
                         }}
-                        className="p-1.5 rounded hover:bg-slate-100 text-slate-500"
+                        className="p-1.5 rounded hover:bg-muted/30 text-muted-foreground"
                       >
                         <ChevronRight className="w-4 h-4" />
                       </button>
@@ -289,7 +289,7 @@ export default function FacilityMapPage() {
               </div>
               {/* Emergency Zone Legend */}
               <div className="px-4 py-3 border-t border-border bg-card">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Emergency Zone Legend</p>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Emergency Zone Legend</p>
                 <div className="flex flex-wrap gap-2">
                   {[
                     { label: 'Evacuation Route',    color: 'bg-green-500'  },
@@ -301,7 +301,7 @@ export default function FacilityMapPage() {
                   ].map((z) => (
                     <div key={z.label} className="flex items-center gap-1.5">
                       <div className={`w-2.5 h-2.5 rounded-full ${z.color}`} />
-                      <span className="text-xs text-slate-600">{z.label}</span>
+                      <span className="text-xs text-muted-foreground">{z.label}</span>
                     </div>
                   ))}
                 </div>
@@ -327,7 +327,7 @@ export default function FacilityMapPage() {
       </div>
 
       {/* Quick Link */}
-      <div className="flex items-center gap-3 text-sm text-slate-500">
+      <div className="flex items-center gap-3 text-sm text-muted-foreground">
         <span>Use during drills:</span>
         <Link href="/emergency/drills" className="text-teal-600 hover:underline">
           Drills & Exercises →

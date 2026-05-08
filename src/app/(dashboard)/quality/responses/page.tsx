@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Generated Responses' };
 
 const STATUS_COLORS: Record<string, string> = {
-  DRAFT:        'bg-slate-100 text-slate-600',
+  DRAFT:        'bg-muted/30 text-muted-foreground',
   UNDER_REVIEW: 'bg-yellow-100 text-yellow-700',
   APPROVED:     'bg-blue-100 text-blue-700',
   SENT:         'bg-green-100 text-green-700',
@@ -48,14 +48,14 @@ export default async function ResponsesPage() {
             <BookOpen className="w-6 h-6 text-teal-600" />
             Generated Responses
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             All drafted, approved, and sent correspondence.
           </p>
         </div>
         <div className="flex gap-2">
           <Link
             href="/quality/response-templates"
-            className="text-sm font-medium bg-slate-100 hover:bg-slate-200 text-foreground/80 px-3 py-2 rounded-lg transition-colors"
+            className="text-sm font-medium bg-muted/30 hover:bg-slate-200 text-foreground/80 px-3 py-2 rounded-lg transition-colors"
           >
             Templates
           </Link>
@@ -71,20 +71,20 @@ export default async function ResponsesPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-card rounded-xl border border-border p-4">
-          <div className="text-2xl font-bold text-slate-600">{draft.length}</div>
-          <div className="text-sm text-slate-500">Drafts</div>
+          <div className="text-2xl font-bold text-muted-foreground">{draft.length}</div>
+          <div className="text-sm text-muted-foreground">Drafts</div>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-yellow-600">{review.length}</div>
-          <div className="text-sm text-slate-500">Under Review</div>
+          <div className="text-sm text-muted-foreground">Under Review</div>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-green-600">{sent.length}</div>
-          <div className="text-sm text-slate-500">Sent</div>
+          <div className="text-sm text-muted-foreground">Sent</div>
         </div>
         <div className={`rounded-xl border p-4 ${overdue.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${overdue.length > 0 ? 'text-red-600' : 'text-foreground'}`}>{overdue.length}</div>
-          <div className="text-sm text-slate-500">Overdue</div>
+          <div className="text-sm text-muted-foreground">Overdue</div>
         </div>
       </div>
 
@@ -92,7 +92,7 @@ export default async function ResponsesPage() {
       {responses.length === 0 ? (
         <div className="bg-card rounded-xl border border-border p-12 text-center">
           <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-500 font-medium">No responses generated yet</p>
+          <p className="text-muted-foreground font-medium">No responses generated yet</p>
           <Link
             href="/quality/response-templates"
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition-colors"
@@ -124,13 +124,13 @@ export default async function ResponsesPage() {
                       <div className="font-medium text-foreground">{r.title}</div>
                       {r.aiGenerated && <span className="text-xs text-teal-500">✦ AI drafted</span>}
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-500">{r.template?.name ?? '-'}</td>
+                    <td className="px-4 py-3 text-xs text-muted-foreground">{r.template?.name ?? '-'}</td>
                     <td className="px-4 py-3">
                       {r.recipientName && <div className="text-foreground/80">{r.recipientName}</div>}
-                      {r.recipientRole && <div className="text-xs text-slate-500">{r.recipientRole}</div>}
+                      {r.recipientRole && <div className="text-xs text-muted-foreground">{r.recipientRole}</div>}
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[r.status] ?? 'bg-slate-100 text-slate-600'}`}>
+                      <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[r.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                         <StatusIcon className="w-3 h-3" />{r.status.replace(/_/g, ' ')}
                       </span>
                     </td>
@@ -138,12 +138,12 @@ export default async function ResponsesPage() {
                       {r.sentDate ? (
                         <span className="text-green-600">Sent {formatDate(r.sentDate)}</span>
                       ) : r.dueDate ? (
-                        <span className={isOverdue ? 'text-red-600 font-semibold' : 'text-slate-500'}>
+                        <span className={isOverdue ? 'text-red-600 font-semibold' : 'text-muted-foreground'}>
                           {isOverdue ? '⚠ OVERDUE' : 'Due'} {formatDate(r.dueDate)}
                         </span>
                       ) : <span className="text-muted-foreground/70">-</span>}
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-500">{formatDate(r.createdAt)}</td>
+                    <td className="px-4 py-3 text-xs text-muted-foreground">{formatDate(r.createdAt)}</td>
                     <td className="px-4 py-3">
                       <Link href={`/quality/responses/${r.id}`} className="text-xs text-teal-600 hover:text-teal-700 font-medium">
                         View →

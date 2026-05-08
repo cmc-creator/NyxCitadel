@@ -59,7 +59,7 @@ export default function EditEocRoundPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/eoc/rounds/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/eoc/rounds/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -75,11 +75,11 @@ export default function EditEocRoundPage() {
           <h2 className="text-sm font-semibold text-foreground">Round Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Round Number *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Round Number *</label>
               <input name="roundNumber" required className="form-input w-full" defaultValue={data.roundNumber ?? ''} placeholder="EOC-ROUND-2026-Q1-01" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Round Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Round Type *</label>
               <select name="roundType" required className="form-input w-full" defaultValue={data.roundType ?? ''}>
                 <option value="">Select…</option>
                 {ROUND_TYPES.map(t => <option key={t} value={t}>{t.replace(/_/g, ' ')}</option>)}
@@ -88,29 +88,29 @@ export default function EditEocRoundPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Date Conducted *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Date Conducted *</label>
               <input name="conductedDate" type="date" required className="form-input w-full"
                 defaultValue={data.conductedDate?.split('T')[0] ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Lead Inspector *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Lead Inspector *</label>
               <input name="conductedBy" required className="form-input w-full" defaultValue={data.conductedBy ?? ''} placeholder="Name / title" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Additional Participants (one per line)</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Additional Participants (one per line)</label>
             <textarea name="participantIds" rows={3} className="form-input w-full"
               defaultValue={(data.participantIds ?? []).join('\n')}
               placeholder="Jane Smith, RN&#10;Tom Jones, Safety Officer" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Areas Inspected (one per line)</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Areas Inspected (one per line)</label>
             <textarea name="areasInspected" rows={3} className="form-input w-full"
               defaultValue={(data.areasInspected ?? []).join('\n')}
               placeholder="Unit 1A&#10;Unit 2B&#10;Pharmacy&#10;Kitchen" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Summary / Overall Findings</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Summary / Overall Findings</label>
             <textarea name="summary" rows={3} className="form-input w-full" defaultValue={data.summary ?? ''} />
           </div>
         </div>

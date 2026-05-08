@@ -58,7 +58,7 @@ export default async function OutbreaksPage() {
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-mono text-xs text-muted-foreground/70">{o.outbreakNumber}</span>
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[o.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[o.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {statusConfig[o.status]?.label ?? o.status}
                     </span>
                     {o.reportedToHealth && (
@@ -92,7 +92,7 @@ export default async function OutbreaksPage() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 text-slate-500">
+        <div className="text-center py-12 text-muted-foreground">
           <Biohazard className="w-10 h-10 mx-auto mb-3 opacity-30" />
           <p className="text-sm">No outbreaks on record.</p>
         </div>

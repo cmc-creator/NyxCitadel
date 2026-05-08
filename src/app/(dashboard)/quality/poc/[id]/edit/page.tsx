@@ -109,7 +109,7 @@ export default function EditPocPage() {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <a href={`/quality/poc/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/quality/poc/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to POC
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -134,7 +134,7 @@ export default function EditPocPage() {
                 name="title"
                 required
                 defaultValue={data.title ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -144,7 +144,7 @@ export default function EditPocPage() {
                 name="regulatoryBody"
                 required
                 defaultValue={data.regulatoryBody ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
                 <option value="">Select...</option>
                 {REGULATORY_BODIES.map(b => (
@@ -159,7 +159,7 @@ export default function EditPocPage() {
                 name="surveyDate"
                 type="date"
                 defaultValue={data.surveyDate?.split('T')[0] ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -169,7 +169,7 @@ export default function EditPocPage() {
                 name="responseDeadline"
                 type="date"
                 defaultValue={data.responseDeadline?.split('T')[0] ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -178,7 +178,7 @@ export default function EditPocPage() {
               <input
                 name="submittedBy"
                 defaultValue={data.submittedBy ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function EditPocPage() {
               name="coverLetter"
               rows={4}
               defaultValue={data.coverLetter ?? ''}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+              className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
             />
           </div>
         </div>
@@ -226,76 +226,76 @@ export default function EditPocPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">Tag / Citation #</label>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Tag / Citation #</label>
                   <input
                     value={finding.findingNumber}
                     onChange={e => updateFinding(finding.id, 'findingNumber', e.target.value)}
                     placeholder="e.g., A-0144, RI.01.07.01 EP2"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">Responsible Party</label>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Responsible Party</label>
                   <input
                     value={finding.responsibleParty}
                     onChange={e => updateFinding(finding.id, 'responsibleParty', e.target.value)}
                     placeholder="Name / title"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">Deficiency Description</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Deficiency Description</label>
                 <textarea
                   value={finding.findingDescription}
                   onChange={e => updateFinding(finding.id, 'findingDescription', e.target.value)}
                   rows={2}
                   placeholder="What was the finding / deficiency cited?"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">How Corrected</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">How Corrected</label>
                 <textarea
                   value={finding.howCorrected}
                   onChange={e => updateFinding(finding.id, 'howCorrected', e.target.value)}
                   rows={2}
                   placeholder="What specific corrective action was taken?"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">How Recurrence is Prevented</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">How Recurrence is Prevented</label>
                 <textarea
                   value={finding.howPrevented}
                   onChange={e => updateFinding(finding.id, 'howPrevented', e.target.value)}
                   rows={2}
                   placeholder="What systemic changes / policy updates were made?"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">Monitoring Strategy</label>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Monitoring Strategy</label>
                   <textarea
                     value={finding.howMonitored}
                     onChange={e => updateFinding(finding.id, 'howMonitored', e.target.value)}
                     rows={2}
                     placeholder="How will compliance be monitored / audited?"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                    className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">Target Completion Date</label>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Target Completion Date</label>
                   <input
                     type="date"
                     value={finding.targetDate}
                     onChange={e => updateFinding(finding.id, 'targetDate', e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                   />
                 </div>
               </div>
@@ -310,7 +310,7 @@ export default function EditPocPage() {
             name="notes"
             rows={2}
             defaultValue={data.notes ?? ''}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+            className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
           />
         </div>
 
@@ -324,7 +324,7 @@ export default function EditPocPage() {
           </button>
           <a
             href={`/quality/poc/${id}`}
-            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors"
+            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-muted/20 transition-colors"
           >
             Cancel
           </a>

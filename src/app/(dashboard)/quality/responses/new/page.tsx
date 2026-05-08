@@ -115,14 +115,14 @@ export default function NewResponsePage() {
   return (
     <div className="max-w-4xl space-y-6">
       <div>
-        <a href="/quality/responses" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/quality/responses" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Responses
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <BookOpen className="w-6 h-6 text-teal-600" />
           Generate Response
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Select a template or write a custom response from scratch.
         </p>
       </div>
@@ -144,11 +144,11 @@ export default function NewResponsePage() {
                 className={`text-left p-3 rounded-lg border-2 transition-colors text-sm ${
                   selectedTemplate?.id === t.id
                     ? 'border-teal-500 bg-teal-950/20'
-                    : 'border-slate-200 hover:border-teal-300'
+                    : 'border-border hover:border-teal-300'
                 }`}
               >
                 <div className="font-medium text-foreground">{t.name}</div>
-                {t.regulatoryRef && <div className="text-xs text-slate-500 mt-0.5">{t.regulatoryRef}</div>}
+                {t.regulatoryRef && <div className="text-xs text-muted-foreground mt-0.5">{t.regulatoryRef}</div>}
                 {t.daysRequired && (
                   <div className="text-xs text-amber-600 mt-0.5">⏱ {t.daysRequired}-day deadline</div>
                 )}

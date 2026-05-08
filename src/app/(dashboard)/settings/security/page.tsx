@@ -87,7 +87,7 @@ export default function SecuritySettingsPage() {
           <Shield className="w-6 h-6 text-teal-600" />
           Account Security
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Manage two-factor authentication (2FA) for your account.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Manage two-factor authentication (2FA) for your account.</p>
       </div>
 
       {/* Status card */}
@@ -100,7 +100,7 @@ export default function SecuritySettingsPage() {
           <p className="font-semibold text-foreground">
             Two-Factor Authentication is {totpEnabled ? 'Enabled' : 'Disabled'}
           </p>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             {totpEnabled
               ? 'Your account is protected. You will be asked for a code each time you sign in.'
               : 'Add an extra layer of security using an authenticator app (Google Authenticator, Authy, etc.).'}
@@ -130,13 +130,13 @@ export default function SecuritySettingsPage() {
         <div className="bg-card border border-border rounded-xl p-6 space-y-5">
           <div>
             <h2 className="font-semibold text-foreground flex items-center gap-2"><KeyRound className="w-4 h-4 text-teal-600" /> Step 1: Scan QR Code</h2>
-            <p className="text-sm text-slate-500 mt-1">Open your authenticator app and scan this code, or enter the secret key manually.</p>
+            <p className="text-sm text-muted-foreground mt-1">Open your authenticator app and scan this code, or enter the secret key manually.</p>
           </div>
           <div className="flex justify-center">
             {qrDataUrl && <Image src={qrDataUrl} alt="QR Code" width={180} height={180} className="rounded-lg border border-border" />}
           </div>
           <div>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Manual entry key</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Manual entry key</p>
             <div className="bg-muted/30 border border-border rounded-lg px-3 py-2 font-mono text-sm text-foreground tracking-widest break-all">{secret}</div>
           </div>
           <button onClick={() => setStep('verify')} className="w-full text-sm bg-teal-600 hover:bg-teal-700 text-white py-2.5 rounded-lg font-medium">
@@ -150,7 +150,7 @@ export default function SecuritySettingsPage() {
         <div className="bg-card border border-border rounded-xl p-6 space-y-5">
           <div>
             <h2 className="font-semibold text-foreground flex items-center gap-2"><KeyRound className="w-4 h-4 text-teal-600" /> Step 2: Verify Code</h2>
-            <p className="text-sm text-slate-500 mt-1">Enter the 6-digit code shown in your authenticator app to confirm setup.</p>
+            <p className="text-sm text-muted-foreground mt-1">Enter the 6-digit code shown in your authenticator app to confirm setup.</p>
           </div>
           <input
             type="text"
@@ -177,7 +177,7 @@ export default function SecuritySettingsPage() {
             <CheckCircle2 className="w-6 h-6 text-green-600 shrink-0 mt-0.5" />
             <div>
               <h2 className="font-semibold text-green-400">2FA Enabled Successfully!</h2>
-              <p className="text-sm text-slate-500 mt-1">Save these backup codes in a safe place. Each code can only be used once if you lose access to your authenticator app.</p>
+              <p className="text-sm text-muted-foreground mt-1">Save these backup codes in a safe place. Each code can only be used once if you lose access to your authenticator app.</p>
             </div>
           </div>
           <div className="bg-muted/30 border border-border rounded-lg p-4 font-mono text-sm grid grid-cols-2 gap-2">
@@ -200,7 +200,7 @@ export default function SecuritySettingsPage() {
         <div className="bg-card border border-red-200 rounded-xl p-6 space-y-5">
           <div>
             <h2 className="font-semibold text-foreground flex items-center gap-2"><ShieldOff className="w-4 h-4 text-red-600" /> Disable Two-Factor Authentication</h2>
-            <p className="text-sm text-slate-500 mt-1">Enter your current password to confirm you want to remove 2FA protection from your account.</p>
+            <p className="text-sm text-muted-foreground mt-1">Enter your current password to confirm you want to remove 2FA protection from your account.</p>
           </div>
           <input
             type="password"

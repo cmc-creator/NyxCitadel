@@ -104,7 +104,7 @@ export default function EditResponseTemplatePage() {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <a href={`/quality/response-templates/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/quality/response-templates/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Template
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -128,7 +128,7 @@ export default function EditResponseTemplatePage() {
                 name="name"
                 required
                 defaultValue={data.name ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -138,7 +138,7 @@ export default function EditResponseTemplatePage() {
                 name="category"
                 required
                 defaultValue={data.category ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
                 <option value="">Select category...</option>
                 {CATEGORIES.map(c => (
@@ -152,7 +152,7 @@ export default function EditResponseTemplatePage() {
               <input
                 name="regulatoryRef"
                 defaultValue={data.regulatoryRef ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -161,7 +161,7 @@ export default function EditResponseTemplatePage() {
               <input
                 name="description"
                 defaultValue={data.description ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -172,7 +172,7 @@ export default function EditResponseTemplatePage() {
                 type="number"
                 min="1"
                 defaultValue={data.daysRequired ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
           </div>
@@ -182,7 +182,7 @@ export default function EditResponseTemplatePage() {
             <input
               name="subject"
               defaultValue={data.subject ?? ''}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
         </div>
@@ -190,7 +190,7 @@ export default function EditResponseTemplatePage() {
         {/* Variables */}
         <div className="bg-card rounded-xl border border-border p-6 space-y-4">
           <h2 className="font-semibold text-foreground/80 text-sm uppercase tracking-wide">Template Variables</h2>
-          <p className="text-xs text-slate-500">Variables are replaced when generating a response. Click to add common variables.</p>
+          <p className="text-xs text-muted-foreground">Variables are replaced when generating a response. Click to add common variables.</p>
 
           <div className="flex flex-wrap gap-1.5">
             {COMMON_VARIABLES.map(v => (
@@ -199,7 +199,7 @@ export default function EditResponseTemplatePage() {
                 type="button"
                 onClick={() => addVariable(v)}
                 disabled={variables.includes(v)}
-                className="text-xs bg-slate-50 hover:bg-purple-50 border border-border hover:border-purple-300 text-slate-600 hover:text-purple-700 px-2 py-1 rounded disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="text-xs bg-muted/20 hover:bg-purple-50 border border-border hover:border-purple-300 text-muted-foreground hover:text-purple-700 px-2 py-1 rounded disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 {v}
               </button>
@@ -222,13 +222,13 @@ export default function EditResponseTemplatePage() {
               value={newVar}
               onChange={e => setNewVar(e.target.value)}
               placeholder="Custom variable name..."
-              className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="flex-1 rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addVariable(newVar); } }}
             />
             <button
               type="button"
               onClick={() => addVariable(newVar)}
-              className="inline-flex items-center gap-1 text-sm font-medium bg-slate-100 hover:bg-slate-200 text-foreground/80 px-3 py-2 rounded-lg"
+              className="inline-flex items-center gap-1 text-sm font-medium bg-muted/30 hover:bg-slate-200 text-foreground/80 px-3 py-2 rounded-lg"
             >
               <Plus className="w-4 h-4" /> Add
             </button>
@@ -243,7 +243,7 @@ export default function EditResponseTemplatePage() {
             required
             rows={16}
             defaultValue={data.bodyTemplate ?? ''}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-purple-500 h-64 resize-y"
+            className="w-full rounded-lg border border-border px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-purple-500 h-64 resize-y"
           />
         </div>
 
@@ -254,7 +254,7 @@ export default function EditResponseTemplatePage() {
             name="instructions"
             rows={3}
             defaultValue={data.instructions ?? ''}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+            className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
           />
         </div>
 
@@ -268,7 +268,7 @@ export default function EditResponseTemplatePage() {
           </button>
           <a
             href={`/quality/response-templates/${id}`}
-            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors"
+            className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-muted/20 transition-colors"
           >
             Cancel
           </a>

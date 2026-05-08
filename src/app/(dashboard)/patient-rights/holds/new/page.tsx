@@ -47,14 +47,14 @@ export default function NewInvoluntaryHoldPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/patient-rights/holds" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/patient-rights/holds" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Involuntary Holds
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Lock className="w-6 h-6 text-red-600" />
           Log Involuntary Hold
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">ARS Title 36 / Court-ordered psychiatric holds. Patient rights notification required within 24 hours.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">ARS Title 36 / Court-ordered psychiatric holds. Patient rights notification required within 24 hours.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -64,16 +64,16 @@ export default function NewInvoluntaryHoldPage() {
           <h2 className="text-sm font-semibold text-foreground">Patient &amp; Hold Type</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient Initials *</label>
               <input name="patientInitials" required className="form-input w-full" placeholder="J.S." />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">MRN</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MRN</label>
               <input name="patientMrn" className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Hold Type *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Hold Type *</label>
             <select name="holdType" required className="form-input w-full">
               <option value="">Select…</option>
               {HOLD_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
@@ -81,11 +81,11 @@ export default function NewInvoluntaryHoldPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Hold Start Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Hold Start Date *</label>
               <input name="holdStartDate" type="datetime-local" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Hold Expiry Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Hold Expiry Date *</label>
               <input name="holdExpiryDate" type="datetime-local" required className="form-input w-full" />
             </div>
           </div>
@@ -95,16 +95,16 @@ export default function NewInvoluntaryHoldPage() {
           <h2 className="text-sm font-semibold text-foreground">Legal &amp; Clinical</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Ordering Physician *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Ordering Physician *</label>
               <input name="orderingPhysician" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Petitioner Name</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Petitioner Name</label>
               <input name="petitionerName" className="form-input w-full" placeholder="Family member / officer" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Court Hearing Date</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Court Hearing Date</label>
             <input name="courtHearingDate" type="date" className="form-input w-full" />
           </div>
           <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
@@ -114,12 +114,12 @@ export default function NewInvoluntaryHoldPage() {
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
           <textarea name="notes" rows={3} className="form-input w-full" />
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/patient-rights/holds" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/patient-rights/holds" className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-muted/20">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Log Hold'}
           </button>

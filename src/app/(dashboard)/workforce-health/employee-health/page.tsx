@@ -68,7 +68,7 @@ export default async function EmployeeHealthPage() {
           </thead>
           <tbody>
             {records.length === 0 ? (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">No employee health records on file.</td></tr>
+              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">No employee health records on file.</td></tr>
             ) : records.map(r => {
               const tbPast = r.tbNextDueDate && r.tbNextDueDate < now;
               return (
@@ -83,7 +83,7 @@ export default async function EmployeeHealthPage() {
                       ? <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Declined</span>
                       : r.fluVaxDate
                         ? <div className="flex items-center gap-1 text-emerald-400 text-xs"><CheckCircle className="w-3.5 h-3.5" />{r.fluVaxDate.toLocaleDateString()}</div>
-                        : <span className="text-slate-500 text-xs">Not recorded</span>}
+                        : <span className="text-muted-foreground text-xs">Not recorded</span>}
                   </td>
                 </tr>
               );

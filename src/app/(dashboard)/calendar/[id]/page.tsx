@@ -31,7 +31,7 @@ const STATUS_COLORS: Record<string, string> = {
   IN_PROGRESS: 'bg-amber-100  text-amber-800',
   COMPLETED:   'bg-green-100  text-green-800',
   OVERDUE:     'bg-red-100    text-red-800',
-  WAIVED:      'bg-slate-100  text-foreground/80',
+  WAIVED:      'bg-muted/30  text-foreground/80',
   NA:          'bg-gray-100   text-gray-600',
 };
 
@@ -164,7 +164,7 @@ export default function CalendarEventDetailPage() {
   );
 
   if (error || !event) return (
-    <div className="flex flex-col items-center gap-4 py-16 text-slate-500">
+    <div className="flex flex-col items-center gap-4 py-16 text-muted-foreground">
       <AlertCircle className="w-8 h-8 text-red-400" />
       <p>{error || 'Event not found.'}</p>
       <Link href="/calendar" className="text-purple-600 hover:underline text-sm">← Back to Calendar</Link>
@@ -177,10 +177,10 @@ export default function CalendarEventDetailPage() {
     <div className="max-w-3xl space-y-6">
       {/* Back */}
       <div className="flex items-center justify-between gap-2">
-        <Link href="/calendar" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600">
+        <Link href="/calendar" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Calendar
         </Link>
-        <Link href={`/calendar/${id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+        <Link href={`/calendar/${id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
           <Pencil className="w-3.5 h-3.5" /> Edit
         </Link>
       </div>
@@ -200,7 +200,7 @@ export default function CalendarEventDetailPage() {
             {!editing ? (
               <>
                 <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${STATUS_COLORS[event.status] ?? 'bg-slate-100 text-foreground/80'}`}>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${STATUS_COLORS[event.status] ?? 'bg-muted/30 text-foreground/80'}`}>
                     {event.status.replace(/_/g, ' ')}
                   </span>
                   {overdue && (
@@ -213,7 +213,7 @@ export default function CalendarEventDetailPage() {
                   </span>
                 </div>
                 <h1 className="text-xl font-bold text-foreground">{event.title}</h1>
-                {event.description && <p className="text-sm text-slate-600 mt-1">{event.description}</p>}
+                {event.description && <p className="text-sm text-muted-foreground mt-1">{event.description}</p>}
               </>
             ) : (
               <div className="space-y-3 w-full">
@@ -232,36 +232,36 @@ export default function CalendarEventDetailPage() {
 
         {/* Details grid */}
         {!editing && (
-          <dl className="mt-5 grid grid-cols-2 gap-x-8 gap-y-3 text-sm border-t border-slate-100 pt-5">
+          <dl className="mt-5 grid grid-cols-2 gap-x-8 gap-y-3 text-sm border-t border-border/30 pt-5">
             <div>
-              <dt className="text-xs font-medium text-slate-500 flex items-center gap-1"><Clock className="w-3 h-3" /> Due Date</dt>
+              <dt className="text-xs font-medium text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" /> Due Date</dt>
               <dd className={`mt-0.5 font-semibold ${overdue ? 'text-red-700' : 'text-foreground'}`}>{fmtDate(event.dueDate)}</dd>
             </div>
             {event.completedDate && (
               <div>
-                <dt className="text-xs font-medium text-slate-500 flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-green-500" /> Completed</dt>
+                <dt className="text-xs font-medium text-muted-foreground flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-green-500" /> Completed</dt>
                 <dd className="mt-0.5 font-semibold text-green-700">{fmtDate(event.completedDate)}</dd>
               </div>
             )}
             <div>
-              <dt className="text-xs font-medium text-slate-500 flex items-center gap-1"><BookOpen className="w-3 h-3" /> Category</dt>
+              <dt className="text-xs font-medium text-muted-foreground flex items-center gap-1"><BookOpen className="w-3 h-3" /> Category</dt>
               <dd className="mt-0.5 text-foreground/80">{fmtCat(event.category)}</dd>
             </div>
             {event.regulatoryBody && (
               <div>
-                <dt className="text-xs font-medium text-slate-500">Regulatory Body</dt>
+                <dt className="text-xs font-medium text-muted-foreground">Regulatory Body</dt>
                 <dd className="mt-0.5 text-foreground/80">{event.regulatoryBody.replace(/_/g, ' ')}</dd>
               </div>
             )}
             {event.notes && (
               <div className="col-span-2">
-                <dt className="text-xs font-medium text-slate-500">Notes</dt>
+                <dt className="text-xs font-medium text-muted-foreground">Notes</dt>
                 <dd className="mt-0.5 text-foreground/80 whitespace-pre-wrap">{event.notes}</dd>
               </div>
             )}
             {event.documentUrl && (
               <div className="col-span-2">
-                <dt className="text-xs font-medium text-slate-500">Reference Document</dt>
+                <dt className="text-xs font-medium text-muted-foreground">Reference Document</dt>
                 <dd className="mt-0.5">
                   <a href={event.documentUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-purple-600 hover:underline text-sm">
                     <ExternalLink className="w-3.5 h-3.5" /> View Document

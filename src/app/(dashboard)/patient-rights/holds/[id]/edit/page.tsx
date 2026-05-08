@@ -60,7 +60,7 @@ export default function EditInvoluntaryHoldPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/patient-rights/holds/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/patient-rights/holds/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -76,16 +76,16 @@ export default function EditInvoluntaryHoldPage() {
           <h2 className="text-sm font-semibold text-foreground">Patient &amp; Hold Type</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient Initials *</label>
               <input name="patientInitials" required className="form-input w-full" defaultValue={data.patientInitials ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">MRN</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MRN</label>
               <input name="patientMrn" className="form-input w-full" defaultValue={data.patientMrn ?? ''} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Hold Type *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Hold Type *</label>
             <select name="holdType" required className="form-input w-full" defaultValue={data.holdType ?? ''}>
               <option value="">Select…</option>
               {HOLD_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
@@ -93,12 +93,12 @@ export default function EditInvoluntaryHoldPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Hold Start Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Hold Start Date *</label>
               <input name="holdStartDate" type="datetime-local" required className="form-input w-full"
                 defaultValue={data.holdStartDate ? data.holdStartDate.slice(0, 16) : ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Hold Expiry Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Hold Expiry Date *</label>
               <input name="holdExpiryDate" type="datetime-local" required className="form-input w-full"
                 defaultValue={data.holdExpiryDate ? data.holdExpiryDate.slice(0, 16) : ''} />
             </div>
@@ -109,16 +109,16 @@ export default function EditInvoluntaryHoldPage() {
           <h2 className="text-sm font-semibold text-foreground">Legal &amp; Clinical</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Ordering Physician *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Ordering Physician *</label>
               <input name="orderingPhysician" required className="form-input w-full" defaultValue={data.orderingPhysician ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Petitioner Name</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Petitioner Name</label>
               <input name="petitionerName" className="form-input w-full" defaultValue={data.petitionerName ?? ''} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Court Hearing Date</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Court Hearing Date</label>
             <input name="courtHearingDate" type="date" className="form-input w-full" defaultValue={data.courtHearingDate?.split('T')[0] ?? ''} />
           </div>
           <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
@@ -129,12 +129,12 @@ export default function EditInvoluntaryHoldPage() {
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
           <textarea name="notes" rows={3} className="form-input w-full" defaultValue={data.notes ?? ''} />
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/patient-rights/holds/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <a href={`/patient-rights/holds/${id}`} className="px-4 py-2 text-sm text-muted-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

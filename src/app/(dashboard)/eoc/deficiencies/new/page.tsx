@@ -57,7 +57,7 @@ export default function NewEocDeficiencyPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/eoc/deficiencies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/eoc/deficiencies" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Deficiencies
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -73,38 +73,38 @@ export default function NewEocDeficiencyPage() {
           <h2 className="text-sm font-semibold text-foreground">Deficiency Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Deficiency Number *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Deficiency Number *</label>
               <input name="defNumber" required className="form-input w-full" placeholder="DEF-2026-001" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Originating Round ID</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Originating Round ID</label>
               <input name="roundId" defaultValue={prefillRoundId} className="form-input w-full" placeholder="Optional - link to round" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Location *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Location *</label>
               <input name="location" required className="form-input w-full" placeholder="e.g. Unit 2A, Room 204" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Unit</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit</label>
               <input name="unit" className="form-input w-full" placeholder="Unit designation" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Description *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Description *</label>
             <textarea name="description" required rows={4} className="form-input w-full" placeholder="Describe the deficiency in detail…" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
               <select name="category" required className="form-input w-full">
                 <option value="">Select…</option>
                 {CATEGORIES.map(c => <option key={c} value={c}>{c.replace(/_/g, ' ')}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Severity *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Severity *</label>
               <select name="severity" required className="form-input w-full">
                 <option value="">Select…</option>
                 {SEVERITIES.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
@@ -113,16 +113,16 @@ export default function NewEocDeficiencyPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Assigned To</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Assigned To</label>
               <input name="assignedTo" className="form-input w-full" placeholder="Name / role" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Due Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Due Date</label>
               <input name="dueDate" type="date" className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} className="form-input w-full" />
           </div>
         </div>

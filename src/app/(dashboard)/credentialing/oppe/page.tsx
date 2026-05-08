@@ -87,7 +87,7 @@ export default async function OppePage() {
           </thead>
           <tbody className="divide-y divide-white/5">
             {records.length === 0 ? (
-              <tr><td colSpan={6} className="text-center py-8 text-slate-500 text-sm">No OPPE records on file.</td></tr>
+              <tr><td colSpan={6} className="text-center py-8 text-muted-foreground text-sm">No OPPE records on file.</td></tr>
             ) : records.map(r => {
               const rate = r.totalCases > 0 ? (r.compliantCases / r.totalCases) * 100 : 0;
               return (
@@ -99,7 +99,7 @@ export default async function OppePage() {
                     {rate.toFixed(1)}%
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ratingConfig[r.overallRating ?? '']?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ratingConfig[r.overallRating ?? '']?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {ratingConfig[r.overallRating ?? '']?.label ?? r.overallRating ?? '—'}
                     </span>
                   </td>

@@ -13,12 +13,12 @@ const STATUS_COLORS: Record<string, string> = {
   INVESTIGATING:     'bg-yellow-100 text-yellow-700',
   PENDING_REVIEW:    'bg-blue-100 text-blue-700',
   REPORTED_TO_STATE: 'bg-teal-100 text-teal-700',
-  CLOSED:            'bg-slate-100 text-slate-500',
+  CLOSED:            'bg-muted/30 text-muted-foreground',
   REOPENED:          'bg-orange-100 text-orange-700',
 };
 
 const SEVERITY_COLORS: Record<string, string> = {
-  NEAR_MISS: 'bg-slate-100 text-slate-500',
+  NEAR_MISS: 'bg-muted/30 text-muted-foreground',
   MINOR:     'bg-green-100 text-green-700',
   MODERATE:  'bg-yellow-100 text-yellow-700',
   SERIOUS:   'bg-orange-100 text-orange-700',
@@ -34,7 +34,7 @@ function DeadlineTag({ dueDate, label }: { dueDate: Date; label: string }) {
     <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full ${
       overdue ? 'bg-red-100 text-red-700 font-semibold' :
       urgent  ? 'bg-orange-100 text-orange-700 font-medium' :
-                'bg-slate-100 text-slate-500'
+                'bg-muted/30 text-muted-foreground'
     }`}>
       <Clock className="w-3 h-3" />
       {overdue
@@ -80,7 +80,7 @@ export default async function IrIadPage({
             <FileWarning className="w-6 h-6 text-red-500" />
             IR / IAD Incident Tracker
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Incident Reports & Adverse Data · ADHS ARS 36-2402 · AHCCCS ACOM · JC Sentinel Event Policy
             {year && <span className="ml-2 font-semibold text-teal-700">· {year} Archive</span>}
           </p>
@@ -123,19 +123,19 @@ export default async function IrIadPage({
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-foreground">{open.length}</div>
-          <div className="text-sm text-slate-500">Open Incidents</div>
+          <div className="text-sm text-muted-foreground">Open Incidents</div>
         </div>
         <div className={`rounded-xl border p-4 ${sentinel.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${sentinel.length > 0 ? 'text-red-600' : 'text-foreground'}`}>{sentinel.length}</div>
-          <div className="text-sm text-slate-500">Sentinel Events</div>
+          <div className="text-sm text-muted-foreground">Sentinel Events</div>
         </div>
         <div className={`rounded-xl border p-4 ${overdueAdhs.length > 0 ? 'bg-orange-950/20 border-orange-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${overdueAdhs.length > 0 ? 'text-orange-600' : 'text-foreground'}`}>{overdueAdhs.length}</div>
-          <div className="text-sm text-slate-500">Overdue ADHS Reports</div>
+          <div className="text-sm text-muted-foreground">Overdue ADHS Reports</div>
         </div>
         <div className={`rounded-xl border p-4 ${pendingIad.length > 0 ? 'bg-blue-950/20 border-blue-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${pendingIad.length > 0 ? 'text-blue-600' : 'text-foreground'}`}>{pendingIad.length}</div>
-          <div className="text-sm text-slate-500">Pending IAD Submissions</div>
+          <div className="text-sm text-muted-foreground">Pending IAD Submissions</div>
         </div>
       </div>
 
@@ -169,16 +169,16 @@ export default async function IrIadPage({
                     <td className="px-4 py-3 font-mono text-xs font-semibold text-red-700">
                       <Link href={`/trackers/ir-iad/${r.id}`} className="hover:underline">{r.irNumber}</Link>
                     </td>
-                    <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{formatDate(r.incidentDate)}</td>
+                    <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{formatDate(r.incidentDate)}</td>
                     <td className="px-4 py-3 text-foreground/80 whitespace-nowrap text-xs">
                       {r.incidentType.replace(/_/g, ' ')}
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${SEVERITY_COLORS[r.severity] ?? 'bg-slate-100 text-slate-600'}`}>
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${SEVERITY_COLORS[r.severity] ?? 'bg-muted/30 text-muted-foreground'}`}>
                         {r.severity}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-slate-600 text-xs">
+                    <td className="px-4 py-3 text-muted-foreground text-xs">
                       {r.patientName ? (
                         <span>
                           {r.patientName}
@@ -206,7 +206,7 @@ export default async function IrIadPage({
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[r.status] ?? 'bg-slate-100 text-slate-600'}`}>
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[r.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                         {r.status.replace(/_/g, ' ')}
                       </span>
                     </td>

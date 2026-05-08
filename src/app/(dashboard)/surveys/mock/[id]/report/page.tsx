@@ -82,37 +82,37 @@ export default async function SurveyReportPage({ params }: Props) {
               {TYPE_LABELS[survey.surveyType]} &middot; Date: {formatDate(survey.scheduledDate)}
               {survey.surveyorName && ` · Surveyor: ${survey.surveyorName}`}
             </p>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-muted-foreground mt-0.5">
               Chapters: {survey.chaptersScoped.join(', ')}
             </p>
           </div>
           <div className="text-right">
             <div className={`text-3xl font-bold ${
-              pct === null ? 'text-slate-600' :
+              pct === null ? 'text-muted-foreground' :
               pct >= 80 ? 'text-green-400' : pct >= 60 ? 'text-yellow-400' : 'text-red-400'
             }`}>
               {pct !== null ? `${pct}%` : '—'}
             </div>
-            <div className="text-xs text-slate-500">Overall Compliance</div>
+            <div className="text-xs text-muted-foreground">Overall Compliance</div>
           </div>
         </div>
 
         <div className="flex gap-6 mt-4 pt-4 border-t border-border">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-400">{metFindings.length}</div>
-            <div className="text-xs text-slate-500">Met</div>
+            <div className="text-xs text-muted-foreground">Met</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-red-400">{notMetFindings.length}</div>
-            <div className="text-xs text-slate-500">Not Met</div>
+            <div className="text-xs text-muted-foreground">Not Met</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-slate-500">{survey.naCount}</div>
-            <div className="text-xs text-slate-500">N/A</div>
+            <div className="text-2xl font-bold text-muted-foreground">{survey.naCount}</div>
+            <div className="text-xs text-muted-foreground">N/A</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-slate-600">{survey.findings.filter(f => f.score === 'NOT_EVALUATED').length}</div>
-            <div className="text-xs text-slate-500">Not Evaluated</div>
+            <div className="text-2xl font-bold text-muted-foreground">{survey.findings.filter(f => f.score === 'NOT_EVALUATED').length}</div>
+            <div className="text-xs text-muted-foreground">Not Evaluated</div>
           </div>
         </div>
       </div>
@@ -163,12 +163,12 @@ export default async function SurveyReportPage({ params }: Props) {
 
                     {f.surveyorNotes && (
                       <div className="bg-slate-900/50 rounded p-2 text-xs text-slate-400">
-                        <span className="font-medium text-slate-500">Notes: </span>{f.surveyorNotes}
+                        <span className="font-medium text-muted-foreground">Notes: </span>{f.surveyorNotes}
                       </div>
                     )}
                     {f.evidence && (
                       <div className="bg-slate-900/50 rounded p-2 text-xs text-slate-400">
-                        <span className="font-medium text-slate-500">Evidence: </span>{f.evidence}
+                        <span className="font-medium text-muted-foreground">Evidence: </span>{f.evidence}
                       </div>
                     )}
                   </div>

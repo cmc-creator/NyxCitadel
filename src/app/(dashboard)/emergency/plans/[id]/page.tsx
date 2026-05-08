@@ -46,7 +46,7 @@ export default async function EmergencyPlanDetailPage({ params }: { params: { id
     <div className="space-y-6 max-w-3xl">
       {/* Back + header */}
       <div>
-        <Link href="/emergency/plans" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground/80 mb-4">
+        <Link href="/emergency/plans" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground/80 mb-4">
           <ArrowLeft className="w-4 h-4" /> Back to Emergency Plans
         </Link>
         <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -61,7 +61,7 @@ export default async function EmergencyPlanDetailPage({ params }: { params: { id
               {plan.status}
             </span>
           </div>
-          <Link href={`/emergency/plans/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/emergency/plans/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           {plan.documentUrl && (
@@ -71,7 +71,7 @@ export default async function EmergencyPlanDetailPage({ params }: { params: { id
             </a>
           )}
         </div>
-        <p className="text-sm text-slate-500 mt-1 ml-9">
+        <p className="text-sm text-muted-foreground mt-1 ml-9">
           {PLAN_TYPE_LABELS[plan.planType] ?? plan.planType.replace(/_/g, ' ')} · v{plan.version}
         </p>
       </div>
@@ -108,26 +108,26 @@ export default async function EmergencyPlanDetailPage({ params }: { params: { id
         </h2>
         <dl className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
           <div>
-            <dt className="text-xs font-medium text-slate-500">Plan Type</dt>
+            <dt className="text-xs font-medium text-muted-foreground">Plan Type</dt>
             <dd className="text-foreground font-medium mt-0.5">{PLAN_TYPE_LABELS[plan.planType] ?? plan.planType.replace(/_/g, ' ')}</dd>
           </div>
           <div>
-            <dt className="text-xs font-medium text-slate-500">Version</dt>
+            <dt className="text-xs font-medium text-muted-foreground">Version</dt>
             <dd className="text-foreground mt-0.5 font-mono">v{plan.version}</dd>
           </div>
           <div>
-            <dt className="text-xs font-medium text-slate-500 flex items-center gap-1"><Calendar className="w-3 h-3" /> Effective Date</dt>
+            <dt className="text-xs font-medium text-muted-foreground flex items-center gap-1"><Calendar className="w-3 h-3" /> Effective Date</dt>
             <dd className="text-foreground mt-0.5">{formatDate(plan.effectiveDate)}</dd>
           </div>
           <div>
-            <dt className="text-xs font-medium text-slate-500 flex items-center gap-1"><RefreshCw className="w-3 h-3" /> Next Review</dt>
+            <dt className="text-xs font-medium text-muted-foreground flex items-center gap-1"><RefreshCw className="w-3 h-3" /> Next Review</dt>
             <dd className={`font-medium mt-0.5 ${isOverdue ? 'text-red-600' : isDueSoon ? 'text-amber-600' : 'text-foreground'}`}>
               {formatDate(plan.nextReviewDate)}
             </dd>
           </div>
           {plan.lastReviewedDate && (
             <div>
-              <dt className="text-xs font-medium text-slate-500">Last Reviewed</dt>
+              <dt className="text-xs font-medium text-muted-foreground">Last Reviewed</dt>
               <dd className="text-green-700 font-medium mt-0.5 flex items-center gap-1">
                 <CheckCircle2 className="w-3 h-3" /> {formatDate(plan.lastReviewedDate)}
               </dd>
@@ -135,7 +135,7 @@ export default async function EmergencyPlanDetailPage({ params }: { params: { id
           )}
           {plan.approvedBy && (
             <div>
-              <dt className="text-xs font-medium text-slate-500 flex items-center gap-1"><User className="w-3 h-3" /> Approved By</dt>
+              <dt className="text-xs font-medium text-muted-foreground flex items-center gap-1"><User className="w-3 h-3" /> Approved By</dt>
               <dd className="text-foreground mt-0.5">{plan.approvedBy}</dd>
             </div>
           )}

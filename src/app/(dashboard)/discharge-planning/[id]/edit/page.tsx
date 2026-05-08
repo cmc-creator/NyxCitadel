@@ -62,7 +62,7 @@ export default function EditDischargePlanPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/discharge-planning/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/discharge-planning/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -78,25 +78,25 @@ export default function EditDischargePlanPage() {
           <h2 className="text-sm font-semibold text-foreground">Patient &amp; Admission</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient Initials *</label>
               <input name="patientInitials" type="text" required maxLength={6} defaultValue={data.patientInitials ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">MRN</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MRN</label>
               <input name="patientMrn" type="text" defaultValue={data.patientMrn ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Unit *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit *</label>
               <input name="unit" type="text" required defaultValue={data.unit ?? ''} className="form-input w-full" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Admit Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Admit Date *</label>
               <input name="admitDate" type="date" required defaultValue={data.admitDate?.split('T')[0] ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Primary Diagnosis *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Primary Diagnosis *</label>
               <input name="primaryDx" type="text" required defaultValue={data.primaryDx ?? ''} className="form-input w-full" />
             </div>
           </div>
@@ -106,16 +106,16 @@ export default function EditDischargePlanPage() {
           <h2 className="text-sm font-semibold text-foreground">Assessment</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Assessment Start Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Assessment Start Date *</label>
               <input name="assessmentStartDate" type="date" required defaultValue={data.assessmentStartDate?.split('T')[0] ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Assessed By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Assessed By *</label>
               <input name="assessmentBy" type="text" required defaultValue={data.assessmentBy ?? ''} className="form-input w-full" placeholder="Social worker / case manager" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Care Coordinator</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Care Coordinator</label>
             <input name="careCoordinator" type="text" defaultValue={data.careCoordinator ?? ''} className="form-input w-full" />
           </div>
         </div>
@@ -124,23 +124,23 @@ export default function EditDischargePlanPage() {
           <h2 className="text-sm font-semibold text-foreground">Discharge Planning</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Expected Disposition *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Expected Disposition *</label>
               <select name="expectedDisposition" required defaultValue={data.expectedDisposition ?? ''} className="form-input w-full">
                 <option value="">Select…</option>
                 {DISPOSITIONS.map(d => <option key={d} value={d}>{formatLabel(d)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Est. Discharge Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Est. Discharge Date</label>
               <input name="estimatedDischargeDate" type="date" defaultValue={data.estimatedDischargeDate?.split('T')[0] ?? ''} className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Insurance Authorization #</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Insurance Authorization #</label>
             <input name="insuranceAuth" type="text" defaultValue={data.insuranceAuth ?? ''} className="form-input w-full" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Barrier Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Barrier Notes</label>
             <textarea name="barrierNotes" rows={2} defaultValue={data.barrierNotes ?? ''} className="form-input w-full" placeholder="Homeless, no support, insurance denial, etc." />
           </div>
           <div className="flex gap-6">
@@ -156,7 +156,7 @@ export default function EditDischargePlanPage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/discharge-planning/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <a href={`/discharge-planning/${id}`} className="px-4 py-2 text-sm text-muted-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

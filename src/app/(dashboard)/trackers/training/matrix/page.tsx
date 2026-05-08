@@ -43,7 +43,7 @@ const CELL_CONFIG: Record<CellStatus, { bg: string; text: string; icon: React.El
   expiring: { bg: 'bg-amber-950/40 border-amber-700/30',      text: 'text-amber-400',   icon: Clock,        label: 'Expiring' },
   expired:  { bg: 'bg-red-950/40 border-red-700/30',          text: 'text-red-400',     icon: XCircle,      label: 'Expired'  },
   missing:  { bg: 'bg-muted/30 border-border/50',             text: 'text-muted-foreground/40', icon: Minus, label: 'Missing' },
-  exempt:   { bg: 'bg-slate-950/30 border-slate-700/30',      text: 'text-slate-500',   icon: Minus,        label: 'Exempt'   },
+  exempt:   { bg: 'bg-slate-950/30 border-border/30',      text: 'text-muted-foreground',   icon: Minus,        label: 'Exempt'   },
 };
 
 export default async function CompetencyMatrixPage() {

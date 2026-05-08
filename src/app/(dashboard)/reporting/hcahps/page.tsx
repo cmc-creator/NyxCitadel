@@ -168,7 +168,7 @@ export default function HcahpsPage() {
     <div className="max-w-4xl space-y-6">
       {/* Header */}
       <div>
-        <Link href="/reporting" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-400 mb-3">
+        <Link href="/reporting" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-400 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Reporting Dashboard
         </Link>
         <div className="flex items-start justify-between flex-wrap gap-4">
@@ -210,7 +210,7 @@ export default function HcahpsPage() {
       <div className="bg-card rounded-xl border border-border px-6 py-5">
         <h2 className="text-sm font-semibold text-foreground mb-3">Survey Period</h2>
         <div className="max-w-xs">
-          <label className="block text-xs font-medium text-slate-500 mb-1">Period (e.g. Q1&nbsp;2026)</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Period (e.g. Q1&nbsp;2026)</label>
           <input
             className="form-input w-full"
             placeholder="Q1 2026"
@@ -224,7 +224,7 @@ export default function HcahpsPage() {
       <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-4">
           <h2 className="text-sm font-semibold text-foreground">Composite Domain Scores</h2>
-          <p className="text-xs text-slate-500 mt-0.5">Enter the number of &quot;top-box&quot; responses (numerator) and total eligible responses (denominator).</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Enter the number of &quot;top-box&quot; responses (numerator) and total eligible responses (denominator).</p>
         </div>
         {COMPOSITE_DOMAINS.map((dom) => {
           const vals = form.domains[dom.id];
@@ -233,11 +233,11 @@ export default function HcahpsPage() {
             <div key={dom.id} className="px-6 py-4 flex items-start gap-6">
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-foreground">{dom.label}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{dom.description}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{dom.description}</p>
               </div>
               <div className="flex items-center gap-3 shrink-0">
                 <div>
-                  <label className="block text-xs text-slate-500 mb-1">Numerator</label>
+                  <label className="block text-xs text-muted-foreground mb-1">Numerator</label>
                   <input
                     type="number"
                     min="0"
@@ -247,7 +247,7 @@ export default function HcahpsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-slate-500 mb-1">Denominator</label>
+                  <label className="block text-xs text-muted-foreground mb-1">Denominator</label>
                   <input
                     type="number"
                     min="0"
@@ -262,7 +262,7 @@ export default function HcahpsPage() {
                       {pct}%
                     </span>
                   ) : (
-                    <span className="text-slate-600 text-sm">—</span>
+                    <span className="text-muted-foreground text-sm">—</span>
                   )}
                 </div>
               </div>
@@ -280,10 +280,10 @@ export default function HcahpsPage() {
         {/* Overall Rating */}
         <div className="px-6 py-4">
           <p className="text-sm font-medium text-foreground mb-1">Overall Hospital Rating (0–10)</p>
-          <p className="text-xs text-slate-500 mb-3">Enter the sum of all patient ratings and the total number of respondents to calculate the average.</p>
+          <p className="text-xs text-muted-foreground mb-3">Enter the sum of all patient ratings and the total number of respondents to calculate the average.</p>
           <div className="flex items-center gap-4">
             <div>
-              <label className="block text-xs text-slate-500 mb-1">Sum of All Ratings</label>
+              <label className="block text-xs text-muted-foreground mb-1">Sum of All Ratings</label>
               <input
                 type="number"
                 min="0"
@@ -293,7 +293,7 @@ export default function HcahpsPage() {
               />
             </div>
             <div>
-              <label className="block text-xs text-slate-500 mb-1">Number of Respondents</label>
+              <label className="block text-xs text-muted-foreground mb-1">Number of Respondents</label>
               <input
                 type="number"
                 min="0"
@@ -308,7 +308,7 @@ export default function HcahpsPage() {
                   {(parseFloat(form.overallRatingSum) / parseFloat(form.overallRatingCount)).toFixed(1)} / 10
                 </span>
               ) : (
-                <span className="text-slate-600">—</span>
+                <span className="text-muted-foreground">—</span>
               )}
             </div>
           </div>
@@ -317,10 +317,10 @@ export default function HcahpsPage() {
         {/* Would Recommend */}
         <div className="px-6 py-4">
           <p className="text-sm font-medium text-foreground mb-1">Would Recommend Hospital</p>
-          <p className="text-xs text-slate-500 mb-3">Patients who would &quot;Definitely Yes&quot; recommend (top-box).</p>
+          <p className="text-xs text-muted-foreground mb-3">Patients who would &quot;Definitely Yes&quot; recommend (top-box).</p>
           <div className="flex items-center gap-4">
             <div>
-              <label className="block text-xs text-slate-500 mb-1">Definitely Yes (Numerator)</label>
+              <label className="block text-xs text-muted-foreground mb-1">Definitely Yes (Numerator)</label>
               <input
                 type="number"
                 min="0"
@@ -330,7 +330,7 @@ export default function HcahpsPage() {
               />
             </div>
             <div>
-              <label className="block text-xs text-slate-500 mb-1">Total Respondents</label>
+              <label className="block text-xs text-muted-foreground mb-1">Total Respondents</label>
               <input
                 type="number"
                 min="0"
@@ -345,7 +345,7 @@ export default function HcahpsPage() {
                 return pct !== null ? (
                   <span className={`text-lg font-bold ${parseFloat(pct) >= 70 ? 'text-teal-400' : 'text-amber-400'}`}>{pct}%</span>
                 ) : (
-                  <span className="text-slate-600">—</span>
+                  <span className="text-muted-foreground">—</span>
                 );
               })()}
             </div>

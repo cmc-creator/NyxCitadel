@@ -59,7 +59,7 @@ export default function EditRestraintEventPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/restraint-seclusion/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/restraint-seclusion/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -75,11 +75,11 @@ export default function EditRestraintEventPage() {
           <h2 className="text-sm font-semibold text-foreground">Event Identification</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Event Number *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Event Number *</label>
               <input name="eventNumber" type="text" required defaultValue={data.eventNumber ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Restraint / Seclusion Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Restraint / Seclusion Type *</label>
               <select name="rsType" required defaultValue={data.rsType ?? ''} className="form-input w-full">
                 <option value="">Select…</option>
                 {RS_TYPES.map(t => <option key={t} value={t}>{formatLabel(t)}</option>)}
@@ -88,25 +88,25 @@ export default function EditRestraintEventPage() {
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient Initials *</label>
               <input name="patientInitials" type="text" required maxLength={6} defaultValue={data.patientInitials ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">MRN</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MRN</label>
               <input name="patientMrn" type="text" defaultValue={data.patientMrn ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Unit *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit *</label>
               <input name="unit" type="text" required defaultValue={data.unit ?? ''} className="form-input w-full" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Event Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Event Date *</label>
               <input name="eventDate" type="date" required defaultValue={data.eventDate?.split('T')[0] ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Event Time *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Event Time *</label>
               <input name="eventTime" type="time" required defaultValue={data.eventTime ?? ''} className="form-input w-full" />
             </div>
           </div>
@@ -116,18 +116,18 @@ export default function EditRestraintEventPage() {
           <h2 className="text-sm font-semibold text-foreground">Order &amp; Staff</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Ordering Provider *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Ordering Provider *</label>
               <input name="orderingProvider" type="text" required defaultValue={data.orderingProvider ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Order DateTime *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Order DateTime *</label>
               <input name="orderDateTime" type="datetime-local" required
                 defaultValue={data.orderDateTime ? data.orderDateTime.slice(0, 16) : ''}
                 className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Initiated By *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Initiated By *</label>
             <input name="initiatedBy" type="text" required defaultValue={data.initiatedBy ?? ''} className="form-input w-full" placeholder="Staff name / role" />
           </div>
         </div>
@@ -135,21 +135,21 @@ export default function EditRestraintEventPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Clinical Documentation</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Behaviors Warranting Use *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Behaviors Warranting Use *</label>
             <textarea name="behaviors" rows={2} required defaultValue={data.behaviors ?? ''} className="form-input w-full" placeholder="Describe observed behaviors…" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Less Restrictive Interventions Tried *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Less Restrictive Interventions Tried *</label>
             <textarea name="lessRestrictiveTried" rows={2} required defaultValue={data.lessRestrictiveTried ?? ''} className="form-input w-full" placeholder="Verbal de-escalation, reorientation, etc." />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Clinical Justification *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Clinical Justification *</label>
             <textarea name="clinicalJustification" rows={3} required defaultValue={data.clinicalJustification ?? ''} className="form-input w-full" />
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/restraint-seclusion/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <a href={`/restraint-seclusion/${id}`} className="px-4 py-2 text-sm text-muted-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

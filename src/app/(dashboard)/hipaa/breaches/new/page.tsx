@@ -60,14 +60,14 @@ export default function NewHipaaBreachPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/hipaa/breaches" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/hipaa/breaches" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Breach Log
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ShieldAlert className="w-6 h-6 text-red-500" />
           Log HIPAA Privacy Incident
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Reportable breaches of 500+ individuals must be reported to HHS within 60 days.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Reportable breaches of 500+ individuals must be reported to HHS within 60 days.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -77,11 +77,11 @@ export default function NewHipaaBreachPage() {
           <h2 className="text-sm font-semibold text-foreground">Incident Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Incident Number *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Incident Number *</label>
               <input name="incidentNumber" required className="form-input w-full" placeholder="HIPAA-2026-001" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Breach Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Breach Type *</label>
               <select name="breachType" required className="form-input w-full">
                 <option value="">Select…</option>
                 {BREACH_TYPES.map(t => <option key={t} value={t}>{t.replace(/_/g, ' ')}</option>)}
@@ -90,16 +90,16 @@ export default function NewHipaaBreachPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Discovery Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Discovery Date *</label>
               <input name="discoveryDate" type="date" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Incident Date (if known)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Incident Date (if known)</label>
               <input name="incidentDate" type="date" className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Individuals Affected (count)</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Individuals Affected (count)</label>
             <input name="individualCount" type="number" min="0" className="form-input w-full" placeholder="0" />
           </div>
         </div>
@@ -109,7 +109,7 @@ export default function NewHipaaBreachPage() {
           <div className="flex flex-wrap gap-2">
             {PHI_TYPES.map(p => (
               <button key={p} type="button" onClick={() => togglePhi(p)}
-                className={`px-3 py-1 rounded-full text-xs font-medium border transition ${selectedPhi.includes(p) ? 'bg-red-100 text-red-700 border-red-300' : 'bg-slate-100 text-slate-600 border-slate-200 hover:border-slate-400'}`}>
+                className={`px-3 py-1 rounded-full text-xs font-medium border transition ${selectedPhi.includes(p) ? 'bg-red-100 text-red-700 border-red-300' : 'bg-muted/30 text-muted-foreground border-border hover:border-slate-400'}`}>
                 {p}
               </button>
             ))}
@@ -119,11 +119,11 @@ export default function NewHipaaBreachPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Narrative</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Description of Incident *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Description of Incident *</label>
             <textarea name="description" required rows={4} className="form-input w-full" placeholder="What happened, how PHI was disclosed, who was affected…" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Immediate Actions Taken *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Immediate Actions Taken *</label>
             <textarea name="immediateActions" required rows={3} className="form-input w-full" placeholder="Steps taken upon discovery…" />
           </div>
         </div>
@@ -132,7 +132,7 @@ export default function NewHipaaBreachPage() {
           <h2 className="text-sm font-semibold text-foreground">Risk Assessment</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Risk Level *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Risk Level *</label>
               <select name="riskAssessment" required className="form-input w-full">
                 {RISK_LEVELS.map(r => <option key={r} value={r}>{r}</option>)}
               </select>
@@ -145,7 +145,7 @@ export default function NewHipaaBreachPage() {
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/hipaa/breaches" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/hipaa/breaches" className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-muted/20">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Log Incident'}
           </button>

@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Plans of Correction' };
 
 const STATUS_COLORS: Record<string, string> = {
-  DRAFT:              'bg-slate-100 text-slate-600',
+  DRAFT:              'bg-muted/30 text-muted-foreground',
   UNDER_REVIEW:       'bg-yellow-100 text-yellow-700',
   SUBMITTED:          'bg-blue-100 text-blue-700',
   ACCEPTED:           'bg-green-100 text-green-700',
@@ -51,7 +51,7 @@ export default async function PocPage() {
             <ClipboardCheck className="w-6 h-6 text-blue-600" />
             Plans of Correction
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Survey deficiency responses for CMS, Joint Commission, AZ ADHS, and other regulatory bodies.
           </p>
         </div>
@@ -76,17 +76,17 @@ export default async function PocPage() {
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-foreground">{open.length}</div>
-          <div className="text-sm text-slate-500">Open POCs</div>
+          <div className="text-sm text-muted-foreground">Open POCs</div>
         </div>
         <div className={`rounded-xl border p-4 ${overdue.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${overdue.length > 0 ? 'text-red-600' : 'text-foreground'}`}>{overdue.length}</div>
-          <div className="text-sm text-slate-500">Past Deadline</div>
+          <div className="text-sm text-muted-foreground">Past Deadline</div>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-green-600">
             {pocs.filter(p => p.status === 'ACCEPTED' || p.status === 'CLOSED').length}
           </div>
-          <div className="text-sm text-slate-500">Accepted / Closed</div>
+          <div className="text-sm text-muted-foreground">Accepted / Closed</div>
         </div>
       </div>
 
@@ -94,7 +94,7 @@ export default async function PocPage() {
       {pocs.length === 0 ? (
         <div className="bg-card rounded-xl border border-border p-12 text-center">
           <ClipboardCheck className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-500 font-medium">No plans of correction logged yet</p>
+          <p className="text-muted-foreground font-medium">No plans of correction logged yet</p>
           <Link
             href="/quality/poc/new"
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition-colors"
@@ -109,16 +109,16 @@ export default async function PocPage() {
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono text-xs text-slate-500">{poc.pocNumber}</span>
-                    <span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
+                    <span className="font-mono text-xs text-muted-foreground">{poc.pocNumber}</span>
+                    <span className="text-xs bg-muted/30 text-muted-foreground px-2 py-0.5 rounded-full">
                       {BODY_LABELS[poc.regulatoryBody] ?? poc.regulatoryBody}
                     </span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[poc.status] ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[poc.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {poc.status.replace(/_/g, ' ')}
                     </span>
                   </div>
                   <div className="font-semibold text-foreground mt-1">{poc.title}</div>
-                  <div className="flex flex-wrap gap-3 mt-2 text-xs text-slate-500">
+                  <div className="flex flex-wrap gap-3 mt-2 text-xs text-muted-foreground">
                     {poc.surveyDate && <span>Survey: {formatDate(poc.surveyDate)}</span>}
                     {poc.responseDeadline && (
                       <span className={poc.responseDeadline < new Date() && poc.status !== 'SUBMITTED' && poc.status !== 'ACCEPTED' ? 'text-red-600 font-semibold' : ''}>

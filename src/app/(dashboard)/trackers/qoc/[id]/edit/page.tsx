@@ -120,7 +120,7 @@ export default function EditQocPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <a href={`/trackers/qoc/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-foreground/80 mb-3">
+        <a href={`/trackers/qoc/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground/80 mb-3">
           <ArrowLeft className="w-4 h-4" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -183,7 +183,7 @@ export default function EditQocPage() {
                   className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
                     form.allegationCategories.includes(cat)
                       ? 'bg-purple-600 text-white border-purple-600'
-                      : 'bg-white text-slate-600 border-slate-300 hover:border-purple-400'
+                      : 'bg-white text-muted-foreground border-border hover:border-purple-400'
                   }`}
                 >
                   {cat}
@@ -251,7 +251,7 @@ export default function EditQocPage() {
           >
             {saving ? 'Saving...' : 'Save Changes'}
           </button>
-          <a href={`/trackers/qoc/${id}`} className="px-4 py-2.5 text-sm text-slate-600 hover:text-foreground rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
+          <a href={`/trackers/qoc/${id}`} className="px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground rounded-lg border border-border hover:border-slate-400 transition-colors">
             Cancel
           </a>
         </div>

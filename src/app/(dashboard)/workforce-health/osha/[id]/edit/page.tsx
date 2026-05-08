@@ -74,7 +74,7 @@ export default function EditOshaLogPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/workforce-health/osha/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/workforce-health/osha/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -90,29 +90,29 @@ export default function EditOshaLogPage() {
           <h2 className="text-sm font-semibold text-foreground">Case &amp; Employee</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Case Number *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Case Number *</label>
               <input name="caseNumber" type="text" required className="form-input w-full" defaultValue={data.caseNumber ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Year *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Year *</label>
               <input name="caseYear" type="number" required className="form-input w-full" defaultValue={data.caseYear ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Injury Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Injury Date *</label>
               <input name="injuryDate" type="date" required className="form-input w-full" defaultValue={data.injuryDate?.split('T')[0] ?? ''} />
             </div>
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Employee Name *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Employee Name *</label>
               <input name="employeeName" type="text" required className="form-input w-full" defaultValue={data.employeeName ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Job Title *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Job Title *</label>
               <input name="jobTitle" type="text" required className="form-input w-full" defaultValue={data.jobTitle ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Department *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Department *</label>
               <input name="department" type="text" required className="form-input w-full" defaultValue={data.department ?? ''} />
             </div>
           </div>
@@ -122,19 +122,19 @@ export default function EditOshaLogPage() {
           <h2 className="text-sm font-semibold text-foreground">Incident Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Injury/Illness Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Injury/Illness Type *</label>
               <select name="injuryType" required className="form-input w-full" defaultValue={data.injuryType ?? ''}>
                 <option value="">Select…</option>
                 {INJURY_TYPES.map(t => <option key={t} value={t}>{formatLabel(t)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Body Part *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Body Part *</label>
               <input name="bodyPart" type="text" required className="form-input w-full" defaultValue={data.bodyPart ?? ''} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Description *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Description *</label>
             <textarea name="description" rows={3} required className="form-input w-full" defaultValue={data.description ?? ''} />
           </div>
         </div>
@@ -143,18 +143,18 @@ export default function EditOshaLogPage() {
           <h2 className="text-sm font-semibold text-foreground">Outcome &amp; Classification</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Outcome *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Outcome *</label>
               <select name="outcome" required className="form-input w-full" defaultValue={data.outcome ?? ''}>
                 <option value="">Select…</option>
                 {OUTCOMES.map(o => <option key={o} value={o}>{formatLabel(o)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Days Away</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Days Away</label>
               <input name="daysAway" type="number" min="0" className="form-input w-full" defaultValue={data.daysAway ?? 0} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Days Restricted</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Days Restricted</label>
               <input name="daysRestriction" type="number" min="0" className="form-input w-full" defaultValue={data.daysRestriction ?? 0} />
             </div>
           </div>
@@ -174,17 +174,17 @@ export default function EditOshaLogPage() {
 
         <div className="px-6 py-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Root Cause</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Root Cause</label>
             <textarea name="rootCause" rows={2} className="form-input w-full" defaultValue={data.rootCause ?? ''} />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Corrective Action</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Corrective Action</label>
             <textarea name="correctiveAction" rows={2} className="form-input w-full" defaultValue={data.correctiveAction ?? ''} />
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/workforce-health/osha/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <a href={`/workforce-health/osha/${id}`} className="px-4 py-2 text-sm text-muted-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

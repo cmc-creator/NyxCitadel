@@ -203,7 +203,7 @@ export default function EocOverviewPage() {
               <div>
                 <p className="text-xs text-muted-foreground/70 mb-1">{s.label}</p>
                 <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
-                <p className="text-xs text-slate-500 mt-1">{s.sub}</p>
+                <p className="text-xs text-muted-foreground mt-1">{s.sub}</p>
               </div>
               <s.icon className={`w-5 h-5 ${s.color} opacity-80`} />
             </div>
@@ -225,11 +225,11 @@ export default function EocOverviewPage() {
                 <div className={`p-2 rounded-lg ${m.bg} border ${m.border}`}>
                   <m.icon className={`w-5 h-5 ${m.color}`} />
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-muted-foreground/70 transition-colors" />
+                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-muted-foreground/70 transition-colors" />
               </div>
               <div>
                 <p className="text-sm font-semibold text-foreground">{m.label}</p>
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">{m.desc}</p>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{m.desc}</p>
               </div>
               <span className={`self-start text-xs px-2 py-0.5 rounded-full font-medium ${m.badgeColor}`}>
                 {m.badge}
@@ -271,7 +271,7 @@ export default function EocOverviewPage() {
               <span className="text-xs text-muted-foreground/70">Overall EOC Score</span>
               <span className="text-sm font-bold text-amber-400">84.5%</span>
             </div>
-            <p className="text-xs text-slate-600 mt-1">Ligature risk deficiencies are dragging the overall score. Target: 95%</p>
+            <p className="text-xs text-muted-foreground mt-1">Ligature risk deficiencies are dragging the overall score. Target: 95%</p>
           </div>
         </div>
 
@@ -291,19 +291,19 @@ export default function EocOverviewPage() {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs font-mono text-slate-500">{d.id}</span>
+                    <span className="text-xs font-mono text-muted-foreground">{d.id}</span>
                     <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${severityBadge[d.severity]}`}>
                       {d.severity}
                     </span>
                   </div>
                   <p className="text-sm text-foreground mt-0.5 truncate">{d.desc}</p>
-                  <p className="text-xs text-slate-500">{d.location}</p>
+                  <p className="text-xs text-muted-foreground">{d.location}</p>
                 </div>
                 <div className="flex flex-col items-end gap-1 ml-3 shrink-0">
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusBadge[d.status]}`}>
                     {d.status.replace('_', ' ')}
                   </span>
-                  <span className="text-xs text-slate-600">{d.daysOpen}d open</span>
+                  <span className="text-xs text-muted-foreground">{d.daysOpen}d open</span>
                 </div>
               </div>
             ))}
@@ -322,7 +322,7 @@ export default function EocOverviewPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-xs text-slate-500 border-b border-border/50">
+              <tr className="text-xs text-muted-foreground border-b border-border/50">
                 <th className="text-left pb-2 font-medium">Equipment</th>
                 <th className="text-left pb-2 font-medium">Category</th>
                 <th className="text-left pb-2 font-medium">Due Date</th>
@@ -345,7 +345,7 @@ export default function EocOverviewPage() {
                     </span>
                   </td>
                   <td className="py-2.5 pr-4">
-                    <span className="text-xs text-slate-500">{e.vendor}</span>
+                    <span className="text-xs text-muted-foreground">{e.vendor}</span>
                   </td>
                   <td className="py-2.5">
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${pmStatusBadge[e.status]}`}>
@@ -369,7 +369,7 @@ export default function EocOverviewPage() {
         ].map((r) => (
           <div key={r.std} className="p-3 rounded-lg bg-slate-900/40 border border-border/50">
             <p className="text-xs font-mono font-semibold text-teal-400">{r.std}</p>
-            <p className="text-xs text-slate-500 mt-0.5">{r.desc}</p>
+            <p className="text-xs text-muted-foreground mt-0.5">{r.desc}</p>
           </div>
         ))}
       </div>

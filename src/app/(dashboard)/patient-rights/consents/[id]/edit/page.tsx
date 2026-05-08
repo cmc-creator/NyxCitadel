@@ -63,7 +63,7 @@ export default function EditConsentPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/patient-rights/consents/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/patient-rights/consents/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -79,16 +79,16 @@ export default function EditConsentPage() {
           <h2 className="text-sm font-semibold text-foreground">Patient</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient Initials *</label>
               <input name="patientInitials" required className="form-input w-full" defaultValue={data.patientInitials ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">MRN</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MRN</label>
               <input name="patientMrn" className="form-input w-full" defaultValue={data.patientMrn ?? ''} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Admit Date</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Admit Date</label>
             <input name="admitDate" type="date" className="form-input w-full" defaultValue={data.admitDate?.split('T')[0] ?? ''} />
           </div>
         </div>
@@ -97,14 +97,14 @@ export default function EditConsentPage() {
           <h2 className="text-sm font-semibold text-foreground">Consent Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Consent Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Consent Type *</label>
               <select name="consentType" required className="form-input w-full" defaultValue={data.consentType ?? ''}>
                 <option value="">Select…</option>
                 {CONSENT_TYPES.map(t => <option key={t} value={t}>{t.replace(/_/g, ' ')}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Status *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status *</label>
               <select name="status" required className="form-input w-full" defaultValue={data.status ?? 'SIGNED'}>
                 {CONSENT_STATUSES.map(s => <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>)}
               </select>
@@ -112,21 +112,21 @@ export default function EditConsentPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Consent Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Consent Date *</label>
               <input name="consentDate" type="date" required className="form-input w-full" defaultValue={data.consentDate?.split('T')[0] ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Obtained By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Obtained By *</label>
               <input name="obtainedBy" required className="form-input w-full" defaultValue={data.obtainedBy ?? ''} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Witness Name</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Witness Name</label>
               <input name="witnessName" className="form-input w-full" defaultValue={data.witnessName ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Legal Representative (if capacity lacking)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Legal Representative (if capacity lacking)</label>
               <input name="legalRepresentative" className="form-input w-full" defaultValue={data.legalRepresentative ?? ''} />
             </div>
           </div>
@@ -138,12 +138,12 @@ export default function EditConsentPage() {
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
           <textarea name="notes" rows={3} className="form-input w-full" defaultValue={data.notes ?? ''} />
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/patient-rights/consents/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <a href={`/patient-rights/consents/${id}`} className="px-4 py-2 text-sm text-muted-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

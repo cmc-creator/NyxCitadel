@@ -46,7 +46,7 @@ export default function EditIcraPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/infection-control/icra/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/infection-control/icra/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -62,39 +62,39 @@ export default function EditIcraPage() {
           <h2 className="text-sm font-semibold text-foreground">Assessment Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Assessment Year *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Assessment Year *</label>
               <input name="assessmentYear" type="number" required defaultValue={data.assessmentYear} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Status *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status *</label>
               <select name="status" required defaultValue={data.status} className="form-input w-full">
                 {ICRA_STATUSES.map(s => <option key={s} value={s}>{s.replace('_', ' ')}</option>)}
               </select>
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Conducted Date *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Conducted Date *</label>
             <input name="conductedDate" type="date" required defaultValue={data.conductedDate ? data.conductedDate.split('T')[0] : ''} className="form-input w-full" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Conducted By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Conducted By *</label>
               <input name="conductedBy" type="text" required defaultValue={data.conductedBy} className="form-input w-full" placeholder="IC Officer / Team" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Reviewed By</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Reviewed By</label>
               <input name="reviewedBy" type="text" defaultValue={data.reviewedBy ?? ''} className="form-input w-full" placeholder="Department director, etc." />
             </div>
           </div>
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
           <textarea name="notes" rows={3} defaultValue={data.notes ?? ''} className="form-input w-full" placeholder="Scope, methodology, or context…" />
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/infection-control/icra/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href={`/infection-control/icra/${id}`} className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

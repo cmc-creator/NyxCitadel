@@ -77,7 +77,7 @@ export default async function LicensesPage() {
           </thead>
           <tbody className="divide-y divide-white/5">
             {licenses.length === 0 ? (
-              <tr><td colSpan={7} className="text-center py-8 text-slate-500 text-sm">No licenses on record.</td></tr>
+              <tr><td colSpan={7} className="text-center py-8 text-muted-foreground text-sm">No licenses on record.</td></tr>
             ) : licenses.map(l => {
               const daysLeft = Math.ceil((l.expiryDate.getTime() - now.getTime()) / 86400000);
               const isExpired = daysLeft < 0;
@@ -86,14 +86,14 @@ export default async function LicensesPage() {
                 <tr key={l.id} className={`hover:bg-white/5 transition-colors ${isExpired ? 'bg-red-500/5' : isSoon ? 'bg-amber-500/5' : ''}`}>
                   <td className="px-3 py-3 font-semibold text-white text-xs">{l.provider.lastName}, {l.provider.firstName}</td>
                   <td className="px-3 py-3 text-muted-foreground/70 text-xs">{l.licenseType}</td>
-                  <td className="px-3 py-3 text-slate-500 text-xs font-mono">{l.licenseNumber}</td>
+                  <td className="px-3 py-3 text-muted-foreground text-xs font-mono">{l.licenseNumber}</td>
                   <td className="px-3 py-3 text-muted-foreground/70 text-xs">{l.state}</td>
                   <td className="px-3 py-3 text-muted-foreground/70 text-xs">{l.expiryDate.toLocaleDateString()}</td>
-                  <td className={`px-3 py-3 text-xs font-bold ${isExpired ? 'text-red-400' : isSoon ? 'text-amber-400' : 'text-slate-500'}`}>
+                  <td className={`px-3 py-3 text-xs font-bold ${isExpired ? 'text-red-400' : isSoon ? 'text-amber-400' : 'text-muted-foreground'}`}>
                     {isExpired ? `${Math.abs(daysLeft)}d overdue` : `${daysLeft}d`}
                   </td>
                   <td className="px-3 py-3">
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[l.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[l.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {statusConfig[l.status]?.label ?? l.status}
                     </span>
                   </td>

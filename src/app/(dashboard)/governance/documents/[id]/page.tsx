@@ -21,7 +21,7 @@ const STATUS_COLOR: Record<string, string> = {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -60,11 +60,11 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/governance/documents" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/governance/documents" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Governance Documents
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/governance/documents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/governance/documents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/governance/documents/${params.id}`} redirectPath="/governance/documents" label="governance document" />
@@ -78,7 +78,7 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <FileText className="w-5 h-5 text-teal-600" />
               <span className="text-xs text-muted-foreground/70">{doc.docType.replace(/_/g, ' ')}</span>
-              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[doc.status] ?? 'bg-slate-100 text-slate-600'}`}>
+              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[doc.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                 {doc.status.replace(/_/g, ' ')}
               </span>
               {reviewDue && (
@@ -107,7 +107,7 @@ export default async function GovernanceDocDetailPage({ params }: { params: { id
           <dl className="space-y-3">
             <div>
               <dt className="text-xs text-muted-foreground/70">Status</dt>
-              <dd className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold mt-1 ${STATUS_COLOR[doc.status] ?? 'bg-slate-100 text-slate-600'}`}>
+              <dd className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold mt-1 ${STATUS_COLOR[doc.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                 {doc.status.replace(/_/g, ' ')}
               </dd>
             </div>

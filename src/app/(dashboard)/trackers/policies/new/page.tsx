@@ -167,14 +167,14 @@ export default function NewPolicyPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Policy Tracker
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <FileText className="w-6 h-6 text-teal-600" />
           Add Policy / Procedure
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Track facility policies with automated review date reminders and document storage.
         </p>
       </div>
@@ -188,22 +188,22 @@ export default function NewPolicyPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Policy Information</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Policy Title *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Policy Title *</label>
             <input name="title" required className="form-input w-full" placeholder="e.g., Patient Rights and Responsibilities Policy" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Policy # <span className="font-normal text-muted-foreground/70">(auto-generated if blank)</span></label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Policy # <span className="font-normal text-muted-foreground/70">(auto-generated if blank)</span></label>
               <input name="policyNumber" className="form-input w-full" placeholder="e.g., PR-001" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Version</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Version</label>
               <input name="version" defaultValue="1.0" className="form-input w-full" placeholder="1.0" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
               <select name="category" required className="form-input w-full">
                 <option value="">Select category...</option>
                 {CATEGORIES.map(([v, l]) => (
@@ -212,7 +212,7 @@ export default function NewPolicyPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Status</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status</label>
               <select name="status" defaultValue="ACTIVE" className="form-input w-full">
                 <option value="DRAFT">Draft</option>
                 <option value="UNDER_REVIEW">Under Review</option>
@@ -221,11 +221,11 @@ export default function NewPolicyPage() {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Owner / Responsible Department</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Owner / Responsible Department</label>
             <input name="owner" className="form-input w-full" placeholder="e.g., Director of Nursing, Risk Management" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Standard / Regulatory Reference</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Standard / Regulatory Reference</label>
             <input name="standardRef" className="form-input w-full" placeholder="e.g., 42 CFR 482.13, RI.01.01.01" />
           </div>
         </div>
@@ -234,7 +234,7 @@ export default function NewPolicyPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Review Schedule</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Review Frequency</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Review Frequency</label>
             <select
               name="reviewFrequency"
               value={reviewFreq}
@@ -248,7 +248,7 @@ export default function NewPolicyPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Effective Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Effective Date *</label>
               <input
                 type="date"
                 name="effectiveDate"
@@ -259,7 +259,7 @@ export default function NewPolicyPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Next Review Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Next Review Date *</label>
               <input
                 type="date"
                 name="nextReviewDate"
@@ -296,9 +296,9 @@ export default function NewPolicyPage() {
             Policy Document <span className="font-normal text-muted-foreground/70">(optional - PDF or Word)</span>
           </h2>
           {!uploadFile && !uploadedUrl ? (
-            <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-teal-300 hover:bg-teal-950/20 transition-colors">
+            <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-border rounded-xl cursor-pointer hover:border-teal-300 hover:bg-teal-950/20 transition-colors">
               <Upload className="w-5 h-5 text-muted-foreground/70 mb-1.5" />
-              <span className="text-sm text-slate-500">Click to upload PDF or Word document</span>
+              <span className="text-sm text-muted-foreground">Click to upload PDF or Word document</span>
               <span className="text-xs text-muted-foreground/70 mt-0.5">Max 20 MB</span>
               <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileSelect} />
             </label>
@@ -307,7 +307,7 @@ export default function NewPolicyPage() {
               <FileCheck className="w-5 h-5 text-green-600 shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-green-800 truncate">{uploadFile?.name ?? 'Document uploaded'}</p>
-                {uploading && <p className="text-xs text-slate-500">Uploading...</p>}
+                {uploading && <p className="text-xs text-muted-foreground">Uploading...</p>}
                 {uploadedUrl && <p className="text-xs text-green-600">Uploaded successfully</p>}
                 {uploadError && <p className="text-xs text-red-600">{uploadError}</p>}
               </div>

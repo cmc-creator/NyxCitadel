@@ -174,7 +174,7 @@ export default async function ArchivesPage({
             <Archive className="w-6 h-6 text-muted-foreground/70" />
             Compliance Archive
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Annual compliance record for regulatory &amp; provider audits · {facilityName}
           </p>
         </div>
@@ -392,7 +392,7 @@ export default async function ArchivesPage({
       </div>
 
       {/* Audit notes footer */}
-      <div className="bg-card border border-border rounded-xl p-4 text-xs text-slate-500 space-y-1">
+      <div className="bg-card border border-border rounded-xl p-4 text-xs text-muted-foreground space-y-1">
         <p className="font-semibold text-slate-300">Audit Documentation Notes</p>
         <p>• All records are stored in NyxCitadel and retrievable by regulators on request. Use the "View Full Records →" links above to navigate to each domain&apos;s complete record set.</p>
         <p>• For regulatory surveys (ADHS, AHCCCS, CMS), printed or exported records from each tracker page include all required fields, dates, and chain-of-custody information.</p>
@@ -441,7 +441,7 @@ function DomainCard({
     green:'text-green-400 font-semibold',
     warn: 'text-amber-400 font-semibold',
   };
-  const iconClass = colorMap[color] ?? 'text-slate-600 bg-slate-50';
+  const iconClass = colorMap[color] ?? 'text-muted-foreground bg-muted/20';
 
   return (
     <div className="bg-card rounded-xl border border-border overflow-hidden flex flex-col">
@@ -455,7 +455,7 @@ function DomainCard({
       <div className="px-4 py-3 space-y-2 flex-1">
         {rows.map((row, i) => (
           <div key={i} className="flex items-center justify-between text-xs">
-            <span className="text-slate-500">{row.label}</span>
+            <span className="text-muted-foreground">{row.label}</span>
             <span className={row.highlight ? highlightColor[row.highlight] : 'text-foreground font-medium'}>
               {row.value}
             </span>
@@ -463,7 +463,7 @@ function DomainCard({
         ))}
       </div>
       <div className="px-4 pb-3 pt-1 flex items-end justify-between gap-2">
-        {note && <p className="text-xs text-slate-500 leading-snug">{note}</p>}
+        {note && <p className="text-xs text-muted-foreground leading-snug">{note}</p>}
         <Link
           href={href}
           className="text-xs text-teal-400 hover:text-teal-300 font-medium whitespace-nowrap shrink-0 ml-auto"

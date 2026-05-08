@@ -46,14 +46,14 @@ export default function NewAdvanceDirectivePage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/patient-rights/advance-directives" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/patient-rights/advance-directives" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Advance Directives
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ScrollText className="w-6 h-6 text-teal-600" />
           Document Advance Directive Status
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">CMS §482.13(b)(3) - advance directive status must be documented at admission.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">CMS §482.13(b)(3) - advance directive status must be documented at admission.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -63,16 +63,16 @@ export default function NewAdvanceDirectivePage() {
           <h2 className="text-sm font-semibold text-foreground">Patient</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient Initials *</label>
               <input name="patientInitials" required className="form-input w-full" placeholder="J.S." />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">MRN</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MRN</label>
               <input name="patientMrn" className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Admit Date *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Admit Date *</label>
             <input name="admitDate" type="date" required className="form-input w-full" />
           </div>
         </div>
@@ -99,14 +99,14 @@ export default function NewAdvanceDirectivePage() {
           </div>
           <div className="grid grid-cols-2 gap-4 mt-2">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">AD Type</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">AD Type</label>
               <select name="adType" className="form-input w-full">
                 <option value="">Select…</option>
                 {AD_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Information Provided By</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Information Provided By</label>
               <input name="providedBy" className="form-input w-full" />
             </div>
           </div>
@@ -116,22 +116,22 @@ export default function NewAdvanceDirectivePage() {
           <h2 className="text-sm font-semibold text-foreground">Documentation</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Documented By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Documented By *</label>
               <input name="documentedBy" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Documented Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Documented Date *</label>
               <input name="documentedDate" type="date" required className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} className="form-input w-full" />
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/patient-rights/advance-directives" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/patient-rights/advance-directives" className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-muted/20">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-teal-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Record'}
           </button>

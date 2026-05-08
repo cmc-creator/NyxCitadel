@@ -54,11 +54,11 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/incidents" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/trackers/incidents" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Incidents
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/incidents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/incidents/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/incidents/${params.id}`} redirectPath="/trackers/incidents" label="incident" />
@@ -72,12 +72,12 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <AlertTriangle className="w-5 h-5 text-purple-600" />
               <span className="text-xs font-mono text-muted-foreground/70">{incident.incidentNumber}</span>
-              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${SEVERITY_COLOR[incident.severity] ?? 'bg-slate-100 text-slate-600'}`}>
+              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${SEVERITY_COLOR[incident.severity] ?? 'bg-muted/30 text-muted-foreground'}`}>
                 {incident.severity}
               </span>
             </div>
             <h1 className="text-xl font-bold text-foreground">{incident.incidentType.replace(/_/g, ' ')}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Occurred: <strong>{formatDate(incident.dateOccurred)}</strong>
               {incident.location && <> &middot; <strong>{incident.location}</strong></>}
             </p>
@@ -158,7 +158,7 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
                 <ClipboardList className="w-4 h-4 shrink-0" />
                 <div>
                   <div className="font-medium">{incident.cap.capNumber}</div>
-                  <div className="text-xs text-slate-500">{incident.cap.title}</div>
+                  <div className="text-xs text-muted-foreground">{incident.cap.title}</div>
                 </div>
               </Link>
             </Section>
@@ -181,7 +181,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <>
-      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
+      <dt className="text-xs text-muted-foreground shrink-0">{label}</dt>
       <dd className={`text-xs font-medium text-right mb-2 ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </>
   );

@@ -63,13 +63,13 @@ export default function DocumentUploadPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <Link href="/documents" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground/80 mb-4">
+        <Link href="/documents" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground/80 mb-4">
           <ArrowLeft className="w-4 h-4" /> Back to Documents
         </Link>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Upload className="w-6 h-6 text-teal-600" /> Add Document
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Register a document in the library by providing its URL and metadata.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Register a document in the library by providing its URL and metadata.</p>
       </div>
 
       {error && (
@@ -79,12 +79,12 @@ export default function DocumentUploadPage() {
       <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border p-6 space-y-5">
         <div>
           <label className="block text-sm font-medium text-foreground/80 mb-1">Document Name <span className="text-red-500">*</span></label>
-          <input name="name" required className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="e.g. Infection Control Policy v3.0" />
+          <input name="name" required className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="e.g. Infection Control Policy v3.0" />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-foreground/80 mb-1">Category <span className="text-red-500">*</span></label>
-          <select name="category" required className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+          <select name="category" required className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
             <option value="">- Select category -</option>
             {CATEGORIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
@@ -92,23 +92,23 @@ export default function DocumentUploadPage() {
 
         <div>
           <label className="block text-sm font-medium text-foreground/80 mb-1">Document URL <span className="text-red-500">*</span></label>
-          <input type="url" name="fileUrl" required className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="https://sharepoint.com/... or storage URL" />
+          <input type="url" name="fileUrl" required className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="https://sharepoint.com/... or storage URL" />
           <p className="text-xs text-muted-foreground/70 mt-1">Link to where the document is stored (SharePoint, OneDrive, Google Drive, etc.)</p>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-foreground/80 mb-1">Description</label>
-          <textarea name="description" rows={2} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none" placeholder="Brief description of this document…" />
+          <textarea name="description" rows={2} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none" placeholder="Brief description of this document…" />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-foreground/80 mb-1">Expiry / Review Date</label>
-            <input type="date" name="expiryDate" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
+            <input type="date" name="expiryDate" className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
           </div>
           <div>
             <label className="block text-sm font-medium text-foreground/80 mb-1">Tags</label>
-            <input name="tags" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="policy, infection, 2026 (comma-separated)" />
+            <input name="tags" className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="policy, infection, 2026 (comma-separated)" />
           </div>
         </div>
 

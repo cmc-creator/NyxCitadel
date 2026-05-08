@@ -107,7 +107,7 @@ export default function DocumentDetailPage() {
     return (
       <div className="text-center py-20">
         <AlertTriangle className="w-10 h-10 text-red-400 mx-auto mb-3" />
-        <p className="text-slate-500">{error || 'Document not found.'}</p>
+        <p className="text-muted-foreground">{error || 'Document not found.'}</p>
         <button onClick={() => router.back()} className="mt-4 text-sm text-purple-600 hover:underline">
           ← Go back
         </button>
@@ -127,12 +127,12 @@ export default function DocumentDetailPage() {
       <div className="flex items-center justify-between gap-2">
         <button
           onClick={() => router.push('/documents')}
-          className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition"
+          className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Documents
         </button>
-        <Link href={`/documents/${id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+        <Link href={`/documents/${id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
           <Pencil className="w-3.5 h-3.5" /> Edit
         </Link>
       </div>
@@ -146,7 +146,7 @@ export default function DocumentDetailPage() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">{doc.name}</h1>
-              <span className="inline-block mt-1 text-xs font-medium bg-slate-100 text-slate-600 rounded-full px-2 py-0.5">
+              <span className="inline-block mt-1 text-xs font-medium bg-muted/30 text-muted-foreground rounded-full px-2 py-0.5">
                 {doc.category}
               </span>
             </div>
@@ -176,7 +176,7 @@ export default function DocumentDetailPage() {
 
         {/* Description */}
         {doc.description && (
-          <p className="mt-4 text-sm text-slate-600 leading-relaxed">{doc.description}</p>
+          <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{doc.description}</p>
         )}
 
         {/* Expiry warnings */}
@@ -258,7 +258,7 @@ export default function DocumentDetailPage() {
             {doc.tags.map(tag => (
               <span
                 key={tag}
-                className="bg-slate-100 text-slate-600 text-xs font-medium rounded-full px-2.5 py-1"
+                className="bg-muted/30 text-muted-foreground text-xs font-medium rounded-full px-2.5 py-1"
               >
                 {tag}
               </span>

@@ -43,7 +43,7 @@ export default async function DeficienciesPage() {
         <div>
           <div className="flex items-center gap-2">
             <Link href="/eoc" className="text-sm text-muted-foreground/70 hover:text-slate-300">Environment of Care</Link>
-            <span className="text-slate-600">›</span>
+            <span className="text-muted-foreground">›</span>
             <span className="text-sm text-foreground font-medium">Deficiencies</span>
           </div>
           <h1 className="text-2xl font-bold text-foreground mt-1">Deficiency Tracker</h1>

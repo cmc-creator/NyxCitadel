@@ -54,14 +54,14 @@ export default function NewControlledSubstancePage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/pharmacy/controlled-substances" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/pharmacy/controlled-substances" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Controlled Substances
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Pill className="w-6 h-6 text-teal-600" />
           New CS Count Log
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Count difference is calculated automatically.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Count difference is calculated automatically.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -71,15 +71,15 @@ export default function NewControlledSubstancePage() {
           <h2 className="text-sm font-semibold text-foreground">Count Details</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Log Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Log Date *</label>
               <input name="logDate" type="date" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Unit *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit *</label>
               <input name="unit" type="text" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Shift *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Shift *</label>
               <select name="shift" required className="form-input w-full">
                 {SHIFTS.map(s => <option key={s} value={s}>{s}</option>)}
               </select>
@@ -87,11 +87,11 @@ export default function NewControlledSubstancePage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Medication Name *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Medication Name *</label>
               <input name="medicationName" type="text" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Schedule *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Schedule *</label>
               <select name="schedule" required className="form-input w-full">
                 {SCHEDULES.map(s => <option key={s} value={s}>{s.replace('_', ' ')}</option>)}
               </select>
@@ -103,19 +103,19 @@ export default function NewControlledSubstancePage() {
           <h2 className="text-sm font-semibold text-foreground">Count Amounts</h2>
           <div className="grid grid-cols-3 gap-4 items-end">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Amount Expected *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Amount Expected *</label>
               <input name="amountExpected" type="number" step="0.01" required defaultValue="0"
                 className="form-input w-full"
                 onChange={e => setExpected(parseFloat(e.target.value) || 0)} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Amount Counted *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Amount Counted *</label>
               <input name="amountCounted" type="number" step="0.01" required defaultValue="0"
                 className="form-input w-full"
                 onChange={e => setCounted(parseFloat(e.target.value) || 0)} />
             </div>
             <div className="pb-0.5">
-              <p className="text-xs font-medium text-slate-600 mb-1">Difference</p>
+              <p className="text-xs font-medium text-muted-foreground mb-1">Difference</p>
               <p className={`text-xl font-bold ${countDifference === 0 ? 'text-green-600' : 'text-red-600'}`}>
                 {countDifference > 0 ? '+' : ''}{countDifference.toFixed(2)}
               </p>
@@ -128,7 +128,7 @@ export default function NewControlledSubstancePage() {
           </label>
           {discrepancyFound && (
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Discrepancy Explanation</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Discrepancy Explanation</label>
               <textarea name="discrepancyExplanation" rows={2} className="form-input w-full" />
             </div>
           )}
@@ -138,11 +138,11 @@ export default function NewControlledSubstancePage() {
           <h2 className="text-sm font-semibold text-foreground">Signatures</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Counted By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Counted By *</label>
               <input name="countedBy" type="text" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Witness *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Witness *</label>
               <input name="witnessName" type="text" required className="form-input w-full" />
             </div>
           </div>
@@ -152,14 +152,14 @@ export default function NewControlledSubstancePage() {
               Reported to Pharmacy
             </label>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Reported Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Reported Date</label>
               <input name="reportedDate" type="date" className="form-input w-full" />
             </div>
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/pharmacy/controlled-substances" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/pharmacy/controlled-substances" className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-muted/20">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-teal-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Log'}
           </button>

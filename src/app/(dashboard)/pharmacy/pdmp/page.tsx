@@ -72,7 +72,7 @@ export default async function PdmpPage() {
           </thead>
           <tbody>
             {checks.length === 0 ? (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">No PDMP checks on record.</td></tr>
+              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">No PDMP checks on record.</td></tr>
             ) : checks.map(c => {
               const derivedStatus = c.significantFinding
                 ? (c.actionTaken ? 'ACTION_TAKEN' : 'CONCERNS_OPEN')

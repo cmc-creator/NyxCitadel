@@ -89,7 +89,7 @@ export default function NhsnPage() {
           <ShieldAlert className="w-6 h-6 text-blue-400" />
           NHSN Healthcare-Associated Infections
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Enter monthly HAI surveillance data and export a CSV file for upload to the CDC NHSN portal.
         </p>
       </div>
@@ -101,12 +101,12 @@ export default function NhsnPage() {
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">Reporting Period <span className="text-red-400">*</span></label>
             <input type="text" value={period} onChange={e => setPeriod(e.target.value)} placeholder="e.g. 2026-03"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500" />
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500" />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">Facility Name</label>
             <input type="text" value={facilityName} onChange={e => setFacility(e.target.value)} placeholder="Your hospital name"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500" />
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500" />
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@ export default function NhsnPage() {
         <div key={h.key} className="bg-card border border-border rounded-xl p-5 space-y-3">
           <div>
             <div className="font-semibold text-sm text-foreground">{h.label}</div>
-            <p className="text-xs text-slate-500">{h.description}</p>
+            <p className="text-xs text-muted-foreground">{h.description}</p>
           </div>
           <div className="grid grid-cols-4 gap-3">
             {([
@@ -132,7 +132,7 @@ export default function NhsnPage() {
                   value={data[h.key]?.[field] ?? ''}
                   onChange={e => setField(h.key, field, e.target.value)}
                   placeholder="0"
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-2 text-sm text-foreground placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
             ))}
@@ -142,7 +142,7 @@ export default function NhsnPage() {
 
       {/* Actions */}
       <div className="flex items-center justify-between">
-        <div className="text-xs text-slate-500">
+        <div className="text-xs text-muted-foreground">
           ⓘ Export CSV for manual upload to the{' '}
           <a href="https://www.cdc.gov/nhsn/" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">CDC NHSN portal</a>.
         </div>

@@ -30,7 +30,7 @@ const CATEGORY_STYLES: Record<string, string> = {
   CAP_COMPLETION_NOTICE:            'bg-emerald-100 text-emerald-800',
   INCIDENT_FAMILY_NOTIFICATION:     'bg-yellow-100 text-yellow-800',
   REGULATORY_INQUIRY_RESPONSE:      'bg-indigo-100 text-indigo-800',
-  COMPLAINT_ACKNOWLEDGMENT:         'bg-slate-100 text-foreground/80',
+  COMPLAINT_ACKNOWLEDGMENT:         'bg-muted/30 text-foreground/80',
 };
 
 export default async function ResponseTemplateDetailPage({ params }: { params: { id: string } }) {
@@ -45,7 +45,7 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <Link href="/quality/response-templates" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600">
+      <Link href="/quality/response-templates" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600">
         <ChevronLeft className="w-4 h-4" /> Back to Templates
       </Link>
 
@@ -57,18 +57,18 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
             {template.name}
           </h1>
           {template.description && (
-            <p className="text-sm text-slate-500 mt-0.5">{template.description}</p>
+            <p className="text-sm text-muted-foreground mt-0.5">{template.description}</p>
           )}
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
-          <Link href={`/quality/response-templates/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/quality/response-templates/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <span className={`text-xs font-medium px-3 py-1 rounded-full ${CATEGORY_STYLES[template.category] ?? 'bg-slate-100 text-foreground/80'}`}>
+          <span className={`text-xs font-medium px-3 py-1 rounded-full ${CATEGORY_STYLES[template.category] ?? 'bg-muted/30 text-foreground/80'}`}>
             {template.category.replace(/_/g, ' ')}
           </span>
           {!template.isActive && (
-            <span className="text-xs font-medium px-3 py-1 rounded-full bg-slate-100 text-slate-500">Inactive</span>
+            <span className="text-xs font-medium px-3 py-1 rounded-full bg-muted/30 text-muted-foreground">Inactive</span>
           )}
         </div>
       </div>
@@ -81,24 +81,24 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
             <dl className="space-y-3">
               {template.regulatoryRef && (
                 <div>
-                  <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Regulatory Reference</dt>
+                  <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Regulatory Reference</dt>
                   <dd className="text-sm font-mono text-foreground">{template.regulatoryRef}</dd>
                 </div>
               )}
               {template.daysRequired && (
                 <div>
-                  <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Response Deadline</dt>
+                  <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Response Deadline</dt>
                   <dd className="text-sm text-foreground flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5 text-orange-500" /> {template.daysRequired} days
                   </dd>
                 </div>
               )}
               <div>
-                <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Times Used</dt>
+                <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Times Used</dt>
                 <dd className="text-sm text-foreground">{template._count.responses} responses</dd>
               </div>
               <div>
-                <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">System Default</dt>
+                <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">System Default</dt>
                 <dd className="text-sm">{template.isDefault
                   ? <span className="text-emerald-700 flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5" /> Yes</span>
                   : <span className="text-muted-foreground/70">No (custom)</span>}
@@ -114,7 +114,7 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
               </h2>
               <div className="flex flex-wrap gap-2">
                 {(template.variables as string[]).map((v) => (
-                  <code key={v} className="text-xs bg-slate-100 text-foreground/80 px-2 py-1 rounded font-mono">{v}</code>
+                  <code key={v} className="text-xs bg-muted/30 text-foreground/80 px-2 py-1 rounded font-mono">{v}</code>
                 ))}
               </div>
             </div>
@@ -139,7 +139,7 @@ export default async function ResponseTemplateDetailPage({ params }: { params: {
         <div className="lg:col-span-2 space-y-4">
           {template.subject && (
             <div className="bg-card rounded-xl border border-border p-5">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Default Subject</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Default Subject</p>
               <p className="text-base font-semibold text-foreground">{template.subject}</p>
             </div>
           )}

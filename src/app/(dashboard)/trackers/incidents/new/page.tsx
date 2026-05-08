@@ -60,14 +60,14 @@ export default function NewIncidentPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/incidents" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/trackers/incidents" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Incidents
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <AlertTriangle className="w-6 h-6 text-red-500" />
           File Incident Report
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Complete within 24 hours of occurrence. AZ ADHS Sentinel events must be reported within 24 hours.
         </p>
       </div>
@@ -94,7 +94,7 @@ export default function NewIncidentPage() {
           <h2 className="text-sm font-semibold text-foreground">Incident Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Incident Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Incident Type *</label>
               <select
                 name="incidentType"
                 required
@@ -109,7 +109,7 @@ export default function NewIncidentPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Severity *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Severity *</label>
               <select
                 name="severity"
                 required
@@ -126,11 +126,11 @@ export default function NewIncidentPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Date &amp; Time of Incident *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Date &amp; Time of Incident *</label>
               <input name="dateOccurred" type="datetime-local" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Location</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Location</label>
               <input
                 name="location"
                 value={location}
@@ -180,17 +180,17 @@ export default function NewIncidentPage() {
         <div className="px-6 py-5 space-y-3">
           <h2 className="text-sm font-semibold text-foreground">Reporting Flags</h2>
           <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
-            <input name="patientInvolved" type="checkbox" className="rounded border-slate-300 text-teal-600" />
+            <input name="patientInvolved" type="checkbox" className="rounded border-border text-teal-600" />
             Patient was involved in this incident
           </label>
           <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
-            <input name="reportableToState" type="checkbox" className="rounded border-slate-300 text-teal-600" />
+            <input name="reportableToState" type="checkbox" className="rounded border-border text-teal-600" />
             Requires AZ ADHS / Regulatory Reporting (Sentinel Event, Abuse, Unexpected Death)
           </label>
         </div>
 
         <div className="px-6 py-4 flex items-center justify-end gap-3">
-          <a href="/trackers/incidents" className="text-sm text-slate-500 hover:text-foreground/80">Cancel</a>
+          <a href="/trackers/incidents" className="text-sm text-muted-foreground hover:text-foreground/80">Cancel</a>
           <button
             type="submit"
             disabled={saving}

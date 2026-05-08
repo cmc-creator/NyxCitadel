@@ -15,7 +15,7 @@ const privilegeConfig: Record<string, { label: string; color: string }> = {
   ACTIVE:      { label: 'Active',      color: 'bg-emerald-100 text-emerald-700' },
   PROVISIONAL: { label: 'Provisional', color: 'bg-amber-100 text-amber-700' },
   SUSPENDED:   { label: 'Suspended',   color: 'bg-red-100 text-red-700' },
-  INACTIVE:    { label: 'Inactive',    color: 'bg-slate-100 text-slate-600' },
+  INACTIVE:    { label: 'Inactive',    color: 'bg-muted/30 text-muted-foreground' },
 };
 
 export default async function ProvidersPage({ searchParams }: { searchParams: { q?: string } }) {
@@ -77,7 +77,7 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
         <Search className="w-4 h-4 text-muted-foreground/70" />
         <input name="q" defaultValue={q}
           placeholder="Search by name or specialty..."
-          className="bg-transparent text-sm text-white placeholder:text-slate-500 outline-none flex-1" />
+          className="bg-transparent text-sm text-white placeholder:text-muted-foreground outline-none flex-1" />
       </form>
 
       <div className="rounded-xl bg-slate-800/50 border border-white/10 overflow-x-auto">
@@ -91,7 +91,7 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
           </thead>
           <tbody className="divide-y divide-white/5">
             {providers.length === 0 ? (
-              <tr><td colSpan={8} className="text-center py-8 text-slate-500 text-sm">No providers found.</td></tr>
+              <tr><td colSpan={8} className="text-center py-8 text-muted-foreground text-sm">No providers found.</td></tr>
             ) : providers.map(p => {
               const primaryLicense = p.licenses[0];
               const licExpiry = primaryLicense?.expiryDate;
@@ -102,18 +102,18 @@ export default async function ProvidersPage({ searchParams }: { searchParams: { 
                 <tr key={p.id} className="hover:bg-white/5 transition-colors">
                   <td className="px-3 py-3 font-semibold text-white text-xs">{p.lastName}, {p.firstName} {p.credentials && <span className="text-muted-foreground/70">{p.credentials}</span>}</td>
                   <td className="px-3 py-3">
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${typeConfig[p.providerType]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${typeConfig[p.providerType]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {typeConfig[p.providerType]?.label ?? p.providerType}
                     </span>
                   </td>
                   <td className="px-3 py-3 text-muted-foreground/70 text-xs">{p.specialty}</td>
-                  <td className="px-3 py-3 text-slate-500 text-xs font-mono">{p.npi ?? '-'}</td>
+                  <td className="px-3 py-3 text-muted-foreground text-xs font-mono">{p.npi ?? '-'}</td>
                   <td className={`px-3 py-3 text-xs font-semibold ${isExpired ? 'text-red-400' : isExpiringSoon ? 'text-amber-400' : 'text-muted-foreground/70'}`}>
                     {licExpiry ? licExpiry.toLocaleDateString() : '-'}
                     {(isExpiringSoon || isExpired) && <span className="ml-1">⚠️</span>}
                   </td>
                   <td className="px-3 py-3">
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${privilegeConfig[p.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${privilegeConfig[p.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {privilegeConfig[p.status]?.label ?? p.status}
                     </span>
                   </td>

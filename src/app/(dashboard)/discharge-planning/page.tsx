@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 const statusConfig: Record<string, { label: string; classes: string }> = {
   ACTIVE:      { label: 'Active',      classes: 'bg-blue-100 text-blue-700' },
   UPDATED:     { label: 'Updated',     classes: 'bg-emerald-100 text-emerald-700' },
-  DISCHARGED:  { label: 'Discharged',  classes: 'bg-slate-100 text-foreground/80' },
+  DISCHARGED:  { label: 'Discharged',  classes: 'bg-muted/30 text-foreground/80' },
   TRANSFERRED: { label: 'Transferred', classes: 'bg-amber-100 text-amber-700' },
   AMA:         { label: 'AMA',         classes: 'bg-red-100 text-red-700' },
 };
@@ -79,9 +79,9 @@ export default async function DischargePlanningPage() {
           </thead>
           <tbody>
             {plans.length === 0 ? (
-              <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">No discharge plans on record.</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">No discharge plans on record.</td></tr>
             ) : plans.map(p => {
-              const cfg = statusConfig[p.status] ?? { label: p.status, classes: 'bg-slate-100 text-foreground/80' };
+              const cfg = statusConfig[p.status] ?? { label: p.status, classes: 'bg-muted/30 text-foreground/80' };
               const isPast = p.estimatedDischargeDate && p.estimatedDischargeDate < now && p.status !== 'DISCHARGED';
               return (
                 <tr key={p.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">

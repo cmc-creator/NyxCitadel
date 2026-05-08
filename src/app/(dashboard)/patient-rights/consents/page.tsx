@@ -85,7 +85,7 @@ export default async function ConsentsPage() {
           </thead>
           <tbody className="divide-y divide-white/5">
             {consents.length === 0 ? (
-              <tr><td colSpan={5} className="text-center py-8 text-slate-500 text-sm">No consent records found.</td></tr>
+              <tr><td colSpan={5} className="text-center py-8 text-muted-foreground text-sm">No consent records found.</td></tr>
             ) : consents.map(c => (
               <tr key={c.id} className="hover:bg-white/5 transition-colors">
                 <td className="px-4 py-3 font-bold text-white">{c.patientInitials}</td>
@@ -93,7 +93,7 @@ export default async function ConsentsPage() {
                 <td className="px-4 py-3 text-muted-foreground/70 text-xs">{c.consentDate ? c.consentDate.toLocaleDateString() : '—'}</td>
                 <td className="px-4 py-3 text-muted-foreground/70 text-xs">{c.obtainedBy ?? '—'}</td>
                 <td className="px-4 py-3">
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[c.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[c.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                     {statusConfig[c.status]?.label ?? c.status}
                   </span>
                 </td>

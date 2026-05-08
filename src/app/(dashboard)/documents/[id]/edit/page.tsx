@@ -67,13 +67,13 @@ export default function EditDocumentPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/documents/${id}`} className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground/80 mb-4">
+        <a href={`/documents/${id}`} className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground/80 mb-4">
           <ArrowLeft className="w-4 h-4" /> Back to Document
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <FileText className="w-6 h-6 text-purple-600" /> Edit Document
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Update document metadata. To replace the file, upload a new document.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Update document metadata. To replace the file, upload a new document.</p>
       </div>
 
       {error && (
@@ -87,7 +87,7 @@ export default function EditDocumentPage() {
             name="name"
             required
             defaultValue={data.name ?? ''}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
 
@@ -97,7 +97,7 @@ export default function EditDocumentPage() {
             name="category"
             required
             defaultValue={data.category ?? ''}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             <option value="">- Select category -</option>
             {CATEGORIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
@@ -110,7 +110,7 @@ export default function EditDocumentPage() {
             name="description"
             rows={2}
             defaultValue={data.description ?? ''}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+            className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
           />
         </div>
 
@@ -121,7 +121,7 @@ export default function EditDocumentPage() {
               type="date"
               name="expiryDate"
               defaultValue={data.expiryDate?.split('T')[0] ?? ''}
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
           <div>
@@ -130,7 +130,7 @@ export default function EditDocumentPage() {
               name="tags"
               defaultValue={Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags ?? '')}
               placeholder="policy, infection, 2026 (comma-separated)"
-              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
         </div>

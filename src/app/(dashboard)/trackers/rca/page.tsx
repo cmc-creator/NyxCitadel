@@ -14,7 +14,7 @@ const STATUS_COLORS: Record<string, string> = {
   UNDER_REVIEW:    'bg-orange-100 text-orange-700',
   APPROVED:        'bg-green-100 text-green-700',
   SUBMITTED_TO_JC: 'bg-teal-100 text-teal-700',
-  CLOSED:          'bg-slate-100 text-slate-500',
+  CLOSED:          'bg-muted/30 text-muted-foreground',
 };
 
 export default async function RcaPage({
@@ -48,7 +48,7 @@ export default async function RcaPage({
             <Search className="w-6 h-6 text-teal-600" />
             Root Cause Analyses
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             JC LD.04.04.05 - Required for sentinel events and serious adverse events.
           </p>
         </div>
@@ -74,17 +74,17 @@ export default async function RcaPage({
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-yellow-600">{inProgress.length}</div>
-          <div className="text-sm text-slate-500">In Progress</div>
+          <div className="text-sm text-muted-foreground">In Progress</div>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-green-600">{approved.length}</div>
-          <div className="text-sm text-slate-500">Approved / Closed</div>
+          <div className="text-sm text-muted-foreground">Approved / Closed</div>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-teal-600">
             {rcas.filter(r => r.status === 'SUBMITTED_TO_JC').length}
           </div>
-          <div className="text-sm text-slate-500">Submitted to JC</div>
+          <div className="text-sm text-muted-foreground">Submitted to JC</div>
         </div>
       </div>
 
@@ -92,7 +92,7 @@ export default async function RcaPage({
       {rcas.length === 0 ? (
         <div className="bg-card rounded-xl border border-border p-12 text-center">
           <Search className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-500 font-medium">No root cause analyses yet</p>
+          <p className="text-muted-foreground font-medium">No root cause analyses yet</p>
           <Link
             href="/trackers/rca/new"
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition-colors"
@@ -107,9 +107,9 @@ export default async function RcaPage({
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-mono text-xs text-slate-500">{rca.rcaNumber}</span>
+                    <span className="font-mono text-xs text-muted-foreground">{rca.rcaNumber}</span>
                     <span className="text-xs bg-teal-950/20 text-indigo-700 px-2 py-0.5 rounded-full">{rca.eventType}</span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[rca.status] ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[rca.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {rca.status.replace(/_/g, ' ')}
                     </span>
                     {rca.systemChangesRequired && (
@@ -117,7 +117,7 @@ export default async function RcaPage({
                     )}
                   </div>
                   <p className="text-foreground/80 mt-1 text-sm line-clamp-2">{rca.eventDescription}</p>
-                  <div className="flex flex-wrap gap-3 mt-1 text-xs text-slate-500">
+                  <div className="flex flex-wrap gap-3 mt-1 text-xs text-muted-foreground">
                     <span>Event: {formatDate(rca.eventDate)}</span>
                     {rca.completedBy && <span>By: {rca.completedBy}</span>}
                     {rca.conductedDate && <span>Conducted: {formatDate(rca.conductedDate)}</span>}

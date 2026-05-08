@@ -16,11 +16,11 @@ const STATUS_COLORS: Record<string, string> = {
   FINDINGS_ISSUED:    'bg-teal-100 text-teal-700',
   SUBSTANTIATED:      'bg-red-200 text-red-800 font-semibold',
   UNSUBSTANTIATED:    'bg-green-100 text-green-700',
-  CLOSED:             'bg-slate-100 text-slate-500',
+  CLOSED:             'bg-muted/30 text-muted-foreground',
 };
 
 const INV_COLORS: Record<string, string> = {
-  STANDARD:          'bg-slate-100 text-slate-600',
+  STANDARD:          'bg-muted/30 text-muted-foreground',
   IMMEDIATE_JEOPARDY:'bg-red-100 text-red-700 font-bold',
   EXPANDED:          'bg-orange-100 text-orange-700',
   REVISIT:           'bg-yellow-100 text-yellow-700',
@@ -36,7 +36,7 @@ function DeadlineTag({ dueDate, label }: { dueDate: Date; label: string }) {
     <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full ${
       overdue ? 'bg-red-100 text-red-700 font-semibold' :
       urgent  ? 'bg-orange-100 text-orange-700 font-medium' :
-                'bg-slate-100 text-slate-500'
+                'bg-muted/30 text-muted-foreground'
     }`}>
       <Clock className="w-3 h-3" />
       {overdue
@@ -84,7 +84,7 @@ export default async function QocPage({
             <Scale className="w-6 h-6 text-teal-600" />
             QOC / LOI Complaint Tracker
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             CMS 42 CFR 488 · Quality of Care Complaints · Letters of Investigation · 10-business-day response window
           </p>
         </div>
@@ -128,21 +128,21 @@ export default async function QocPage({
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-foreground">{open.length}</div>
-          <div className="text-sm text-slate-500">Open Complaints</div>
+          <div className="text-sm text-muted-foreground">Open Complaints</div>
         </div>
         <div className={`rounded-xl border p-4 ${ij.length > 0 ? 'bg-red-950/20 border-red-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${ij.length > 0 ? 'text-red-600' : 'text-foreground'}`}>{ij.length}</div>
-          <div className="text-sm text-slate-500">Immediate Jeopardy</div>
+          <div className="text-sm text-muted-foreground">Immediate Jeopardy</div>
         </div>
         <div className={`rounded-xl border p-4 ${overdueResponse.length > 0 ? 'bg-orange-950/20 border-orange-200' : 'bg-card border-border'}`}>
           <div className={`text-2xl font-bold ${overdueResponse.length > 0 ? 'text-orange-600' : 'text-foreground'}`}>{overdueResponse.length}</div>
-          <div className="text-sm text-slate-500">Overdue Responses</div>
+          <div className="text-sm text-muted-foreground">Overdue Responses</div>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-green-600">
             {complaints.filter(c => c.status === 'CLOSED' || c.status === 'UNSUBSTANTIATED').length}
           </div>
-          <div className="text-sm text-slate-500">Closed / Unsubstantiated</div>
+          <div className="text-sm text-muted-foreground">Closed / Unsubstantiated</div>
         </div>
       </div>
 
@@ -175,13 +175,13 @@ export default async function QocPage({
                     <td className="px-4 py-3 font-mono text-xs font-semibold text-teal-700">
                       <Link href={`/trackers/qoc/${c.id}`} className="hover:underline">{c.qocNumber}</Link>
                     </td>
-                    <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{formatDate(c.dateReceived)}</td>
-                    <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
+                    <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{formatDate(c.dateReceived)}</td>
+                    <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">
                       {c.complainantType.replace(/_/g, ' ')}
                     </td>
                     <td className="px-4 py-3 text-foreground/80 max-w-xs truncate">{c.allegationSummary}</td>
                     <td className="px-4 py-3">
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${INV_COLORS[c.investigationType] ?? 'bg-slate-100 text-slate-600'}`}>
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${INV_COLORS[c.investigationType] ?? 'bg-muted/30 text-muted-foreground'}`}>
                         {c.investigationType.replace(/_/g, ' ')}
                       </span>
                     </td>
@@ -197,7 +197,7 @@ export default async function QocPage({
                       )}
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[c.status] ?? 'bg-slate-100 text-slate-600'}`}>
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[c.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                         {c.status.replace(/_/g, ' ')}
                       </span>
                     </td>

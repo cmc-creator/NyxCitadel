@@ -71,7 +71,7 @@ export default function EditEmployeeHealthPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/workforce-health/employee-health/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/workforce-health/employee-health/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -87,21 +87,21 @@ export default function EditEmployeeHealthPage() {
           <h2 className="text-sm font-semibold text-foreground">Employee Info</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Employee Name *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Employee Name *</label>
               <input name="employeeName" type="text" required className="form-input w-full" defaultValue={data.employeeName ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Employee ID</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Employee ID</label>
               <input name="employeeId" type="text" className="form-input w-full" defaultValue={data.employeeId ?? ''} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Department *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Department *</label>
               <input name="department" type="text" required className="form-input w-full" defaultValue={data.department ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Hire Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Hire Date</label>
               <input name="hireDate" type="date" className="form-input w-full" defaultValue={data.hireDate?.split('T')[0] ?? ''} />
             </div>
           </div>
@@ -111,18 +111,18 @@ export default function EditEmployeeHealthPage() {
           <h2 className="text-sm font-semibold text-foreground">TB Screening</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Screen Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Screen Date</label>
               <input name="tbScreenDate" type="date" className="form-input w-full" defaultValue={data.tbScreenDate?.split('T')[0] ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Method</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Method</label>
               <select name="tbMethod" className="form-input w-full" defaultValue={data.tbMethod ?? ''}>
                 <option value="">-</option>
                 {TB_METHODS.map(m => <option key={m} value={m}>{m}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Result</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Result</label>
               <select name="tbResult" className="form-input w-full" defaultValue={data.tbResult ?? ''}>
                 <option value="">-</option>
                 {TB_RESULTS.map(r => <option key={r} value={r}>{r}</option>)}
@@ -130,7 +130,7 @@ export default function EditEmployeeHealthPage() {
             </div>
           </div>
           <div className="w-1/2">
-            <label className="block text-xs font-medium text-slate-600 mb-1">Next Due Date</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Next Due Date</label>
             <input name="tbNextDueDate" type="date" className="form-input w-full" defaultValue={data.tbNextDueDate?.split('T')[0] ?? ''} />
           </div>
         </div>
@@ -139,11 +139,11 @@ export default function EditEmployeeHealthPage() {
           <h2 className="text-sm font-semibold text-foreground">Influenza Vaccination</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Flu Vax Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Flu Vax Date</label>
               <input name="fluVaxDate" type="date" className="form-input w-full" defaultValue={data.fluVaxDate?.split('T')[0] ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Flu Season</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Flu Season</label>
               <input name="fluVaxSeason" type="text" className="form-input w-full" defaultValue={data.fluVaxSeason ?? ''} />
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function EditEmployeeHealthPage() {
           </label>
           {fluDeclined && (
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Decline Reason</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Decline Reason</label>
               <input name="fluDeclineReason" type="text" className="form-input w-full" defaultValue={data.fluDeclineReason ?? ''} />
             </div>
           )}
@@ -164,14 +164,14 @@ export default function EditEmployeeHealthPage() {
           <h2 className="text-sm font-semibold text-foreground">Other Health Items</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">COVID Vax Status</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">COVID Vax Status</label>
               <select name="covidVaxStatus" className="form-input w-full" defaultValue={data.covidVaxStatus ?? ''}>
                 <option value="">-</option>
                 {COVID_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Background Check Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Background Check Date</label>
               <input name="bgCheckDate" type="date" className="form-input w-full" defaultValue={data.bgCheckDate?.split('T')[0] ?? ''} />
             </div>
           </div>
@@ -182,27 +182,27 @@ export default function EditEmployeeHealthPage() {
           </label>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Fit Test Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Fit Test Date</label>
               <input name="fitTestDate" type="date" className="form-input w-full" defaultValue={data.fitTestDate?.split('T')[0] ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Fit Test Result</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Fit Test Result</label>
               <input name="fitTestResult" type="text" className="form-input w-full" defaultValue={data.fitTestResult ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Respirator Model</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Respirator Model</label>
               <input name="fitTestModel" type="text" className="form-input w-full" defaultValue={data.fitTestModel ?? ''} />
             </div>
           </div>
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
           <textarea name="notes" rows={2} className="form-input w-full" defaultValue={data.notes ?? ''} />
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/workforce-health/employee-health/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <a href={`/workforce-health/employee-health/${id}`} className="px-4 py-2 text-sm text-muted-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

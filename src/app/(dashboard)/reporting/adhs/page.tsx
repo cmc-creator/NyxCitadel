@@ -42,7 +42,7 @@ export default async function AdhsPage() {
           <AlertTriangle className="w-6 h-6 text-orange-400" />
           ADHS Incident / IAD Reporting
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Incidents flagged as IAD-required from the last 90 days. Export a formatted submission package for the Arizona ADHS portal.
         </p>
       </div>
@@ -50,15 +50,15 @@ export default async function AdhsPage() {
       {/* Summary */}
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-card border border-border rounded-xl p-4">
-          <p className="text-xs text-slate-500">IAD-Required (90 days)</p>
+          <p className="text-xs text-muted-foreground">IAD-Required (90 days)</p>
           <p className="text-2xl font-bold text-orange-400">{incidents.length}</p>
         </div>
         <div className="bg-card border border-border rounded-xl p-4">
-          <p className="text-xs text-slate-500">Also JC-Reportable</p>
+          <p className="text-xs text-muted-foreground">Also JC-Reportable</p>
           <p className="text-2xl font-bold text-red-400">{jcReportable.length}</p>
         </div>
         <div className="bg-card border border-border rounded-xl p-4">
-          <p className="text-xs text-slate-500">Past ADHS Submissions</p>
+          <p className="text-xs text-muted-foreground">Past ADHS Submissions</p>
           <p className="text-2xl font-bold text-foreground">{submissions.length}</p>
         </div>
       </div>
@@ -86,7 +86,7 @@ export default async function AdhsPage() {
         </div>
 
         {incidents.length === 0 ? (
-          <div className="p-10 text-center text-slate-500 text-sm">
+          <div className="p-10 text-center text-muted-foreground text-sm">
             No IAD-required incidents in the past 90 days.{' '}
             <Link href="/incidents" className="text-teal-400 hover:underline">View all incidents</Link> to flag them.
           </div>
@@ -168,7 +168,7 @@ export default async function AdhsPage() {
         </div>
       )}
 
-      <div className="text-xs text-slate-500">
+      <div className="text-xs text-muted-foreground">
         ⓘ Submit exported files directly to the{' '}
         <a href="https://azdhs.gov/" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">
           Arizona ADHS portal

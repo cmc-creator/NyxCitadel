@@ -76,14 +76,14 @@ export default function NewQapiProjectPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/quality/projects" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/quality/projects" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to QAPI Projects
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Target className="w-6 h-6 text-teal-600" />
           New QAPI Project
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           CMS requires ≥2 active Performance Improvement Projects (PIPs) at all times. Document problem, aim, measure, intervention, and outcomes using PDSA methodology.
         </p>
       </div>
@@ -97,38 +97,38 @@ export default function NewQapiProjectPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Project Overview</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Project Title *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Project Title *</label>
             <input name="title" required placeholder="e.g., Reduce Restraint Use by 20% by Q4 2026" className="form-input w-full" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
               <select name="category" required className="form-input w-full">
                 <option value="">Select…</option>
                 {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Related QAPI Metric</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Related QAPI Metric</label>
               <select name="relatedMetricKey" className="form-input w-full">
                 <option value="">None</option>
                 {METRIC_KEYS.map(k => <option key={k} value={k}>{k.replace(/_/g, ' ')}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Owner / Champion *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Owner / Champion *</label>
               <input name="owner" required placeholder="Name or department" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Team Members</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Team Members</label>
               <input name="team" placeholder="e.g., Nursing, Pharmacy, QI" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Start Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Start Date *</label>
               <input name="startDate" type="date" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Target Completion Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Target Completion Date *</label>
               <input name="targetDate" type="date" required className="form-input w-full" />
             </div>
           </div>
@@ -138,29 +138,29 @@ export default function NewQapiProjectPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Problem Statement & Aim (PDSA - Plan)</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Problem Statement *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Problem Statement *</label>
             <textarea name="problemStatement" required rows={3} placeholder="Describe the problem using data. e.g., 'Restraint use rate has averaged 8.2 per 1,000 pt-days in Q1 2026, exceeding the facility target of 5.0 and national benchmark.'" className="form-input w-full resize-none" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Aim Statement * - SMART goal</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Aim Statement * - SMART goal</label>
             <textarea name="aim" required rows={2} placeholder="e.g., 'Reduce the restraint use rate from 8.2 to ≤5.0 per 1,000 pt-days by December 31, 2026 through enhanced de-escalation training and environmental modifications.'" className="form-input w-full resize-none" />
           </div>
           <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Baseline Value</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Baseline Value</label>
               <input name="baselineValue" type="number" step="0.01" placeholder="e.g., 8.2" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Target Value</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Target Value</label>
               <input name="targetValue" type="number" step="0.01" placeholder="e.g., 5.0" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Unit</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit</label>
               <input name="targetUnit" placeholder="per 1k pt-days, %, days" className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Measure - How will success be measured?</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Measure - How will success be measured?</label>
             <input name="measure" placeholder="e.g., Monthly restraint rate per 1,000 patient-days from incident reporting system" className="form-input w-full" />
           </div>
         </div>
@@ -169,7 +169,7 @@ export default function NewQapiProjectPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Planned Interventions (PDSA - Do)</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Interventions</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Interventions</label>
             <textarea name="interventions" rows={4} placeholder="List specific interventions to be tested. e.g.:&#10;1. Implement CPI refresher training for all direct care staff by March 2026&#10;2. Establish sensory room on Unit A by April 2026&#10;3. Daily restraint review huddle with charge nurses&#10;4. Root cause analysis for each restraint event" className="form-input w-full resize-none" />
           </div>
         </div>
@@ -179,7 +179,7 @@ export default function NewQapiProjectPage() {
           <h2 className="text-sm font-semibold text-foreground">Regulatory Linkage</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body</label>
               <select name="regulatoryBody" className="form-input w-full">
                 <option value="">Select…</option>
                 <option value="JOINT_COMMISSION">Joint Commission</option>
@@ -190,14 +190,14 @@ export default function NewQapiProjectPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Standard Reference</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Standard Reference</label>
               <input name="standardRef" placeholder="e.g., 42 CFR 482.21, PC.03.05.01" className="form-input w-full" />
             </div>
           </div>
         </div>
 
         <div className="px-6 py-4 flex items-center justify-end gap-3">
-          <a href="/quality/projects" className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href="/quality/projects" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button
             type="submit"
             disabled={saving}

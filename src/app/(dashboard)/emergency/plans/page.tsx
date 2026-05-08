@@ -61,7 +61,7 @@ export default async function EmergencyPlansPage() {
             <BookOpen className="w-6 h-6 text-teal-600" />
             Emergency Plans
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             {plans.length} plans · {overdueCount} overdue for review
           </p>
         </div>
@@ -134,14 +134,14 @@ export default async function EmergencyPlansPage() {
                     <td className="px-4 py-3">
                       <Link href={`/emergency/plans/${plan.id}`} className="font-medium text-foreground hover:underline hover:text-teal-700">{plan.planName}</Link>
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-500">
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
                       {planTypeLabel[plan.planType] ?? plan.planType.replace(/_/g, ' ')}
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-500">v{plan.version}</td>
-                    <td className="px-4 py-3 text-xs text-slate-600">
+                    <td className="px-4 py-3 text-xs text-muted-foreground">v{plan.version}</td>
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
                       {formatDate(plan.effectiveDate)}
                     </td>
-                    <td className="px-4 py-3 text-xs text-slate-600">
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
                       {plan.lastReviewedDate ? formatDate(plan.lastReviewedDate) : '-'}
                     </td>
                     <td className="px-4 py-3">

@@ -33,7 +33,7 @@ const STATUS_COLORS: Record<string, string> = {
   COMPLETED: 'bg-green-50 text-green-700',
   REVIEWED: 'bg-teal-950/20 text-teal-700',
   APPROVED: 'bg-emerald-950/20 text-emerald-700',
-  ARCHIVED: 'bg-slate-100 text-slate-500',
+  ARCHIVED: 'bg-muted/30 text-muted-foreground',
 };
 
 export default async function RiskAssessmentsPage() {
@@ -66,7 +66,7 @@ export default async function RiskAssessmentsPage() {
             <ShieldAlert className="w-6 h-6 text-teal-600" />
             Risk Assessments
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             JC LD.04.04.01 · CMS 42 CFR 482.21 · AZ ADHS A.A.C. R9-10
           </p>
         </div>
@@ -121,7 +121,7 @@ export default async function RiskAssessmentsPage() {
 
       {/* Assessment list */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100">
+        <div className="px-6 py-4 border-b border-border/30">
           <h2 className="text-base font-semibold text-foreground">All Risk Assessments</h2>
         </div>
         {assessments.length === 0 ? (
@@ -146,7 +146,7 @@ export default async function RiskAssessmentsPage() {
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className="text-xs text-muted-foreground mt-0.5">
                     {TYPE_LABELS[a.assessmentType] ?? a.assessmentType}
                     {a.scope && ` · ${a.scope}`}
                     {a.conductedDate && ` · ${formatDate(a.conductedDate, 'MMM d, yyyy')}`}
@@ -159,7 +159,7 @@ export default async function RiskAssessmentsPage() {
                   )}
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
-                  <span className="text-xs text-slate-500">{a._count.items} risks</span>
+                  <span className="text-xs text-muted-foreground">{a._count.items} risks</span>
                   <span className={`text-xs font-medium px-2 py-1 rounded-full ${STATUS_COLORS[a.status] ?? ''}`}>
                     {a.status.replace('_', ' ')}
                   </span>

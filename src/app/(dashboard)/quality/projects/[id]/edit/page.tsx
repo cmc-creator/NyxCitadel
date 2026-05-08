@@ -90,7 +90,7 @@ export default function EditQapiProjectPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/quality/projects/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/quality/projects/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Project
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -108,38 +108,38 @@ export default function EditQapiProjectPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Project Overview</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Project Title *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Project Title *</label>
             <input name="title" required defaultValue={data.title ?? ''} className="form-input w-full" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
               <select name="category" required defaultValue={data.category ?? ''} className="form-input w-full">
                 <option value="">Select…</option>
                 {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Related QAPI Metric</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Related QAPI Metric</label>
               <select name="relatedMetricKey" defaultValue={data.relatedMetricKey ?? ''} className="form-input w-full">
                 <option value="">None</option>
                 {METRIC_KEYS.map(k => <option key={k} value={k}>{k.replace(/_/g, ' ')}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Owner / Champion *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Owner / Champion *</label>
               <input name="owner" required defaultValue={data.owner ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Team Members</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Team Members</label>
               <input name="team" defaultValue={data.team ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Start Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Start Date *</label>
               <input name="startDate" type="date" required defaultValue={data.startDate?.split('T')[0] ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Target Completion Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Target Completion Date *</label>
               <input name="targetDate" type="date" required defaultValue={data.targetDate?.split('T')[0] ?? ''} className="form-input w-full" />
             </div>
           </div>
@@ -149,29 +149,29 @@ export default function EditQapiProjectPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Problem Statement & Aim (PDSA - Plan)</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Problem Statement *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Problem Statement *</label>
             <textarea name="problemStatement" required rows={3} defaultValue={data.problemStatement ?? ''} className="form-input w-full resize-none" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Aim Statement * - SMART goal</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Aim Statement * - SMART goal</label>
             <textarea name="aim" required rows={2} defaultValue={data.aim ?? ''} className="form-input w-full resize-none" />
           </div>
           <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Baseline Value</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Baseline Value</label>
               <input name="baselineValue" type="number" step="0.01" defaultValue={data.baselineValue ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Target Value</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Target Value</label>
               <input name="targetValue" type="number" step="0.01" defaultValue={data.targetValue ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Unit</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit</label>
               <input name="targetUnit" defaultValue={data.targetUnit ?? ''} className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Measure - How will success be measured?</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Measure - How will success be measured?</label>
             <input name="measure" defaultValue={data.measure ?? ''} className="form-input w-full" />
           </div>
         </div>
@@ -180,7 +180,7 @@ export default function EditQapiProjectPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Planned Interventions (PDSA - Do)</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Interventions</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Interventions</label>
             <textarea name="interventions" rows={4} defaultValue={data.interventions ?? ''} className="form-input w-full resize-none" />
           </div>
         </div>
@@ -190,7 +190,7 @@ export default function EditQapiProjectPage() {
           <h2 className="text-sm font-semibold text-foreground">Regulatory Linkage</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body</label>
               <select name="regulatoryBody" defaultValue={data.regulatoryBody ?? ''} className="form-input w-full">
                 <option value="">Select…</option>
                 <option value="JOINT_COMMISSION">Joint Commission</option>
@@ -201,14 +201,14 @@ export default function EditQapiProjectPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Standard Reference</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Standard Reference</label>
               <input name="standardRef" defaultValue={data.standardRef ?? ''} className="form-input w-full" />
             </div>
           </div>
         </div>
 
         <div className="px-6 py-4 flex items-center justify-end gap-3">
-          <a href={`/quality/projects/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href={`/quality/projects/${id}`} className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

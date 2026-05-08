@@ -131,7 +131,7 @@ function statusBadge(s: ComplianceStatus) {
     case 'COMPLIANT':     return <span className="px-2 py-0.5 rounded-full text-xs bg-teal-900/40 text-teal-300 font-medium">Compliant</span>;
     case 'NON_COMPLIANT': return <span className="px-2 py-0.5 rounded-full text-xs bg-red-900/40 text-red-300 font-medium">Non-Compliant</span>;
     case 'NEEDS_REVIEW':  return <span className="px-2 py-0.5 rounded-full text-xs bg-amber-900/40 text-amber-300 font-medium">Needs Review</span>;
-    default:              return <span className="px-2 py-0.5 rounded-full text-xs bg-slate-800 text-slate-500 font-medium">Not Assessed</span>;
+    default:              return <span className="px-2 py-0.5 rounded-full text-xs bg-slate-800 text-muted-foreground font-medium">Not Assessed</span>;
   }
 }
 
@@ -204,7 +204,7 @@ export default function CopPage() {
     <div className="max-w-4xl space-y-6">
       {/* Header */}
       <div>
-        <Link href="/reporting" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-400 mb-3">
+        <Link href="/reporting" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-400 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Reporting Dashboard
         </Link>
         <div className="flex items-start justify-between flex-wrap gap-4">
@@ -270,7 +270,7 @@ export default function CopPage() {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-slate-400">Not Assessed</span>
-              <span className="font-bold text-slate-500">{summary.unassessed}</span>
+              <span className="font-bold text-muted-foreground">{summary.unassessed}</span>
             </div>
           </div>
         </div>
@@ -280,7 +280,7 @@ export default function CopPage() {
       <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-4">
           <h2 className="text-sm font-semibold text-foreground">Conditions of Participation</h2>
-          <p className="text-xs text-slate-500 mt-0.5">Click each condition to expand and document compliance status, evidence, and action items.</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Click each condition to expand and document compliance status, evidence, and action items.</p>
         </div>
         {CONDITIONS.map((cop) => {
           const entry   = entries[cop.id];
@@ -296,7 +296,7 @@ export default function CopPage() {
                 <span className="font-mono text-xs text-indigo-400 w-16 shrink-0">{cop.cfr}</span>
                 <span className="flex-1 text-sm font-medium text-foreground">{cop.label}</span>
                 {statusBadge(entry.status)}
-                {isOpen ? <ChevronUp className="w-4 h-4 text-slate-500 shrink-0" /> : <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />}
+                {isOpen ? <ChevronUp className="w-4 h-4 text-muted-foreground shrink-0" /> : <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />}
               </button>
 
               {/* Expanded detail */}
@@ -306,15 +306,15 @@ export default function CopPage() {
 
                   {/* Standards checklist */}
                   <div>
-                    <p className="text-xs font-medium text-slate-500 mb-2">Standards under this Condition:</p>
-                    <ul className="space-y-0.5 text-xs text-slate-500 list-disc list-inside">
+                    <p className="text-xs font-medium text-muted-foreground mb-2">Standards under this Condition:</p>
+                    <ul className="space-y-0.5 text-xs text-muted-foreground list-disc list-inside">
                       {cop.standards.map(s => <li key={s}>{s}</li>)}
                     </ul>
                   </div>
 
                   {/* Compliance status */}
                   <div>
-                    <label className="block text-xs font-medium text-slate-500 mb-1">Compliance Status</label>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1">Compliance Status</label>
                     <select
                       className="form-input w-full max-w-xs"
                       value={entry.status}
@@ -329,7 +329,7 @@ export default function CopPage() {
 
                   {/* Evidence */}
                   <div>
-                    <label className="block text-xs font-medium text-slate-500 mb-1">Evidence / Documentation</label>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1">Evidence / Documentation</label>
                     <textarea
                       rows={2}
                       className="form-input w-full"
@@ -343,7 +343,7 @@ export default function CopPage() {
                   {(entry.status === 'NON_COMPLIANT' || entry.status === 'NEEDS_REVIEW') && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-medium text-slate-500 mb-1">Action Required / Plan of Correction</label>
+                        <label className="block text-xs font-medium text-muted-foreground mb-1">Action Required / Plan of Correction</label>
                         <textarea
                           rows={2}
                           className="form-input w-full"
@@ -353,7 +353,7 @@ export default function CopPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-slate-500 mb-1">Target Completion Date</label>
+                        <label className="block text-xs font-medium text-muted-foreground mb-1">Target Completion Date</label>
                         <input
                           type="date"
                           className="form-input w-full"

@@ -113,7 +113,7 @@ export default function GuidePage() {
                     <Icon className="w-4 h-4 text-teal-400" />
                     <span className="text-sm font-medium text-slate-200">{label}</span>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-teal-400 transition-colors" />
+                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-teal-400 transition-colors" />
                 </Link>
               ))}
             </div>

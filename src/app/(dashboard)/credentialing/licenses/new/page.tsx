@@ -56,14 +56,14 @@ export default function NewProviderLicensePage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/credentialing/licenses" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/credentialing/licenses" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Licenses
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <BadgeCheck className="w-6 h-6 text-green-600" />
           Add Provider License
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Medical license, DEA, APRN, or other credential requiring primary source verification.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Medical license, DEA, APRN, or other credential requiring primary source verification.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -72,38 +72,38 @@ export default function NewProviderLicensePage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">License Details</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Provider ID *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Provider ID *</label>
             <input name="providerId" required defaultValue={prefillProviderId} className="form-input w-full font-mono text-sm" placeholder="Provider record ID" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">License Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">License Type *</label>
               <input name="licenseType" required className="form-input w-full" placeholder="Medical License, DEA, APRN, NPI…" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">License Number *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">License Number *</label>
               <input name="licenseNumber" required className="form-input w-full" />
             </div>
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">State *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">State *</label>
               <select name="state" required className="form-input w-full">
                 <option value="">State…</option>
                 {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Issue Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Issue Date</label>
               <input name="issuedDate" type="date" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Expiry Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Expiry Date *</label>
               <input name="expiryDate" type="date" required className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Status *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Status *</label>
             <select name="status" required defaultValue="ACTIVE" className="form-input w-full">
               {LICENSE_STATUSES.map(s => <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>)}
             </select>
@@ -118,11 +118,11 @@ export default function NewProviderLicensePage() {
           </label>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Verified Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Verified Date</label>
               <input name="verifiedDate" type="date" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Verified By</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Verified By</label>
               <input name="verifiedBy" className="form-input w-full" />
             </div>
           </div>

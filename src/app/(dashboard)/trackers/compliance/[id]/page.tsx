@@ -14,8 +14,8 @@ const STATUS_OPTIONS = [
   { value: 'COMPLIANT', label: 'Compliant', color: 'bg-emerald-100 text-emerald-700' },
   { value: 'NON_COMPLIANT', label: 'Non-Compliant', color: 'bg-red-100 text-red-700' },
   { value: 'PENDING_REVIEW', label: 'Pending Review', color: 'bg-yellow-100 text-yellow-700' },
-  { value: 'WAIVED', label: 'Waived', color: 'bg-slate-100 text-slate-500' },
-  { value: 'NA', label: 'N/A', color: 'bg-slate-100 text-muted-foreground/70' },
+  { value: 'WAIVED', label: 'Waived', color: 'bg-muted/30 text-muted-foreground' },
+  { value: 'NA', label: 'N/A', color: 'bg-muted/30 text-muted-foreground/70' },
 ];
 
 export default async function ComplianceItemDetailPage({ params }: { params: { id: string } }) {
@@ -31,11 +31,11 @@ export default async function ComplianceItemDetailPage({ params }: { params: { i
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/compliance" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/trackers/compliance" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Compliance Requirements
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/compliance/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/compliance/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -53,7 +53,7 @@ export default async function ComplianceItemDetailPage({ params }: { params: { i
               </span>
             </div>
             <h1 className="text-xl font-bold text-foreground">{item.title}</h1>
-            <p className="text-xs text-slate-500 mt-1">{item.category.replace(/_/g, ' ')} &middot; {item.frequency.replace(/_/g, ' ')}</p>
+            <p className="text-xs text-muted-foreground mt-1">{item.category.replace(/_/g, ' ')} &middot; {item.frequency.replace(/_/g, ' ')}</p>
           </div>
           <StatusUpdater apiPath={`/api/compliance/${item.id}`} currentStatus={item.status} options={STATUS_OPTIONS} />
         </div>
@@ -117,7 +117,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div className="flex justify-between gap-2">
-      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
+      <dt className="text-xs text-muted-foreground shrink-0">{label}</dt>
       <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );

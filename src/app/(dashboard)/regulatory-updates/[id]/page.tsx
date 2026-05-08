@@ -14,7 +14,7 @@ const IMPACT_STYLES: Record<string, { badge: string; bg: string; icon: React.Ele
   CRITICAL:      { badge: 'bg-red-500/15 text-red-400 border border-red-500/30',          bg: 'bg-red-950/30 border-red-700/40',       icon: AlertTriangle,  label: 'Critical - Immediate Action Required' },
   HIGH:          { badge: 'bg-orange-500/15 text-orange-400 border border-orange-500/30',  bg: 'bg-orange-950/30 border-orange-700/40', icon: ArrowUpCircle,  label: 'High Priority - Review Within 7 Days' },
   MEDIUM:        { badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',     bg: 'bg-amber-950/20 border-amber-700/40',   icon: Info,           label: 'Medium - Review Within 30 Days' },
-  INFORMATIONAL: { badge: 'bg-slate-500/15 text-muted-foreground/70 border border-slate-500/20',     bg: 'bg-slate-800/30 border-slate-700/30',   icon: CheckCircle2,   label: 'Informational - Awareness Only' },
+  INFORMATIONAL: { badge: 'bg-slate-500/15 text-muted-foreground/70 border border-slate-500/20',     bg: 'bg-slate-800/30 border-border/30',   icon: CheckCircle2,   label: 'Informational - Awareness Only' },
 };
 
 export default async function RegulatoryUpdateDetailPage({ params }: { params: { id: string } }) {

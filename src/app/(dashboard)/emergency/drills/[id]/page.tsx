@@ -26,7 +26,7 @@ const STATUS_STYLES: Record<string, string> = {
   SCHEDULED:   'bg-blue-100 text-blue-700',
   IN_PROGRESS: 'bg-red-100 text-red-700 animate-pulse',
   COMPLETED:   'bg-emerald-100 text-emerald-700',
-  CANCELLED:   'bg-slate-100 text-slate-500',
+  CANCELLED:   'bg-muted/30 text-muted-foreground',
   RESCHEDULED: 'bg-orange-100 text-orange-700',
 };
 
@@ -101,7 +101,7 @@ export default async function DrillDetailPage({
       {/* Back */}
       <Link
         href="/emergency/drills"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 transition-colors"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 transition-colors"
       >
         <ChevronLeft className="w-4 h-4" /> Back to Drills
       </Link>
@@ -113,14 +113,14 @@ export default async function DrillDetailPage({
             <Siren className="w-6 h-6 text-red-600" />
             {drill.drillName}
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">{drill.drillType.replace(/_/g, ' ')}</p>
+          <p className="text-sm text-muted-foreground mt-0.5">{drill.drillType.replace(/_/g, ' ')}</p>
         </div>
         <div className="flex items-center gap-2">
-          <Link href={`/emergency/drills/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/emergency/drills/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <span
-            className={`inline-block text-xs font-medium px-3 py-1 rounded-full ${STATUS_STYLES[drill.status] ?? 'bg-slate-100 text-slate-500'}`}
+            className={`inline-block text-xs font-medium px-3 py-1 rounded-full ${STATUS_STYLES[drill.status] ?? 'bg-muted/30 text-muted-foreground'}`}
           >
             {drill.status.replace('_', ' ')}
           </span>
@@ -177,13 +177,13 @@ export default async function DrillDetailPage({
         <div className="grid md:grid-cols-2 gap-4">
           {drill.scenario && (
             <div className="bg-card border border-border rounded-xl p-4">
-              <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Scenario</h3>
+              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Scenario</h3>
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{drill.scenario}</p>
             </div>
           )}
           {drill.objectives && (
             <div className="bg-card border border-border rounded-xl p-4">
-              <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Objectives</h3>
+              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Objectives</h3>
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{drill.objectives}</p>
             </div>
           )}
@@ -264,7 +264,7 @@ function InfoCard({
     <div className={`rounded-xl border p-3 ${highlight ? 'bg-orange-950/20 border-orange-200' : 'bg-card border-border'}`}>
       <div className="flex items-center gap-1.5 mb-1">{icon}</div>
       <p className={`text-sm font-semibold ${highlight ? 'text-orange-700' : 'text-foreground'}`}>{value}</p>
-      <p className="text-xs text-slate-500">{label}</p>
+      <p className="text-xs text-muted-foreground">{label}</p>
     </div>
   );
 }

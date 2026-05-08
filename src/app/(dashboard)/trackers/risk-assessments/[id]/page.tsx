@@ -15,7 +15,7 @@ const STATUS_OPTIONS = [
   { value: 'COMPLETED', label: 'Completed', color: 'bg-blue-100 text-blue-700' },
   { value: 'REVIEWED', label: 'Reviewed', color: 'bg-purple-100 text-purple-700' },
   { value: 'APPROVED', label: 'Approved', color: 'bg-green-100 text-green-700' },
-  { value: 'ARCHIVED', label: 'Archived', color: 'bg-slate-100 text-muted-foreground/70' },
+  { value: 'ARCHIVED', label: 'Archived', color: 'bg-muted/30 text-muted-foreground/70' },
 ];
 
 const RISK_LEVEL_COLORS: Record<string, string> = {
@@ -36,7 +36,7 @@ const ITEM_STATUS_COLOR: Record<string, string> = {
   OPEN: 'bg-blue-100 text-blue-700',
   IN_PROGRESS: 'bg-yellow-100 text-yellow-700',
   MITIGATED: 'bg-teal-100 text-teal-700',
-  ACCEPTED: 'bg-slate-100 text-slate-600',
+  ACCEPTED: 'bg-muted/30 text-muted-foreground',
   CLOSED: 'bg-green-100 text-green-700',
 };
 
@@ -58,11 +58,11 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/risk-assessments" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/trackers/risk-assessments" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Risk Assessments
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/risk-assessments/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/risk-assessments/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/risk-assessments/${params.id}`} redirectPath="/trackers/risk-assessments" label="risk assessment" />
@@ -80,10 +80,10 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                   {ra.overallRiskLevel} RISK
                 </span>
               )}
-              <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2.5 py-0.5">{ra.assessmentType.replace(/_/g, ' ')}</span>
+              <span className="text-xs bg-muted/30 text-muted-foreground rounded-full px-2.5 py-0.5">{ra.assessmentType.replace(/_/g, ' ')}</span>
             </div>
             <h1 className="text-xl font-bold text-foreground">{ra.title}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Conducted: <strong>{formatDate(ra.conductedDate)}</strong>
               {ra.conductedBy && <> &middot; by <strong>{ra.conductedBy}</strong></>}
             </p>
@@ -112,7 +112,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
               <div className="overflow-x-auto -mx-1">
                 <table className="w-full text-xs min-w-[640px]">
                   <thead>
-                    <tr className="text-left text-muted-foreground/70 border-b border-slate-100">
+                    <tr className="text-left text-muted-foreground/70 border-b border-border/30">
                       <th className="pb-2 pr-2">Risk</th>
                       <th className="pb-2 pr-2">Category</th>
                       <th className="pb-2 pr-2 text-center">L</th>
@@ -125,12 +125,12 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                   </thead>
                   <tbody className="divide-y divide-slate-50">
                     {ra.items.map((item) => (
-                      <tr key={item.id} className="text-foreground/80 hover:bg-slate-50">
+                      <tr key={item.id} className="text-foreground/80 hover:bg-muted/20">
                         <td className="py-2 pr-2 max-w-[200px]">
                           <p className="truncate" title={item.riskDescription}>{item.riskDescription}</p>
                           {item.currentControls && <p className="text-xs text-muted-foreground/70 truncate">Controls: {item.currentControls}</p>}
                         </td>
-                        <td className="py-2 pr-2 text-slate-500">{item.category ? item.category.replace(/_/g, ' ') : '—'}</td>
+                        <td className="py-2 pr-2 text-muted-foreground">{item.category ? item.category.replace(/_/g, ' ') : '—'}</td>
                         <td className="py-2 pr-2 text-center font-medium">{item.likelihood}</td>
                         <td className="py-2 pr-2 text-center font-medium">{item.severity}</td>
                         <td className="py-2 pr-2 text-center">
@@ -141,7 +141,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                             {item.riskLevel}
                           </span>
                         </td>
-                        <td className="py-2 pr-2 text-slate-500">{item.assignedTo ?? '—'}</td>
+                        <td className="py-2 pr-2 text-muted-foreground">{item.assignedTo ?? '—'}</td>
                         <td className="py-2">
                           <span className={`px-1.5 py-0.5 rounded text-xs ${ITEM_STATUS_COLOR[item.status]}`}>{item.status}</span>
                         </td>
@@ -229,7 +229,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div className="flex justify-between gap-2">
-      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
+      <dt className="text-xs text-muted-foreground shrink-0">{label}</dt>
       <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );

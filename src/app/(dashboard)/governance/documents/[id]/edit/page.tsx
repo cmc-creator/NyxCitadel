@@ -60,7 +60,7 @@ export default function EditGovernanceDocumentPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/governance/documents/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/governance/documents/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -76,30 +76,30 @@ export default function EditGovernanceDocumentPage() {
           <h2 className="text-sm font-semibold text-foreground">Document Info</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Document Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Document Type *</label>
               <select name="docType" required className="form-input w-full" defaultValue={data.docType ?? ''}>
                 <option value="">Select type…</option>
                 {DOC_TYPES.map(t => <option key={t} value={t}>{formatLabel(t)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Status *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status *</label>
               <select name="status" required className="form-input w-full" defaultValue={data.status ?? 'ACTIVE'}>
                 {DOC_STATUSES.map(s => <option key={s} value={s}>{formatLabel(s)}</option>)}
               </select>
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Title *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Title *</label>
             <input name="title" type="text" required className="form-input w-full" defaultValue={data.title ?? ''} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Version</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Version</label>
               <input name="version" type="text" className="form-input w-full" defaultValue={data.version ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Approved By</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Approved By</label>
               <input name="approvedBy" type="text" className="form-input w-full" defaultValue={data.approvedBy ?? ''} />
             </div>
           </div>
@@ -109,11 +109,11 @@ export default function EditGovernanceDocumentPage() {
           <h2 className="text-sm font-semibold text-foreground">Dates</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Effective Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Effective Date *</label>
               <input name="effectiveDate" type="date" required className="form-input w-full" defaultValue={data.effectiveDate?.split('T')[0] ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Review Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Review Date</label>
               <input name="reviewDate" type="date" className="form-input w-full" defaultValue={data.reviewDate?.split('T')[0] ?? ''} />
             </div>
           </div>
@@ -121,17 +121,17 @@ export default function EditGovernanceDocumentPage() {
 
         <div className="px-6 py-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Document URL</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Document URL</label>
             <input name="documentUrl" type="url" className="form-input w-full" defaultValue={data.documentUrl ?? ''} />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} className="form-input w-full" defaultValue={data.notes ?? ''} />
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/governance/documents/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <a href={`/governance/documents/${id}`} className="px-4 py-2 text-sm text-muted-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

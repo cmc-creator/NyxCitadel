@@ -68,17 +68,17 @@ export default async function AdvanceDirectivesPage() {
           </thead>
           <tbody className="divide-y divide-white/5">
             {records.length === 0 ? (
-              <tr><td colSpan={7} className="text-center py-8 text-slate-500 text-sm">No advance directive records on file.</td></tr>
+              <tr><td colSpan={7} className="text-center py-8 text-muted-foreground text-sm">No advance directive records on file.</td></tr>
             ) : records.map(p => (
               <tr key={p.id} className={`hover:bg-white/5 transition-colors ${!p.informationProvided ? 'bg-red-500/5' : ''}`}>
                 <td className="px-4 py-3 font-bold text-white">{p.patientInitials}</td>
                 <td className="px-4 py-3 text-muted-foreground/70 text-xs">{p.admitDate.toLocaleDateString()}</td>
                 <td className="px-4 py-3">
-                  {p.adExists ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <span className="text-xs text-slate-500">No</span>}
+                  {p.adExists ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <span className="text-xs text-muted-foreground">No</span>}
                 </td>
                 <td className="px-4 py-3 text-slate-300 text-xs">{p.adType ?? '—'}</td>
                 <td className="px-4 py-3">
-                  {p.adOnFile ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <span className="text-xs text-slate-500">—</span>}
+                  {p.adOnFile ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <span className="text-xs text-muted-foreground">—</span>}
                 </td>
                 <td className="px-4 py-3">
                   {p.informationProvided
@@ -86,7 +86,7 @@ export default async function AdvanceDirectivesPage() {
                     : <AlertTriangle className="w-4 h-4 text-red-400" />}
                 </td>
                 <td className="px-4 py-3">
-                  {p.patientDeclined ? <span className="text-xs text-amber-400">Declined</span> : <span className="text-xs text-slate-500">—</span>}
+                  {p.patientDeclined ? <span className="text-xs text-amber-400">Declined</span> : <span className="text-xs text-muted-foreground">—</span>}
                 </td>
               </tr>
             ))}

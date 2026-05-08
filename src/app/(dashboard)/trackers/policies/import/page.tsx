@@ -264,27 +264,27 @@ export default function ImportPoliciesPage() {
   return (
     <div className="max-w-4xl space-y-6">
       <div>
-        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Policy Tracker
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Upload className="w-6 h-6 text-teal-600" />
           Bulk Import Policies
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Upload a CSV file to import multiple policies at once. Download the template below to get started.
         </p>
       </div>
 
       {/* Template Download */}
-      <div className="bg-blue-950/20 border border-blue-200 rounded-xl px-5 py-4 flex items-start gap-4">
-        <FileText className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+      <div className="bg-blue-950/20 border border-blue-800/40 rounded-xl px-5 py-4 flex items-start gap-4">
+        <FileText className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
         <div className="flex-1">
-          <p className="text-sm font-semibold text-blue-900 mb-1">Download the import template</p>
-          <p className="text-xs text-blue-700 mb-2">
-            Required columns: <code className="bg-blue-100 px-1 rounded">title</code>, <code className="bg-blue-100 px-1 rounded">category</code>, <code className="bg-blue-100 px-1 rounded">effective_date</code>, <code className="bg-blue-100 px-1 rounded">next_review_date</code>
+          <p className="text-sm font-semibold text-blue-300 mb-1">Download the import template</p>
+          <p className="text-xs text-blue-400/80 mb-2">
+            Required columns: <code className="bg-blue-950/40 text-blue-300 px-1 rounded">title</code>, <code className="bg-blue-950/40 text-blue-300 px-1 rounded">category</code>, <code className="bg-blue-950/40 text-blue-300 px-1 rounded">effective_date</code>, <code className="bg-blue-950/40 text-blue-300 px-1 rounded">next_review_date</code>
             <br />
-            Optional: <code className="bg-blue-100 px-1 rounded">policy_number</code>, <code className="bg-blue-100 px-1 rounded">version</code>, <code className="bg-blue-100 px-1 rounded">owner</code>, <code className="bg-blue-100 px-1 rounded">standard_ref</code>, <code className="bg-blue-100 px-1 rounded">review_frequency</code>, <code className="bg-blue-100 px-1 rounded">status</code>, <code className="bg-blue-100 px-1 rounded">description</code>
+            Optional: <code className="bg-blue-950/40 text-blue-300 px-1 rounded">policy_number</code>, <code className="bg-blue-950/40 text-blue-300 px-1 rounded">version</code>, <code className="bg-blue-950/40 text-blue-300 px-1 rounded">owner</code>, <code className="bg-blue-950/40 text-blue-300 px-1 rounded">standard_ref</code>, <code className="bg-blue-950/40 text-blue-300 px-1 rounded">review_frequency</code>, <code className="bg-blue-950/40 text-blue-300 px-1 rounded">status</code>, <code className="bg-blue-950/40 text-blue-300 px-1 rounded">description</code>
             <br />
             Dates must be in <strong>YYYY-MM-DD</strong> or <strong>MM/DD/YYYY</strong> format.
             Policy numbers are auto-generated if omitted.
@@ -306,11 +306,11 @@ export default function ImportPoliciesPage() {
             <input ref={fileRef} type="file" accept=".csv,text/csv" className="hidden" onChange={handleFile} />
           </label>
         ) : (
-          <div className="flex items-center gap-3 bg-slate-50 border border-border rounded-lg px-4 py-3">
+          <div className="flex items-center gap-3 bg-muted/20 border border-border rounded-lg px-4 py-3">
             <FileText className="w-5 h-5 text-teal-600 shrink-0" />
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">{fileName}</p>
-              <p className="text-xs text-slate-500">{rows.length} rows parsed &mdash; {validRows.length} valid, {invalidRows.length} with errors</p>
+              <p className="text-xs text-muted-foreground">{rows.length} rows parsed &mdash; {validRows.length} valid, {invalidRows.length} with errors</p>
             </div>
             <button onClick={clearFile} className="p-1 text-muted-foreground/70 hover:text-red-500">
               <X className="w-4 h-4" />
@@ -339,7 +339,7 @@ export default function ImportPoliciesPage() {
       {/* Preview Table */}
       {validRows.length > 0 && (
         <div className="bg-card rounded-xl border border-border overflow-hidden">
-          <div className="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+          <div className="px-5 py-3 border-b border-border/30 flex items-center justify-between">
             <span className="text-sm font-semibold text-foreground">{validRows.length} policies ready to import</span>
             <button
               onClick={handleImport}
@@ -351,27 +351,27 @@ export default function ImportPoliciesPage() {
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-xs min-w-[700px]">
-              <thead className="bg-slate-50 border-b border-slate-100">
+              <thead className="bg-muted/20 border-b border-border/30">
                 <tr>
-                  <th className="text-left px-4 py-2 font-semibold text-slate-500">LINE</th>
-                  <th className="text-left px-4 py-2 font-semibold text-slate-500">POLICY #</th>
-                  <th className="text-left px-4 py-2 font-semibold text-slate-500">TITLE</th>
-                  <th className="text-left px-4 py-2 font-semibold text-slate-500">CATEGORY</th>
-                  <th className="text-left px-4 py-2 font-semibold text-slate-500">EFFECTIVE</th>
-                  <th className="text-left px-4 py-2 font-semibold text-slate-500">NEXT REVIEW</th>
-                  <th className="text-left px-4 py-2 font-semibold text-slate-500">STATUS</th>
+                  <th className="text-left px-4 py-2 font-semibold text-muted-foreground">LINE</th>
+                  <th className="text-left px-4 py-2 font-semibold text-muted-foreground">POLICY #</th>
+                  <th className="text-left px-4 py-2 font-semibold text-muted-foreground">TITLE</th>
+                  <th className="text-left px-4 py-2 font-semibold text-muted-foreground">CATEGORY</th>
+                  <th className="text-left px-4 py-2 font-semibold text-muted-foreground">EFFECTIVE</th>
+                  <th className="text-left px-4 py-2 font-semibold text-muted-foreground">NEXT REVIEW</th>
+                  <th className="text-left px-4 py-2 font-semibold text-muted-foreground">STATUS</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
                 {validRows.map(r => (
-                  <tr key={r._line} className="hover:bg-slate-50">
+                  <tr key={r._line} className="hover:bg-muted/20">
                     <td className="px-4 py-2 text-muted-foreground/70">{r._line}</td>
-                    <td className="px-4 py-2 font-mono text-slate-500">{r.policyNumber ?? <span className="text-slate-300">auto</span>}</td>
+                    <td className="px-4 py-2 font-mono text-muted-foreground">{r.policyNumber ?? <span className="text-slate-300">auto</span>}</td>
                     <td className="px-4 py-2 text-foreground/80 max-w-[200px] truncate">{r.title}</td>
-                    <td className="px-4 py-2 text-slate-500">{r.category.replace(/_/g, ' ')}</td>
-                    <td className="px-4 py-2 text-slate-500">{r.effectiveDate}</td>
-                    <td className="px-4 py-2 text-slate-500">{r.nextReviewDate}</td>
-                    <td className="px-4 py-2 text-slate-500">{r.status}</td>
+                    <td className="px-4 py-2 text-muted-foreground">{r.category.replace(/_/g, ' ')}</td>
+                    <td className="px-4 py-2 text-muted-foreground">{r.effectiveDate}</td>
+                    <td className="px-4 py-2 text-muted-foreground">{r.nextReviewDate}</td>
+                    <td className="px-4 py-2 text-muted-foreground">{r.status}</td>
                   </tr>
                 ))}
               </tbody>

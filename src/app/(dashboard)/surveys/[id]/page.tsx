@@ -18,7 +18,7 @@ const STATUS_COLOR: Record<string, string> = {
   COMPLETED:          'bg-green-100 text-green-700',
   RESPONSE_DUE:       'bg-orange-100 text-orange-700',
   RESPONSE_SUBMITTED: 'bg-purple-100 text-purple-700',
-  CLOSED:             'bg-slate-100 text-slate-500',
+  CLOSED:             'bg-muted/30 text-muted-foreground',
 };
 
 const SURVEY_TYPE_LABELS: Record<string, string> = {
@@ -68,19 +68,19 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
       {/* Header */}
       <div>
         <div className="flex items-center justify-between gap-2 mb-3">
-        <Link href="/surveys" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600">
+        <Link href="/surveys" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Surveys &amp; Inspections
         </Link>
-        <Link href={`/surveys/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+        <Link href={`/surveys/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
           <Pencil className="w-3.5 h-3.5" /> Edit
         </Link>
         <DeleteButton apiPath={`/api/surveys/${params.id}`} redirectPath="/surveys" label="survey record" />
         </div>
         <div className="flex flex-wrap items-center gap-2 mb-1">
-          <span className={`text-xs font-medium px-2 py-0.5 rounded ${STATUS_COLOR[survey.status] ?? 'bg-slate-100'}`}>
+          <span className={`text-xs font-medium px-2 py-0.5 rounded ${STATUS_COLOR[survey.status] ?? 'bg-muted/30'}`}>
             {survey.status.replace(/_/g, ' ')}
           </span>
-          <span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
+          <span className="text-xs bg-muted/30 text-muted-foreground px-2 py-0.5 rounded">
             {survey.regulatoryBody.replace(/_/g, ' ')}
           </span>
           {survey.immediateJeopardy && (
@@ -95,7 +95,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
           {SURVEY_TYPE_LABELS[survey.surveyType] ?? survey.surveyType.replace(/_/g, ' ')}
         </h1>
         {survey.conductedDate && (
-          <p className="text-sm text-slate-500 mt-0.5">Conducted {formatDate(survey.conductedDate)}{survey.surveyorNames ? ` · ${survey.surveyorNames}` : ''}</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Conducted {formatDate(survey.conductedDate)}{survey.surveyorNames ? ` · ${survey.surveyorNames}` : ''}</p>
         )}
       </div>
 
@@ -121,8 +121,8 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
 
       {/* Survey Details */}
       <div className="bg-card rounded-xl border border-border">
-        <div className="px-5 py-4 border-b border-slate-100">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Survey Details</h2>
+        <div className="px-5 py-4 border-b border-border/30">
+          <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Survey Details</h2>
         </div>
         <dl className="px-5 py-4 grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
           <div><dt className="text-xs text-muted-foreground/70">Survey Type</dt><dd className="text-foreground font-medium">{SURVEY_TYPE_LABELS[survey.surveyType] ?? survey.surveyType}</dd></div>
@@ -152,14 +152,14 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
       {/* Linked CAP */}
       {survey.cap && (
         <div className="bg-card rounded-xl border border-border px-5 py-4">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Linked Corrective Action Plan</h2>
+          <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Linked Corrective Action Plan</h2>
           <Link href={`/trackers/caps/${survey.cap.id}`}
             className="flex items-center justify-between rounded-lg border border-border px-4 py-3 hover:border-purple-300 transition-colors group">
             <div>
-              <span className="text-xs font-mono text-slate-500 mr-2">{survey.cap.capNumber}</span>
+              <span className="text-xs font-mono text-muted-foreground mr-2">{survey.cap.capNumber}</span>
               <span className="text-sm font-medium text-foreground group-hover:text-purple-700">{survey.cap.title}</span>
             </div>
-            <span className={`text-xs px-2 py-0.5 rounded font-medium ${ ({OPEN:'bg-blue-100 text-blue-700',IN_PROGRESS:'bg-yellow-100 text-yellow-700',COMPLETED:'bg-green-100 text-green-700',VERIFIED:'bg-teal-100 text-teal-700',OVERDUE:'bg-red-100 text-red-700',EXTENDED:'bg-purple-100 text-purple-700'} as Record<string,string>)[survey.cap.status] ?? 'bg-slate-100 text-slate-600'}`}>
+            <span className={`text-xs px-2 py-0.5 rounded font-medium ${ ({OPEN:'bg-blue-100 text-blue-700',IN_PROGRESS:'bg-yellow-100 text-yellow-700',COMPLETED:'bg-green-100 text-green-700',VERIFIED:'bg-teal-100 text-teal-700',OVERDUE:'bg-red-100 text-red-700',EXTENDED:'bg-purple-100 text-purple-700'} as Record<string,string>)[survey.cap.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
               {survey.cap.status.replace(/_/g, ' ')}
             </span>
           </Link>
@@ -169,18 +169,18 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
       {/* Plans of Correction */}
       {survey.plansOfCorrection.length > 0 && (
         <div className="bg-card rounded-xl border border-border">
-          <div className="px-5 py-4 border-b border-slate-100">
-            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Plans of Correction</h2>
+          <div className="px-5 py-4 border-b border-border/30">
+            <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Plans of Correction</h2>
           </div>
           <div className="divide-y divide-border/30">
             {survey.plansOfCorrection.map(poc => (
               <Link key={poc.id} href={`/quality/poc/${poc.id}`}
-                className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition-colors group">
+                className="flex items-center justify-between px-5 py-3 hover:bg-muted/20 transition-colors group">
                 <div className="text-sm">
                   <span className="text-foreground/80 group-hover:text-purple-700">Plan of Correction</span>
                   <span className="ml-2 text-xs text-muted-foreground/70">created {formatDate(poc.createdAt)}</span>
                 </div>
-                <div className="flex items-center gap-3 text-xs text-slate-500">
+                <div className="flex items-center gap-3 text-xs text-muted-foreground">
                   {poc.findings.length > 0 && (
                     <span>{poc.findings.filter(f => f.status === 'OPEN').length} open / {poc.findings.length} total findings</span>
                   )}
@@ -195,7 +195,7 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
       {/* Notes */}
       {survey.notes && (
         <div className="bg-card rounded-xl border border-border px-5 py-4">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Notes</h2>
+          <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Notes</h2>
           <p className="text-sm text-foreground/80 whitespace-pre-wrap">{survey.notes}</p>
         </div>
       )}

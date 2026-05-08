@@ -52,7 +52,7 @@ export default function NewGovernanceDocumentPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/governance/documents" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/governance/documents" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Governance Documents
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -68,30 +68,30 @@ export default function NewGovernanceDocumentPage() {
           <h2 className="text-sm font-semibold text-foreground">Document Info</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Document Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Document Type *</label>
               <select name="docType" required className="form-input w-full">
                 <option value="">Select type…</option>
                 {DOC_TYPES.map(t => <option key={t} value={t}>{formatLabel(t)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Status *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status *</label>
               <select name="status" required defaultValue="ACTIVE" className="form-input w-full">
                 {DOC_STATUSES.map(s => <option key={s} value={s}>{formatLabel(s)}</option>)}
               </select>
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Title *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Title *</label>
             <input name="title" type="text" required className="form-input w-full" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Version</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Version</label>
               <input name="version" type="text" className="form-input w-full" placeholder="e.g. 3.1" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Approved By</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Approved By</label>
               <input name="approvedBy" type="text" className="form-input w-full" placeholder="Board / Committee name" />
             </div>
           </div>
@@ -101,11 +101,11 @@ export default function NewGovernanceDocumentPage() {
           <h2 className="text-sm font-semibold text-foreground">Dates</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Effective Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Effective Date *</label>
               <input name="effectiveDate" type="date" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Review Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Review Date</label>
               <input name="reviewDate" type="date" className="form-input w-full" />
             </div>
           </div>
@@ -113,11 +113,11 @@ export default function NewGovernanceDocumentPage() {
 
         <div className="px-6 py-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Document URL</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Document URL</label>
             <input name="documentUrl" type="url" className="form-input w-full" placeholder="https://…" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} className="form-input w-full" />
           </div>
         </div>

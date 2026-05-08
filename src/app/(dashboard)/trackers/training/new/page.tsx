@@ -93,14 +93,14 @@ export default function NewTrainingPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/training" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/trackers/training" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Training Tracker
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <GraduationCap className="w-6 h-6 text-teal-600" />
           Log Training Record
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Document staff training completions, competency assessments, and certifications.
         </p>
       </div>
@@ -116,19 +116,19 @@ export default function NewTrainingPage() {
           <h2 className="text-sm font-semibold text-foreground">Staff Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-slate-600 mb-1">Full Name *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Full Name *</label>
               <input name="staffName" required className="form-input w-full" placeholder="First and last name" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Employee ID</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Employee ID</label>
               <input name="staffId" className="form-input w-full" placeholder="EMP-12345" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Job Title</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Job Title</label>
               <input name="jobTitle" className="form-input w-full" placeholder="RN, MHT, Pharmacist…" />
             </div>
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-slate-600 mb-1">Department</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Department</label>
               <input name="department" className="form-input w-full" placeholder="Nursing, Pharmacy, Behavioral Health…" />
             </div>
           </div>
@@ -138,12 +138,12 @@ export default function NewTrainingPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Training Details</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Training Name *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Training Name *</label>
             <input name="trainingName" required className="form-input w-full" placeholder="e.g., CPI Nonviolent Crisis Intervention - Annual Recertification" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
               <select name="category" required className="form-input w-full">
                 <option value="">Select category…</option>
                 {CATEGORIES.map(([v, l]) => (
@@ -152,7 +152,7 @@ export default function NewTrainingPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Status</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status</label>
               <select name="status" defaultValue="COMPLETED" className="form-input w-full">
                 {STATUSES.map(([v, l]) => (
                   <option key={v} value={v}>{l}</option>
@@ -160,16 +160,16 @@ export default function NewTrainingPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Completed Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Completed Date</label>
               <input type="date" name="completedDate" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Expiry / Renewal Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Expiry / Renewal Date</label>
               <input type="date" name="expiryDate" className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Training Provider / Vendor</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Training Provider / Vendor</label>
             <input name="provider" className="form-input w-full" placeholder="e.g., Crisis Prevention Institute (CPI), internal" />
           </div>
         </div>
@@ -179,11 +179,11 @@ export default function NewTrainingPage() {
           <h2 className="text-sm font-semibold text-foreground">Assessment Score <span className="font-normal text-muted-foreground/70">(optional)</span></h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Score Achieved (%)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Score Achieved (%)</label>
               <input type="number" name="score" min="0" max="100" step="0.1" className="form-input w-full" placeholder="e.g., 92" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Passing Score (%)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Passing Score (%)</label>
               <input type="number" name="passingScore" min="0" max="100" step="0.1" className="form-input w-full" placeholder="e.g., 80" />
             </div>
           </div>
@@ -193,7 +193,7 @@ export default function NewTrainingPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Compliance Flags</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body</label>
             <select name="regulatoryBody" className="form-input w-full">
               {REGULATORY_BODIES.map(([v, l]) => (
                 <option key={v} value={v}>{l}</option>
@@ -205,7 +205,7 @@ export default function NewTrainingPage() {
             <label htmlFor="isRequired" className="text-sm text-foreground/80">This is a required / mandatory training</label>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} className="form-input w-full resize-none" placeholder="Additional notes or observations…" />
           </div>
         </div>

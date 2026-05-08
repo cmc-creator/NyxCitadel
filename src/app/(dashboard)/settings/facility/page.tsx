@@ -33,7 +33,7 @@ const TIMEZONES = [
 function Field({ label, note, children }: { label: string; note?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-xs font-medium text-slate-500 mb-1">
+      <label className="block text-xs font-medium text-muted-foreground mb-1">
         {label}{note && <span className="font-normal text-muted-foreground/70 ml-1">{note}</span>}
       </label>
       {children}
@@ -139,7 +139,7 @@ export default function FacilitySettingsPage() {
             <Building2 className="w-6 h-6 text-teal-600" />
             Facility Configuration
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             White-label branding, facility details, and regulatory identifiers.
             Changes apply platform-wide for this facility.
           </p>
@@ -273,7 +273,7 @@ export default function FacilitySettingsPage() {
           <div className="flex items-center gap-10">
             {(['primaryColor', 'secondaryColor'] as const).map(key => (
               <div key={key}>
-                <label className="block text-xs font-medium text-slate-500 mb-2">
+                <label className="block text-xs font-medium text-muted-foreground mb-2">
                   {key === 'primaryColor' ? 'Primary' : 'Secondary'} Color
                 </label>
                 <div className="flex items-center gap-3">

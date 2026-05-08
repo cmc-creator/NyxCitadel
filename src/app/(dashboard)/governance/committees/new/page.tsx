@@ -57,14 +57,14 @@ export default function NewCommitteeMeetingPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/governance/committees" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/governance/committees" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Committee Meetings
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Users className="w-6 h-6 text-teal-600" />
           Log Committee Meeting
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Enter one item per line for attendees, absentees, and agenda items.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Enter one item per line for attendees, absentees, and agenda items.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -74,19 +74,19 @@ export default function NewCommitteeMeetingPage() {
           <h2 className="text-sm font-semibold text-foreground">Meeting Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Committee *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Committee *</label>
               <select name="committeeType" required className="form-input w-full">
                 <option value="">Select committee…</option>
                 {COMMITTEE_TYPES.map(t => <option key={t} value={t}>{formatCommitteeType(t)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Meeting Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Meeting Date *</label>
               <input name="meetingDate" type="date" required className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Chair *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Chair *</label>
             <input name="chair" type="text" required className="form-input w-full" />
           </div>
           <label className="flex items-center gap-2 text-sm text-foreground/80 cursor-pointer">
@@ -99,23 +99,23 @@ export default function NewCommitteeMeetingPage() {
           <h2 className="text-sm font-semibold text-foreground">Attendance</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Attendees (one per line)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Attendees (one per line)</label>
               <textarea name="attendees" rows={4} className="form-input w-full" placeholder="Jane Smith, MD&#10;Bob Jones, RN&#10;…" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Absentees (one per line)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Absentees (one per line)</label>
               <textarea name="absentees" rows={4} className="form-input w-full" />
             </div>
           </div>
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Agenda Items (one per line) *</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Agenda Items (one per line) *</label>
           <textarea name="agendaItems" rows={5} required className="form-input w-full" placeholder="1. Approval of prior minutes&#10;2. Quality metrics review&#10;…" />
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Notes / Minutes Summary</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Notes / Minutes Summary</label>
           <textarea name="notes" rows={3} className="form-input w-full" />
         </div>
 

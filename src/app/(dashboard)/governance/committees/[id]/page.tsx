@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -53,11 +53,11 @@ export default async function CommitteeMeetingDetailPage({ params }: { params: {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/governance/committees" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/governance/committees" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Committee Meetings
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/governance/committees/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/governance/committees/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/governance/committees/${params.id}`} redirectPath="/governance/committees" label="committee meeting" />
@@ -70,7 +70,7 @@ export default async function CommitteeMeetingDetailPage({ params }: { params: {
           <Users2 className="w-5 h-5 text-teal-600 mt-0.5 shrink-0" />
           <div>
             <h1 className="text-xl font-bold text-foreground">{meeting.committeeType.replace(/_/g, ' ')}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               {formatDate(meeting.meetingDate)} &middot; Chair: <strong>{meeting.chair}</strong>
               &middot; Quorum: <span className={meeting.quorumMet ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'}>
                 {meeting.quorumMet ? 'Met' : 'Not Met'}
@@ -96,7 +96,7 @@ export default async function CommitteeMeetingDetailPage({ params }: { params: {
             <Section title="Action Items">
               <div className="space-y-3">
                 {actionItems.map((ai, i) => (
-                  <div key={i} className="flex items-start justify-between gap-3 border border-slate-100 rounded-lg p-3">
+                  <div key={i} className="flex items-start justify-between gap-3 border border-border/30 rounded-lg p-3">
                     <div>
                       <p className="text-sm font-medium text-foreground">{ai.item}</p>
                       <p className="text-xs text-muted-foreground/70 mt-0.5">Owner: {ai.owner}
@@ -116,7 +116,7 @@ export default async function CommitteeMeetingDetailPage({ params }: { params: {
             <Section title="Reports Reviewed">
               <div className="flex flex-wrap gap-2">
                 {meeting.reportReferences.map((r, i) => (
-                  <span key={i} className="text-xs bg-slate-100 text-foreground/80 rounded-full px-3 py-1">{r}</span>
+                  <span key={i} className="text-xs bg-muted/30 text-foreground/80 rounded-full px-3 py-1">{r}</span>
                 ))}
               </div>
             </Section>

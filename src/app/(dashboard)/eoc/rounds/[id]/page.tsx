@@ -20,7 +20,7 @@ const DEF_SEVERITY_COLOR: Record<string, string> = {
   HIGH: 'bg-red-100 text-red-800',
   MEDIUM: 'bg-yellow-100 text-yellow-800',
   LOW: 'bg-green-100 text-green-800',
-  OBSERVATION: 'bg-slate-100 text-slate-600',
+  OBSERVATION: 'bg-muted/30 text-muted-foreground',
 };
 
 const DEF_STATUS_COLOR: Record<string, string> = {
@@ -34,7 +34,7 @@ const DEF_STATUS_COLOR: Record<string, string> = {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -56,11 +56,11 @@ export default async function EocRoundDetailPage({ params }: { params: { id: str
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/eoc/rounds" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/eoc/rounds" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to EOC Rounds
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/eoc/rounds/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/eoc/rounds/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -73,12 +73,12 @@ export default async function EocRoundDetailPage({ params }: { params: { id: str
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <ClipboardCheck className="w-5 h-5 text-teal-600" />
               <span className="text-xs font-mono text-muted-foreground/70">{round.roundNumber}</span>
-              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[round.status] ?? 'bg-slate-100 text-slate-600'}`}>
+              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOR[round.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                 {round.status.replace(/_/g, ' ')}
               </span>
             </div>
             <h1 className="text-xl font-bold text-foreground">{round.roundType.replace(/_/g, ' ')}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Conducted: <strong>{formatDate(round.conductedDate)}</strong>
               &middot; By: <strong>{round.conductedBy}</strong>
             </p>
@@ -109,10 +109,10 @@ export default async function EocRoundDetailPage({ params }: { params: { id: str
                       <div className="flex-1">
                         <div className="flex items-center gap-2 flex-wrap mb-1">
                           <span className="text-xs font-mono text-muted-foreground/70">{def.defNumber}</span>
-                          <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${DEF_SEVERITY_COLOR[def.severity] ?? 'bg-slate-100 text-slate-600'}`}>
+                          <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${DEF_SEVERITY_COLOR[def.severity] ?? 'bg-muted/30 text-muted-foreground'}`}>
                             {def.severity.replace(/_/g, ' ')}
                           </span>
-                          <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${DEF_STATUS_COLOR[def.status] ?? 'bg-slate-100 text-slate-600'}`}>
+                          <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${DEF_STATUS_COLOR[def.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
                             {def.status}
                           </span>
                         </div>

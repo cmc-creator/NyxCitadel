@@ -47,7 +47,7 @@ export default async function CommitteeMeetingsPage() {
 
       <div className="space-y-3">
         {meetings.length === 0 ? (
-          <div className="rounded-xl border border-white/10 bg-slate-800/50 p-8 text-center text-slate-500 text-sm">No committee meetings on record.</div>
+          <div className="rounded-xl border border-white/10 bg-slate-800/50 p-8 text-center text-muted-foreground text-sm">No committee meetings on record.</div>
         ) : meetings.map(m => {
           const actionItems = (m.actionItems as unknown[]) ?? [];
           return (
@@ -68,7 +68,7 @@ export default async function CommitteeMeetingsPage() {
               </div>
               {actionItems.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-white/5">
-                  <p className="text-xs text-slate-500 mb-1">{actionItems.length} action item(s)</p>
+                  <p className="text-xs text-muted-foreground mb-1">{actionItems.length} action item(s)</p>
                 </div>
               )}
             </div>

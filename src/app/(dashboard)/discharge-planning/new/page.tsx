@@ -56,14 +56,14 @@ export default function NewDischargePlanPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/discharge-planning" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/discharge-planning" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Discharge Planning
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Home className="w-6 h-6 text-rose-600" />
           New Discharge Plan
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Assessment should be initiated within 24 hours of admission.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Assessment should be initiated within 24 hours of admission.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -73,25 +73,25 @@ export default function NewDischargePlanPage() {
           <h2 className="text-sm font-semibold text-foreground">Patient &amp; Admission</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient Initials *</label>
               <input name="patientInitials" type="text" required maxLength={6} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">MRN</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MRN</label>
               <input name="patientMrn" type="text" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Unit *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit *</label>
               <input name="unit" type="text" required className="form-input w-full" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Admit Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Admit Date *</label>
               <input name="admitDate" type="date" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Primary Diagnosis *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Primary Diagnosis *</label>
               <input name="primaryDx" type="text" required className="form-input w-full" />
             </div>
           </div>
@@ -101,16 +101,16 @@ export default function NewDischargePlanPage() {
           <h2 className="text-sm font-semibold text-foreground">Assessment</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Assessment Start Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Assessment Start Date *</label>
               <input name="assessmentStartDate" type="date" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Assessed By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Assessed By *</label>
               <input name="assessmentBy" type="text" required className="form-input w-full" placeholder="Social worker / case manager" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Care Coordinator</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Care Coordinator</label>
             <input name="careCoordinator" type="text" className="form-input w-full" />
           </div>
         </div>
@@ -119,23 +119,23 @@ export default function NewDischargePlanPage() {
           <h2 className="text-sm font-semibold text-foreground">Discharge Planning</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Expected Disposition *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Expected Disposition *</label>
               <select name="expectedDisposition" required className="form-input w-full">
                 <option value="">Select…</option>
                 {DISPOSITIONS.map(d => <option key={d} value={d}>{formatLabel(d)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Est. Discharge Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Est. Discharge Date</label>
               <input name="estimatedDischargeDate" type="date" className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Insurance Authorization #</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Insurance Authorization #</label>
             <input name="insuranceAuth" type="text" className="form-input w-full" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Barrier Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Barrier Notes</label>
             <textarea name="barrierNotes" rows={2} className="form-input w-full" placeholder="Homeless, no support, insurance denial, etc." />
           </div>
           <div className="flex gap-6">

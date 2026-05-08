@@ -26,7 +26,7 @@ const HAI_LABELS: Record<string, string> = {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -55,11 +55,11 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/infection-control/hai" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/infection-control/hai" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to HAI Surveillance
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/infection-control/hai/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/infection-control/hai/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -71,7 +71,7 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
           <Activity className="w-5 h-5 text-teal-600 mt-0.5 shrink-0" />
           <div>
             <h1 className="text-xl font-bold text-foreground">{HAI_LABELS[hai.haiType] ?? hai.haiType}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               {MONTHS[hai.reportMonth]} {hai.reportYear}
               &middot; <strong>{hai.caseCount} case{hai.caseCount !== 1 ? 's' : ''}</strong>
             </p>

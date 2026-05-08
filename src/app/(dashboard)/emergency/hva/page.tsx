@@ -33,7 +33,7 @@ export default async function HvaPage() {
     TECHNOLOGICAL:  'bg-teal-100 text-teal-800',
     HUMAN:          'bg-red-100 text-red-800',
     HAZMAT:         'bg-orange-100 text-orange-800',
-    INFRASTRUCTURE: 'bg-slate-100 text-foreground/80',
+    INFRASTRUCTURE: 'bg-muted/30 text-foreground/80',
   };
 
   // Quick-year buttons: show last 4 years
@@ -50,7 +50,7 @@ export default async function HvaPage() {
             <ShieldAlert className="w-6 h-6 text-amber-500" />
             Hazard Vulnerability Analysis (HVA)
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">Annual Kaiser Permanente-style HVA &middot; JC Standard EM.01.01.01</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Annual Kaiser Permanente-style HVA &middot; JC Standard EM.01.01.01</p>
         </div>
         <div className="flex flex-col sm:items-end gap-2">
           <Link
@@ -66,7 +66,7 @@ export default async function HvaPage() {
       {/* ── Year Navigation ── */}
       <div className="bg-card rounded-xl border border-border px-5 py-4">
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             <Calendar className="w-3.5 h-3.5" />Quick Access
           </div>
           <div className="flex flex-wrap gap-2">
@@ -135,7 +135,7 @@ export default async function HvaPage() {
                         }`}>{risk.label} - {(hazard.riskScore * 100).toFixed(0)}%</span>
                       </div>
                       {hazard.mitigationPlan ? (
-                        <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">{hazard.mitigationPlan}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{hazard.mitigationPlan}</p>
                       ) : (
                         <p className="text-xs text-red-500 mt-0.5 font-medium">No mitigation plan documented</p>
                       )}
@@ -182,7 +182,7 @@ export default async function HvaPage() {
                   {assessment.status.replace('_',' ')}
                 </span>
                 {assessment.completedDate && (
-                  <span className="text-xs text-slate-500">Completed: {formatDate(assessment.completedDate)}</span>
+                  <span className="text-xs text-muted-foreground">Completed: {formatDate(assessment.completedDate)}</span>
                 )}
                 {assessment.totalRiskScore != null && (
                   <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
@@ -196,7 +196,7 @@ export default async function HvaPage() {
               <div className="flex gap-2">
                 {assessment.documentUrl && (
                   <a href={assessment.documentUrl} target="_blank" rel="noopener noreferrer"
-                    className="text-xs text-slate-500 hover:text-amber-600 border border-border px-2 py-1 rounded">
+                    className="text-xs text-muted-foreground hover:text-amber-600 border border-border px-2 py-1 rounded">
                     View Doc
                   </a>
                 )}

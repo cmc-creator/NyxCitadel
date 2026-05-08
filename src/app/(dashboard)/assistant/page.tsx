@@ -197,12 +197,12 @@ export default function AssistantPage() {
           </div>
           <div>
             <h1 className="text-xl font-bold text-foreground">Sentry 🤖 Compliance Assistant</h1>
-            <p className="text-xs text-slate-500">Powered by Claude 3.5 Haiku · JC / CMS / AZ ADHS · Acute Psychiatric</p>
+            <p className="text-xs text-muted-foreground">Powered by Claude 3.5 Haiku · JC / CMS / AZ ADHS · Acute Psychiatric</p>
           </div>
         </div>
         <button
           onClick={reset}
-          className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-teal-700 hover:bg-teal-950/20 px-3 py-1.5 rounded-lg border border-border transition"
+          className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-teal-700 hover:bg-teal-950/20 px-3 py-1.5 rounded-lg border border-border transition"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           New chat

@@ -130,7 +130,7 @@ export default function IntegrationsPage() {
           <Plug className="w-6 h-6 text-teal-600" />
           Integrations
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Connect NyxCitadel to your existing systems to automate data sync and workflow.
         </p>
       </div>
@@ -177,7 +177,7 @@ export default function IntegrationsPage() {
                     {integration.category}
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                   {integration.description}
                 </p>
               </div>

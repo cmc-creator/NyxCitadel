@@ -193,7 +193,7 @@ export default function QapiMetricsPage() {
             <BarChart2 className="w-6 h-6 text-teal-600" />
             QAPI Metrics
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">Enter raw counts - rates calculate automatically · CMS 42 CFR 482.21</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Enter raw counts - rates calculate automatically · CMS 42 CFR 482.21</p>
         </div>
         <div className="flex items-center gap-2">
           <select value={month} onChange={e => setMonth(Number(e.target.value))} className="form-input text-sm py-1.5">
@@ -360,7 +360,7 @@ export default function QapiMetricsPage() {
 
                   {/* Trend row */}
                   {trendData.length > 0 && (
-                    <div className="border-t border-slate-50">
+                    <div className="border-t border-border/20">
                       <button
                         type="button"
                         onClick={() => setExpandedTrend(isExpanded ? null : ind.key)}
@@ -387,7 +387,7 @@ export default function QapiMetricsPage() {
       {/* Sticky save bar */}
       <div className="sticky bottom-4">
         <div className="bg-card border border-border rounded-xl shadow-lg px-5 py-3 flex items-center justify-between gap-4">
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-muted-foreground">
             {readyCount > 0
               ? <><strong>{readyCount}</strong> metric{readyCount !== 1 ? 's' : ''} ready to save for <strong>{MONTH_NAMES[month - 1]} {year}</strong></>
               : 'Enter counts above to calculate metrics.'}

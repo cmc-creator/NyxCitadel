@@ -49,11 +49,11 @@ export default function NewEquipmentPmPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/eoc/equipment" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/eoc/equipment" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Equipment PM
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <Wrench className="w-6 h-6 text-slate-600" />
+          <Wrench className="w-6 h-6 text-muted-foreground" />
           Add Equipment PM Record
         </h1>
       </div>
@@ -65,21 +65,21 @@ export default function NewEquipmentPmPage() {
           <h2 className="text-sm font-semibold text-foreground">Equipment Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Equipment Name *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Equipment Name *</label>
               <input name="equipmentName" required className="form-input w-full" placeholder="e.g. Fire Suppression System - Kitchen" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Asset Tag / Serial #</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Asset Tag / Serial #</label>
               <input name="equipmentId" className="form-input w-full" placeholder="Optional identifier" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Location *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Location *</label>
               <input name="location" required className="form-input w-full" placeholder="Building / floor / room" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
               <select name="category" required className="form-input w-full">
                 <option value="">Select…</option>
                 {CATEGORIES.map(c => <option key={c} value={c}>{c.replace(/_/g, ' ')}</option>)}
@@ -92,17 +92,17 @@ export default function NewEquipmentPmPage() {
           <h2 className="text-sm font-semibold text-foreground">Maintenance Schedule</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Frequency *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Frequency *</label>
               <select name="frequency" required className="form-input w-full">
                 {FREQUENCIES.map(f => <option key={f} value={f}>{f.replace(/_/g, ' ')}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Last Service Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Last Service Date</label>
               <input name="lastServiceDate" type="date" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Next Service Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Next Service Date *</label>
               <input name="nextServiceDate" type="date" required className="form-input w-full" />
             </div>
           </div>
@@ -112,16 +112,16 @@ export default function NewEquipmentPmPage() {
           <h2 className="text-sm font-semibold text-foreground">Vendor</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Vendor Name</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Vendor Name</label>
               <input name="vendor" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Contact Phone</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Contact Phone</label>
               <input name="contactPhone" type="tel" className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} className="form-input w-full" />
           </div>
         </div>

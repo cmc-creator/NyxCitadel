@@ -76,7 +76,7 @@ export default async function HandHygienePage({ searchParams }: { searchParams: 
                     {up ? <TrendingUp className="w-4 h-4 text-emerald-400" /> : <TrendingDown className="w-4 h-4 text-red-400" />}
                   </div>
                 </div>
-                <p className="text-xs text-slate-500">Avg: {avg.toFixed(1)}% · {data.rates.length} audit{data.rates.length !== 1 ? 's' : ''}</p>
+                <p className="text-xs text-muted-foreground">Avg: {avg.toFixed(1)}% · {data.rates.length} audit{data.rates.length !== 1 ? 's' : ''}</p>
               </div>
             );
           })}
@@ -108,7 +108,7 @@ export default async function HandHygienePage({ searchParams }: { searchParams: 
           </thead>
           <tbody className="divide-y divide-white/5">
             {audits.length === 0 ? (
-              <tr><td colSpan={7} className="text-center py-10 text-slate-500 text-sm">No audits on record.</td></tr>
+              <tr><td colSpan={7} className="text-center py-10 text-muted-foreground text-sm">No audits on record.</td></tr>
             ) : audits.map(a => {
               const below = a.complianceRate < 90;
               return (

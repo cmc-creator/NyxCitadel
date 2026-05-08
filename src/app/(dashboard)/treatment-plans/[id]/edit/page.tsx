@@ -54,7 +54,7 @@ export default function EditTreatmentPlanPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/treatment-plans/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/treatment-plans/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -70,25 +70,25 @@ export default function EditTreatmentPlanPage() {
           <h2 className="text-sm font-semibold text-foreground">Patient &amp; Admission</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient Initials *</label>
               <input name="patientInitials" type="text" required maxLength={6} defaultValue={data.patientInitials ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">MRN</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MRN</label>
               <input name="patientMrn" type="text" defaultValue={data.patientMrn ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Unit *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit *</label>
               <input name="unit" type="text" required defaultValue={data.unit ?? ''} className="form-input w-full" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Admit Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Admit Date *</label>
               <input name="admitDate" type="date" required defaultValue={data.admitDate?.split('T')[0] ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Primary Diagnosis *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Primary Diagnosis *</label>
               <input name="primaryDx" type="text" required defaultValue={data.primaryDx ?? ''} className="form-input w-full" />
             </div>
           </div>
@@ -98,16 +98,16 @@ export default function EditTreatmentPlanPage() {
           <h2 className="text-sm font-semibold text-foreground">Plan Creation</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Plan Created Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Plan Created Date *</label>
               <input name="planCreatedDate" type="date" required defaultValue={data.planCreatedDate?.split('T')[0] ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Plan Created By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Plan Created By *</label>
               <input name="planCreatedBy" type="text" required defaultValue={data.planCreatedBy ?? ''} className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Treatment Team (one member per line) *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Treatment Team (one member per line) *</label>
             <textarea name="treatmentTeam" rows={4} required defaultValue={teamValue} className="form-input w-full"
               placeholder="Dr. Jane Smith, MD - Attending&#10;Bob Jones, RN - Primary Nurse&#10;Alice Lee, SW - Social Work" />
           </div>
@@ -120,21 +120,21 @@ export default function EditTreatmentPlanPage() {
             Patient / Legal Representative Participated in Plan Development
           </label>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Participation Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Participation Notes</label>
             <textarea name="participationNotes" rows={2} defaultValue={data.participationNotes ?? ''} className="form-input w-full" placeholder="If patient unable to participate, document reason…" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Discharge Goal</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Discharge Goal</label>
             <textarea name="dischargeGoal" rows={2} defaultValue={data.dischargeGoal ?? ''} className="form-input w-full" placeholder="Patient will be discharged to home with home health support…" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Estimated Length of Stay</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Estimated Length of Stay</label>
             <input name="estimatedLos" type="text" defaultValue={data.estimatedLos ?? ''} className="form-input w-full" placeholder="e.g. 5-7 days" />
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/treatment-plans/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <a href={`/treatment-plans/${id}`} className="px-4 py-2 text-sm text-muted-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

@@ -63,7 +63,7 @@ export default async function WorkforceHealthPage() {
                 <p className="text-xs text-muted-foreground/70">{m.desc}</p>
               </div>
             </div>
-            <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
+            <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-white transition-colors" />
           </Link>
         ))}
       </div>

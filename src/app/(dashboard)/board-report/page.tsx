@@ -154,7 +154,7 @@ export default async function BoardReportPage() {
     <div className="space-y-4">
       {/* Toolbar */}
       <div className="flex items-center justify-between print:hidden">
-        <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600">
+        <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600">
           <ChevronLeft className="w-4 h-4" /> Dashboard
         </Link>
         <PrintButton />
@@ -172,13 +172,13 @@ export default async function BoardReportPage() {
                 <span className="text-xs font-bold text-teal-600 uppercase tracking-widest">NyxCitadel - Compliance Intelligence</span>
               </div>
               <h1 className="text-3xl font-black text-foreground">Board Compliance Report</h1>
-              <p className="text-slate-500 mt-1 text-sm">
+              <p className="text-muted-foreground mt-1 text-sm">
                 {facility?.name} · {facility?.city}, {facility?.state} ·{' '}
                 {facility?.licenseNumber ? `Lic. #${facility.licenseNumber} · ` : ''}
                 {facility?.bedCount ? `${facility.bedCount} beds` : ''}
               </p>
             </div>
-            <div className="text-right text-sm text-slate-500">
+            <div className="text-right text-sm text-muted-foreground">
               <p className="font-semibold text-foreground/80">Reporting Period</p>
               <p>{formatDate(since90)} - {reportDate}</p>
               <p className="text-xs text-muted-foreground/70 mt-1">CONFIDENTIAL - BOARD USE ONLY</p>
@@ -194,7 +194,7 @@ export default async function BoardReportPage() {
               <span className="text-6xl font-black text-teal-300">{resGrade}</span>
               <span className="text-3xl font-bold text-teal-500 mb-1">{resilience}/100</span>
             </div>
-            <p className="text-sm text-slate-600 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Training {trainingPct}% · IR (90d): {irLast90} · Open CAPs: {capsOpen} · Open Grievances: {grievancesOpen}
             </p>
           </div>
@@ -217,7 +217,7 @@ export default async function BoardReportPage() {
           {criticalIR.length > 0 ? (
             <table className="min-w-full text-sm border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 text-xs text-slate-500 uppercase tracking-wide">
+                <tr className="border-b border-border text-xs text-muted-foreground uppercase tracking-wide">
                   <th className="py-1.5 text-left">IR #</th>
                   <th className="py-1.5 text-left">Date</th>
                   <th className="py-1.5 text-left">Type</th>
@@ -229,9 +229,9 @@ export default async function BoardReportPage() {
               </thead>
               <tbody>
                 {criticalIR.map((ir) => (
-                  <tr key={ir.irNumber} className="border-b border-slate-100">
+                  <tr key={ir.irNumber} className="border-b border-border/30">
                     <td className="py-1.5 font-mono text-xs">{ir.irNumber}</td>
-                    <td className="py-1.5 text-xs text-slate-500">{formatDate(ir.incidentDate)}</td>
+                    <td className="py-1.5 text-xs text-muted-foreground">{formatDate(ir.incidentDate)}</td>
                     <td className="py-1.5 text-xs">{ir.incidentType.replace(/_/g, ' ')}</td>
                     <td className="py-1.5 text-xs">{ir.unitName ?? '-'}</td>
                     <td className="py-1.5 text-center">
@@ -244,7 +244,7 @@ export default async function BoardReportPage() {
                         <span className="text-muted-foreground/70">No</span>
                       )}
                     </td>
-                    <td className="py-1.5 text-xs text-slate-600">{ir.status.replace(/_/g, ' ')}</td>
+                    <td className="py-1.5 text-xs text-muted-foreground">{ir.status.replace(/_/g, ' ')}</td>
                   </tr>
                 ))}
               </tbody>
@@ -266,10 +266,10 @@ export default async function BoardReportPage() {
 
           {recentCaps.length > 0 && (
             <div className="mt-3">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Priority Open CAPs</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Priority Open CAPs</p>
               <table className="min-w-full text-sm border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-200 text-xs text-slate-500 uppercase tracking-wide">
+                  <tr className="border-b border-border text-xs text-muted-foreground uppercase tracking-wide">
                     <th className="py-1.5 text-left">CAP #</th>
                     <th className="py-1.5 text-left">Title</th>
                     <th className="py-1.5 text-left">Priority</th>
@@ -279,12 +279,12 @@ export default async function BoardReportPage() {
                 </thead>
                 <tbody>
                   {recentCaps.map((c) => (
-                    <tr key={c.capNumber} className="border-b border-slate-100">
+                    <tr key={c.capNumber} className="border-b border-border/30">
                       <td className="py-1.5 font-mono text-xs">{c.capNumber}</td>
                       <td className="py-1.5 text-xs">{c.title}</td>
                       <td className="py-1.5 text-xs">{c.priority}</td>
                       <td className="py-1.5 text-xs">{c.status.replace(/_/g, ' ')}</td>
-                      <td className={`py-1.5 text-xs ${c.targetDate < now ? 'text-red-600 font-semibold' : 'text-slate-600'}`}>
+                      <td className={`py-1.5 text-xs ${c.targetDate < now ? 'text-red-600 font-semibold' : 'text-muted-foreground'}`}>
                         {formatDate(c.targetDate)}
                       </td>
                     </tr>
@@ -305,7 +305,7 @@ export default async function BoardReportPage() {
           {drillsLast90.length > 0 && (
             <table className="min-w-full text-sm border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 text-xs text-slate-500 uppercase tracking-wide">
+                <tr className="border-b border-border text-xs text-muted-foreground uppercase tracking-wide">
                   <th className="py-1.5 text-left">Drill</th>
                   <th className="py-1.5 text-left">Type</th>
                   <th className="py-1.5 text-left">Date</th>
@@ -316,14 +316,14 @@ export default async function BoardReportPage() {
               </thead>
               <tbody>
                 {drillsLast90.map((d, i) => (
-                  <tr key={i} className="border-b border-slate-100">
+                  <tr key={i} className="border-b border-border/30">
                     <td className="py-1.5 text-xs font-medium">
                       <a href={`/emergency/drills/${d.id}`} className="hover:text-teal-600 hover:underline">{d.drillName}</a>
                     </td>
-                    <td className="py-1.5 text-xs text-slate-500">{d.drillType.replace(/_/g, ' ')}</td>
-                    <td className="py-1.5 text-xs text-slate-500">{formatDate(d.scheduledDate)}</td>
+                    <td className="py-1.5 text-xs text-muted-foreground">{d.drillType.replace(/_/g, ' ')}</td>
+                    <td className="py-1.5 text-xs text-muted-foreground">{formatDate(d.scheduledDate)}</td>
                     <td className="py-1.5 text-center">
-                      <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${d.status === 'COMPLETED' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
+                      <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${d.status === 'COMPLETED' ? 'bg-emerald-100 text-emerald-700' : 'bg-muted/30 text-muted-foreground'}`}>
                         {d.status}
                       </span>
                     </td>
@@ -365,10 +365,10 @@ export default async function BoardReportPage() {
           </div>
           <div className="mt-4">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs text-slate-500">Overall Completion</span>
+              <span className="text-xs text-muted-foreground">Overall Completion</span>
               <span className={`text-xs font-semibold ${trainingPct >= 80 ? 'text-emerald-600' : 'text-red-600'}`}>{trainingPct}%</span>
             </div>
-            <div className="w-full bg-slate-100 rounded-full h-3">
+            <div className="w-full bg-muted/30 rounded-full h-3">
               <div
                 className={`h-3 rounded-full ${trainingPct >= 80 ? 'bg-emerald-500' : 'bg-red-500'}`}
                 style={{ width: `${trainingPct}%` }}
@@ -387,7 +387,7 @@ export default async function BoardReportPage() {
           <ReportSection icon={<Activity className="w-4 h-4 text-teal-500" />} title="Section 5 - QAPI Quality Metrics">
             <table className="min-w-full text-sm border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 text-xs text-slate-500 uppercase tracking-wide">
+                <tr className="border-b border-border text-xs text-muted-foreground uppercase tracking-wide">
                   <th className="py-1.5 text-left">Metric</th>
                   <th className="py-1.5 text-right">Value</th>
                   <th className="py-1.5 text-right">Target</th>
@@ -398,7 +398,7 @@ export default async function BoardReportPage() {
                 {qapiMetrics.map((m) => {
                   const onTarget = m.target == null || m.value <= m.target;
                   return (
-                    <tr key={m.metricName} className="border-b border-slate-100">
+                    <tr key={m.metricName} className="border-b border-border/30">
                       <td className="py-1.5 text-xs font-medium">{m.metricName}</td>
                       <td className="py-1.5 text-right text-xs">{m.value}{m.unit ? ` ${m.unit}` : ''}</td>
                       <td className="py-1.5 text-right text-xs text-muted-foreground/70">{m.target ?? '-'}{m.unit && m.target ? ` ${m.unit}` : ''}</td>
@@ -419,10 +419,10 @@ export default async function BoardReportPage() {
 
         {/* ── Section 6: Survey Activity ────────────────────── */}
         {surveys.length > 0 && (
-          <ReportSection icon={<FileBarChart className="w-4 h-4 text-slate-500" />} title="Section 6 - Survey & Inspection Activity">
+          <ReportSection icon={<FileBarChart className="w-4 h-4 text-muted-foreground" />} title="Section 6 - Survey & Inspection Activity">
             <table className="min-w-full text-sm border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 text-xs text-slate-500 uppercase tracking-wide">
+                <tr className="border-b border-border text-xs text-muted-foreground uppercase tracking-wide">
                   <th className="py-1.5 text-left">Type</th>
                   <th className="py-1.5 text-left">Body</th>
                   <th className="py-1.5 text-left">Date</th>
@@ -432,10 +432,10 @@ export default async function BoardReportPage() {
               </thead>
               <tbody>
                 {surveys.map((s, i) => (
-                  <tr key={i} className="border-b border-slate-100">
+                  <tr key={i} className="border-b border-border/30">
                     <td className="py-1.5 text-xs font-medium">{s.surveyType?.replace(/_/g, ' ') ?? '-'}</td>
-                    <td className="py-1.5 text-xs text-slate-500">{s.regulatoryBody?.replace(/_/g, ' ') ?? '-'}</td>
-                    <td className="py-1.5 text-xs text-slate-500">{formatDate(s.conductedDate)}</td>
+                    <td className="py-1.5 text-xs text-muted-foreground">{s.regulatoryBody?.replace(/_/g, ' ') ?? '-'}</td>
+                    <td className="py-1.5 text-xs text-muted-foreground">{formatDate(s.conductedDate)}</td>
                     <td className="py-1.5 text-xs">{s.outcome ?? '-'}</td>
                     <td className={`py-1.5 text-center text-xs font-semibold ${(s.findingCount ?? 0) > 0 ? 'text-orange-600' : 'text-emerald-600'}`}>
                       {s.findingCount ?? 0}
@@ -497,21 +497,21 @@ export default async function BoardReportPage() {
         </div>
 
         {/* Attestation */}
-        <div className="border-t border-slate-200 pt-5">
-          <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-4">Board Attestation</h3>
+        <div className="border-t border-border pt-5">
+          <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-4">Board Attestation</h3>
           <div className="grid md:grid-cols-3 gap-6 text-sm">
             {['Quality/Compliance Officer', 'Chief Executive Officer', 'Board Chair'].map((role) => (
               <div key={role} className="space-y-4">
-                <div className="border-b border-slate-300 h-8" />
-                <p className="text-xs text-slate-500">Signature - {role}</p>
-                <div className="border-b border-slate-300 h-8" />
-                <p className="text-xs text-slate-500">Date</p>
+                <div className="border-b border-border h-8" />
+                <p className="text-xs text-muted-foreground">Signature - {role}</p>
+                <div className="border-b border-border h-8" />
+                <p className="text-xs text-muted-foreground">Date</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="text-xs text-muted-foreground/70 border-t border-slate-100 pt-3 flex justify-between">
+        <div className="text-xs text-muted-foreground/70 border-t border-border/30 pt-3 flex justify-between">
           <span>NyxCitadel · {facility?.name} · {reportDate}</span>
           <span>Confidential - Generated automatically from compliance data</span>
         </div>
@@ -525,7 +525,7 @@ export default async function BoardReportPage() {
 function ReportSection({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="flex items-center gap-2 text-sm font-bold text-foreground uppercase tracking-wide border-b-2 border-slate-200 pb-1 mb-3">
+      <h2 className="flex items-center gap-2 text-sm font-bold text-foreground uppercase tracking-wide border-b-2 border-border pb-1 mb-3">
         {icon}
         {title}
       </h2>
@@ -560,7 +560,7 @@ function SeverityBadge({ s }: { s: string | null }) {
     LOW:      'bg-green-100 text-green-700',
   };
   return (
-    <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${styles[s ?? ''] ?? 'bg-slate-100 text-slate-500'}`}>
+    <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${styles[s ?? ''] ?? 'bg-muted/30 text-muted-foreground'}`}>
       {s ?? '-'}
     </span>
   );

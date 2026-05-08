@@ -57,7 +57,7 @@ export default async function EocRoundsPage() {
         <div>
           <div className="flex items-center gap-2">
             <Link href="/eoc" className="text-sm text-muted-foreground/70 hover:text-slate-300">Environment of Care</Link>
-            <span className="text-slate-600">›</span>
+            <span className="text-muted-foreground">›</span>
             <span className="text-sm text-foreground font-medium">Safety Rounds</span>
           </div>
           <h1 className="text-2xl font-bold text-foreground mt-1">Life Safety Rounds</h1>
@@ -72,19 +72,19 @@ export default async function EocRoundsPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="p-3 rounded-lg bg-card border border-border text-center">
           <p className="text-2xl font-bold text-foreground">{rounds.length}</p>
-          <p className="text-xs text-slate-500 mt-0.5">Total Rounds (YTD)</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Total Rounds (YTD)</p>
         </div>
         <div className="p-3 rounded-lg bg-amber-950/30 border border-amber-700/40 text-center">
           <p className="text-2xl font-bold text-amber-400">{rounds.filter(r => r.status === 'IN_PROGRESS').length}</p>
-          <p className="text-xs text-slate-500 mt-0.5">In Progress</p>
+          <p className="text-xs text-muted-foreground mt-0.5">In Progress</p>
         </div>
         <div className="p-3 rounded-lg bg-red-950/30 border border-red-700/40 text-center">
           <p className="text-2xl font-bold text-red-400">{rounds.reduce((a, r) => a + r.openItems, 0)}</p>
-          <p className="text-xs text-slate-500 mt-0.5">Total Open Items</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Total Open Items</p>
         </div>
         <div className="p-3 rounded-lg bg-emerald-950/30 border border-emerald-700/40 text-center">
           <p className="text-2xl font-bold text-emerald-400">{rounds.filter(r => ['REVIEWED','APPROVED'].includes(r.status)).length}</p>
-          <p className="text-xs text-slate-500 mt-0.5">Reviewed / Approved</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Reviewed / Approved</p>
         </div>
       </div>
 
@@ -109,11 +109,11 @@ export default async function EocRoundsPage() {
                       )}
                     </div>
                     <p className="text-sm font-semibold text-foreground mt-1">{TYPE_LABELS[round.roundType] ?? typeInfo.label}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {round.conductedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} · {round.conductedBy}
                     </p>
                     {round.participantIds.length > 0 && (
-                      <p className="text-xs text-slate-600 mt-0.5">+ {round.participantIds.join(', ')}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">+ {round.participantIds.join(', ')}</p>
                     )}
                     <p className="text-xs text-muted-foreground/70 mt-2 leading-relaxed">{round.summary}</p>
                     {round.areasInspected.length > 0 && round.areasInspected[0] !== 'Administrative' && (
@@ -128,9 +128,9 @@ export default async function EocRoundsPage() {
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-2 shrink-0">
-                  <span className="text-xs text-slate-600 font-mono">{round.roundNumber}</span>
+                  <span className="text-xs text-muted-foreground font-mono">{round.roundNumber}</span>
                   {round.totalItems > 0 && (
-                    <span className="text-xs text-slate-500">{round.totalItems} checklist items</span>
+                    <span className="text-xs text-muted-foreground">{round.totalItems} checklist items</span>
                   )}
                   <Link
                     href={`/eoc/rounds/${round.id}`}

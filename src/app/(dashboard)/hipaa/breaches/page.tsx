@@ -90,7 +90,7 @@ export default async function BreachLogPage({ searchParams }: { searchParams: { 
 
       <div className="space-y-4">
         {breaches.length === 0 ? (
-          <div className="rounded-xl border border-white/10 bg-slate-800/50 p-8 text-center text-slate-500 text-sm">
+          <div className="rounded-xl border border-white/10 bg-slate-800/50 p-8 text-center text-muted-foreground text-sm">
             No breach incidents on record.
           </div>
         ) : breaches.map(b => (
@@ -99,7 +99,7 @@ export default async function BreachLogPage({ searchParams }: { searchParams: { 
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-mono text-xs text-muted-foreground/70">{b.incidentNumber}</span>
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[b.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[b.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                     {statusConfig[b.status]?.label ?? b.status}
                   </span>
                   {b.reportableBreach && (

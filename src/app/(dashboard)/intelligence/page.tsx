@@ -100,7 +100,7 @@ export default async function IntelligencePage() {
           <BarChart2 className="w-6 h-6 text-teal-400" />
           Intelligence
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Compliance analytics, risk intelligence, and executive reporting.
         </p>
       </div>
@@ -119,14 +119,14 @@ export default async function IntelligencePage() {
             <p className="text-2xl font-bold text-foreground group-hover:text-teal-400 leading-none">
               {value}
             </p>
-            <p className="text-xs text-slate-500 mt-1 leading-tight">{label}</p>
+            <p className="text-xs text-muted-foreground mt-1 leading-tight">{label}</p>
           </Link>
         ))}
       </div>
 
       {/* View cards */}
       <div>
-        <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">Reports & Scorecards</h2>
+        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Reports & Scorecards</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {views.map(({ href, title, description, icon: Icon, badge, badgeColor, color, iconBg }) => (
             <Link
@@ -146,9 +146,9 @@ export default async function IntelligencePage() {
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
               </div>
-              <span className="text-slate-600 group-hover:text-muted-foreground/70 mt-1 text-lg">→</span>
+              <span className="text-muted-foreground group-hover:text-muted-foreground/70 mt-1 text-lg">→</span>
             </Link>
           ))}
         </div>
@@ -158,7 +158,7 @@ export default async function IntelligencePage() {
       {recentRegUpdates.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">Recent Regulatory Updates</h2>
+            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Recent Regulatory Updates</h2>
             <Link href="/regulatory-updates" className="text-xs text-teal-400 hover:text-teal-300 transition-colors">
               View all →
             </Link>
@@ -174,7 +174,7 @@ export default async function IntelligencePage() {
                   {upd.urgency}
                 </span>
                 <span className="text-sm text-foreground group-hover:text-teal-400 transition-colors truncate flex-1">{upd.title}</span>
-                <span className="text-xs text-slate-500 flex-shrink-0">{upd.regulatoryBody}</span>
+                <span className="text-xs text-muted-foreground flex-shrink-0">{upd.regulatoryBody}</span>
               </Link>
             ))}
           </div>

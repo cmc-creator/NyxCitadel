@@ -65,7 +65,7 @@ export default function EditAdvanceDirectivePage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/patient-rights/advance-directives/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/patient-rights/advance-directives/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -81,16 +81,16 @@ export default function EditAdvanceDirectivePage() {
           <h2 className="text-sm font-semibold text-foreground">Patient</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient Initials *</label>
               <input name="patientInitials" required className="form-input w-full" defaultValue={data.patientInitials ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">MRN</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MRN</label>
               <input name="patientMrn" className="form-input w-full" defaultValue={data.patientMrn ?? ''} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Admit Date *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Admit Date *</label>
             <input name="admitDate" type="date" required className="form-input w-full" defaultValue={data.admitDate?.split('T')[0] ?? ''} />
           </div>
         </div>
@@ -117,14 +117,14 @@ export default function EditAdvanceDirectivePage() {
           </div>
           <div className="grid grid-cols-2 gap-4 mt-2">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">AD Type</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">AD Type</label>
               <select name="adType" className="form-input w-full" defaultValue={data.adType ?? ''}>
                 <option value="">Select…</option>
                 {AD_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Information Provided By</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Information Provided By</label>
               <input name="providedBy" className="form-input w-full" defaultValue={data.providedBy ?? ''} />
             </div>
           </div>
@@ -134,22 +134,22 @@ export default function EditAdvanceDirectivePage() {
           <h2 className="text-sm font-semibold text-foreground">Documentation</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Documented By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Documented By *</label>
               <input name="documentedBy" required className="form-input w-full" defaultValue={data.documentedBy ?? ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Documented Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Documented Date *</label>
               <input name="documentedDate" type="date" required className="form-input w-full" defaultValue={data.documentedDate?.split('T')[0] ?? ''} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} className="form-input w-full" defaultValue={data.notes ?? ''} />
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/patient-rights/advance-directives/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <a href={`/patient-rights/advance-directives/${id}`} className="px-4 py-2 text-sm text-muted-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

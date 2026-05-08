@@ -54,14 +54,14 @@ export default function NewHaiSurveillancePage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/infection-control/hai" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/infection-control/hai" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to HAI Surveillance
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Activity className="w-6 h-6 text-red-600" />
           Add HAI Surveillance Report
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Monthly NHSN reporting. Rate auto-calculated from case count and patient-days.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Monthly NHSN reporting. Rate auto-calculated from case count and patient-days.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -71,17 +71,17 @@ export default function NewHaiSurveillancePage() {
           <h2 className="text-sm font-semibold text-foreground">Reporting Period &amp; Type</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Month *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Month *</label>
               <select name="reportMonth" required defaultValue={today.getMonth() + 1} className="form-input w-full">
                 {MONTHS.map((m, i) => <option key={i + 1} value={i + 1}>{m}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Year *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Year *</label>
               <input name="reportYear" type="number" required defaultValue={today.getFullYear()} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">HAI Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">HAI Type *</label>
               <select name="haiType" required className="form-input w-full">
                 <option value="">Select…</option>
                 {HAI_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
@@ -94,21 +94,21 @@ export default function NewHaiSurveillancePage() {
           <h2 className="text-sm font-semibold text-foreground">Counts &amp; Rate</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Case Count *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Case Count *</label>
               <input name="caseCount" type="number" min="0" required defaultValue="0" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient-Days</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient-Days</label>
               <input name="patientDays" type="number" min="0" className="form-input w-full" placeholder="Used to calculate rate" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">NHSN Benchmark</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">NHSN Benchmark</label>
               <input name="nhsnBenchmark" type="number" step="0.001" className="form-input w-full" placeholder="SIR pooled mean" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">SIR (Standardized Infection Ratio)</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">SIR (Standardized Infection Ratio)</label>
               <input name="sir" type="number" step="0.001" className="form-input w-full" />
             </div>
           </div>
@@ -119,12 +119,12 @@ export default function NewHaiSurveillancePage() {
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
           <textarea name="notes" rows={2} className="form-input w-full" />
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/infection-control/hai" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/infection-control/hai" className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-muted/20">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save HAI Report'}
           </button>

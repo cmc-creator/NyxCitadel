@@ -31,7 +31,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   STATE_ADVERSE_EVENT_REPORT:       'bg-orange-100 text-orange-700',
   JC_SENTINEL_EVENT_REPORT:         'bg-red-100 text-red-700',
   PLAN_OF_CORRECTION:               'bg-teal-100 text-teal-700',
-  OTHER:                            'bg-slate-100 text-slate-600',
+  OTHER:                            'bg-muted/30 text-muted-foreground',
 };
 
 export default async function ResponseTemplatesPage() {
@@ -60,14 +60,14 @@ export default async function ResponseTemplatesPage() {
             <FileText className="w-6 h-6 text-teal-600" />
             QOC Response Templates
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Standardized response templates for grievances, adverse events, regulatory inquiries, and survey responses.
           </p>
         </div>
         <div className="flex gap-2">
           <Link
             href="/quality/responses/new"
-            className="inline-flex items-center gap-1.5 text-sm font-medium bg-slate-100 hover:bg-slate-200 text-foreground/80 px-3 py-2 rounded-lg transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm font-medium bg-muted/30 hover:bg-slate-200 text-foreground/80 px-3 py-2 rounded-lg transition-colors"
           >
             <BookOpen className="w-4 h-4" /> Generate Response
           </Link>
@@ -84,19 +84,19 @@ export default async function ResponseTemplatesPage() {
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-foreground">{templates.length}</div>
-          <div className="text-sm text-slate-500">Active Templates</div>
+          <div className="text-sm text-muted-foreground">Active Templates</div>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-blue-600">
             {templates.filter(t => t.isDefault).length}
           </div>
-          <div className="text-sm text-slate-500">System Defaults</div>
+          <div className="text-sm text-muted-foreground">System Defaults</div>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="text-2xl font-bold text-teal-600">
             {Object.keys(grouped).length}
           </div>
-          <div className="text-sm text-slate-500">Categories</div>
+          <div className="text-sm text-muted-foreground">Categories</div>
         </div>
       </div>
 
@@ -115,7 +115,7 @@ export default async function ResponseTemplatesPage() {
       {templates.length === 0 ? (
         <div className="bg-card rounded-xl border border-border p-12 text-center">
           <FileText className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-500 font-medium">No templates yet</p>
+          <p className="text-muted-foreground font-medium">No templates yet</p>
           <p className="text-muted-foreground/70 text-sm mt-1">Create your first template or run the seeder to load defaults.</p>
           <Link
             href="/quality/response-templates/new"
@@ -127,7 +127,7 @@ export default async function ResponseTemplatesPage() {
       ) : (
         (Object.entries(grouped) as [string, typeof templates][]).map(([category, items]) => (
           <div key={category}>
-            <h2 className="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-3">{category}</h2>
+            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{category}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {items.map(t => (
                 <div key={t.id} className="bg-card rounded-xl border border-border p-4 hover:border-teal-300 transition-colors">
@@ -141,7 +141,7 @@ export default async function ResponseTemplatesPage() {
                     <p className="text-xs text-muted-foreground/70 mb-2 line-clamp-2">{t.description}</p>
                   )}
                   <div className="flex flex-wrap gap-2 mb-3">
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${CATEGORY_COLORS[t.category] ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${CATEGORY_COLORS[t.category] ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {CATEGORY_LABELS[t.category] ?? t.category}
                     </span>
                     {t.daysRequired && (
@@ -162,7 +162,7 @@ export default async function ResponseTemplatesPage() {
                     </Link>
                     <Link
                       href={`/quality/response-templates/${t.id}`}
-                      className="text-xs font-medium bg-slate-100 hover:bg-slate-200 text-foreground/80 px-3 py-1.5 rounded-lg transition-colors"
+                      className="text-xs font-medium bg-muted/30 hover:bg-slate-200 text-foreground/80 px-3 py-1.5 rounded-lg transition-colors"
                     >
                       Edit
                     </Link>
@@ -178,7 +178,7 @@ export default async function ResponseTemplatesPage() {
       <div className="bg-card rounded-xl border border-border p-4 flex items-center justify-between">
         <div>
           <p className="font-medium text-foreground text-sm">Generated Responses</p>
-          <p className="text-xs text-slate-500">View all drafted, approved, and sent responses</p>
+          <p className="text-xs text-muted-foreground">View all drafted, approved, and sent responses</p>
         </div>
         <Link
           href="/quality/responses"

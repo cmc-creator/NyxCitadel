@@ -17,7 +17,7 @@ const SEVERITY_COLOR: Record<string, string> = {
   HIGH: 'bg-red-100 text-red-800',
   MEDIUM: 'bg-yellow-100 text-yellow-800',
   LOW: 'bg-green-100 text-green-800',
-  OBSERVATION: 'bg-slate-100 text-slate-600',
+  OBSERVATION: 'bg-muted/30 text-muted-foreground',
 };
 
 const STATUS_OPTIONS = [
@@ -31,7 +31,7 @@ const STATUS_OPTIONS = [
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-sm p-5">
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{title}</h2>
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{title}</h2>
       {children}
     </div>
   );
@@ -71,11 +71,11 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/eoc/deficiencies" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
+        <Link href="/eoc/deficiencies" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to Deficiencies
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/eoc/deficiencies/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/eoc/deficiencies/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <DeleteButton apiPath={`/api/eoc/deficiencies/${params.id}`} redirectPath="/eoc/deficiencies" label="deficiency" />
@@ -89,12 +89,12 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <AlertCircle className="w-5 h-5 text-orange-600" />
               <span className="text-xs font-mono text-muted-foreground/70">{def.defNumber}</span>
-              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${SEVERITY_COLOR[def.severity] ?? 'bg-slate-100 text-slate-600'}`}>
+              <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${SEVERITY_COLOR[def.severity] ?? 'bg-muted/30 text-muted-foreground'}`}>
                 {def.severity.replace(/_/g, ' ')}
               </span>
             </div>
             <h1 className="text-xl font-bold text-foreground">{def.category.replace(/_/g, ' ')}</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               {def.location}{def.unit && ` · ${def.unit}`}
             </p>
           </div>

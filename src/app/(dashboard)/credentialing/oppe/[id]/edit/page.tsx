@@ -59,14 +59,14 @@ export default function EditOppeRecordPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/credentialing/oppe/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/credentialing/oppe/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <BarChart2 className="w-6 h-6 text-purple-600" />
           Edit OPPE Record
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Ongoing Professional Practice Evaluation - TJC MS.08.01.01.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Ongoing Professional Practice Evaluation - TJC MS.08.01.01.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -75,23 +75,23 @@ export default function EditOppeRecordPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Provider &amp; Review Period</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Provider ID *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Provider ID *</label>
             <input name="providerId" required className="form-input w-full font-mono text-sm"
               defaultValue={data.providerId ?? ''} placeholder="Provider record ID" />
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Period Start *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Period Start *</label>
               <input name="periodStart" type="date" required className="form-input w-full"
                 defaultValue={data.periodStart ? data.periodStart.split('T')[0] : ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Period End *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Period End *</label>
               <input name="periodEnd" type="date" required className="form-input w-full"
                 defaultValue={data.periodEnd ? data.periodEnd.split('T')[0] : ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Review Cycle Label *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Review Cycle Label *</label>
               <input name="reviewCycle" required className="form-input w-full"
                 defaultValue={data.reviewCycle ?? ''} placeholder="Q1 2026" />
             </div>
@@ -102,17 +102,17 @@ export default function EditOppeRecordPage() {
           <h2 className="text-sm font-semibold text-foreground">Case Counts &amp; Rating</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Total Cases Reviewed</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Total Cases Reviewed</label>
               <input name="totalCases" type="number" min="0" className="form-input w-full"
                 defaultValue={data.totalCases ?? 0} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Compliant Cases</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Compliant Cases</label>
               <input name="compliantCases" type="number" min="0" className="form-input w-full"
                 defaultValue={data.compliantCases ?? 0} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Overall Rating *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Overall Rating *</label>
               <select name="overallRating" required className="form-input w-full" defaultValue={data.overallRating ?? 'ACCEPTABLE'}>
                 {RATINGS.map(r => <option key={r} value={r}>{r.replace(/_/g, ' ')}</option>)}
               </select>
@@ -120,7 +120,7 @@ export default function EditOppeRecordPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Reviewed By</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Reviewed By</label>
               <input name="reviewedBy" className="form-input w-full"
                 defaultValue={data.reviewedBy ?? ''} />
             </div>
@@ -133,13 +133,13 @@ export default function EditOppeRecordPage() {
         </div>
 
         <div className="px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
           <textarea name="notes" rows={3} className="form-input w-full"
             defaultValue={data.notes ?? ''} />
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/credentialing/oppe/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href={`/credentialing/oppe/${id}`} className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

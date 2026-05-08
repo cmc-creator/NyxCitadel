@@ -67,7 +67,7 @@ export default function EditCalendarEventPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/calendar/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/calendar/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Event
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -81,20 +81,20 @@ export default function EditCalendarEventPage() {
       <form key={data.id} onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Event Title *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Event Title *</label>
             <input name="title" required defaultValue={data.title ?? ''} className="form-input w-full" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Description</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Description</label>
             <textarea name="description" rows={3} defaultValue={data.description ?? ''} className="form-input w-full" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Due Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Due Date *</label>
               <input name="dueDate" type="date" required defaultValue={data.dueDate?.split('T')[0] ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Priority</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Priority</label>
               <select name="priority" defaultValue={data.priority ?? 'MEDIUM'} className="form-input w-full">
                 {PRIORITY_LEVELS.map(p => <option key={p} value={p}>{p}</option>)}
               </select>
@@ -102,14 +102,14 @@ export default function EditCalendarEventPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body</label>
               <select name="regulatoryBody" defaultValue={data.regulatoryBody ?? ''} className="form-input w-full">
                 <option value="">Select…</option>
                 {REGULATORY_BODIES.map(r => <option key={r} value={r}>{r.replace(/_/g, ' ')}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Frequency</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Frequency</label>
               <select name="frequency" defaultValue={data.frequency ?? 'ONCE'} className="form-input w-full">
                 {FREQUENCY_VALUES.map(f => <option key={f} value={f}>{f.replace(/_/g, ' ')}</option>)}
               </select>
@@ -117,21 +117,21 @@ export default function EditCalendarEventPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Category Tag</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Category Tag</label>
               <input name="category" defaultValue={data.category ?? ''} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Assigned To</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Assigned To</label>
               <input name="assignedTo" defaultValue={data.assignedTo ?? ''} className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} defaultValue={data.notes ?? ''} className="form-input w-full" />
           </div>
         </div>
         <div className="px-6 py-4 flex items-center justify-end gap-3">
-          <a href={`/calendar/${id}`} className="text-sm text-slate-500 hover:text-foreground/80">Cancel</a>
+          <a href={`/calendar/${id}`} className="text-sm text-muted-foreground hover:text-foreground/80">Cancel</a>
           <button type="submit" disabled={saving}
             className="px-5 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors">
             {saving ? 'Saving…' : 'Save Changes'}

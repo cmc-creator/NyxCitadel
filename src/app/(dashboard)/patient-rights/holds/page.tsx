@@ -67,14 +67,14 @@ export default async function InvoluntaryHoldsPage() {
 
       <div className="space-y-3">
         {holds.length === 0 ? (
-          <div className="rounded-xl border border-white/10 bg-slate-800/50 p-8 text-center text-slate-500 text-sm">No involuntary holds on record.</div>
+          <div className="rounded-xl border border-white/10 bg-slate-800/50 p-8 text-center text-muted-foreground text-sm">No involuntary holds on record.</div>
         ) : holds.map(h => (
           <div key={h.id} className={`rounded-xl border p-4 ${h.status === 'ACTIVE' && !h.legalCounselNotified ? 'border-red-500/30 bg-red-500/5' : 'border-white/10 bg-slate-800/50'}`}>
             <div className="flex items-start justify-between">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-bold text-white">{h.patientInitials}</span>
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[h.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[h.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                     {statusConfig[h.status]?.label ?? h.status}
                   </span>
                   {!h.legalCounselNotified && h.status === 'ACTIVE' && (

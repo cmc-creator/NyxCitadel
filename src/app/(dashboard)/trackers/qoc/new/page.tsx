@@ -88,14 +88,14 @@ export default function NewQocPage() {
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <Link href="/trackers/qoc" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-foreground/80 mb-3">
+        <Link href="/trackers/qoc" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground/80 mb-3">
           <ArrowLeft className="w-4 h-4" /> Back to QOC Tracker
         </Link>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Scale className="w-6 h-6 text-teal-600" />
           Log QOC / LOI Complaint
         </h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           CMS 42 CFR 488 - Quality of Care complaint or Letter of Investigation received
         </p>
       </div>

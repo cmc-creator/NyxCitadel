@@ -67,7 +67,7 @@ export default async function HaiPage() {
                   <p className="font-semibold text-white text-sm">{m.haiType.replace(/_/g, ' ')}</p>
                   {above ? <TrendingUp className="w-4 h-4 text-red-400" /> : <TrendingDown className="w-4 h-4 text-emerald-400" />}
                 </div>
-                <p className="text-xs text-slate-500 mb-3">{m.reportMonth}/{m.reportYear}</p>
+                <p className="text-xs text-muted-foreground mb-3">{m.reportMonth}/{m.reportYear}</p>
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-xs"><span className="text-muted-foreground/70">Cases</span><span className="font-semibold text-white">{m.caseCount}</span></div>
                   <div className="flex justify-between text-xs"><span className="text-muted-foreground/70">Rate / 1000 pt-days</span><span className={`font-semibold ${above ? 'text-red-400' : 'text-emerald-400'}`}>{m.rate != null ? m.rate.toFixed(1) : '—'}</span></div>
@@ -79,7 +79,7 @@ export default async function HaiPage() {
           })}
         </div>
       ) : (
-        <div className="text-center py-12 text-slate-500">
+        <div className="text-center py-12 text-muted-foreground">
           <Activity className="w-10 h-10 mx-auto mb-3 opacity-30" />
           <p className="text-sm">No HAI surveillance data on record.</p>
         </div>
@@ -105,7 +105,7 @@ export default async function HaiPage() {
                   <td className="px-4 py-2.5 text-slate-300 font-medium text-xs">{row.mth}/{row.year}</td>
                   {Array.from(new Set(records.map(r => r.haiType))).map(t => {
                     const cnt = row.counts[t] ?? 0;
-                    return <td key={t} className={`px-4 py-2.5 text-xs font-semibold ${cnt > 0 ? 'text-amber-400' : 'text-slate-500'}`}>{cnt}</td>;
+                    return <td key={t} className={`px-4 py-2.5 text-xs font-semibold ${cnt > 0 ? 'text-amber-400' : 'text-muted-foreground'}`}>{cnt}</td>;
                   })}
                 </tr>
               ))}

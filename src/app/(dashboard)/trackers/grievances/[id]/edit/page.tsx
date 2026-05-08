@@ -105,7 +105,7 @@ export default function EditGrievancePage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/trackers/grievances/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/trackers/grievances/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -131,7 +131,7 @@ export default function EditGrievancePage() {
                 type="date"
                 required
                 defaultValue={data.dateReceived ? data.dateReceived.split('T')[0] : ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -141,7 +141,7 @@ export default function EditGrievancePage() {
                 name="severity"
                 required
                 defaultValue={data.severity}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
                 {SEVERITIES.map(s => (
                   <option key={s.value} value={s.value}>{s.label}</option>
@@ -155,7 +155,7 @@ export default function EditGrievancePage() {
                 name="category"
                 required
                 defaultValue={data.category}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
                 <option value="">Select category...</option>
                 {CATEGORIES.map(c => (
@@ -169,7 +169,7 @@ export default function EditGrievancePage() {
               <input
                 name="assignedTo"
                 defaultValue={data.assignedTo ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
           </div>
@@ -181,7 +181,7 @@ export default function EditGrievancePage() {
               required
               rows={4}
               defaultValue={data.summary ?? ''}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+              className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
             />
           </div>
         </div>
@@ -197,7 +197,7 @@ export default function EditGrievancePage() {
                 name="complainantName"
                 required
                 defaultValue={data.complainantName ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -207,7 +207,7 @@ export default function EditGrievancePage() {
                 name="complainantType"
                 required
                 defaultValue={data.complainantType}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
                 <option value="">Select type...</option>
                 {COMPLAINANT_TYPES.map(t => (
@@ -222,7 +222,7 @@ export default function EditGrievancePage() {
                 name="complainantPhone"
                 type="tel"
                 defaultValue={data.complainantPhone ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -232,7 +232,7 @@ export default function EditGrievancePage() {
                 name="complainantEmail"
                 type="email"
                 defaultValue={data.complainantEmail ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
           </div>
@@ -248,7 +248,7 @@ export default function EditGrievancePage() {
               <input
                 name="patientName"
                 defaultValue={data.patientName ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -257,7 +257,7 @@ export default function EditGrievancePage() {
               <input
                 name="patientMRN"
                 defaultValue={data.patientMRN ?? ''}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
           </div>
@@ -272,7 +272,7 @@ export default function EditGrievancePage() {
               type="checkbox"
               checked={reportableToAdhs}
               onChange={e => setReportableToAdhs(e.target.checked)}
-              className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+              className="w-4 h-4 rounded border-border text-purple-600 focus:ring-purple-500"
             />
             <span className="text-sm text-foreground/80">
               Reportable to AZ ADHS (R9-10-211 adverse event or patient rights violation)
@@ -285,7 +285,7 @@ export default function EditGrievancePage() {
               name="notes"
               rows={2}
               defaultValue={data.notes ?? ''}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+              className="w-full rounded-lg border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
             />
           </div>
         </div>
@@ -294,7 +294,7 @@ export default function EditGrievancePage() {
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>
-          <a href={`/trackers/grievances/${id}`} className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-slate-50 transition-colors">
+          <a href={`/trackers/grievances/${id}`} className="py-2.5 px-5 rounded-xl border border-border text-sm font-medium text-foreground/80 hover:bg-muted/20 transition-colors">
             Cancel
           </a>
         </div>

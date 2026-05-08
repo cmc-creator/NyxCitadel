@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 const statusConfig: Record<string, { label: string; classes: string }> = {
   ACTIVE:      { label: 'Active',      classes: 'bg-emerald-100 text-emerald-700' },
   UPDATED:     { label: 'Updated',     classes: 'bg-blue-100 text-blue-700' },
-  DISCHARGED:  { label: 'Discharged',  classes: 'bg-slate-100 text-foreground/80' },
+  DISCHARGED:  { label: 'Discharged',  classes: 'bg-muted/30 text-foreground/80' },
   TRANSFERRED: { label: 'Transferred', classes: 'bg-amber-100 text-amber-700' },
 };
 
@@ -71,9 +71,9 @@ export default async function TreatmentPlansPage() {
           </thead>
           <tbody>
             {plans.length === 0 ? (
-              <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">No treatment plans on record.</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">No treatment plans on record.</td></tr>
             ) : plans.map(p => {
-              const cfg = statusConfig[p.status] ?? { label: p.status, classes: 'bg-slate-100 text-foreground/80' };
+              const cfg = statusConfig[p.status] ?? { label: p.status, classes: 'bg-muted/30 text-foreground/80' };
               return (
                 <tr key={p.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                   <td className="px-4 py-3 text-white font-medium">{p.patientInitials}</td>

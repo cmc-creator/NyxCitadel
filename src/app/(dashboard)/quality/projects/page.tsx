@@ -13,7 +13,7 @@ const STATUS_COLORS: Record<string, string> = {
   MONITORING: 'bg-teal-950/20 text-teal-700',
   COMPLETED: 'bg-green-50 text-green-700',
   SUSPENDED: 'bg-yellow-50 text-yellow-700',
-  CANCELLED: 'bg-slate-100 text-slate-500',
+  CANCELLED: 'bg-muted/30 text-muted-foreground',
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -27,7 +27,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   READMISSIONS: 'bg-indigo-100 text-indigo-700',
   COMPLIANCE: 'bg-teal-100 text-teal-700',
   WORKFORCE: 'bg-pink-100 text-pink-700',
-  OTHER: 'bg-slate-100 text-slate-600',
+  OTHER: 'bg-muted/30 text-muted-foreground',
   THROUGHPUT: 'bg-cyan-100 text-cyan-700',
 };
 
@@ -51,7 +51,7 @@ export default async function QapiProjectsPage() {
             <Target className="w-6 h-6 text-teal-600" />
             QAPI Projects
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">CMS 42 CFR 482.21 · Performance Improvement Projects (PIPs)</p>
+          <p className="text-sm text-muted-foreground mt-0.5">CMS 42 CFR 482.21 · Performance Improvement Projects (PIPs)</p>
         </div>
         <Link
           href="/quality/projects/new"
@@ -65,22 +65,22 @@ export default async function QapiProjectsPage() {
       <div className="grid grid-cols-3 gap-3">
         <div className="bg-card rounded-xl border border-border p-4 text-center">
           <p className="text-3xl font-bold text-blue-600">{active.length}</p>
-          <p className="text-xs text-slate-500 mt-0.5">Active Projects</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Active Projects</p>
         </div>
         <div className="bg-card rounded-xl border border-border p-4 text-center">
           <p className="text-3xl font-bold text-green-600">{completed.length}</p>
-          <p className="text-xs text-slate-500 mt-0.5">Completed</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Completed</p>
         </div>
         <div className="bg-card rounded-xl border border-border p-4 text-center">
           <p className="text-3xl font-bold text-foreground/80">{projects.length}</p>
-          <p className="text-xs text-slate-500 mt-0.5">Total Projects</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Total Projects</p>
         </div>
       </div>
 
       {/* Active projects */}
       {active.length > 0 && (
         <div className="bg-card rounded-xl border border-border overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-100">
+          <div className="px-6 py-4 border-b border-border/30">
             <h2 className="text-base font-semibold text-foreground">Active & Monitoring</h2>
           </div>
           <div className="divide-y divide-slate-50">
@@ -94,7 +94,7 @@ export default async function QapiProjectsPage() {
       {/* Completed */}
       {completed.length > 0 && (
         <div className="bg-card rounded-xl border border-border overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-100">
+          <div className="px-6 py-4 border-b border-border/30">
             <h2 className="text-base font-semibold text-foreground">Completed</h2>
           </div>
           <div className="divide-y divide-slate-50">
@@ -130,11 +130,11 @@ function ProjectRow({ project }: { project: any }) {
           <div className="flex items-center gap-2 flex-wrap">
             <p className="text-sm font-semibold text-foreground">{project.title}</p>
             <span className="text-xs text-muted-foreground/70 font-mono">{project.projectNumber}</span>
-            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${CATEGORY_COLORS[project.category] ?? 'bg-slate-100 text-slate-600'}`}>
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${CATEGORY_COLORS[project.category] ?? 'bg-muted/30 text-muted-foreground'}`}>
               {project.category.replace(/_/g, ' ')}
             </span>
           </div>
-          <p className="text-xs text-slate-600 mt-1 line-clamp-2">{project.problemStatement}</p>
+          <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{project.problemStatement}</p>
           <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground/70">
             <span>Owner: {project.owner ?? '-'}</span>
             <span>Target: {formatDate(new Date(project.targetDate), 'MMM d, yyyy')}</span>

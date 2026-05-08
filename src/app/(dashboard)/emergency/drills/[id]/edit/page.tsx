@@ -66,7 +66,7 @@ export default function EditDrillPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/emergency/drills/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/emergency/drills/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -80,50 +80,50 @@ export default function EditDrillPage() {
       <form key={data.id} onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Drill Name *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Drill Name *</label>
             <input name="drillName" required defaultValue={data.drillName ?? ''} className="form-input w-full" placeholder="e.g. Q1 Fire Drill – Day Shift – Unit 3B" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Drill Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Drill Type *</label>
               <select name="drillType" required defaultValue={data.drillType ?? ''} className="form-input w-full">
                 <option value="">Select type…</option>
                 {DRILL_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Scheduled Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Scheduled Date *</label>
               <input name="scheduledDate" type="date" required defaultValue={data.scheduledDate?.split('T')[0] ?? ''} className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Location / Units</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Location / Units</label>
             <input name="location" defaultValue={data.location ?? ''} className="form-input w-full" placeholder="e.g. All units, Unit 3B" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Scenario Description</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Scenario Description</label>
             <textarea name="scenario" rows={3} defaultValue={data.scenario ?? ''} className="form-input w-full"
               placeholder="Describe the emergency scenario that will be simulated…" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Learning Objectives</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Learning Objectives</label>
             <textarea name="objectives" rows={3} defaultValue={data.objectives ?? ''} className="form-input w-full"
               placeholder="What competencies will this drill test?" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Expected Participant Count</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Expected Participant Count</label>
               <input name="participantCount" type="number" min="1" defaultValue={data.participantCount ?? ''} className="form-input w-full" placeholder="e.g. 24" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Observer / Evaluator</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Observer / Evaluator</label>
               <input name="observer" defaultValue={data.observer ?? ''} className="form-input w-full" placeholder="Name and title" />
             </div>
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/emergency/drills/${id}`} className="px-4 py-2 text-sm text-slate-600">Cancel</a>
+          <a href={`/emergency/drills/${id}`} className="px-4 py-2 text-sm text-muted-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

@@ -66,7 +66,7 @@ export default function EditCapPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/trackers/caps/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/trackers/caps/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -80,19 +80,19 @@ export default function EditCapPage() {
       <form key={data.id} onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">CAP Title *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">CAP Title *</label>
             <input name="title" required defaultValue={data.title} className="form-input w-full" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Source *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Source *</label>
               <select name="source" required defaultValue={data.source} className="form-input w-full">
                 <option value="">Select source…</option>
                 {SOURCES.map(s => <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Priority *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Priority *</label>
               <select name="priority" required defaultValue={data.priority} className="form-input w-full">
                 <option value="">Select priority…</option>
                 {PRIORITY_LEVELS.map(p => <option key={p} value={p}>{p}</option>)}
@@ -100,20 +100,20 @@ export default function EditCapPage() {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Problem Description *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Problem Description *</label>
             <textarea name="description" required rows={4} defaultValue={data.description ?? ''} className="form-input w-full" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Measure of Success</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Measure of Success</label>
             <textarea name="measureOfSuccess" rows={2} defaultValue={data.measureOfSuccess ?? ''} className="form-input w-full" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Target Date *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Target Date *</label>
             <input name="targetDate" type="date" required defaultValue={data.targetDate ? data.targetDate.split('T')[0] : ''} className="form-input w-full max-w-xs" />
           </div>
         </div>
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/trackers/caps/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href={`/trackers/caps/${id}`} className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

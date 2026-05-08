@@ -15,7 +15,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   EM_PLAN:     'bg-orange-100 text-orange-700',
   TRAINING:    'bg-green-100 text-green-700',
   REGULATORY:  'bg-red-100 text-red-700',
-  OTHER:       'bg-slate-100 text-foreground/80',
+  OTHER:       'bg-muted/30 text-foreground/80',
 };
 
 export default async function DocumentsPage() {
@@ -35,7 +35,7 @@ export default async function DocumentsPage() {
             <FileText className="w-6 h-6 text-teal-600" />
             Document Library
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             Policies, procedures, emergency plans, training materials, and regulatory documents.
           </p>
         </div>
@@ -81,8 +81,8 @@ export default async function DocumentsPage() {
                       {doc.category.replace(/_/g, ' ')}
                     </span>
                   </td>
-                  <td className="data-table-td text-sm text-slate-600">{doc.uploadedBy ?? '-'}</td>
-                  <td className="data-table-td text-sm text-slate-600">
+                  <td className="data-table-td text-sm text-muted-foreground">{doc.uploadedBy ?? '-'}</td>
+                  <td className="data-table-td text-sm text-muted-foreground">
                     {new Date(doc.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </td>
                   <td className="data-table-td">
@@ -98,7 +98,7 @@ export default async function DocumentsPage() {
                           href={doc.fileUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-foreground/80"
+                          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground/80"
                         >
                           <Download className="w-3.5 h-3.5" /> Download
                         </a>

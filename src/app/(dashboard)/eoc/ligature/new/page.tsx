@@ -48,14 +48,14 @@ export default function NewLigatureItemPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <Link href="/eoc/ligature" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-400 mb-3">
+        <Link href="/eoc/ligature" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-400 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Ligature Risk
         </Link>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ShieldAlert className="w-6 h-6 text-amber-400" />
           Add Ligature Risk Item
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">TJC EC.02.06.01 — Document identified ligature point with risk level and mitigation plan.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">TJC EC.02.06.01 — Document identified ligature point with risk level and mitigation plan.</p>
       </div>
 
       {error && (
@@ -67,7 +67,7 @@ export default function NewLigatureItemPage() {
           <h2 className="text-sm font-semibold text-foreground">Item Details</h2>
 
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Item Description *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Item Description *</label>
             <input
               name="itemDescription"
               required
@@ -78,17 +78,17 @@ export default function NewLigatureItemPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Location *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Location *</label>
               <input name="location" required className="form-input w-full" placeholder="e.g. Room 118 – Bathroom" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Unit / Zone</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit / Zone</label>
               <input name="unit" className="form-input w-full" placeholder="e.g. Acute Adult Unit" />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Risk Level *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Risk Level *</label>
             <select name="riskLevel" required className="form-input w-full">
               <option value="">Select…</option>
               {RISK_LEVELS.map(r => (
@@ -107,16 +107,16 @@ export default function NewLigatureItemPage() {
           <h2 className="text-sm font-semibold text-foreground">Identification</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Identified Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Identified Date *</label>
               <input name="identifiedDate" type="date" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Identified By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Identified By *</label>
               <input name="identifiedBy" required className="form-input w-full" placeholder="Name / Role" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Target Resolution Date</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Target Resolution Date</label>
             <input name="targetDate" type="date" className="form-input w-full" />
           </div>
         </div>
@@ -124,7 +124,7 @@ export default function NewLigatureItemPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Mitigation</h2>
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Mitigation Plan</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Mitigation Plan</label>
             <textarea
               name="mitigationPlan"
               rows={3}
@@ -133,7 +133,7 @@ export default function NewLigatureItemPage() {
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
             <textarea name="notes" rows={2} className="form-input w-full" placeholder="Additional context, vendor contacts, interim controls…" />
           </div>
         </div>

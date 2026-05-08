@@ -115,12 +115,12 @@ export default async function QualityPage() {
             <Activity className="w-6 h-6 text-teal-600" />
             Quality / QAPI
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             CMS 42 CFR 482.21 · JC PI.01.01.01 · Quality Assessment & Performance Improvement
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-slate-600 border border-border px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors">
+          <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground border border-border px-3 py-1.5 rounded-lg hover:bg-muted/20 transition-colors">
             <BarChart2 className="w-4 h-4" /> Enter Metrics
           </Link>
           <Link href="/quality/projects/new" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
@@ -132,17 +132,17 @@ export default async function QualityPage() {
       {/* Top stat cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-card rounded-xl border border-border p-4">
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Open CAPs</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Open CAPs</p>
           <p className="text-3xl font-bold mt-1 text-orange-600">{openCaps}</p>
           <Link href="/trackers/caps" className="text-xs text-muted-foreground/70 hover:text-teal-600">View CAPs →</Link>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">CAP Completion</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">CAP Completion</p>
           <p className="text-3xl font-bold mt-1 text-green-600">{capCompletionPct}%</p>
           <p className="text-xs text-muted-foreground/70">{closedCaps} of {totalCaps} closed</p>
         </div>
         <div className="bg-card rounded-xl border border-border p-4">
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Active QAPI Projects</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Active QAPI Projects</p>
           <p className="text-3xl font-bold mt-1 text-teal-600">{activeProjects}</p>
           <Link href="/quality/projects" className="text-xs text-muted-foreground/70 hover:text-teal-600">View projects →</Link>
         </div>
@@ -163,7 +163,7 @@ export default async function QualityPage() {
             : null;
           return (
             <div key={key} className="bg-card rounded-xl border border-border p-4">
-              <p className="text-xs font-medium text-slate-500">{info.label}</p>
+              <p className="text-xs font-medium text-muted-foreground">{info.label}</p>
               {m ? (
                 <>
                   <p className={`text-2xl font-bold mt-1 ${isGood === true ? 'text-green-600' : isGood === false ? 'text-red-600' : 'text-foreground/80'}`}>
@@ -187,7 +187,7 @@ export default async function QualityPage() {
 
       {/* Required QAPI indicators checklist */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-border/30 flex items-center justify-between">
           <h2 className="text-base font-semibold text-foreground flex items-center gap-2">
             <Target className="w-5 h-5 text-teal-600" />
             Standard HBIPS Quality Indicators

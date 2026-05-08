@@ -95,7 +95,7 @@ export default function SiteSearchPage() {
           <FileSearch className="w-6 h-6 text-teal-600" />
           Site Search
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Search records across compliance modules, trackers, governance, and operations.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Search records across compliance modules, trackers, governance, and operations.</p>
       </div>
 
       <form onSubmit={onSubmit} className="bg-card rounded-xl border border-border p-4">
@@ -106,43 +106,43 @@ export default function SiteSearchPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search incidents, CAPs, policies, training, surveys..."
-            className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-full pl-9 pr-4 py-2 text-sm bg-muted/20 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
       </form>
 
       {q.length < 2 ? (
-        <div className="bg-card rounded-xl border border-border p-8 text-sm text-slate-500 text-center">
+        <div className="bg-card rounded-xl border border-border p-8 text-sm text-muted-foreground text-center">
           Enter at least 2 characters to search.
         </div>
       ) : loading ? (
-        <div className="bg-card rounded-xl border border-border p-8 text-sm text-slate-500 text-center">
+        <div className="bg-card rounded-xl border border-border p-8 text-sm text-muted-foreground text-center">
           Searching for “{q}”...
         </div>
       ) : error ? (
         <div className="bg-red-950/20 border border-red-200 rounded-xl p-4 text-sm text-red-700">{error}</div>
       ) : data.total === 0 ? (
-        <div className="bg-card rounded-xl border border-border p-8 text-sm text-slate-500 text-center">
+        <div className="bg-card rounded-xl border border-border p-8 text-sm text-muted-foreground text-center">
           No results for “{q}”.
         </div>
       ) : (
         <div className="space-y-4">
-          <div className="text-sm text-slate-500">
+          <div className="text-sm text-muted-foreground">
             {data.total} result{data.total === 1 ? '' : 's'} in {totalGroups} group{totalGroups === 1 ? '' : 's'} for “{q}”
           </div>
 
           {data.results.map((group) => (
             <div key={group.label} className="bg-card rounded-xl border border-border overflow-hidden">
-              <div className="px-4 py-2.5 border-b border-slate-100 bg-slate-50">
+              <div className="px-4 py-2.5 border-b border-border/30 bg-muted/20">
                 <h2 className="text-sm font-semibold text-foreground/80">{group.label}</h2>
               </div>
               <ul className="divide-y divide-border/30">
                 {group.items.map((item) => (
                   <li key={`${group.label}-${item.id}`}>
-                    <Link href={item.href} className="px-4 py-3 flex items-start justify-between gap-3 hover:bg-slate-50 transition-colors">
+                    <Link href={item.href} className="px-4 py-3 flex items-start justify-between gap-3 hover:bg-muted/20 transition-colors">
                       <div className="min-w-0">
                         <p className="text-sm font-medium text-foreground truncate">{item.title}</p>
-                        <p className="text-xs text-slate-500 mt-0.5 truncate">{item.meta}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5 truncate">{item.meta}</p>
                       </div>
                       <ExternalLink className="w-4 h-4 text-muted-foreground/70 flex-shrink-0 mt-0.5" />
                     </Link>

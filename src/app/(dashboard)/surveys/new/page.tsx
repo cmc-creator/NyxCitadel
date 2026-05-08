@@ -83,14 +83,14 @@ export default function NewSurveyPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/surveys" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/surveys" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Surveys &amp; Inspections
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ClipboardList className="w-6 h-6 text-teal-600" />
           Add Survey / Inspection
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
+        <p className="text-sm text-muted-foreground mt-0.5">
           Log regulatory surveys, accreditation visits, complaint investigations, and mock surveys.
         </p>
       </div>
@@ -106,7 +106,7 @@ export default function NewSurveyPage() {
           <h2 className="text-sm font-semibold text-foreground">Survey Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Survey Type *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Survey Type *</label>
               <select name="surveyType" required className="form-input w-full">
                 <option value="">Select type…</option>
                 {SURVEY_TYPES.map(([v, l]) => (
@@ -115,7 +115,7 @@ export default function NewSurveyPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body *</label>
               <select name="regulatoryBody" required className="form-input w-full">
                 <option value="">Select body…</option>
                 {REGULATORY_BODIES.map(([v, l]) => (
@@ -124,7 +124,7 @@ export default function NewSurveyPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Status</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Status</label>
               <select name="status" defaultValue="SCHEDULED" className="form-input w-full">
                 {STATUSES.map(([v, l]) => (
                   <option key={v} value={v}>{l}</option>
@@ -132,12 +132,12 @@ export default function NewSurveyPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Conducted / Survey Date</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Conducted / Survey Date</label>
               <input type="date" name="conductedDate" className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Surveyor Name(s)</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Surveyor Name(s)</label>
             <input name="surveyorNames" className="form-input w-full" placeholder="Names of surveyors present" />
           </div>
         </div>
@@ -147,11 +147,11 @@ export default function NewSurveyPage() {
           <h2 className="text-sm font-semibold text-foreground">Findings &amp; Response</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Number of Findings</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Number of Findings</label>
               <input type="number" name="findingCount" min="0" className="form-input w-full" placeholder="0" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Response Deadline</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Response Deadline</label>
               <input type="date" name="responseDeadline" className="form-input w-full" />
             </div>
           </div>

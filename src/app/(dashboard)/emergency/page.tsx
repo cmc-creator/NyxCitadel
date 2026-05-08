@@ -64,7 +64,7 @@ export default async function EmergencyManagementPage() {
             <Siren className="w-6 h-6 text-teal-400" />
             Emergency Management
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             HVA · Drills &amp; Exercises · Plans · Joint Commission EM Standards
           </p>
         </div>
@@ -81,7 +81,7 @@ export default async function EmergencyManagementPage() {
           </div>
           <div>
             <p className="font-semibold text-foreground">HVA Assessment</p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-muted-foreground">
               {currentHva
                 ? currentHva.status === 'APPROVED'
                   ? '✅ Complete'
@@ -100,7 +100,7 @@ export default async function EmergencyManagementPage() {
           </div>
           <div>
             <p className="font-semibold text-foreground">Drills &amp; Exercises</p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-muted-foreground">
               {upcomingDrills.length} upcoming · {recentDrills.length} recently completed
             </p>
           </div>
@@ -115,7 +115,7 @@ export default async function EmergencyManagementPage() {
           </div>
           <div>
             <p className="font-semibold text-foreground">EM Plans</p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-muted-foreground">
               {activePlans.length} active plans
             </p>
           </div>
@@ -157,19 +157,19 @@ export default async function EmergencyManagementPage() {
                 {currentHva.status}
               </span>
               {currentHva.completedDate && (
-                <span className="text-sm text-slate-500">
+                <span className="text-sm text-muted-foreground">
                   Completed: {formatDate(currentHva.completedDate)}
                 </span>
               )}
               {currentHva.totalRiskScore !== null && (
-                <span className="text-sm text-slate-500">
+                <span className="text-sm text-muted-foreground">
                   Overall Risk Score: <span className="font-semibold text-foreground">{currentHva.totalRiskScore.toFixed(1)}</span>
                 </span>
               )}
             </div>
             {currentHva.hazards.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
                   Top Risk Hazards (by Risk Score)
                 </p>
                 <div className="space-y-2">

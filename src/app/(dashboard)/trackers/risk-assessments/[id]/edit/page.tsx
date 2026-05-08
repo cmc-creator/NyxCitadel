@@ -154,7 +154,7 @@ export default function EditRiskAssessmentPage() {
   return (
     <div className="max-w-4xl space-y-6">
       <div>
-        <a href={`/trackers/risk-assessments/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/trackers/risk-assessments/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -174,13 +174,13 @@ export default function EditRiskAssessmentPage() {
             <h2 className="text-sm font-semibold text-foreground">Assessment Information</h2>
 
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Assessment Title *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Assessment Title *</label>
               <input name="title" required defaultValue={data.title} className="form-input w-full" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">Assessment Type *</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Assessment Type *</label>
                 <select name="assessmentType" required defaultValue={data.assessmentType} className="form-input w-full">
                   <option value="">Select type…</option>
                   {ASSESSMENT_TYPES.map(t => (
@@ -189,19 +189,19 @@ export default function EditRiskAssessmentPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">Scope / Area Assessed</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Scope / Area Assessed</label>
                 <input name="scope" defaultValue={data.scope ?? ''} className="form-input w-full" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">Date Conducted</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Date Conducted</label>
                 <input name="conductedDate" type="date" defaultValue={data.conductedDate ? data.conductedDate.split('T')[0] : ''} className="form-input w-full" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">Conducted By</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Conducted By</label>
                 <input name="conductedBy" defaultValue={data.conductedBy ?? ''} className="form-input w-full" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">Regulatory Body</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body</label>
                 <select name="regulatoryBody" defaultValue={data.regulatoryBody ?? ''} className="form-input w-full">
                   <option value="">Select…</option>
                   {REGULATORY_BODIES.map(r => (
@@ -210,17 +210,17 @@ export default function EditRiskAssessmentPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">Standard Reference</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Standard Reference</label>
                 <input name="standardRef" defaultValue={data.standardRef ?? ''} className="form-input w-full" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">Next Review Date</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Next Review Date</label>
                 <input name="nextReviewDate" type="date" defaultValue={data.nextReviewDate ? data.nextReviewDate.split('T')[0] : ''} className="form-input w-full" />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Executive Summary</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Executive Summary</label>
               <textarea name="summary" rows={3} defaultValue={data.summary ?? ''} className="form-input w-full resize-none" />
             </div>
           </div>
@@ -231,7 +231,7 @@ export default function EditRiskAssessmentPage() {
           <div className="px-6 py-4 flex items-center justify-between">
             <div>
               <h2 className="text-sm font-semibold text-foreground">Risk Identification Matrix</h2>
-              <p className="text-xs text-slate-500 mt-0.5">Score = Likelihood (1-5) × Severity (1-5). Critical ≥20 · High ≥12 · Medium ≥6 · Low 1-5</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Score = Likelihood (1-5) × Severity (1-5). Critical ≥20 · High ≥12 · Medium ≥6 · Low 1-5</p>
             </div>
             <button
               type="button"
@@ -274,7 +274,7 @@ export default function EditRiskAssessmentPage() {
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pl-8">
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-1">Category</label>
+                      <label className="block text-xs font-medium text-muted-foreground mb-1">Category</label>
                       <select
                         value={item.category}
                         onChange={e => updateItem(item.id, 'category', e.target.value)}
@@ -284,7 +284,7 @@ export default function EditRiskAssessmentPage() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-1">Likelihood (1-5)</label>
+                      <label className="block text-xs font-medium text-muted-foreground mb-1">Likelihood (1-5)</label>
                       <select
                         value={item.likelihood}
                         onChange={e => updateItem(item.id, 'likelihood', Number(e.target.value))}
@@ -298,7 +298,7 @@ export default function EditRiskAssessmentPage() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-1">Severity (1-5)</label>
+                      <label className="block text-xs font-medium text-muted-foreground mb-1">Severity (1-5)</label>
                       <select
                         value={item.severity}
                         onChange={e => updateItem(item.id, 'severity', Number(e.target.value))}
@@ -312,7 +312,7 @@ export default function EditRiskAssessmentPage() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-1">Assigned To</label>
+                      <label className="block text-xs font-medium text-muted-foreground mb-1">Assigned To</label>
                       <input
                         value={item.assignedTo}
                         onChange={e => updateItem(item.id, 'assignedTo', e.target.value)}
@@ -324,7 +324,7 @@ export default function EditRiskAssessmentPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pl-8">
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-1">Current Controls</label>
+                      <label className="block text-xs font-medium text-muted-foreground mb-1">Current Controls</label>
                       <textarea
                         value={item.currentControls}
                         onChange={e => updateItem(item.id, 'currentControls', e.target.value)}
@@ -334,7 +334,7 @@ export default function EditRiskAssessmentPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-1">Recommended Actions</label>
+                      <label className="block text-xs font-medium text-muted-foreground mb-1">Recommended Actions</label>
                       <textarea
                         value={item.recommendedActions}
                         onChange={e => updateItem(item.id, 'recommendedActions', e.target.value)}
@@ -344,7 +344,7 @@ export default function EditRiskAssessmentPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-1">Target Date</label>
+                      <label className="block text-xs font-medium text-muted-foreground mb-1">Target Date</label>
                       <input
                         type="date"
                         value={item.targetDate}
@@ -370,12 +370,12 @@ export default function EditRiskAssessmentPage() {
 
         {/* Notes */}
         <div className="bg-card rounded-xl border border-border px-6 py-5">
-          <label className="block text-xs font-medium text-slate-600 mb-1">Additional Notes</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Additional Notes</label>
           <textarea name="notes" rows={3} defaultValue={data.notes ?? ''} className="form-input w-full resize-none" />
         </div>
 
         <div className="flex items-center justify-end gap-3">
-          <a href={`/trackers/risk-assessments/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href={`/trackers/risk-assessments/${id}`} className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button
             type="submit"
             disabled={saving}

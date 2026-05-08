@@ -78,9 +78,9 @@ export default async function RestraintSeclusionPage() {
           </thead>
           <tbody>
             {events.length === 0 ? (
-              <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">No restraint/seclusion events on record.</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">No restraint/seclusion events on record.</td></tr>
             ) : events.map(e => {
-              const cfg = statusConfig[e.status] ?? { label: e.status, classes: 'bg-slate-100 text-foreground/80' };
+              const cfg = statusConfig[e.status] ?? { label: e.status, classes: 'bg-muted/30 text-foreground/80' };
               return (
                 <tr key={e.id} className={`border-b border-white/5 hover:bg-white/5 transition-colors ${e.deathOccurred ? 'bg-red-500/5' : ''}`}>
                   <td className="px-4 py-3 text-slate-300">{e.eventNumber}</td>

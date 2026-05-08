@@ -75,7 +75,7 @@ export default async function ControlledSubstancesPage() {
           </thead>
           <tbody className="divide-y divide-white/5">
             {logs.length === 0 ? (
-              <tr><td colSpan={9} className="text-center py-8 text-slate-500 text-sm">No controlled substance log entries.</td></tr>
+              <tr><td colSpan={9} className="text-center py-8 text-muted-foreground text-sm">No controlled substance log entries.</td></tr>
             ) : logs.map(l => (
               <tr key={l.id} className={`hover:bg-white/5 transition-colors ${l.discrepancyFound ? 'bg-red-500/5' : ''}`}>
                 <td className="px-3 py-3 text-muted-foreground/70 text-xs">{l.logDate.toLocaleDateString()}</td>
@@ -87,11 +87,11 @@ export default async function ControlledSubstancesPage() {
                 </td>
                 <td className="px-3 py-3 text-slate-300 text-xs">{l.amountExpected}</td>
                 <td className="px-3 py-3 text-slate-300 text-xs">{l.amountCounted}</td>
-                <td className={`px-3 py-3 font-bold text-xs ${l.countDifference !== 0 ? 'text-red-400' : 'text-slate-500'}`}>
+                <td className={`px-3 py-3 font-bold text-xs ${l.countDifference !== 0 ? 'text-red-400' : 'text-muted-foreground'}`}>
                   {l.countDifference !== 0 ? `−${Math.abs(l.countDifference)}` : '0'}
                 </td>
                 <td className="px-3 py-3">
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[l.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[l.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                     {statusConfig[l.status]?.label ?? l.status}
                   </span>
                 </td>

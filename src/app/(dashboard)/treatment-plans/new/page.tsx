@@ -47,14 +47,14 @@ export default function NewTreatmentPlanPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/treatment-plans" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+        <a href="/treatment-plans" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Treatment Plans
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <ClipboardList className="w-6 h-6 text-rose-600" />
           New Treatment Plan
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">Treatment goals are added after creation on the plan detail page.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Treatment goals are added after creation on the plan detail page.</p>
       </div>
 
       {error && <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>}
@@ -64,25 +64,25 @@ export default function NewTreatmentPlanPage() {
           <h2 className="text-sm font-semibold text-foreground">Patient &amp; Admission</h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Patient Initials *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Patient Initials *</label>
               <input name="patientInitials" type="text" required maxLength={6} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">MRN</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MRN</label>
               <input name="patientMrn" type="text" className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Unit *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit *</label>
               <input name="unit" type="text" required className="form-input w-full" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Admit Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Admit Date *</label>
               <input name="admitDate" type="date" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Primary Diagnosis *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Primary Diagnosis *</label>
               <input name="primaryDx" type="text" required className="form-input w-full" />
             </div>
           </div>
@@ -92,16 +92,16 @@ export default function NewTreatmentPlanPage() {
           <h2 className="text-sm font-semibold text-foreground">Plan Creation</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Plan Created Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Plan Created Date *</label>
               <input name="planCreatedDate" type="date" required className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Plan Created By *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Plan Created By *</label>
               <input name="planCreatedBy" type="text" required className="form-input w-full" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Treatment Team (one member per line) *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Treatment Team (one member per line) *</label>
             <textarea name="treatmentTeam" rows={4} required className="form-input w-full"
               placeholder="Dr. Jane Smith, MD - Attending&#10;Bob Jones, RN - Primary Nurse&#10;Alice Lee, SW - Social Work" />
           </div>
@@ -114,21 +114,21 @@ export default function NewTreatmentPlanPage() {
             Patient / Legal Representative Participated in Plan Development
           </label>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Participation Notes</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Participation Notes</label>
             <textarea name="participationNotes" rows={2} className="form-input w-full" placeholder="If patient unable to participate, document reason…" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Discharge Goal</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Discharge Goal</label>
             <textarea name="dischargeGoal" rows={2} className="form-input w-full" placeholder="Patient will be discharged to home with home health support…" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Estimated Length of Stay</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Estimated Length of Stay</label>
             <input name="estimatedLos" type="text" className="form-input w-full" placeholder="e.g. 5-7 days" />
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href="/treatment-plans" className="px-4 py-2 text-sm rounded-lg border border-border text-slate-600 hover:bg-slate-50">Cancel</a>
+          <a href="/treatment-plans" className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-muted/20">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm rounded-lg bg-rose-600 text-white hover:bg-rose-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Create Plan'}
           </button>

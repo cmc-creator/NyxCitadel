@@ -48,7 +48,7 @@ export default async function CapsPage({
             <ClipboardList className="w-6 h-6 text-teal-600" />
             Corrective Action Plans
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-muted-foreground mt-0.5">
             {caps.length} total · {overdueCount} overdue
           </p>
         </div>

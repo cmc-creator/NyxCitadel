@@ -39,7 +39,7 @@ export default async function CredentialingPage() {
     ACTIVE:      { label: 'Active',      color: 'bg-emerald-100 text-emerald-700' },
     PENDING:     { label: 'Pending',     color: 'bg-amber-100 text-amber-700' },
     SUSPENDED:   { label: 'Suspended',   color: 'bg-red-100 text-red-700' },
-    RESIGNED:    { label: 'Resigned',    color: 'bg-slate-100 text-slate-600' },
+    RESIGNED:    { label: 'Resigned',    color: 'bg-muted/30 text-muted-foreground' },
     EXPIRED:     { label: 'Expired',     color: 'bg-red-100 text-red-700' },
     REVOKED:     { label: 'Revoked',     color: 'bg-red-100 text-red-700' },
   };
@@ -113,7 +113,7 @@ export default async function CredentialingPage() {
                   <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full ${m.badgeColor}`}>{m.badge}</span>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-indigo-400 transition-colors" />
+              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-indigo-400 transition-colors" />
             </div>
             <p className="text-xs text-muted-foreground/70 mb-3">{m.description}</p>
             <p className={`text-sm font-semibold ${m.statColor}`}>{m.stat}</p>
@@ -138,7 +138,7 @@ export default async function CredentialingPage() {
           </thead>
           <tbody className="divide-y divide-white/5">
             {activeProviders.length === 0 ? (
-              <tr><td colSpan={6} className="text-center py-8 text-slate-500 text-sm">No active providers on record.</td></tr>
+              <tr><td colSpan={6} className="text-center py-8 text-muted-foreground text-sm">No active providers on record.</td></tr>
             ) : activeProviders.map(p => (
               <tr key={p.id} className="hover:bg-white/5">
                 <td className="px-4 py-2.5 font-semibold text-white text-xs">{p.lastName}, {p.firstName}</td>
@@ -147,7 +147,7 @@ export default async function CredentialingPage() {
                 <td className="px-4 py-2.5 text-muted-foreground/70 text-xs">{p.providerType.replace(/_/g, ' ')}</td>
                 <td className="px-4 py-2.5 text-muted-foreground/70 text-xs">{p.reappointmentDate ? p.reappointmentDate.toLocaleDateString() : '—'}</td>
                 <td className="px-4 py-2.5">
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[p.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[p.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                     {statusConfig[p.status]?.label ?? p.status}
                   </span>
                 </td>

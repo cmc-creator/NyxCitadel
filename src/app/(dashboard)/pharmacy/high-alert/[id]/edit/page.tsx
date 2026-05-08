@@ -63,7 +63,7 @@ export default function EditHighAlertAuditPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href={`/pharmacy/high-alert/${id}`} className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
+        <a href={`/pharmacy/high-alert/${id}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Record
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -79,24 +79,24 @@ export default function EditHighAlertAuditPage() {
           <h2 className="text-sm font-semibold text-foreground">Audit Info</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Audit Date *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Audit Date *</label>
               <input name="auditDate" type="date" required className="form-input w-full"
                 defaultValue={data.auditDate ? data.auditDate.split('T')[0] : ''} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Auditor *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Auditor *</label>
               <input name="auditor" type="text" required className="form-input w-full"
                 defaultValue={data.auditor ?? ''} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Medication *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Medication *</label>
               <input name="medication" type="text" required className="form-input w-full"
                 defaultValue={data.medication ?? ''} placeholder="e.g. Heparin, Insulin" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Unit / Location *</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Unit / Location *</label>
               <input name="unit" type="text" required className="form-input w-full"
                 defaultValue={data.unit ?? ''} />
             </div>
@@ -124,7 +124,7 @@ export default function EditHighAlertAuditPage() {
 
         <div className="px-6 py-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Audit Findings</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Audit Findings</label>
             <textarea name="auditFindings" rows={2} className="form-input w-full"
               defaultValue={data.auditFindings ?? ''} placeholder="Observations, gaps, concerns…" />
           </div>
@@ -134,14 +134,14 @@ export default function EditHighAlertAuditPage() {
             Action Required
           </label>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Action Taken</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Action Taken</label>
             <textarea name="actionTaken" rows={2} className="form-input w-full"
               defaultValue={data.actionTaken ?? ''} />
           </div>
         </div>
 
         <div className="px-6 py-4 flex justify-end gap-3">
-          <a href={`/pharmacy/high-alert/${id}`} className="px-4 py-2 text-sm text-slate-600 hover:text-foreground">Cancel</a>
+          <a href={`/pharmacy/high-alert/${id}`} className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
           <button type="submit" disabled={saving} className="px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
             {saving ? 'Saving…' : 'Save Changes'}
           </button>

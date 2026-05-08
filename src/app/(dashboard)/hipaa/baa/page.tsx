@@ -97,7 +97,7 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
           </thead>
           <tbody className="divide-y divide-white/5">
             {baas.length === 0 ? (
-              <tr><td colSpan={6} className="text-center py-8 text-slate-500 text-sm">No BAAs on record.</td></tr>
+              <tr><td colSpan={6} className="text-center py-8 text-muted-foreground text-sm">No BAAs on record.</td></tr>
             ) : baas.map(b => {
               const daysLeft = b.expiryDate
                 ? Math.ceil((b.expiryDate.getTime() - now.getTime()) / 86400000)
@@ -108,11 +108,11 @@ export default async function BaaPage({ searchParams }: { searchParams: { filter
                   <td className="px-4 py-3 text-muted-foreground/70 text-xs">{b.serviceDescription}</td>
                   <td className="px-4 py-3 text-muted-foreground/70 text-xs">{b.agreementDate.toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{b.expiryDate ? b.expiryDate.toLocaleDateString() : '—'}</td>
-                  <td className={`px-4 py-3 font-bold text-xs ${daysLeft == null ? 'text-slate-500' : daysLeft <= 0 ? 'text-red-400' : daysLeft <= 90 ? 'text-amber-400' : 'text-muted-foreground/70'}`}>
+                  <td className={`px-4 py-3 font-bold text-xs ${daysLeft == null ? 'text-muted-foreground' : daysLeft <= 0 ? 'text-red-400' : daysLeft <= 90 ? 'text-amber-400' : 'text-muted-foreground/70'}`}>
                     {daysLeft == null ? '—' : daysLeft <= 0 ? `${Math.abs(daysLeft)}d overdue` : `${daysLeft}d`}
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[b.status]?.color ?? 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[b.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                       {statusConfig[b.status]?.label ?? b.status}
                     </span>
                   </td>
