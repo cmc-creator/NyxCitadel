@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import {
-  UserCircle, CheckCircle2, AlertCircle, Loader2, Eye, EyeOff, X, LogOut,
+  UserCircle, CheckCircle2, AlertCircle, Loader2, Eye, EyeOff, X, LogOut, Phone,
 } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 
@@ -42,6 +42,8 @@ interface ProfileData {
   role: string;
   title: string | null;
   department: string | null;
+  phone: string | null;
+  smsEnabled: boolean;
 }
 
 const ROLE_LABELS: Record<string, string> = {
@@ -67,7 +69,7 @@ export default function ProfilePage() {
   const [flash, setFlash]       = useState<{ type: 'ok' | 'err'; msg: string } | null>(null);
 
   const [form, setForm] = useState({
-    name: '', title: '', department: '', password: '', confirmPassword: '',
+    name: '', title: '', department: '', password: '', confirmPassword: '', phone: '', smsEnabled: false,
   });
 
   const load = useCallback(async (id: string) => {
@@ -82,6 +84,8 @@ export default function ProfilePage() {
         name:       data.name ?? '',
         title:      data.title ?? '',
         department: data.department ?? '',
+        phone:      data.phone ?? '',
+        smsEnabled: data.smsEnabled,
       }));
     } finally {
       setLoading(false);
@@ -101,10 +105,12 @@ export default function ProfilePage() {
     setSaving(true);
     setFlash(null);
     try {
-      const body: Record<string, string> = {
+      const body: Record<string, unknown> = {
         name:       form.name,
         title:      form.title,
         department: form.department,
+        phone:      form.phone || null,
+        smsEnabled: form.smsEnabled,
       };
       if (form.password) body.password = form.password;
 
@@ -122,7 +128,7 @@ export default function ProfilePage() {
 
       const updated = await res.json() as ProfileData;
       setProfile(updated);
-      setForm(f => ({ ...f, password: '', confirmPassword: '' }));
+      setForm(f => ({ ...f, password: '', confirmPassword: '', phone: updated.phone ?? '', smsEnabled: updated.smsEnabled }));
       setFlash({ type: 'ok', msg: 'Profile updated. Sign out and back in if you changed your department to refresh the dashboard panel.' });
     } finally {
       setSaving(false);
@@ -215,6 +221,53 @@ export default function ProfilePage() {
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
           Save Changes
+        </button>
+      </div>
+
+      {/* SMS Alerts */}
+      <div className="bg-card border border-border rounded-xl p-6 space-y-4">
+        <h2 className="text-base font-semibold text-foreground">SMS Alerts</h2>
+        <p className="text-xs text-muted-foreground/70">
+          Receive a text message when new compliance alerts are generated. Requires Twilio to be configured by your administrator.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-medium text-foreground/80 mb-1">Mobile Phone Number</label>
+            <div className="relative">
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/50" />
+              <input
+                className="w-full border border-border rounded-lg pl-9 pr-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-teal-500"
+                value={form.phone}
+                onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                placeholder="+1 (555) 000-0000"
+                type="tel"
+              />
+            </div>
+            <p className="text-xs text-muted-foreground/60 mt-1">Include country code, e.g. +1 for US.</p>
+          </div>
+          <div className="flex flex-col justify-end">
+            <label className="flex items-center gap-3 cursor-pointer select-none">
+              <div
+                onClick={() => setForm(f => ({ ...f, smsEnabled: !f.smsEnabled }))}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${form.smsEnabled ? 'bg-teal-600' : 'bg-border'}`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${form.smsEnabled ? 'translate-x-6' : 'translate-x-1'}`}
+                />
+              </div>
+              <span className="text-sm font-medium text-foreground">
+                {form.smsEnabled ? 'SMS alerts enabled' : 'SMS alerts disabled'}
+              </span>
+            </label>
+          </div>
+        </div>
+        <button
+          onClick={save}
+          disabled={saving}
+          className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-semibold px-5 py-2 rounded-lg transition"
+        >
+          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
+          Save SMS Settings
         </button>
       </div>
 

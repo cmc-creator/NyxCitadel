@@ -158,6 +158,8 @@ model User {
   department    String?
   isActive      Boolean   @default(true)
   lastLoginAt   DateTime?
+  phone         String?
+  smsEnabled    Boolean   @default(false)
   facilityId    String
   facility      Facility  @relation(fields: [facilityId], references: [id])
   createdAt     DateTime  @default(now())

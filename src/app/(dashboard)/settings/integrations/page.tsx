@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plug, CheckCircle2, Clock, ExternalLink, AlertCircle } from 'lucide-react';
+import { Plug, CheckCircle2, Clock, ExternalLink, AlertCircle, Copy, Check, Calendar } from 'lucide-react';
 
 interface Integration {
   key: string;
@@ -89,6 +89,24 @@ const INTEGRATIONS: Integration[] = [
     logoText: 'Chat',
     logoColor: 'bg-slate-400',
   },
+  {
+    key: 'ical',
+    name: 'Calendar Sync (iCal / Outlook)',
+    description: 'Subscribe to your compliance calendar in Outlook, Google Calendar, or Apple Calendar. Copy the feed URL below and add it as a subscribed calendar.',
+    category: 'Integrations',
+    status: 'available',
+    logoText: 'CAL',
+    logoColor: 'bg-teal-600',
+  },
+  {
+    key: 'twilio',
+    name: 'SMS Alerts (Twilio)',
+    description: 'Receive SMS text alerts for critical compliance items such as open sentinel events and overdue CAPs. Configure Twilio credentials in your environment, then enable SMS in your profile.',
+    category: 'Notifications',
+    status: 'available',
+    logoText: 'SMS',
+    logoColor: 'bg-purple-600',
+  },
 ];
 
 const STATUS_CONFIG = {
@@ -116,7 +134,24 @@ const CATEGORIES = ['All', ...Array.from(new Set(INTEGRATIONS.map(i => i.categor
 
 export default function IntegrationsPage() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [icalUrl, setIcalUrl] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    fetch('/api/calendar/ical-url')
+      .then(r => r.json())
+      .then(d => { if (d.url) setIcalUrl(d.url); })
+      .catch(() => {});
+  }, []);
+
+  function copyIcalUrl() {
+    if (!icalUrl) return;
+    navigator.clipboard.writeText(icalUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
 
   const filtered = INTEGRATIONS.filter(
     i => activeCategory === 'All' || i.category === activeCategory
@@ -180,6 +215,37 @@ export default function IntegrationsPage() {
                 <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                   {integration.description}
                 </p>
+
+                {/* iCal feed URL widget */}
+                {integration.key === 'ical' && (
+                  <div className="mt-3">
+                    {icalUrl ? (
+                      <div className="flex items-center gap-2">
+                        <input
+                          readOnly
+                          value={icalUrl}
+                          className="flex-1 text-xs bg-muted/40 border border-border rounded-lg px-3 py-1.5 text-muted-foreground font-mono truncate focus:outline-none"
+                        />
+                        <button
+                          onClick={copyIcalUrl}
+                          className="flex items-center gap-1 text-xs bg-teal-600 text-white px-2.5 py-1.5 rounded-lg hover:bg-teal-700 transition flex-shrink-0"
+                        >
+                          {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                          {copied ? 'Copied!' : 'Copy'}
+                        </button>
+                      </div>
+                    ) : (
+                      <p className="text-xs text-amber-400/80 flex items-center gap-1">
+                        <AlertCircle className="w-3.5 h-3.5" />
+                        Set <code className="font-mono bg-muted/50 px-1 rounded">ICAL_SECRET</code> in your environment to enable.
+                      </p>
+                    )}
+                    <p className="text-xs text-muted-foreground/60 mt-1.5 flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      Paste into Outlook → Add Calendar → Subscribe from web, or paste in Google Calendar.
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Status / Action */}
@@ -199,12 +265,20 @@ export default function IntegrationsPage() {
                     Docs
                   </a>
                 )}
-                {integration.status === 'available' && (
+                {integration.status === 'available' && integration.key === 'smtp' && (
                   <button
                     onClick={() => router.push('/settings/notifications')}
                     className="text-xs bg-teal-600 text-white px-3 py-1 rounded-lg hover:bg-teal-700 transition"
                   >
                     Configure
+                  </button>
+                )}
+                {integration.status === 'available' && integration.key === 'twilio' && (
+                  <button
+                    onClick={() => router.push('/settings/profile')}
+                    className="text-xs bg-purple-600 text-white px-3 py-1 rounded-lg hover:bg-purple-700 transition"
+                  >
+                    Enable in Profile
                   </button>
                 )}
               </div>

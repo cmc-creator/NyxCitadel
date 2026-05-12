@@ -87,6 +87,13 @@ export const NOTIFICATION_RULE_DEFS: NotificationRuleDefinition[] = [
     defaultEnabled: true,
     defaultDaysAhead: 0,
   },
+  {
+    key: 'REG_UPDATE_NEW',
+    label: 'New Regulatory Updates',
+    description: 'Alert when new regulatory updates are published with CRITICAL or HIGH urgency.',
+    defaultEnabled: true,
+    defaultDaysAhead: 0,
+  },
 ];
 
 export type NotificationRuleKey = (typeof NOTIFICATION_RULE_DEFS)[number]['key'];

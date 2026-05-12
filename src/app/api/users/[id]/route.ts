@@ -26,6 +26,7 @@ export async function GET(
       id: true, name: true, email: true, role: true,
       title: true, department: true, isActive: true,
       lastLoginAt: true, createdAt: true, facilityId: true,
+      phone: true, smsEnabled: true,
     },
   });
 
@@ -67,12 +68,16 @@ export async function PATCH(
     department?: string;
     isActive?: boolean;
     password?: string;
+    phone?: string | null;
+    smsEnabled?: boolean;
   };
 
   const data: Record<string, unknown> = {};
   if (body.name !== undefined)       data.name       = body.name;
   if (body.title !== undefined)      data.title      = body.title;
   if (body.department !== undefined) data.department = body.department;
+  if (body.phone !== undefined)      data.phone      = body.phone;
+  if (body.smsEnabled !== undefined) data.smsEnabled = body.smsEnabled;
   // Only admins can change email, role, and isActive
   if (isAdmin) {
     if (body.email !== undefined) {
@@ -97,6 +102,7 @@ export async function PATCH(
     select: {
       id: true, name: true, email: true, role: true,
       title: true, department: true, isActive: true, lastLoginAt: true, createdAt: true,
+      phone: true, smsEnabled: true,
     },
   });
 

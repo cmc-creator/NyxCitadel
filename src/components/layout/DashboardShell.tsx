@@ -20,9 +20,13 @@ export function DashboardShell({ user, children }: DashboardShellProps) {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
-      <div className="flex-1 lg:ml-64 flex flex-col min-w-0">
-        <TopBar user={user} onMenuToggle={() => setMobileOpen(true)} />
+      <div className="print:hidden">
+        <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
+      </div>
+      <div className="flex-1 lg:ml-64 print:ml-0 flex flex-col min-w-0">
+        <div className="print:hidden">
+          <TopBar user={user} onMenuToggle={() => setMobileOpen(true)} />
+        </div>
         <main className="flex-1 p-4 lg:p-6 overflow-auto">
           {children}
         </main>

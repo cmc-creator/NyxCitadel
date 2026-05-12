@@ -2,6 +2,7 @@ import { UserRole } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { generateComplianceAlerts } from '@/lib/notifications/alertScanner';
 import { sendNotificationEmail } from '@/lib/notifications/email';
+import { sendSms } from '@/lib/sms';
 import { getComplianceDigestEmail } from '@/lib/notifications/email-templates';
 import {
   ALERT_SWEEP_STATUS_TITLE,
@@ -150,6 +151,8 @@ export async function runComplianceAlertSweep(scope: SweepScope = {}) {
       facilityId: true,
       email: true,
       name: true,
+      phone: true,
+      smsEnabled: true,
     },
   });
 
@@ -231,6 +234,12 @@ export async function runComplianceAlertSweep(scope: SweepScope = {}) {
         });
         notificationsCreated += created;
         existingFacility.notificationsCreated += created;
+
+        // SMS: send a brief summary if the user has SMS enabled and alerts were created
+        if (created > 0 && user.smsEnabled && user.phone && !suppressEmails) {
+          const smsBody = `NyxCitadel: ${created} new compliance alert${created === 1 ? '' : 's'} require your attention. Log in to review.`;
+          await sendSms(user.phone, smsBody).catch(() => { /* non-fatal */ });
+        }
       }
 
       usersProcessed += 1;
