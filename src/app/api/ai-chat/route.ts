@@ -7,7 +7,6 @@ import { logAudit } from '@/lib/audit';
 import {
   ActionSuggestion,
   DraftActionRequest,
-  DraftActionType,
   buildActionAuditChanges,
   canRunSentryDraftAction,
   normalizeDraftActionRequest,

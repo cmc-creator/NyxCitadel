@@ -86,11 +86,11 @@ export default function NewRcaPage() {
       environmentFactors:     (f.elements.namedItem('environmentFactors') as HTMLTextAreaElement).value || null,
       processFactors:         (f.elements.namedItem('processFactors') as HTMLTextAreaElement).value || null,
       organizationalFactors:  (f.elements.namedItem('organizationalFactors') as HTMLTextAreaElement).value || null,
-      whyAnalysis:            whyItems.filter(w => w.answer).map(({ id: _id, ...rest }) => rest),
+      whyAnalysis:            whyItems.filter(w => w.answer).map(({ id: _, ...rest }) => rest),
       rootCauses:             (f.elements.namedItem('rootCauses') as HTMLTextAreaElement).value
                                 ? [(f.elements.namedItem('rootCauses') as HTMLTextAreaElement).value]
                                 : null,
-      actionItems:            actionItems.filter(a => a.action).map(({ id: _id, ...rest }) => rest),
+      actionItems:            actionItems.filter(a => a.action).map(({ id: _, ...rest }) => rest),
       conclusion:             (f.elements.namedItem('conclusion') as HTMLTextAreaElement).value || null,
       preventabilityRating:   (f.elements.namedItem('preventabilityRating') as HTMLSelectElement).value || null,
       systemChangesRequired:  (f.elements.namedItem('systemChangesRequired') as HTMLInputElement).checked,

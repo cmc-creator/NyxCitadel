@@ -52,6 +52,7 @@ export default function FacilityMapPage() {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { fetchPlans(); }, []);
 
   async function handleUpload(e: React.FormEvent) {

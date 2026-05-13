@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ShieldAlert, ArrowLeft, Plus, Trash2, AlertTriangle } from 'lucide-react';
+import { ShieldAlert, ArrowLeft, Plus, Trash2 } from 'lucide-react';
 
 const ASSESSMENT_TYPES = [
   { value: 'ANNUAL_PROACTIVE', label: 'Annual Proactive Risk Assessment', ref: 'JC LD.04.04.01', desc: 'Required annually - broad facility-wide risk identification' },

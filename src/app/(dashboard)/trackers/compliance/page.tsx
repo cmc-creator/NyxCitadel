@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
-import { ShieldCheck, Plus, Filter } from 'lucide-react';
+import { ShieldCheck, Plus } from 'lucide-react';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -102,7 +102,7 @@ export default async function ComplianceTrackerPage({
             </thead>
             <tbody className="divide-y divide-border/30">
               {items.map((item) => {
-                const { label, className } = getDueDateStatus(item.nextDueDate);
+                const { className } = getDueDateStatus(item.nextDueDate);
                 return (
                   <tr key={item.id} className="hover:bg-muted/30 transition-colors cursor-pointer">
                     <td className="px-4 py-3">

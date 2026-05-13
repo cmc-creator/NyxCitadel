@@ -7,8 +7,6 @@ import {
   ChevronLeft,
   Calendar,
   User,
-  FileText,
-  CheckCircle2,
   Clock,
   Sparkles,
   Pencil,

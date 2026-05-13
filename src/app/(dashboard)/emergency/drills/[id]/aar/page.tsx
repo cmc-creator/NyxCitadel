@@ -3,10 +3,8 @@ import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
-  FileText,
   ChevronLeft,
   CheckCircle2,
-  AlertTriangle,
   Flag,
   Shield,
 } from 'lucide-react';
@@ -47,7 +45,6 @@ export default async function DrillAARPage({
   const allClears    = drill.drillActions.filter((a) => a.actionType === 'ALL_CLEAR');
   const notifications = drill.drillActions.filter((a) => a.actionType === 'NOTIFICATION');
   const evacuations  = drill.drillActions.filter((a) => a.actionType === 'EVACUATION');
-  const actionTypes  = Array.from(new Set(drill.drillActions.map((a) => a.actionType)));
 
   // Elapsed compute
   const first = drill.drillActions[0]?.timestamp;

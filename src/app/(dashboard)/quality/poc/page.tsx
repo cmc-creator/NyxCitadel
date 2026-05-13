@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import { ClipboardCheck, Plus, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ClipboardCheck, Plus, AlertCircle } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';

@@ -51,6 +51,18 @@ interface Props {
   drillName: string;
 }
 
+interface RawDrillAction {
+  id: string;
+  actionType: string;
+  description: string;
+  severity?: string | null;
+  actor?: string | null;
+  performedBy?: string | null;
+  location?: string | null;
+  timestamp?: string | null;
+  createdAt?: string | null;
+}
+
 //  Constants 
 
 const ACTION_TYPES = [
@@ -93,7 +105,6 @@ export default function DrillWarRoomClient({
   initialKillTasks,
   initialMuster,
   drillStatus,
-  drillName,
 }: Props) {
   const [activeTab, setActiveTab] = useState<'timeline' | 'killtasks' | 'muster'>('timeline');
   const [actions, setActions] = useState<DrillAction[]>(initialActions);
@@ -126,28 +137,28 @@ export default function DrillWarRoomClient({
         ]);
         if (!actRes.ok || !taskRes.ok || !musterRes.ok) return;
 
-        const [rawActions, rawTasks, rawMuster] = await Promise.all([
+        const [rawActions, rawTasks, rawMuster] = (await Promise.all([
           actRes.json(), taskRes.json(), musterRes.json(),
-        ]);
+        ])) as [RawDrillAction[], KillTask[], MusterEntry[]];
 
         // Map DB shape → client interface shape
-        const mappedActions: DrillAction[] = rawActions.map((a: any) => ({
+        const mappedActions: DrillAction[] = rawActions.map((a) => ({
           id:          a.id,
           actionType:  a.actionType,
           description: a.description,
           severity:    a.severity ?? 'LOW',
           performedBy: a.actor ?? a.performedBy ?? null,
           location:    a.location ?? null,
-          createdAt:   a.timestamp ?? a.createdAt,
+          createdAt:   a.timestamp ?? a.createdAt ?? '',
         }));
 
         // Only update if counts changed (avoid flicker when nothing new)
         if (mappedActions.length !== actionsRef.current.length) setActions(mappedActions);
-        if (rawTasks.length !== killTasksRef.current.length || rawTasks.some((t: any, i: number) => {
+        if (rawTasks.length !== killTasksRef.current.length || rawTasks.some((t, i: number) => {
           const ex = killTasksRef.current[i];
           return !ex || t.completedAt !== ex.completedAt || t.isMissed !== ex.isMissed;
         })) setKillTasks(rawTasks);
-        if (rawMuster.length !== musterRef.current.length || rawMuster.some((e: any, i: number) => {
+        if (rawMuster.length !== musterRef.current.length || rawMuster.some((e, i: number) => {
           const ex = musterRef.current[i];
           return !ex || e.status !== ex.status;
         })) setMuster(rawMuster);
@@ -326,7 +337,7 @@ export default function DrillWarRoomClient({
         ].map(({ key, label, icon: Icon, count }) => (
           <button
             key={key}
-            onClick={() => setActiveTab(key as any)}
+            onClick={() => setActiveTab(key as 'timeline' | 'killtasks' | 'muster')}
             className={`flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-medium transition-colors ${
               activeTab === key
                 ? 'text-white border-b-2 border-teal-500 bg-slate-800'
@@ -442,6 +453,7 @@ export default function DrillWarRoomClient({
               </div>
               <div className="flex items-center gap-4 px-4 pb-3">
                 <div className="w-16 h-16 bg-white rounded-lg overflow-hidden flex-shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={qrUrl(`${baseUrl}/drill-task/${task.qrToken}`)} alt="Task QR" className="w-16 h-16 object-contain" loading="lazy" />
                 </div>
                 <div className="text-xs text-muted-foreground/70 space-y-0.5">
@@ -521,6 +533,7 @@ export default function DrillWarRoomClient({
           {muster.map((entry) => (
             <div key={entry.id} className="bg-slate-800 border border-slate-700 rounded-xl flex gap-3 p-3 items-start">
               <div className="w-14 h-14 bg-white rounded-lg flex-shrink-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={qrUrl(`${baseUrl}/drill-muster/${entry.qrToken}`)} alt="Muster QR" className="w-14 h-14 object-contain" loading="lazy" />
               </div>
               <div className="flex-1 min-w-0">

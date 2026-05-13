@@ -2,10 +2,9 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
-  Activity, Plus, TrendingUp, AlertTriangle, CheckCircle2,
-  ClipboardList, BarChart2, Target,
+  Activity, Plus, CheckCircle2,
+  BarChart2, Target,
 } from 'lucide-react';
-import { formatDate } from '@/lib/utils';
 import { QapiOverviewCharts } from './overview-charts';
 
 export const dynamic = 'force-dynamic';
@@ -19,7 +18,6 @@ export default async function QualityPage() {
   const facilityId = session!.user.facilityId;
   const now = new Date();
   const thisYear = now.getFullYear();
-  const thisMonth = now.getMonth() + 1;
 
   // Fetch stats in parallel
   const [

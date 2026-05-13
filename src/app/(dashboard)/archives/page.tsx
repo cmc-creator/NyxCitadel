@@ -394,7 +394,7 @@ export default async function ArchivesPage({
       {/* Audit notes footer */}
       <div className="bg-card border border-border rounded-xl p-4 text-xs text-muted-foreground space-y-1">
         <p className="font-semibold text-slate-300">Audit Documentation Notes</p>
-        <p>• All records are stored in NyxCitadel and retrievable by regulators on request. Use the "View Full Records →" links above to navigate to each domain&apos;s complete record set.</p>
+        <p>• All records are stored in NyxCitadel and retrievable by regulators on request. Use the &quot;View Full Records →&quot; links above to navigate to each domain&apos;s complete record set.</p>
         <p>• For regulatory surveys (ADHS, AHCCCS, CMS), printed or exported records from each tracker page include all required fields, dates, and chain-of-custody information.</p>
         <p>• For insurance / provider audits (UHC, BCBS, Aetna, etc.), combine this summary with the CAPs and Training records for credentialing submissions.</p>
         <p>• Sentinel events require: original IR, completed RCA (within 45 days per JC), and linked CAP. Use the IR&nbsp;→&nbsp;RCA&nbsp;→&nbsp;CAP links in each tracker to verify completeness.</p>

@@ -65,7 +65,7 @@ export default function NewPocPage() {
       coverLetter:      (f.elements.namedItem('coverLetter') as HTMLTextAreaElement).value || null,
       submittedBy:      (f.elements.namedItem('submittedBy') as HTMLInputElement).value || null,
       notes:            (f.elements.namedItem('notes') as HTMLTextAreaElement).value || null,
-      findings: findings.map(({ id: _id, ...rest }) => rest),
+      findings: findings.map(({ id: _, ...rest }) => rest),
     };
 
     const res = await fetch('/api/poc', {

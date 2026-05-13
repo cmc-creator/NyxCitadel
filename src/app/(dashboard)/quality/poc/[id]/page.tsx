@@ -6,8 +6,6 @@ import {
   ClipboardCheck,
   ChevronLeft,
   Calendar,
-  User,
-  FileText,
   CheckCircle2,
   Circle,
   AlertTriangle,

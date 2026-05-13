@@ -7,7 +7,7 @@ import { logAudit } from '@/lib/audit';
 
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'floor-plans');
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { logAudit } from '@/lib/audit';
+import type { ResponseStatus, ResponseTemplateCategory } from '@prisma/client';
 
 export async function GET(req: NextRequest) {
   const session = await auth();
@@ -14,8 +15,8 @@ export async function GET(req: NextRequest) {
   const responses = await prisma.generatedResponse.findMany({
     where: {
       facilityId: session.user.facilityId,
-      ...(status ? { status: status as any } : {}),
-      ...(category ? { category: category as any } : {}),
+      ...(status ? { status: status as ResponseStatus } : {}),
+      ...(category ? { category: category as ResponseTemplateCategory } : {}),
     },
     include: { template: { select: { name: true, category: true } } },
     orderBy: { createdAt: 'desc' },

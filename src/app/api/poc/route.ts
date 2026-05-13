@@ -3,6 +3,17 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { logAudit } from '@/lib/audit';
 
+interface RawFinding {
+  findingNumber?: string;
+  findingDescription?: string;
+  howCorrected?: string | null;
+  howPrevented?: string | null;
+  howMonitored?: string | null;
+  responsibleParty?: string | null;
+  targetDate?: string | null;
+  evidenceOfCorrection?: string | null;
+}
+
 async function generatePocNumber(facilityId: string): Promise<string> {
   const year = new Date().getFullYear();
   const count = await prisma.planOfCorrection.count({ where: { facilityId } });
@@ -53,7 +64,7 @@ export async function POST(req: NextRequest) {
       notes:                   notes ?? null,
       findings: findings?.length
         ? {
-            create: findings.map((f: any) => ({
+            create: findings.map((f: RawFinding) => ({
               findingNumber:       f.findingNumber ?? '',
               findingDescription:  f.findingDescription ?? '',
               howCorrected:        f.howCorrected ?? null,

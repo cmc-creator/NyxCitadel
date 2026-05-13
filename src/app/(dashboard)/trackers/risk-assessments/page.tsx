@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { ShieldAlert, Plus, ClipboardCheck, Clock, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
+import type { RiskAssessmentType } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
@@ -49,14 +50,14 @@ export default async function RiskAssessmentsPage() {
   });
 
   // Types that are annually required
-  const requiredTypes = ['ANNUAL_PROACTIVE', 'INFECTION_CONTROL', 'IT_SECURITY', 'SECURITY'];
+  const requiredTypes: RiskAssessmentType[] = ['ANNUAL_PROACTIVE', 'INFECTION_CONTROL', 'IT_SECURITY', 'SECURITY'];
   const thisYear = new Date().getFullYear();
   const completedTypesThisYear = new Set(
     assessments
       .filter(a => a.conductedDate && new Date(a.conductedDate).getFullYear() === thisYear)
       .map(a => a.assessmentType)
   );
-  const missingRequired = requiredTypes.filter(t => !completedTypesThisYear.has(t as any));
+  const missingRequired = requiredTypes.filter(t => !completedTypesThisYear.has(t));
 
   return (
     <div className="space-y-6">
@@ -102,7 +103,7 @@ export default async function RiskAssessmentsPage() {
       {/* Required types grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {requiredTypes.map(t => {
-          const done = completedTypesThisYear.has(t as any);
+          const done = completedTypesThisYear.has(t);
           return (
             <div key={t} className={`rounded-xl border p-3 ${done ? 'bg-green-500/10 border-green-500/20' : 'bg-card border-border'}`}>
               {done ? (

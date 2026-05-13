@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import { ArrowLeft, AlertTriangle, Download, ExternalLink } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, ExternalLink } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import { AdhsExportButton } from '@/components/reporting/adhs-export-button';
 

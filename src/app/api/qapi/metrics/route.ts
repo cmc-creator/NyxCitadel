@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
+import type { QapiCategory } from '@prisma/client';
 
 const UpsertSchema = z.object({
   metricName: z.string().min(1),
@@ -30,7 +31,7 @@ export async function GET(req: NextRequest) {
     where: {
       facilityId: session.user.facilityId,
       ...(year ? { year } : {}),
-      ...(category ? { category: category as any } : {}),
+      ...(category ? { category: category as QapiCategory } : {}),
     },
     orderBy: [{ year: 'asc' }, { month: 'asc' }],
   });
@@ -67,7 +68,7 @@ export async function POST(req: NextRequest) {
     create: {
       facilityId,
       ...parsed.data,
-      category: parsed.data.category as any,
+      category: parsed.data.category as QapiCategory,
     },
   });
 

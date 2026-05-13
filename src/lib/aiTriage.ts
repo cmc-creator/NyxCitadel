@@ -55,7 +55,7 @@ export function computeTriage(params: {
   unitName?: string;
   recentSameTypeCount?: number; // How many same-type incidents in same unit last 60 days
 }): TriageResult {
-  const { incidentType, severity, adhsReportable, jcReportable, unitName, recentSameTypeCount = 0 } = params;
+  const { incidentType, severity, adhsReportable, jcReportable, recentSameTypeCount = 0 } = params;
 
   const tags: string[] = [];
   let level: TriageSeverity = 'LOW';

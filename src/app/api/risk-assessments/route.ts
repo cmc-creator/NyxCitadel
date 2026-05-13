@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
+import type { RiskLevel, RiskAssessmentType, RegulatoryBody } from '@prisma/client';
 
 const CreateSchema = z.object({
   title: z.string().min(1),
@@ -27,21 +28,21 @@ const CreateSchema = z.object({
   })).optional().default([]),
 });
 
-function calcRiskLevel(score: number): string {
+function calcRiskLevel(score: number): RiskLevel {
   if (score >= 20) return 'CRITICAL';
   if (score >= 12) return 'HIGH';
   if (score >= 6)  return 'MEDIUM';
   return 'LOW';
 }
 
-function calcPriority(score: number): string {
+function calcPriority(score: number): RiskLevel {
   if (score >= 20) return 'CRITICAL';
   if (score >= 12) return 'HIGH';
   if (score >= 6)  return 'MEDIUM';
   return 'LOW';
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const session = await auth();
   if (!session?.user?.facilityId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
@@ -72,8 +73,8 @@ export async function POST(req: NextRequest) {
     return {
       ...item,
       riskScore: score,
-      riskLevel: calcRiskLevel(score) as any,
-      priority: calcPriority(score) as any,
+      riskLevel: calcRiskLevel(score),
+      priority: calcPriority(score),
       targetDate: item.targetDate ? new Date(item.targetDate) : undefined,
     };
   });
@@ -85,17 +86,17 @@ export async function POST(req: NextRequest) {
     data: {
       facilityId: session.user.facilityId,
       title: rest.title,
-      assessmentType: rest.assessmentType as any,
+      assessmentType: rest.assessmentType as RiskAssessmentType,
       scope: rest.scope,
       conductedDate: conductedDate ? new Date(conductedDate) : undefined,
       conductedBy: rest.conductedBy,
-      regulatoryBody: rest.regulatoryBody as any ?? undefined,
+      regulatoryBody: rest.regulatoryBody as RegulatoryBody | undefined,
       standardRef: rest.standardRef,
       nextReviewDate: nextReviewDate ? new Date(nextReviewDate) : undefined,
       summary: rest.summary,
       notes: rest.notes,
       status: 'IN_PROGRESS',
-      overallRiskLevel: maxScore > 0 ? calcRiskLevel(maxScore) as any : undefined,
+      overallRiskLevel: maxScore > 0 ? calcRiskLevel(maxScore) : undefined,
       items: { create: builtItems },
     },
     include: { items: true },

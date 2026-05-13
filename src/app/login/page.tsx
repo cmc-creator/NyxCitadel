@@ -152,7 +152,7 @@ function LoginForm() {
             </div>
           </div>
           <h1 className="text-4xl xl:text-5xl font-extrabold text-white leading-tight mb-5">
-            Your facility's{' '}
+            Your facility&apos;s{' '}
             <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
               compliance command center
             </span>

@@ -66,7 +66,6 @@ export default async function GrievancesPage({
   const open = grievances.filter(g => g.status !== 'CLOSED' && g.status !== 'RESOLVED');
   const overdueAck = open.filter(g => !g.acknowledgmentDate && g.acknowledgmentDueDate < now);
   const overdueRes = open.filter(g => !g.resolutionDate && g.resolutionDueDate < now);
-  const sentinel  = open.filter(g => g.severity === 'SENTINEL');
 
   return (
     <div className="space-y-6">

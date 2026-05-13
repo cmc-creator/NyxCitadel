@@ -79,7 +79,7 @@ export default async function ResilienceScorecardPage() {
   }
 
   // Drill average score
-  const drillScores = recentDrills.map((d: any) => grade12ToScore(d.resilienceGrade ?? 'F'));
+  const drillScores = recentDrills.map((d) => grade12ToScore(d.resilienceGrade ?? 'F'));
   const drillAvgScore = drillScores.length > 0
     ? Math.round(drillScores.reduce((a: number, b: number) => a + b, 0) / drillScores.length)
     : null;

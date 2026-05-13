@@ -766,6 +766,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
   ];
 
   const createdIncidents: Record<string, string> = {};
+  type IncExtra = { staffInvolved?: boolean; reportedToState?: boolean; stateReportDate?: Date | null; closedDate?: Date | null };
   for (const inc of incidents) {
     const record = await prisma.incident.create({
       data: {
@@ -778,13 +779,13 @@ Destiny Springs Healthcare | Peoria, AZ`,
         description: inc.description,
         immediateActions: inc.immediateActions,
         patientInvolved: inc.patientInvolved ?? false,
-        staffInvolved: (inc as any).staffInvolved ?? false,
+        staffInvolved: (inc as IncExtra).staffInvolved ?? false,
         correctionRequired: inc.correctionRequired,
         reportableToState: inc.reportableToState,
-        reportedToState: (inc as any).reportedToState ?? false,
-        stateReportDate: (inc as any).stateReportDate ?? null,
+        reportedToState: (inc as IncExtra).reportedToState ?? false,
+        stateReportDate: (inc as IncExtra).stateReportDate ?? null,
         status: inc.status,
-        closedDate: (inc as any).closedDate ?? null,
+        closedDate: (inc as IncExtra).closedDate ?? null,
       },
     });
     createdIncidents[inc.incidentNumber] = record.id;
@@ -943,6 +944,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
     },
   ];
 
+  type GrievExtra = { complainantPhone?: string | null; patientName?: string | null; patientMRN?: string | null; acknowledgmentDate?: Date | null; acknowledgmentSentBy?: string | null; resolutionDate?: Date | null; resolutionSentBy?: string | null; resolution?: string | null; outcomeCategory?: string | null };
   for (const g of grievances) {
     await prisma.grievanceRecord.create({
       data: {
@@ -951,22 +953,22 @@ Destiny Springs Healthcare | Peoria, AZ`,
         dateReceived: g.dateReceived,
         complainantName: g.complainantName,
         complainantType: g.complainantType,
-        complainantPhone: (g as any).complainantPhone ?? null,
-        patientName: (g as any).patientName ?? null,
-        patientMRN: (g as any).patientMRN ?? null,
+        complainantPhone: (g as GrievExtra).complainantPhone ?? null,
+        patientName: (g as GrievExtra).patientName ?? null,
+        patientMRN: (g as GrievExtra).patientMRN ?? null,
         summary: g.summary,
         category: g.category,
         severity: g.severity,
         assignedTo: g.assignedTo,
         acknowledgmentDueDate: g.acknowledgmentDueDate,
         resolutionDueDate: g.resolutionDueDate,
-        acknowledgmentDate: (g as any).acknowledgmentDate ?? null,
-        acknowledgmentSentBy: (g as any).acknowledgmentSentBy ?? null,
-        resolutionDate: (g as any).resolutionDate ?? null,
-        resolutionSentBy: (g as any).resolutionSentBy ?? null,
+        acknowledgmentDate: (g as GrievExtra).acknowledgmentDate ?? null,
+        acknowledgmentSentBy: (g as GrievExtra).acknowledgmentSentBy ?? null,
+        resolutionDate: (g as GrievExtra).resolutionDate ?? null,
+        resolutionSentBy: (g as GrievExtra).resolutionSentBy ?? null,
         status: g.status,
-        resolution: (g as any).resolution ?? null,
-        outcomeCategory: (g as any).outcomeCategory ?? null,
+        resolution: (g as GrievExtra).resolution ?? null,
+        outcomeCategory: (g as GrievExtra).outcomeCategory ?? null,
         reportableToAdhs: g.reportableToAdhs,
       },
     });
@@ -1108,6 +1110,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
     },
   ];
 
+  type IrExtra = { injuryDescription?: string | null; patientName?: string | null; patientMRN?: string | null; staffInvolvedNames?: string | null; physicianNotifiedTime?: string | null; supervisorNotifiedTime?: string | null; familyNotified?: boolean; adhsReportableCategory?: string | null; adhsReported?: boolean; adhsReportDate?: Date | null; adhsConfirmationNumber?: string | null; closedDate?: Date | null; aiCascadeTriggered?: boolean };
   for (const ir of irRecords) {
     await prisma.incidentReport.create({
       data: {
@@ -1120,26 +1123,26 @@ Destiny Springs Healthcare | Peoria, AZ`,
         location: ir.location,
         unitName: ir.unitName,
         briefDescription: ir.briefDescription,
-        injuryDescription: (ir as any).injuryDescription ?? null,
+        injuryDescription: (ir as IrExtra).injuryDescription ?? null,
         immediateActions: ir.immediateActions,
-        patientName: (ir as any).patientName ?? null,
-        patientMRN: (ir as any).patientMRN ?? null,
-        staffInvolvedNames: (ir as any).staffInvolvedNames ?? null,
+        patientName: (ir as IrExtra).patientName ?? null,
+        patientMRN: (ir as IrExtra).patientMRN ?? null,
+        staffInvolvedNames: (ir as IrExtra).staffInvolvedNames ?? null,
         physicianNotified: ir.physicianNotified,
-        physicianNotifiedTime: (ir as any).physicianNotifiedTime ?? null,
+        physicianNotifiedTime: (ir as IrExtra).physicianNotifiedTime ?? null,
         supervisorNotified: ir.supervisorNotified,
-        supervisorNotifiedTime: (ir as any).supervisorNotifiedTime ?? null,
-        familyNotified: (ir as any).familyNotified ?? false,
+        supervisorNotifiedTime: (ir as IrExtra).supervisorNotifiedTime ?? null,
+        familyNotified: (ir as IrExtra).familyNotified ?? false,
         adhsReportable: ir.adhsReportable,
-        adhsReportableCategory: (ir as any).adhsReportableCategory ?? null,
-        adhsReported: (ir as any).adhsReported ?? false,
-        adhsReportDate: (ir as any).adhsReportDate ?? null,
-        adhsConfirmationNumber: (ir as any).adhsConfirmationNumber ?? null,
+        adhsReportableCategory: (ir as IrExtra).adhsReportableCategory ?? null,
+        adhsReported: (ir as IrExtra).adhsReported ?? false,
+        adhsReportDate: (ir as IrExtra).adhsReportDate ?? null,
+        adhsConfirmationNumber: (ir as IrExtra).adhsConfirmationNumber ?? null,
         status: ir.status,
-        closedDate: (ir as any).closedDate ?? null,
+        closedDate: (ir as IrExtra).closedDate ?? null,
         aiTriageSeverity: ir.aiTriageSeverity,
         aiTriageTags: ir.aiTriageTags,
-        aiCascadeTriggered: (ir as any).aiCascadeTriggered ?? false,
+        aiCascadeTriggered: (ir as IrExtra).aiCascadeTriggered ?? false,
       },
     });
   }

@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
+import type { QapiCategory, RegulatoryBody } from '@prisma/client';
 
 const CreateSchema = z.object({
   title: z.string().min(1),
@@ -23,7 +24,7 @@ const CreateSchema = z.object({
   relatedMetricKey: z.string().optional(),
 });
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const session = await auth();
   if (!session?.user?.facilityId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
@@ -54,7 +55,7 @@ export async function POST(req: NextRequest) {
       facilityId,
       projectNumber,
       title: parsed.data.title,
-      category: parsed.data.category as any,
+      category: parsed.data.category as QapiCategory,
       problemStatement: parsed.data.problemStatement,
       aim: parsed.data.aim,
       measure: parsed.data.measure,
@@ -66,7 +67,7 @@ export async function POST(req: NextRequest) {
       team: parsed.data.team,
       startDate: new Date(parsed.data.startDate),
       targetDate: new Date(parsed.data.targetDate),
-      regulatoryBody: parsed.data.regulatoryBody as any ?? undefined,
+      regulatoryBody: parsed.data.regulatoryBody as RegulatoryBody | undefined,
       standardRef: parsed.data.standardRef,
       relatedMetricKey: parsed.data.relatedMetricKey,
       status: 'ACTIVE',

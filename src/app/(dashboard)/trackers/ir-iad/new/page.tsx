@@ -95,8 +95,8 @@ export default function NewIrIadPage() {
         throw new Error(data.error ?? 'Save failed');
       }
       router.push('/trackers/ir-iad');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Save failed');
     } finally {
       setSaving(false);
     }

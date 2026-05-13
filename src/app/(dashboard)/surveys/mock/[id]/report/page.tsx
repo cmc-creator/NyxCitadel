@@ -2,7 +2,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ClipboardCheck, ArrowLeft, FileText, CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, FileText, CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import { CHAPTER_LABELS } from '@/lib/jc-standards';
 import { BulkCreatePocsButton } from '@/components/mock-survey/bulk-create-pocs-button';
@@ -15,10 +15,6 @@ export async function generateMetadata({ params }: Props) {
   const survey = await prisma.mockSurvey.findFirst({ where: { id: params.id }, select: { title: true } });
   return { title: survey ? `Report: ${survey.title}` : 'Survey Report' };
 }
-
-const SCORE_LABEL: Record<string, string> = {
-  MET: 'Met', NOT_MET: 'Not Met', NOT_APPLICABLE: 'N/A', NOT_EVALUATED: 'Not Evaluated',
-};
 
 export default async function SurveyReportPage({ params }: Props) {
   const session = await auth();

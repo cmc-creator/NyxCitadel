@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { BookOpen, ArrowLeft, Wand2, RefreshCw } from 'lucide-react';
+import { BookOpen, ArrowLeft, RefreshCw } from 'lucide-react';
 
 interface Template {
   id: string;
@@ -36,7 +36,6 @@ export default function NewResponsePage() {
   const [body, setBody] = useState('');
   const [subject, setSubject] = useState('');
   const [saving, setSaving] = useState(false);
-  const [generating, setGenerating] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -183,7 +182,7 @@ export default function NewResponsePage() {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-teal-600">Fill values above and click "Apply to Letter" to substitute them in the body.</p>
+            <p className="text-xs text-teal-600">Fill values above and click &quot;Apply to Letter&quot; to substitute them in the body.</p>
           </div>
         )}
 

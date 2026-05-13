@@ -1,7 +1,8 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import { Activity, Plus, Target, CheckCircle2, Clock, AlertTriangle } from 'lucide-react';
+import type { QapiProject } from '@prisma/client';
+import { Plus, Target, AlertTriangle } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
@@ -119,9 +120,8 @@ export default async function QapiProjectsPage() {
   );
 }
 
-function ProjectRow({ project }: { project: any }) {
+function ProjectRow({ project }: { project: QapiProject }) {
   const isOverdue = project.status !== 'COMPLETED' && new Date(project.targetDate) < new Date();
-  const progress = project.baselineValue !== null && project.targetValue !== null;
 
   return (
     <Link href={`/quality/projects/${project.id}`} className="block px-6 py-4 hover:bg-accent/50 transition-colors">

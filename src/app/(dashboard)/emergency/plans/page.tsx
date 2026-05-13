@@ -128,7 +128,7 @@ export default async function EmergencyPlansPage() {
               plans.map((plan) => {
                 const isOverdue =
                   plan.nextReviewDate && isPast(plan.nextReviewDate) && plan.status === 'ACTIVE';
-                const { label, className } = getDueDateStatus(plan.nextReviewDate);
+                const { className } = getDueDateStatus(plan.nextReviewDate);
                 return (
                   <tr key={plan.id} className="hover:bg-accent/50 transition-colors cursor-pointer">
                     <td className="px-4 py-3">

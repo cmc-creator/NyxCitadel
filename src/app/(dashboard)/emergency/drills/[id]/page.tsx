@@ -62,7 +62,7 @@ export default async function DrillDetailPage({
   const actionCount  = drill.drillActions.length;
 
   // Serialize for client component
-  const serializedKillTasks = drill.killTasks.map((t: any) => ({
+  const serializedKillTasks = drill.killTasks.map((t) => ({
     id:              t.id,
     taskName:        t.taskName,
     assignedRole:    t.assignedRole,
@@ -75,7 +75,7 @@ export default async function DrillDetailPage({
     isMissed:        t.isMissed,
   }));
 
-  const serializedMuster = drill.musterEntries.map((e: any) => ({
+  const serializedMuster = drill.musterEntries.map((e) => ({
     id:          e.id,
     staffName:   e.staffName,
     staffRole:   e.staffRole,
@@ -140,12 +140,12 @@ export default async function DrillDetailPage({
               <FileText className="w-3.5 h-3.5" /> View AAR
             </Link>
           )}
-          {(drill as any).resilienceGrade && (
+          {drill.resilienceGrade && (
             <Link
               href={`/emergency/drills/${drill.id}/scorecard`}
               className="inline-flex items-center gap-1 text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg transition-colors"
             >
-              <CheckCircle2 className="w-3.5 h-3.5" /> Scorecard ({(drill as any).resilienceGrade})
+              <CheckCircle2 className="w-3.5 h-3.5" /> Scorecard ({drill.resilienceGrade})
             </Link>
           )}
         </div>

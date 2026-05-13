@@ -33,6 +33,11 @@ const sections: { href: string; title: string; description: string; soon?: boole
     title: 'Integrations',
     description: 'Connect to HR / LMS systems for automatic training record sync.',
   },
+  {
+    href: '/settings/regulatory-updates',
+    title: 'Regulatory Update Alerts',
+    description: 'View monitored regulatory sources and configure urgency alert thresholds.',
+  },
 ];
 
 export default function SettingsPage() {

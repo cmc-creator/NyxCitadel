@@ -5,7 +5,6 @@ import {
   Siren,
   ShieldAlert,
   BookOpen,
-  CalendarDays,
   Plus,
   CheckCircle2,
   Clock,

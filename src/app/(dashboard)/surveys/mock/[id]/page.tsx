@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
-import { JC_STANDARDS, getChapter } from '@/lib/jc-standards';
+import { JC_STANDARDS } from '@/lib/jc-standards';
 import { TracerClient } from '@/components/mock-survey/tracer-client';
 
 export const dynamic = 'force-dynamic';

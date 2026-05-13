@@ -10,7 +10,7 @@ interface Toast {
 }
 
 // Simple singleton store for toasts
-let toastListeners: ((toasts: Toast[]) => void)[] = [];
+const toastListeners: ((toasts: Toast[]) => void)[] = [];
 let currentToasts: Toast[] = [];
 
 function notifyListeners() {
@@ -41,13 +41,6 @@ export function toast({
 
 export function useToast() {
   const [toasts, setToasts] = useState<Toast[]>(currentToasts);
-
-  const subscribe = useCallback(() => {
-    toastListeners.push(setToasts);
-    return () => {
-      toastListeners = toastListeners.filter((fn) => fn !== setToasts);
-    };
-  }, []);
 
   // Subscribe on mount
   if (typeof window !== 'undefined' && !toastListeners.includes(setToasts)) {

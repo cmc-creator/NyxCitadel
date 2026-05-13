@@ -24,7 +24,6 @@ export default async function BoardReportPage() {
   const facilityId = session!.user.facilityId;
 
   const since90   = new Date(Date.now() - 90  * 24 * 60 * 60 * 1000);
-  const since60   = new Date(Date.now() - 60  * 24 * 60 * 60 * 1000);
   const now       = new Date();
   const in90      = new Date(Date.now() + 90  * 24 * 60 * 60 * 1000);
   const yearStart = new Date(now.getFullYear(), 0, 1);

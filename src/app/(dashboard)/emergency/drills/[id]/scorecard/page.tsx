@@ -15,16 +15,6 @@ function gradeToColor(grade: string): string {
   return 'text-red-600';
 }
 
-function gradeScore(grade: string): number {
-  const map: Record<string, number> = {
-    'A+': 98, A: 94, 'A-': 91,
-    'B+': 88, B: 84, 'B-': 81,
-    'C+': 78, C: 74, 'C-': 71,
-    'D+': 68, D: 61, F: 50,
-  };
-  return map[grade] ?? 0;
-}
-
 function scoreToGrade(score: number): string {
   if (score >= 97) return 'A+';
   if (score >= 93) return 'A';
@@ -62,8 +52,8 @@ export default async function DrillScorecardPage({ params }: { params: { id: str
 
   if (!drill) notFound();
 
-  const ghostedStaff = drill.musterEntries.filter((e: any) => e.status === 'GHOSTED');
-  const presentStaff = drill.musterEntries.filter((e: any) => e.status === 'PRESENT');
+  const ghostedStaff = drill.musterEntries.filter((e) => e.status === 'GHOSTED');
+  const presentStaff = drill.musterEntries.filter((e) => e.status === 'PRESENT');
 
   // Re-derive metric grades
   const evacuationScore = drill.evacuationSeconds != null
@@ -153,7 +143,7 @@ export default async function DrillScorecardPage({ params }: { params: { id: str
               Drill underperformance detected. Automated &ldquo;Evacuation Protocol&rdquo; refresher training
               has been assigned to{' '}
               <strong>{ghostedStaff.length} &ldquo;Ghosted&rdquo; employee{ghostedStaff.length !== 1 ? 's' : ''}</strong>
-              : {ghostedStaff.map((g: any) => g.staffName).join(', ')}.{' '}
+              {ghostedStaff.map((g) => g.staffName).join(', ')}.{' '}
               <strong>Deadline: 48 hours.</strong>
             </p>
           </div>
@@ -226,12 +216,12 @@ export default async function DrillScorecardPage({ params }: { params: { id: str
             <p className="font-semibold text-foreground/80 text-sm">Staff Accountability Detail</p>
             <p className="text-xs text-muted-foreground/70 mt-0.5">
               {presentStaff.length} Accounted · {ghostedStaff.length} Ghosted ·{' '}
-              {drill.musterEntries.filter((e: any) => e.status === 'EXCUSED').length} Excused ·{' '}
-              {drill.musterEntries.filter((e: any) => e.status === 'UNACCOUNTED').length} Unaccounted
+              {drill.musterEntries.filter((e) => e.status === 'EXCUSED').length} Excused ·{' '}
+              {drill.musterEntries.filter((e) => e.status === 'UNACCOUNTED').length} Unaccounted
             </p>
           </div>
           <div className="divide-y divide-border/30">
-            {drill.musterEntries.map((entry: any) => (
+            {drill.musterEntries.map((entry) => (
               <div key={entry.id} className="flex items-center justify-between px-5 py-3 text-sm">
                 <div>
                   <p className="font-medium text-foreground">{entry.staffName}</p>
@@ -250,12 +240,12 @@ export default async function DrillScorecardPage({ params }: { params: { id: str
           <div className="px-5 py-3 border-b border-border/30 bg-muted/30">
             <p className="font-semibold text-foreground/80 text-sm">Critical Task Detail</p>
             <p className="text-xs text-muted-foreground/70 mt-0.5">
-              {drill.killTasks.filter((t: any) => t.completedAt && !t.isMissed).length} On-Time ·{' '}
-              {drill.killTasks.filter((t: any) => t.isMissed).length} Missed
+              {drill.killTasks.filter((t) => t.completedAt && !t.isMissed).length} On-Time ·{' '}
+              {drill.killTasks.filter((t) => t.isMissed).length} Missed
             </p>
           </div>
           <div className="divide-y divide-border/30">
-            {drill.killTasks.map((task: any) => (
+            {drill.killTasks.map((task) => (
               <div key={task.id} className="flex items-center justify-between px-5 py-3 text-sm">
                 <div>
                   <p className="font-medium text-foreground">{task.taskName}</p>
