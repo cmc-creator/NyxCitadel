@@ -27,6 +27,7 @@ import { formatDate, getDueDateStatus } from '@/lib/utils';
 import Link from 'next/link';
 import { addDays } from 'date-fns';
 import { DepartmentPanel } from '@/components/dashboard/DepartmentPanel';
+import { OnboardingBanner } from '@/components/onboarding/OnboardingBanner';
 
 export const dynamic = 'force-dynamic';
 
@@ -189,6 +190,7 @@ export default async function DashboardPage() {
   const session = await auth();
   const facilityId = session!.user.facilityId;
   const department = session!.user.department;
+  const userRole   = (session!.user as { role: string }).role;
   const [s, facility, healthScore] = await Promise.all([
     getDashboardStats(facilityId),
     prisma.facility.findUnique({ where: { id: facilityId }, select: { name: true } }),
@@ -222,6 +224,9 @@ export default async function DashboardPage() {
 
       {/* Department Quick-Start Panel */}
       <DepartmentPanel department={department} />
+
+      {/* Onboarding setup banner — admin only, auto-hides when setup complete */}
+      <OnboardingBanner facilityId={facilityId} userRole={userRole} />
 
       {/* RED ZONE */}
       {urgentCount > 0 && (
