@@ -12,7 +12,7 @@ export async function GET() {
   const facilityId = session.user.facilityId;
   const cutoff = startOfDay(new Date());
 
-  const [poc, qoc, grievAck, grievRes, caps, policies, responses, adhs, calendar] = await Promise.all([
+  const [poc, qoc, grievAck, grievRes, caps, policies, responses, adhs, calendar, regUpdates] = await Promise.all([
     prisma.planOfCorrection.count({
       where: { facilityId, responseDeadline: { lt: cutoff }, status: { notIn: ['SUBMITTED', 'ACCEPTED', 'CLOSED'] } },
     }),
@@ -40,8 +40,21 @@ export async function GET() {
     prisma.calendarEvent.count({
       where: { facilityId, dueDate: { lt: cutoff }, completedDate: null, status: { notIn: ['COMPLETED', 'NA', 'WAIVED'] } },
     }),
+    // Unacknowledged CRITICAL / HIGH regulatory updates count as overdue action items
+    prisma.regulatoryUpdateAck.findMany({
+      where: { userId: session.user.id },
+      select: { updateId: true },
+    }).then(async (acks) => {
+      const ackedIds = acks.map(a => a.updateId);
+      return prisma.regulatoryUpdate.count({
+        where: {
+          isActive: true,
+          urgency: { in: ['CRITICAL', 'HIGH'] },
+          ...(ackedIds.length > 0 ? { id: { notIn: ackedIds } } : {}),
+        },
+      });
+    }),
   ]);
 
-  const overdue = poc + qoc + grievAck + grievRes + caps + policies + responses + adhs + calendar;
+  const overdue = poc + qoc + grievAck + grievRes + caps + policies + responses + adhs + calendar + regUpdates;
   return NextResponse.json({ overdue });
-}

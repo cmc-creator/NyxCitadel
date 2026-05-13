@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Newspaper, Loader2, Send } from 'lucide-react';
+import { ArrowLeft, Newspaper, Loader2, Send, X } from 'lucide-react';
 
 const REGULATORY_BODIES = [
   'Joint Commission',
@@ -25,6 +25,14 @@ const URGENCY_OPTIONS = [
   { value: 'INFORMATIONAL', label: '📋 Informational - Awareness only',           desc: 'New resource, best practice revision, no immediate action' },
 ];
 
+const AFFECTED_AREA_OPTIONS = [
+  'Policies & Procedures', 'Training & Competency', 'Environment of Care',
+  'Infection Control', 'Emergency Management', 'Patient Rights',
+  'Restraint & Seclusion', 'Credentialing', 'HIPAA / Privacy',
+  'Pharmacy / Meds', 'Quality / QAPI', 'Risk & Incidents',
+  'Governance', 'Discharge Planning', 'Workforce Health',
+];
+
 export default function NewRegulatoryUpdatePage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
@@ -38,7 +46,13 @@ export default function NewRegulatoryUpdatePage() {
     standardRef:    '',
     effectiveDate:  '',
     sourceUrl:      '',
+    actionRequired: '',
   });
+  const [affectedAreas, setAffectedAreas] = useState<string[]>([]);
+
+  function toggleArea(area: string) {
+    setAffectedAreas(prev => prev.includes(area) ? prev.filter(a => a !== area) : [...prev, area]);
+  }
 
   function set(k: keyof typeof form, v: string) {
     setForm(f => ({ ...f, [k]: v }));
@@ -56,7 +70,7 @@ export default function NewRegulatoryUpdatePage() {
       const res = await fetch('/api/regulatory-updates', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, affectedAreas }),
       });
       if (!res.ok) {
         const data = await res.json();
@@ -220,6 +234,44 @@ export default function NewRegulatoryUpdatePage() {
             placeholder="https://www.cms.gov/..."
             className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500/60 transition"
           />
+        </div>
+
+        {/* Action Required */}
+        <div>
+          <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+            Action Required <span className="text-muted-foreground font-normal normal-case">(what staff must do)</span>
+          </label>
+          <textarea
+            value={form.actionRequired}
+            onChange={e => set('actionRequired', e.target.value)}
+            rows={3}
+            placeholder="e.g. Update policy #IC-04 by June 30. Brief all nursing staff by July 15. Complete attestation in training system."
+            className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500/60 transition resize-none"
+          />
+        </div>
+
+        {/* Affected Areas */}
+        <div>
+          <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+            Affected Operational Areas
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {AFFECTED_AREA_OPTIONS.map(area => (
+              <button
+                key={area}
+                type="button"
+                onClick={() => toggleArea(area)}
+                className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border font-medium transition-colors ${
+                  affectedAreas.includes(area)
+                    ? 'bg-teal-950/40 border-teal-600/50 text-teal-300'
+                    : 'bg-muted/20 border-border/50 text-muted-foreground hover:border-teal-700/40'
+                }`}
+              >
+                {affectedAreas.includes(area) && <X className="w-2.5 h-2.5" />}
+                {area}
+              </button>
+            ))}
+          </div>
         </div>
 
         {error && (

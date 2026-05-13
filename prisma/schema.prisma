@@ -173,6 +173,7 @@ model User {
   notifications       Notification[]
   auditLogs           AuditLog[]
   publishedUpdates    RegulatoryUpdate[]     @relation("PublishedBy")
+  regulatoryUpdateAcks RegulatoryUpdateAck[] @relation("RegulatoryUpdateAcks")
 
   @@map("users")
 }
@@ -3194,12 +3195,29 @@ model RegulatoryUpdate {
   standardRef    String?       // e.g. "42 CFR 482.13(e)(1)"
   effectiveDate  DateTime?     // When the change takes effect
   sourceUrl      String?       // Link to official rule/guidance
+  affectedAreas  String[]      // e.g. ["Policies", "Training", "EOC"]
+  actionRequired String?       @db.Text  // What staff must do in response
   isGlobal       Boolean       @default(true)  // true = applies to all facilities
   publishedById  String
   publishedBy    User          @relation("PublishedBy", fields: [publishedById], references: [id])
+  acknowledgments RegulatoryUpdateAck[]
   isActive       Boolean       @default(true)
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
   @@map("regulatory_updates")
+}
+
+// Per-user acknowledgment — tracks who has reviewed and confirmed action on an update
+model RegulatoryUpdateAck {
+  id        String           @id @default(cuid())
+  updateId  String
+  update    RegulatoryUpdate @relation(fields: [updateId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User             @relation("RegulatoryUpdateAcks", fields: [userId], references: [id], onDelete: Cascade)
+  notes     String?          // Optional notes from the reviewer
+  ackedAt   DateTime         @default(now())
+
+  @@unique([updateId, userId])
+  @@map("regulatory_update_acks")
 }

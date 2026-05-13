@@ -20,7 +20,7 @@ function urgency(dueDate: Date): DailyTask['urgency'] {
   return 'week';
 }
 
-async function getMyDayTasks(facilityId: string): Promise<DailyTask[]> {
+async function getMyDayTasks(facilityId: string, userId: string): Promise<DailyTask[]> {
   const now  = new Date();
   const in7  = addDays(now, 7);
   const tasks: DailyTask[] = [];
@@ -365,6 +365,39 @@ async function getMyDayTasks(facilityId: string): Promise<DailyTask[]> {
     });
   }
 
+  // Unacknowledged CRITICAL / HIGH regulatory updates
+  const ackedIds = await prisma.regulatoryUpdateAck.findMany({
+    where: { userId },
+    select: { updateId: true },
+  }).then(rows => rows.map(r => r.updateId));
+
+  const urgentUpdates = await prisma.regulatoryUpdate.findMany({
+    where: {
+      isActive: true,
+      urgency: { in: ['CRITICAL', 'HIGH'] },
+      ...(ackedIds.length > 0 ? { id: { notIn: ackedIds } } : {}),
+    },
+    select: { id: true, title: true, urgency: true, regulatoryBody: true, effectiveDate: true, createdAt: true },
+    orderBy: { createdAt: 'desc' },
+    take: 20,
+  });
+
+  for (const u of urgentUpdates) {
+    // Use effectiveDate if set, otherwise treat as overdue from publish date
+    const dueDate = u.effectiveDate ?? u.createdAt;
+    tasks.push({
+      id: `regupdate-${u.id}`,
+      type: 'REG_UPDATE',
+      label: u.urgency === 'CRITICAL' ? '🚨 Regulatory' : '⚠ Regulatory',
+      title: u.title,
+      subtitle: `${u.regulatoryBody} · ${u.urgency === 'CRITICAL' ? 'Critical — immediate action required' : 'High priority — review within 7 days'} · Acknowledge when reviewed`,
+      dueDate: dueDate.toISOString(),
+      urgency: u.urgency === 'CRITICAL' ? 'overdue' : 'today',
+      href: `/regulatory-updates/${u.id}`,
+      regulatoryNote: 'Click to review full update and acknowledge',
+    });
+  }
+
   // Sort within each urgency bucket: overdue by how old (oldest first), others by nearest first
   return tasks.sort((a, b) => {
     const urgencyOrder = { overdue: 0, today: 1, week: 2 };
@@ -379,7 +412,7 @@ export default async function MyDayPage() {
   const facilityId = session.user.facilityId;
 
   const [tasks, facility] = await Promise.all([
-    getMyDayTasks(facilityId),
+    getMyDayTasks(facilityId, session.user.id),
     prisma.facility.findUnique({ where: { id: facilityId }, select: { name: true } }),
   ]);
 

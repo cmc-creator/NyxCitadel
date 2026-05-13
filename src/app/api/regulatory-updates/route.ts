@@ -54,7 +54,11 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { title, summary, regulatoryBody, urgency, standardRef, effectiveDate, sourceUrl, isGlobal } = body;
+  const {
+    title, summary, body: bodyText, regulatoryBody, urgency,
+    standardRef, effectiveDate, sourceUrl, isGlobal,
+    affectedAreas, actionRequired,
+  } = body;
 
   if (!title?.trim() || !summary?.trim() || !regulatoryBody?.trim()) {
     return NextResponse.json(
@@ -67,15 +71,47 @@ export async function POST(req: NextRequest) {
     data: {
       title:          title.trim(),
       summary:        summary.trim(),
+      body:           bodyText?.trim() ?? null,
       regulatoryBody: regulatoryBody.trim(),
       urgency:        urgency ?? 'INFORMATIONAL',
       standardRef:    standardRef?.trim() ?? null,
       effectiveDate:  effectiveDate ? new Date(effectiveDate) : null,
       sourceUrl:      sourceUrl?.trim() ?? null,
       isGlobal:       isGlobal ?? true,
+      affectedAreas:  Array.isArray(affectedAreas) ? affectedAreas : [],
+      actionRequired: actionRequired?.trim() ?? null,
       publishedById:  session.user.id,
     },
   });
+
+  // Fan-out in-app notifications to all active users
+  // CRITICAL/HIGH → immediate; others → still created so unread badge shows
+  const notifyRoles = ['ADMIN', 'SUPER_ADMIN', 'COMPLIANCE_OFFICER', 'RISK_MANAGER', 'QUALITY', 'EM_COORDINATOR'];
+  const users = await prisma.user.findMany({
+    where: { isActive: true, role: { in: notifyRoles as any[] } },
+    select: { id: true, facilityId: true },
+  });
+
+  const urgencyLabel: Record<string, string> = {
+    CRITICAL:      'CRITICAL – Immediate Action Required',
+    HIGH:          'High Priority – Review Within 7 Days',
+    MEDIUM:        'Medium – Review Within 30 Days',
+    INFORMATIONAL: 'Informational',
+  };
+
+  if (users.length > 0) {
+    await prisma.notification.createMany({
+      data: users.map((u) => ({
+        userId:     u.id,
+        facilityId: u.facilityId,
+        type:       'REGULATORY_UPDATE' as const,
+        title:      `[${urgencyLabel[urgency] ?? urgency}] ${title.trim()}`,
+        message:    summary.trim().slice(0, 300),
+        linkUrl:    `/regulatory-updates/${update.id}`,
+      })),
+      skipDuplicates: true,
+    });
+  }
 
   await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'RegulatoryUpdate', entityId: update.id, req });
   return NextResponse.json(update, { status: 201 });

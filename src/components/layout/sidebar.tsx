@@ -58,6 +58,7 @@ import {
 } from 'lucide-react';
 import { useState, createContext, useContext } from 'react';
 import { MyDayBadge } from '@/components/daily/MyDayBadge';
+import { RegulatoryUpdatesBadge } from '@/components/regulatory/RegulatoryUpdatesBadge';
 
 // Context so NavLinks can close the mobile drawer on navigation
 const SidebarCloseCtx = createContext<(() => void) | null>(null);
@@ -256,7 +257,7 @@ const navItems: NavItem[] = [
     children: [
       { href: '/resilience',         label: 'Resilience Scorecard', icon: ResilienceIcon },
       { href: '/board-report',       label: 'Board Report',         icon: FileBarChart, badge: 'EXEC', badgeColor: 'bg-emerald-100 text-emerald-700' },
-      { href: '/regulatory-updates', label: 'Regulatory Updates',   icon: Newspaper,    badge: 'NEW',  badgeColor: 'bg-teal-100 text-teal-700' },
+      { href: '/regulatory-updates', label: 'Regulatory Updates',   icon: Newspaper },
       { href: '/outpatient-iop',     label: 'Outpatient / IOP',     icon: HeartHandshake, badge: 'IOP', badgeColor: 'bg-emerald-100 text-emerald-700' },
     ],
   },
@@ -360,6 +361,8 @@ function NavLink({
       <span>{item.label}</span>
       {item.href === '/my-day'
         ? <MyDayBadge />
+        : item.href === '/regulatory-updates'
+        ? <RegulatoryUpdatesBadge />
         : item.badge && (
           <span
             className={cn(
