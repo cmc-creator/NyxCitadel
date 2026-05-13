@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plug, CheckCircle2, Clock, ExternalLink, AlertCircle, Copy, Check, Calendar, CalendarPlus } from 'lucide-react';
+import { Plug, CheckCircle2, Clock, ExternalLink, AlertCircle, Copy, Check, CalendarPlus } from 'lucide-react';
 
 interface Integration {
   key: string;
@@ -92,7 +92,7 @@ const INTEGRATIONS: Integration[] = [
   {
     key: 'ical',
     name: 'Calendar Sync (iCal / Outlook)',
-    description: 'Subscribe to your compliance calendar in Outlook, Google Calendar, or Apple Calendar. Click a button below to subscribe instantly — no copy-paste required.','
+    description: 'Subscribe to your compliance calendar in Outlook, Google Calendar, or Apple Calendar. Click a button below to subscribe instantly — no copy-paste required.',
     category: 'Integrations',
     status: 'available',
     logoText: 'CAL',
