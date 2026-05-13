@@ -4,6 +4,7 @@ import { calculateComplianceHealth, getHealthScoreColor } from '@/lib/compliance
 import {
   AlertTriangle,
   CalendarDays,
+  ListTodo,
   CheckCircle2,
   Clock,
   FileText,
@@ -209,6 +210,9 @@ export default async function DashboardPage() {
         <div className="flex items-center gap-2">
           <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-teal-400 border border-teal-800/50 bg-teal-950/30 hover:bg-teal-950/60 px-3 py-1.5 rounded-lg transition-colors">
             <Activity className="w-3.5 h-3.5" /> QAPI Metrics
+          </Link>
+          <Link href="/my-day" className="inline-flex items-center gap-1.5 text-sm text-teal-400 border border-teal-800/50 bg-teal-950/30 hover:bg-teal-950/60 px-3 py-1.5 rounded-lg transition-colors">
+            <ListTodo className="w-3.5 h-3.5" /> My Day
           </Link>
           <Link href="/calendar" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
             <CalendarDays className="w-4 h-4" /> Calendar

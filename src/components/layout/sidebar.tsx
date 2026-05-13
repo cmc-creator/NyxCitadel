@@ -57,6 +57,7 @@ import {
   X,
 } from 'lucide-react';
 import { useState, createContext, useContext } from 'react';
+import { MyDayBadge } from '@/components/daily/MyDayBadge';
 
 // Context so NavLinks can close the mobile drawer on navigation
 const SidebarCloseCtx = createContext<(() => void) | null>(null);
@@ -73,7 +74,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   // ── Core ─────────────────────────────────────────────────────
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/my-day', label: 'My Day', icon: ListTodo, badge: 'NEW', badgeColor: 'bg-teal-100 text-teal-700' },
+  { href: '/my-day', label: 'My Day', icon: ListTodo },
   { href: '/assistant', label: 'Sentry Assistant 🤖', icon: Sparkles, badge: 'AI', badgeColor: 'bg-teal-100 text-teal-700' },
   { href: '/site-search', label: 'Search', icon: Search },
   { href: '/calendar', label: 'Compliance Calendar', icon: CalendarDays },
@@ -357,16 +358,19 @@ function NavLink({
     >
       <item.icon className="w-4 h-4 flex-shrink-0" />
       <span>{item.label}</span>
-      {item.badge && (
-        <span
-          className={cn(
-            'ml-auto text-xs font-medium px-1.5 py-0.5 rounded-full',
-            item.badgeColor ?? 'bg-red-500 text-white'
-          )}
-        >
-          {item.badge}
-        </span>
-      )}
+      {item.href === '/my-day'
+        ? <MyDayBadge />
+        : item.badge && (
+          <span
+            className={cn(
+              'ml-auto text-xs font-medium px-1.5 py-0.5 rounded-full',
+              item.badgeColor ?? 'bg-red-500 text-white'
+            )}
+          >
+            {item.badge}
+          </span>
+        )
+      }
     </Link>
   );
 }

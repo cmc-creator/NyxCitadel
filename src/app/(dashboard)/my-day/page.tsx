@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { addDays, startOfDay, endOfDay, isToday, isPast, format } from 'date-fns';
 import { DailyChecklistClient } from '@/components/daily/DailyChecklistClient';
@@ -374,7 +375,8 @@ async function getMyDayTasks(facilityId: string): Promise<DailyTask[]> {
 
 export default async function MyDayPage() {
   const session = await auth();
-  const facilityId = session!.user.facilityId;
+  if (!session) redirect('/login');
+  const facilityId = session.user.facilityId;
 
   const [tasks, facility] = await Promise.all([
     getMyDayTasks(facilityId),
