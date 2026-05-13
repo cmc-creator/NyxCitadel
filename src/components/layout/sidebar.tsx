@@ -7,6 +7,7 @@ import { signOut } from 'next-auth/react';
 import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
+  ListTodo,
   CalendarDays,
   ClipboardList,
   ShieldAlert,
@@ -72,6 +73,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   // ── Core ─────────────────────────────────────────────────────
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/my-day', label: 'My Day', icon: ListTodo, badge: 'NEW', badgeColor: 'bg-teal-100 text-teal-700' },
   { href: '/assistant', label: 'Sentry Assistant 🤖', icon: Sparkles, badge: 'AI', badgeColor: 'bg-teal-100 text-teal-700' },
   { href: '/site-search', label: 'Search', icon: Search },
   { href: '/calendar', label: 'Compliance Calendar', icon: CalendarDays },
