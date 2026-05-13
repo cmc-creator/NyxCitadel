@@ -49,8 +49,7 @@ function emailShell(title: string, eyebrow: string, body: string): string {
 </html>`;
 }
 
-export function getComplianceDigestEmail(data: {
-  recipientName: string | null;
+export function getComplianceDigestEmail(data: {  recipientName: string | null;
   alerts: DigestAlert[];
 }) {
   const base = appBaseUrl();
@@ -167,5 +166,66 @@ export function getRegulatoryAlertEmail(data: {
   return {
     subject: `[NyxCitadel] ${summary} Regulatory Alert${data.updates.length === 1 ? '' : 's'} Detected`,
     html: emailShell('New Regulatory Alerts', 'Regulatory Intelligence', body),
+  };
+}
+
+export function getRegulatoryUpdatePublishedEmail(data: {
+  recipientName: string | null;
+  urgency: string;
+  regulatoryBody: string;
+  title: string;
+  summary: string;
+  actionRequired: string | null;
+  updateId: string;
+}) {
+  const base = appBaseUrl();
+  const url  = `${base}/regulatory-updates/${data.updateId}`;
+
+  const urgencyColors: Record<string, { bg: string; text: string; border: string; label: string }> = {
+    CRITICAL:      { bg: '#450a0a', text: '#fca5a5', border: '#7f1d1d', label: 'CRITICAL — Immediate Action Required' },
+    HIGH:          { bg: '#431407', text: '#fdba74', border: '#7c2d12', label: 'HIGH — Review Within 7 Days' },
+    MEDIUM:        { bg: '#451a03', text: '#fcd34d', border: '#78350f', label: 'MEDIUM — Review Within 30 Days' },
+    INFORMATIONAL: { bg: '#1e293b', text: '#94a3b8', border: '#334155', label: 'INFORMATIONAL' },
+  };
+
+  const c = urgencyColors[data.urgency] ?? urgencyColors.INFORMATIONAL;
+
+  const banner = `<div style="background:${c.bg};border:1px solid ${c.border};border-radius:10px;padding:14px 18px;margin-bottom:18px;">
+    <p style="margin:0;font-size:12px;font-weight:700;color:${c.text};text-transform:uppercase;letter-spacing:0.08em;">${c.label}</p>
+  </div>`;
+
+  const actionHtml = data.actionRequired
+    ? `<div style="background:#451a03;border:1px solid #78350f;border-radius:10px;padding:14px 18px;margin-bottom:18px;">
+        <p style="margin:0 0 6px;font-size:11px;font-weight:700;color:#fcd34d;text-transform:uppercase;letter-spacing:0.08em;">Action Required</p>
+        <p style="margin:0;font-size:14px;color:#fef3c7;line-height:1.55;">${data.actionRequired}</p>
+      </div>`
+    : '';
+
+  const body = `
+    <div class="section">
+      <p class="muted">Hello <strong>${data.recipientName ?? 'Compliance Team'}</strong>,</p>
+      <p class="muted">A new regulatory update has been published that may require your review and acknowledgment.</p>
+    </div>
+    <div class="section">
+      ${banner}
+      <div class="list-item">
+        <h3>${data.regulatoryBody} &mdash; ${data.title}</h3>
+        <p>${data.summary.slice(0, 300)}${data.summary.length > 300 ? '&hellip;' : ''}</p>
+        <div class="meta"><a href="${url}" style="color:#0d7377;text-decoration:none;">Open in NyxCitadel &rarr;</a></div>
+      </div>
+      ${actionHtml}
+    </div>
+    <div class="section">
+      <a class="button" href="${url}">Review &amp; Acknowledge</a>
+    </div>
+    <div class="section">
+      <p class="muted" style="font-size:12px;">You are receiving this because your role requires review of regulatory updates. Please open NyxCitadel to acknowledge receipt.</p>
+    </div>
+  `;
+
+  const subjectPrefix = data.urgency === 'CRITICAL' ? '[CRITICAL] ' : data.urgency === 'HIGH' ? '[HIGH] ' : '';
+  return {
+    subject: `[NyxCitadel] ${subjectPrefix}New Regulatory Update: ${data.title.slice(0, 80)}`,
+    html: emailShell('New Regulatory Update', data.regulatoryBody, body),
   };
 }

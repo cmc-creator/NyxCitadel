@@ -38,6 +38,7 @@ const TYPE_COLORS: Record<string, string> = {
   CALENDAR:     'bg-sky-900/40 text-sky-300 border-sky-700/40',
   ADHS:         'bg-red-900/40 text-red-300 border-red-700/40',
   QAPI:         'bg-emerald-900/40 text-emerald-300 border-emerald-700/40',
+  REG_UPDATE:   'bg-amber-900/40 text-amber-300 border-amber-700/40',
   OTHER:        'bg-slate-800 text-slate-300 border-slate-600/40',
 };
 

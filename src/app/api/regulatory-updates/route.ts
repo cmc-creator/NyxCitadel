@@ -2,6 +2,8 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { logAudit } from '@/lib/audit';
+import { sendNotificationEmail } from '@/lib/notifications/email';
+import { getRegulatoryUpdatePublishedEmail } from '@/lib/notifications/email-templates';
 
 // GET /api/regulatory-updates - paginated list (all authenticated users)
 export async function GET(req: NextRequest) {
@@ -89,7 +91,7 @@ export async function POST(req: NextRequest) {
   const notifyRoles = ['ADMIN', 'SUPER_ADMIN', 'COMPLIANCE_OFFICER', 'RISK_MANAGER', 'QUALITY', 'EM_COORDINATOR'];
   const users = await prisma.user.findMany({
     where: { isActive: true, role: { in: notifyRoles as any[] } },
-    select: { id: true, facilityId: true },
+    select: { id: true, facilityId: true, email: true, name: true },
   });
 
   const urgencyLabel: Record<string, string> = {
@@ -111,6 +113,39 @@ export async function POST(req: NextRequest) {
       })),
       skipDuplicates: true,
     });
+
+    // Send immediate email for CRITICAL and HIGH updates (fire-and-forget)
+    if (['CRITICAL', 'HIGH'].includes(urgency)) {
+      const emailTemplate = getRegulatoryUpdatePublishedEmail({
+        recipientName:  null, // personalised per-user below
+        urgency,
+        regulatoryBody: regulatoryBody.trim(),
+        title:          title.trim(),
+        summary:        summary.trim(),
+        actionRequired: actionRequired?.trim() ?? null,
+        updateId:       update.id,
+      });
+
+      Promise.allSettled(
+        users.map((u) => {
+          const personalised = getRegulatoryUpdatePublishedEmail({
+            recipientName:  u.name,
+            urgency,
+            regulatoryBody: regulatoryBody.trim(),
+            title:          title.trim(),
+            summary:        summary.trim(),
+            actionRequired: actionRequired?.trim() ?? null,
+            updateId:       update.id,
+          });
+          return sendNotificationEmail({
+            to:      u.email,
+            subject: personalised.subject,
+            text:    `${title.trim()}\n\n${summary.trim()}${actionRequired ? `\n\nAction Required: ${actionRequired.trim()}` : ''}\n\nOpen: ${process.env.APP_URL ?? process.env.NEXTAUTH_URL ?? ''}/regulatory-updates/${update.id}`,
+            html:    personalised.html,
+          });
+        })
+      ).catch(() => {/* non-fatal */});
+    }
   }
 
   await logAudit({ userId: session.user.id, action: 'CREATE', entityType: 'RegulatoryUpdate', entityId: update.id, req });

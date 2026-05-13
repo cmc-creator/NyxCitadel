@@ -1,10 +1,12 @@
 import React from 'react';
 import { prisma } from '@/lib/prisma';
+import { auth } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
 import {
   Newspaper, AlertTriangle, Info,
-  ArrowUpCircle, CheckCircle2,
+  ArrowUpCircle, CheckCircle2, Plus,
 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -20,11 +22,26 @@ const IMPACT_STYLES: Record<string, { badge: string; icon: React.ElementType; ba
 const IMPACT_ORDER = ['CRITICAL', 'HIGH', 'MEDIUM', 'INFORMATIONAL'];
 
 export default async function RegulatoryUpdatesPage() {
-  const updates = await prisma.regulatoryUpdate.findMany({
-    where: { isGlobal: true },
-    orderBy: [{ createdAt: 'desc' }],
-    take: 100,
-  });
+  const session = await auth();
+  if (!session) redirect('/login');
+
+  const userId   = session.user.id as string;
+  const userRole = (session.user as { role: string }).role;
+  const canPublish = ['ADMIN', 'SUPER_ADMIN', 'COMPLIANCE_OFFICER'].includes(userRole);
+
+  const [updates, ackedIds] = await Promise.all([
+    prisma.regulatoryUpdate.findMany({
+      where: { isGlobal: true },
+      orderBy: [{ createdAt: 'desc' }],
+      take: 100,
+    }),
+    prisma.regulatoryUpdateAck.findMany({
+      where: { userId },
+      select: { updateId: true },
+    }),
+  ]);
+
+  const ackedSet = new Set(ackedIds.map(a => a.updateId));
 
   // Sort client-side by impact level priority
   const sorted = [...updates].sort((a, b) => {
@@ -50,6 +67,15 @@ export default async function RegulatoryUpdatesPage() {
             Latest regulatory changes, new guidance, and compliance mandates from CMS, Joint Commission, AZ ADHS, and other bodies.
           </p>
         </div>
+        {canPublish && (
+          <Link
+            href="/regulatory-updates/new"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-semibold transition-colors shrink-0"
+          >
+            <Plus className="w-4 h-4" />
+            Publish Update
+          </Link>
+        )}
       </div>
 
       {/* Critical banner */}
@@ -65,13 +91,20 @@ export default async function RegulatoryUpdatesPage() {
               className="block bg-red-950/40 hover:bg-red-950/60 border border-red-700/30 rounded-lg px-4 py-3 transition-colors"
             >
               <div className="flex items-start justify-between gap-2">
-                <div>
-                  <p className="text-sm font-semibold text-red-300">{u.title}</p>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    {ackedSet.has(u.id) ? (
+                      <CheckCircle2 className="w-3.5 h-3.5 text-green-400 flex-shrink-0" />
+                    ) : (
+                      <span className="w-2 h-2 rounded-full bg-red-400 flex-shrink-0 mt-0.5" />
+                    )}
+                    <p className="text-sm font-semibold text-red-300 truncate">{u.title}</p>
+                  </div>
                   {u.summary && (
                     <p className="text-xs text-red-400/80 mt-0.5">{u.summary.slice(0, 160)}{u.summary.length > 160 ? '…' : ''}</p>
                   )}
                 </div>
-                <span className="text-xs text-red-500/60 whitespace-nowrap mt-0.5">{formatDate(u.createdAt, 'MMM d, yyyy')}</span>
+                <span className="text-xs text-red-500/60 whitespace-nowrap mt-0.5 ml-2">{formatDate(u.createdAt, 'MMM d, yyyy')}</span>
               </div>
             </Link>
           ))}
@@ -116,8 +149,17 @@ export default async function RegulatoryUpdatesPage() {
                       <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{u.summary}</p>
                     )}
                   </div>
-                  <div className="text-right flex-shrink-0">
+                  <div className="text-right flex-shrink-0 flex flex-col items-end gap-1">
                     <p className="text-xs text-muted-foreground">{formatDate(u.createdAt, 'MMM d, yyyy')}</p>
+                    {ackedSet.has(u.id) ? (
+                      <span className="inline-flex items-center gap-1 text-[10px] text-green-400 font-medium">
+                        <CheckCircle2 className="w-3 h-3" /> Reviewed
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 text-[10px] text-amber-400 font-medium">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400" /> Unreviewed
+                      </span>
+                    )}
                   </div>
                 </div>
               </Link>

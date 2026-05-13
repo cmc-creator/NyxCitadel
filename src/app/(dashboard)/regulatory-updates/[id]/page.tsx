@@ -43,6 +43,7 @@ export default async function RegulatoryUpdateDetailPage({ params }: { params: {
   const Icon  = style.icon;
   const isAcked = !!ack;
   const affectedAreas = (update.affectedAreas ?? []) as string[];
+  const isAdmin = ['ADMIN', 'SUPER_ADMIN', 'COMPLIANCE_OFFICER'].includes((session.user as { role: string }).role);
 
   return (
     <div className="max-w-3xl space-y-6">
@@ -151,6 +152,21 @@ export default async function RegulatoryUpdateDetailPage({ params }: { params: {
         <div className="px-6 py-4">
           <AckButton updateId={params.id} initialAcked={isAcked} ackedAt={ack?.ackedAt?.toISOString() ?? null} />
         </div>
+
+        {/* Admin: link to ack report */}
+        {isAdmin && (
+          <div className="px-6 py-3 border-t border-border bg-muted/20 flex items-center justify-between gap-2">
+            <span className="text-xs text-muted-foreground">
+              {update._count.acknowledgments} of your staff have reviewed this update.
+            </span>
+            <Link
+              href={`/regulatory-updates/${params.id}/acks`}
+              className="text-xs font-semibold text-teal-400 hover:text-teal-300 transition-colors whitespace-nowrap"
+            >
+              View Acknowledgment Report →
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
