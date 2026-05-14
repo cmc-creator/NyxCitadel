@@ -327,7 +327,8 @@ export default async function RootPage() {
               <br />
               Let NyxCitadel<sup className="text-2xl font-normal align-super">™</sup>{' '}
               <span className="bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
-                Chase Them For You.
+                Chase Them{' '}
+                <span className="whitespace-nowrap">For You.</span>
               </span>
             </h1>
             <p className="text-lg text-slate-300 leading-relaxed mb-3 max-w-xl">
@@ -514,7 +515,7 @@ export default async function RootPage() {
               <span className="bg-gradient-to-r from-rose-400 to-orange-400 bg-clip-text text-transparent">
                 constantly.
               </span>
-              <br />We track every single one.
+              <br />We track every <span className="whitespace-nowrap">single one.</span>
             </h2>
             <p className="text-lg text-slate-300 leading-relaxed mb-6">
               Healthcare regulations don&apos;t sit still. CMS rewrites interpretive guidelines.
@@ -591,9 +592,9 @@ export default async function RootPage() {
               Built for Quality &amp; Risk Professionals
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold mb-5 scroll-fade">
-              The unfair advantage{' '}
-              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
-                your facility deserves
+              The unfair{' '}
+              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent whitespace-nowrap">
+                advantage your facility deserves
               </span>
             </h2>
             <p className="text-lg text-muted-foreground/70 max-w-2xl mx-auto">
@@ -621,10 +622,11 @@ export default async function RootPage() {
       <section id="features" className="relative z-10 max-w-7xl mx-auto px-6 py-24">
         <div className="text-center mb-14">
           <h2 className="text-4xl lg:text-5xl font-extrabold mb-5 scroll-fade">
-            Every tool your compliance team needs.{' '}
+            Every tool your compliance{' '}
+            <span className="whitespace-nowrap">team needs.{' '}
             <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
               Unified.
-            </span>
+            </span></span>
           </h2>
           <p className="text-lg text-muted-foreground/70 max-w-2xl mx-auto">
             Nine fully-integrated modules covering every corner of healthcare compliance -
@@ -668,7 +670,7 @@ export default async function RootPage() {
                 <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
                   It&apos;s a culture.
                 </span>{' '}
-                We help you build it.
+                We help you <span className="whitespace-nowrap">build it.</span>
               </h2>
               <p className="text-slate-300 text-lg leading-relaxed mb-6">
                 NyxCitadel&apos;s QAPI module isn&apos;t a form - it&apos;s a full continuous quality improvement
@@ -758,8 +760,8 @@ export default async function RootPage() {
             Deep Regulatory Alignment
           </div>
           <h2 className="text-4xl lg:text-5xl font-extrabold mb-4 scroll-fade">
-            Every standard. Every agency.
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"> Every time.</span>
+            Every standard. Every agency.{' '}
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent whitespace-nowrap">Every time.</span>
           </h2>
           <p className="text-muted-foreground/70 max-w-2xl mx-auto mb-12 text-lg">
             NyxCitadel isn&apos;t built around one regulation - it&apos;s built around the entire
@@ -915,7 +917,7 @@ export default async function RootPage() {
             <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
               Your next survey is coming.{' '}
               <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
-                Are you ready?
+                Are you <span className="whitespace-nowrap">ready?</span>
               </span>
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto mb-4 text-lg leading-relaxed">
