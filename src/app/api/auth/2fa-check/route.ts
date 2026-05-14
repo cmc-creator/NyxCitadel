@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
 const schema = z.object({ email: z.string().email() });
@@ -16,10 +15,7 @@ export async function POST(req: NextRequest) {
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ requiresTotp: false });
 
-  const user = await prisma.user.findUnique({
-    where: { email: parsed.data.email.toLowerCase() },
-    select: { totpEnabled: true, isActive: true },
-  });
-
-  return NextResponse.json({ requiresTotp: !!(user?.isActive && user.totpEnabled) });
+  // totpEnabled / totpSecret are not yet in the User schema — TOTP is not active.
+  // When TOTP is implemented, add the fields to the schema and query them here.
+  return NextResponse.json({ requiresTotp: false });
 }
