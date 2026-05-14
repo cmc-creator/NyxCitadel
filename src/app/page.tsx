@@ -327,8 +327,7 @@ export default async function RootPage() {
               <br />
               Let NyxCitadel<sup className="text-2xl font-normal align-super">™</sup>{' '}
               <span className="bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
-                Chase Them{' '}
-                <span className="whitespace-nowrap">For You.</span>
+                Chase Them For{'\u00A0'}You.
               </span>
             </h1>
             <p className="text-lg text-slate-300 leading-relaxed mb-3 max-w-xl">
