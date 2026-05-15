@@ -78,7 +78,7 @@ export default function GuidePage() {
           <BookOpen className="w-3.5 h-3.5" />
           Operator Guide
         </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">How to run NyxCitadel{'\u00a0'}well</h1>
+        <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">How to run{'\u00a0'}NyxCitadel{'\u00a0'}well</h1>
         <p className="text-slate-300 leading-relaxed">
           Written for real operators: compliance officers, quality leaders, EM coordinators, educators, and executives who need a practical rhythm, not marketing copy.
         </p>

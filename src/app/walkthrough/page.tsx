@@ -22,7 +22,7 @@ const modules = [
     step: '01',
     icon: LayoutDashboard,
     title: 'Compliance Command Center',
-    subtitle: 'Your entire compliance posture at a\u00a0glance',
+    subtitle: 'Your entire compliance posture at\u00a0a\u00a0glance',
     color: 'from-teal-500 to-cyan-500',
     border: 'border-teal-500/30',
     bg: 'bg-teal-500/8',
