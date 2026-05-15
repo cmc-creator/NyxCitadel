@@ -18,6 +18,7 @@ import {
   Minus,
   Printer,
 } from 'lucide-react';
+import { PrintButton } from '@/components/shared/PrintButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -179,13 +180,9 @@ export default async function ArchivesPage({
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <a
-            href={`/archives?year=${year}`}
-            onClick={(e) => { e.preventDefault(); window.print(); }}
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground/70 border border-border bg-card hover:bg-white/5 px-3 py-1.5 rounded-lg transition-colors"
-          >
+          <PrintButton className="inline-flex items-center gap-1.5 text-sm text-muted-foreground/70 border border-border bg-card hover:bg-white/5 px-3 py-1.5 rounded-lg transition-colors">
             <Printer className="w-3.5 h-3.5" /> Print / Export
-          </a>
+          </PrintButton>
         </div>
       </div>
 

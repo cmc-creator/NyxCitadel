@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { notFound, redirect } from 'next/navigation';
 import { formatDate } from '@/lib/utils';
 import { format } from 'date-fns';
+import { PrintButton } from '@/components/shared/PrintButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -44,12 +45,9 @@ export default async function CapAuditReportPage({ params }: { params: { id: str
     <div className="min-h-screen bg-white text-black font-sans p-8 max-w-4xl mx-auto print:p-0">
       {/* Print button — hidden in print */}
       <div className="flex justify-end mb-6 print:hidden">
-        <button
-          onClick={() => window.print()}
-          className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700"
-        >
+        <PrintButton className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700">
           Print / Save PDF
-        </button>
+        </PrintButton>
       </div>
 
       {/* Header */}

@@ -6,6 +6,7 @@ import { ArrowLeft, FileText, CheckCircle2, XCircle, AlertTriangle } from 'lucid
 import { formatDate } from '@/lib/utils';
 import { CHAPTER_LABELS } from '@/lib/jc-standards';
 import { BulkCreatePocsButton } from '@/components/mock-survey/bulk-create-pocs-button';
+import { PrintButton } from '@/components/shared/PrintButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,12 +62,9 @@ export default async function SurveyReportPage({ params }: Props) {
             Findings Report
           </h1>
         </div>
-        <button
-          onClick={() => window.print()}
-          className="print:hidden inline-flex items-center gap-1.5 px-3 py-2 border border-border text-slate-300 hover:text-foreground text-sm rounded-lg transition-colors"
-        >
+        <PrintButton className="print:hidden inline-flex items-center gap-1.5 px-3 py-2 border border-border text-slate-300 hover:text-foreground text-sm rounded-lg transition-colors">
           Print / Export PDF
-        </button>
+        </PrintButton>
       </div>
 
       {/* Report header block */}
