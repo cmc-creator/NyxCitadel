@@ -230,10 +230,6 @@ export default function WalkthroughPage() {
               width={36}
               height={36}
               unoptimized
-              onError={(e) => {
-                const img = e.currentTarget as HTMLImageElement;
-                if (!img.src.includes('/logo-white.svg')) img.src = '/logo-white.svg';
-              }}
               className="h-9 w-auto rounded-lg"
             />
             <span className="font-bold text-white text-sm hidden sm:block">NyxCitadel<sup className="text-[9px] font-normal align-super ml-0.5 text-teal-400">™</sup></span>
