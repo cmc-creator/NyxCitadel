@@ -15,7 +15,8 @@ export const authConfig: NextAuthConfig = {
     authorized({ auth, request: { nextUrl } }: { auth: Session | null; request: { nextUrl: URL } }) {
       const isLoggedIn = !!auth?.user;
       const isAuthPage = nextUrl.pathname.startsWith('/login');
-      const isApiAuth  = nextUrl.pathname.startsWith('/api/nyx-auth');
+      const isApiAuth  = nextUrl.pathname.startsWith('/api/nyx-auth') ||
+        nextUrl.pathname.startsWith('/api/auth/');
       const isPublic   =
         nextUrl.pathname === '/' ||
         nextUrl.pathname.startsWith('/signup') ||
