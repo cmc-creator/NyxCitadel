@@ -38,53 +38,51 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') ?? '/dashboard';
-  const reason = searchParams.get('reason');
 
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
   const [showPw, setShowPw]   = useState(false);
+  const [totpToken, setTotpToken] = useState('');
+  const [requires2fa, setRequires2fa] = useState(false);
   const [error, setError]     = useState('');
   const [loading, setLoading] = useState(false);
-
-  // Two-factor auth state
-  const [totpRequired, setTotpRequired] = useState(false);
-  const [totpToken, setTotpToken]       = useState('');
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    // If we already know TOTP is required, skip the check and go straight to signIn
-    if (!totpRequired) {
-      // Phase 1: check if this account needs a TOTP challenge
+    // If we haven't determined 2FA status yet, check first
+    if (!requires2fa) {
       try {
-        const checkRes = await fetch('/api/auth/2fa-check', {
+        const check = await fetch('/api/auth/2fa/preflight', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email, password }),
         });
-        const checkData = await checkRes.json() as { requiresTotp?: boolean };
-        if (checkData.requiresTotp) {
-          setTotpRequired(true);
-          setLoading(false);
-          return;
+        if (check.ok) {
+          const data = await check.json() as { requires2fa: boolean };
+          if (data.requires2fa) {
+            setRequires2fa(true);
+            setLoading(false);
+            return; // Show TOTP field, wait for resubmit
+          }
         }
       } catch {
-        // fall through to normal sign-in on network error
+        // ignore preflight errors — fall through to normal signIn
       }
     }
 
     const result = await signIn('credentials', {
       email,
       password,
-      totpToken: totpRequired ? totpToken.trim() : undefined,
+      totpToken: totpToken || undefined,
       redirect: false,
     });
 
     if (result?.error) {
-      if (totpRequired) {
-        setError('Invalid authenticator code. Please try again.');
+      if (requires2fa) {
+        setError('Invalid authentication code. Please try again.');
       } else {
         setError('Invalid email or password. Please try again.');
       }
@@ -92,12 +90,6 @@ function LoginForm() {
     } else {
       router.push(callbackUrl);
     }
-  }
-
-  function handleBackToPassword() {
-    setTotpRequired(false);
-    setTotpToken('');
-    setError('');
   }
 
   return (
@@ -152,8 +144,9 @@ function LoginForm() {
             </div>
           </div>
           <h1 className="text-4xl xl:text-5xl font-extrabold text-white leading-tight mb-5">
-            Your facility&apos;s{' '}
-            <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+            Your facility&apos;s
+            <br />
+            <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent whitespace-nowrap">
               compliance command center
             </span>
           </h1>
@@ -227,13 +220,6 @@ function LoginForm() {
               <p className="text-muted-foreground/70 text-sm mt-1">Sign in to access your facility portal</p>
             </div>
 
-            {reason === 'idle' && (
-              <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 mb-5 text-amber-400 text-sm">
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                You were signed out due to inactivity. Please sign in again.
-              </div>
-            )}
-
             {error && (
               <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl p-3.5 mb-5 text-red-400 text-sm">
                 <AlertCircle className="w-4 h-4 flex-shrink-0" />
@@ -242,92 +228,68 @@ function LoginForm() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {totpRequired ? (
-                /* ── TOTP Challenge Step ── */
-                <>
-                  <div className="flex items-center gap-2 bg-teal-500/10 border border-teal-500/20 rounded-xl p-3.5 text-teal-300 text-sm">
-                    <Shield className="w-4 h-4 flex-shrink-0" />
-                    Enter the 6-digit code from your authenticator app.
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-300 mb-1.5">
-                      Authenticator code
-                    </label>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9A-Za-z]+"
-                      value={totpToken}
-                      onChange={e => setTotpToken(e.target.value)}
-                      required
-                      autoFocus
-                      autoComplete="one-time-code"
-                      placeholder="000000"
-                      maxLength={8}
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm tracking-widest text-center"
-                    />
-                    <p className="text-xs text-slate-500 mt-1.5">
-                      Or enter a backup code if you lost access to your device.
-                    </p>
-                  </div>
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1.5">
+                  Email address
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                  autoComplete="email"
+                  placeholder="you@facility.com"
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm"
+                />
+              </div>
+
+              {/* Password */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1.5">
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPw ? 'text' : 'password'}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required
+                    autoComplete="current-password"
+                    placeholder="••••••••"
+                    className="w-full px-4 py-2.5 pr-11 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm"
+                  />
                   <button
                     type="button"
-                    onClick={handleBackToPassword}
-                    className="text-xs text-slate-500 hover:text-slate-400 transition-colors"
+                    onClick={() => setShowPw(v => !v)}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                    tabIndex={-1}
                   >
-                    ← Use a different account
+                    {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
-                </>
-              ) : (
-                /* ── Password Step ── */
-                <>
-                  {/* Email */}
-                  <div>
-                    <label className="block text-sm font-medium text-slate-300 mb-1.5">
-                      Email address
-                    </label>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      required
-                      autoComplete="email"
-                      placeholder="you@facility.com"
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm"
-                    />
-                  </div>
+                </div>
+              </div>
 
-                  {/* Password */}
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label className="block text-sm font-medium text-slate-300">
-                        Password
-                      </label>
-                      <Link href="/forgot-password" className="text-xs text-teal-500 hover:text-teal-400 transition-colors">
-                        Forgot password?
-                      </Link>
-                    </div>
-                    <div className="relative">
-                      <input
-                        type={showPw ? 'text' : 'password'}
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                        autoComplete="current-password"
-                        placeholder="••••••••"
-                        className="w-full px-4 py-2.5 pr-11 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPw(v => !v)}
-                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
-                        tabIndex={-1}
-                      >
-                        {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                      </button>
-                    </div>
-                  </div>
-                </>
+              {/* 2FA Code (shown only when required) */}
+              {requires2fa && (
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-1.5">
+                    Authenticator Code
+                  </label>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    value={totpToken}
+                    onChange={e => setTotpToken(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    required
+                    autoFocus
+                    autoComplete="one-time-code"
+                    placeholder="000000"
+                    maxLength={6}
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500/60 focus:border-teal-500/60 transition text-sm font-mono tracking-widest text-center"
+                  />
+                  <p className="text-xs text-slate-500 mt-1.5">Enter the 6-digit code from your authenticator app, or a backup code.</p>
+                </div>
               )}
 
               {/* Submit */}
@@ -340,10 +302,10 @@ function LoginForm() {
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    {totpRequired ? 'Verifying…' : 'Signing in…'}
+                    Signing in…
                   </>
                 ) : (
-                  totpRequired ? 'Verify & sign in' : 'Sign in'
+                  'Sign in'
                 )}
               </button>
             </form>

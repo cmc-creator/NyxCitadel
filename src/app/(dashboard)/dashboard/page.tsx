@@ -4,7 +4,6 @@ import { calculateComplianceHealth, getHealthScoreColor } from '@/lib/compliance
 import {
   AlertTriangle,
   CalendarDays,
-  ListTodo,
   CheckCircle2,
   Clock,
   FileText,
@@ -27,7 +26,10 @@ import { formatDate, getDueDateStatus } from '@/lib/utils';
 import Link from 'next/link';
 import { addDays } from 'date-fns';
 import { DepartmentPanel } from '@/components/dashboard/DepartmentPanel';
-import { OnboardingBanner } from '@/components/onboarding/OnboardingBanner';
+import { TrendCharts } from '@/components/dashboard/TrendCharts';
+import { ReadinessScore } from '@/components/dashboard/ReadinessScore';
+import { AttentionFeed, buildAttentionItems } from '@/components/dashboard/AttentionFeed';
+import { SentryBriefing } from '@/components/dashboard/SentryBriefing';
 
 export const dynamic = 'force-dynamic';
 
@@ -67,6 +69,12 @@ async function getDashboardStats(facilityId: string) {
     eocHighSeverity,
     eocOverdueDeficiencies,
     lastEocRound,
+    attnOverdueCaps,
+    attnOverdueGrievances,
+    attnOverdueAdhs,
+    attnPendingIad,
+    attnOverdueQoc,
+    attnDueSoonCaps,
   ] = await Promise.all([
     prisma.calendarEvent.count({ where: { facilityId, dueDate: { lt: now }, completedDate: null, status: { not: 'COMPLETED' } } }),
     prisma.calendarEvent.count({ where: { facilityId, dueDate: { gte: now, lte: in30Days }, status: { notIn: ['COMPLETED', 'NA', 'WAIVED'] } } }),
@@ -119,6 +127,37 @@ async function getDashboardStats(facilityId: string) {
       orderBy: { conductedDate: 'desc' },
       select: { conductedDate: true, totalItems: true, openItems: true, status: true, roundType: true },
     }),
+    // Attention Feed — specific records
+    prisma.correctiveActionPlan.findMany({
+      where: { facilityId, targetDate: { lt: new Date() }, status: { notIn: ['COMPLETED', 'VERIFIED'] } },
+      select: { id: true, capNumber: true, title: true, targetDate: true },
+      orderBy: { targetDate: 'asc' }, take: 10,
+    }),
+    prisma.grievanceRecord.findMany({
+      where: { facilityId, status: { notIn: ['CLOSED', 'RESOLVED'] } },
+      select: { id: true, grievanceNumber: true, summary: true, chiefComplaint: true, resolutionDueDate: true, acknowledgmentDueDate: true, acknowledgmentDate: true, resolutionDate: true },
+      orderBy: { acknowledgmentDueDate: 'asc' }, take: 10,
+    }),
+    prisma.incidentReport.findMany({
+      where: { facilityId, adhsReportable: true, adhsReported: false, adhsReportDue: { lt: new Date() } },
+      select: { id: true, irNumber: true, incidentType: true, adhsReportDue: true },
+      orderBy: { adhsReportDue: 'asc' }, take: 5,
+    }),
+    prisma.incidentReport.findMany({
+      where: { facilityId, iadRequired: true, iadSubmitted: false, status: { not: 'CLOSED' } },
+      select: { id: true, irNumber: true, incidentType: true },
+      take: 5,
+    }),
+    prisma.qocComplaint.findMany({
+      where: { facilityId, status: 'LOI_RECEIVED', responseSubmittedDate: null, responseDueDate: { lt: new Date() } },
+      select: { id: true, cmsComplaintNumber: true, complainantType: true, responseDueDate: true },
+      orderBy: { responseDueDate: 'asc' }, take: 5,
+    }),
+    prisma.correctiveActionPlan.findMany({
+      where: { facilityId, targetDate: { gte: new Date(), lte: addDays(new Date(), 7) }, status: { notIn: ['COMPLETED', 'VERIFIED'] } },
+      select: { id: true, capNumber: true, title: true, targetDate: true },
+      orderBy: { targetDate: 'asc' }, take: 5,
+    }),
   ]);
 
   const trainingCompliancePct = totalRequiredTraining > 0
@@ -155,6 +194,12 @@ async function getDashboardStats(facilityId: string) {
     eocHighSeverity,
     eocOverdueDeficiencies,
     lastEocRound,
+    attnOverdueCaps,
+    attnOverdueGrievances,
+    attnOverdueAdhs,
+    attnPendingIad,
+    attnOverdueQoc,
+    attnDueSoonCaps,
   };
 }
 
@@ -189,8 +234,7 @@ function ProgressBar({ value, max, label, sublabel }: { value: number; max: numb
 export default async function DashboardPage() {
   const session = await auth();
   const facilityId = session!.user.facilityId;
-  const department = session!.user.department;
-  const userRole   = (session!.user as { role: string }).role;
+  const department = (session!.user as { department?: string | null }).department ?? null;
   const [s, facility, healthScore] = await Promise.all([
     getDashboardStats(facilityId),
     prisma.facility.findUnique({ where: { id: facilityId }, select: { name: true } }),
@@ -210,11 +254,11 @@ export default async function DashboardPage() {
           <p className="text-sm text-muted-foreground mt-0.5">{facilityName} · {formatDate(new Date(), 'MMMM d, yyyy')}</p>
         </div>
         <div className="flex items-center gap-2">
+          <Link href="/reports/executive" target="_blank" className="inline-flex items-center gap-1.5 text-sm text-teal-400 border border-teal-800/50 bg-teal-950/30 hover:bg-teal-950/60 px-3 py-1.5 rounded-lg transition-colors">
+            <FileText className="w-3.5 h-3.5" /> Board Report
+          </Link>
           <Link href="/quality/metrics" className="inline-flex items-center gap-1.5 text-sm text-teal-400 border border-teal-800/50 bg-teal-950/30 hover:bg-teal-950/60 px-3 py-1.5 rounded-lg transition-colors">
             <Activity className="w-3.5 h-3.5" /> QAPI Metrics
-          </Link>
-          <Link href="/my-day" className="inline-flex items-center gap-1.5 text-sm text-teal-400 border border-teal-800/50 bg-teal-950/30 hover:bg-teal-950/60 px-3 py-1.5 rounded-lg transition-colors">
-            <ListTodo className="w-3.5 h-3.5" /> My Day
           </Link>
           <Link href="/calendar" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
             <CalendarDays className="w-4 h-4" /> Calendar
@@ -222,11 +266,24 @@ export default async function DashboardPage() {
         </div>
       </div>
 
+      {/* Sentry Daily Briefing */}
+      <SentryBriefing />
+
       {/* Department Quick-Start Panel */}
       <DepartmentPanel department={department} />
 
-      {/* Onboarding setup banner — admin only, auto-hides when setup complete */}
-      <OnboardingBanner facilityId={facilityId} userRole={userRole} />
+      {/* ATTENTION FEED */}
+      {(() => {
+        const attentionItems = buildAttentionItems({
+          overdueCaps: s.attnOverdueCaps,
+          overdueGrievances: s.attnOverdueGrievances,
+          overdueAdhs: s.attnOverdueAdhs,
+          pendingIad: s.attnPendingIad,
+          overdueQoc: s.attnOverdueQoc,
+          dueSoonCaps: s.attnDueSoonCaps,
+        });
+        return <AttentionFeed items={attentionItems} />;
+      })()}
 
       {/* RED ZONE */}
       {urgentCount > 0 && (
@@ -425,8 +482,10 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* QAPI SNAPSHOT */}
-      {Object.keys(s.latestMetrics).length > 0 && (
+      {/* SURVEY READINESS + QAPI SNAPSHOT */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <ReadinessScore />
+        {Object.keys(s.latestMetrics).length > 0 && (
         <div className="bg-card rounded-xl border border-border p-5">
           <div className="flex items-center gap-2 mb-4">
             <Activity className="w-4 h-4 text-teal-400" />
@@ -465,8 +524,11 @@ export default async function DashboardPage() {
           </div>
         </div>
       )}
+      </div>{/* end readiness+qapi grid */}
 
       {/* UPCOMING EVENTS */}
+      <TrendCharts />
+
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-border/50">
           <h2 className="text-base font-semibold text-foreground flex items-center gap-2">

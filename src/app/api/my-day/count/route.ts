@@ -58,3 +58,4 @@ export async function GET() {
 
   const overdue = poc + qoc + grievAck + grievRes + caps + policies + responses + adhs + calendar + regUpdates;
   return NextResponse.json({ overdue });
+}

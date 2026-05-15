@@ -5,6 +5,7 @@ import { compare } from 'bcryptjs';
 import { z } from 'zod';
 import type { UserRole } from '@prisma/client';
 import { authConfig } from '@/auth.config';
+import { verifySync } from 'otplib';
 
 // Extend the session and JWT types to include role, facilityId, and department
 declare module 'next-auth' {
@@ -40,7 +41,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
-        totpToken: { label: 'Authenticator Code', type: 'text' },
+        totpToken: { label: 'Auth Code', type: 'text' },
       },
       async authorize(credentials: Partial<Record<"email" | "password" | "totpToken", unknown>>) {
         const parsed = loginSchema.safeParse(credentials);
@@ -48,6 +49,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const user = await prisma.user.findUnique({
           where: { email: parsed.data.email },
+          select: {
+            id: true, email: true, name: true, image: true, passwordHash: true,
+            role: true, facilityId: true, department: true, isActive: true,
+            totpEnabled: true, totpSecret: true, backupCodes: true,
+          },
         });
 
         if (!user || !user.passwordHash || !user.isActive) return null;
@@ -58,6 +64,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         );
 
         if (!passwordValid) return null;
+
+        // 2FA check
+        if (user.totpEnabled && user.totpSecret) {
+          const token = typeof parsed.data.totpToken === 'string' ? parsed.data.totpToken.replace(/\s/g, '') : '';
+          if (!token) return null; // 2FA required but no code provided
+          const verifyResult = verifySync({ token, secret: user.totpSecret });
+          const isValidTotp = verifyResult.valid;
+          // Also allow backup code
+          if (!isValidTotp) {
+            const codes = user.backupCodes ?? [];
+            const backupMatch = codes.findIndex(bc => bc === token);
+            if (backupMatch === -1) return null;
+            // Consume backup code (one-time use)
+            const remaining = codes.filter((_, i) => i !== backupMatch);
+            await prisma.user.update({ where: { id: user.id }, data: { backupCodes: remaining } });
+          }
+        }
 
         // Update last login
         await prisma.user.update({

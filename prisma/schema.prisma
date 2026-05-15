@@ -126,6 +126,9 @@ model Facility {
   // Regulatory Reporting Submissions
   regulatorySubmissions RegulatorySubmission[]
 
+  // Policy Acknowledgments
+  policyAcknowledgments PolicyAcknowledgment[]
+
   @@map("facilities")
 }
 
@@ -155,12 +158,15 @@ model User {
   department    String?
   isActive      Boolean   @default(true)
   lastLoginAt   DateTime?
-  phone         String?
-  smsEnabled    Boolean   @default(false)
   facilityId    String
   facility      Facility  @relation(fields: [facilityId], references: [id])
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  // 2FA / MFA
+  totpSecret    String?
+  totpEnabled   Boolean   @default(false)
+  backupCodes   String[]
 
   // NextAuth relations
   accounts      Account[]
@@ -170,10 +176,20 @@ model User {
   assignedItems       TrackerItem[]          @relation("AssignedTo")
   createdItems        TrackerItem[]          @relation("CreatedBy")
   assignedCaps        CorrectiveActionPlan[] @relation("CAPAssignee")
+  capAuditEntries     CapAuditEntry[]        @relation("CapAuditor")
   notifications       Notification[]
   auditLogs           AuditLog[]
   publishedUpdates    RegulatoryUpdate[]     @relation("PublishedBy")
-  regulatoryUpdateAcks RegulatoryUpdateAck[] @relation("RegulatoryUpdateAcks")
+  comments            Comment[]              @relation("CommentAuthor")
+  regulatoryAcks      RegulatoryUpdateAck[]
+
+  // Password reset
+  resetPasswordToken  String?   @unique
+  resetPasswordExpiry DateTime?
+
+  // SMS / phone
+  phone               String?
+  smsEnabled          Boolean   @default(false)
 
   @@map("users")
 }
@@ -503,6 +519,7 @@ model Policy {
   documentUrl     String?
   summary         String?       @db.Text
   revisionHistory Json?         // Array of {version, date, changedBy, summary}
+  acknowledgments PolicyAcknowledgment[]
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   deletedAt       DateTime?
@@ -536,6 +553,30 @@ enum PolicyStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// POLICY ACKNOWLEDGMENTS
+// Track staff read-and-acknowledge for amended policies (survey evidence)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PolicyAcknowledgment {
+  id             String    @id @default(cuid())
+  facilityId     String
+  facility       Facility  @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  policyId       String
+  policy         Policy    @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  staffName      String
+  staffEmail     String
+  token          String    @unique @default(cuid())
+  sentAt         DateTime  @default(now())
+  sentBy         String    // display name of the sender
+  acknowledgedAt DateTime?
+  acknowledgedIp String?
+
+  @@index([policyId])
+  @@index([token])
+  @@map("policy_acknowledgments")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // STAFF TRAINING & COMPETENCY TRACKER
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -545,6 +586,7 @@ model TrainingRecord {
   facility        Facility      @relation(fields: [facilityId], references: [id])
   staffName       String
   staffId         String?       // Employee ID
+  staffEmail      String?       // For assignment email flow
   department      String?
   jobTitle        String?
   trainingName    String
@@ -561,6 +603,7 @@ model TrainingRecord {
   sourceId        String?
   assignedBy      String?
   assignedReason  String?
+  completionToken String?       @unique  // For email-based self-reporting flow
   notes           String?
   regulatoryBody  RegulatoryBody?
   createdAt       DateTime      @default(now())
@@ -708,13 +751,48 @@ model CorrectiveActionPlan {
   vigilanceStatus  String?  @default("PENDING") // PENDING | ACTIVE | BREACH | COMPLETE
   vigilanceBreaches Int?    @default(0)
 
+  // Approval workflow
+  approvalStatus    ApprovalStatus @default(PENDING_REVIEW)
+  approvalHistory   Json?
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  reviewNote        String?        @db.Text
+
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
   incidents       Incident[]
   surveys         Survey[]
+  auditEntries    CapAuditEntry[]
 
   @@map("corrective_action_plans")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CAP EFFECTIVENESS AUDIT LOG
+// ─────────────────────────────────────────────────────────────────────────────
+
+model CapAuditEntry {
+  id            String               @id @default(cuid())
+  capId         String
+  cap           CorrectiveActionPlan @relation(fields: [capId], references: [id], onDelete: Cascade)
+  facilityId    String
+  auditDate     DateTime             @default(now())
+  auditorId     String
+  auditor       User                 @relation("CapAuditor", fields: [auditorId], references: [id])
+  result        AuditResult
+  notes         String?              @db.Text
+  nextAuditDate DateTime?
+  createdAt     DateTime             @default(now())
+
+  @@index([capId])
+  @@map("cap_audit_entries")
+}
+
+enum AuditResult {
+  PASS
+  FAIL
+  NEEDS_IMPROVEMENT
 }
 
 enum CapSource {
@@ -1491,8 +1569,10 @@ model GrievanceRecord {
   linkedIncidentId      String?
   linkedCapId           String?
   notes                 String?         @db.Text
+  chiefComplaint        String?
   createdAt             DateTime        @default(now())
   updatedAt             DateTime        @updatedAt
+  deletedAt             DateTime?
 
   @@map("grievance_records")
 }
@@ -1564,6 +1644,14 @@ model PlanOfCorrection {
   submittedBy     String?
   approvedBy      String?
   notes           String?       @db.Text
+
+  // Approval workflow
+  approvalStatus    ApprovalStatus @default(PENDING_REVIEW)
+  approvalHistory   Json?
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  reviewNote        String?        @db.Text
+
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
@@ -1828,6 +1916,13 @@ model IncidentReport {
   aiTriageTags      String?   // Comma-separated: "medication_security,repeat_offense,regulatory_exposure"
   aiCascadeTriggered Boolean  @default(false) // True if auto-RCA was triggered
   aiTriageReason    String?   // Human-readable explanation of the triage decision
+
+  // Approval workflow
+  approvalStatus    ApprovalStatus @default(PENDING_REVIEW)
+  approvalHistory   Json?
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  reviewNote        String?        @db.Text
   deletedAt         DateTime?
 
   @@map("incident_reports")
@@ -3195,29 +3290,58 @@ model RegulatoryUpdate {
   standardRef    String?       // e.g. "42 CFR 482.13(e)(1)"
   effectiveDate  DateTime?     // When the change takes effect
   sourceUrl      String?       // Link to official rule/guidance
-  affectedAreas  String[]      // e.g. ["Policies", "Training", "EOC"]
-  actionRequired String?       @db.Text  // What staff must do in response
   isGlobal       Boolean       @default(true)  // true = applies to all facilities
   publishedById  String
   publishedBy    User          @relation("PublishedBy", fields: [publishedById], references: [id])
-  acknowledgments RegulatoryUpdateAck[]
   isActive       Boolean       @default(true)
+  affectedAreas  String[]
+  actionRequired String?       @db.Text
+  acknowledgments RegulatoryUpdateAck[]
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
   @@map("regulatory_updates")
 }
 
-// Per-user acknowledgment — tracks who has reviewed and confirmed action on an update
 model RegulatoryUpdateAck {
   id        String           @id @default(cuid())
   updateId  String
-  update    RegulatoryUpdate @relation(fields: [updateId], references: [id], onDelete: Cascade)
+  update    RegulatoryUpdate @relation(fields: [updateId], references: [id])
   userId    String
-  user      User             @relation("RegulatoryUpdateAcks", fields: [userId], references: [id], onDelete: Cascade)
-  notes     String?          // Optional notes from the reviewer
+  user      User             @relation(fields: [userId], references: [id])
+  notes     String?
   ackedAt   DateTime         @default(now())
 
   @@unique([updateId, userId])
   @@map("regulatory_update_acks")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Approval Workflow
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum ApprovalStatus {
+  DRAFT
+  PENDING_REVIEW
+  APPROVED
+  RETURNED
+  REJECTED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Record-Level Comments
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Comment {
+  id         String   @id @default(cuid())
+  recordType String   // 'CAP' | 'INCIDENT' | 'GRIEVANCE' | 'POC' | 'RCA'
+  recordId   String
+  body       String   @db.Text
+  authorId   String
+  author     User     @relation("CommentAuthor", fields: [authorId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([recordType, recordId])
+  @@map("comments")
 }
