@@ -809,7 +809,7 @@ export default async function RootPage() {
               Simple, Transparent Pricing
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold mb-5 scroll-fade">
-              The right plan for{' '}
+              The right plan for{'\u00a0'}
               <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
                 every facility.
               </span>

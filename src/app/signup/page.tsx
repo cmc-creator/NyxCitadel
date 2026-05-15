@@ -106,7 +106,7 @@ export default function SignupPage() {
             <Sparkles className="w-3.5 h-3.5 animate-pulse" /> Built for Behavioral Health &amp; Acute Psychiatric Facilities
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-4">
-            Get started with{' '}
+            Get started with{'\u00a0'}
             <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
               NyxCitadel<sup className="text-base align-super">™</sup>
             </span>
