@@ -76,8 +76,9 @@ function LoginForm() {
     const result = await signIn('credentials', {
       email,
       password,
-      totpToken: totpToken || undefined,
+      ...(totpToken ? { totpToken } : {}),
       redirect: false,
+      callbackUrl,
     });
 
     if (result?.error) {
