@@ -1,10 +1,24 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { BarChart2, TrendingUp, Zap, ChevronDown, ChevronRight } from 'lucide-react';
+import { BarChart2, TrendingUp, Zap, ChevronDown, ChevronRight, Plus, X, Trash2 } from 'lucide-react';
 import { MetricTrendChart } from '@/components/quality/qapi-charts';
 
 const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+const CATEGORIES = [
+  { value: 'PATIENT_SAFETY',       label: 'Patient Safety' },
+  { value: 'RESTRAINT_SECLUSION',  label: 'Restraint & Seclusion' },
+  { value: 'MEDICATION_SAFETY',    label: 'Medication Safety' },
+  { value: 'INFECTION_PREVENTION', label: 'Infection Prevention' },
+  { value: 'PATIENT_EXPERIENCE',   label: 'Patient Experience' },
+  { value: 'STAFF_SAFETY',         label: 'Staff Safety' },
+  { value: 'READMISSIONS',         label: 'Readmissions' },
+  { value: 'THROUGHPUT',           label: 'Throughput' },
+  { value: 'COMPLIANCE',           label: 'Compliance' },
+  { value: 'WORKFORCE',            label: 'Workforce' },
+  { value: 'OTHER',                label: 'Other' },
+];
 
 function daysInMonth(m: number, y: number) {
   return new Date(y, m, 0).getDate();
@@ -25,20 +39,33 @@ interface Indicator {
   autoFromIR?: boolean;
 }
 
+interface CustomIndicator {
+  key: string;
+  label: string;
+  category: string;
+  unit: string;
+  target?: number;
+  higherIsBetter?: boolean;
+}
+
 const INDICATORS: Indicator[] = [
-  { key: 'restraint_rate',      label: 'Restraint Use Rate',     category: 'RESTRAINT_SECLUSION',  unit: 'per 1k pt-days', target: 5.0,  ref: 'HBIPS-2 / JC PC.03.05.01', color: '#7c3aed', calcType: 'per1kDays',  numeratorLabel: 'Total restraint hours' },
-  { key: 'seclusion_rate',      label: 'Seclusion Use Rate',     category: 'RESTRAINT_SECLUSION',  unit: 'per 1k pt-days', target: 2.0,  ref: 'HBIPS-3',                   color: '#9333ea', calcType: 'per1kDays',  numeratorLabel: 'Total seclusion hours' },
-  { key: 'fall_rate',           label: 'Patient Fall Rate',      category: 'PATIENT_SAFETY',       unit: 'per 1k pt-days', target: 2.0,  ref: 'NDNQI / NPSG.09.02.01',     color: '#ea580c', calcType: 'per1kDays',  numeratorLabel: 'Total falls (any)' },
-  { key: 'fall_with_injury_rate', label: 'Falls with Injury',    category: 'PATIENT_SAFETY',       unit: 'per 1k pt-days', target: 0.5,  ref: 'CMS / NDNQI',               color: '#dc2626', calcType: 'per1kDays',  numeratorLabel: 'Falls causing injury' },
-  { key: 'hai_rate',            label: 'HAI Rate',               category: 'INFECTION_PREVENTION', unit: 'per 1k pt-days', target: 0.5,  ref: 'CDC NHSN / NPSG.07',        color: '#0e7490', calcType: 'per1kDays',  numeratorLabel: 'Healthcare-assoc. infections' },
-  { key: 'medication_error_rate', label: 'Medication Error Rate',category: 'MEDICATION_SAFETY',   unit: 'per 1k doses',   target: 1.0,  ref: 'JC MM.09.01.01 / CMS',      color: '#d97706', calcType: 'per1kDoses', numeratorLabel: 'Medication errors (incl. near-miss)' },
-  { key: 'elopement_count',     label: 'Elopements',             category: 'PATIENT_SAFETY',       unit: 'count',          target: 0,    ref: 'AZ ADHS R9-10-211',         color: '#b91c1c', calcType: 'rawCount',   numeratorLabel: 'Elopements', autoFromIR: true },
-  { key: 'patient_satisfaction', label: 'Patient Satisfaction', category: 'PATIENT_EXPERIENCE',   unit: '%',              target: 85,   ref: 'CMS HCAHPS / HBIPS-7',      color: '#16a34a', calcType: 'pct', numeratorLabel: 'Patients rating care positively', denominatorLabel: 'Total patients surveyed', higherIsBetter: true },
-  { key: '30day_readmission_rate', label: '30-Day Readmission', category: 'CLINICAL_CARE',         unit: '%',              target: 15,   ref: 'CMS / HBIPS-6',             color: '#0369a1', calcType: 'pct', numeratorLabel: 'Patients readmitted ≤30d', denominatorLabel: 'Total discharges' },
-  { key: 'census_utilization',  label: 'Occupancy Rate',         category: 'THROUGHPUT',           unit: '%',              ref: 'Operations',                             color: '#475569', calcType: 'pct', numeratorLabel: 'Total patient-days (census)', denominatorLabel: 'Licensed bed-days', higherIsBetter: true },
-  { key: 'avg_los',             label: 'Avg Length of Stay',     category: 'THROUGHPUT',           unit: 'days',           ref: 'CMS / Utilization',                      color: '#6d28d9', calcType: 'direct', numeratorLabel: 'Average days (admission → discharge)' },
-  { key: 'staff_turnover',      label: 'Staff Turnover Rate',    category: 'WORKFORCE',            unit: '%',              ref: 'HR',                                     color: '#854d0e', calcType: 'direct', numeratorLabel: 'Turnover % (separations ÷ avg headcount × 100)' },
+  { key: 'restraint_rate',        label: 'Restraint Use Rate',    category: 'RESTRAINT_SECLUSION',  unit: 'per 1k pt-days', target: 5.0,  ref: 'HBIPS-2 / JC PC.03.05.01', color: '#7c3aed', calcType: 'per1kDays',  numeratorLabel: 'Total restraint hours' },
+  { key: 'seclusion_rate',        label: 'Seclusion Use Rate',    category: 'RESTRAINT_SECLUSION',  unit: 'per 1k pt-days', target: 2.0,  ref: 'HBIPS-3',                   color: '#9333ea', calcType: 'per1kDays',  numeratorLabel: 'Total seclusion hours' },
+  { key: 'fall_rate',             label: 'Patient Fall Rate',     category: 'PATIENT_SAFETY',       unit: 'per 1k pt-days', target: 2.0,  ref: 'NDNQI / NPSG.09.02.01',     color: '#ea580c', calcType: 'per1kDays',  numeratorLabel: 'Total falls (any)' },
+  { key: 'fall_with_injury_rate', label: 'Falls with Injury',     category: 'PATIENT_SAFETY',       unit: 'per 1k pt-days', target: 0.5,  ref: 'CMS / NDNQI',               color: '#dc2626', calcType: 'per1kDays',  numeratorLabel: 'Falls causing injury' },
+  { key: 'hai_rate',              label: 'HAI Rate',              category: 'INFECTION_PREVENTION', unit: 'per 1k pt-days', target: 0.5,  ref: 'CDC NHSN / NPSG.07',        color: '#0e7490', calcType: 'per1kDays',  numeratorLabel: 'Healthcare-assoc. infections' },
+  { key: 'medication_error_rate', label: 'Medication Error Rate', category: 'MEDICATION_SAFETY',    unit: 'per 1k doses',   target: 1.0,  ref: 'JC MM.09.01.01 / CMS',      color: '#d97706', calcType: 'per1kDoses', numeratorLabel: 'Medication errors (incl. near-miss)' },
+  { key: 'elopement_count',       label: 'Elopements',            category: 'PATIENT_SAFETY',       unit: 'count',          target: 0,    ref: 'AZ ADHS R9-10-211',         color: '#b91c1c', calcType: 'rawCount',   numeratorLabel: 'Elopements', autoFromIR: true },
+  { key: 'patient_satisfaction',  label: 'Patient Satisfaction',  category: 'PATIENT_EXPERIENCE',   unit: '%',              target: 85,   ref: 'CMS HCAHPS / HBIPS-7',      color: '#16a34a', calcType: 'pct', numeratorLabel: 'Patients rating care positively', denominatorLabel: 'Total patients surveyed', higherIsBetter: true },
+  { key: '30day_readmission_rate',label: '30-Day Readmission',    category: 'READMISSIONS',         unit: '%',              target: 15,   ref: 'CMS / HBIPS-6',             color: '#0369a1', calcType: 'pct', numeratorLabel: 'Patients readmitted \u226430d', denominatorLabel: 'Total discharges' },
+  { key: 'census_utilization',    label: 'Occupancy Rate',        category: 'THROUGHPUT',           unit: '%',              ref: 'Operations',                             color: '#475569', calcType: 'pct', numeratorLabel: 'Total patient-days (census)', denominatorLabel: 'Licensed bed-days', higherIsBetter: true },
+  { key: 'avg_los',               label: 'Avg Length of Stay',    category: 'THROUGHPUT',           unit: 'days',           ref: 'CMS / Utilization',                      color: '#6d28d9', calcType: 'direct', numeratorLabel: 'Average days (admission \u2192 discharge)' },
+  { key: 'staff_turnover',        label: 'Staff Turnover Rate',   category: 'WORKFORCE',            unit: '%',              ref: 'HR',                                     color: '#854d0e', calcType: 'direct', numeratorLabel: 'Turnover % (separations \u00f7 avg headcount \u00d7 100)' },
 ];
+
+const PREDEFINED_KEYS = new Set(INDICATORS.map(i => i.key));
+const CUSTOM_COLORS = ['#0d7377','#14a4a8','#f59e0b','#8b5cf6','#06b6d4','#f43f5e','#84cc16','#fb923c'];
+const STORAGE_KEY = 'qapi_custom_metrics_v1';
 
 function calcRate(ind: Indicator, num: number, den: number, ptDays: number, doses: number): number | null {
   if (ind.calcType === 'per1kDays')  return ptDays  ? (num / ptDays)  * 1000 : null;
@@ -53,21 +80,24 @@ function StatusBadge({ value, target, higherIsBetter }: { value: number; target?
   if (target === undefined) return null;
   const better = higherIsBetter ? value >= target : value <= target;
   const borderline = !better && (higherIsBetter ? value >= target * 0.9 : value <= target * 1.2);
-  if (better)     return <span className="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">✓ On target</span>;
-  if (borderline) return <span className="text-xs bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded-full font-medium">⚠ Near target</span>;
-  return <span className="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full font-medium">↑ Off target</span>;
+  if (better)     return <span className="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">\u2713 On target</span>;
+  if (borderline) return <span className="text-xs bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded-full font-medium">\u26a0 Near target</span>;
+  return <span className="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full font-medium">\u2191 Off target</span>;
 }
 
 interface StoredMetric {
-  id: string; metricKey: string; month: number; year: number;
-  value: number; target?: number; unit?: string; numerator?: number; denominator?: number;
+  id: string; metricKey: string; metricName: string; category: string;
+  month: number; year: number; value: number; target?: number;
+  unit?: string; numerator?: number; denominator?: number;
 }
 
 type Entries = Record<string, { num: string; den: string }>;
 
+const BLANK_FORM = { label: '', category: 'OTHER', unit: '', target: '', higherIsBetter: false };
+
 export default function QapiMetricsPage() {
   const now = new Date();
-  const [year, setYear] = useState(now.getFullYear());
+  const [year, setYear]   = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [patientDays, setPatientDays] = useState('');
   const [doses, setDoses] = useState('');
@@ -80,13 +110,30 @@ export default function QapiMetricsPage() {
   const [expandedTrend, setExpandedTrend] = useState<string | null>(null);
   const [facilityBeds, setFacilityBeds] = useState<number>(60);
 
-  // Load facility bed count dynamically
+  const [customIndicators, setCustomIndicators] = useState<CustomIndicator[]>([]);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newMetric, setNewMetric] = useState(BLANK_FORM);
+
+  // Load facility bed count
   useEffect(() => {
     fetch('/api/facility')
       .then(r => r.json())
       .then(data => { if (data.bedCount) setFacilityBeds(data.bedCount); })
-      .catch(() => {/* use default */});
+      .catch(() => {});
   }, []);
+
+  // Load custom indicators from localStorage
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) setCustomIndicators(JSON.parse(stored));
+    } catch {}
+  }, []);
+
+  // Persist custom indicators to localStorage
+  useEffect(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(customIndicators)); } catch {}
+  }, [customIndicators]);
 
   const BEDS = facilityBeds;
   const suggestedDays = BEDS * daysInMonth(month, year);
@@ -98,6 +145,19 @@ export default function QapiMetricsPage() {
       .then((data: StoredMetric[]) => {
         if (!Array.isArray(data)) return;
         setMetrics(data);
+
+        // Discover any custom metric keys from DB records not already tracked
+        setCustomIndicators(prev => {
+          const knownKeys = new Set([...PREDEFINED_KEYS, ...prev.map(c => c.key)]);
+          const found: CustomIndicator[] = [];
+          for (const m of data) {
+            if (!knownKeys.has(m.metricKey) && !found.find(f => f.key === m.metricKey)) {
+              found.push({ key: m.metricKey, label: m.metricName, category: m.category, unit: m.unit ?? '', target: m.target });
+            }
+          }
+          return found.length > 0 ? [...prev, ...found] : prev;
+        });
+
         const thisMonth = data.filter(d => d.month === month && d.year === year);
         const prefilled: Entries = {};
         for (const m of thisMonth) {
@@ -146,16 +206,43 @@ export default function QapiMetricsPage() {
     return calcRate(ind, num, den, ptDaysNum, dosesNum);
   }
 
+  function getCustomValue(key: string): number | null {
+    const val = parseFloat(entries[key]?.num ?? '');
+    return isNaN(val) ? null : val;
+  }
+
   function buildTrendData(key: string) {
     return metrics
       .filter(m => m.metricKey === key)
-      .sort((a, b) => a.month - b.month)
+      .sort((a, b) => a.year !== b.year ? a.year - b.year : a.month - b.month)
       .map(m => ({ month: m.month, year: m.year, value: m.value, target: m.target ?? undefined }));
+  }
+
+  function addCustomMetric() {
+    if (!newMetric.label.trim()) return;
+    const key = 'custom_' + newMetric.label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') + '_' + Date.now();
+    const ci: CustomIndicator = {
+      key,
+      label: newMetric.label.trim(),
+      category: newMetric.category,
+      unit: newMetric.unit.trim(),
+      target: newMetric.target ? parseFloat(newMetric.target) : undefined,
+      higherIsBetter: newMetric.higherIsBetter,
+    };
+    setCustomIndicators(prev => [...prev, ci]);
+    setNewMetric(BLANK_FORM);
+    setShowAddForm(false);
+  }
+
+  function removeCustomMetric(key: string) {
+    setCustomIndicators(prev => prev.filter(c => c.key !== key));
+    setEntries(e => { const copy = { ...e }; delete copy[key]; return copy; });
   }
 
   async function saveAll() {
     setSaving(true);
-    const batch = INDICATORS.map(ind => {
+
+    const predefinedBatch = INDICATORS.map(ind => {
       const value = getCalcValue(ind);
       if (value === null) return null;
       const numRaw = parseFloat(entries[ind.key]?.num ?? '');
@@ -169,6 +256,14 @@ export default function QapiMetricsPage() {
                numerator: isNaN(num) ? undefined : num, denominator: den ?? undefined };
     }).filter(Boolean);
 
+    const customBatch = customIndicators.map(ci => {
+      const value = getCustomValue(ci.key);
+      if (value === null) return null;
+      return { metricKey: ci.key, metricName: ci.label, category: ci.category, month, year,
+               value: Math.round(value * 100) / 100, target: ci.target, unit: ci.unit };
+    }).filter(Boolean);
+
+    const batch = [...predefinedBatch, ...customBatch];
     if (batch.length > 0) {
       await fetch('/api/qapi/metrics/bulk', {
         method: 'POST',
@@ -182,7 +277,8 @@ export default function QapiMetricsPage() {
     loadMetrics();
   }
 
-  const readyCount = INDICATORS.filter(i => getCalcValue(i) !== null).length;
+  const readyCount = INDICATORS.filter(i => getCalcValue(i) !== null).length
+    + customIndicators.filter(c => getCustomValue(c.key) !== null).length;
 
   return (
     <div className="space-y-6 max-w-4xl">
@@ -193,7 +289,7 @@ export default function QapiMetricsPage() {
             <BarChart2 className="w-6 h-6 text-teal-600" />
             QAPI Metrics
           </h1>
-          <p className="text-sm text-muted-foreground mt-0.5">Enter raw counts - rates calculate automatically · CMS 42 CFR 482.21</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Enter raw counts - rates calculate automatically \u00b7 CMS 42 CFR 482.21</p>
         </div>
         <div className="flex items-center gap-2">
           <select value={month} onChange={e => setMonth(Number(e.target.value))} className="form-input text-sm py-1.5">
@@ -221,7 +317,7 @@ export default function QapiMetricsPage() {
                 type="number" min={0}
                 value={patientDays}
                 onChange={e => setPatientDays(e.target.value)}
-                placeholder={`Suggested: ${suggestedDays} (${BEDS} beds × ${daysInMonth(month, year)} days)`}
+                placeholder={`Suggested: ${suggestedDays} (${BEDS} beds \u00d7 ${daysInMonth(month, year)} days)`}
                 className="form-input flex-1 text-sm"
               />
               {!patientDays && (
@@ -260,7 +356,7 @@ export default function QapiMetricsPage() {
         </div>
       )}
 
-      {/* Step 2: Metrics grid */}
+      {/* Step 2: Predefined metrics */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-semibold text-foreground text-sm">Step 2 - Enter raw counts below</h2>
@@ -268,7 +364,7 @@ export default function QapiMetricsPage() {
         </div>
         <div className="bg-card rounded-xl border border-border overflow-hidden divide-y divide-border/30">
           {loading ? (
-            <div className="py-12 text-center text-muted-foreground/70 text-sm">Loading…</div>
+            <div className="py-12 text-center text-muted-foreground/70 text-sm">Loading\u2026</div>
           ) : (
             INDICATORS.map(ind => {
               const calcVal = getCalcValue(ind);
@@ -279,7 +375,6 @@ export default function QapiMetricsPage() {
               return (
                 <div key={ind.key}>
                   <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] items-center">
-                    {/* Label */}
                     <div className="px-4 py-3 flex items-center gap-3 min-w-0">
                       <div className="w-1 h-10 rounded-full flex-shrink-0" style={{ backgroundColor: ind.color }} />
                       <div className="min-w-0">
@@ -289,13 +384,12 @@ export default function QapiMetricsPage() {
                         </div>
                         <div className="text-xs text-muted-foreground/70 mt-0.5">
                           {ind.numeratorLabel}
-                          {ind.calcType === 'per1kDays'  && <span className="text-teal-400"> ÷ patient-days × 1k</span>}
-                          {ind.calcType === 'per1kDoses' && <span className="text-orange-400"> ÷ doses × 1k</span>}
+                          {ind.calcType === 'per1kDays'  && <span className="text-teal-400"> \u00f7 patient-days \u00d7 1k</span>}
+                          {ind.calcType === 'per1kDoses' && <span className="text-orange-400"> \u00f7 doses \u00d7 1k</span>}
                         </div>
                       </div>
                     </div>
 
-                    {/* Inputs */}
                     <div className="px-4 py-3 flex items-center gap-2">
                       {isAutoEl ? (
                         <div className="flex items-center gap-2">
@@ -332,7 +426,6 @@ export default function QapiMetricsPage() {
                       )}
                     </div>
 
-                    {/* Calculated result */}
                     <div className="px-4 py-3 min-w-[160px] flex items-center justify-end">
                       {calcVal !== null ? (
                         <div className="flex flex-col items-end gap-1">
@@ -351,14 +444,13 @@ export default function QapiMetricsPage() {
                         </div>
                       ) : (
                         <span className="text-xs text-slate-300 italic">
-                          {ind.calcType === 'per1kDays'  && !ptDaysNum ? 'enter pt-days ↑' :
-                           ind.calcType === 'per1kDoses' && !dosesNum  ? 'enter doses ↑' : '-'}
+                          {ind.calcType === 'per1kDays'  && !ptDaysNum ? 'enter pt-days \u2191' :
+                           ind.calcType === 'per1kDoses' && !dosesNum  ? 'enter doses \u2191' : '-'}
                         </span>
                       )}
                     </div>
                   </div>
 
-                  {/* Trend row */}
                   {trendData.length > 0 && (
                     <div className="border-t border-border/20">
                       <button
@@ -384,6 +476,207 @@ export default function QapiMetricsPage() {
         </div>
       </div>
 
+      {/* Custom metrics */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="font-semibold text-foreground text-sm flex items-center gap-2">
+            Custom Metrics
+            {customIndicators.length > 0 && (
+              <span className="text-xs bg-teal-500/20 text-teal-400 px-2 py-0.5 rounded-full">{customIndicators.length}</span>
+            )}
+          </h2>
+          {!showAddForm && (
+            <button
+              type="button"
+              onClick={() => setShowAddForm(true)}
+              className="flex items-center gap-1.5 text-sm text-teal-500 hover:text-teal-400 transition-colors"
+            >
+              <Plus className="w-4 h-4" /> Add Metric
+            </button>
+          )}
+        </div>
+
+        {customIndicators.length > 0 && (
+          <div className="bg-card rounded-xl border border-border overflow-hidden divide-y divide-border/30 mb-3">
+            {customIndicators.map((ci, idx) => {
+              const val = getCustomValue(ci.key);
+              const trendData = buildTrendData(ci.key);
+              const isExpanded = expandedTrend === ci.key;
+              const color = CUSTOM_COLORS[idx % CUSTOM_COLORS.length];
+              return (
+                <div key={ci.key}>
+                  <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] items-center">
+                    <div className="px-4 py-3 flex items-center gap-3 min-w-0">
+                      <div className="w-1 h-10 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-sm font-semibold text-foreground">{ci.label}</span>
+                          <span className="text-xs text-muted-foreground/50 bg-slate-800/50 px-1.5 py-0.5 rounded">
+                            {CATEGORIES.find(c => c.value === ci.category)?.label ?? ci.category}
+                          </span>
+                        </div>
+                        <div className="text-xs text-muted-foreground/70 mt-0.5">
+                          {ci.unit ? `Unit: ${ci.unit}` : 'No unit set'}
+                          {ci.target !== undefined && ` \u00b7 Target: ${ci.target}${ci.higherIsBetter ? ' (higher is better)' : ''}`}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="px-4 py-3 flex items-center gap-2">
+                      <div>
+                        <label className="block text-xs text-muted-foreground/70 mb-0.5">Value</label>
+                        <input
+                          type="number" min={0} step="0.01"
+                          value={entries[ci.key]?.num ?? ''}
+                          onChange={e => setNum(ci.key, e.target.value)}
+                          placeholder="0"
+                          className="form-input w-24 text-sm text-right"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="px-4 py-3 min-w-[160px] flex items-center justify-end gap-3">
+                      {val !== null ? (
+                        <div className="flex flex-col items-end gap-1">
+                          <div className="flex items-baseline gap-1">
+                            <span className="text-xl font-bold text-foreground">
+                              {Number.isInteger(val) ? val : val.toFixed(2)}
+                            </span>
+                            {ci.unit && <span className="text-xs text-muted-foreground/70">{ci.unit}</span>}
+                          </div>
+                          {ci.target !== undefined && (
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-xs text-muted-foreground/70">Target: {ci.target}</span>
+                              <StatusBadge value={val} target={ci.target} higherIsBetter={ci.higherIsBetter} />
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="text-xs text-slate-300 italic">-</span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeCustomMetric(ci.key)}
+                        className="text-slate-600 hover:text-red-400 transition-colors shrink-0"
+                        title="Remove metric"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {trendData.length > 0 && (
+                    <div className="border-t border-border/20">
+                      <button
+                        type="button"
+                        onClick={() => setExpandedTrend(isExpanded ? null : ci.key)}
+                        className="w-full flex items-center gap-1.5 px-4 py-1.5 text-xs text-muted-foreground/70 hover:text-teal-600 hover:bg-teal-950/20 transition-colors"
+                      >
+                        {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+                        <TrendingUp className="w-3 h-3" />
+                        {trendData.length} month{trendData.length !== 1 ? 's' : ''} of data - {isExpanded ? 'hide' : 'view'} trend
+                      </button>
+                      {isExpanded && (
+                        <div className="px-4 pb-4">
+                          <MetricTrendChart data={trendData} unit={ci.unit} target={ci.target} color={color} />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Add custom metric form */}
+        {showAddForm && (
+          <div className="bg-slate-900/60 border border-teal-800/40 rounded-xl p-5 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-foreground">New Custom Metric</h3>
+              <button type="button" onClick={() => { setShowAddForm(false); setNewMetric(BLANK_FORM); }}
+                className="text-slate-500 hover:text-slate-300 transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-medium text-slate-400 mb-1">Metric Name <span className="text-red-400">*</span></label>
+                <input
+                  type="text"
+                  value={newMetric.label}
+                  onChange={e => setNewMetric(f => ({ ...f, label: e.target.value }))}
+                  placeholder="e.g. Pressure Ulcer Rate, Code Blue Events"
+                  className="form-input w-full text-sm"
+                  autoFocus
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1">Category</label>
+                <select value={newMetric.category} onChange={e => setNewMetric(f => ({ ...f, category: e.target.value }))} className="form-input w-full text-sm">
+                  {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1">Unit</label>
+                <input
+                  type="text"
+                  value={newMetric.unit}
+                  onChange={e => setNewMetric(f => ({ ...f, unit: e.target.value }))}
+                  placeholder="e.g. %, count, per 1k pt-days"
+                  className="form-input w-full text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1">Target (optional)</label>
+                <input
+                  type="number" min={0} step="0.01"
+                  value={newMetric.target}
+                  onChange={e => setNewMetric(f => ({ ...f, target: e.target.value }))}
+                  placeholder="Goal value"
+                  className="form-input w-full text-sm"
+                />
+              </div>
+              <div className="flex items-center gap-2 pt-4">
+                <input
+                  type="checkbox"
+                  id="higherIsBetter"
+                  checked={newMetric.higherIsBetter}
+                  onChange={e => setNewMetric(f => ({ ...f, higherIsBetter: e.target.checked }))}
+                  className="rounded"
+                />
+                <label htmlFor="higherIsBetter" className="text-xs text-slate-400">Higher value = better (e.g. satisfaction score)</label>
+              </div>
+            </div>
+            <div className="flex justify-end gap-2 pt-1">
+              <button type="button" onClick={() => { setShowAddForm(false); setNewMetric(BLANK_FORM); }}
+                className="text-sm text-slate-400 hover:text-slate-200 px-3 py-1.5 transition-colors">
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={addCustomMetric}
+                disabled={!newMetric.label.trim()}
+                className="flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700 disabled:opacity-40 text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-colors"
+              >
+                <Plus className="w-3.5 h-3.5" /> Add Metric
+              </button>
+            </div>
+          </div>
+        )}
+
+        {customIndicators.length === 0 && !showAddForm && (
+          <button
+            type="button"
+            onClick={() => setShowAddForm(true)}
+            className="w-full py-6 border border-dashed border-border rounded-xl text-sm text-muted-foreground/70 hover:text-teal-400 hover:border-teal-800/50 transition-colors flex items-center justify-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            Add a custom metric specific to your facility
+          </button>
+        )}
+      </div>
+
       {/* Sticky save bar */}
       <div className="sticky bottom-4">
         <div className="bg-card border border-border rounded-xl shadow-lg px-5 py-3 flex items-center justify-between gap-4">
@@ -397,7 +690,7 @@ export default function QapiMetricsPage() {
             disabled={saving || readyCount === 0}
             className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-40 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors shadow"
           >
-            {saving ? 'Saving…' : savedAll ? '✓ All Saved!' : 'Save All Metrics'}
+            {saving ? 'Saving\u2026' : savedAll ? '\u2713 All Saved!' : 'Save All Metrics'}
           </button>
         </div>
       </div>
