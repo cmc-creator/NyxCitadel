@@ -37,7 +37,7 @@ export async function PATCH(
   } = body;
 
   const record = await prisma.trainingRecord.update({
-    where: { id: params.id },
+    where: { id: params.id, facilityId: session.user.facilityId },
     data: {
       ...(status         != null && { status }),
       ...(completedDate  != null && { completedDate: new Date(completedDate) }),

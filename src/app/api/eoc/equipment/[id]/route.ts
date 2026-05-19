@@ -23,7 +23,7 @@ export async function PATCH(
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   const body = await req.json();
   const updated = await prisma.equipmentPm.update({
-    where: { id: params.id },
+    where: { id: params.id, facilityId: session.user.facilityId },
     data: {
       ...body,
       lastServiceDate: body.lastServiceDate ? new Date(body.lastServiceDate) : undefined,
@@ -39,6 +39,6 @@ export async function DELETE(
 ) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  await prisma.equipmentPm.delete({ where: { id: params.id } });
+  await prisma.equipmentPm.delete({ where: { id: params.id, facilityId: session.user.facilityId } });
   return new NextResponse(null, { status: 204 });
 }

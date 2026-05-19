@@ -42,7 +42,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     data.closedDate = new Date();
   }
 
-  const updated = await prisma.qocComplaint.update({ where: { id: params.id }, data });
+  const updated = await prisma.qocComplaint.update({ where: { id: params.id, facilityId: session.user.facilityId }, data });
   return NextResponse.json(updated);
 }
 
@@ -55,6 +55,6 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
 
-  await prisma.qocComplaint.delete({ where: { id: params.id } });
+  await prisma.qocComplaint.delete({ where: { id: params.id, facilityId: session.user.facilityId } });
   return new NextResponse(null, { status: 204 });
 }

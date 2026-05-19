@@ -32,7 +32,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   } = body;
 
   const updated = await prisma.ligatureRiskItem.update({
-    where: { id: params.id },
+    where: { id: params.id, facilityId: session.user.facilityId },
     data: {
       ...(location        !== undefined && { location }),
       ...(unit            !== undefined && { unit }),
@@ -62,6 +62,6 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   });
   if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
-  await prisma.ligatureRiskItem.delete({ where: { id: params.id } });
+  await prisma.ligatureRiskItem.delete({ where: { id: params.id, facilityId: session.user.facilityId } });
   return NextResponse.json({ success: true });
 }

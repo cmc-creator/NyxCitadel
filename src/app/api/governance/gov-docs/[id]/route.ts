@@ -30,7 +30,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   if (data.effectiveDate) data.effectiveDate = new Date(data.effectiveDate as string);
   if (data.reviewDate)    data.reviewDate    = new Date(data.reviewDate as string);
 
-  const updated = await prisma.governanceDocument.update({ where: { id: params.id }, data });
+  const updated = await prisma.governanceDocument.update({ where: { id: params.id, facilityId: session.user.facilityId }, data });
   return NextResponse.json(updated);
 }
 
@@ -43,6 +43,6 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
 
-  await prisma.governanceDocument.delete({ where: { id: params.id } });
+  await prisma.governanceDocument.delete({ where: { id: params.id, facilityId: session.user.facilityId } });
   return new NextResponse(null, { status: 204 });
 }

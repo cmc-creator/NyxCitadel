@@ -137,7 +137,7 @@ export async function POST(
 
   // ── Persist scorecard ─────────────────────────────────────────────────────────
   await prisma.drill.update({
-    where: { id: params.id },
+    where: { id: params.id, facilityId: session.user.facilityId },
     data: {
       status:            'COMPLETED',
       drillEndedAt:      now,

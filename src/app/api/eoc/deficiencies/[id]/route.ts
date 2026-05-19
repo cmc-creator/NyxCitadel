@@ -24,7 +24,7 @@ export async function PATCH(
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   const body = await req.json();
   const updated = await prisma.eocDeficiency.update({
-    where: { id: params.id },
+    where: { id: params.id, facilityId: session.user.facilityId },
     data: {
       ...body,
       dueDate:      body.dueDate      ? new Date(body.dueDate)      : undefined,
@@ -40,6 +40,6 @@ export async function DELETE(
 ) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  await prisma.eocDeficiency.delete({ where: { id: params.id } });
+  await prisma.eocDeficiency.delete({ where: { id: params.id, facilityId: session.user.facilityId } });
   return new NextResponse(null, { status: 204 });
 }

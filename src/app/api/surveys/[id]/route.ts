@@ -49,7 +49,7 @@ export async function PATCH(
 
   // Update the survey record
   const updated = await prisma.survey.update({
-    where: { id: params.id },
+    where: { id: params.id, facilityId: session.user.facilityId },
     data: {
       ...(score              != null && { satisfactionScore: score }),
       ...(status             != null && { status }),

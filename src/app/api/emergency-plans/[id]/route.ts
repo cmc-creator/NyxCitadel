@@ -25,7 +25,7 @@ export async function PATCH(
 
   const body = await req.json();
   const updated = await prisma.emergencyPlan.update({
-    where: { id: params.id },
+    where: { id: params.id, facilityId: session.user.facilityId },
     data: {
       ...body,
       effectiveDate:    body.effectiveDate    ? new Date(body.effectiveDate)    : undefined,
@@ -43,6 +43,6 @@ export async function DELETE(
   const session = await auth();
   if (!session?.user?.facilityId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  await prisma.emergencyPlan.delete({ where: { id: params.id } });
+  await prisma.emergencyPlan.delete({ where: { id: params.id, facilityId: session.user.facilityId } });
   return NextResponse.json({ success: true });
 }

@@ -27,7 +27,7 @@ export async function PATCH(
 
   const body = await req.json();
   const updated = await prisma.drill.update({
-    where: { id: params.id },
+    where: { id: params.id, facilityId: session.user.facilityId },
     data: {
       ...body,
       scheduledDate:  body.scheduledDate  ? new Date(body.scheduledDate)  : undefined,
@@ -56,7 +56,7 @@ export async function DELETE(
   const existing = await prisma.drill.findFirst({ where: { id: params.id, facilityId: session.user.facilityId } });
   if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
-  await prisma.drill.delete({ where: { id: params.id } });
+  await prisma.drill.delete({ where: { id: params.id, facilityId: session.user.facilityId } });
 
   await logAudit({
     userId: session.user.id,

@@ -113,7 +113,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   const body = await req.json();
   const updated = await prisma.mockSurvey.update({
-    where: { id: params.id },
+    where: { id: params.id, facilityId: session.user.facilityId },
     data: body,
   });
 
