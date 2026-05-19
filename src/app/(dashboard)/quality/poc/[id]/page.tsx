@@ -13,6 +13,8 @@ import {
   Pencil,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
+import { ApprovalPanel, type ApprovalHistoryEntry } from '@/components/shared/ApprovalPanel';
+import { CommentThread } from '@/components/shared/CommentThread';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,13 +23,13 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 const POC_STATUS_STYLES: Record<string, string> = {
-  DRAFT:             'bg-muted/30 text-foreground/80',
+  DRAFT:             'bg-slate-100 text-foreground/80',
   UNDER_REVIEW:      'bg-yellow-100 text-yellow-800',
   SUBMITTED:         'bg-blue-100 text-blue-800',
   ACCEPTED:          'bg-emerald-100 text-emerald-800',
   REJECTED:          'bg-red-100 text-red-800',
   RESUBMIT_REQUIRED: 'bg-orange-100 text-orange-800',
-  CLOSED:            'bg-muted/30 text-muted-foreground',
+  CLOSED:            'bg-slate-100 text-slate-500',
 };
 
 const FINDING_STATUS_STYLES: Record<string, { badge: string; icon: React.ReactNode }> = {
@@ -52,10 +54,11 @@ export default async function PocDetailPage({ params }: { params: { id: string }
                     poc.status !== 'ACCEPTED' &&
                     poc.status !== 'CLOSED' &&
                     new Date() > poc.responseDeadline;
+  const canApprove = ['ADMIN', 'SUPER_ADMIN'].includes(session!.user.role);
 
   return (
     <div className="space-y-6 max-w-5xl">
-      <Link href="/quality/poc" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600">
+      <Link href="/quality/poc" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600">
         <ChevronLeft className="w-4 h-4" /> Back to Plans of Correction
       </Link>
 
@@ -66,16 +69,16 @@ export default async function PocDetailPage({ params }: { params: { id: string }
             <ClipboardCheck className="w-6 h-6 text-purple-600" />
             {poc.pocNumber}
           </h1>
-          <p className="text-sm text-muted-foreground mt-0.5">{poc.title}</p>
+          <p className="text-sm text-slate-500 mt-0.5">{poc.title}</p>
         </div>
         <div className="flex items-center gap-2">
-          <Link href={`/quality/poc/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/quality/poc/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <span className="text-xs font-medium px-3 py-1 rounded-full bg-muted/30 text-foreground/80">
+          <span className="text-xs font-medium px-3 py-1 rounded-full bg-slate-100 text-foreground/80">
             {poc.regulatoryBody.replace(/_/g, ' ')}
           </span>
-          <span className={`text-xs font-medium px-3 py-1 rounded-full ${POC_STATUS_STYLES[poc.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
+          <span className={`text-xs font-medium px-3 py-1 rounded-full ${POC_STATUS_STYLES[poc.status] ?? 'bg-slate-100 text-slate-600'}`}>
             {poc.status.replace(/_/g, ' ')}
           </span>
         </div>
@@ -94,7 +97,7 @@ export default async function PocDetailPage({ params }: { params: { id: string }
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-card rounded-xl border border-border p-4 text-center">
           <p className="text-2xl font-bold text-foreground">{poc.findings.length}</p>
-          <p className="text-xs text-muted-foreground mt-0.5">Total Findings</p>
+          <p className="text-xs text-slate-500 mt-0.5">Total Findings</p>
         </div>
         <div className="bg-red-950/20 rounded-xl border border-red-200 p-4 text-center">
           <p className="text-2xl font-bold text-red-700">{openFindings}</p>
@@ -116,13 +119,13 @@ export default async function PocDetailPage({ params }: { params: { id: string }
             <dl className="space-y-3">
               {poc.surveyDate && (
                 <div>
-                  <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Survey Date</dt>
+                  <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Survey Date</dt>
                   <dd className="text-sm text-foreground">{formatDate(poc.surveyDate)}</dd>
                 </div>
               )}
               {poc.responseDeadline && (
                 <div>
-                  <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Response Deadline</dt>
+                  <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Response Deadline</dt>
                   <dd className={`text-sm font-medium ${isOverdue ? 'text-red-600' : 'text-foreground'}`}>
                     {formatDate(poc.responseDeadline)}
                   </dd>
@@ -130,19 +133,19 @@ export default async function PocDetailPage({ params }: { params: { id: string }
               )}
               {poc.submittedDate && (
                 <div>
-                  <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Submitted</dt>
+                  <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Submitted</dt>
                   <dd className="text-sm text-emerald-700 font-medium">{formatDate(poc.submittedDate)}</dd>
                 </div>
               )}
               {poc.submittedBy && (
                 <div>
-                  <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Submitted By</dt>
+                  <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Submitted By</dt>
                   <dd className="text-sm text-foreground">{poc.submittedBy}</dd>
                 </div>
               )}
               {poc.approvedBy && (
                 <div>
-                  <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Approved By</dt>
+                  <dt className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-0.5">Approved By</dt>
                   <dd className="text-sm text-foreground">{poc.approvedBy}</dd>
                 </div>
               )}
@@ -162,6 +165,18 @@ export default async function PocDetailPage({ params }: { params: { id: string }
           >
             + Generate POC Cover Letter
           </Link>
+
+          <ApprovalPanel
+            recordId={poc.id}
+            approveApiPath={`/api/poc/${poc.id}/approve`}
+            returnApiPath={`/api/poc/${poc.id}/return`}
+            approvalStatus={poc.approvalStatus as 'DRAFT' | 'PENDING_REVIEW' | 'APPROVED' | 'RETURNED' | 'REJECTED'}
+            approvalHistory={poc.approvalHistory as ApprovalHistoryEntry[] | null}
+            reviewedBy={poc.reviewedBy}
+            reviewedAt={poc.reviewedAt}
+            reviewNote={poc.reviewNote}
+            canApprove={canApprove}
+          />
         </div>
 
         {/* Right: Findings */}
@@ -174,7 +189,7 @@ export default async function PocDetailPage({ params }: { params: { id: string }
           )}
 
           <div className="bg-card rounded-xl border border-border">
-            <div className="px-5 py-4 border-b border-border/30">
+            <div className="px-5 py-4 border-b border-slate-100">
               <h3 className="text-sm font-semibold text-foreground">
                 Survey Findings &amp; Corrections ({poc.findings.length})
               </h3>
@@ -190,7 +205,7 @@ export default async function PocDetailPage({ params }: { params: { id: string }
                       <div className="flex items-start justify-between gap-4">
                         <div>
                           <p className="text-sm font-bold text-foreground">{finding.findingNumber}</p>
-                          <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{finding.findingDescription}</p>
+                          <p className="text-xs text-slate-500 mt-0.5 line-clamp-2">{finding.findingDescription}</p>
                         </div>
                         <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${style.badge}`}>
                           {style.icon} {finding.status.replace(/_/g, ' ')}
@@ -201,31 +216,31 @@ export default async function PocDetailPage({ params }: { params: { id: string }
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-2">
                         {finding.howCorrected && (
                           <div>
-                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">How Corrected</p>
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">How Corrected</p>
                             <p className="text-xs text-foreground/80 whitespace-pre-wrap">{finding.howCorrected}</p>
                           </div>
                         )}
                         {finding.howPrevented && (
                           <div>
-                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">How Prevented</p>
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">How Prevented</p>
                             <p className="text-xs text-foreground/80 whitespace-pre-wrap">{finding.howPrevented}</p>
                           </div>
                         )}
                         {finding.howMonitored && (
                           <div>
-                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Monitoring Plan</p>
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Monitoring Plan</p>
                             <p className="text-xs text-foreground/80 whitespace-pre-wrap">{finding.howMonitored}</p>
                           </div>
                         )}
                         {finding.evidenceOfCorrection && (
                           <div>
-                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Evidence</p>
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Evidence</p>
                             <p className="text-xs text-foreground/80 whitespace-pre-wrap">{finding.evidenceOfCorrection}</p>
                           </div>
                         )}
                       </div>
                       {(finding.responsibleParty || finding.targetDate || finding.completedDate) && (
-                        <div className="flex flex-wrap gap-4 text-xs text-muted-foreground pl-2">
+                        <div className="flex flex-wrap gap-4 text-xs text-slate-500 pl-2">
                           {finding.responsibleParty && <span>Responsible: <strong className="text-foreground/80">{finding.responsibleParty}</strong></span>}
                           {finding.targetDate && <span>Target: <strong className="text-foreground/80">{formatDate(finding.targetDate)}</strong></span>}
                           {finding.completedDate && (
@@ -243,16 +258,23 @@ export default async function PocDetailPage({ params }: { params: { id: string }
           </div>
 
           {poc.certificationStatement && (
-            <div className="bg-muted/30 rounded-xl border border-border p-5">
+            <div className="bg-slate-50 rounded-xl border border-border p-5">
               <h3 className="text-sm font-semibold text-foreground mb-3">Certification Statement</h3>
               <p className="text-sm text-foreground/80 whitespace-pre-wrap leading-relaxed italic">{poc.certificationStatement}</p>
             </div>
           )}
 
-          <div className="bg-muted/30 rounded-xl border border-border px-5 py-3 flex items-center justify-between text-xs text-muted-foreground/70">
+          <div className="bg-slate-50 rounded-xl border border-border px-5 py-3 flex items-center justify-between text-xs text-slate-500">
             <span>Created {formatDate(poc.createdAt)}</span>
             <span>Last updated {formatDate(poc.updatedAt)}</span>
           </div>
+
+          <CommentThread
+            recordType="POC"
+            recordId={poc.id}
+            currentUserId={session!.user.id}
+            currentUserRole={session!.user.role}
+          />
         </div>
       </div>
     </div>

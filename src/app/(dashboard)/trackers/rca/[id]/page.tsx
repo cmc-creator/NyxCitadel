@@ -6,6 +6,7 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, Search , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import { CommentThread } from '@/components/shared/CommentThread';
 
 export const dynamic = 'force-dynamic';
 
@@ -186,6 +187,13 @@ export default async function RcaDetailPage({ params }: { params: { id: string }
           )}
         </div>
       </div>
+
+      <CommentThread
+        recordType="RCA"
+        recordId={rca.id}
+        currentUserId={session.user.id}
+        currentUserRole={session.user.role}
+      />
     </div>
   );
 }
