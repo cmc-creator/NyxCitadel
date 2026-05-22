@@ -96,9 +96,19 @@ export default async function AdminPage() {
         <div className="flex flex-col items-end gap-3">
           <RunAlertsNowButton />
           <RunWeeklyExportsButton />
-          <Link href="/admin/pilot-kpis" className="inline-flex items-center gap-2 bg-cyan-700 hover:bg-cyan-800 text-white text-sm font-medium px-3 py-2 rounded-lg transition">
-            View Pilot KPIs
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/admin/audit-log" className="inline-flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium px-3 py-2 rounded-lg transition">
+              Audit Log
+            </Link>
+            <Link href="/admin/pilot-kpis" className="inline-flex items-center gap-2 bg-cyan-700 hover:bg-cyan-800 text-white text-sm font-medium px-3 py-2 rounded-lg transition">
+              View Pilot KPIs
+            </Link>
+          </div>
+          {isSuperAdmin && (
+            <Link href="/admin/facilities/new" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition">
+              + New Facility
+            </Link>
+          )}
           {demoToolsEnabled && <ResetDemoDataButton />}
         </div>
       </div>
@@ -269,7 +279,9 @@ export default async function AdminPage() {
           <h3 className="text-sm font-medium text-foreground">Platform Activity</h3>
         </div>
         <p className="text-xs text-muted-foreground">
-          Detailed audit logs are tracked per user. Visit{' '}
+          Detailed audit logs are tracked per user. View the{' '}
+          <Link href="/admin/audit-log" className="text-teal-400 hover:underline">Audit Log</Link>{' '}
+          for a full history of changes, or visit{' '}
           <Link href="/settings" className="text-teal-400 hover:underline">Settings</Link>{' '}
           to manage notification preferences and integrations.
         </p>

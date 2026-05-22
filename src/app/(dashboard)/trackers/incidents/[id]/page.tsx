@@ -34,7 +34,7 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
   const session = await auth();
   if (!session) redirect('/login');
 
-  const [incident, attachments] = await Promise.all([
+  const [incident, attachments, linkedRca] = await Promise.all([
     prisma.incident.findUnique({
       where: { id: params.id },
       include: { cap: { select: { id: true, capNumber: true, status: true, title: true } } },
@@ -46,6 +46,10 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
         sourceId: params.id,
       },
       orderBy: { createdAt: 'desc' },
+    }),
+    prisma.rootCauseAnalysis.findFirst({
+      where: { facilityId: session.user.facilityId, linkedIncidentId: params.id },
+      select: { id: true },
     }),
   ]);
 
@@ -91,6 +95,24 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
       )}
       {incident.reportableToJC && !incident.jcReportDate && (
         <AlertBanner color="orange" title="Joint Commission Report Required" body="This incident is reportable to The Joint Commission." />
+      )}
+
+      {incident.severity === 'SENTINEL' && !linkedRca && (
+        <div className="bg-red-950/20 border border-red-300 rounded-xl p-4 flex items-start justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5 text-red-700" />
+            <div className="text-red-800">
+              <p className="text-sm font-semibold">Sentinel Event - Root Cause Analysis Required</p>
+              <p className="text-xs mt-0.5 opacity-80">JC SE.04.01.01 requires a thorough RCA within 45 days of a sentinel event. No RCA has been started for this incident.</p>
+            </div>
+          </div>
+          <Link
+            href={`/trackers/rca/new?incidentId=${params.id}&incidentNumber=${incident.incidentNumber}`}
+            className="flex-none inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors whitespace-nowrap"
+          >
+            Start RCA
+          </Link>
+        </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

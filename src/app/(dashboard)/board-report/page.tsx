@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import { PrintButton } from '@/components/ui/PrintButton';
+import { BoardReportDownloadButton } from '@/components/ui/BoardReportDownloadButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -156,7 +157,10 @@ export default async function BoardReportPage() {
         <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600">
           <ChevronLeft className="w-4 h-4" /> Dashboard
         </Link>
-        <PrintButton />
+        <div className="flex items-center gap-2">
+          <BoardReportDownloadButton />
+          <PrintButton />
+        </div>
       </div>
 
       {/* ─── REPORT BODY ──────────────────────────────────── */}
