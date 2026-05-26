@@ -52,6 +52,7 @@ import {
   PlayCircle,
   Download,
   BarChart3,
+  CreditCard,
   UserCircle,
 } from 'lucide-react';
 import { useState, createContext, useContext } from 'react';
@@ -337,7 +338,8 @@ const bottomNavItems: NavItem[] = [
       { href: '/settings/facility',      label: 'Facility Config',   icon: Building2 },
       { href: '/settings/users',         label: 'User Management',   icon: Users2 },
       { href: '/settings/notifications', label: 'Notifications',     icon: Mail },
-      { href: '/settings/integrations',  label: 'Integrations',      icon: Wrench },
+      { href: '/settings/billing',       label: 'Billing',            icon: CreditCard },
+      { href: '/settings/integrations',  label: 'Integrations',       icon: Wrench },
     ],
   },
 ];

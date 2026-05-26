@@ -18,6 +18,8 @@
     "seed:reglib": "tsx prisma/seed-reg-library.ts",
     "db:reset": "prisma migrate reset --force && tsx prisma/seed-clean.ts",
     "db:reset:demo": "prisma migrate reset --force && tsx prisma/seed.ts && tsx prisma/seed-reg-library.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:unit": "node --test --import tsx src/lib/ai/sentry-actions.test.ts"
   },
   "dependencies": {
@@ -55,17 +57,21 @@
     "react": "^18",
     "react-dom": "^18",
     "recharts": "^2.15.4",
+    "stripe": "^22.1.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "twilio": "^6.0.2",
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/nodemailer": "^7.0.11",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^6.0.2",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "14.2.30",
@@ -73,6 +79,8 @@
     "prisma": "^5.22.0",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.19.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.7"
   }
 }

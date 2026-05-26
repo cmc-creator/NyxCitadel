@@ -16,16 +16,20 @@ export async function DELETE(
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
 
-  await prisma.attachment.delete({ where: { id: params.id } });
+  try {
+    await prisma.attachment.delete({ where: { id: params.id } });
 
-  await logAudit({
-    userId: session.user.id,
-    action: 'DELETE_ATTACHMENT',
-    entityType: 'Attachment',
-    entityId: params.id,
-    changes: { fileName: attachment.fileName, sourceType: attachment.sourceType, sourceId: attachment.sourceId },
-    req: _req,
-  });
+    await logAudit({
+      userId: session.user.id,
+      action: 'DELETE_ATTACHMENT',
+      entityType: 'Attachment',
+      entityId: params.id,
+      changes: { fileName: attachment.fileName, sourceType: attachment.sourceType, sourceId: attachment.sourceId },
+      req: _req,
+    });
 
-  return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true });
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }

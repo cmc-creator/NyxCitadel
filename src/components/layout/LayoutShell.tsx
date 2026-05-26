@@ -20,8 +20,8 @@ export function LayoutShell({ user, children }: LayoutShellProps) {
 
   return (
     <>
-      <Sidebar mobileOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div className="flex-1 lg:ml-64 flex flex-col min-w-0">
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div className="flex-1 md:ml-64 flex flex-col min-w-0">
         <TopBar user={user} onMenuToggle={() => setSidebarOpen(true)} />
         <main className="flex-1 p-4 md:p-6 overflow-auto">
           {children}

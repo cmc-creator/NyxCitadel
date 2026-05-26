@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Sidebar } from '@/components/layout/sidebar';
 import { TopBar } from '@/components/layout/topbar';
+import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 
 interface DashboardShellProps {
   user: {
@@ -21,14 +22,14 @@ export function DashboardShell({ user, children }: DashboardShellProps) {
   return (
     <div className="flex min-h-screen bg-background">
       <div className="print:hidden">
-        <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
+        <Sidebar isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
       </div>
       <div className="flex-1 lg:ml-64 print:ml-0 flex flex-col min-w-0">
         <div className="print:hidden">
           <TopBar user={user} onMenuToggle={() => setMobileOpen(true)} />
         </div>
         <main className="flex-1 p-4 lg:p-6 overflow-auto">
-          {children}
+          <ErrorBoundary>{children}</ErrorBoundary>
         </main>
       </div>
     </div>

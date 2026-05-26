@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { unstable_cache } from 'next/cache';
 import Link from 'next/link';
 import {
   Shield,
@@ -21,41 +22,38 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Board Compliance Report' };
 
-export default async function BoardReportPage() {
-  const session = await auth();
-  const facilityId = session!.user.facilityId;
+const getBoardReportData = unstable_cache(
+  async (facilityId: string) => {
+    const since90   = new Date(Date.now() - 90  * 24 * 60 * 60 * 1000);
+    const now       = new Date();
+    const in90      = new Date(Date.now() + 90  * 24 * 60 * 60 * 1000);
+    const yearStart = new Date(now.getFullYear(), 0, 1);
+    const thisMonth = now.getMonth() + 1;
+    const thisYear  = now.getFullYear();
 
-  const since90   = new Date(Date.now() - 90  * 24 * 60 * 60 * 1000);
-  const now       = new Date();
-  const in90      = new Date(Date.now() + 90  * 24 * 60 * 60 * 1000);
-  const yearStart = new Date(now.getFullYear(), 0, 1);
-  const thisMonth = now.getMonth() + 1;
-  const thisYear  = now.getFullYear();
-
-  const [
-    facility,
-    irLast90,
-    rcaApproved,
-    capsCompleted,
-    capsOpen,
-    trainingAll,
-    trainingCompleted,
-    drillsLast90,
-    qapiMetrics,
-    surveys,
-    grievancesLast90,
-    grievancesOpen,
-    recentCaps,
-    criticalIR,
-    // New module stats
-    expiringLicenses90,
-    csDiscrepanciesOpen,
-    openHipaaBreaches,
-    activeHolds,
-    restraintDeathsYtd,
-    lockedUserCount,
-    overdueRequiredCount,
-  ] = await Promise.all([
+    const [
+      facility,
+      irLast90,
+      rcaApproved,
+      capsCompleted,
+      capsOpen,
+      trainingAll,
+      trainingCompleted,
+      drillsLast90,
+      qapiMetrics,
+      surveys,
+      grievancesLast90,
+      grievancesOpen,
+      recentCaps,
+      criticalIR,
+      expiringLicenses90,
+      csDiscrepanciesOpen,
+      openHipaaBreaches,
+      activeHolds,
+      restraintDeathsYtd,
+      lockedUserCount,
+      overdueRequiredCount,
+    ] = await Promise.all([
     prisma.facility.findUnique({
       where: { id: facilityId },
       select: { name: true, city: true, state: true, licenseNumber: true, bedCount: true, facilityType: true },
@@ -136,10 +134,41 @@ export default async function BoardReportPage() {
     prisma.trainingRecord.count({ where: { facilityId, isRequired: true, status: { in: ['OVERDUE', 'EXPIRED'] } } }),
   ]);
 
+    return {
+      facility, irLast90, rcaApproved, capsCompleted, capsOpen,
+      trainingAll, trainingCompleted, drillsLast90, qapiMetrics, surveys,
+      grievancesLast90, grievancesOpen, recentCaps, criticalIR,
+      expiringLicenses90, csDiscrepanciesOpen, openHipaaBreaches,
+      activeHolds, restraintDeathsYtd, lockedUserCount, overdueRequiredCount,
+      reportDate: formatDate(now),
+      since90ISO: since90.toISOString(),
+      thisMonth,
+      thisYear,
+    };
+  },
+  ['board-report'],
+  { revalidate: 300 },
+);
+
+export default async function BoardReportPage() {
+  const session = await auth();
+  const facilityId = session!.user.facilityId;
+
+  const {
+    facility, irLast90, rcaApproved, capsCompleted, capsOpen,
+    trainingAll, trainingCompleted, drillsLast90, qapiMetrics, surveys,
+    grievancesLast90, grievancesOpen, recentCaps, criticalIR,
+    expiringLicenses90, csDiscrepanciesOpen, openHipaaBreaches,
+    activeHolds, restraintDeathsYtd, lockedUserCount, overdueRequiredCount,
+    reportDate, since90ISO, thisMonth, thisYear,
+  } = await getBoardReportData(facilityId);
+
+  const now     = new Date();
+  const since90 = new Date(since90ISO);
+
   const trainingPct = trainingAll > 0 ? Math.round((trainingCompleted / trainingAll) * 100) : 100;
   const drillsCompleted = drillsLast90.filter((d) => d.status === 'COMPLETED').length;
   const aarCompleted    = drillsLast90.filter((d) => d.aarGeneratedAt).length;
-  const reportDate      = formatDate(now);
 
   function resilScore() {
     let score = trainingPct * 0.4;
