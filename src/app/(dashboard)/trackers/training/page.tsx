@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
-import { GraduationCap, Plus, AlertTriangle, Download, Grid3x3 } from 'lucide-react';
+import { GraduationCap, Plus, AlertTriangle, Download, Grid3x3, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 import { isPast, isWithinInterval, addDays } from 'date-fns';
 import { PrintButton } from '@/components/ui/PrintButton';
@@ -89,6 +89,13 @@ export default async function TrainingPage({
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <Link
+            href="/trackers/training/compliance"
+            className="inline-flex items-center gap-1.5 text-sm bg-red-950/30 border border-red-900/30 hover:bg-red-950/50 text-red-400 px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <ShieldAlert className="w-3.5 h-3.5" />
+            Compliance Gatekeeper
+          </Link>
           <Link
             href="/trackers/training/matrix"
             className="inline-flex items-center gap-1.5 text-sm bg-card border border-border hover:bg-muted/30 text-foreground/80 px-3 py-1.5 rounded-lg font-medium transition-colors"
@@ -196,8 +203,8 @@ export default async function TrainingPage({
       </div>
 
       {/* Table */}
-      <div className="bg-card rounded-xl border border-border overflow-x-auto">
-        <table className="w-full text-sm min-w-[640px]">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
+        <table className="w-full text-sm">
           <thead className="bg-muted/30 border-b border-border">
             <tr>
               <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Staff Name</th>
@@ -209,7 +216,7 @@ export default async function TrainingPage({
               <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border/30">
+          <tbody className="divide-y divide-slate-50">
             {records.length === 0 ? (
               <tr>
                 <td colSpan={7} className="text-center py-12 text-muted-foreground/70">

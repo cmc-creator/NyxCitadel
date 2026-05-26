@@ -312,3 +312,103 @@ export async function generateComplianceAlerts({ userId, facilityId, deliverEmai
 
   return createdCount;
 }
+
+/**
+ * Sends 60/30/15-day milestone notifications for required training due dates.
+ * Notifies the employee and their department head/director.
+ * Uses milestone number embedded in the title for natural 3-day deduplication.
+ */
+export async function generateTrainingMilestoneAlerts(facilityId: string): Promise<void> {
+  const now = new Date();
+  const dedupWindow = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
+  const in63Days = new Date(now.getTime() + 63 * 24 * 60 * 60 * 1000);
+
+  const upcomingRecords = await prisma.trainingRecord.findMany({
+    where: {
+      facilityId,
+      isRequired: true,
+      expiryDate: { gte: now, lte: in63Days },
+      status: { notIn: ['COMPLETED', 'EXEMPT'] },
+      staffEmail: { not: null },
+    },
+    select: {
+      staffEmail: true,
+      staffName: true,
+      trainingName: true,
+      expiryDate: true,
+      department: true,
+    },
+  });
+
+  for (const rec of upcomingRecords) {
+    if (!rec.expiryDate || !rec.staffEmail) continue;
+    const daysUntil = Math.floor((rec.expiryDate.getTime() - now.getTime()) / 86400000);
+
+    let milestone: number | null = null;
+    if (daysUntil >= 57 && daysUntil <= 63) milestone = 60;
+    else if (daysUntil >= 27 && daysUntil <= 33) milestone = 30;
+    else if (daysUntil >= 12 && daysUntil <= 18) milestone = 15;
+
+    if (!milestone) continue;
+
+    const title = `Training due in ${milestone} days: ${rec.trainingName}`;
+
+    // Notify the employee
+    const employee = await prisma.user.findFirst({
+      where: { email: rec.staffEmail, facilityId, isActive: true },
+      select: { id: true },
+    });
+    if (employee) {
+      const existingEmp = await prisma.notification.findFirst({
+        where: { userId: employee.id, type: 'TRAINING_EXPIRING', title, createdAt: { gte: dedupWindow } },
+      });
+      if (!existingEmp) {
+        await prisma.notification.create({
+          data: {
+            facilityId,
+            userId: employee.id,
+            type: 'TRAINING_EXPIRING',
+            title,
+            message: `Your required training "${rec.trainingName}" is due in ${daysUntil} days (${rec.expiryDate.toLocaleDateString()}). Complete it to avoid a scheduling lockout.`,
+            linkUrl: '/education/training',
+          },
+        });
+      }
+    }
+
+    // Notify department head/director if employee has a department
+    if (rec.department) {
+      const deptLeads = await prisma.user.findMany({
+        where: {
+          facilityId,
+          isActive: true,
+          department: rec.department,
+          role: { in: ['ADMIN', 'COMPLIANCE_OFFICER'] },
+        },
+        select: { id: true },
+      });
+      for (const lead of deptLeads) {
+        const existingLead = await prisma.notification.findFirst({
+          where: {
+            userId: lead.id,
+            type: 'TRAINING_EXPIRING',
+            title: `[Dept] ${title}`,
+            createdAt: { gte: dedupWindow },
+          },
+        });
+        if (!existingLead) {
+          await prisma.notification.create({
+            data: {
+              facilityId,
+              userId: lead.id,
+              type: 'TRAINING_EXPIRING',
+              title: `[Dept] ${title}`,
+              message: `${rec.staffName} in your department has required training "${rec.trainingName}" due in ${daysUntil} days. Non-completion triggers a scheduling lockout.`,
+              linkUrl: '/trackers/training/compliance',
+            },
+          });
+        }
+      }
+    }
+  }
+}

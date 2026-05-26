@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
 import { CheckSquare, Square, CheckCheck, Trash2, Download, X } from 'lucide-react';
 import { Clock, AlertCircle, CheckCircle2, MessageSquareWarning, Plus } from 'lucide-react';
+import { QuickStatusSelect } from '@/components/trackers/QuickStatusSelect';
 
 interface Grievance {
   id: string;
@@ -37,6 +38,12 @@ const SEVERITY_COLORS: Record<string, string> = {
   REGULATORY: 'bg-red-100 text-red-700',
   SENTINEL: 'bg-red-200 text-red-800 font-bold',
 };
+
+const GRIEVANCE_STATUS_OPTIONS = Object.entries(STATUS_COLORS).map(([value, color]) => ({
+  value,
+  label: value.replace(/_/g, ' '),
+  color,
+}));
 
 function DaysIndicator({ dueDate, label }: { dueDate: Date; label: string }) {
   const now = new Date();
@@ -141,7 +148,7 @@ export function GrievancesListClient({ grievances }: { grievances: Grievance[] }
                   <td className="px-4 py-3 font-mono text-xs text-slate-600">{g.grievanceNumber}</td>
                   <td className="px-4 py-3"><div className="font-medium text-foreground">{g.complainantName}</div>{g.patientName && <div className="text-xs text-slate-500">Patient: {g.patientName}</div>}</td>
                   <td className="px-4 py-3"><div className="text-xs text-slate-600">{g.category.replace(/_/g, ' ')}</div><span className={`text-xs px-1.5 py-0.5 rounded-full ${SEVERITY_COLORS[g.severity] ?? ''}`}>{g.severity}</span></td>
-                  <td className="px-4 py-3"><span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[g.status] ?? 'bg-slate-100 text-slate-600'}`}>{g.status.replace(/_/g, ' ')}</span></td>
+                  <td className="px-4 py-3"><QuickStatusSelect apiPath={`/api/grievances/${g.id}`} currentStatus={g.status} options={GRIEVANCE_STATUS_OPTIONS} /></td>
                   <td className="px-4 py-3 space-y-1">
                     {!isClosed && !g.acknowledgmentDate && <DaysIndicator dueDate={g.acknowledgmentDueDate} label="ACK" />}
                     {!isClosed && !g.resolutionDate && <DaysIndicator dueDate={g.resolutionDueDate} label="RES" />}

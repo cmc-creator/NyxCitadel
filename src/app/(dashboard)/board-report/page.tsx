@@ -15,6 +15,7 @@ import {
 import { formatDate } from '@/lib/utils';
 import { PrintButton } from '@/components/ui/PrintButton';
 import { BoardReportDownloadButton } from '@/components/ui/BoardReportDownloadButton';
+import { SaveBoardReportButton } from '@/components/ui/SaveBoardReportButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -158,6 +159,22 @@ export default async function BoardReportPage() {
           <ChevronLeft className="w-4 h-4" /> Dashboard
         </Link>
         <div className="flex items-center gap-2">
+          <Link href="/board-report/archive" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg px-3 py-2 transition-colors">
+            Archive
+          </Link>
+          <SaveBoardReportButton
+            title={`Board Compliance Report — ${facility?.name ?? 'Facility'} — ${reportDate}`}
+            reportMonth={thisMonth}
+            reportYear={thisYear}
+            content={{
+              resilience, resGrade, trainingPct,
+              irLast90, rcaApproved, capsCompleted, capsOpen,
+              grievancesLast90, grievancesOpen,
+              drillsCompleted, aarCompleted,
+              csDiscrepanciesOpen, openHipaaBreaches, activeHolds, restraintDeathsYtd,
+              reportDate,
+            }}
+          />
           <BoardReportDownloadButton />
           <PrintButton />
         </div>

@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 import { runComplianceAlertSweep } from '@/lib/notifications/run-alerts';
+import { generateTrainingMilestoneAlerts } from '@/lib/notifications/alertScanner';
+import { runTrainingLockoutSweep } from '@/lib/notifications/training-lockout';
+import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -21,6 +24,18 @@ export async function GET(req: Request) {
   }
 
   const result = await runComplianceAlertSweep();
+
+  // Training milestone notifications (60/30/15-day warnings per facility)
+  const facilities = await prisma.facility.findMany({
+    where: { isActive: true },
+    select: { id: true },
+  });
+  for (const facility of facilities) {
+    await generateTrainingMilestoneAlerts(facility.id);
+  }
+
+  // Compliance Gatekeeper: lock/unlock employees based on required training status
+  await runTrainingLockoutSweep();
 
   return NextResponse.json({
     ok: result.failures.length === 0,

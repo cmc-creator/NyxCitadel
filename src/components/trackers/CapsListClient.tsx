@@ -5,6 +5,7 @@ import { isPast } from 'date-fns';
 import { formatDate, getDueDateStatus } from '@/lib/utils';
 import { BulkSelectList } from '@/components/trackers/BulkSelectList';
 import { ClipboardList } from 'lucide-react';
+import { QuickStatusSelect } from '@/components/trackers/QuickStatusSelect';
 
 interface Cap {
   id: string;
@@ -38,6 +39,12 @@ const sourceColor: Record<string, string> = {
   SENTINEL_EVENT: 'bg-red-100 text-red-900',
   DEFAULT: 'bg-slate-50 text-slate-600',
 };
+
+const statusOptions = Object.entries(statusColor).map(([value, color]) => ({
+  value,
+  label: value.replace(/_/g, ' '),
+  color,
+}));
 
 export function CapsListClient({ caps }: { caps: Cap[] }) {
   if (caps.length === 0) {
@@ -85,9 +92,11 @@ export function CapsListClient({ caps }: { caps: Cap[] }) {
                 </div>
               </div>
               <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                <span className={`text-xs font-medium px-2 py-0.5 rounded ${statusColor[cap.status] ?? ''}`}>
-                  {cap.status.replace(/_/g, ' ')}
-                </span>
+                <QuickStatusSelect
+                  apiPath={`/api/caps/${cap.id}`}
+                  currentStatus={cap.status}
+                  options={statusOptions}
+                />
                 <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${isOverdue ? 'status-overdue' : dueClass}`}>
                   {isOverdue ? `Overdue \u00b7 ${formatDate(cap.targetDate)}` : `Due ${formatDate(cap.targetDate)}`}
                 </span>

@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
-import { CheckSquare, Square, CheckCheck, Trash2, Download, X, Plus } from 'lucide-react';
+import { CheckSquare, Square, CheckCheck, Trash2, Download, X } from 'lucide-react';
 import { AlertTriangle } from 'lucide-react';
+import { QuickStatusSelect } from '@/components/trackers/QuickStatusSelect';
 
 interface Incident {
   id: string;
@@ -38,6 +39,12 @@ const statusColor: Record<string, string> = {
   REPORTABLE_PENDING: 'bg-red-100 text-red-800',
 };
 
+const INCIDENT_STATUS_OPTIONS = Object.entries(statusColor).map(([value, color]) => ({
+  value,
+  label: value.replace(/_/g, ' '),
+  color,
+}));
+
 export function IncidentsListClient({ incidents }: { incidents: Incident[] }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [confirming, setConfirming] = useState(false);
@@ -67,21 +74,12 @@ export function IncidentsListClient({ incidents }: { incidents: Incident[] }) {
 
   if (incidents.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 px-4 bg-card rounded-xl border border-border text-center">
-        <div className="w-16 h-16 rounded-full bg-teal-600/10 flex items-center justify-center mb-4">
-          <AlertTriangle className="w-8 h-8 text-teal-600/70" />
-        </div>
-        <h3 className="text-lg font-semibold text-foreground mb-1">No incidents found</h3>
-        <p className="text-sm text-muted-foreground max-w-xs mb-6">
-          Your incident tracker is clear. When an event occurs, file a report to start tracking it through investigation and closure.
-        </p>
-        <Link
-          href="/trackers/incidents/new"
-          className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          File New Incident Report
-        </Link>
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
+        <table className="w-full text-sm"><tbody>
+          <tr><td colSpan={9} className="text-center py-12 text-muted-foreground/70">
+            No incidents found. <Link href="/trackers/incidents/new" className="text-teal-600 hover:underline">File a new incident report</Link>
+          </td></tr>
+        </tbody></table>
       </div>
     );
   }
@@ -157,7 +155,11 @@ export function IncidentsListClient({ incidents }: { incidents: Incident[] }) {
                   ) : <span className="text-muted-foreground/70">-</span>}
                 </td>
                 <td className="px-4 py-3">
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded ${statusColor[incident.status] ?? ''}`}>{incident.status.replace(/_/g, ' ')}</span>
+                  <QuickStatusSelect
+                    apiPath={`/api/incidents/${incident.id}`}
+                    currentStatus={incident.status}
+                    options={INCIDENT_STATUS_OPTIONS}
+                  />
                 </td>
               </tr>
             ))}

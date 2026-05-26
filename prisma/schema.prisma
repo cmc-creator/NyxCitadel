@@ -129,6 +129,9 @@ model Facility {
   // Policy Acknowledgments
   policyAcknowledgments PolicyAcknowledgment[]
 
+  surveyFindings        SurveyFinding[]
+  boardReports          BoardReport[]
+
   @@map("facilities")
 }
 
@@ -190,6 +193,16 @@ model User {
   // SMS / phone
   phone               String?
   smsEnabled          Boolean   @default(false)
+
+  boardReports    BoardReport[]
+
+  // Compliance Gatekeeper — scheduling lockout
+  scheduleBlocked      Boolean   @default(false)
+  scheduleBlockedAt    DateTime?
+  scheduleBlockReason  String?
+  scheduleUnblockedAt  DateTime?
+  scheduleUnblockedBy  String?
+  scheduleOverrideNote String?
 
   @@map("users")
 }
@@ -763,6 +776,7 @@ model CorrectiveActionPlan {
 
   incidents       Incident[]
   surveys         Survey[]
+  surveyFindings  SurveyFinding[]
   auditEntries    CapAuditEntry[]
 
   @@map("corrective_action_plans")
@@ -1077,6 +1091,7 @@ model Survey {
   capId               String?
   cap                 CorrectiveActionPlan? @relation(fields: [capId], references: [id])
   plansOfCorrection   PlanOfCorrection[]
+  findings            SurveyFinding[]
   notes               String?   @db.Text
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
@@ -1243,6 +1258,7 @@ enum NotificationType {
   CAP_UPDATE
   POLICY_REVIEW_DUE
   TRAINING_EXPIRING
+  TRAINING_LOCKOUT
   INCIDENT_UPDATE
   SYSTEM
   REGULATORY_UPDATE
@@ -3344,4 +3360,57 @@ model Comment {
 
   @@index([recordType, recordId])
   @@map("comments")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Survey Findings
+// ─────────────────────────────────────────────────────────────────────────────
+
+model SurveyFinding {
+  id            String        @id @default(cuid())
+  facilityId    String
+  facility      Facility      @relation(fields: [facilityId], references: [id])
+  surveyId      String?
+  survey        Survey?       @relation(fields: [surveyId], references: [id])
+  tagNumber     String?
+  condition     String?
+  description   String        @db.Text
+  severity      String?
+  status        FindingStatus @default(OPEN)
+  targetDate    DateTime?
+  capId         String?
+  cap           CorrectiveActionPlan? @relation(fields: [capId], references: [id])
+  notes         String?       @db.Text
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([facilityId, status])
+  @@map("survey_findings")
+}
+
+enum FindingStatus {
+  OPEN
+  CAP_IN_PROGRESS
+  VERIFIED
+  CLOSED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Board Report Archive
+// ─────────────────────────────────────────────────────────────────────────────
+
+model BoardReport {
+  id          String   @id @default(cuid())
+  facilityId  String
+  facility    Facility @relation(fields: [facilityId], references: [id])
+  title       String
+  reportMonth Int
+  reportYear  Int
+  content     Json
+  generatedBy String?
+  user        User?    @relation(fields: [generatedBy], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@index([facilityId, reportYear, reportMonth])
+  @@map("board_reports")
 }

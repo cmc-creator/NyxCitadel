@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { logAudit } from '@/lib/audit';
+import { checkAndAutoUnlock } from '@/lib/notifications/training-lockout';
 
 export async function GET(
   _req: NextRequest,
@@ -62,6 +63,11 @@ export async function PATCH(
     changes: body,
     req,
   });
+
+  // Immediately check if a scheduling lockout should be lifted
+  if (body.status === 'COMPLETED' && record.staffEmail) {
+    await checkAndAutoUnlock(record.staffEmail, session.user.facilityId);
+  }
 
   return NextResponse.json(record);
 }

@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import { DeleteButton } from '@/components/ui/DeleteButton';
 import AttachmentPanel from '@/components/ui/AttachmentPanel';
 import AttachmentComposer from '@/components/ui/AttachmentComposer';
+import { SurveyFindingsPanel } from '@/components/surveys/SurveyFindingsPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -148,6 +149,9 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
           </div>
         )}
       </div>
+
+      {/* Survey Findings */}
+      <SurveyFindingsPanel surveyId={params.id} />
 
       {/* Linked CAP */}
       {survey.cap && (
