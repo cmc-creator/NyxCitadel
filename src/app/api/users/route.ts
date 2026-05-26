@@ -30,6 +30,8 @@ export async function GET() {
       isActive: true,
       lastLoginAt: true,
       createdAt: true,
+      scheduleBlocked: true,
+      scheduleBlockedAt: true,
     },
   });
 

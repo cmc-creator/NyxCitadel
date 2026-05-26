@@ -16,6 +16,7 @@ interface AppUser {
   isActive: boolean;
   lastLoginAt: string | null;
   createdAt: string;
+  scheduleBlocked: boolean;
 }
 
 const ROLES = [
@@ -288,6 +289,11 @@ export default function UsersSettingsPage() {
                         <p className="font-medium text-foreground">{u.name ?? '-'}</p>
                         <p className="text-xs text-muted-foreground/70">{u.email}</p>
                         {u.title && <p className="text-xs text-muted-foreground mt-0.5">{u.title}</p>}
+                        {u.scheduleBlocked && (
+                          <span className="inline-flex items-center gap-1 mt-1 text-[10px] font-medium px-1.5 py-0.5 rounded bg-red-950/40 text-red-400 border border-red-800/40">
+                            <ShieldOff className="w-2.5 h-2.5" /> Sched. Locked
+                          </span>
+                        )}
                       </td>
                       <td className="px-4 py-3">
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ROLE_COLORS[u.role] ?? 'bg-muted/50 text-foreground/80'}`}>

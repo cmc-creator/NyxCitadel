@@ -94,6 +94,13 @@ export const NOTIFICATION_RULE_DEFS: NotificationRuleDefinition[] = [
     defaultEnabled: true,
     defaultDaysAhead: 0,
   },
+  {
+    key: 'TRAINING_LOCKOUT',
+    label: 'Scheduling Lockout Activated',
+    description: 'Notify when a staff member is automatically locked out of scheduling due to overdue required training.',
+    defaultEnabled: true,
+    defaultDaysAhead: 0,
+  },
 ];
 
 export type NotificationRuleKey = (typeof NOTIFICATION_RULE_DEFS)[number]['key'];
