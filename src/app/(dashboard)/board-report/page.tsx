@@ -53,6 +53,8 @@ export default async function BoardReportPage() {
     openHipaaBreaches,
     activeHolds,
     restraintDeathsYtd,
+    lockedUserCount,
+    overdueRequiredCount,
   ] = await Promise.all([
     prisma.facility.findUnique({
       where: { id: facilityId },
@@ -130,6 +132,8 @@ export default async function BoardReportPage() {
     prisma.hipaaBreachLog.count({ where: { facilityId, status: { notIn: ['CLOSED', 'REPORTED_TO_HHS'] } } }),
     prisma.involuntaryHoldLog.count({ where: { facilityId, status: 'ACTIVE' } }),
     prisma.restraintEvent.count({ where: { facilityId, deathOccurred: true, eventDate: { gte: yearStart } } }),
+    prisma.user.count({ where: { facilityId, scheduleBlocked: true, isActive: true } }),
+    prisma.trainingRecord.count({ where: { facilityId, isRequired: true, status: { in: ['OVERDUE', 'EXPIRED'] } } }),
   ]);
 
   const trainingPct = trainingAll > 0 ? Math.round((trainingCompleted / trainingAll) * 100) : 100;
@@ -382,6 +386,8 @@ export default async function BoardReportPage() {
               value={`${trainingPct}%`}
               highlight={trainingPct < 80}
             />
+            <StatBox label="Scheduling Lockouts"  value={lockedUserCount}     highlight={lockedUserCount > 0} />
+            <StatBox label="Overdue Required"     value={overdueRequiredCount} highlight={overdueRequiredCount > 0} />
           </div>
           <div className="mt-4">
             <div className="flex items-center gap-2 mb-1">

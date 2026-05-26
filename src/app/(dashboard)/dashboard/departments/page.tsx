@@ -2,7 +2,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { BarChart2, Users, BookOpen, AlertTriangle, ArrowLeft } from 'lucide-react';
+import { BarChart2, Users, BookOpen, AlertTriangle, ArrowLeft, ShieldOff } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Department Scorecards' };
@@ -13,7 +13,7 @@ export default async function DepartmentScorecardsPage() {
 
   const facilityId = session.user.facilityId;
 
-  const [users, trainingRecords] = await Promise.all([
+  const [users, trainingRecords, lockedUsers] = await Promise.all([
     prisma.user.findMany({
       where: { facilityId, isActive: true },
       select: { department: true },
@@ -21,6 +21,10 @@ export default async function DepartmentScorecardsPage() {
     prisma.trainingRecord.findMany({
       where: { facilityId, department: { not: null } },
       select: { department: true, status: true, isRequired: true },
+    }),
+    prisma.user.findMany({
+      where: { facilityId, isActive: true, scheduleBlocked: true },
+      select: { department: true },
     }),
   ]);
 
@@ -31,6 +35,7 @@ export default async function DepartmentScorecardsPage() {
     trainingOverdue: number;
     trainingRequired: number;
     trainingRequiredCompleted: number;
+    lockedCount: number;
   };
 
   const deptMap: Record<string, DeptStats> = {};
@@ -44,6 +49,7 @@ export default async function DepartmentScorecardsPage() {
         trainingOverdue: 0,
         trainingRequired: 0,
         trainingRequiredCompleted: 0,
+        lockedCount: 0,
       };
     }
     return deptMap[d];
@@ -64,6 +70,11 @@ export default async function DepartmentScorecardsPage() {
       s.trainingRequired++;
       if (t.status === 'COMPLETED') s.trainingRequiredCompleted++;
     }
+  }
+
+  for (const u of lockedUsers) {
+    const d = u.department ?? 'Unassigned';
+    ensureDept(d).lockedCount++;
   }
 
   const departments = Object.entries(deptMap)
@@ -151,11 +162,18 @@ export default async function DepartmentScorecardsPage() {
               >
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="font-semibold text-foreground">{dept.name}</h3>
-                  {dept.userCount > 0 && (
-                    <span className="text-xs text-muted-foreground flex items-center gap-1 shrink-0">
-                      <Users className="w-3 h-3" /> {dept.userCount} staff
-                    </span>
-                  )}
+                  <div className="flex items-center gap-2 shrink-0">
+                    {dept.lockedCount > 0 && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded bg-red-950/40 text-red-400 border border-red-800/40">
+                        <ShieldOff className="w-2.5 h-2.5" /> {dept.lockedCount} locked
+                      </span>
+                    )}
+                    {dept.userCount > 0 && (
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Users className="w-3 h-3" /> {dept.userCount} staff
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <div>

@@ -271,8 +271,9 @@ const navSections: NavSection[] = [
         label: 'Training & Competency',
         icon: GraduationCap,
         children: [
-          { href: '/trackers/training/compliance', label: 'Compliance Gatekeeper', icon: ShieldAlert },
-          { href: '/trackers/training/matrix',     label: 'Training Matrix',       icon: GraduationCap },
+          { href: '/education/training',           label: 'My Training',            icon: UserCheck },
+          { href: '/trackers/training/compliance', label: 'Compliance Gatekeeper',  icon: ShieldAlert },
+          { href: '/trackers/training/matrix',     label: 'Training Matrix',        icon: GraduationCap },
         ],
       },
       {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Download, FileText, TrendingUp, AlertTriangle, CheckCircle, Users, BookOpen, FileBarChart2 } from 'lucide-react';
+import { Download, FileText, TrendingUp, AlertTriangle, CheckCircle, Users, BookOpen, FileBarChart2, ShieldOff } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 interface ExportItem {
@@ -69,6 +69,15 @@ const EXPORTS: ExportItem[] = [
     endpoint: '/api/export/policies',
     color: 'blue',
     category: 'Policies',
+  },
+  {
+    id: 'training-lockouts',
+    title: 'Scheduling Lockouts',
+    description: 'Staff currently blocked from scheduling due to overdue required training. Includes department, block date, reason, and any active HR overrides.',
+    icon: <ShieldOff className="w-5 h-5" />,
+    endpoint: '/api/export/training/lockouts',
+    color: 'red',
+    category: 'Training',
   },
   {
     id: 'board-report-pdf',
