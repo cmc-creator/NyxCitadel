@@ -2,7 +2,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { GraduationCap, ArrowLeft, CheckCircle2, AlertTriangle, Clock, XCircle, Minus } from 'lucide-react';
+import { GraduationCap, ArrowLeft, CheckCircle2, AlertTriangle, Clock, XCircle, Minus, ShieldOff } from 'lucide-react';
 import { addDays, isPast, isWithinInterval } from 'date-fns';
 
 export const dynamic = 'force-dynamic';
@@ -43,28 +43,52 @@ const CELL_CONFIG: Record<CellStatus, { bg: string; text: string; icon: React.El
   expiring: { bg: 'bg-amber-950/40 border-amber-700/30',      text: 'text-amber-400',   icon: Clock,        label: 'Expiring' },
   expired:  { bg: 'bg-red-950/40 border-red-700/30',          text: 'text-red-400',     icon: XCircle,      label: 'Expired'  },
   missing:  { bg: 'bg-muted/30 border-border/50',             text: 'text-muted-foreground/40', icon: Minus, label: 'Missing' },
-  exempt:   { bg: 'bg-slate-950/30 border-border/30',      text: 'text-muted-foreground',   icon: Minus,        label: 'Exempt'   },
+  exempt:   { bg: 'bg-slate-950/30 border-slate-700/30',      text: 'text-slate-500',   icon: Minus,        label: 'Exempt'   },
 };
 
-export default async function CompetencyMatrixPage() {
+export default async function CompetencyMatrixPage({
+  searchParams,
+}: {
+  searchParams: { department?: string };
+}) {
   const session = await auth();
   if (!session) redirect('/login');
 
   const now = new Date();
   const in30 = addDays(now, 30);
   const facilityId = session.user.facilityId;
+  const deptFilter = searchParams.department;
 
-  const records = await prisma.trainingRecord.findMany({
-    where: { facilityId, category: { in: REQUIRED_CATEGORIES as never[] } },
-    orderBy: [{ staffName: 'asc' }, { category: 'asc' }, { completedDate: 'desc' }],
-    select: {
-      id: true, staffName: true, department: true, jobTitle: true,
-      category: true, status: true, expiryDate: true, completedDate: true,
-    },
-  });
+  const [records, lockedUsers, allDepts] = await Promise.all([
+    prisma.trainingRecord.findMany({
+      where: {
+        facilityId,
+        category: { in: REQUIRED_CATEGORIES as never[] },
+        ...(deptFilter ? { department: deptFilter } : {}),
+      },
+      orderBy: [{ staffName: 'asc' }, { category: 'asc' }, { completedDate: 'desc' }],
+      select: {
+        id: true, staffName: true, department: true, jobTitle: true,
+        category: true, status: true, expiryDate: true, completedDate: true,
+      },
+    }),
+    prisma.user.findMany({
+      where: { facilityId, scheduleBlocked: true, isActive: true },
+      select: { email: true },
+    }),
+    prisma.trainingRecord.findMany({
+      where: { facilityId, category: { in: REQUIRED_CATEGORIES as never[] } },
+      select: { department: true },
+      distinct: ['department'],
+      orderBy: { department: 'asc' },
+    }),
+  ]);
+
+  const lockedEmails = new Set(lockedUsers.map((u) => u.email?.toLowerCase()));
+  const departments = allDepts.map((d) => d.department).filter(Boolean) as string[];
 
   // Build staff list (unique staff, sorted by name)
-  const staffMap = new Map<string, { name: string; department: string | null; jobTitle: string | null }>();
+  const staffMap = new Map<string, { name: string; department: string | null; jobTitle: string | null; email?: string | null }>();
   for (const r of records) {
     if (!staffMap.has(r.staffName)) {
       staffMap.set(r.staffName, { name: r.staffName, department: r.department, jobTitle: r.jobTitle });
@@ -73,17 +97,25 @@ export default async function CompetencyMatrixPage() {
   const staffList = Array.from(staffMap.values()).sort((a, b) => a.name.localeCompare(b.name));
 
   // Build lookup: staffName + category -> best record
-  // Best = COMPLETED with latest completedDate, or EXEMPT, or PENDING
   type RecordRow = typeof records[0];
   const lookup = new Map<string, RecordRow>();
   for (const r of records) {
     const key = `${r.staffName}::${r.category}`;
     const existing = lookup.get(key);
     if (!existing) { lookup.set(key, r); continue; }
-    // Prefer COMPLETED over others; then latest
     if (r.status === 'COMPLETED' && existing.status !== 'COMPLETED') { lookup.set(key, r); continue; }
     if (r.status === 'EXEMPT' && existing.status !== 'COMPLETED') { lookup.set(key, r); continue; }
     if (r.completedDate && existing.completedDate && r.completedDate > existing.completedDate) { lookup.set(key, r); }
+  }
+
+  // Build locked name set by matching staffName against lockedEmails via training records
+  const lockedStaffNames = new Set<string>();
+  for (const r of records) {
+    // staffEmail is on training records — use it to check lock status
+    const rec = r as RecordRow & { staffEmail?: string | null };
+    if (rec.staffEmail && lockedEmails.has(rec.staffEmail.toLowerCase())) {
+      lockedStaffNames.add(r.staffName);
+    }
   }
 
   function getCellStatus(staffName: string, category: string): CellStatus {
@@ -108,6 +140,7 @@ export default async function CompetencyMatrixPage() {
     }
   }
   const compliancePct = totalCells > 0 ? Math.round((okCells / totalCells) * 100) : 0;
+  const lockoutCount = lockedStaffNames.size;
 
   return (
     <div className="space-y-6">
@@ -121,16 +154,49 @@ export default async function CompetencyMatrixPage() {
             Staff Competency Matrix
           </h1>
           <p className="text-sm text-muted-foreground mt-0.5">
-            Required training compliance across all staff &mdash; {staffList.length} staff, {REQUIRED_CATEGORIES.length} categories
+            Required training compliance &mdash; {staffList.length} staff
+            {deptFilter ? ` in ${deptFilter}` : ''}, {REQUIRED_CATEGORIES.length} categories
+            {lockoutCount > 0 && (
+              <span className="ml-2 text-red-400 font-medium">&bull; {lockoutCount} scheduling lockout{lockoutCount !== 1 ? 's' : ''}</span>
+            )}
           </p>
         </div>
-        <Link
-          href="/trackers/training/new"
-          className="inline-flex items-center gap-1.5 text-sm bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
-        >
-          Log Training
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/trackers/training/compliance"
+            className="inline-flex items-center gap-1.5 text-sm border border-red-700/50 text-red-400 hover:bg-red-950/30 px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            <ShieldOff className="w-4 h-4" /> Lockout Dashboard
+          </Link>
+          <Link
+            href="/trackers/training/new"
+            className="inline-flex items-center gap-1.5 text-sm bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+          >
+            Log Training
+          </Link>
+        </div>
       </div>
+
+      {/* Department filter pills */}
+      {departments.length > 1 && (
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/trackers/training/matrix"
+            className={`text-xs px-3 py-1 rounded-full border transition-colors ${!deptFilter ? 'bg-teal-600 text-white border-teal-600' : 'border-border text-muted-foreground hover:border-teal-600/50 hover:text-foreground'}`}
+          >
+            All Departments
+          </Link>
+          {departments.map((dept) => (
+            <Link
+              key={dept}
+              href={`/trackers/training/matrix?department=${encodeURIComponent(dept)}`}
+              className={`text-xs px-3 py-1 rounded-full border transition-colors ${deptFilter === dept ? 'bg-teal-600 text-white border-teal-600' : 'border-border text-muted-foreground hover:border-teal-600/50 hover:text-foreground'}`}
+            >
+              {dept}
+            </Link>
+          ))}
+        </div>
+      )}
 
       {/* Summary stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -162,6 +228,10 @@ export default async function CompetencyMatrixPage() {
             <span className="text-xs text-muted-foreground">{cfg.label}</span>
           </div>
         ))}
+        <div className="flex items-center gap-1.5">
+          <ShieldOff className="w-3.5 h-3.5 text-red-400" />
+          <span className="text-xs text-muted-foreground">Sched. Lockout</span>
+        </div>
       </div>
 
       {staffList.length === 0 ? (
@@ -174,15 +244,18 @@ export default async function CompetencyMatrixPage() {
           </Link>
         </div>
       ) : (
-        /* Matrix table — horizontally scrollable */
+        /* Matrix table */
         <div className="bg-card rounded-xl border border-border overflow-x-auto">
           <table className="text-xs min-w-max w-full">
             <thead>
               <tr className="border-b border-border/50">
-                <th className="text-left px-4 py-3 font-semibold text-muted-foreground sticky left-0 bg-card z-10 min-w-[180px]">
+                <th className="text-left px-4 py-3 font-semibold text-muted-foreground sticky left-0 bg-card z-10 min-w-[200px]">
                   Staff Member
                 </th>
                 <th className="text-left px-3 py-3 font-semibold text-muted-foreground min-w-[80px]">Dept</th>
+                <th className="px-2 py-3 font-semibold text-muted-foreground text-center min-w-[52px]" title="Scheduling Lockout">
+                  <ShieldOff className="w-3.5 h-3.5 text-red-400 mx-auto" />
+                </th>
                 {REQUIRED_CATEGORIES.map(cat => (
                   <th key={cat} className="px-2 py-3 font-semibold text-muted-foreground text-center min-w-[70px] max-w-[70px]">
                     <span className="block truncate">{CAT_LABEL[cat] ?? cat.replace(/_/g, ' ')}</span>
@@ -193,15 +266,17 @@ export default async function CompetencyMatrixPage() {
             <tbody className="divide-y divide-border/30">
               {staffList.map(staff => {
                 const staffStatuses = REQUIRED_CATEGORIES.map(cat => getCellStatus(staff.name, cat));
+                const isLocked = lockedStaffNames.has(staff.name);
                 const hasIssue = staffStatuses.some(s => s === 'expired' || s === 'missing');
                 const hasWarning = staffStatuses.some(s => s === 'expiring');
 
                 return (
-                  <tr key={staff.name} className={`hover:bg-muted/20 transition-colors ${hasIssue ? 'bg-red-950/10' : hasWarning ? 'bg-amber-950/10' : ''}`}>
+                  <tr key={staff.name} className={`hover:bg-muted/20 transition-colors ${isLocked ? 'bg-red-950/15' : hasIssue ? 'bg-red-950/10' : hasWarning ? 'bg-amber-950/10' : ''}`}>
                     <td className="px-4 py-2.5 sticky left-0 bg-inherit z-10">
                       <div className="flex items-center gap-2">
-                        {hasIssue && <AlertTriangle className="w-3 h-3 text-red-400 flex-shrink-0" />}
-                        {!hasIssue && hasWarning && <Clock className="w-3 h-3 text-amber-400 flex-shrink-0" />}
+                        {isLocked && <ShieldOff className="w-3 h-3 text-red-500 flex-shrink-0" />}
+                        {!isLocked && hasIssue && <AlertTriangle className="w-3 h-3 text-red-400 flex-shrink-0" />}
+                        {!isLocked && !hasIssue && hasWarning && <Clock className="w-3 h-3 text-amber-400 flex-shrink-0" />}
                         <div>
                           <p className="font-medium text-foreground/90">{staff.name}</p>
                           {staff.jobTitle && <p className="text-muted-foreground/60 text-[10px]">{staff.jobTitle}</p>}
@@ -209,6 +284,15 @@ export default async function CompetencyMatrixPage() {
                       </div>
                     </td>
                     <td className="px-3 py-2.5 text-muted-foreground/70">{staff.department ?? '—'}</td>
+                    <td className="px-2 py-2.5 text-center">
+                      {isLocked ? (
+                        <Link href="/trackers/training/compliance" title="View lockout details">
+                          <ShieldOff className="w-4 h-4 text-red-500 mx-auto hover:text-red-400" />
+                        </Link>
+                      ) : (
+                        <span className="text-muted-foreground/20">&mdash;</span>
+                      )}
+                    </td>
                     {REQUIRED_CATEGORIES.map(cat => {
                       const st = getCellStatus(staff.name, cat);
                       const cfg = CELL_CONFIG[st];

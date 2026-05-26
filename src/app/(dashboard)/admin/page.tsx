@@ -8,6 +8,7 @@ import {
   Activity,
   ClipboardList,
   FileWarning,
+  ShieldOff,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
@@ -51,6 +52,8 @@ export default async function AdminPage() {
         isActive: true,
         lastLoginAt: true,
         createdAt: true,
+        scheduleBlocked: true,
+        scheduleBlockedAt: true,
         facility: { select: { id: true, name: true } },
       },
       orderBy: { createdAt: 'desc' },
@@ -238,6 +241,7 @@ export default async function AdminPage() {
                 {isSuperAdmin && <th className="text-left text-xs font-medium text-muted-foreground px-3 py-3">Facility</th>}
                 <th className="text-left text-xs font-medium text-muted-foreground px-3 py-3">Role</th>
                 <th className="text-left text-xs font-medium text-muted-foreground px-3 py-3">Last login</th>
+                <th className="text-center text-xs font-medium text-muted-foreground px-3 py-3">Sched. Lockout</th>
                 <th className="text-center text-xs font-medium text-muted-foreground px-3 py-3">Status</th>
               </tr>
             </thead>
@@ -256,6 +260,15 @@ export default async function AdminPage() {
                   </td>
                   <td className="px-3 py-3 text-xs text-muted-foreground">
                     {u.lastLoginAt ? formatDate(u.lastLoginAt, 'MMM d, yyyy') : 'Never'}
+                  </td>
+                  <td className="px-3 py-3 text-center">
+                    {u.scheduleBlocked ? (
+                      <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-red-950/40 text-red-400 border border-red-800/40">
+                        <ShieldOff className="w-3 h-3" /> Locked
+                      </span>
+                    ) : (
+                      <span className="text-xs text-muted-foreground/30">&mdash;</span>
+                    )}
                   </td>
                   <td className="px-3 py-3 text-center">
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${u.isActive ? 'bg-emerald-950/40 text-emerald-400 border border-emerald-800/40' : 'bg-red-950/40 text-red-400 border border-red-800/40'}`}>
