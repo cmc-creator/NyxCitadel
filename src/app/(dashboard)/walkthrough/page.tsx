@@ -113,8 +113,7 @@ const colorMap: Record<string, { border: string; bg: string; text: string; icon:
 
 export default function WalkthroughPage() {
   useEffect(() => {
-    const t = setTimeout(() => startFeatureTour(), 500);
-    return () => clearTimeout(t);
+    // Don't auto-start — let user choose to start the tour
   }, []);
 
   return (
@@ -125,7 +124,7 @@ export default function WalkthroughPage() {
         <div>
           <h1 className="text-2xl font-bold text-foreground">Feature Walkthrough</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            A guided tour of every module in your compliance command center.
+            Explore every module in your compliance command center, or take an interactive guided tour.
           </p>
         </div>
         <button

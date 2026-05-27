@@ -329,7 +329,7 @@ const bottomNavItems: NavItem[] = [
   { href: '/admin/pilot-kpis', label: 'Pilot KPIs',          icon: BarChart2 },
   { href: '/export',           label: 'Export Center',       icon: Download },
   { href: '/guide',            label: 'User Guide',          icon: BookOpen },
-  { href: '/walkthrough',      label: 'Feature Walkthrough', icon: PlayCircle },
+  { href: '/dashboard/walkthrough',      label: 'Feature Walkthrough', icon: PlayCircle },
   {
     href: '/settings',
     label: 'Settings',
