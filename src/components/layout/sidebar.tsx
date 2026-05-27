@@ -65,6 +65,7 @@ interface NavItem {
   children?: NavItem[];
   badge?: string;
   badgeColor?: string;
+  tourId?: string;
 }
 
 interface NavSection {
@@ -80,8 +81,8 @@ const navSections: NavSection[] = [
   // ── Core (no section label) ───────────────────────────────────
   {
     items: [
-      { href: '/dashboard', label: 'Dashboard',  icon: LayoutDashboard },
-      { href: '/assistant', label: 'Sentry AI',  icon: Sparkles, badge: 'AI', badgeColor: 'bg-teal-100 text-teal-700' },
+      { href: '/dashboard', label: 'Dashboard',  icon: LayoutDashboard, tourId: 'dashboard' },
+      { href: '/assistant', label: 'Sentry AI',  icon: Sparkles, badge: 'AI', badgeColor: 'bg-teal-100 text-teal-700', tourId: 'sentry' },
     ],
   },
 
@@ -93,6 +94,7 @@ const navSections: NavSection[] = [
         href: '/trackers',
         label: 'Risk & Incidents',
         icon: ShieldAlert,
+        tourId: 'incidents',
         children: [
           { href: '/trackers/incidents',        label: 'Incidents',               icon: AlertTriangle },
           { href: '/trackers/ir-iad',           label: 'IR / IAD Reports',        icon: FileWarning, badge: 'ADHS', badgeColor: 'bg-red-100 text-red-700' },
@@ -123,7 +125,7 @@ const navSections: NavSection[] = [
   {
     label: 'REGULATORY',
     items: [
-      { href: '/calendar',            label: 'Compliance Calendar',    icon: CalendarDays },
+      { href: '/calendar',            label: 'Compliance Calendar',    icon: CalendarDays, tourId: 'calendar' },
       { href: '/trackers/policies',   label: 'Policies & Procedures',  icon: FileText },
       { href: '/trackers/compliance', label: 'Compliance Items',       icon: ShieldCheck },
       {
@@ -271,6 +273,7 @@ const navSections: NavSection[] = [
         href: '/trackers/training',
         label: 'Training & Competency',
         icon: GraduationCap,
+        tourId: 'training',
         children: [
           { href: '/education/training',           label: 'My Training',            icon: UserCheck },
           { href: '/trackers/training/compliance', label: 'Compliance Gatekeeper',  icon: ShieldAlert },
@@ -300,7 +303,7 @@ const navSections: NavSection[] = [
         children: [
           { href: '/resilience',            label: 'Resilience Scorecard',  icon: ResilienceIcon },
           { href: '/dashboard/departments', label: 'Department Scorecards', icon: Users2 },
-          { href: '/board-report',          label: 'Board Report',          icon: FileBarChart, badge: 'EXEC', badgeColor: 'bg-emerald-100 text-emerald-700' },
+          { href: '/board-report',          label: 'Board Report',          icon: FileBarChart, badge: 'EXEC', badgeColor: 'bg-emerald-100 text-emerald-700', tourId: 'board-report' },
           { href: '/outpatient-iop', label: 'Outpatient / IOP',     icon: HeartHandshake, badge: 'IOP', badgeColor: 'bg-emerald-100 text-emerald-700' },
         ],
       },
@@ -331,6 +334,7 @@ const bottomNavItems: NavItem[] = [
     href: '/settings',
     label: 'Settings',
     icon: Settings,
+    tourId: 'settings',
     children: [
       { href: '/settings/profile',       label: 'My Profile',        icon: UserCircle },
       { href: '/settings',               label: 'General Settings',  icon: Settings },
@@ -366,6 +370,7 @@ function NavLink({ item, depth = 0 }: { item: NavItem; depth?: number }) {
       <div>
         <button
           onClick={() => setOpen(!open)}
+          data-tour={item.tourId}
           className={cn('sidebar-link w-full text-left', depth > 0 && 'pl-8', isActive && 'active')}
         >
           <item.icon className="w-4 h-4 flex-shrink-0" />
@@ -392,6 +397,7 @@ function NavLink({ item, depth = 0 }: { item: NavItem; depth?: number }) {
     <Link
       href={item.href}
       onClick={onClose}
+      data-tour={item.tourId}
       className={cn('sidebar-link', depth > 0 && 'pl-8', isActive && 'active')}
     >
       <item.icon className="w-4 h-4 flex-shrink-0" />

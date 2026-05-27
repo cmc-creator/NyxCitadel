@@ -502,3 +502,65 @@
   body      { background: white !important; color: black !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* ── Driver.js tour — dark theme overrides ── */
+@import 'driver.js/dist/driver.css';
+.nyx-tour-popover.driver-popover {
+  background-color: #0f172a;
+  border: 1px solid rgba(20, 184, 166, 0.3);
+  border-radius: 12px;
+  color: #f1f5f9;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+  max-width: 320px;
+}
+.nyx-tour-popover .driver-popover-title {
+  color: #5eead4;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.nyx-tour-popover .driver-popover-description {
+  color: #94a3b8;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+}
+.nyx-tour-popover .driver-popover-progress-text {
+  color: #475569;
+  font-size: 0.6875rem;
+}
+.nyx-tour-popover .driver-popover-footer {
+  margin-top: 14px;
+}
+.nyx-tour-popover .driver-popover-footer button {
+  background: #0d9488;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.nyx-tour-popover .driver-popover-footer button:hover {
+  background: #0f766e;
+}
+.nyx-tour-popover .driver-popover-footer .driver-popover-prev-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #94a3b8;
+}
+.nyx-tour-popover .driver-popover-footer .driver-popover-prev-btn:hover {
+  background: rgba(255,255,255,0.06);
+  color: #e2e8f0;
+}
+.nyx-tour-popover .driver-popover-close-btn {
+  color: #475569;
+}
+.nyx-tour-popover .driver-popover-close-btn:hover {
+  color: #94a3b8;
+  background: rgba(255,255,255,0.06);
+}
+.driver-overlay {
+  background: rgba(0, 0, 0, 0.6) !important;
+}

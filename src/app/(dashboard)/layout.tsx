@@ -8,6 +8,7 @@ import { AssistantChat } from '@/components/ai/assistant-chat';
 import { WelcomeOnboarding } from '@/components/layout/WelcomeOnboarding';
 import { WhatsNew } from '@/components/layout/WhatsNew';
 import { SetupWizard } from '@/components/layout/SetupWizard';
+import { FeatureTour } from '@/components/onboarding/FeatureTour';
 import { IdleTimeout } from '@/components/idle-timeout';
 
 export const metadata: Metadata = {
@@ -47,6 +48,7 @@ export default async function DashboardLayout({
       <WelcomeOnboarding userName={session.user.name} />
       <WhatsNew />
       <SetupWizard />
+      <FeatureTour />
       <AssistantChat />
       <IdleTimeout />
     </div>
