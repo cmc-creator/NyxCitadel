@@ -54,6 +54,7 @@ import {
   BarChart3,
   CreditCard,
   UserCircle,
+  Flame,
 } from 'lucide-react';
 import { useState, createContext, useContext } from 'react';
 import { X } from 'lucide-react';
@@ -229,6 +230,13 @@ const navSections: NavSection[] = [
           { href: '/eoc/deficiencies', label: 'Deficiencies',   icon: AlertTriangle },
           { href: '/eoc/equipment',    label: 'Equipment PM',   icon: Wrench },
         ],
+      },
+      {
+        href: '/fire-safety',
+        label: 'Fire Safety & Preparedness',
+        icon: Flame,
+        badge: 'NFPA',
+        badgeColor: 'bg-red-100 text-red-700',
       },
       {
         href: '/emergency',

@@ -8,6 +8,7 @@ import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
 import AttachmentPanel from '@/components/ui/AttachmentPanel';
 import AttachmentComposer from '@/components/ui/AttachmentComposer';
+import { QocAiResponseGenerator } from '@/components/trackers/QocAiResponseGenerator';
 
 export const dynamic = 'force-dynamic';
 
@@ -146,6 +147,13 @@ export default async function QocDetailPage({ params }: { params: { id: string }
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{qoc.notes}</p>
             </Section>
           )}
+
+          <QocAiResponseGenerator
+            qocId={qoc.id}
+            qocNumber={qoc.qocNumber}
+            allegationSummary={qoc.allegationSummary}
+            findingsSummary={qoc.findingsSummary ?? undefined}
+          />
 
           <AttachmentPanel
             title="Investigation Documentation"

@@ -7,6 +7,8 @@ import { ArrowLeft, MessageSquareWarning, Clock, AlertTriangle , Pencil } from '
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
 import { CommentThread } from '@/components/shared/CommentThread';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,7 +33,18 @@ export default async function GrievanceDetailPage({ params }: { params: { id: st
   const session = await auth();
   if (!session) redirect('/login');
 
-  const g = await prisma.grievanceRecord.findUnique({ where: { id: params.id } });
+  const [g, attachments] = await Promise.all([
+    prisma.grievanceRecord.findUnique({ where: { id: params.id } }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'PATIENT_GRIEVANCE',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
+
   if (!g || g.facilityId !== session.user.facilityId) notFound();
 
   const now = new Date();
@@ -105,6 +118,19 @@ export default async function GrievanceDetailPage({ params }: { params: { id: st
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{g.notes}</p>
             </Section>
           )}
+
+          <AttachmentPanel
+            title="Grievance Documentation"
+            attachments={attachments}
+            emptyLabel="No grievance documentation, evidence, or supporting materials have been attached yet."
+          />
+
+          <AttachmentComposer
+            sourceType="PATIENT_GRIEVANCE"
+            sourceId={g.id}
+            sourceLabel={g.grievanceNumber}
+            title="Add Grievance Documentation"
+          />
         </div>
 
         <div className="space-y-5">
