@@ -23,6 +23,7 @@ export default async function PoliciesPage() {
     category:         p.category as string,
     version:          p.version,
     owner:            p.owner,
+    department:       p.department,
     standardRef:      p.standardRef,
     summary:          p.summary,
     documentUrl:      p.documentUrl,

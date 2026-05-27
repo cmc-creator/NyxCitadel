@@ -163,7 +163,7 @@ export default function EditPolicyPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-purple-600 mb-3">
+        <a href="/trackers/policies" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Policy Tracker
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -182,28 +182,28 @@ export default function EditPolicyPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Policy Information</h2>
           <div>
-            <label className="block text-xs font-medium text-muted-foreground mb-1">Policy Title *</label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Policy Title *</label>
             <input name="title" required defaultValue={data.title} className="form-input w-full" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Policy #</label>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Policy #</label>
               <input name="policyNumber" defaultValue={data.policyNumber} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Version</label>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Version</label>
               <input name="version" defaultValue={data.version} className="form-input w-full" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
               <select name="category" required defaultValue={data.category} className="form-input w-full">
                 {CATEGORIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Status</label>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Status</label>
               <select name="status" defaultValue={data.status} className="form-input w-full">
                 <option value="DRAFT">Draft</option>
                 <option value="UNDER_REVIEW">Under Review</option>
@@ -213,11 +213,11 @@ export default function EditPolicyPage() {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-muted-foreground mb-1">Owner / Responsible Department</label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Owner / Responsible Department</label>
             <input name="owner" defaultValue={data.owner ?? ''} className="form-input w-full" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-muted-foreground mb-1">Standard / Regulatory Reference</label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Standard / Regulatory Reference</label>
             <input name="standardRef" defaultValue={data.standardRef ?? ''} className="form-input w-full" />
           </div>
         </div>
@@ -226,18 +226,18 @@ export default function EditPolicyPage() {
         <div className="px-6 py-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">Review Schedule</h2>
           <div>
-            <label className="block text-xs font-medium text-muted-foreground mb-1">Review Frequency</label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Review Frequency</label>
             <select name="reviewFrequency" defaultValue={data.reviewFrequency} className="form-input w-full">
               {REVIEW_FREQUENCIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Effective Date *</label>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Effective Date *</label>
               <input type="date" name="effectiveDate" required defaultValue={toDateInput(data.effectiveDate)} className="form-input w-full" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Next Review Date *</label>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Next Review Date *</label>
               <input type="date" name="nextReviewDate" required defaultValue={toDateInput(data.nextReviewDate)} className="form-input w-full" />
             </div>
           </div>
@@ -255,7 +255,7 @@ export default function EditPolicyPage() {
                 className={`px-3 py-1 text-xs rounded-full border transition-colors ${
                   selectedBodies.includes(v)
                     ? 'bg-purple-600 text-white border-purple-600'
-                    : 'bg-white text-muted-foreground border-border hover:border-purple-300'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-purple-300'
                 }`}
               >
                 {REG_LABELS[v] ?? v}
@@ -278,7 +278,7 @@ export default function EditPolicyPage() {
                   <ExternalLink className="w-3 h-3" /> View document
                 </a>
               </div>
-              <label className="text-xs text-muted-foreground hover:text-purple-600 cursor-pointer underline">
+              <label className="text-xs text-slate-500 hover:text-purple-600 cursor-pointer underline">
                 Replace
                 <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileSelect} />
               </label>
@@ -288,7 +288,7 @@ export default function EditPolicyPage() {
               <FileCheck className="w-5 h-5 text-green-600 shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-green-800 truncate">{uploadFile.name}</p>
-                {uploading && <p className="text-xs text-muted-foreground">Uploading...</p>}
+                {uploading && <p className="text-xs text-slate-500">Uploading...</p>}
                 {!uploading && documentUrl && <p className="text-xs text-green-600">Uploaded successfully</p>}
                 {uploadError && <p className="text-xs text-red-600">{uploadError}</p>}
               </div>
@@ -297,9 +297,9 @@ export default function EditPolicyPage() {
               </button>
             </div>
           ) : (
-            <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-border rounded-xl cursor-pointer hover:border-purple-300 hover:bg-purple-50 transition-colors">
+            <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-purple-300 hover:bg-purple-50 transition-colors">
               <Upload className="w-5 h-5 text-muted-foreground/70 mb-1.5" />
-              <span className="text-sm text-muted-foreground">Click to upload PDF or Word document</span>
+              <span className="text-sm text-slate-500">Click to upload PDF or Word document</span>
               <span className="text-xs text-muted-foreground/70 mt-0.5">Max 20 MB</span>
               <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileSelect} />
             </label>

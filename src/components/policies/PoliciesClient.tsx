@@ -16,6 +16,7 @@ export interface PolicyRow {
   category: string;
   version: string;
   owner: string | null;
+  department: string | null;
   standardRef: string | null;
   summary: string | null;
   documentUrl: string | null;
@@ -121,6 +122,7 @@ export default function PoliciesClient({ initialData }: Props) {
   const [search, setSearch]           = useState('');
   const [filterCat, setFilterCat]     = useState('');
   const [filterStatus, setFilterStatus] = useState('');
+  const [filterDept, setFilterDept]     = useState('');
   const [sort, setSort]               = useState('nextReview_asc');
   const [deleting, setDeleting]       = useState<string | null>(null);
   const [actioning, setActioning]     = useState<string | null>(null);
@@ -147,13 +149,25 @@ export default function PoliciesClient({ initialData }: Props) {
     return Object.entries(m).sort((a, b) => b[1] - a[1]);
   }, [data]);
 
+  // ── Department counts
+  const deptCounts = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const p of data) {
+      if (p.department) {
+        m[p.department] = (m[p.department] ?? 0) + 1;
+      }
+    }
+    return Object.entries(m).sort((a, b) => b[1] - a[1]);
+  }, [data]);
+
   // ── Filtered + sorted
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
     let rows = data.filter(p => {
       if (filterCat    && p.category !== filterCat)    return false;
       if (filterStatus && p.status   !== filterStatus) return false;
-      if (q && ![ p.title, p.policyNumber, p.owner ?? '', p.standardRef ?? '', p.summary ?? '',
+      if (filterDept   && p.department !== filterDept) return false;
+      if (q && ![ p.title, p.policyNumber, p.owner ?? '', p.department ?? '', p.standardRef ?? '', p.summary ?? '',
                   CATEGORY_LABELS[p.category] ?? '' ]
               .some(s => s.toLowerCase().includes(q))) return false;
       return true;
@@ -174,13 +188,13 @@ export default function PoliciesClient({ initialData }: Props) {
     });
 
     return rows;
-  }, [data, search, filterCat, filterStatus, sort]);
+  }, [data, search, filterCat, filterStatus, filterDept, sort]);
 
   // ── Export CSV
   const exportCsv = useCallback(() => {
-    const headers = ['Policy #', 'Title', 'Category', 'Version', 'Owner', 'Standard Ref', 'Effective Date', 'Next Review', 'Review Frequency', 'Status', 'Document URL'];
+    const headers = ['Policy #', 'Title', 'Category', 'Department', 'Version', 'Owner', 'Standard Ref', 'Effective Date', 'Next Review', 'Review Frequency', 'Status', 'Document URL'];
     const rows = filtered.map(p => [
-      p.policyNumber, p.title, CATEGORY_LABELS[p.category] ?? p.category,
+      p.policyNumber, p.title, CATEGORY_LABELS[p.category] ?? p.category, p.department ?? '',
       p.version, p.owner ?? '', p.standardRef ?? '',
       fmt(p.effectiveDate), fmt(p.nextReviewDate), p.reviewFrequency,
       p.status, p.documentUrl ?? '',
@@ -315,6 +329,43 @@ export default function PoliciesClient({ initialData }: Props) {
         </div>
       )}
 
+      {/* ── Department Pills ─────────────────────────────────────────────────── */}
+      {deptCounts.length > 0 && (
+        <div>
+          <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-widest mb-2">Browse by Department</p>
+          <div className="flex gap-2 flex-wrap">
+            <button
+              onClick={() => setFilterDept('')}
+              className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition whitespace-nowrap ${
+                !filterDept ? 'bg-teal-600 text-white border-teal-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-teal-950/20'
+              }`}
+            >
+              All
+              <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${!filterDept ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                {data.length}
+              </span>
+            </button>
+            {deptCounts.map(([dept, count]) => {
+              const active = filterDept === dept;
+              return (
+                <button
+                  key={dept}
+                  onClick={() => setFilterDept(active ? '' : dept)}
+                  className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition whitespace-nowrap ${
+                    active ? 'bg-teal-600 text-white border-teal-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-teal-950/20'
+                  }`}
+                >
+                  {dept}
+                  <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${active ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* ── Toolbar ───────────────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
@@ -397,8 +448,8 @@ export default function PoliciesClient({ initialData }: Props) {
               {filtered.length === 0 ? (
                 <tr>
                   <td colSpan={9} className="text-center py-16 text-muted-foreground/70">
-                    {search || filterCat || filterStatus ? (
-                      <>No policies match your filters. <button onClick={() => { setSearch(''); setFilterCat(''); setFilterStatus(''); }} className="text-teal-600 hover:underline">Clear filters</button></>
+                    {search || filterCat || filterStatus || filterDept ? (
+                      <>No policies match your filters. <button onClick={() => { setSearch(''); setFilterCat(''); setFilterStatus(''); setFilterDept(''); }} className="text-teal-600 hover:underline">Clear filters</button></>
                     ) : (
                       <>No policies yet. <a href="/trackers/policies/new" className="text-teal-600 hover:underline">Add your first policy</a> or <a href="/trackers/policies/import" className="text-teal-600 hover:underline">import from CSV</a>.</>
                     )}
