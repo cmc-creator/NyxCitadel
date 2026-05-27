@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, ShieldCheck , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,7 +40,17 @@ export default async function IcraDetailPage({ params }: { params: { id: string 
   const session = await auth();
   if (!session) redirect('/login');
 
-  const icra = await prisma.icRiskAssessment.findUnique({ where: { id: params.id } });
+  const [icra, attachments] = await Promise.all([
+    prisma.icRiskAssessment.findUnique({ where: { id: params.id } }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'ICRA_ASSESSMENT',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!icra || icra.facilityId !== session.user.facilityId) notFound();
 
@@ -115,6 +127,19 @@ export default async function IcraDetailPage({ params }: { params: { id: string 
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{icra.notes}</p>
             </Section>
           )}
+
+          <AttachmentPanel
+            title="Assessment Documents"
+            attachments={attachments}
+            emptyLabel="No assessment documents or supporting evidence have been attached yet."
+          />
+
+          <AttachmentComposer
+            sourceType="ICRA_ASSESSMENT"
+            sourceId={icra.id}
+            sourceLabel={`ICRA ${icra.assessmentYear}`}
+            title="Add Assessment Documents"
+          />
         </div>
 
         <div className="space-y-5">

@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, Activity , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -46,7 +48,17 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
   const session = await auth();
   if (!session) redirect('/login');
 
-  const hai = await prisma.haiSurveillance.findUnique({ where: { id: params.id } });
+  const [hai, attachments] = await Promise.all([
+    prisma.haiSurveillance.findUnique({ where: { id: params.id } }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'HAI_SURVEILLANCE',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!hai || hai.facilityId !== session.user.facilityId) notFound();
 
@@ -138,6 +150,21 @@ export default async function HaiDetailPage({ params }: { params: { id: string }
           <p className="text-sm text-foreground/80 whitespace-pre-wrap">{hai.notes}</p>
         </Section>
       )}
+
+      <Section title="">
+        <AttachmentPanel
+          title="Surveillance Data & Reports"
+          attachments={attachments}
+          emptyLabel="No surveillance reports or supporting data have been attached yet."
+        />
+      </Section>
+
+      <AttachmentComposer
+        sourceType="HAI_SURVEILLANCE"
+        sourceId={hai.id}
+        sourceLabel={`${HAI_LABELS[hai.haiType] ?? hai.haiType} - ${hai.reportMonth}/${hai.reportYear}`}
+        title="Add Surveillance Data"
+      />
     </div>
   );
 }

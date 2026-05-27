@@ -7,6 +7,8 @@ import { ArrowLeft, ShieldAlert, ExternalLink , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
 import { DeleteButton } from '@/components/ui/DeleteButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -44,12 +46,22 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
   const session = await auth();
   if (!session) redirect('/login');
 
-  const ra = await prisma.riskAssessment.findUnique({
-    where: { id: params.id },
-    include: {
-      items: { orderBy: { riskScore: 'desc' } },
-    },
-  });
+  const [ra, attachments] = await Promise.all([
+    prisma.riskAssessment.findUnique({
+      where: { id: params.id },
+      include: {
+        items: { orderBy: { riskScore: 'desc' } },
+      },
+    }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'RISK_ASSESSMENT',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!ra || ra.facilityId !== session.user.facilityId) notFound();
 
@@ -159,6 +171,19 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ra.notes}</p>
             </Section>
           )}
+
+          <AttachmentPanel
+            title="Assessment Documents"
+            attachments={attachments}
+            emptyLabel="No assessment documents or supporting evidence have been attached yet."
+          />
+
+          <AttachmentComposer
+            sourceType="RISK_ASSESSMENT"
+            sourceId={ra.id}
+            sourceLabel={ra.title}
+            title="Add Assessment Documents"
+          />
         </div>
 
         <div className="space-y-5">

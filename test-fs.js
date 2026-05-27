@@ -1,0 +1,13 @@
+const fs = require('fs');
+const cwd = process.cwd();
+console.log('cwd:', cwd);
+const fwdSlash = cwd.replace(/\\/g, '/');
+const dblFwdSlash = '//' + fwdSlash.replace(/^[\/]+/, '');
+console.log('forward slash:', fwdSlash);
+console.log('double forward slash:', dblFwdSlash);
+const testFileBack = cwd + '\\src\\lib\\prisma.ts';
+const testFileFwd = fwdSlash + '/src/lib/prisma.ts';
+const testFileDbl = dblFwdSlash + '/src/lib/prisma.ts';
+console.log('backslash exists:', fs.existsSync(testFileBack));
+console.log('fwd slash exists:', fs.existsSync(testFileFwd));
+console.log('dbl fwd slash exists:', fs.existsSync(testFileDbl));

@@ -6,6 +6,8 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, ClipboardCheck, AlertTriangle, Clock , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,7 +28,18 @@ export default async function QocDetailPage({ params }: { params: { id: string }
   const session = await auth();
   if (!session) redirect('/login');
 
-  const qoc = await prisma.qocComplaint.findUnique({ where: { id: params.id } });
+  const [qoc, attachments] = await Promise.all([
+    prisma.qocComplaint.findUnique({ where: { id: params.id } }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'QUALITY_OF_CARE_LOI',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
+
   if (!qoc || qoc.facilityId !== session.user.facilityId) notFound();
 
   const now = new Date();
@@ -133,6 +146,19 @@ export default async function QocDetailPage({ params }: { params: { id: string }
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{qoc.notes}</p>
             </Section>
           )}
+
+          <AttachmentPanel
+            title="Investigation Documentation"
+            attachments={attachments}
+            emptyLabel="No investigation documents or evidence have been attached yet."
+          />
+
+          <AttachmentComposer
+            sourceType="QUALITY_OF_CARE_LOI"
+            sourceId={qoc.id}
+            sourceLabel={qoc.qocNumber}
+            title="Add Investigation Documents"
+          />
         </div>
 
         <div className="space-y-5">

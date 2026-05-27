@@ -6,6 +6,8 @@ import { formatDate } from '@/lib/utils';
 import { ArrowLeft, AlertTriangle, Bug , Pencil } from 'lucide-react';
 import StatusUpdater from '@/components/trackers/StatusUpdater';
 import PrintButton from '@/components/ui/PrintButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,7 +41,17 @@ export default async function OutbreakDetailPage({ params }: { params: { id: str
   const session = await auth();
   if (!session) redirect('/login');
 
-  const outbreak = await prisma.icOutbreak.findUnique({ where: { id: params.id } });
+  const [outbreak, attachments] = await Promise.all([
+    prisma.icOutbreak.findUnique({ where: { id: params.id } }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'OUTBREAK_TRACKING',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!outbreak || outbreak.facilityId !== session.user.facilityId) notFound();
 
@@ -101,6 +113,19 @@ export default async function OutbreakDetailPage({ params }: { params: { id: str
               </ul>
             </Section>
           )}
+
+          <AttachmentPanel
+            title="Outbreak Documentation"
+            attachments={attachments}
+            emptyLabel="No outbreak investigation documents or evidence have been attached yet."
+          />
+
+          <AttachmentComposer
+            sourceType="OUTBREAK_TRACKING"
+            sourceId={outbreak.id}
+            sourceLabel={outbreak.outbreakNumber}
+            title="Add Investigation Documents"
+          />
         </div>
 
         <div className="space-y-5">

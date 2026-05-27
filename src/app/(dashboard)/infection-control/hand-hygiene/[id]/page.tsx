@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeft, HandMetal , Pencil } from 'lucide-react';
 import PrintButton from '@/components/ui/PrintButton';
+import AttachmentPanel from '@/components/ui/AttachmentPanel';
+import AttachmentComposer from '@/components/ui/AttachmentComposer';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,7 +33,17 @@ export default async function HandHygieneDetailPage({ params }: { params: { id: 
   const session = await auth();
   if (!session) redirect('/login');
 
-  const audit = await prisma.handHygieneAudit.findUnique({ where: { id: params.id } });
+  const [audit, attachments] = await Promise.all([
+    prisma.handHygieneAudit.findUnique({ where: { id: params.id } }),
+    prisma.attachment.findMany({
+      where: {
+        facilityId: session.user.facilityId,
+        sourceType: 'HAND_HYGIENE_AUDIT',
+        sourceId: params.id,
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
 
   if (!audit || audit.facilityId !== session.user.facilityId) notFound();
 
@@ -109,6 +121,21 @@ export default async function HandHygieneDetailPage({ params }: { params: { id: 
           <p className="text-sm text-foreground/80 whitespace-pre-wrap">{audit.notes}</p>
         </Section>
       )}
+
+      <Section title="">
+        <AttachmentPanel
+          title="Audit Evidence & Photos"
+          attachments={attachments}
+          emptyLabel="No audit evidence, photos, or documentation have been attached yet."
+        />
+      </Section>
+
+      <AttachmentComposer
+        sourceType="HAND_HYGIENE_AUDIT"
+        sourceId={audit.id}
+        sourceLabel={`Hand Hygiene Audit - ${audit.unit} ${formatDate(audit.auditDate)}`}
+        title="Add Audit Evidence"
+      />
     </div>
   );
 }
