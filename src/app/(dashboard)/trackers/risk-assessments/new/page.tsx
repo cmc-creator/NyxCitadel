@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShieldAlert, ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { HVAFormBuilder } from '@/components/risk-assessments/hva-form-builder';
 
 const ASSESSMENT_TYPES = [
   { value: 'ANNUAL_PROACTIVE', label: 'Annual Proactive Risk Assessment', ref: 'JC LD.04.04.01', desc: 'Required annually - broad facility-wide risk identification' },
@@ -62,6 +63,7 @@ export default function NewRiskAssessmentPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [items, setItems] = useState<RiskItem[]>([newItem()]);
+  const [assessmentMethod, setAssessmentMethod] = useState<'generic' | 'hva'>('generic');
 
   function updateItem(id: string, field: keyof RiskItem, value: string | number) {
     setItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i));
@@ -137,224 +139,293 @@ export default function NewRiskAssessmentPage() {
         <div className="bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Header info */}
-        <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
-          <div className="px-6 py-5 space-y-4">
-            <h2 className="text-sm font-semibold text-foreground">Assessment Information</h2>
+      <div className="flex gap-2 border-b border-border">
+        <button
+          onClick={() => setAssessmentMethod('generic')}
+          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+            assessmentMethod === 'generic'
+              ? 'border-teal-600 text-teal-600'
+              : 'border-transparent text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          Generic Assessment
+        </button>
+        <button
+          onClick={() => setAssessmentMethod('hva')}
+          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+            assessmentMethod === 'hva'
+              ? 'border-teal-600 text-teal-600'
+              : 'border-transparent text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          HVA Template
+        </button>
+      </div>
 
-            <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Assessment Title *</label>
-              <input name="title" required placeholder="e.g., 2026 Annual Proactive Risk Assessment" className="form-input w-full" />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {assessmentMethod === 'hva' ? (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
+            <div className="px-6 py-5 space-y-4">
+              <h2 className="text-sm font-semibold text-foreground">Assessment Information</h2>
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">Assessment Type *</label>
-                <select name="assessmentType" required className="form-input w-full">
-                  <option value="">Select type…</option>
-                  {ASSESSMENT_TYPES.map(t => (
-                    <option key={t.value} value={t.value}>{t.label}</option>
-                  ))}
-                </select>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Assessment Title *</label>
+                <input name="title" required placeholder="e.g., 2026 HVA Assessment" className="form-input w-full" />
               </div>
-              <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">Scope / Area Assessed</label>
-                <input name="scope" placeholder="e.g., Facility-wide, Unit 3B, Pharmacy" className="form-input w-full" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Conducted Date</label>
+                  <input name="conductedDate" type="date" className="form-input w-full" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Conducted By</label>
+                  <input name="conductedBy" placeholder="Name / Title" className="form-input w-full" />
+                </div>
               </div>
-              <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">Date Conducted</label>
-                <input name="conductedDate" type="date" className="form-input w-full" />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">Conducted By</label>
-                <input name="conductedBy" placeholder="Name / Title" className="form-input w-full" />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body</label>
-                <select name="regulatoryBody" className="form-input w-full">
-                  <option value="">Select…</option>
-                  {REGULATORY_BODIES.map(r => (
-                    <option key={r} value={r}>{r.replace(/_/g, ' ')}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">Standard Reference</label>
-                <input name="standardRef" placeholder="e.g., LD.04.04.01, 45 CFR 164.308" className="form-input w-full" />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">Next Review Date</label>
-                <input name="nextReviewDate" type="date" className="form-input w-full" />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Executive Summary</label>
-              <textarea name="summary" rows={3} placeholder="Overall assessment findings, methodology, and conclusions…" className="form-input w-full resize-none" />
             </div>
           </div>
-        </div>
 
-        {/* Risk matrix */}
-        <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
-          <div className="px-6 py-4 flex items-center justify-between">
-            <div>
-              <h2 className="text-sm font-semibold text-foreground">Risk Identification Matrix</h2>
-              <p className="text-xs text-muted-foreground mt-0.5">Score = Likelihood (1-5) × Severity (1-5). Critical ≥20 · High ≥12 · Medium ≥6 · Low 1-5</p>
+          <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
+            <div className="px-6 py-5">
+              <HVAFormBuilder />
             </div>
+          </div>
+
+          <div className="bg-card rounded-xl border border-border px-6 py-5">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Notes</label>
+            <textarea name="notes" rows={3} placeholder="Methodology used, sources reviewed, team members involved…" className="form-input w-full resize-none" />
+          </div>
+
+          <div className="flex items-center justify-end gap-3">
+            <a href="/trackers/risk-assessments" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
             <button
-              type="button"
-              onClick={() => setItems(prev => [...prev, newItem()])}
-              className="inline-flex items-center gap-1 text-sm text-teal-600 hover:text-teal-700 font-medium"
+              type="submit"
+              disabled={saving}
+              className="px-6 py-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
             >
-              <Plus className="w-4 h-4" /> Add Risk
+              {saving ? 'Saving…' : 'Save Assessment'}
             </button>
           </div>
+        </form>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Generic Assessment Form */}
+          <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
+            <div className="px-6 py-5 space-y-4">
+              <h2 className="text-sm font-semibold text-foreground">Assessment Information</h2>
 
-          <div className="divide-y divide-slate-50">
-            {items.map((item, idx) => {
-              const score = item.likelihood * item.severity;
-              const level = calcLevel(item.likelihood, item.severity);
-              return (
-                <div key={item.id} className="px-6 py-5 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs font-bold text-muted-foreground/70 w-5">#{idx + 1}</span>
-                    <div className="flex-1">
-                      <input
-                        value={item.riskDescription}
-                        onChange={e => updateItem(item.id, 'riskDescription', e.target.value)}
-                        placeholder="Describe the identified risk…"
-                        className="form-input w-full font-medium"
-                      />
-                    </div>
-                    {score > 0 && (
-                      <span className={`text-xs font-bold px-2 py-1 rounded-full ${level.color}`}>
-                        {score} - {level.label}
-                      </span>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => removeItem(item.id)}
-                      className="p-1.5 text-muted-foreground/70 hover:text-red-500 transition-colors"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Assessment Title *</label>
+                <input name="title" required placeholder="e.g., 2026 Annual Proactive Risk Assessment" className="form-input w-full" />
+              </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pl-8">
-                    <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1">Category</label>
-                      <select
-                        value={item.category}
-                        onChange={e => updateItem(item.id, 'category', e.target.value)}
-                        className="form-input w-full text-xs"
-                      >
-                        {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1">Likelihood (1-5)</label>
-                      <select
-                        value={item.likelihood}
-                        onChange={e => updateItem(item.id, 'likelihood', Number(e.target.value))}
-                        className="form-input w-full text-xs"
-                      >
-                        <option value={1}>1 - Rare</option>
-                        <option value={2}>2 - Unlikely</option>
-                        <option value={3}>3 - Possible</option>
-                        <option value={4}>4 - Likely</option>
-                        <option value={5}>5 - Almost Certain</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1">Severity (1-5)</label>
-                      <select
-                        value={item.severity}
-                        onChange={e => updateItem(item.id, 'severity', Number(e.target.value))}
-                        className="form-input w-full text-xs"
-                      >
-                        <option value={1}>1 - Negligible</option>
-                        <option value={2}>2 - Minor</option>
-                        <option value={3}>3 - Moderate</option>
-                        <option value={4}>4 - Major</option>
-                        <option value={5}>5 - Catastrophic</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1">Assigned To</label>
-                      <input
-                        value={item.assignedTo}
-                        onChange={e => updateItem(item.id, 'assignedTo', e.target.value)}
-                        placeholder="Name / dept"
-                        className="form-input w-full text-xs"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pl-8">
-                    <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1">Current Controls</label>
-                      <textarea
-                        value={item.currentControls}
-                        onChange={e => updateItem(item.id, 'currentControls', e.target.value)}
-                        rows={2}
-                        placeholder="Existing safeguards in place…"
-                        className="form-input w-full text-xs resize-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1">Recommended Actions</label>
-                      <textarea
-                        value={item.recommendedActions}
-                        onChange={e => updateItem(item.id, 'recommendedActions', e.target.value)}
-                        rows={2}
-                        placeholder="Mitigation steps to reduce risk…"
-                        className="form-input w-full text-xs resize-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-muted-foreground mb-1">Target Date</label>
-                      <input
-                        type="date"
-                        value={item.targetDate}
-                        onChange={e => updateItem(item.id, 'targetDate', e.target.value)}
-                        className="form-input w-full text-xs"
-                      />
-                    </div>
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Assessment Type *</label>
+                  <select name="assessmentType" required className="form-input w-full">
+                    <option value="">Select type…</option>
+                    {ASSESSMENT_TYPES.map(t => (
+                      <option key={t.value} value={t.value}>{t.label}</option>
+                    ))}
+                  </select>
                 </div>
-              );
-            })}
+                <div>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Scope / Area Assessed</label>
+                  <input name="scope" placeholder="e.g., Facility-wide, Unit 3B, Pharmacy" className="form-input w-full" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Date Conducted</label>
+                  <input name="conductedDate" type="date" className="form-input w-full" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Conducted By</label>
+                  <input name="conductedBy" placeholder="Name / Title" className="form-input w-full" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Regulatory Body</label>
+                  <select name="regulatoryBody" className="form-input w-full">
+                    <option value="">Select…</option>
+                    {REGULATORY_BODIES.map(r => (
+                      <option key={r} value={r}>{r.replace(/_/g, ' ')}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Standard Reference</label>
+                  <input name="standardRef" placeholder="e.g., LD.04.04.01, 45 CFR 164.308" className="form-input w-full" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1">Next Review Date</label>
+                  <input name="nextReviewDate" type="date" className="form-input w-full" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Executive Summary</label>
+                <textarea name="summary" rows={3} placeholder="Overall assessment findings, methodology, and conclusions…" className="form-input w-full resize-none" />
+              </div>
+            </div>
           </div>
 
-          {items.length === 0 && (
-            <div className="px-6 py-8 text-center text-muted-foreground/70 text-sm">
-              No risks added yet.{' '}
-              <button type="button" onClick={() => setItems([newItem()])} className="text-teal-600 hover:underline">
-                Add your first risk
+          {/* Risk matrix */}
+          <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
+            <div className="px-6 py-4 flex items-center justify-between">
+              <div>
+                <h2 className="text-sm font-semibold text-foreground">Risk Identification Matrix</h2>
+                <p className="text-xs text-muted-foreground mt-0.5">Score = Likelihood (1-5) × Severity (1-5). Critical ≥20 · High ≥12 · Medium ≥6 · Low 1-5</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setItems(prev => [...prev, newItem()])}
+                className="inline-flex items-center gap-1 text-sm text-teal-600 hover:text-teal-700 font-medium"
+              >
+                <Plus className="w-4 h-4" /> Add Risk
               </button>
             </div>
-          )}
-        </div>
 
-        {/* Notes */}
-        <div className="bg-card rounded-xl border border-border px-6 py-5">
-          <label className="block text-xs font-medium text-muted-foreground mb-1">Additional Notes</label>
-          <textarea name="notes" rows={3} placeholder="Methodology used, sources reviewed, team members involved, follow-up plans…" className="form-input w-full resize-none" />
-        </div>
+            <div className="divide-y divide-slate-50">
+              {items.map((item, idx) => {
+                const score = item.likelihood * item.severity;
+                const level = calcLevel(item.likelihood, item.severity);
+                return (
+                  <div key={item.id} className="px-6 py-5 space-y-3">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-bold text-muted-foreground/70 w-5">#{idx + 1}</span>
+                      <div className="flex-1">
+                        <input
+                          value={item.riskDescription}
+                          onChange={e => updateItem(item.id, 'riskDescription', e.target.value)}
+                          placeholder="Describe the identified risk…"
+                          className="form-input w-full font-medium"
+                        />
+                      </div>
+                      {score > 0 && (
+                        <span className={`text-xs font-bold px-2 py-1 rounded-full ${level.color}`}>
+                          {score} - {level.label}
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeItem(item.id)}
+                        className="p-1.5 text-muted-foreground/70 hover:text-red-500 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
 
-        <div className="flex items-center justify-end gap-3">
-          <a href="/trackers/risk-assessments" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
-          <button
-            type="submit"
-            disabled={saving}
-            className="px-6 py-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
-          >
-            {saving ? 'Saving…' : 'Save Assessment'}
-          </button>
-        </div>
-      </form>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pl-8">
+                      <div>
+                        <label className="block text-xs font-medium text-muted-foreground mb-1">Category</label>
+                        <select
+                          value={item.category}
+                          onChange={e => updateItem(item.id, 'category', e.target.value)}
+                          className="form-input w-full text-xs"
+                        >
+                          {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-muted-foreground mb-1">Likelihood (1-5)</label>
+                        <select
+                          value={item.likelihood}
+                          onChange={e => updateItem(item.id, 'likelihood', Number(e.target.value))}
+                          className="form-input w-full text-xs"
+                        >
+                          <option value={1}>1 - Rare</option>
+                          <option value={2}>2 - Unlikely</option>
+                          <option value={3}>3 - Possible</option>
+                          <option value={4}>4 - Likely</option>
+                          <option value={5}>5 - Almost Certain</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-muted-foreground mb-1">Severity (1-5)</label>
+                        <select
+                          value={item.severity}
+                          onChange={e => updateItem(item.id, 'severity', Number(e.target.value))}
+                          className="form-input w-full text-xs"
+                        >
+                          <option value={1}>1 - Negligible</option>
+                          <option value={2}>2 - Minor</option>
+                          <option value={3}>3 - Moderate</option>
+                          <option value={4}>4 - Major</option>
+                          <option value={5}>5 - Catastrophic</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-muted-foreground mb-1">Assigned To</label>
+                        <input
+                          value={item.assignedTo}
+                          onChange={e => updateItem(item.id, 'assignedTo', e.target.value)}
+                          placeholder="Name / dept"
+                          className="form-input w-full text-xs"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pl-8">
+                      <div>
+                        <label className="block text-xs font-medium text-muted-foreground mb-1">Current Controls</label>
+                        <textarea
+                          value={item.currentControls}
+                          onChange={e => updateItem(item.id, 'currentControls', e.target.value)}
+                          rows={2}
+                          placeholder="Existing safeguards in place…"
+                          className="form-input w-full text-xs resize-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-muted-foreground mb-1">Recommended Actions</label>
+                        <textarea
+                          value={item.recommendedActions}
+                          onChange={e => updateItem(item.id, 'recommendedActions', e.target.value)}
+                          rows={2}
+                          placeholder="Mitigation steps to reduce risk…"
+                          className="form-input w-full text-xs resize-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-muted-foreground mb-1">Target Date</label>
+                        <input
+                          type="date"
+                          value={item.targetDate}
+                          onChange={e => updateItem(item.id, 'targetDate', e.target.value)}
+                          className="form-input w-full text-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {items.length === 0 && (
+              <div className="px-6 py-8 text-center text-muted-foreground/70 text-sm">
+                No risks added yet.{' '}
+                <button type="button" onClick={() => setItems([newItem()])} className="text-teal-600 hover:underline">
+                  Add your first risk
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Notes */}
+          <div className="bg-card rounded-xl border border-border px-6 py-5">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Additional Notes</label>
+            <textarea name="notes" rows={3} placeholder="Methodology used, sources reviewed, team members involved, follow-up plans…" className="form-input w-full resize-none" />
+          </div>
+
+          <div className="flex items-center justify-end gap-3">
+            <a href="/trackers/risk-assessments" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">Cancel</a>
+            <button
+              type="submit"
+              disabled={saving}
+              className="px-6 py-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              {saving ? 'Saving…' : 'Save Assessment'}
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 }

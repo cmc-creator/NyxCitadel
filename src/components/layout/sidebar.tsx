@@ -20,7 +20,6 @@ import {
   AlertTriangle,
   FileSearch,
   ChevronDown,
-  Building2,
   Activity,
   BarChart2,
   Target,
@@ -358,7 +357,7 @@ const bottomNavItems: NavItem[] = [
 
 const SidebarCloseContext = createContext<(() => void) | undefined>(undefined);
 
-function NavLink({ item, depth = 0 }: { item: NavItem; depth?: number }) {
+function NavLink({ item, depth = 0, isCollapsed = false }: { item: NavItem; depth?: number; isCollapsed?: boolean }) {
   const pathname = usePathname();
   const onClose  = useContext(SidebarCloseContext);
   const [open, setOpen] = useState(
@@ -379,21 +378,22 @@ function NavLink({ item, depth = 0 }: { item: NavItem; depth?: number }) {
         <button
           onClick={() => setOpen(!open)}
           data-tour={item.tourId}
-          className={cn('sidebar-link w-full text-left', depth > 0 && 'pl-8', isActive && 'active')}
+          className={cn('sidebar-link w-full text-left', depth > 0 && 'pl-8', isActive && 'active', isCollapsed && depth === 0 && 'justify-center')}
+          title={isCollapsed ? item.label : undefined}
         >
           <item.icon className="w-4 h-4 flex-shrink-0" />
-          <span className="flex-1">{item.label}</span>
-          {item.badge && (
+          {!isCollapsed && <span className="flex-1">{item.label}</span>}
+          {item.badge && !isCollapsed && (
             <span className={cn('text-xs font-medium px-1.5 py-0.5 rounded-full mr-1', item.badgeColor ?? 'bg-red-500 text-white')}>
               {item.badge}
             </span>
           )}
-          <ChevronDown className={cn('w-3.5 h-3.5 transition-transform flex-shrink-0', open && 'rotate-180')} />
+          {!isCollapsed && <ChevronDown className={cn('w-3.5 h-3.5 transition-transform flex-shrink-0', open && 'rotate-180')} />}
         </button>
-        {open && (
+        {open && !isCollapsed && (
           <div className="mt-0.5 space-y-0.5 pl-3">
             {item.children.map((child) => (
-              <NavLink key={child.href} item={child} depth={depth + 1} />
+              <NavLink key={child.href} item={child} depth={depth + 1} isCollapsed={isCollapsed} />
             ))}
           </div>
         )}
@@ -406,11 +406,12 @@ function NavLink({ item, depth = 0 }: { item: NavItem; depth?: number }) {
       href={item.href}
       onClick={onClose}
       data-tour={item.tourId}
-      className={cn('sidebar-link', depth > 0 && 'pl-8', isActive && 'active')}
+      className={cn('sidebar-link', depth > 0 && 'pl-8', isActive && 'active', isCollapsed && depth === 0 && 'justify-center')}
+      title={isCollapsed ? item.label : undefined}
     >
       <item.icon className="w-4 h-4 flex-shrink-0" />
-      <span>{item.label}</span>
-      {item.badge && (
+      {!isCollapsed && <span>{item.label}</span>}
+      {item.badge && !isCollapsed && (
         <span className={cn('ml-auto text-xs font-medium px-1.5 py-0.5 rounded-full', item.badgeColor ?? 'bg-red-500 text-white')}>
           {item.badge}
         </span>
@@ -419,7 +420,7 @@ function NavLink({ item, depth = 0 }: { item: NavItem; depth?: number }) {
   );
 }
 
-export function Sidebar({ isOpen = false, onClose }: { isOpen?: boolean; onClose?: () => void }) {
+export function Sidebar({ isOpen = false, onClose, isCollapsed = false, onToggleCollapse }: { isOpen?: boolean; onClose?: () => void; isCollapsed?: boolean; onToggleCollapse?: () => void }) {
   return (
     <SidebarCloseContext.Provider value={onClose}>
       {/* Mobile backdrop */}
@@ -428,9 +429,10 @@ export function Sidebar({ isOpen = false, onClose }: { isOpen?: boolean; onClose
       )}
 
       <aside className={cn(
-        'sidebar w-64 min-h-screen flex flex-col fixed left-0 top-0 bottom-0 transition-transform duration-300',
+        'sidebar min-h-screen flex flex-col fixed left-0 top-0 bottom-0 transition-all duration-300',
         'z-40 md:z-30',
-        isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
+        isCollapsed ? 'w-20 md:w-20' : 'w-64 md:w-64'
       )}>
         {/* Mobile close */}
         <button
@@ -442,8 +444,8 @@ export function Sidebar({ isOpen = false, onClose }: { isOpen?: boolean; onClose
         </button>
 
         {/* Branding */}
-        <div className="flex items-center px-4 py-4 border-b border-white/8" style={{background: 'linear-gradient(135deg, hsl(228 45% 5%) 0%, hsl(228 42% 7%) 100%)'}}>
-          <Link href="/dashboard" className="flex items-center gap-3 group">
+        <div className="flex items-center justify-between px-3 py-4 border-b border-white/8" style={{background: 'linear-gradient(135deg, hsl(228 45% 5%) 0%, hsl(228 42% 7%) 100%)'}}>
+          <Link href="/dashboard" className={cn('flex items-center gap-3 group', isCollapsed && 'hidden md:flex')}>
             <Image
               src="/citadellogo-clean.png"
               alt="NyxCitadel"
@@ -464,20 +466,27 @@ export function Sidebar({ isOpen = false, onClose }: { isOpen?: boolean; onClose
               <p className="text-[10px] leading-tight" style={{color: 'hsl(43 65% 54%)'}}>Compliance Intelligence</p>
             </div>
           </Link>
+          <button
+            onClick={onToggleCollapse}
+            className="hidden md:flex p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors flex-shrink-0"
+            aria-label="Toggle sidebar"
+          >
+            <ChevronDown className={cn('w-4 h-4 transition-transform', isCollapsed ? '-rotate-90' : 'rotate-90')} />
+          </button>
         </div>
 
         {/* Main Nav */}
-        <nav className="flex-1 px-3 py-3 overflow-y-auto space-y-4">
+        <nav className={cn('flex-1 overflow-y-auto space-y-4', isCollapsed ? 'px-1.5 py-3' : 'px-3 py-3')}>
           {navSections.map((section, idx) => (
             <div key={idx}>
-              {section.label && (
+              {section.label && !isCollapsed && (
                 <p className="px-2 pb-1.5 text-[10px] font-semibold uppercase tracking-widest text-white/25 select-none">
                   {section.label}
                 </p>
               )}
               <div className="space-y-0.5">
                 {section.items.map((item) => (
-                  <NavLink key={item.href} item={item} />
+                  <NavLink key={item.href} item={item} isCollapsed={isCollapsed} />
                 ))}
               </div>
             </div>
@@ -485,16 +494,17 @@ export function Sidebar({ isOpen = false, onClose }: { isOpen?: boolean; onClose
         </nav>
 
         {/* Bottom Nav */}
-        <div className="border-t border-white/10 px-3 py-3 space-y-0.5">
+        <div className="border-t border-white/10 px-1.5 md:px-1.5 py-3 space-y-0.5" style={{background: 'linear-gradient(135deg, hsl(228 35% 10%) 0%, hsl(228 32% 12%) 100%)'}}>
           {bottomNavItems.map((item) => (
-            <NavLink key={item.href} item={item} />
+            <NavLink key={item.href} item={item} isCollapsed={isCollapsed} />
           ))}
           <button
             onClick={() => { onClose?.(); signOut({ callbackUrl: '/login' }); }}
-            className="sidebar-link w-full text-left text-red-400 hover:text-red-300"
+            className={cn('sidebar-link w-full text-left text-red-400 hover:text-red-300', isCollapsed && 'justify-center')}
+            title={isCollapsed ? 'Sign out' : undefined}
           >
             <LogOut className="w-4 h-4 flex-shrink-0" />
-            <span>Sign out</span>
+            {!isCollapsed && <span>Sign out</span>}
           </button>
         </div>
       </aside>
