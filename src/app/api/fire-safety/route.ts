@@ -18,9 +18,7 @@ export async function GET(req: NextRequest) {
       prisma.trackerItem.findMany({
         where: {
           facilityId,
-          category: {
-            in: ['FIRE_MARSHAL_INSPECTION', 'FIRE_EXTINGUISHER_INSPECTION', 'FIRE_ALARM_TEST', 'FIRE_SAFETY', 'FIRE_SUPPRESSION']
-          }
+          category: 'LIFE_SAFETY'
         },
         orderBy: { dueDate: 'asc' },
       }),
@@ -30,7 +28,7 @@ export async function GET(req: NextRequest) {
     const yearDrills = allDrills.filter(d => new Date(d.scheduledDate).getFullYear() === currentYear);
     const completedDrills = yearDrills.filter(d => d.status === 'COMPLETED').length;
 
-    const inspectionsDue = trackerItems.filter(t => !t.completedDate && t.dueDate < new Date()).length;
+    const inspectionsDue = trackerItems.filter(t => !t.completedDate && t.dueDate != null && t.dueDate < new Date()).length;
 
     // Calculate compliance score (0-100)
     let score = 100;

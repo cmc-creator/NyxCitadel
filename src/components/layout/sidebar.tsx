@@ -54,6 +54,7 @@ import {
   CreditCard,
   UserCircle,
   Flame,
+  Building2,
 } from 'lucide-react';
 import { useState, createContext, useContext } from 'react';
 import { X } from 'lucide-react';
