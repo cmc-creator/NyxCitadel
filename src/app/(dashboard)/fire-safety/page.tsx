@@ -11,11 +11,6 @@ import {
 
 export const dynamic = 'force-dynamic';
 
-export const metadata = {
-  title: 'Fire Safety & Preparedness | NyxCitadel',
-  description: 'Fire evacuation drills, inspections, equipment maintenance, and compliance tracking.'
-};
-
 export default function FireSafetyPage() {
   const { data: session } = useSession();
   const [fireData, setFireData] = useState<any>(null);
