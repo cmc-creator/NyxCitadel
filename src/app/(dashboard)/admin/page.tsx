@@ -130,7 +130,8 @@ export default async function AdminPage() {
               <p className="text-3xl font-bold text-teal-400 mt-1">{users.length}</p>
               <p className="text-xs text-muted-foreground/60 mt-0.5">{activeUsers} active</p>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-teal-950/40 ring-1 ring-teal-800/40 flex items-center justify-center">`n              <Users className="w-5 h-5 text-teal-400" />
+            <div className="w-10 h-10 rounded-xl bg-teal-950/40 ring-1 ring-teal-800/40 flex items-center justify-center">
+              <Users className="w-5 h-5 text-teal-400" />
             </div>
           </div>
         </div>

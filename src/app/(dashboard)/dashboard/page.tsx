@@ -113,7 +113,7 @@ export default async function DashboardPage() {
         <div>
           <h3 className="font-semibold text-foreground mb-1">Need a tour?</h3>
           <p className="text-sm text-muted-foreground mb-3">Click the walkthrough button in the sidebar to get an interactive guided tour of the app.</p>
-          <Link href="/dashboard/walkthrough" className="inline-flex items-center gap-1.5 text-sm font-medium text-teal-600 hover:text-teal-700 transition">
+          <Link href="/walkthrough" className="inline-flex items-center gap-1.5 text-sm font-medium text-teal-600 hover:text-teal-700 transition">
             Start Interactive Walkthrough <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
