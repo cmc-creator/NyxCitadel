@@ -3,9 +3,10 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
-  BarChart2, Shield, FileBarChart, TrendingUp,
-  AlertTriangle, CheckCircle2, ClipboardList, Activity, Newspaper,
+  BarChart2, Shield, FileBarChart,
+  AlertTriangle, CheckCircle2, Newspaper,
 } from 'lucide-react';
+import { KpiStrip, type KpiStatSerialized } from '@/components/intelligence/KpiStrip';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,10 +16,7 @@ export default async function IntelligencePage() {
   const session = await auth();
   const facilityId = session!.user.facilityId;
 
-  const since30 = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-  const since90 = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
-
-  const [
+const [
     openIncidents,
     openCaps,
     overdueCaps,
@@ -43,13 +41,14 @@ export default async function IntelligencePage() {
     select: { id: true, title: true, urgency: true, regulatoryBody: true, createdAt: true },
   });
 
-  const stats = [
-    { label: 'Open Incidents', value: openIncidents, icon: AlertTriangle, color: 'text-orange-400 bg-orange-950/40', href: '/trackers/incidents' },
-    { label: 'Active CAPs', value: openCaps, icon: ClipboardList, color: 'text-blue-400 bg-blue-950/40', href: '/trackers/caps' },
-    { label: 'Overdue CAPs', value: overdueCaps, icon: AlertTriangle, color: overdueCaps > 0 ? 'text-red-400 bg-red-950/40' : 'text-muted-foreground/70 bg-slate-800/40', href: '/trackers/caps' },
-    { label: 'High/Critical Risks', value: criticalRisks, icon: Shield, color: criticalRisks > 0 ? 'text-red-400 bg-red-950/40' : 'text-muted-foreground/70 bg-slate-800/40', href: '/trackers/risk-assessments' },
-    { label: 'Open Grievances', value: openGrievances, icon: Activity, color: 'text-teal-400 bg-teal-950/40', href: '/trackers/grievances' },
-    { label: 'Active QAPI Projects', value: activeProjects, icon: TrendingUp, color: 'text-teal-400 bg-teal-950/40', href: '/quality/projects' },
+  const stats: KpiStatSerialized[] = [
+    { id: 'open-incidents', label: 'Open Incidents', value: openIncidents, iconKey: 'AlertTriangle', color: 'text-orange-400 bg-orange-950/40', href: '/trackers/incidents' },
+    { id: 'active-caps', label: 'Active CAPs', value: openCaps, iconKey: 'ClipboardList', color: 'text-blue-400 bg-blue-950/40', href: '/trackers/caps' },
+    { id: 'overdue-caps', label: 'Overdue CAPs', value: overdueCaps, iconKey: 'AlertTriangle', color: overdueCaps > 0 ? 'text-red-400 bg-red-950/40' : 'text-muted-foreground/70 bg-slate-800/40', href: '/trackers/caps' },
+    { id: 'critical-risks', label: 'High/Critical Risks', value: criticalRisks, iconKey: 'Shield', color: criticalRisks > 0 ? 'text-red-400 bg-red-950/40' : 'text-muted-foreground/70 bg-slate-800/40', href: '/trackers/risk-assessments' },
+    { id: 'open-grievances', label: 'Open Grievances', value: openGrievances, iconKey: 'Activity', color: 'text-teal-400 bg-teal-950/40', href: '/trackers/grievances' },
+    { id: 'active-qapi', label: 'Active QAPI Projects', value: activeProjects, iconKey: 'TrendingUp', color: 'text-teal-400 bg-teal-950/40', href: '/quality/projects' },
+    { id: 'upcoming-surveys', label: 'Upcoming Surveys', value: upcomingSurveys, iconKey: 'CalendarClock', color: upcomingSurveys > 0 ? 'text-amber-400 bg-amber-950/40' : 'text-muted-foreground/70 bg-slate-800/40', href: '/surveys' },
   ];
 
   const URGENCY_COLOR: Record<string, string> = {
@@ -106,23 +105,7 @@ export default async function IntelligencePage() {
       </div>
 
       {/* Live KPI strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
-        {stats.map(({ label, value, icon: Icon, color, href }) => (
-          <Link
-            key={label}
-            href={href}
-            className="bg-card border border-border rounded-xl px-4 py-3 hover:border-teal-500 transition-colors group"
-          >
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-2 ${color}`}>
-              <Icon className="w-4 h-4" />
-            </div>
-            <p className="text-2xl font-bold text-foreground group-hover:text-teal-400 leading-none">
-              {value}
-            </p>
-            <p className="text-xs text-muted-foreground mt-1 leading-tight">{label}</p>
-          </Link>
-        ))}
-      </div>
+      <KpiStrip stats={stats} />
 
       {/* View cards */}
       <div>

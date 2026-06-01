@@ -19,7 +19,7 @@ const EXPORTS: ExportItem[] = [
   {
     id: 'caps',
     title: 'Corrective Action Plans',
-    description: 'All CAPs with status, priority, target dates, and assignees. Use for board reports and regulatory submissions.',
+    description: 'All CAPs with status, priority, target dates, and assignees.',
     icon: <CheckCircle className="w-5 h-5" />,
     endpoint: '/api/export/caps',
     color: 'purple',
@@ -28,7 +28,7 @@ const EXPORTS: ExportItem[] = [
   {
     id: 'incidents',
     title: 'Incidents',
-    description: 'Complete incident log with types, severity, location, and state report status. Essential for risk management.',
+    description: 'Complete incident log with types, severity, location, and state report status.',
     icon: <AlertTriangle className="w-5 h-5" />,
     endpoint: '/api/export/incidents',
     color: 'red',
@@ -37,7 +37,7 @@ const EXPORTS: ExportItem[] = [
   {
     id: 'rcas',
     title: 'Root Cause Analyses',
-    description: 'RCA investigations with root causes, corrective actions, and completion status. For quality improvement documentation.',
+    description: 'RCA investigations with root causes, corrective actions, and completion status.',
     icon: <TrendingUp className="w-5 h-5" />,
     endpoint: '/api/export/rcas',
     color: 'orange',
@@ -46,7 +46,7 @@ const EXPORTS: ExportItem[] = [
   {
     id: 'training',
     title: 'Training Records',
-    description: 'Staff training completion status, expiry dates, and compliance gaps. For workforce management and audits.',
+    description: 'Staff training completion status, expiry dates, and compliance gaps.',
     icon: <Users className="w-5 h-5" />,
     endpoint: '/api/export/training',
     color: 'green',
@@ -55,7 +55,7 @@ const EXPORTS: ExportItem[] = [
   {
     id: 'drills',
     title: 'Emergency Drills',
-    description: 'Fire drills, tabletops, and full-scale exercises with participation and observer notes. For emergency preparedness compliance.',
+    description: 'Fire drills, tabletops, and full-scale exercises with participation and observer notes.',
     icon: <BookOpen className="w-5 h-5" />,
     endpoint: '/api/export/drills',
     color: 'indigo',
@@ -64,7 +64,7 @@ const EXPORTS: ExportItem[] = [
   {
     id: 'policies',
     title: 'Policies & Procedures',
-    description: 'All facility policies with review dates, versions, and status. For governance and policy management.',
+    description: 'All facility policies with review dates, versions, and status.',
     icon: <FileText className="w-5 h-5" />,
     endpoint: '/api/export/policies',
     color: 'blue',
@@ -82,7 +82,7 @@ const EXPORTS: ExportItem[] = [
   {
     id: 'board-report-pdf',
     title: 'Board PDF Report',
-    description: 'Board-ready PDF snapshot with resilience score, risk indicators, and executive highlights for leadership packets.',
+    description: 'PDF snapshot with resilience score, risk indicators, and executive highlights.',
     icon: <FileBarChart2 className="w-5 h-5" />,
     endpoint: '/api/export/board-report/pdf',
     fileType: 'pdf',
@@ -269,17 +269,6 @@ export default function ExportPage() {
         </div>
       ))}
 
-      {/* Usage Tips */}
-      <div className="bg-card border-2 border-dashed border-border rounded-lg p-6">
-        <h3 className="text-white font-semibold mb-3">💡 Usage Tips</h3>
-        <div className="text-gray-300 space-y-2 text-sm">
-          <p>• <strong>Board Reports:</strong> Use the Board Packet for one-click leadership downloads, including the trend-enabled board PDF.</p>
-          <p>• <strong>Accreditation Surveys:</strong> Use the Survey Readiness Pack for evidence-heavy meetings and tracer prep.</p>
-          <p>• <strong>Risk Assessment:</strong> Combine incidents and RCAs to identify patterns before committee review.</p>
-          <p>• <strong>State Reporting:</strong> Export incidents with reportable status for regulatory submissions.</p>
-          <p>• <strong>Audit Preparation:</strong> Schedule external delivery lists so executive recipients receive the right cadence automatically.</p>
-        </div>
-      </div>
     </div>
   );
 }
