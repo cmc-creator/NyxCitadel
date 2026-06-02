@@ -1,7 +1,9 @@
 import Link from 'next/link';
-import { Rss, Globe, Shield, Building2, FileText, Bell, ArrowRight, Info } from 'lucide-react';
+import { Rss, Globe, Shield, Building2, FileText, Bell, ArrowRight, Info, RefreshCw } from 'lucide-react';
+import { prisma } from '@/lib/prisma';
+import { RunScrapeButton } from '@/components/settings/RunScrapeButton';
 
-export const metadata = { title: 'Regulatory Update Alerts — Settings' };
+export const metadata = { title: 'Regulatory Update Alerts \u2014 Settings' };
 
 const SOURCES = [
   {
@@ -54,7 +56,20 @@ const TAG_COLORS: Record<string, string> = {
   Accreditation: 'bg-teal-500/10 text-teal-600 border-teal-500/20',
 };
 
-export default function RegulatoryUpdateSettingsPage() {
+export default async function RegulatoryUpdateSettingsPage() {
+  const lastUpdate = await prisma.regulatoryUpdate.findFirst({
+    where: { isGlobal: true },
+    orderBy: { createdAt: 'desc' },
+    select: { createdAt: true },
+  });
+
+  const lastRunLabel = lastUpdate
+    ? new Intl.DateTimeFormat('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric',
+        hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
+      }).format(new Date(lastUpdate.createdAt))
+    : 'Never';
+
   return (
     <div className="space-y-6 max-w-2xl">
       {/* Header */}
@@ -113,6 +128,22 @@ export default function RegulatoryUpdateSettingsPage() {
             );
           })}
         </div>
+      </div>
+
+      {/* Manual trigger */}
+      <div className="rounded-xl border border-border bg-card px-5 py-4 space-y-3">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-teal-500/10 flex items-center justify-center shrink-0">
+            <RefreshCw className="w-4 h-4 text-teal-500" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-foreground">Manual Scrape</p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Last run: <span className="text-foreground font-medium">{lastRunLabel}</span>
+            </p>
+          </div>
+        </div>
+        <RunScrapeButton />
       </div>
 
       {/* Alert preferences link */}

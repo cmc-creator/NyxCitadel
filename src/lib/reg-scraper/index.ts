@@ -99,8 +99,8 @@ export async function runScrape(days = 90): Promise<ScrapeResult> {
   }
 
   // 3. Identify which CRITICAL/HIGH items are actually new (not already in DB)
-  const alertCandidates = allUpdates.filter(u => u.impactLevel === 'CRITICAL' || u.impactLevel === 'HIGH');
-  const urlsToCheck = alertCandidates.map(u => u.url).filter(Boolean);
+  const alertCandidates = allUpdates.filter(u => (u.impactLevel === 'CRITICAL' || u.impactLevel === 'HIGH') && u.url);
+  const urlsToCheck = alertCandidates.map(u => u.url);
   const existingSourceUrls = urlsToCheck.length > 0
     ? new Set(
         (await prisma.regulatoryUpdate.findMany({
@@ -112,16 +112,18 @@ export async function runScrape(days = 90): Promise<ScrapeResult> {
 
   const newAlerts = alertCandidates.filter(u => !existingSourceUrls.has(u.url));
 
-  // 4. Insert new items (sourceUrl used for soft-dedup via skipDuplicates on title)
+  // 4. Insert new items — only those with a sourceUrl so the unique constraint
+  //    prevents duplicate runs from accumulating identical records.
+  const insertable = allUpdates.filter(u => u.url);
   let newCount = 0;
   try {
     const result = await prisma.regulatoryUpdate.createMany({
-      data: allUpdates.map(u => ({
+      data: insertable.map(u => ({
         title:          u.title.slice(0, 500),
         summary:        u.summary ?? '',
         regulatoryBody: u.agency,
         urgency:        mapImpactToUrgency(u.impactLevel),
-        sourceUrl:      u.url || null,
+        sourceUrl:      u.url,
         isGlobal:       true,
         publishedById:  sysUser.id,
       })),
@@ -268,8 +270,9 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
           .join('\n\n'),
         html: emailData.html,
       });
-    } catch {
-      // Non-fatal — in-app notifications already created
+    } catch (err) {
+      // Non-fatal — in-app notifications already created, but log so admins know SMTP is broken
+      console.warn(`[reg-scraper] Email failed for ${user.email}:`, err instanceof Error ? err.message : String(err));
     }
   }
 }

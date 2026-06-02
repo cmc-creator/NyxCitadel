@@ -3333,6 +3333,7 @@ model RegulatoryUpdate {
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
+  @@unique([sourceUrl])
   @@map("regulatory_updates")
 }
 
