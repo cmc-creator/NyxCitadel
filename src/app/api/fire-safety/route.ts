@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
 
     const facilityId = session.user.facilityId;
 
-    const [allDrills, trackerItems] = await Promise.all([
+    const [allDrills, trackerItems, fireSafetyTraining] = await Promise.all([
       prisma.drill.findMany({
         where: { facilityId, drillType: 'FIRE_EVACUATION' },
         orderBy: { scheduledDate: 'desc' },
@@ -22,6 +22,10 @@ export async function GET(req: NextRequest) {
         },
         orderBy: { dueDate: 'asc' },
       }),
+      prisma.trainingRecord.findMany({
+        where: { facilityId, category: 'FIRE_SAFETY', isRequired: true },
+        select: { status: true },
+      }),
     ]);
 
     const currentYear = new Date().getFullYear();
@@ -30,17 +34,24 @@ export async function GET(req: NextRequest) {
 
     const inspectionsDue = trackerItems.filter(t => !t.completedDate && t.dueDate != null && t.dueDate < new Date()).length;
 
+    const totalFireTraining = fireSafetyTraining.length;
+    const completedFireTraining = fireSafetyTraining.filter(t => t.status === 'COMPLETED').length;
+    const staffTrained = totalFireTraining > 0
+      ? Math.round((completedFireTraining / totalFireTraining) * 100)
+      : 0;
+
     // Calculate compliance score (0-100)
     let score = 100;
     if (completedDrills < 12) score -= (12 - completedDrills) * 5;
     if (inspectionsDue > 0) score -= inspectionsDue * 3;
+    if (staffTrained < 100) score -= Math.round((100 - staffTrained) * 0.2);
     score = Math.max(0, Math.min(100, score));
 
     return NextResponse.json({
       firedrillsThisYear: completedDrills,
       lastDrillDate: allDrills[0]?.conductedDate || allDrills[0]?.scheduledDate,
       inspectionsDue,
-      staffTrained: 85, // TODO: calculate from TrainingRecord
+      staffTrained,
       complianceScore: score,
       recentDrills: allDrills.slice(0, 5).map(d => ({
         id: d.id,
