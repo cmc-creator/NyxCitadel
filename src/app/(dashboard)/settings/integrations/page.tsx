@@ -76,7 +76,7 @@ const INTEGRATIONS: Integration[] = [
     name: 'Joint Commission Connect',
     description: 'Submit Sentinel Event disclosures and pull accreditation standards updates directly from The Joint Commission.',
     category: 'Regulatory',
-    status: 'coming_soon',
+    status: 'available',
     logoText: 'JC',
     logoColor: 'bg-slate-400',
   },
@@ -136,6 +136,8 @@ export default function IntegrationsPage() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [icalUrl, setIcalUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [jcConnectEnabled, setJcConnectEnabled] = useState(false);
+  const [jcConnectLoading, setJcConnectLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -145,12 +147,34 @@ export default function IntegrationsPage() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    fetch('/api/settings/integrations/jc-connect')
+      .then(r => r.json())
+      .then(d => { if (typeof d.enabled === 'boolean') setJcConnectEnabled(d.enabled); })
+      .catch(() => {});
+  }, []);
+
   function copyIcalUrl() {
     if (!icalUrl) return;
     navigator.clipboard.writeText(icalUrl).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
+  }
+
+  async function toggleJcConnect() {
+    setJcConnectLoading(true);
+    try {
+      const res = await fetch('/api/settings/integrations/jc-connect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled: !jcConnectEnabled }),
+      });
+      const d = await res.json();
+      if (typeof d.enabled === 'boolean') setJcConnectEnabled(d.enabled);
+    } finally {
+      setJcConnectLoading(false);
+    }
   }
 
   const filtered = INTEGRATIONS.filter(
@@ -190,7 +214,15 @@ export default function IntegrationsPage() {
       {/* Integration cards */}
       <div className="grid gap-3">
         {filtered.map(integration => {
-          const cfg = STATUS_CONFIG[integration.status];
+          const effectiveStatus: 'connected' | 'available' | 'coming_soon' =
+            integration.key === 'jc_connect'
+              ? (jcConnectEnabled ? 'connected' : 'available')
+              : integration.status;
+          const effectiveLogoColor =
+            integration.key === 'jc_connect'
+              ? (jcConnectEnabled ? 'bg-teal-600' : 'bg-slate-400')
+              : integration.logoColor;
+          const cfg = STATUS_CONFIG[effectiveStatus];
           const StatusIcon = cfg.icon;
           return (
             <div
@@ -199,7 +231,7 @@ export default function IntegrationsPage() {
             >
               {/* Logo */}
               <div
-                className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 text-white text-xs font-bold ${integration.logoColor}`}
+                className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 text-white text-xs font-bold ${effectiveLogoColor}`}
               >
                 {integration.logoText}
               </div>
@@ -308,6 +340,19 @@ export default function IntegrationsPage() {
                     className="text-xs bg-purple-600 text-white px-3 py-1 rounded-lg hover:bg-purple-700 transition"
                   >
                     Enable in Profile
+                  </button>
+                )}
+                {integration.key === 'jc_connect' && (
+                  <button
+                    onClick={toggleJcConnect}
+                    disabled={jcConnectLoading}
+                    className={`text-xs text-white px-3 py-1 rounded-lg transition disabled:opacity-50 ${
+                      jcConnectEnabled
+                        ? 'bg-red-600 hover:bg-red-700'
+                        : 'bg-teal-600 hover:bg-teal-700'
+                    }`}
+                  >
+                    {jcConnectLoading ? '...' : jcConnectEnabled ? 'Disable' : 'Enable'}
                   </button>
                 )}
               </div>

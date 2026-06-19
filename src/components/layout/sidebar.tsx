@@ -55,6 +55,7 @@ import {
   UserCircle,
   Flame,
   Building2,
+  Upload,
 } from 'lucide-react';
 import { useState, createContext, useContext } from 'react';
 import { X } from 'lucide-react';
@@ -127,7 +128,16 @@ const navSections: NavSection[] = [
     label: 'REGULATORY',
     items: [
       { href: '/calendar',            label: 'Compliance Calendar',    icon: CalendarDays, tourId: 'calendar' },
-      { href: '/trackers/policies',   label: 'Policies & Procedures',  icon: FileText },
+      {
+        href: '/trackers/policies',
+        label: 'Policies & Procedures',
+        icon: FileText,
+        children: [
+          { href: '/trackers/policies',             label: 'Policy List',        icon: FileText },
+          { href: '/trackers/policies/bulk-upload', label: 'Bulk Upload',        icon: Upload },
+          { href: '/trackers/policies/coverage',    label: 'Coverage Matrix',    icon: BarChart2 },
+        ],
+      },
       { href: '/trackers/compliance', label: 'Compliance Items',       icon: ShieldCheck },
       {
         href: '/surveys',

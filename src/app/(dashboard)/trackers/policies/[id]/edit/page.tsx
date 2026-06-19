@@ -2,7 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { FileText, ArrowLeft, Upload, X, FileCheck, ExternalLink } from 'lucide-react';
+import { FileText, ArrowLeft, Upload, X, FileCheck, ExternalLink, Sparkles, Loader2, CheckCircle2, Link2 } from 'lucide-react';
+import { JC_STANDARDS } from '@/lib/jc-standards';
+import { standardsLibrary } from '@/lib/standards-library';
+import { CARF_STANDARDS } from '@/lib/carf-standards';
 
 const CATEGORIES = [
   ['ADMINISTRATIVE', 'Administrative'],
@@ -41,6 +44,32 @@ const REG_LABELS: Record<string, string> = {
   HIPAA: 'HIPAA', SAMHSA: 'SAMHSA', INTERNAL: 'Internal', OTHER: 'Other',
 };
 
+// Flatten standards libraries for crosswalk
+const TJC_FLAT = JC_STANDARDS.flatMap(ch =>
+  ch.standards.map(s => ({ ref: s.ref, title: s.title, chapter: ch.title }))
+);
+const CMS_FLAT = standardsLibrary
+  .filter(s => s.category === 'CMS')
+  .map(s => ({ ref: s.standard, title: s.title, chapter: '' }));
+const CARF_FLAT = CARF_STANDARDS.flatMap(sec =>
+  sec.standards.map(s => ({ ref: s.ref, title: s.title, chapter: sec.title }))
+);
+
+type Framework = 'TJC' | 'CMS' | 'CARF';
+const FRAMEWORK_LIBS: Record<Framework, { ref: string; title: string; chapter: string }[]> = {
+  TJC: TJC_FLAT,
+  CMS: CMS_FLAT,
+  CARF: CARF_FLAT,
+};
+
+interface Mapping {
+  id: string;
+  framework: string;
+  standardRef: string;
+  standardTitle: string | null;
+  aiSuggested: boolean;
+}
+
 function toDateInput(iso: string | null | undefined) {
   if (!iso) return '';
   return iso.slice(0, 10);
@@ -51,7 +80,7 @@ export default function EditPolicyPage() {
   const params = useParams();
   const id = params.id as string;
 
-  const [data, setData] = useState<Record<string, any> | null>(null);
+  const [data, setData] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -64,19 +93,31 @@ export default function EditPolicyPage() {
   const [uploadError, setUploadError] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
 
+  // Crosswalk
+  const [mappings, setMappings] = useState<Mapping[]>([]);
+  const [activeFramework, setActiveFramework] = useState<Framework>('TJC');
+  const [crosswalkSearch, setCrosswalkSearch] = useState('');
+  const [suggesting, setSuggesting] = useState(false);
+  const [suggestions, setSuggestions] = useState<{ framework: string; standardRef: string; standardTitle: string }[]>([]);
+  const [mappingLoading, setMappingLoading] = useState<string>(''); // standardRef being toggled
+
   useEffect(() => {
     fetch(`/api/policies/${id}`)
       .then(r => r.json())
       .then(d => {
         setData(d);
-        setSelectedBodies(d.regulatoryBody ?? []);
-        setDocumentUrl(d.documentUrl ?? '');
+        setSelectedBodies((d.regulatoryBody as string[]) ?? []);
+        setDocumentUrl((d.documentUrl as string) ?? '');
         setLoading(false);
       })
       .catch(() => {
         setError('Failed to load record.');
         setLoading(false);
       });
+    fetch(`/api/policies/${id}/standard-mappings`)
+      .then(r => r.json())
+      .then(d => { if (Array.isArray(d.mappings)) setMappings(d.mappings); })
+      .catch(() => {});
   }, [id]);
 
   function toggleBody(v: string) {
@@ -94,8 +135,8 @@ export default function EditPolicyPage() {
       fd.append('file', file);
       const res = await fetch('/api/upload', { method: 'POST', body: fd });
       if (res.ok) {
-        const data = await res.json();
-        setDocumentUrl(data.url);
+        const d = await res.json();
+        setDocumentUrl(d.url);
       } else {
         const err = await res.json();
         setUploadError(err.error ?? 'Upload failed.');
@@ -113,8 +154,61 @@ export default function EditPolicyPage() {
     setUploadFile(null);
     setUploadError('');
     if (fileRef.current) fileRef.current.value = '';
-    // Restore original URL if removing newly uploaded file
-    setDocumentUrl(data?.documentUrl ?? '');
+    setDocumentUrl((data?.documentUrl as string) ?? '');
+  }
+
+  async function toggleMapping(fw: Framework, ref: string, title: string) {
+    const key = `${fw}:${ref}`;
+    const existing = mappings.find(m => m.framework === fw && m.standardRef === ref);
+    setMappingLoading(key);
+    try {
+      if (existing) {
+        await fetch(`/api/policies/${id}/standard-mappings`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mappingId: existing.id }),
+        });
+        setMappings(prev => prev.filter(m => !(m.framework === fw && m.standardRef === ref)));
+      } else {
+        const res = await fetch(`/api/policies/${id}/standard-mappings`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ framework: fw, standardRef: ref, standardTitle: title, aiSuggested: false }),
+        });
+        const d = await res.json();
+        if (d.mapping) setMappings(prev => [...prev, d.mapping]);
+      }
+    } finally {
+      setMappingLoading('');
+    }
+  }
+
+  async function confirmSuggestion(s: { framework: string; standardRef: string; standardTitle: string }) {
+    const res = await fetch(`/api/policies/${id}/standard-mappings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ framework: s.framework, standardRef: s.standardRef, standardTitle: s.standardTitle, aiSuggested: true }),
+    });
+    const d = await res.json();
+    if (d.mapping) {
+      setMappings(prev => [...prev, d.mapping]);
+      setSuggestions(prev => prev.filter(x => x.standardRef !== s.standardRef || x.framework !== s.framework));
+    }
+  }
+
+  async function runAiSuggest() {
+    setSuggesting(true);
+    setSuggestions([]);
+    try {
+      const res = await fetch(`/api/policies/${id}/suggest-mappings`, { method: 'POST' });
+      const d = await res.json();
+      const alreadyMapped = new Set(mappings.map(m => `${m.framework}:${m.standardRef}`));
+      setSuggestions((d.suggestions ?? []).filter(
+        (s: { framework: string; standardRef: string }) => !alreadyMapped.has(`${s.framework}:${s.standardRef}`)
+      ));
+    } finally {
+      setSuggesting(false);
+    }
   }
 
   if (loading) return <div className="text-muted-foreground/70 p-8">Loading...</div>;
@@ -155,10 +249,16 @@ export default function EditPolicyPage() {
       router.refresh();
     } else {
       const body = await res.json();
-      setError(body.error ?? 'Failed to save policy.');
+      setError((body as { error?: string }).error ?? 'Failed to save policy.');
       setSaving(false);
     }
   }
+
+  const libStandards = FRAMEWORK_LIBS[activeFramework];
+  const searchLower = crosswalkSearch.toLowerCase();
+  const filteredStandards = crosswalkSearch
+    ? libStandards.filter(s => s.ref.toLowerCase().includes(searchLower) || s.title.toLowerCase().includes(searchLower))
+    : libStandards;
 
   return (
     <div className="max-w-2xl space-y-6">
@@ -170,7 +270,7 @@ export default function EditPolicyPage() {
           <FileText className="w-6 h-6 text-purple-600" />
           Edit Policy / Procedure
         </h1>
-        <p className="text-xs text-muted-foreground/70 mt-1 font-mono">{data.policyNumber}</p>
+        <p className="text-xs text-muted-foreground/70 mt-1 font-mono">{data.policyNumber as string}</p>
       </div>
 
       {error && (
@@ -183,28 +283,28 @@ export default function EditPolicyPage() {
           <h2 className="text-sm font-semibold text-foreground">Policy Information</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Policy Title *</label>
-            <input name="title" required defaultValue={data.title} className="form-input w-full" />
+            <input name="title" required defaultValue={data.title as string} className="form-input w-full" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Policy #</label>
-              <input name="policyNumber" defaultValue={data.policyNumber} className="form-input w-full" />
+              <input name="policyNumber" defaultValue={data.policyNumber as string} className="form-input w-full" />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Version</label>
-              <input name="version" defaultValue={data.version} className="form-input w-full" />
+              <input name="version" defaultValue={data.version as string} className="form-input w-full" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Category *</label>
-              <select name="category" required defaultValue={data.category} className="form-input w-full">
+              <select name="category" required defaultValue={data.category as string} className="form-input w-full">
                 {CATEGORIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Status</label>
-              <select name="status" defaultValue={data.status} className="form-input w-full">
+              <select name="status" defaultValue={data.status as string} className="form-input w-full">
                 <option value="DRAFT">Draft</option>
                 <option value="UNDER_REVIEW">Under Review</option>
                 <option value="ACTIVE">Active</option>
@@ -214,11 +314,11 @@ export default function EditPolicyPage() {
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Owner / Responsible Department</label>
-            <input name="owner" defaultValue={data.owner ?? ''} className="form-input w-full" />
+            <input name="owner" defaultValue={(data.owner as string) ?? ''} className="form-input w-full" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Standard / Regulatory Reference</label>
-            <input name="standardRef" defaultValue={data.standardRef ?? ''} className="form-input w-full" />
+            <label className="block text-xs font-medium text-slate-600 mb-1">Primary Standard / Regulatory Reference</label>
+            <input name="standardRef" defaultValue={(data.standardRef as string) ?? ''} className="form-input w-full" />
           </div>
         </div>
 
@@ -227,18 +327,18 @@ export default function EditPolicyPage() {
           <h2 className="text-sm font-semibold text-foreground">Review Schedule</h2>
           <div>
             <label className="block text-xs font-medium text-slate-600 mb-1">Review Frequency</label>
-            <select name="reviewFrequency" defaultValue={data.reviewFrequency} className="form-input w-full">
+            <select name="reviewFrequency" defaultValue={data.reviewFrequency as string} className="form-input w-full">
               {REVIEW_FREQUENCIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Effective Date *</label>
-              <input type="date" name="effectiveDate" required defaultValue={toDateInput(data.effectiveDate)} className="form-input w-full" />
+              <input type="date" name="effectiveDate" required defaultValue={toDateInput(data.effectiveDate as string)} className="form-input w-full" />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Next Review Date *</label>
-              <input type="date" name="nextReviewDate" required defaultValue={toDateInput(data.nextReviewDate)} className="form-input w-full" />
+              <input type="date" name="nextReviewDate" required defaultValue={toDateInput(data.nextReviewDate as string)} className="form-input w-full" />
             </div>
           </div>
         </div>
@@ -300,7 +400,7 @@ export default function EditPolicyPage() {
             <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-purple-300 hover:bg-purple-50 transition-colors">
               <Upload className="w-5 h-5 text-muted-foreground/70 mb-1.5" />
               <span className="text-sm text-slate-500">Click to upload PDF or Word document</span>
-              <span className="text-xs text-muted-foreground/70 mt-0.5">Max 20 MB</span>
+              <span className="text-xs text-muted-foreground/70 mt-0.5">Max 50 MB</span>
               <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileSelect} />
             </label>
           )}
@@ -309,7 +409,7 @@ export default function EditPolicyPage() {
         {/* Description */}
         <div className="px-6 py-5 space-y-3">
           <h2 className="text-sm font-semibold text-foreground">Summary / Description <span className="font-normal text-muted-foreground/70">(optional)</span></h2>
-          <textarea name="description" rows={3} defaultValue={data.summary ?? ''} className="form-input w-full resize-none" />
+          <textarea name="description" rows={3} defaultValue={(data.summary as string) ?? ''} className="form-input w-full resize-none" />
         </div>
 
         {/* Version change note */}
@@ -329,6 +429,146 @@ export default function EditPolicyPage() {
           </button>
         </div>
       </form>
+
+      {/* ── Standard Crosswalk ──────────────────────────────────────────────── */}
+      <div className="bg-card rounded-xl border border-border divide-y divide-border/30">
+        <div className="px-6 py-5">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Link2 className="w-4 h-4 text-teal-600" />
+                Standard Crosswalk
+              </h2>
+              <p className="text-xs text-muted-foreground mt-0.5">Map this policy to specific TJC, CMS, or CARF standards. Saved automatically.</p>
+            </div>
+            <button
+              onClick={runAiSuggest}
+              disabled={suggesting}
+              className="flex items-center gap-1.5 text-xs bg-teal-600 text-white px-3 py-1.5 rounded-lg hover:bg-teal-700 transition disabled:opacity-50"
+            >
+              {suggesting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
+              {suggesting ? 'Analyzing...' : 'AI Suggest'}
+            </button>
+          </div>
+
+          {/* Existing mappings pills */}
+          {mappings.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {mappings.map(m => (
+                <span
+                  key={m.id}
+                  className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border ${
+                    m.aiSuggested
+                      ? 'bg-amber-950/20 border-amber-300 text-amber-600'
+                      : 'bg-teal-950/20 border-teal-300 text-teal-600'
+                  }`}
+                >
+                  <span className="font-medium">{m.framework}</span>
+                  <span className="text-muted-foreground">·</span>
+                  {m.standardRef}
+                  <button
+                    onClick={() => toggleMapping(m.framework as Framework, m.standardRef, m.standardTitle ?? '')}
+                    className="ml-1 text-current/60 hover:text-red-500 transition"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* AI suggestions */}
+          {suggestions.length > 0 && (
+            <div className="mt-4 bg-amber-950/10 border border-amber-200 rounded-lg px-4 py-3 space-y-2">
+              <p className="text-xs font-medium text-amber-600 flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5" />
+                AI suggested {suggestions.length} standard{suggestions.length !== 1 ? 's' : ''} — click to confirm
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {suggestions.map(s => (
+                  <button
+                    key={`${s.framework}:${s.standardRef}`}
+                    onClick={() => confirmSuggestion(s)}
+                    className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border border-amber-300 bg-amber-100/30 text-amber-700 hover:bg-amber-100 transition"
+                    title={s.standardTitle}
+                  >
+                    <CheckCircle2 className="w-3 h-3" />
+                    <span className="font-medium">{s.framework}</span>
+                    <span className="text-amber-500/70">·</span>
+                    {s.standardRef}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Framework tabs + search */}
+        <div className="px-6 py-4 space-y-3">
+          <div className="flex gap-1">
+            {(['TJC', 'CMS', 'CARF'] as Framework[]).map(fw => (
+              <button
+                key={fw}
+                onClick={() => { setActiveFramework(fw); setCrosswalkSearch(''); }}
+                className={`text-xs font-medium px-3 py-1.5 rounded-lg border transition-colors ${
+                  activeFramework === fw
+                    ? 'bg-teal-600 text-white border-teal-600'
+                    : 'bg-card text-muted-foreground border-border hover:border-teal-500/50'
+                }`}
+              >
+                {fw === 'TJC' ? 'The Joint Commission' : fw === 'CMS' ? 'CMS (42 CFR)' : 'CARF'}
+              </button>
+            ))}
+          </div>
+          <input
+            value={crosswalkSearch}
+            onChange={e => setCrosswalkSearch(e.target.value)}
+            placeholder={`Search ${activeFramework} standards...`}
+            className="w-full text-sm bg-muted/30 border border-border rounded-lg px-3 py-1.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-teal-500"
+          />
+        </div>
+
+        {/* Standards list */}
+        <div className="max-h-72 overflow-y-auto divide-y divide-border/20">
+          {filteredStandards.slice(0, 100).map(std => {
+            const isMapped = mappings.some(m => m.framework === activeFramework && m.standardRef === std.ref);
+            const isLoading = mappingLoading === `${activeFramework}:${std.ref}`;
+            return (
+              <div
+                key={std.ref}
+                className={`flex items-center gap-3 px-6 py-2.5 hover:bg-muted/20 transition-colors ${isMapped ? 'bg-teal-950/10' : ''}`}
+              >
+                <button
+                  onClick={() => toggleMapping(activeFramework, std.ref, std.title)}
+                  disabled={isLoading}
+                  className={`flex-shrink-0 w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${
+                    isMapped
+                      ? 'bg-teal-600 border-teal-600'
+                      : 'border-border hover:border-teal-500'
+                  }`}
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-2.5 h-2.5 text-teal-600 animate-spin" />
+                  ) : isMapped ? (
+                    <CheckCircle2 className="w-3 h-3 text-white" />
+                  ) : null}
+                </button>
+                <div className="min-w-0 flex-1">
+                  <span className="text-xs font-mono font-semibold text-teal-600 mr-2">{std.ref}</span>
+                  <span className="text-xs text-foreground">{std.title}</span>
+                  {std.chapter && <span className="text-xs text-muted-foreground/50 ml-1">— {std.chapter}</span>}
+                </div>
+              </div>
+            );
+          })}
+          {filteredStandards.length === 0 && (
+            <p className="px-6 py-4 text-xs text-muted-foreground/60">No standards match your search.</p>
+          )}
+          {filteredStandards.length > 100 && (
+            <p className="px-6 py-3 text-xs text-muted-foreground/50">Showing first 100 results — use search to filter.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

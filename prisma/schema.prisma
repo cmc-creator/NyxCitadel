@@ -31,6 +31,7 @@ model Facility {
   medicareId      String?
   medicaidId      String?
   jcAhcId         String?  // Joint Commission accreditation ID
+  jcConnectEnabled Boolean @default(false)
   licenseNumber   String?  // AZ ADHS license number
   licenseExpiry   DateTime?
   facilityType    FacilityType @default(ACUTE_PSYCH)
@@ -134,7 +135,8 @@ model Facility {
   regulatorySubmissions RegulatorySubmission[]
 
   // Policy Acknowledgments
-  policyAcknowledgments PolicyAcknowledgment[]
+  policyAcknowledgments  PolicyAcknowledgment[]
+  policyStandardMappings PolicyStandardMapping[]
 
   surveyFindings        SurveyFinding[]
   boardReports          BoardReport[]
@@ -543,8 +545,9 @@ model Policy {
   documentUrl     String?
   summary         String?       @db.Text
   revisionHistory Json?         // Array of {version, date, changedBy, summary}
-  acknowledgments PolicyAcknowledgment[]
-  createdAt       DateTime      @default(now())
+  acknowledgments  PolicyAcknowledgment[]
+  standardMappings PolicyStandardMapping[]
+  createdAt        DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   deletedAt       DateTime?
 
@@ -598,6 +601,28 @@ model PolicyAcknowledgment {
   @@index([policyId])
   @@index([token])
   @@map("policy_acknowledgments")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POLICY STANDARD CROSSWALK MAPPINGS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PolicyStandardMapping {
+  id            String   @id @default(cuid())
+  facilityId    String
+  facility      Facility @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  policyId      String
+  policy        Policy   @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  framework     String   // 'TJC' | 'CMS' | 'CARF'
+  standardRef   String   // e.g. 'EC.02.06.01' or '42 CFR 482.13(a)'
+  standardTitle String?
+  aiSuggested   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  @@unique([policyId, framework, standardRef])
+  @@index([policyId])
+  @@index([facilityId, framework])
+  @@map("policy_standard_mappings")
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
