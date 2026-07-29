@@ -57,7 +57,7 @@ export default function NewCapPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <a href="/trackers/caps" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-teal-600 mb-3">
+        <a href="/trackers/caps" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to CAPs
         </a>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -90,7 +90,7 @@ export default function NewCapPage() {
       <form onSubmit={handleSubmit} className="bg-card rounded-xl border border-border divide-y divide-border/30">
         <div className="px-6 py-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-muted-foreground mb-1">CAP Title *</label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">CAP Title *</label>
             <input
               name="title"
               required
@@ -101,7 +101,7 @@ export default function NewCapPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Source *</label>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Source *</label>
               <select
                 name="source"
                 required
@@ -114,7 +114,7 @@ export default function NewCapPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Priority *</label>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Priority *</label>
               <select
                 name="priority"
                 required
@@ -156,12 +156,12 @@ export default function NewCapPage() {
             }}
           />
           <div>
-            <label className="block text-xs font-medium text-muted-foreground mb-1">Target Date *</label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Target Date *</label>
             <input name="targetDate" type="date" required className="form-input w-full max-w-xs" />
           </div>
         </div>
         <div className="px-6 py-4 flex items-center justify-end gap-3">
-          <a href="/trackers/caps" className="text-sm text-muted-foreground hover:text-foreground/80">Cancel</a>
+          <a href="/trackers/caps" className="text-sm text-slate-500 hover:text-foreground/80">Cancel</a>
           <button
             type="submit"
             disabled={saving}

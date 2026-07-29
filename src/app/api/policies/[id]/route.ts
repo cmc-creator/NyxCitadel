@@ -88,7 +88,7 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
             facilityName: facility?.name ?? 'Your Facility',
             policyTitle: policy.title,
             policyNumber: policy.policyNumber ?? '',
-            newVersion: Number(newVersion),
+            newVersion,
             changedBy: session.user.name ?? session.user.email ?? 'Staff',
             changeNote: body.changeNote,
             effectiveDate: policy.effectiveDate
@@ -117,10 +117,10 @@ export async function DELETE(_req: NextRequest, { params }: Ctx) {
 
   // Verify ownership
   const existing = await prisma.policy.findFirst({
-    where: { id: params.id, facilityId: session.user.facilityId, deletedAt: null },
+    where: { id: params.id, facilityId: session.user.facilityId },
   });
   if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
-  await prisma.policy.update({ where: { id: params.id }, data: { deletedAt: new Date() } });
+  await prisma.policy.delete({ where: { id: params.id } });
   return NextResponse.json({ success: true });
 }

@@ -28,7 +28,7 @@ const PRIORITY_COLOR: Record<string, string> = {
   CRITICAL: 'bg-red-100 text-red-800',
   HIGH: 'bg-orange-100 text-orange-800',
   MEDIUM: 'bg-yellow-100 text-yellow-800',
-  LOW: 'bg-muted/30 text-muted-foreground',
+  LOW: 'bg-slate-100 text-slate-600',
 };
 
 export default async function CapDetailPage({ params }: { params: { id: string } }) {
@@ -62,14 +62,14 @@ export default async function CapDetailPage({ params }: { params: { id: string }
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/caps" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
+        <Link href="/trackers/caps" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to CAPs
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/caps/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/caps/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
-          <Link href={`/trackers/caps/${params.id}/audit-report`} target="_blank" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/caps/${params.id}/audit-report`} target="_blank" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <FileText className="w-3.5 h-3.5" /> Audit Report
           </Link>
           <DeleteButton apiPath={`/api/caps/${params.id}`} redirectPath="/trackers/caps" label="CAP" />
@@ -86,12 +86,12 @@ export default async function CapDetailPage({ params }: { params: { id: string }
               <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${PRIORITY_COLOR[cap.priority]}`}>
                 {cap.priority}
               </span>
-              <span className="text-xs bg-muted/30 text-muted-foreground rounded-full px-2.5 py-0.5">
+              <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2.5 py-0.5">
                 {cap.source.replace(/_/g, ' ')}
               </span>
             </div>
             <h1 className="text-xl font-bold text-foreground">{cap.title}</h1>
-            {cap.sourceRef && <p className="text-xs text-muted-foreground mt-0.5">Ref: {cap.sourceRef}</p>}
+            {cap.sourceRef && <p className="text-xs text-slate-500 mt-0.5">Ref: {cap.sourceRef}</p>}
           </div>
           <StatusUpdater apiPath={`/api/caps/${cap.id}`} currentStatus={cap.status} options={STATUS_OPTIONS} />
         </div>
@@ -199,7 +199,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
             <Section title="Assignee">
               <div className="text-sm">
                 <p className="font-medium text-foreground">{cap.assignee.name}</p>
-                {cap.assignee.title && <p className="text-xs text-muted-foreground">{cap.assignee.title}</p>}
+                {cap.assignee.title && <p className="text-xs text-slate-500">{cap.assignee.title}</p>}
                 <p className="text-xs text-muted-foreground/70 mt-0.5">{cap.assignee.email}</p>
               </div>
             </Section>
@@ -213,7 +213,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
                     <Link href={`/trackers/incidents/${i.id}`} className="text-xs text-purple-700 hover:underline font-medium">
                       {i.incidentNumber}
                     </Link>
-                    <p className="text-xs text-muted-foreground">{i.incidentType.replace(/_/g, ' ')} &middot; {formatDate(i.dateOccurred)}</p>
+                    <p className="text-xs text-slate-500">{i.incidentType.replace(/_/g, ' ')} &middot; {formatDate(i.dateOccurred)}</p>
                   </li>
                 ))}
               </ul>
@@ -264,7 +264,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <>
-      <dt className="text-xs text-muted-foreground shrink-0">{label}</dt>
+      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
       <dd className={`text-xs font-medium text-right mb-2 ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </>
   );

@@ -4,7 +4,7 @@ import { Suspense, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Loader2, AlertCircle, Shield, CheckCircle,
   Lock, Eye, EyeOff, ArrowLeft,
@@ -35,6 +35,7 @@ const leftFeatures = [
 ];
 
 function LoginForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') ?? '/dashboard';
 
@@ -88,7 +89,7 @@ function LoginForm() {
       }
       setLoading(false);
     } else {
-      window.location.href = callbackUrl;
+      router.push(callbackUrl);
     }
   }
 

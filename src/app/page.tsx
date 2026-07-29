@@ -102,33 +102,12 @@ const stats = [
   { value: 'Real-Time', label: 'Regulatory Alerts', sub: 'Before deadlines hit' },
 ];
 
-const testimonials = [
-  {
-    quote: 'We went from a 14-finding survey to zero deficiencies in 18 months. NyxCitadel gave us the visibility we never had before.',
-    author: 'Chief Compliance Officer',
-    org: '60-Bed Acute Psychiatric Hospital · Arizona',
-    stars: 5,
-  },
-  {
-    quote: 'Our board used to ask why compliance costs kept rising with no results. Now I hand them a one-page report and they understand everything.',
-    author: 'CEO',
-    org: 'Behavioral Health Network · 3 Facilities',
-    stars: 5,
-  },
-  {
-    quote: 'We had an ADHS unannounced survey 6 weeks after go-live. Our CAPs, policies, and incident records were all in one place. We were ready.',
-    author: 'Director of Quality',
-    org: 'Crisis Stabilization & Residential Program · Southwest',
-    stars: 5,
-  },
-];
-
 const pricingTiers = [
   {
     name: 'Starter',
     tagline: 'Everything you need to stay survey-ready.',
     price: '$399',
-    period: '/mo, billed annually',
+    period: '/mo, billed monthly',
     badge: null,
     color: 'border-white/10',
     buttonStyle: 'bg-white/8 hover:bg-white/15 border border-white/10 text-white',
@@ -151,7 +130,7 @@ const pricingTiers = [
     name: 'Professional',
     tagline: 'The full platform - built for quality teams.',
     price: '$799',
-    period: '/mo, billed annually',
+    period: '/mo, billed monthly',
     badge: 'Most Popular',
     color: 'border-teal-500/60',
     buttonStyle: 'text-white shadow-lg shadow-teal-900/40',
@@ -338,10 +317,10 @@ export default async function RootPage() {
                 to do before a surveyor ever walks through your door.
               </strong>
             </p>
-            <p className="text-base text-muted-foreground/70 leading-relaxed mb-8 max-w-xl">
-              Built from the ground up for long-term care, skilled nursing, and healthcare
-              facilities that refuse to be caught off guard.
-            </p>
+                        <p className="text-base text-muted-foreground/70 leading-relaxed mb-8 max-w-xl">
+                          Built from the ground up for hospitals, behavioral health, and acute care 
+                          facilities that refuse to be caught off guard.
+                        </p>
             <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4">
               {isLoggedIn ? (
                 <Link
@@ -460,42 +439,27 @@ export default async function RootPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════
-          SOCIAL PROOF
+            {/* ══════════════════════════════
+          EARLY ACCESS CTA
       ══════════════════════════════ */}
       <section className="relative z-10 max-w-7xl mx-auto px-6 py-16">
-        <p className="text-center text-xs font-semibold text-slate-600 uppercase tracking-widest mb-8 scroll-fade">Built for the full spectrum of behavioral health &amp; acute care</p>
-        <div className="flex flex-wrap justify-center gap-3 mb-14">
-          {[
-            'Acute Psychiatric Hospitals',
-            'Behavioral Health Outpatient',
-            'Crisis Stabilization Units',
-            'Residential Treatment',
-            'Skilled Nursing Facilities',
-            'LTACs',
-            'General Acute Care',
-            'Dual-Diagnosis Programs',
-          ].map(label => (
-            <span key={label} className="text-xs font-medium text-muted-foreground/70 border border-white/8 bg-white/3 rounded-full px-4 py-1.5">
-              {label}
-            </span>
-          ))}
-        </div>
-        <div className="grid md:grid-cols-3 gap-5">
-          {testimonials.map((t, i) => (
-            <div key={i} className="bg-slate-900/50 border border-white/8 rounded-2xl p-7 hover:border-teal-500/25 transition-all">
-              <div className="flex gap-0.5 mb-4">
-                {Array.from({ length: t.stars }).map((_, j) => (
-                  <Star key={j} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-              <p className="text-sm text-slate-300 leading-relaxed mb-5 italic">&ldquo;{t.quote}&rdquo;</p>
-              <div>
-                <p className="text-xs font-semibold text-white">{t.author}</p>
-                <p className="text-xs text-slate-500">{t.org}</p>
-              </div>
-            </div>
-          ))}
+        <div className="bg-gradient-to-r from-teal-900/30 to-blue-900/30 border border-teal-500/20 rounded-2xl p-8 sm:p-12 text-center overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-blue-500/10 pointer-events-none" />
+          <div className="relative z-10">
+            <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">
+              Early access — <span className="text-teal-400">founding customers wanted.</span>
+            </h2>
+                        <p className="text-slate-300 max-w-2xl mx-auto mb-8 text-lg">
+              We are currently in private beta, working closely with a select group of hospitals and behavioral health facilities. Join us early to shape the future of NyxCitadel and secure lifetime founding pricing.
+            </p>
+            <Link
+              href="/signup"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 shadow-lg shadow-teal-900/40"
+              style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)'}}
+            >
+              Request Early Access <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -889,8 +853,8 @@ export default async function RootPage() {
             ))}
           </div>
 
-          <p className="text-center text-sm text-slate-600 mt-8">
-            All plans billed annually. Monthly billing available at a 20% premium.
+                    <p className="text-center text-sm text-slate-600 mt-8">
+            Cancel anytime. No annual commitment required for our standard tiers.
             Need a custom quote?{' '}
             <a href="mailto:sales@nyxcitadel.com" className="text-teal-400 hover:text-teal-300 underline underline-offset-2">Contact our sales team.</a>
           </p>
@@ -1063,10 +1027,10 @@ export default async function RootPage() {
                   </span>
                 </div>
               </div>
-              <p className="text-xs text-slate-500 leading-relaxed mb-5">
-                Healthcare compliance &amp; risk management platform for behavioral health,
-                acute psychiatric, and skilled nursing facilities.
-              </p>
+                            <p className="text-xs text-slate-500 leading-relaxed mb-5">
+                              Healthcare compliance &amp; risk management platform for hospitals, behavioral health, 
+                              and acute care facilities.
+                            </p>
               <div className="flex items-center gap-2 text-[11px] text-slate-600">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
                 All systems operational

@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
     }
     try {
       const record = await prisma.trainingRecord.create({
-        data: { ...parsed.data, facilityId } as Parameters<typeof prisma.trainingRecord.create>[0]['data'],
+        data: { ...parsed.data, facilityId },
       });
       results.push({ index: i, ok: true, id: record.id });
     } catch (err) {

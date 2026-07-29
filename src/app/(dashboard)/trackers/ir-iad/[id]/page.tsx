@@ -16,12 +16,12 @@ const STATUS_OPTIONS = [
   { value: 'INVESTIGATING', label: 'Investigating', color: 'bg-yellow-100 text-yellow-700' },
   { value: 'PENDING_REVIEW', label: 'Pending Review', color: 'bg-orange-100 text-orange-700' },
   { value: 'REPORTED_TO_STATE', label: 'Reported to State', color: 'bg-purple-100 text-purple-700' },
-  { value: 'CLOSED', label: 'Closed', color: 'bg-muted/30 text-muted-foreground' },
+  { value: 'CLOSED', label: 'Closed', color: 'bg-slate-100 text-slate-500' },
   { value: 'REOPENED', label: 'Reopened', color: 'bg-red-100 text-red-700' },
 ];
 
 const SEVERITY_COLOR: Record<string, string> = {
-  NEAR_MISS: 'bg-muted/30 text-muted-foreground',
+  NEAR_MISS: 'bg-slate-100 text-slate-600',
   MINOR: 'bg-green-100 text-green-700',
   MODERATE: 'bg-yellow-100 text-yellow-700',
   SERIOUS: 'bg-orange-100 text-orange-700',
@@ -41,11 +41,11 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <Link href="/trackers/ir-iad" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition">
+        <Link href="/trackers/ir-iad" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-foreground transition">
           <ArrowLeft className="w-4 h-4" /> Back to IR / IAD Reports
         </Link>
         <div className="flex items-center gap-2">
-          <Link href={`/trackers/ir-iad/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted/30 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
+          <Link href={`/trackers/ir-iad/${params.id}/edit`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 text-foreground/80 rounded-lg font-medium transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </Link>
           <PrintButton />
@@ -63,7 +63,7 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
               </span>
             </div>
             <h1 className="text-xl font-bold text-foreground">{ir.incidentType.replace(/_/g, ' ')}</h1>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-slate-500 mt-1">
               Incident date: <strong>{formatDate(ir.incidentDate)}</strong>
               {ir.location && <> &middot; <strong>{ir.location}</strong></>}
             </p>
@@ -133,7 +133,7 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
             <Section title="Investigation Findings">
               <p className="text-sm text-foreground/80 whitespace-pre-wrap">{ir.investigationFindings}</p>
               {ir.rootCauseIdentified && (
-                <p className="mt-2 text-xs text-muted-foreground">Root cause identified: <strong className="text-foreground">{ir.rootCauseIdentified}</strong></p>
+                <p className="mt-2 text-xs text-slate-500">Root cause identified: <strong className="text-foreground">{ir.rootCauseIdentified}</strong></p>
               )}
             </Section>
           )}
@@ -214,7 +214,7 @@ function ReportingBadge({ label, reportable, reported, dueDate, confirmationNum 
 }) {
   if (!reportable) {
     return (
-      <div className="rounded-xl border border-border/30 bg-muted/20 p-3 text-center">
+      <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 text-center">
         <p className="text-xs font-semibold text-muted-foreground/70">{label}</p>
         <p className="text-xs text-muted-foreground/70 mt-0.5">Not Reportable</p>
       </div>
@@ -226,7 +226,7 @@ function ReportingBadge({ label, reportable, reported, dueDate, confirmationNum 
       <p className={`text-xs mt-0.5 ${reported ? 'text-green-600' : 'text-red-600 font-bold'}`}>
         {reported ? (confirmationNum ? `Reported (${confirmationNum})` : 'Reported') : '⚠ Not Yet Reported'}
       </p>
-      {dueDate && !reported && <p className="text-xs text-muted-foreground mt-0.5">Due {formatDate(dueDate)}</p>}
+      {dueDate && !reported && <p className="text-xs text-slate-500 mt-0.5">Due {formatDate(dueDate)}</p>}
     </div>
   );
 }
@@ -243,7 +243,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div className="flex justify-between gap-2">
-      <dt className="text-xs text-muted-foreground shrink-0">{label}</dt>
+      <dt className="text-xs text-slate-500 shrink-0">{label}</dt>
       <dd className={`text-xs font-medium text-right ${highlight ? 'text-red-600 font-bold' : 'text-foreground'}`}>{value}</dd>
     </div>
   );
