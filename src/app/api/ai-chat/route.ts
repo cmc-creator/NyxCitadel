@@ -421,13 +421,22 @@ export async function POST(req: NextRequest) {
 
   const sentrySystemPrompt = `${SYSTEM_PROMPT}
 
-Current facility context snapshot:
-${contextString}${pageContextLine}
+  Current facility context snapshot:
+  ${contextString}${pageContextLine}
 
-If the user asks to create a draft CAP, incident report, calendar event, root cause analysis, patient grievance, or plan of correction, include ONE XML-like action tag at the end of your answer:
-<sentry_action>{"type":"CREATE_CAP_DRAFT|CREATE_INCIDENT_DRAFT|CREATE_CALENDAR_DRAFT|CREATE_RCA_DRAFT|CREATE_GRIEVANCE_DRAFT|CREATE_POC_DRAFT","payload":{...}}</sentry_action>
+  ONBOARDING COACH INSTRUCTIONS:
+  If the facility context snapshot shows all or mostly zeros (e.g., 0 open CAPs, 0 recent incidents, 0 calendar events), recognize that this is a new user in a fresh workspace. Instead of just saying "you have no overdue items," proactively welcome them and act as an onboarding guide. 
+  Suggest they start by:
+  1. Going to "Settings > Facility" to configure their NPI and facility profile.
+  2. Going to "People > Training" to bulk import their staff roster via CSV.
+  3. Going to "Compliance > Policies" to bulk upload their existing policies.
+  Offer to answer any questions about regulatory standards or how to use specific modules.
 
-Only include that tag when explicitly useful. Keep payload minimal and valid.`;
+  DRAFT ACTION INSTRUCTIONS:
+  If the user asks to create a draft CAP, incident report, calendar event, root cause analysis, patient grievance, or plan of correction, include ONE XML-like action tag at the end of your answer:
+  <sentry_action>{"type":"CREATE_CAP_DRAFT|CREATE_INCIDENT_DRAFT|CREATE_CALENDAR_DRAFT|CREATE_RCA_DRAFT|CREATE_GRIEVANCE_DRAFT|CREATE_POC_DRAFT","payload":{...}}</sentry_action>
+
+  Only include that tag when explicitly useful. Keep payload minimal and valid.`;
 
   // Build message array from prior history (capped at last 20) + new user message.
   // Filter out any system messages — Anthropic takes system as a top-level param.
