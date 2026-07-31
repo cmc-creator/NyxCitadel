@@ -20,9 +20,9 @@ const sections = [
     title: '3. Safeguards',
     body: 'Business Associate will implement and maintain appropriate administrative, technical, and physical safeguards to protect PHI, including encryption in transit and at rest, access controls, logging, and workforce security training reasonably aligned to the risk profile.',
   },
-  {
+    {
     title: '4. Breach and Security Incident Notification',
-    body: 'Business Associate will notify Covered Entity without unreasonable delay, and no later than [BREACH_NOTICE_WINDOW_DAYS] calendar days after discovery of a Breach of Unsecured PHI. Notice will include known facts, impact summary, mitigation steps, and remediation plan.',
+    body: 'Business Associate will notify Covered Entity without unreasonable delay, and no later than five (5) calendar days after discovery of a Breach of Unsecured PHI, or any Security Incident that results in the unauthorized use or disclosure of PHI. Notice will include known facts, impact summary, mitigation steps, and remediation plan.',
   },
   {
     title: '5. Subcontractors',
@@ -36,9 +36,9 @@ const sections = [
     title: '7. Return or Destruction of PHI',
     body: 'Upon termination, Business Associate will return or destroy PHI where feasible. If return or destruction is infeasible, Business Associate will continue protections and limit further uses/disclosures to those making return or destruction infeasible.',
   },
-  {
+    {
     title: '8. Term and Termination',
-    body: 'This Agreement is effective as of the Effective Date and remains in force while Business Associate performs services involving PHI. Material breach not cured within [CURE_PERIOD_DAYS] days after written notice permits termination by non-breaching party.',
+    body: 'This Agreement is effective as of the Effective Date and remains in force while Business Associate performs services involving PHI. Material breach not cured within thirty (30) days after written notice permits termination by non-breaching party.',
   },
   {
     title: '9. Governing Law and Venue',
@@ -81,10 +81,10 @@ export default function BaaPage() {
           </p>
         </div>
 
-        <section className="mt-6 rounded-xl border border-white/10 bg-slate-900/70 p-5">
+                <section className="mt-6 rounded-xl border border-white/10 bg-slate-900/70 p-5">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-300">Drafting Placeholders</h2>
           <p className="mt-2 text-sm text-slate-300 leading-relaxed">
-            [COVERED_ENTITY_NAME], [EFFECTIVE_DATE], [BREACH_NOTICE_WINDOW_DAYS], [CURE_PERIOD_DAYS], [GOVERNING_STATE], [VENUE_COUNTY_STATE]
+            [COVERED_ENTITY_NAME], [EFFECTIVE_DATE], [GOVERNING_STATE], [VENUE_COUNTY_STATE]
           </p>
         </section>
 

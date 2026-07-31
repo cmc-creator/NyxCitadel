@@ -1,7 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node -e \":*)"
+      "Bash(node -e \":*)",
+      "Read",
+      "Edit(src/**)",
+      "Bash(npm run:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Bash(git push:*)",
+      "Bash(rm:*)"
     ]
   }
 }
