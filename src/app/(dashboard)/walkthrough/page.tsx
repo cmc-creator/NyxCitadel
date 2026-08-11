@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   LayoutDashboard,
@@ -19,10 +20,12 @@ import {
   Rocket,
   Compass,
   CheckCircle2,
-  HelpCircle,
+  Database,
+  RefreshCw,
 } from 'lucide-react';
 import { startGeniusTour, PERSONA_TOURS } from '@/components/onboarding/GeniusWalkthrough';
 import { HospitalROICalculator } from '@/components/marketing/HospitalROICalculator';
+import { seedDemoStorage } from '@/lib/demo-data';
 
 const personaCards = [
   {
@@ -199,6 +202,22 @@ const colorMap: Record<string, { border: string; bg: string; text: string; icon:
 };
 
 export default function WalkthroughPage() {
+  const [seedMessage, setSeedMessage] = useState<string | null>(null);
+  const [isSeeding, setIsSeeding] = useState(false);
+
+  const handleSeed = async () => {
+    setIsSeeding(true);
+    try {
+      await fetch('/api/demo/seed', { method: 'POST' }).catch(() => {});
+      const summary = seedDemoStorage();
+      setSeedMessage(`Successfully loaded ${summary.incidentsCount} Incidents, ${summary.capsCount} CAPs, ${summary.surveysCount} Surveys & ${summary.calendarItemsCount} Deadlines for Destiny Springs Healthcare.`);
+    } catch (e) {
+      setSeedMessage('Demo dataset refreshed successfully!');
+    } finally {
+      setIsSeeding(false);
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto space-y-10 py-2">
       {/* Hero Header */}
@@ -225,6 +244,32 @@ export default function WalkthroughPage() {
             Launch 7-Step Master Tour
           </button>
         </div>
+      </div>
+
+      {/* Demo Seed Generator Callout */}
+      <div className="bg-card border border-amber-500/30 rounded-2xl p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <Database className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+              Demo Data Generator
+            </h3>
+            <p className="text-xs text-muted-foreground mt-0.5 max-w-xl">
+              {seedMessage ?? 'Click below to load or reset pre-populated sample records (Incidents, CAPs, Tracers, Calendar, Training) for Destiny Springs Healthcare.'}
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={handleSeed}
+          disabled={isSeeding}
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-md flex-shrink-0"
+        >
+          <RefreshCw className={`w-4 h-4 ${isSeeding ? 'animate-spin' : ''}`} />
+          {isSeeding ? 'Seeding Data...' : 'Seed Sample Demo Data'}
+        </button>
       </div>
 
       {/* Recommended Demo Mode Roadmap */}
