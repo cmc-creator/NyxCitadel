@@ -5,6 +5,7 @@ import { Sidebar } from './sidebar';
 import { TopBar } from './topbar';
 import { GeniusWalkthrough } from '@/components/onboarding/GeniusWalkthrough';
 import { FloatingAiCoPilot } from '@/components/ai/FloatingAiCoPilot';
+import { DemoModeBanner } from '@/components/shared/DemoModeBanner';
 
 interface LayoutShellProps {
   user: {
@@ -28,6 +29,7 @@ export function LayoutShell({ user, children }: LayoutShellProps) {
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isCollapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} />
       <div className={`flex-1 transition-all duration-300 flex flex-col min-w-0 ${sidebarCollapsed ? 'md:ml-20' : 'md:ml-64'}`}>
         <TopBar user={user} onMenuClick={() => setSidebarOpen(true)} />
+        <DemoModeBanner />
         <main className="flex-1 p-4 md:p-6 overflow-auto">
           {children}
         </main>

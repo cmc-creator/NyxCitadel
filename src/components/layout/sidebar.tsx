@@ -143,6 +143,7 @@ const navSections: NavSection[] = [
         href: '/surveys',
         label: 'Surveys & Inspections',
         icon: FileSearch,
+        tourId: 'surveys',
         children: [
           { href: '/surveys',      label: 'All Surveys',  icon: FileSearch },
           { href: '/surveys/mock', label: 'Mock Surveys', icon: ClipboardCheck, badge: 'JC', badgeColor: 'bg-teal-100 text-teal-700' },
@@ -178,6 +179,7 @@ const navSections: NavSection[] = [
         icon: Biohazard,
         badge: 'IC',
         badgeColor: 'bg-teal-100 text-teal-700',
+        tourId: 'infection-control',
         children: [
           { href: '/infection-control/icra',        label: 'ICRA Assessments', icon: TestTube2 },
           { href: '/infection-control/hai',          label: 'HAI Surveillance', icon: Biohazard },
@@ -234,6 +236,7 @@ const navSections: NavSection[] = [
         icon: HardHat,
         badge: 'EOC',
         badgeColor: 'bg-amber-100 text-amber-700',
+        tourId: 'eoc',
         children: [
           { href: '/eoc/ligature',     label: 'Ligature Risk',  icon: CircleAlert,  badge: 'TJC', badgeColor: 'bg-amber-100 text-amber-700' },
           { href: '/eoc/rounds',       label: 'Safety Rounds',  icon: ClipboardList },

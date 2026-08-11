@@ -15,6 +15,7 @@ import {
   Activity,
   ArrowRight,
   Compass,
+  Rocket,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -23,7 +24,7 @@ export interface TourStep {
   target: string;
   route: string;
   title: string;
-  persona: 'executive' | 'surveyor' | 'risk_manager' | 'staff';
+  persona: 'master' | 'executive' | 'surveyor' | 'risk_manager' | 'staff';
   badge?: string;
   description: string;
   actionHint?: string;
@@ -31,6 +32,85 @@ export interface TourStep {
 }
 
 export const PERSONA_TOURS = {
+  master: {
+    id: 'master',
+    title: 'Platform Masterclass & Guided Tour',
+    subtitle: '7-step complete tour: Dashboard -> Calendar -> Incidents -> Surveys -> Training -> Board Deck -> Sentry AI.',
+    icon: Rocket,
+    color: 'from-teal-500 to-emerald-500',
+    steps: [
+      {
+        id: 'master-1',
+        target: '[data-tour="dashboard"]',
+        route: '/dashboard',
+        title: '1. Executive Command Center',
+        persona: 'master',
+        badge: 'Start Here',
+        description: 'Welcome to NyxCitadel! The Dashboard gives you immediate visibility into overall facility compliance health. Pay close attention to the live Risk Score, overdue regulatory deadlines, open CAPs, and active alert feeds.',
+        actionHint: 'Check the top stats cards and the Attention Feed on the right for urgent priorities.',
+      },
+      {
+        id: 'master-2',
+        target: '[data-tour="calendar"]',
+        route: '/calendar',
+        title: '2. Unified Regulatory Compliance Calendar',
+        persona: 'master',
+        badge: 'ADHS / CMS / TJC',
+        description: 'Never miss a regulatory deadline again. All recurring mandates for Joint Commission, CMS Conditions of Participation, Arizona ADHS R9-10, NFPA 101, and OSHA are pre-mapped into this calendar.',
+        actionHint: 'Filter deadlines by regulator (e.g. Joint Commission vs. ADHS) to see active compliance windows.',
+      },
+      {
+        id: 'master-3',
+        target: '[data-tour="incidents"]',
+        route: '/trackers/incidents',
+        title: '3. Risk & Incident Management Engine',
+        persona: 'master',
+        badge: 'Auto-Sentinel',
+        description: 'Log patient safety events, medication errors, and behavioral incidents. System auto-flags ADHS reportable sentinel events and launches mandatory Root Cause Analyses (RCAs) and Corrective Action Plans (CAPs).',
+        actionHint: 'Click "Log Incident" or view an open incident to test the automated severity classifier.',
+      },
+      {
+        id: 'master-4',
+        target: '[data-tour="surveys"]',
+        route: '/surveys',
+        title: '4. Survey & Inspection Command (Tracer Mode)',
+        persona: 'master',
+        badge: 'Zero-Finding Prep',
+        description: 'Maintain continuous audit readiness. Track unannounced surveyor visits, conduct internal Mock Surveys with tracer worksheets, and organize evidence documents by TJC standard.',
+        actionHint: 'Open "Mock Surveys" to test live surveyor tracer simulations.',
+      },
+      {
+        id: 'master-5',
+        target: '[data-tour="training"]',
+        route: '/trackers/training',
+        title: '5. Workforce Competency & Compliance Gatekeeper',
+        persona: 'master',
+        badge: 'Automated Lockout',
+        description: 'Track mandatory staff training, CPR/CPI certs, and medical licenses. The automated Compliance Gatekeeper flags non-compliant personnel before shift scheduling.',
+        actionHint: 'Check the Compliance Gatekeeper tab to see staff with expiring certs.',
+      },
+      {
+        id: 'master-6',
+        target: '[data-tour="board-report"]',
+        route: '/board-report',
+        title: '6. Automated Executive Board Report Deck',
+        persona: 'master',
+        badge: '1-Click Export',
+        description: 'Save 20+ hours of manual board deck preparation. NyxCitadel aggregates real-time metrics into a clean, executive-ready PDF report for hospital leadership and board meetings.',
+        actionHint: 'Click "Export Report" to generate a live PDF or share the executive portal link.',
+      },
+      {
+        id: 'master-7',
+        target: '[data-tour="sentry"]',
+        route: '/assistant',
+        title: '7. Sentry AI Compliance Co-Pilot',
+        persona: 'master',
+        badge: 'AI Co-Pilot',
+        description: 'Your 24/7 regulatory intelligence co-pilot. Ask Sentry AI questions like "Summarize our top 3 Joint Commission vulnerabilities" or "Draft a Plan of Correction for CMS 482.13(e)".',
+        actionHint: 'Type any question or click a suggested prompt to see Sentry draft policies and CAPs in seconds.',
+      },
+    ],
+  },
   executive: {
     id: 'executive',
     title: '60-Second Executive Pitch',
@@ -97,6 +177,16 @@ export const PERSONA_TOURS = {
         description: 'Log mock surveys, track surveyor citations from past visits, and maintain complete audit trails with attached evidence documents ready for immediate presentation.',
         actionHint: 'Open Mock Survey Tracer Mode to simulate an actual unannounced survey.',
       },
+      {
+        id: 'surv-3',
+        target: '[data-tour="sentry"]',
+        route: '/assistant',
+        title: 'Instant Regulatory Standards Lookup',
+        persona: 'surveyor',
+        badge: 'AI Reference',
+        description: 'Use Sentry AI to cross-reference TJC standards against ADHS R9-10 and CMS CoPs instantly during survey tracer rounds.',
+        actionHint: 'Ask Sentry to look up any specific tag code like CMS 482.13(e).',
+      },
     ],
   },
   risk_manager: {
@@ -118,9 +208,19 @@ export const PERSONA_TOURS = {
       },
       {
         id: 'risk-2',
-        target: '[data-tour="caps"]',
-        route: '/trackers/caps',
-        title: 'Corrective Action Plan (CAP) Engine',
+        target: '[data-tour="eoc"]',
+        route: '/eoc',
+        title: 'Environment of Care & Ligature Risk',
+        persona: 'risk_manager',
+        badge: 'Facility Safety',
+        description: 'Track ligature risk assessments, safety rounds, and equipment preventative maintenance to meet TJC EC standards.',
+        actionHint: 'Inspect open ligature risk items and mitigation timelines.',
+      },
+      {
+        id: 'risk-3',
+        target: '[data-tour="board-report"]',
+        route: '/board-report',
+        title: 'Root Cause Analysis & CAP Tracking',
         persona: 'risk_manager',
         badge: 'Accountability',
         description: 'Assign corrective action items to department owners with mandatory due dates, escalation paths, and verification sign-offs before closure.',
@@ -145,11 +245,21 @@ export const PERSONA_TOURS = {
         description: 'Track annual mandatory training, CPR/CPI certs, and license renewals. The compliance gatekeeper automatically flags non-compliant personnel before shift start.',
         actionHint: 'View department completion rates across clinical and administrative staff.',
       },
+      {
+        id: 'staff-2',
+        target: '[data-tour="infection-control"]',
+        route: '/infection-control',
+        title: 'Infection Prevention & Surveillance',
+        persona: 'staff',
+        badge: 'CMS / CDC',
+        description: 'Monitor ICRA risk assessments, hand hygiene observations, and outbreak tracking across patient units.',
+        actionHint: 'Check recent hand hygiene compliance percentages.',
+      },
     ],
   },
 };
 
-export function startGeniusTour(persona: keyof typeof PERSONA_TOURS = 'executive') {
+export function startGeniusTour(persona: keyof typeof PERSONA_TOURS = 'master') {
   if (typeof window !== 'undefined') {
     window.dispatchEvent(
       new CustomEvent('nyx:start-genius-tour', { detail: { persona } })
@@ -170,7 +280,7 @@ export function GeniusWalkthrough() {
   useEffect(() => {
     const handleStart = (e: Event) => {
       const customEvent = e as CustomEvent<{ persona?: keyof typeof PERSONA_TOURS }>;
-      const personaKey = customEvent.detail?.persona || 'executive';
+      const personaKey = customEvent.detail?.persona || 'master';
       setActivePersona(personaKey);
       setStepIndex(0);
       setIsOpen(true);

@@ -16,11 +16,24 @@ import {
   ShieldCheck,
   Building2,
   TrendingUp,
+  Rocket,
+  Compass,
+  CheckCircle2,
+  HelpCircle,
 } from 'lucide-react';
 import { startGeniusTour, PERSONA_TOURS } from '@/components/onboarding/GeniusWalkthrough';
 import { HospitalROICalculator } from '@/components/marketing/HospitalROICalculator';
 
 const personaCards = [
+  {
+    key: 'master' as const,
+    title: 'Complete Platform Masterclass',
+    icon: Rocket,
+    badge: '7-Step Tour',
+    color: 'from-teal-500/20 to-emerald-500/10 border-teal-500/40 text-teal-300',
+    btnBg: 'bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500',
+    description: 'The definitive end-to-end guided tour: Dashboard -> Calendar -> Incidents -> Surveys -> Training -> Board Deck -> Sentry AI.',
+  },
   {
     key: 'executive' as const,
     title: 'Executive Pitch & Board Report',
@@ -56,6 +69,37 @@ const personaCards = [
     color: 'from-blue-500/20 to-teal-500/10 border-blue-500/30 text-blue-300',
     btnBg: 'bg-blue-600 hover:bg-blue-500',
     description: 'Mandatory training matrix, automated access gatekeeper, EOC rounding, and emergency preparedness.',
+  },
+];
+
+const startSteps = [
+  {
+    step: '01',
+    title: 'Check Daily Priorities on Dashboard',
+    route: '/dashboard',
+    routeLabel: 'Open Dashboard',
+    description: 'View the live facility Health Index (94.2%), open Corrective Action Plans (CAPs), and urgent alerts in your Attention Feed.',
+  },
+  {
+    step: '02',
+    title: 'Explore Regulatory Deadlines',
+    route: '/calendar',
+    routeLabel: 'View Calendar',
+    description: 'Check pre-mapped compliance windows for Joint Commission, CMS Conditions of Participation, and Arizona ADHS R9-10.',
+  },
+  {
+    step: '03',
+    title: 'Log an Incident & Trigger RCA',
+    route: '/trackers/incidents',
+    routeLabel: 'Test Incident Log',
+    description: 'Log a test incident or review sample data to see automated severity classification and ADHS sentinel event flagging in action.',
+  },
+  {
+    step: '04',
+    title: 'Run a Mock Survey & Export Board Deck',
+    route: '/surveys',
+    routeLabel: 'Open Survey Command',
+    description: 'Simulate unannounced surveyor tracer rounds, then jump to Board Reports to auto-generate a 1-click executive PDF deck.',
   },
 ];
 
@@ -157,29 +201,76 @@ const colorMap: Record<string, { border: string; bg: string; text: string; icon:
 export default function WalkthroughPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-10 py-2">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30">
-              Genius Interactive Tours
-            </span>
+      {/* Hero Header */}
+      <div className="bg-gradient-to-r from-teal-950/80 via-slate-900 to-cyan-950/80 border border-teal-500/30 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30">
+              <Sparkles className="w-3.5 h-3.5" />
+              Where To Start In NyxCitadel
+            </div>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
+              Master Interactive Walkthrough & Demo Guide
+            </h1>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              New to NyxCitadel or exploring in Demo Mode? Follow our 4-step quick roadmap below or launch a guided interactive tour with live target highlighting and smart prompts.
+            </p>
           </div>
-          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">
-            Interactive Product Walkthrough
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
-            Choose your role to launch an interactive, multi-page guided tour of NyxCitadel with live target highlights and smart prompts.
-          </p>
+
+          <button
+            onClick={() => startGeniusTour('master')}
+            className="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white text-sm font-extrabold transition-all shadow-xl shadow-teal-900/40 border border-teal-400/30 flex-shrink-0"
+          >
+            <Rocket className="w-5 h-5 animate-bounce" />
+            Launch 7-Step Master Tour
+          </button>
+        </div>
+      </div>
+
+      {/* Recommended Demo Mode Roadmap */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <Compass className="w-5 h-5 text-teal-400" />
+              Where To Start First (Quick Demo Roadmap)
+            </h2>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              The recommended 4-step flow for any hospital risk manager, executive, or surveyor exploring the platform.
+            </p>
+          </div>
         </div>
 
-        <button
-          onClick={() => startGeniusTour('executive')}
-          className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white text-sm font-bold transition-all shadow-xl shadow-teal-900/30 flex-shrink-0"
-        >
-          <PlayCircle className="w-5 h-5" />
-          Launch 60-Sec Executive Pitch
-        </button>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {startSteps.map((item) => (
+            <div
+              key={item.step}
+              className="bg-card border border-border rounded-2xl p-5 flex flex-col justify-between gap-4 shadow-sm hover:border-teal-500/40 transition-all group"
+            >
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-extrabold text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded border border-teal-500/20">
+                    STEP {item.step}
+                  </span>
+                  <CheckCircle2 className="w-4 h-4 text-muted-foreground/40 group-hover:text-teal-400 transition-colors" />
+                </div>
+                <h3 className="text-sm font-bold text-foreground group-hover:text-teal-300 transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+
+              <Link
+                href={item.route}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-400 hover:text-teal-300 transition-colors mt-2"
+              >
+                {item.routeLabel} <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Role-Based Genius Tour Launchers */}
@@ -187,7 +278,7 @@ export default function WalkthroughPage() {
         <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-teal-400" /> Choose Persona Guided Tour
         </h2>
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {personaCards.map((card) => {
             const Icon = card.icon;
             return (
@@ -279,4 +370,3 @@ export default function WalkthroughPage() {
     </div>
   );
 }
-
