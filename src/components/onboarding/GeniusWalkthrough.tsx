@@ -16,8 +16,18 @@ import {
   ArrowRight,
   Compass,
   Rocket,
+  FileText,
+  AlertTriangle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+export interface ExampleCard {
+  label: string;
+  title: string;
+  badge?: string;
+  metrics?: { key: string; val: string }[];
+  snippet?: string;
+}
 
 export interface TourStep {
   id: string;
@@ -28,7 +38,7 @@ export interface TourStep {
   badge?: string;
   description: string;
   actionHint?: string;
-  highlightText?: string;
+  exampleCard?: ExampleCard;
 }
 
 export const PERSONA_TOURS = {
@@ -48,6 +58,18 @@ export const PERSONA_TOURS = {
         badge: 'Start Here',
         description: 'Welcome to NyxCitadel! The Dashboard gives you immediate visibility into overall facility compliance health. Pay close attention to the live Risk Score, overdue regulatory deadlines, open CAPs, and active alert feeds.',
         actionHint: 'Check the top stats cards and the Attention Feed on the right for urgent priorities.',
+        exampleCard: {
+          label: 'LIVE DEMO EXAMPLE: Facility Health Snapshot',
+          title: 'Destiny Springs Healthcare (Acute Psychiatric, Peoria AZ)',
+          badge: 'Health Index: 94.2%',
+          metrics: [
+            { key: 'Compliance Index', val: '94.2% (Tier A)' },
+            { key: 'Active CAPs', val: '3 Open Items' },
+            { key: 'Sentinel Events', val: '0 Active' },
+            { key: 'TJC Inspection', val: 'Window Active' },
+          ],
+          snippet: '"Attention Feed: Towel bar non-conformity identified in Room 118 — CAP-2026-001 assigned to Facility Ops."',
+        },
       },
       {
         id: 'master-2',
@@ -58,6 +80,18 @@ export const PERSONA_TOURS = {
         badge: 'ADHS / CMS / TJC',
         description: 'Never miss a regulatory deadline again. All recurring mandates for Joint Commission, CMS Conditions of Participation, Arizona ADHS R9-10, NFPA 101, and OSHA are pre-mapped into this calendar.',
         actionHint: 'Filter deadlines by regulator (e.g. Joint Commission vs. ADHS) to see active compliance windows.',
+        exampleCard: {
+          label: 'LIVE DEMO EXAMPLE: Pre-Mapped Deadline Record',
+          title: 'Q1 Unannounced Fire Drill (Night Shift)',
+          badge: 'NFPA 101 & TJC EC.02.03.01',
+          metrics: [
+            { key: 'Regulator', val: 'NFPA & Joint Commission' },
+            { key: 'Compliance Window', val: 'March 15 - March 30' },
+            { key: 'Mandatory Artifact', val: 'Drill Log + Response Matrix' },
+            { key: 'Alert Lead Time', val: '14 Days Prior' },
+          ],
+          snippet: '"Auto-Alert: System notified Emergency Management Coordinator 14 days prior to window expiration."',
+        },
       },
       {
         id: 'master-3',
@@ -68,6 +102,18 @@ export const PERSONA_TOURS = {
         badge: 'Auto-Sentinel',
         description: 'Log patient safety events, medication errors, and behavioral incidents. System auto-flags ADHS reportable sentinel events and launches mandatory Root Cause Analyses (RCAs) and Corrective Action Plans (CAPs).',
         actionHint: 'Click "Log Incident" or view an open incident to test the automated severity classifier.',
+        exampleCard: {
+          label: 'LIVE DEMO EXAMPLE: Logged Incident Record',
+          title: 'INC-2026-003: Ligature Hardware Non-Conformity',
+          badge: 'Severity: HIGH (Auto-RCA)',
+          metrics: [
+            { key: 'Facility Location', val: 'Wing B - Room 118' },
+            { key: 'AZ ADHS Mandate', val: 'A.A.C. R9-10-211 Compliant' },
+            { key: 'CAP Tracking', val: 'CAP-2026-001 Assigned' },
+            { key: 'RCA Lead', val: 'EOC Safety Officer' },
+          ],
+          snippet: '"Severity Classifier: Flagged as High Severity Ligature Point. Room locked out until sloped fixture installation verified."',
+        },
       },
       {
         id: 'master-4',
@@ -78,6 +124,18 @@ export const PERSONA_TOURS = {
         badge: 'Zero-Finding Prep',
         description: 'Maintain continuous audit readiness. Track unannounced surveyor visits, conduct internal Mock Surveys with tracer worksheets, and organize evidence documents by TJC standard.',
         actionHint: 'Open "Mock Surveys" to test live surveyor tracer simulations.',
+        exampleCard: {
+          label: 'LIVE DEMO EXAMPLE: Mock Surveyor Tracer',
+          title: 'SURV-2026-001: TJC Environmental & Patient Rights Audit',
+          badge: 'Score: 96.4%',
+          metrics: [
+            { key: 'Standards Audited', val: 'RI.01.07.01 & EC.02.06.01' },
+            { key: 'Evidence Vault', val: '14 Audit PDF Documents' },
+            { key: 'Critical Deficiencies', val: '0 Findings' },
+            { key: 'Minor Notes', val: '2 Action Items' },
+          ],
+          snippet: '"Tracer Summary: Patient consent chart audit verified 100% compliance across 30 sampled inpatient files."',
+        },
       },
       {
         id: 'master-5',
@@ -88,6 +146,18 @@ export const PERSONA_TOURS = {
         badge: 'Automated Lockout',
         description: 'Track mandatory staff training, CPR/CPI certs, and medical licenses. The automated Compliance Gatekeeper flags non-compliant personnel before shift scheduling.',
         actionHint: 'Check the Compliance Gatekeeper tab to see staff with expiring certs.',
+        exampleCard: {
+          label: 'LIVE DEMO EXAMPLE: Gatekeeper Scheduling Lockout',
+          title: 'Shift Lockout Trigger — CPI Crisis De-Escalation Cert',
+          badge: 'Automated Lockout',
+          metrics: [
+            { key: 'Staff Tracked', val: '45 Clinical Staff' },
+            { key: 'Overall Completion', val: '94.2% Compliant' },
+            { key: 'Expiring <7 Days', val: '3 RN Certifications' },
+            { key: 'Gatekeeper Rule', val: 'Shift Block Active' },
+          ],
+          snippet: '"Compliance Rule: Automated warning sent to Nursing Supervisor. Shift scheduling blocked if unrenewed by Friday."',
+        },
       },
       {
         id: 'master-6',
@@ -98,6 +168,18 @@ export const PERSONA_TOURS = {
         badge: '1-Click Export',
         description: 'Save 20+ hours of manual board deck preparation. NyxCitadel aggregates real-time metrics into a clean, executive-ready PDF report for hospital leadership and board meetings.',
         actionHint: 'Click "Export Report" to generate a live PDF or share the executive portal link.',
+        exampleCard: {
+          label: 'LIVE DEMO EXAMPLE: Executive Board Report Deck',
+          title: 'Q1 2026 Executive Compliance & Quality Board Deck',
+          badge: '14-Slide PDF Ready',
+          metrics: [
+            { key: 'Data Sources', val: 'Incidents, CAPs, NHSN, HCAHPS' },
+            { key: 'Prepared For', val: 'Board of Directors' },
+            { key: 'Preparation Time', val: '1-Click Auto Export' },
+            { key: 'Time Saved', val: '~22 Hours' },
+          ],
+          snippet: '"Executive Summary: Zero sentinel events, 94.2% compliance index, 100% ADHS R9-10 reporting adherence."',
+        },
       },
       {
         id: 'master-7',
@@ -108,6 +190,12 @@ export const PERSONA_TOURS = {
         badge: 'AI Co-Pilot',
         description: 'Your 24/7 regulatory intelligence co-pilot. Ask Sentry AI questions like "Summarize our top 3 Joint Commission vulnerabilities" or "Draft a Plan of Correction for CMS 482.13(e)".',
         actionHint: 'Type any question or click a suggested prompt to see Sentry draft policies and CAPs in seconds.',
+        exampleCard: {
+          label: 'LIVE DEMO EXAMPLE: Sentry AI Regulatory Query',
+          title: 'User Prompt: "Draft a Plan of Correction for CMS 482.13(e)"',
+          badge: 'Sentry Response',
+          snippet: '"Plan of Correction: 1. Re-educate unit charge nurses on 15-minute log intervals. 2. Mandate dual-signoff on eMAR flowsheets. 3. Audit 100% of restraint charts weekly for 90 days."',
+        },
       },
     ],
   },
@@ -127,6 +215,15 @@ export const PERSONA_TOURS = {
         badge: 'Executive View',
         description: 'See facility compliance health instantly. Track open Corrective Action Plans (CAPs), overdue regulatory deadlines, and active risk signals in one central dashboard.',
         actionHint: 'Notice the live risk score breakdown and facility health index.',
+        exampleCard: {
+          label: 'EXAMPLE: Executive Dashboard Metrics',
+          title: 'Destiny Springs Healthcare — Live Index 94.2%',
+          badge: 'Executive View',
+          metrics: [
+            { key: 'Facility Score', val: '94.2% Tier A' },
+            { key: 'Open CAPs', val: '3 Assigned' },
+          ],
+        },
       },
       {
         id: 'exec-2',
@@ -137,6 +234,12 @@ export const PERSONA_TOURS = {
         badge: '1-Click Export',
         description: 'Never spend 20 hours preparing quarterly board decks manually. NyxCitadel aggregates real-time data across incidents, quality metrics, and training into a board-ready report.',
         actionHint: 'Export directly to PDF or share live executive link with leadership.',
+        exampleCard: {
+          label: 'EXAMPLE: Auto-Generated Deck',
+          title: 'Q1 Board Deck — 14-Slide PDF Compilation',
+          badge: 'Board Ready',
+          snippet: '"Auto-compiled from live incident logs, QAPI metrics, and training records."',
+        },
       },
       {
         id: 'exec-3',
@@ -147,6 +250,12 @@ export const PERSONA_TOURS = {
         badge: 'AI Powered',
         description: 'Ask Sentry AI high-level risk questions like "Summarize our top 3 Joint Commission vulnerabilities this quarter" and receive instant, cited regulatory insights.',
         actionHint: 'Type or click any suggested prompt to see Sentry in action.',
+        exampleCard: {
+          label: 'EXAMPLE: Sentry AI Query',
+          title: '"Summarize top Joint Commission vulnerabilities"',
+          badge: 'Sentry Insight',
+          snippet: '"1. Ligature risk points (EC.02.06.01) — 1 active CAP. 2. Restraint documentation timing — resolved in Q1."',
+        },
       },
     ],
   },
@@ -166,6 +275,15 @@ export const PERSONA_TOURS = {
         badge: 'ADHS / CMS / TJC',
         description: 'Every recurring deadline pre-mapped for Joint Commission, CMS CoPs, ADHS R9-10, NFPA 101, and OSHA. Color-coded by regulatory standard and urgency.',
         actionHint: 'Filter by Joint Commission or Arizona ADHS with one click.',
+        exampleCard: {
+          label: 'EXAMPLE: Pre-Mapped Calendar Event',
+          title: 'ADHS R9-10 Annual Recertification Window',
+          badge: 'State License',
+          metrics: [
+            { key: 'State Rule', val: 'A.A.C. R9-10-211' },
+            { key: 'Status', val: '100% Compliant' },
+          ],
+        },
       },
       {
         id: 'surv-2',
@@ -176,6 +294,12 @@ export const PERSONA_TOURS = {
         badge: 'Tracer Ready',
         description: 'Log mock surveys, track surveyor citations from past visits, and maintain complete audit trails with attached evidence documents ready for immediate presentation.',
         actionHint: 'Open Mock Survey Tracer Mode to simulate an actual unannounced survey.',
+        exampleCard: {
+          label: 'EXAMPLE: Tracer Worksheet',
+          title: 'TJC Mock Survey — Score 96.4%',
+          badge: 'Tracer Audit',
+          snippet: '"Evidence Vault: 14 supporting PDF documents verified for EC & RI standards."',
+        },
       },
       {
         id: 'surv-3',
@@ -186,6 +310,12 @@ export const PERSONA_TOURS = {
         badge: 'AI Reference',
         description: 'Use Sentry AI to cross-reference TJC standards against ADHS R9-10 and CMS CoPs instantly during survey tracer rounds.',
         actionHint: 'Ask Sentry to look up any specific tag code like CMS 482.13(e).',
+        exampleCard: {
+          label: 'EXAMPLE: Tag Code Lookup',
+          title: 'CMS Tag A-0144 (§482.13 e Restraint & Seclusion)',
+          badge: 'CoP Citation',
+          snippet: '"Mandates 1-hour face-to-face evaluation by licensed practitioner following restraint initiation."',
+        },
       },
     ],
   },
@@ -205,6 +335,12 @@ export const PERSONA_TOURS = {
         badge: 'AZ ADHS Sentinel',
         description: 'Log patient safety incidents, restraint/seclusion events, or medication errors. Auto-flags state-reportable sentinel events according to Arizona ADHS rules.',
         actionHint: 'Click "Log Incident" to test the automated severity classifier.',
+        exampleCard: {
+          label: 'EXAMPLE: Logged Incident',
+          title: 'INC-2026-002 Clozapine Timing Variance',
+          badge: 'High Severity',
+          snippet: '"Auto-classified: High severity medication variance requiring RCA submission within 14 days."',
+        },
       },
       {
         id: 'risk-2',
@@ -215,6 +351,12 @@ export const PERSONA_TOURS = {
         badge: 'Facility Safety',
         description: 'Track ligature risk assessments, safety rounds, and equipment preventative maintenance to meet TJC EC standards.',
         actionHint: 'Inspect open ligature risk items and mitigation timelines.',
+        exampleCard: {
+          label: 'EXAMPLE: Ligature Item',
+          title: 'Towel Bar Fixture — Room 118 Bathroom',
+          badge: 'TJC EC.02.06.01',
+          snippet: '"Status: Mitigation Plan assigned. Sloped non-ligature fixture installation in progress."',
+        },
       },
       {
         id: 'risk-3',
@@ -225,6 +367,12 @@ export const PERSONA_TOURS = {
         badge: 'Accountability',
         description: 'Assign corrective action items to department owners with mandatory due dates, escalation paths, and verification sign-offs before closure.',
         actionHint: 'Filter CAPs by open status to view items needing immediate sign-off.',
+        exampleCard: {
+          label: 'EXAMPLE: CAP Tracking Record',
+          title: 'CAP-2026-001 Anti-Ligature Hardware Replacement',
+          badge: '75% Complete',
+          snippet: '"Audit completed across 24 bathrooms. Installation verification scheduled for March 25."',
+        },
       },
     ],
   },
@@ -244,6 +392,12 @@ export const PERSONA_TOURS = {
         badge: 'Automated Lockout',
         description: 'Track annual mandatory training, CPR/CPI certs, and license renewals. The compliance gatekeeper automatically flags non-compliant personnel before shift start.',
         actionHint: 'View department completion rates across clinical and administrative staff.',
+        exampleCard: {
+          label: 'EXAMPLE: Compliance Gatekeeper',
+          title: 'Annual CPI De-Escalation Refresher',
+          badge: '94.2% Department Rate',
+          snippet: '"Gatekeeper Warning: 3 staff members flagged for renewal prior to next shift schedule lock."',
+        },
       },
       {
         id: 'staff-2',
@@ -254,6 +408,12 @@ export const PERSONA_TOURS = {
         badge: 'CMS / CDC',
         description: 'Monitor ICRA risk assessments, hand hygiene observations, and outbreak tracking across patient units.',
         actionHint: 'Check recent hand hygiene compliance percentages.',
+        exampleCard: {
+          label: 'EXAMPLE: Infection Control Audit',
+          title: 'Unit 3B Hand Hygiene Observation Audit',
+          badge: '98% Compliance',
+          snippet: '"Audit Summary: 50 observations recorded during medication administration rounds."',
+        },
       },
     ],
   },
@@ -375,7 +535,7 @@ export function GeniusWalkthrough() {
       )}
 
       {/* Floating Guided Card */}
-      <div className="relative z-50 max-w-xl mx-auto w-full bg-card/95 backdrop-blur-md border border-teal-500/30 rounded-2xl p-6 shadow-2xl pointer-events-auto animate-in fade-in slide-in-from-bottom-6 duration-300">
+      <div className="relative z-50 max-w-xl mx-auto w-full bg-card/95 backdrop-blur-md border border-teal-500/30 rounded-2xl p-6 shadow-2xl pointer-events-auto animate-in fade-in slide-in-from-bottom-6 duration-300 max-h-[85vh] overflow-y-auto">
         {/* Card Header */}
         <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-3 mb-4">
           <div className="flex items-center gap-2.5">
@@ -409,7 +569,7 @@ export function GeniusWalkthrough() {
         </div>
 
         {/* Content */}
-        <div className="space-y-3 mb-6">
+        <div className="space-y-4 mb-6">
           <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
             {currentStep.title}
           </h3>
@@ -417,8 +577,45 @@ export function GeniusWalkthrough() {
             {currentStep.description}
           </p>
 
+          {/* Concrete Example Card */}
+          {currentStep.exampleCard && (
+            <div className="rounded-xl border border-teal-500/30 bg-slate-950/90 p-4 space-y-2.5 shadow-inner">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-teal-400 flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-teal-400" />
+                  {currentStep.exampleCard.label}
+                </span>
+                {currentStep.exampleCard.badge && (
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    {currentStep.exampleCard.badge}
+                  </span>
+                )}
+              </div>
+              <p className="font-bold text-sm text-white">
+                {currentStep.exampleCard.title}
+              </p>
+
+              {currentStep.exampleCard.metrics && (
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  {currentStep.exampleCard.metrics.map((m) => (
+                    <div key={m.key} className="bg-slate-900/90 border border-slate-800 rounded-lg p-2">
+                      <span className="text-[10px] text-slate-400 block">{m.key}</span>
+                      <span className="font-semibold text-xs text-teal-300">{m.val}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {currentStep.exampleCard.snippet && (
+                <div className="bg-slate-900/90 border border-slate-800/80 rounded-lg p-2.5 text-xs text-slate-300 leading-relaxed italic">
+                  {currentStep.exampleCard.snippet}
+                </div>
+              )}
+            </div>
+          )}
+
           {currentStep.actionHint && (
-            <div className="flex items-start gap-2 bg-teal-950/30 border border-teal-700/30 rounded-xl p-3 text-xs text-teal-300">
+            <div className="flex items-start gap-2 bg-teal-950/40 border border-teal-700/40 rounded-xl p-3 text-xs text-teal-300">
               <Compass className="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" />
               <span>{currentStep.actionHint}</span>
             </div>
