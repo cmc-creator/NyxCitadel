@@ -59,17 +59,21 @@ export default function NewIncidentPage() {
 
   return (
     <div className="max-w-2xl space-y-6">
-      <div>
-        <a href="/trackers/incidents" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Incidents
-        </a>
-        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <AlertTriangle className="w-6 h-6 text-red-500" />
-          File Incident Report
-        </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
-          Complete within 24 hours of occurrence. AZ ADHS Sentinel events must be reported within 24 hours.
-        </p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <a href="/trackers/incidents" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-teal-600 mb-3">
+            <ArrowLeft className="w-3.5 h-3.5" /> Back to Incidents
+          </a>
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <AlertTriangle className="w-6 h-6 text-red-500" />
+            File Incident Report
+          </h1>
+          <p className="text-sm text-slate-500 mt-0.5">
+            Complete within 24 hours of occurrence. AZ ADHS Sentinel events must be reported within 24 hours.
+          </p>
+        </div>
+
+        <VoiceIncidentModal onApplyParsedData={handleApplyVoiceData} />
       </div>
 
       <SentryPageGuide

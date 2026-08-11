@@ -10,6 +10,7 @@ import { DeleteButton } from '@/components/ui/DeleteButton';
 import AttachmentPanel from '@/components/ui/AttachmentPanel';
 import AttachmentComposer from '@/components/ui/AttachmentComposer';
 import { CommentThread } from '@/components/shared/CommentThread';
+import { OneClickRcaCapWidget } from '@/components/trackers/OneClickRcaCapWidget';
 
 export const dynamic = 'force-dynamic';
 
@@ -89,6 +90,9 @@ export default async function IncidentDetailPage({ params }: { params: { id: str
           <StatusUpdater apiPath={`/api/incidents/${incident.id}`} currentStatus={incident.status} options={STATUS_OPTIONS} />
         </div>
       </div>
+
+      {/* 1-Click 5-Why RCA & SMART CAP Auto-Populator */}
+      <OneClickRcaCapWidget incidentId={incident.id} incidentDescription={incident.description} />
 
       {incident.reportableToState && !incident.reportedToState && (
         <AlertBanner color="red" title="State Report Required" body="This incident has been flagged as reportable to the state but has not been reported." />
