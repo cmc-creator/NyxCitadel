@@ -6,6 +6,10 @@ import {
   Flame, CheckSquare, BookOpen, ArrowRight, Sparkles 
 } from 'lucide-react';
 
+import { UnannouncedSurveyDossierModal } from '@/components/executive/UnannouncedSurveyDossierModal';
+import { ExecutiveBoardSummaryWidget } from '@/components/executive/ExecutiveBoardSummaryWidget';
+import { SentinelEventCountdownWidget } from '@/components/executive/SentinelEventCountdownWidget';
+
 export const metadata = { title: 'Dashboard | NyxCitadel' };
 
 const QUICK_START = [
@@ -66,12 +70,21 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8 pb-16">
       {/* Hero */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 border border-slate-700">
-        <div className="relative z-10">
-          <h1 className="text-4xl font-bold text-white mb-2">Welcome back, {session.user.name || 'there'}!</h1>
-          <p className="text-slate-300 text-lg">Start with the most important compliance tasks below, or use the sidebar to explore all modules.</p>
+      <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-2xl">
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Welcome back, {session.user.name || 'there'}!</h1>
+            <p className="text-slate-300 text-sm md:text-base">Executive Command Center for Destiny Springs Healthcare (Acute Psychiatric).</p>
+          </div>
+          <UnannouncedSurveyDossierModal />
         </div>
       </div>
+
+      {/* State Reporting 24h Countdown Widget */}
+      <SentinelEventCountdownWidget />
+
+      {/* C-Suite Executive Board Summary Widget */}
+      <ExecutiveBoardSummaryWidget />
 
       {/* Quick Start Grid */}
       <div>
