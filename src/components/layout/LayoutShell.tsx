@@ -6,6 +6,7 @@ import { TopBar } from './topbar';
 import { GeniusWalkthrough } from '@/components/onboarding/GeniusWalkthrough';
 import { FloatingAiCoPilot } from '@/components/ai/FloatingAiCoPilot';
 import { DemoModeBanner } from '@/components/shared/DemoModeBanner';
+import { DemoScenarioShortcuts } from '@/components/shared/DemoScenarioShortcuts';
 
 interface LayoutShellProps {
   user: {
@@ -26,6 +27,7 @@ export function LayoutShell({ user, children }: LayoutShellProps) {
     <>
       <GeniusWalkthrough />
       <FloatingAiCoPilot />
+      <DemoScenarioShortcuts />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isCollapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} />
       <div className={`flex-1 transition-all duration-300 flex flex-col min-w-0 ${sidebarCollapsed ? 'md:ml-20' : 'md:ml-64'}`}>
         <TopBar user={user} onMenuClick={() => setSidebarOpen(true)} />

@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import { LayoutShell } from '@/components/layout/LayoutShell';
-import { AssistantChat } from '@/components/ai/assistant-chat';
 import { WelcomeOnboarding } from '@/components/layout/WelcomeOnboarding';
 import { WhatsNew } from '@/components/layout/WhatsNew';
 import { SetupWizard } from '@/components/layout/SetupWizard';
@@ -49,7 +48,6 @@ export default async function DashboardLayout({
       <WhatsNew />
       <SetupWizard />
       <FeatureTour />
-      <AssistantChat />
       <IdleTimeout />
     </div>
   );

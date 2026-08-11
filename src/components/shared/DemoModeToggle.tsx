@@ -26,7 +26,7 @@ export function DemoModeToggle() {
   return (
     <button
       onClick={toggleDemo}
-      title={isDemo ? 'Disable Demo Data' : 'Enable Sales Demo Mode'}
+      title={isDemo ? 'Disable Demo Data' : 'Enable VIP Demo Mode'}
       className={cn(
         'hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all border shadow-sm',
         isDemo
@@ -49,7 +49,7 @@ export function DemoModeToggle() {
         />
       </span>
       <Sparkles className="w-3.5 h-3.5" />
-      {isDemo ? 'Demo Mode: Active' : 'Sales Demo Mode'}
+      {isDemo ? 'VIP Demo: Active' : 'VIP Demo Mode'}
     </button>
   );
 }

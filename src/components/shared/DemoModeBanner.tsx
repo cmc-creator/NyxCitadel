@@ -6,6 +6,8 @@ import { Sparkles, PlayCircle, BookOpen, X, ChevronRight, Rocket, Database, Chec
 import { startGeniusTour } from '@/components/onboarding/GeniusWalkthrough';
 import { seedDemoStorage, getDemoSeedStatus } from '@/lib/demo-data';
 
+import { DemoPersonaSwitcher } from '@/components/shared/DemoPersonaSwitcher';
+
 export function DemoModeBanner() {
   const [isDemo, setIsDemo] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -66,14 +68,16 @@ export function DemoModeBanner() {
         </span>
         <Sparkles className="w-4 h-4 text-amber-400 flex-shrink-0" />
         <div>
-          <span className="font-bold text-amber-300">Demo Mode Active:</span>{' '}
+          <span className="font-bold text-amber-300">VIP Demo Mode Active:</span>{' '}
           <span className="text-slate-300">
             {seededMessage ?? 'Pre-populated hospital dataset loaded for Destiny Springs Healthcare.'}
           </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-wrap">
+        <DemoPersonaSwitcher />
+
         <button
           onClick={handleSeedData}
           disabled={isSeeding}
