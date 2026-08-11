@@ -126,6 +126,11 @@ export function AiRcaCapGenerator({ initialText = '', onApply }: AiRcaCapGenerat
             </div>
           </div>
 
+          <div className="flex items-start gap-2 bg-amber-950/40 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-300">
+            <ShieldAlert className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+            <span>AI-generated RCAs & CAPs are preliminary drafts. Compliance and clinical officers must review and verify all action items before finalizing official records.</span>
+          </div>
+
           {onApply && (
             <button
               type="button"

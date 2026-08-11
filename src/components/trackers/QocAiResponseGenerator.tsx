@@ -157,9 +157,10 @@ export function QocAiResponseGenerator({
             </button>
           </div>
 
-          <p className="text-xs text-muted-foreground italic">
-            Review and edit the response as needed before submitting. All generated content should be reviewed for accuracy and tone.
-          </p>
+          <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs">
+            <AlertCircle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+            <p>Sentry AI provides draft wording. Always review, edit, and independently verify responses for accuracy against official hospital records before submitting.</p>
+          </div>
         </div>
       )}
     </div>

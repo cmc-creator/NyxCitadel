@@ -217,6 +217,12 @@ export function FloatingAiCoPilot() {
               <Send className="w-4 h-4" />
             </button>
           </div>
+
+          {/* AI Accuracy Disclaimer */}
+          <div className="px-3 py-1.5 bg-amber-950/40 border-t border-amber-500/20 text-[10px] text-amber-300/90 text-center leading-tight flex items-center justify-center gap-1.5">
+            <ShieldAlert className="w-3 h-3 text-amber-400 flex-shrink-0" />
+            <span>AI can make mistakes. Always review and verify regulatory suggestions against official publications.</span>
+          </div>
         </div>
       )}
 

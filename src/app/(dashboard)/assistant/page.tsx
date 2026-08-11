@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Loader2, Sparkles, RefreshCw, Copy, CheckCheck } from 'lucide-react';
+import { Send, Bot, User, Loader2, Sparkles, RefreshCw, Copy, CheckCheck, AlertTriangle } from 'lucide-react';
 import { ActionSuggestion, DraftActionType, buildActionPreview } from '@/lib/ai/sentry-actions';
 
 interface Message {
@@ -310,9 +310,10 @@ export default function AssistantPage() {
           <Send className="w-4 h-4" />
         </button>
       </div>
-      <p className="text-center text-[11px] text-muted-foreground/70 mt-2">
-        AI responses may be inaccurate. Always verify against official regulatory publications before acting.
-      </p>
+      <div className="flex items-center justify-center gap-1.5 text-[11px] text-amber-300 bg-amber-950/40 py-1.5 px-3 rounded-lg border border-amber-500/30 mt-2 max-w-lg mx-auto text-center">
+        <AlertTriangle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+        <span>Sentry AI can make mistakes. Always independently review and verify all regulatory guidance against official publications.</span>
+      </div>
     </div>
   );
 }
