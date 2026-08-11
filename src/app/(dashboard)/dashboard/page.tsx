@@ -10,6 +10,7 @@ import { UnannouncedSurveyDossierModal } from '@/components/executive/Unannounce
 import { ExecutiveBoardSummaryWidget } from '@/components/executive/ExecutiveBoardSummaryWidget';
 import { SentinelEventCountdownWidget } from '@/components/executive/SentinelEventCountdownWidget';
 import { ComplianceRoiWidget } from '@/components/executive/ComplianceRoiWidget';
+import PrintButton from '@/components/ui/PrintButton';
 
 export const metadata = { title: 'Dashboard | NyxCitadel' };
 
@@ -77,7 +78,11 @@ export default async function DashboardPage() {
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Welcome back, {session.user.name || 'there'}!</h1>
             <p className="text-slate-300 text-sm md:text-base">Executive Command Center for Destiny Springs Healthcare (Acute Psychiatric).</p>
           </div>
-          <UnannouncedSurveyDossierModal />
+
+          <div className="flex items-center gap-2">
+            <PrintButton />
+            <UnannouncedSurveyDossierModal />
+          </div>
         </div>
       </div>
 
