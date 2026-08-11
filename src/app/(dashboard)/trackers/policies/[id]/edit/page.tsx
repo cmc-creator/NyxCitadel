@@ -415,7 +415,7 @@ export default function EditPolicyPage() {
         {/* Version change note */}
         <div className="px-6 py-5 space-y-3">
           <h2 className="text-sm font-semibold text-foreground">
-            Change Note <span className="font-normal text-muted-foreground/70">(optional &mdash; leave blank to save without creating a new version)</span>
+            Change Note <span className="font-normal text-muted-foreground/70">(optional - leave blank to save without creating a new version)</span>
           </h2>
           <textarea name="changeNote" rows={2} placeholder="Briefly describe what changed (e.g. Updated restraint criteria per CMS update)" className="form-input w-full resize-none" />
           <p className="text-xs text-muted-foreground/70">If provided, the policy version will be incremented and this note will appear in the Revision History on the detail page.</p>
@@ -482,7 +482,7 @@ export default function EditPolicyPage() {
             <div className="mt-4 bg-amber-950/10 border border-amber-200 rounded-lg px-4 py-3 space-y-2">
               <p className="text-xs font-medium text-amber-600 flex items-center gap-1">
                 <Sparkles className="w-3.5 h-3.5" />
-                AI suggested {suggestions.length} standard{suggestions.length !== 1 ? 's' : ''} — click to confirm
+                AI suggested {suggestions.length} standard{suggestions.length !== 1 ? 's' : ''} - click to confirm
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {suggestions.map(s => (
@@ -556,7 +556,7 @@ export default function EditPolicyPage() {
                 <div className="min-w-0 flex-1">
                   <span className="text-xs font-mono font-semibold text-teal-600 mr-2">{std.ref}</span>
                   <span className="text-xs text-foreground">{std.title}</span>
-                  {std.chapter && <span className="text-xs text-muted-foreground/50 ml-1">— {std.chapter}</span>}
+                  {std.chapter && <span className="text-xs text-muted-foreground/50 ml-1">- {std.chapter}</span>}
                 </div>
               </div>
             );
@@ -565,7 +565,7 @@ export default function EditPolicyPage() {
             <p className="px-6 py-4 text-xs text-muted-foreground/60">No standards match your search.</p>
           )}
           {filteredStandards.length > 100 && (
-            <p className="px-6 py-3 text-xs text-muted-foreground/50">Showing first 100 results — use search to filter.</p>
+            <p className="px-6 py-3 text-xs text-muted-foreground/50">Showing first 100 results - use search to filter.</p>
           )}
         </div>
       </div>

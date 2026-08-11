@@ -8,14 +8,14 @@ export const metadata = { title: 'Regulatory Update Alerts \u2014 Settings' };
 const SOURCES = [
   {
     name: 'Federal Register (CMS)',
-    description: 'Centers for Medicare & Medicaid Services — Conditions of Participation, final rules, proposed rules, and guidance documents.',
+    description: 'Centers for Medicare & Medicaid Services - Conditions of Participation, final rules, proposed rules, and guidance documents.',
     icon: FileText,
     tag: 'Federal',
     frequency: 'Daily (06:00 UTC)',
   },
   {
     name: 'Federal Register (OSHA)',
-    description: 'Occupational Safety and Health Administration — workplace safety standards and enforcement updates.',
+    description: 'Occupational Safety and Health Administration - workplace safety standards and enforcement updates.',
     icon: Shield,
     tag: 'Federal',
     frequency: 'Daily (06:00 UTC)',
@@ -36,7 +36,7 @@ const SOURCES = [
   },
   {
     name: 'AZ ADHS RSS',
-    description: 'Arizona Department of Health Services — behavioral health licensing updates, survey findings, and state-specific regulatory changes.',
+    description: 'Arizona Department of Health Services - behavioral health licensing updates, survey findings, and state-specific regulatory changes.',
     icon: Building2,
     tag: 'AZ State',
     frequency: 'Daily (06:00 UTC)',
@@ -96,7 +96,7 @@ export default async function RegulatoryUpdateSettingsPage() {
         <p className="text-sm text-muted-foreground leading-relaxed">
           The scraper runs automatically every day at <span className="font-medium text-foreground">06:00 UTC</span>.
           Federal sources notify all facilities; AZ ADHS updates are Arizona-specific.
-          New updates are deduplicated by source ID — re-running the scraper is always safe.
+          New updates are deduplicated by source ID - re-running the scraper is always safe.
         </p>
       </div>
 

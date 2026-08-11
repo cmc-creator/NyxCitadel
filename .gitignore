@@ -9,7 +9,7 @@ next-build/
 out/
 build/
 
-# Environment files — NEVER commit real secrets
+# Environment files - NEVER commit real secrets
 .env
 .env.local
 .env.development.local

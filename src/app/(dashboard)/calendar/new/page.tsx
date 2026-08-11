@@ -69,7 +69,7 @@ export default function NewCalendarEventPage() {
         <div className="px-6 py-5 space-y-4">
           <div>
             <label className="block text-xs font-medium text-muted-foreground mb-1">Event Title *</label>
-            <input name="title" required className="form-input w-full" placeholder="e.g. Fire Drill Q1 – Day Shift" />
+            <input name="title" required className="form-input w-full" placeholder="e.g. Fire Drill Q1 - Day Shift" />
           </div>
           <div>
             <label className="block text-xs font-medium text-muted-foreground mb-1">Description</label>

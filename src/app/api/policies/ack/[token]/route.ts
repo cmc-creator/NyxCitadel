@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 type Ctx = { params: { token: string } };
 
-// POST /api/policies/ack/[token] — record acknowledgment (no auth required)
+// POST /api/policies/ack/[token] - record acknowledgment (no auth required)
 export async function POST(req: NextRequest, { params }: Ctx) {
   const ack = await prisma.policyAcknowledgment.findUnique({
     where: { token: params.token },
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest, { params }: Ctx) {
   });
 }
 
-// GET /api/policies/ack/[token] — fetch ack context for the public page
+// GET /api/policies/ack/[token] - fetch ack context for the public page
 export async function GET(_req: NextRequest, { params }: Ctx) {
   const ack = await prisma.policyAcknowledgment.findUnique({
     where: { token: params.token },

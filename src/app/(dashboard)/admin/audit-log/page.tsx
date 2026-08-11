@@ -154,7 +154,7 @@ export default async function AuditLogPage({
                     {formatDate(log.createdAt, 'MMM d, yyyy h:mm a')}
                   </td>
                   <td className="px-3 py-2.5 text-xs">
-                    <div className="font-medium text-foreground/80">{log.user?.name ?? '—'}</div>
+                    <div className="font-medium text-foreground/80">{log.user?.name ?? '-'}</div>
                     <div className="text-muted-foreground/60">{log.user?.email ?? 'System'}</div>
                   </td>
                   <td className="px-3 py-2.5">
@@ -164,7 +164,7 @@ export default async function AuditLogPage({
                   </td>
                   <td className="px-3 py-2.5 text-xs text-foreground/70">{log.entityType}</td>
                   <td className="px-3 py-2.5 text-xs font-mono text-muted-foreground/60 max-w-[120px] truncate">{log.entityId}</td>
-                  <td className="px-3 py-2.5 text-xs text-muted-foreground/60">{log.ipAddress ?? '—'}</td>
+                  <td className="px-3 py-2.5 text-xs text-muted-foreground/60">{log.ipAddress ?? '-'}</td>
                 </tr>
               ))}
             </tbody>

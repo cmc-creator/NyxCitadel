@@ -94,7 +94,7 @@ export async function runScrape(days = 90): Promise<ScrapeResult> {
   });
 
   if (!sysUser) {
-    errors.push('No admin user found — skipping DB write');
+    errors.push('No admin user found - skipping DB write');
     return { success: false, newCount: 0, totalFetched, sources, errors, durationMs: Date.now() - start };
   }
 
@@ -112,7 +112,7 @@ export async function runScrape(days = 90): Promise<ScrapeResult> {
 
   const newAlerts = alertCandidates.filter(u => !existingSourceUrls.has(u.url));
 
-  // 4. Insert new items — only those with a sourceUrl so the unique constraint
+  // 4. Insert new items - only those with a sourceUrl so the unique constraint
   //    prevents duplicate runs from accumulating identical records.
   const insertable = allUpdates.filter(u => u.url);
   let newCount = 0;
@@ -271,7 +271,7 @@ async function createRegAlertNotifications(updates: ScrapedUpdate[]): Promise<vo
         html: emailData.html,
       });
     } catch (err) {
-      // Non-fatal — in-app notifications already created, but log so admins know SMTP is broken
+      // Non-fatal - in-app notifications already created, but log so admins know SMTP is broken
       console.warn(`[reg-scraper] Email failed for ${user.email}:`, err instanceof Error ? err.message : String(err));
     }
   }

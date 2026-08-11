@@ -162,7 +162,7 @@ export function TrainingCsvImport({ onImported }: { onImported?: () => void }) {
               <Upload className="w-8 h-8 text-muted-foreground/40 mx-auto mb-2" />
               <p className="text-sm font-medium text-foreground/70">Drop a CSV file here or click to browse</p>
               <p className="text-xs text-muted-foreground/50 mt-1">
-                Required columns: staffName, trainingName, category &mdash; up to 500 rows
+                Required columns: staffName, trainingName, category - up to 500 rows
               </p>
               <input ref={fileRef} type="file" accept=".csv" className="hidden"
                 onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />

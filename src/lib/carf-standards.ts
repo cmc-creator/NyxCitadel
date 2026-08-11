@@ -1,6 +1,6 @@
 /**
  * CARF Behavioral Health Standards Library
- * Commission on Accreditation of Rehabilitation Facilities — Behavioral Health Standards
+ * Commission on Accreditation of Rehabilitation Facilities - Behavioral Health Standards
  * Applicable to acute psychiatric hospitals, residential programs, and outpatient BH services.
  */
 

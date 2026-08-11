@@ -7,7 +7,7 @@ import HvaYearInput from './HvaYearInput';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata = { title: 'HVA – Hazard Vulnerability Analysis' };
+export const metadata = { title: 'HVA - Hazard Vulnerability Analysis' };
 
 export default async function HvaPage() {
   const session = await auth();
@@ -163,7 +163,7 @@ export default async function HvaPage() {
             <Link href={`/emergency/hva/${currentYear}/edit`} className="text-amber-600 hover:underline">
               Start {currentYear} HVA
             </Link>
-            {' '}&mdash; or enter any prior year using the year picker above.
+            {' '} -  or enter any prior year using the year picker above.
           </p>
         </div>
       ) : (

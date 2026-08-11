@@ -3,7 +3,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 // POST /api/regulatory-updates/[id]/ack
-// Marks an update as acknowledged by the current user (upsert — safe to call multiple times).
+// Marks an update as acknowledged by the current user (upsert - safe to call multiple times).
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
   return NextResponse.json(ack);
 }
 
-// DELETE /api/regulatory-updates/[id]/ack — unacknowledge (admin / undo)
+// DELETE /api/regulatory-updates/[id]/ack - unacknowledge (admin / undo)
 export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

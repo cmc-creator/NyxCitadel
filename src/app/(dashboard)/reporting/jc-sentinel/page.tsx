@@ -60,7 +60,7 @@ export default async function JcSentinelPage() {
       <div className="bg-card border border-border rounded-xl overflow-hidden">
         <div className="px-4 py-3 border-b border-border">
           <h2 className="text-sm font-semibold text-foreground">
-            JC-Reportable Incidents (Last 12 Months) — {sentinelIncidents.length}
+            JC-Reportable Incidents (Last 12 Months) - {sentinelIncidents.length}
           </h2>
         </div>
 

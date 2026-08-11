@@ -133,7 +133,7 @@ export const oshaRecordkeepingRequirements: ComplianceRequirement[] = [
   },
   {
     id: 'osha-rk-002',
-    title: 'OSHA 300A Summary - Post February 1–April 30',
+    title: 'OSHA 300A Summary - Post February 1-April 30',
     description:
       'Complete and post OSHA 300A Annual Summary of Work-Related Injuries ' +
       'from February 1 through April 30 per 29 CFR 1904.32.',

@@ -26,7 +26,7 @@ export default async function AdvanceDirectivesPage() {
             <h1 className="text-xl font-bold text-white">Advance Directives</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700">CMS §482.13(b)(3)</span>
           </div>
-          <p className="text-muted-foreground/70 text-sm">Advance directive status per admission — documentation of existence, type, and information offered at intake.</p>
+          <p className="text-muted-foreground/70 text-sm">Advance directive status per admission - documentation of existence, type, and information offered at intake.</p>
         </div>
         <a href="/patient-rights/advance-directives/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> Update Record
@@ -36,7 +36,7 @@ export default async function AdvanceDirectivesPage() {
       {notOffered > 0 && (
         <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
-          <p className="text-sm text-red-300">{notOffered} patient(s) did not receive advance directive information at admission — required under CMS CoP. Complete documentation immediately.</p>
+          <p className="text-sm text-red-300">{notOffered} patient(s) did not receive advance directive information at admission - required under CMS CoP. Complete documentation immediately.</p>
         </div>
       )}
 
@@ -76,9 +76,9 @@ export default async function AdvanceDirectivesPage() {
                 <td className="px-4 py-3">
                   {p.adExists ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <span className="text-xs text-muted-foreground">No</span>}
                 </td>
-                <td className="px-4 py-3 text-slate-300 text-xs">{p.adType ?? '—'}</td>
+                <td className="px-4 py-3 text-slate-300 text-xs">{p.adType ?? '-'}</td>
                 <td className="px-4 py-3">
-                  {p.adOnFile ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <span className="text-xs text-muted-foreground">—</span>}
+                  {p.adOnFile ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <span className="text-xs text-muted-foreground">-</span>}
                 </td>
                 <td className="px-4 py-3">
                   {p.informationProvided
@@ -86,7 +86,7 @@ export default async function AdvanceDirectivesPage() {
                     : <AlertTriangle className="w-4 h-4 text-red-400" />}
                 </td>
                 <td className="px-4 py-3">
-                  {p.patientDeclined ? <span className="text-xs text-amber-400">Declined</span> : <span className="text-xs text-muted-foreground">—</span>}
+                  {p.patientDeclined ? <span className="text-xs text-amber-400">Declined</span> : <span className="text-xs text-muted-foreground">-</span>}
                 </td>
               </tr>
             ))}

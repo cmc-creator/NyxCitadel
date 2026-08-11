@@ -93,7 +93,7 @@ export function ApprovalPanel({
         </div>
       )}
 
-      {/* Action area — only for admins */}
+      {/* Action area - only for admins */}
       {canApprove && approvalStatus !== 'APPROVED' && approvalStatus !== 'REJECTED' && (
         <div className="px-5 py-4 space-y-3 border-b border-border/50">
           <textarea

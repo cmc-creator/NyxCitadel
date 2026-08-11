@@ -23,7 +23,7 @@ export default async function DashboardLayout({
   const session = await auth();
   if (!session) redirect('/login');
 
-  // Subscription gating — redirect canceled facilities to billing page
+  // Subscription gating - redirect canceled facilities to billing page
   const headersList = await headers();
   const pathname = headersList.get('x-pathname') ?? headersList.get('x-invoke-path') ?? '';
   const isBillingExempt =

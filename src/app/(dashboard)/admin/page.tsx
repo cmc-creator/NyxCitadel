@@ -17,6 +17,8 @@ import { AutomationStatusCard } from '@/components/admin/AutomationStatusCard';
 import { ExportDeliveryListCard } from '@/components/admin/ExportDeliveryListCard';
 import { ResetDemoDataButton } from '@/components/admin/ResetDemoDataButton';
 import { RunWeeklyExportsButton } from '@/components/admin/RunWeeklyExportsButton';
+import { QuickAddUserButton } from '@/components/admin/QuickAddUserButton';
+import { AdminQuickActionsToolbar } from '@/components/admin/AdminQuickActionsToolbar';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Admin Panel' };
@@ -96,25 +98,28 @@ export default async function AdminPage() {
             {isSuperAdmin ? 'All facilities · Super Admin view' : 'Your facility · Admin view'}
           </p>
         </div>
-        <div className="flex flex-col items-end gap-3">
+        <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
+          <QuickAddUserButton />
           <RunAlertsNowButton />
           <RunWeeklyExportsButton />
           <div className="flex items-center gap-2">
-            <Link href="/admin/audit-log" className="inline-flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium px-3 py-2 rounded-lg transition">
+            <Link href="/admin/audit-log" className="inline-flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white text-xs font-medium px-3 py-2 rounded-xl transition">
               Audit Log
             </Link>
-            <Link href="/admin/pilot-kpis" className="inline-flex items-center gap-2 bg-cyan-700 hover:bg-cyan-800 text-white text-sm font-medium px-3 py-2 rounded-lg transition">
-              View Pilot KPIs
+            <Link href="/admin/pilot-kpis" className="inline-flex items-center gap-2 bg-cyan-700 hover:bg-cyan-800 text-white text-xs font-medium px-3 py-2 rounded-xl transition">
+              Pilot KPIs
             </Link>
           </div>
           {isSuperAdmin && (
-            <Link href="/admin/facilities/new" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition">
+            <Link href="/admin/facilities/new" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-3 py-2 rounded-xl transition">
               + New Facility
             </Link>
           )}
           {demoToolsEnabled && <ResetDemoDataButton />}
         </div>
       </div>
+
+      <AdminQuickActionsToolbar />
 
       <div className="grid gap-4 xl:grid-cols-[1.35fr_0.95fr]">
         <AutomationStatusCard />
@@ -224,14 +229,19 @@ export default async function AdminPage() {
 
       {/* Users table */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <div className="flex items-center gap-2 px-5 py-4 border-b border-border/50">
-          <Users className="w-4 h-4 text-teal-400" />
-          <h2 className="text-sm font-semibold text-foreground">
-            {isSuperAdmin ? 'All Users' : 'Facility Users'}
-          </h2>
-          <Link href="/settings/users" className="ml-auto text-xs text-teal-400 hover:underline">
-            Manage users →
-          </Link>
+        <div className="flex items-center justify-between gap-2 px-5 py-4 border-b border-border/50">
+          <div className="flex items-center gap-2">
+            <Users className="w-4 h-4 text-teal-400" />
+            <h2 className="text-sm font-semibold text-foreground">
+              {isSuperAdmin ? 'All Users' : 'Facility Users'}
+            </h2>
+          </div>
+          <div className="flex items-center gap-3">
+            <QuickAddUserButton />
+            <Link href="/settings/users" className="text-xs text-teal-400 hover:underline">
+              Manage users →
+            </Link>
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -249,7 +259,7 @@ export default async function AdminPage() {
             <tbody className="divide-y divide-border/30">
               {users.map((u) => (
                 <tr key={u.id} className="hover:bg-muted/20 transition-colors">
-                  <td className="px-5 py-3 font-medium text-foreground/90">{u.name ?? '—'}</td>
+                  <td className="px-5 py-3 font-medium text-foreground/90">{u.name ?? '-'}</td>
                   <td className="px-3 py-3 text-muted-foreground text-xs">{u.email}</td>
                   {isSuperAdmin && (
                     <td className="px-3 py-3 text-xs text-muted-foreground">{u.facility.name}</td>
@@ -268,7 +278,7 @@ export default async function AdminPage() {
                         <ShieldOff className="w-3 h-3" /> Locked
                       </span>
                     ) : (
-                      <span className="text-xs text-muted-foreground/30">&mdash;</span>
+                      <span className="text-xs text-muted-foreground/30"> - </span>
                     )}
                   </td>
                   <td className="px-3 py-3 text-center">

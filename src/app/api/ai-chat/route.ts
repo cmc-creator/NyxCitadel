@@ -439,7 +439,7 @@ export async function POST(req: NextRequest) {
   Only include that tag when explicitly useful. Keep payload minimal and valid.`;
 
   // Build message array from prior history (capped at last 20) + new user message.
-  // Filter out any system messages — Anthropic takes system as a top-level param.
+  // Filter out any system messages - Anthropic takes system as a top-level param.
   const anthropicMessages = [
     ...history.slice(-20).filter((m) => m.role !== 'system').map((m) => ({
       role: m.role as 'user' | 'assistant',

@@ -176,7 +176,7 @@ export default function NewRegulatoryUpdatePage() {
             onChange={e => set('summary', e.target.value)}
             required
             rows={3}
-            placeholder="1–3 sentence plain-language summary of what changed and what staff need to know."
+            placeholder="1-3 sentence plain-language summary of what changed and what staff need to know."
             className="w-full px-3 py-2.5 rounded-lg bg-card border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500/60 transition resize-none"
           />
         </div>

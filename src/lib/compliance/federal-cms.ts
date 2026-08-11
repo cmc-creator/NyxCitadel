@@ -4,7 +4,7 @@
  *
  * Primary Sources:
  * - 42 CFR Part 482 - Conditions of Participation for Hospitals
- * - 42 CFR Part 482, Subpart E (§ 482.60–482.62) - Special Requirements for
+ * - 42 CFR Part 482, Subpart E (§ 482.60-482.62) - Special Requirements for
  *   Psychiatric Hospitals (IPF CoPs)
  * - 42 CFR Part 441 Subpart D - IMD (Institutions for Mental Disease) Medicaid
  * - CMS State Operations Manual (SOM) - Appendix A (hospitals), Appendix AA (psych)
@@ -198,7 +198,7 @@ export const restraintSeclusionCoP: ComplianceRequirement[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PSYCHIATRIC HOSPITAL SPECIAL CONDITIONS - 42 CFR 482.60–482.62
+// PSYCHIATRIC HOSPITAL SPECIAL CONDITIONS - 42 CFR 482.60-482.62
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const psychiatricHospitalCoP: ComplianceRequirement[] = [

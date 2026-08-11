@@ -85,7 +85,7 @@ export default async function QocDetailPage({ params }: { params: { id: string }
       {qoc.investigationType === 'IMMEDIATE_JEOPARDY' && (
         <div className="bg-red-950/20 border border-red-300 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-          <p className="text-sm text-red-800"><strong>Immediate Jeopardy Investigation</strong> &mdash; this complaint has been classified as an Immediate Jeopardy matter.</p>
+          <p className="text-sm text-red-800"><strong>Immediate Jeopardy Investigation</strong> - this complaint has been classified as an Immediate Jeopardy matter.</p>
         </div>
       )}
 

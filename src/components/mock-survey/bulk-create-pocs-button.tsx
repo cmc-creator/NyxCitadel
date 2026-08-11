@@ -24,7 +24,7 @@ export function BulkCreatePocsButton({ surveyId, surveyTitle, notMetCount }: Pro
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          title: `Mock Survey Deficiencies — ${surveyTitle}`,
+          title: `Mock Survey Deficiencies - ${surveyTitle}`,
           regulatoryBody: 'ADHS',
           surveyId,
         }),

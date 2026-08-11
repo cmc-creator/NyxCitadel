@@ -1,11 +1,11 @@
 /**
- * NyxCitadel — Clean Seed Script
+ * NyxCitadel - Clean Seed Script
  *
  * Creates the minimum required data for a tester or new client onboarding:
  *   1. One facility  (configurable via env vars)
  *   2. One admin user (configurable via env vars)
  *
- * NO demo data — no sample incidents, policies, compliance items, drills, etc.
+ * NO demo data - no sample incidents, policies, compliance items, drills, etc.
  *
  * Usage:
  *   npm run db:seed:clean
@@ -29,7 +29,7 @@ async function main() {
   const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? 'ChangeMe123!';
   const adminName     = process.env.SEED_ADMIN_NAME     ?? 'System Administrator';
 
-  console.log('\n🌱 NyxCitadel — Clean Seed\n');
+  console.log('\n🌱 NyxCitadel - Clean Seed\n');
   console.log(`  Facility : ${facilityName}`);
   console.log(`  Admin    : ${adminEmail}`);
   console.log('');

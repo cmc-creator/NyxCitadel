@@ -27,8 +27,8 @@ export default async function OppePage() {
 
   // Derive most recent cycle label
   const latestCycle = records[0]
-    ? `${records[0].periodStart.toLocaleDateString()} – ${records[0].periodEnd.toLocaleDateString()}`
-    : '—';
+    ? `${records[0].periodStart.toLocaleDateString()} - ${records[0].periodEnd.toLocaleDateString()}`
+    : '-';
 
   return (
     <div className="p-6 space-y-6">
@@ -39,7 +39,7 @@ export default async function OppePage() {
             <h1 className="text-xl font-bold text-white">OPPE Records</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">TJC MS.06.01</span>
           </div>
-          <p className="text-muted-foreground/70 text-sm">Ongoing Professional Practice Evaluation — quarterly performance data reviewed by Medical Executive Committee.</p>
+          <p className="text-muted-foreground/70 text-sm">Ongoing Professional Practice Evaluation - quarterly performance data reviewed by Medical Executive Committee.</p>
         </div>
         <a href="/credentialing/oppe/new" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors">
           <Plus className="w-4 h-4" /> New OPPE Record
@@ -93,14 +93,14 @@ export default async function OppePage() {
               return (
                 <tr key={r.id} className="hover:bg-white/5">
                   <td className="px-4 py-3 font-semibold text-white text-xs">{r.provider.lastName}, {r.provider.firstName}</td>
-                  <td className="px-4 py-3 text-muted-foreground/70 text-xs">{r.periodStart.toLocaleDateString()} – {r.periodEnd.toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-muted-foreground/70 text-xs">{r.periodStart.toLocaleDateString()} - {r.periodEnd.toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-slate-300 text-xs">{r.totalCases}</td>
                   <td className={`px-4 py-3 font-bold text-sm ${rate >= 90 ? 'text-emerald-400' : 'text-amber-400'}`}>
                     {rate.toFixed(1)}%
                   </td>
                   <td className="px-4 py-3">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ratingConfig[r.overallRating ?? '']?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
-                      {ratingConfig[r.overallRating ?? '']?.label ?? r.overallRating ?? '—'}
+                      {ratingConfig[r.overallRating ?? '']?.label ?? r.overallRating ?? '-'}
                     </span>
                   </td>
                   <td className="px-4 py-3">

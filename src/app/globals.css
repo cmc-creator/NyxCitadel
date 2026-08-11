@@ -302,7 +302,7 @@
 .delay-600 { animation-delay: 0.6s; }
 .delay-700 { animation-delay: 0.7s; }
 
-/* Scroll-triggered fade (Intersection Observer not needed — CSS @scroll-timeline fallback) */
+/* Scroll-triggered fade (Intersection Observer not needed - CSS @scroll-timeline fallback) */
 @supports (animation-timeline: scroll()) {
   .scroll-fade {
     animation: fade-in-up linear both;
@@ -503,7 +503,7 @@
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
-/* ── Driver.js tour — dark theme overrides ── */
+/* ── Driver.js tour - dark theme overrides ── */
 @import 'driver.js/dist/driver.css';
 .nyx-tour-popover.driver-popover {
   background-color: #0f172a;

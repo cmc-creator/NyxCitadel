@@ -245,7 +245,7 @@ export default function BulkUploadPage() {
             <Upload className="w-8 h-8 text-muted-foreground/60" />
             <div className="text-center">
               <p className="text-sm font-medium text-foreground">Drop PDF or Word files here</p>
-              <p className="text-xs text-muted-foreground mt-0.5">or click to browse — up to 50 MB each</p>
+              <p className="text-xs text-muted-foreground mt-0.5">or click to browse - up to 50 MB each</p>
             </div>
             <input
               ref={inputRef}

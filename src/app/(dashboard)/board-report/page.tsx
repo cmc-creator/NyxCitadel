@@ -196,7 +196,7 @@ export default async function BoardReportPage() {
             Archive
           </Link>
           <SaveBoardReportButton
-            title={`Board Compliance Report — ${facility?.name ?? 'Facility'} — ${reportDate}`}
+            title={`Board Compliance Report - ${facility?.name ?? 'Facility'} - ${reportDate}`}
             reportMonth={thisMonth}
             reportYear={thisYear}
             content={{

@@ -72,7 +72,7 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
         <div className="bg-red-950/20 border border-red-200 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
           <p className="text-sm text-red-800">
-            <strong>Review Overdue</strong> &mdash; this policy was due for review on {formatDate(policy.nextReviewDate!)}. {Math.abs(daysToReview!)} days overdue.
+            <strong>Review Overdue</strong> - this policy was due for review on {formatDate(policy.nextReviewDate!)}. {Math.abs(daysToReview!)} days overdue.
           </p>
         </div>
       )}
@@ -108,7 +108,7 @@ export default async function PolicyDetailPage({ params }: { params: { id: strin
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-semibold text-foreground/80">v{r.version}</span>
                         <span className="text-xs text-muted-foreground/70">{r.date}</span>
-                        <span className="text-xs text-slate-500">&mdash; {r.changedBy}</span>
+                        <span className="text-xs text-slate-500"> -  {r.changedBy}</span>
                       </div>
                       <p className="text-xs text-slate-600 mt-0.5">{r.summary}</p>
                     </div>

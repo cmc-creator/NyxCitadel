@@ -57,14 +57,14 @@ export function getIncidentCreatedEmail(opts: {
       <div class="row"><span class="label">Date Occurred</span><span class="val">${opts.dateOccurred}</span></div>
       <div class="row"><span class="label">Reported By</span><span class="val">${opts.reportedBy}</span></div>
       <p style="margin-top:16px;font-size:14px;color:#374151"><strong>Description:</strong><br>${opts.description.slice(0,300)}${opts.description.length > 300 ? '...' : ''}</p>
-      ${opts.severity === 'SENTINEL' ? '<p style="color:#dc2626;font-weight:600;font-size:13px">&#9888; Sentinel event — ADHS reporting within 24 hours may be required.</p>' : ''}
+      ${opts.severity === 'SENTINEL' ? '<p style="color:#dc2626;font-weight:600;font-size:13px">&#9888; Sentinel event - ADHS reporting within 24 hours may be required.</p>' : ''}
       <a href="${url}" class="btn">Review in NyxCitadel &rarr;</a>
     </div>
     <div class="footer">&copy; ${new Date().getFullYear()} NyxCitadel&trade; | HIPAA Compliant</div>
   `);
 
   return {
-    subject: `[NyxCitadel] Incident Report Filed: ${opts.reportNumber} — ${opts.severity}`,
+    subject: `[NyxCitadel] Incident Report Filed: ${opts.reportNumber} - ${opts.severity}`,
     html,
   };
 }
@@ -99,7 +99,7 @@ export function getCapCreatedEmail(opts: {
   `);
 
   return {
-    subject: `[NyxCitadel] CAP Created: ${opts.capNumber} — ${opts.title}`,
+    subject: `[NyxCitadel] CAP Created: ${opts.capNumber} - ${opts.title}`,
     html,
   };
 }
@@ -130,14 +130,14 @@ export function getGrievanceCreatedEmail(opts: {
       <div class="row"><span class="label">Severity</span><span class="val">${isExpedited ? `<span class="chip chip-red">${opts.severity}</span>` : opts.severity}</span></div>
       <div class="row"><span class="label">Ack. Due</span><span class="val">${opts.ackDueDate} (CMS 7-day)</span></div>
       <div class="row"><span class="label">Resolution Due</span><span class="val">${opts.resDueDate} (CMS 30-day)</span></div>
-      ${isExpedited ? '<p style="color:#dc2626;font-weight:600;font-size:13px">&#9888; This grievance requires expedited review — clinical urgency applies.</p>' : ''}
+      ${isExpedited ? '<p style="color:#dc2626;font-weight:600;font-size:13px">&#9888; This grievance requires expedited review - clinical urgency applies.</p>' : ''}
       <a href="${url}" class="btn">Review Grievance &rarr;</a>
     </div>
     <div class="footer">&copy; ${new Date().getFullYear()} NyxCitadel&trade; | HIPAA Compliant</div>
   `);
 
   return {
-    subject: `[NyxCitadel] Grievance Assigned: ${opts.grievanceNumber} — ${opts.category.replace(/_/g,' ')}`,
+    subject: `[NyxCitadel] Grievance Assigned: ${opts.grievanceNumber} - ${opts.category.replace(/_/g,' ')}`,
     html,
   };
 }
@@ -157,7 +157,7 @@ export function getPolicyAmendedEmail(opts: {
   const url = `${base()}/trackers/policies`;
   const html = htmlWrap(`
     <div class="hdr">
-      <h2>Policy Amended &mdash; Version ${opts.newVersion}</h2>
+      <h2>Policy Amended - Version ${opts.newVersion}</h2>
       <p>${opts.facilityName}</p>
     </div>
     <div class="body">
@@ -285,7 +285,7 @@ export function getTrainingAssignmentEmail(opts: {
   `);
 
   return {
-    subject: `[Action Required] Training Assignment: ${opts.trainingName} &mdash; ${opts.facilityName}`,
+    subject: `[Action Required] Training Assignment: ${opts.trainingName} - ${opts.facilityName}`,
     html,
   };
 }

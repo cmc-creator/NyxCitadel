@@ -109,7 +109,7 @@ export default async function BoardReportArchivePage() {
                       </span>
                     </td>
                     <td className="px-4 py-4 text-center">
-                      {grade ? <ResilienceChip grade={grade} /> : <span className="text-muted-foreground/50">—</span>}
+                      {grade ? <ResilienceChip grade={grade} /> : <span className="text-muted-foreground/50">-</span>}
                     </td>
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-3 text-xs text-muted-foreground/70">

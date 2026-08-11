@@ -32,7 +32,7 @@ export default async function ControlledSubstancesPage() {
           <div className="flex items-center gap-3 mb-1">
             <Clipboard className="w-5 h-5 text-emerald-400" />
             <h1 className="text-xl font-bold text-white">Controlled Substance Log</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">DEA Schedule II–V</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700">DEA Schedule II-V</span>
           </div>
           <p className="text-muted-foreground/70 text-sm">Shift count verification, waste reconciliation, and discrepancy tracking for controlled substances.</p>
         </div>

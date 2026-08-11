@@ -22,11 +22,11 @@ const STEPS = [
   {
     id: 'templates',
     title: 'Apply quick-start templates',
-    description: 'Seed your calendar with standard regulatory deadlines (CMS, ADHS, TJC, QAPI), pre-built policy templates, and CAP scaffolding — so your first week is not a blank page.',
+    description: 'Seed your calendar with standard regulatory deadlines (CMS, ADHS, TJC, QAPI), pre-built policy templates, and CAP scaffolding - so your first week is not a blank page.',
     icon: Sparkles,
     color: 'purple',
     action: { label: 'Apply Templates', api: '/api/quick-start' },
-    hint: 'Safe to run more than once — duplicates are skipped automatically.',
+    hint: 'Safe to run more than once - duplicates are skipped automatically.',
   },
   {
     id: 'team',
@@ -108,7 +108,7 @@ export default function OnboardingPage() {
       {/* Header */}
       <div className="text-center space-y-2">
         <p className="text-xs font-bold text-teal-400 uppercase tracking-widest">NyxCitadel Setup</p>
-        <h1 className="text-3xl font-bold text-foreground">Welcome — let&apos;s get you live</h1>
+        <h1 className="text-3xl font-bold text-foreground">Welcome - let&apos;s get you live</h1>
         <p className="text-sm text-muted-foreground">
           Four quick steps and your compliance command centre is ready.
         </p>
@@ -217,7 +217,7 @@ export default function OnboardingPage() {
                     onClick={() => markDone('templates')}
                     className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2 transition-colors"
                   >
-                    Skip — I&apos;ll apply templates later
+                    Skip - I&apos;ll apply templates later
                   </button>
                 )}
                 {'hint' in s && s.hint && (
@@ -298,7 +298,7 @@ export default function OnboardingPage() {
           onClick={dismissOnboarding}
           className="text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors underline underline-offset-2"
         >
-          Skip setup — go to dashboard
+          Skip setup - go to dashboard
         </button>
       </div>
     </div>

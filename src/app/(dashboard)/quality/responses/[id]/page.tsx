@@ -115,7 +115,7 @@ export default async function ResponseDetailPage({ params }: { params: { id: str
           {response.sourceRef && (
             <div className="bg-muted/30 rounded-xl border border-border p-4">
               <p className="text-xs font-medium text-muted-foreground/70 mb-1">Source Reference</p>
-              <p className="text-sm text-foreground font-medium">{response.sourceType?.replace(/_/g, ' ')} – {response.sourceRef}</p>
+              <p className="text-sm text-foreground font-medium">{response.sourceType?.replace(/_/g, ' ')} - {response.sourceRef}</p>
             </div>
           )}
 

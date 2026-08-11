@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft, Lock } from 'lucide-react';
 
 const HOLD_TYPES = [
-  'Title 36 – 72hr Emergency', 'Court Order – 5 Day', 'Court Order – 30 Day',
+  'Title 36 - 72hr Emergency', 'Court Order - 5 Day', 'Court Order - 30 Day',
   'Involuntary Outpatient Treatment', 'Petition for Evaluation', 'Other',
 ];
 

@@ -403,7 +403,7 @@ export const arizonaCompliance: ComplianceRequirement[] = [
       'Annual internal review of CMS CoPs for Inpatient Psychiatric Facilities.',
     category: EventCategory.CMS_CONDITIONS_REVIEW,
     regulatoryBody: RegulatoryBody.CMS,
-    standardRef: '42 CFR 482.60–482.62',
+    standardRef: '42 CFR 482.60-482.62',
     frequency: Frequency.ANNUAL,
     priority: Priority.CRITICAL,
     responsibleRole: 'COMPLIANCE_OFFICER',

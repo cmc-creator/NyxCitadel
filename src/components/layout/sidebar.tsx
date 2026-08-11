@@ -76,7 +76,7 @@ interface NavSection {
 }
 
 // ─────────────────────────────────────────────────────────────────
-// Navigation — 8 logical sections, workflow-first organization
+// Navigation - 8 logical sections, workflow-first organization
 // ─────────────────────────────────────────────────────────────────
 const navSections: NavSection[] = [
 

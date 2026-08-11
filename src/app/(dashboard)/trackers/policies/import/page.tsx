@@ -310,7 +310,7 @@ export default function ImportPoliciesPage() {
             <FileText className="w-5 h-5 text-teal-600 shrink-0" />
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">{fileName}</p>
-              <p className="text-xs text-muted-foreground">{rows.length} rows parsed &mdash; {validRows.length} valid, {invalidRows.length} with errors</p>
+              <p className="text-xs text-muted-foreground">{rows.length} rows parsed - {validRows.length} valid, {invalidRows.length} with errors</p>
             </div>
             <button onClick={clearFile} className="p-1 text-muted-foreground/70 hover:text-red-500">
               <X className="w-4 h-4" />
@@ -329,7 +329,7 @@ export default function ImportPoliciesPage() {
           <ul className="space-y-1">
             {invalidRows.map(r => (
               <li key={r._line} className="text-xs text-amber-700">
-                Line {r._line}: <strong>{r.title || '(no title)'}</strong> &mdash; {r.error}
+                Line {r._line}: <strong>{r.title || '(no title)'}</strong> - {r.error}
               </li>
             ))}
           </ul>

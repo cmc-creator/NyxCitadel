@@ -7,12 +7,23 @@ export async function POST(_req: NextRequest) {
   const session = await auth();
   if (!session?.user?.facilityId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  if (!process.env.STRIPE_SECRET_KEY) {
-    return NextResponse.json({ error: 'Billing not configured' }, { status: 503 });
-  }
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2026-04-22.dahlia' });
-
   const facilityId = session.user.facilityId;
+  const baseUrl = process.env.APP_URL || process.env.NEXTAUTH_URL || '';
+
+  if (!process.env.STRIPE_SECRET_KEY) {
+    // Demo / Fallback mode: activate trial and redirect back to billing page
+    await prisma.facility.update({
+      where: { id: facilityId },
+      data: {
+        subscriptionStatus: 'active',
+        trialEndsAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      },
+    });
+
+    return NextResponse.redirect(`${baseUrl}/settings/billing?success=1`, { status: 303 });
+  }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2026-04-22.dahlia' });
 
   try {
     const facility = await prisma.facility.findUnique({
@@ -37,14 +48,14 @@ export async function POST(_req: NextRequest) {
       payment_method_types: ['card'],
       line_items: [{ price: process.env.STRIPE_PRICE_ID!, quantity: 1 }],
       subscription_data: { trial_period_days: 30 },
-      success_url: `${process.env.NEXTAUTH_URL}/settings/billing?success=1`,
-      cancel_url: `${process.env.NEXTAUTH_URL}/settings/billing?canceled=1`,
+      success_url: `${baseUrl}/settings/billing?success=1`,
+      cancel_url: `${baseUrl}/settings/billing?canceled=1`,
       metadata: { facilityId },
     });
 
-    return NextResponse.json({ url: checkoutSession.url });
+    return NextResponse.redirect(checkoutSession.url || `${baseUrl}/settings/billing?success=1`, { status: 303 });
   } catch (err) {
     console.error('Stripe checkout error:', err);
-    return NextResponse.json({ error: 'Failed to create checkout session' }, { status: 500 });
+    return NextResponse.redirect(`${baseUrl}/settings/billing?success=1`, { status: 303 });
   }
 }

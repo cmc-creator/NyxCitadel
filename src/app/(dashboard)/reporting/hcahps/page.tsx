@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, Save, Loader2, Users } from 'lucide-react';
 
 /**
- * CMS HCAHPS — Hospital Consumer Assessment of Healthcare Providers and Systems
+ * CMS HCAHPS - Hospital Consumer Assessment of Healthcare Providers and Systems
  * For psychiatric / behavioral health hospitals (quarterly reporting)
  *
  * 8 composite domains + 2 global ratings
@@ -178,7 +178,7 @@ export default function HcahpsPage() {
               CMS HCAHPS Patient Satisfaction
             </h1>
             <p className="text-sm text-slate-400 mt-1">
-              Patient satisfaction survey results — enter composite domain numerators and denominators
+              Patient satisfaction survey results - enter composite domain numerators and denominators
               from your survey vendor report.
             </p>
           </div>
@@ -262,7 +262,7 @@ export default function HcahpsPage() {
                       {pct}%
                     </span>
                   ) : (
-                    <span className="text-muted-foreground text-sm">—</span>
+                    <span className="text-muted-foreground text-sm">-</span>
                   )}
                 </div>
               </div>
@@ -279,7 +279,7 @@ export default function HcahpsPage() {
 
         {/* Overall Rating */}
         <div className="px-6 py-4">
-          <p className="text-sm font-medium text-foreground mb-1">Overall Hospital Rating (0–10)</p>
+          <p className="text-sm font-medium text-foreground mb-1">Overall Hospital Rating (0-10)</p>
           <p className="text-xs text-muted-foreground mb-3">Enter the sum of all patient ratings and the total number of respondents to calculate the average.</p>
           <div className="flex items-center gap-4">
             <div>
@@ -308,7 +308,7 @@ export default function HcahpsPage() {
                   {(parseFloat(form.overallRatingSum) / parseFloat(form.overallRatingCount)).toFixed(1)} / 10
                 </span>
               ) : (
-                <span className="text-muted-foreground">—</span>
+                <span className="text-muted-foreground">-</span>
               )}
             </div>
           </div>
@@ -345,7 +345,7 @@ export default function HcahpsPage() {
                 return pct !== null ? (
                   <span className={`text-lg font-bold ${parseFloat(pct) >= 70 ? 'text-teal-400' : 'text-amber-400'}`}>{pct}%</span>
                 ) : (
-                  <span className="text-muted-foreground">—</span>
+                  <span className="text-muted-foreground">-</span>
                 );
               })()}
             </div>

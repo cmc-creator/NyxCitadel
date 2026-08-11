@@ -447,7 +447,7 @@ export default async function RootPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-blue-500/10 pointer-events-none" />
           <div className="relative z-10">
             <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">
-              Early access — <span className="text-teal-400">founding customers wanted.</span>
+              Early access - <span className="text-teal-400">founding customers wanted.</span>
             </h2>
                         <p className="text-slate-300 max-w-2xl mx-auto mb-8 text-lg">
               We are currently in private beta, working closely with a select group of hospitals and behavioral health facilities. Join us early to shape the future of NyxCitadel and secure lifetime founding pricing.
@@ -1014,7 +1014,7 @@ export default async function RootPage() {
       {/* ── Footer ── */}
       <footer className="relative z-10 border-t border-white/5 bg-[#060b16]">
         <div className="max-w-7xl mx-auto px-6 py-14">
-          {/* Top grid — brand + columns */}
+          {/* Top grid - brand + columns */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
 
             {/* Brand */}

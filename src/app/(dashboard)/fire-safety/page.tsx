@@ -41,7 +41,7 @@ export default function FireSafetyPage() {
             Fire Safety &amp; Preparedness
           </h1>
           <p className="text-sm text-muted-foreground mt-0.5">
-            NFPA 101 &amp; TJC compliance — drills, inspections, equipment maintenance, response plans
+            NFPA 101 &amp; TJC compliance - drills, inspections, equipment maintenance, response plans
           </p>
         </div>
         <Link
@@ -211,13 +211,13 @@ export default function FireSafetyPage() {
           <Section title="Regulatory References" icon={AlertCircle}>
             <ul className="space-y-1.5 text-xs">
               <li className="text-muted-foreground">
-                <span className="font-medium text-foreground">NFPA 101</span> — Life Safety Code
+                <span className="font-medium text-foreground">NFPA 101</span> - Life Safety Code
               </li>
               <li className="text-muted-foreground">
-                <span className="font-medium text-foreground">TJC</span> — Emergency Management standards
+                <span className="font-medium text-foreground">TJC</span> - Emergency Management standards
               </li>
               <li className="text-muted-foreground">
-                <span className="font-medium text-foreground">CMS CoP</span> — 42 CFR 485.68
+                <span className="font-medium text-foreground">CMS CoP</span> - 42 CFR 485.68
               </li>
             </ul>
           </Section>

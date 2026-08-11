@@ -158,9 +158,9 @@ export default async function AdhsPage() {
               {submissions.map((s, i) => (
                 <tr key={s.id} className={`border-b border-border last:border-0 ${i % 2 === 1 ? 'bg-slate-900/20' : ''}`}>
                   <td className="p-3 text-slate-400">{s.reportingPeriod}</td>
-                  <td className="p-3 text-slate-400">{s.submittedDate ? formatDate(s.submittedDate) : '—'}</td>
+                  <td className="p-3 text-slate-400">{s.submittedDate ? formatDate(s.submittedDate) : '-'}</td>
                   <td className="p-3 text-slate-400">{s.status}</td>
-                  <td className="p-3 text-slate-400">{s.portalReference ?? '—'}</td>
+                  <td className="p-3 text-slate-400">{s.portalReference ?? '-'}</td>
                 </tr>
               ))}
             </tbody>

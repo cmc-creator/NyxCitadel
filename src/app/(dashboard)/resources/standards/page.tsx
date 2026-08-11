@@ -152,7 +152,7 @@ export default function StandardsLibraryPage() {
         <div className="bg-card rounded-xl border border-border overflow-hidden">
           <div className="px-5 py-3 bg-slate-50 border-b border-border flex items-center gap-2">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-              {filtered.length} standard{filtered.length !== 1 ? 's' : ''} — click any row to expand surveyor guidance
+              {filtered.length} standard{filtered.length !== 1 ? 's' : ''} - click any row to expand surveyor guidance
             </span>
           </div>
           <div>

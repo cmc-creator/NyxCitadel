@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: 'Get in touch with NyxCitadel. Contact our sales team for demos and pricing, legal for BAA and security reviews, or support for platform questions. HIPAA BAA included on all plans.',
   openGraph: {
     title: 'Contact NyxCitadel',
-    description: 'Get in touch with NyxCitadel — sales, legal, and support.',
+    description: 'Get in touch with NyxCitadel - sales, legal, and support.',
     type: 'website',
   },
   twitter: { card: 'summary', title: 'Contact NyxCitadel' },
@@ -91,7 +91,7 @@ export default function ContactPage() {
             </span>
           </h1>
           <p className="text-lg text-slate-300 leading-relaxed">
-            Whether you're evaluating pricing, reviewing our security posture, or need onboarding help —
+            Whether you're evaluating pricing, reviewing our security posture, or need onboarding help -
             we have a dedicated team for every conversation.
           </p>
         </div>

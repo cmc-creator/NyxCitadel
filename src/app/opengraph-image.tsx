@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'NyxCitadel — Healthcare Compliance That Never Sleeps';
+export const alt = 'NyxCitadel - Healthcare Compliance That Never Sleeps';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -19,7 +19,7 @@ export default function OGImage() {
         overflow: 'hidden',
       }}
     >
-      {/* Teal glow — top right */}
+      {/* Teal glow - top right */}
       <div
         style={{
           position: 'absolute',
@@ -32,7 +32,7 @@ export default function OGImage() {
           display: 'flex',
         }}
       />
-      {/* Blue glow — bottom left */}
+      {/* Blue glow - bottom left */}
       <div
         style={{
           position: 'absolute',
@@ -70,7 +70,7 @@ export default function OGImage() {
           position: 'relative',
         }}
       >
-        {/* Top — category pill */}
+        {/* Top - category pill */}
         <div style={{ display: 'flex' }}>
           <div
             style={{
@@ -88,7 +88,7 @@ export default function OGImage() {
           </div>
         </div>
 
-        {/* Middle — brand + tagline */}
+        {/* Middle - brand + tagline */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div
             style={{
@@ -111,11 +111,11 @@ export default function OGImage() {
             }}
           >
             The only compliance platform that never sleeps.
-            Survey-ready — always.
+            Survey-ready - always.
           </div>
         </div>
 
-        {/* Bottom — trust badges + domain */}
+        {/* Bottom - trust badges + domain */}
         <div
           style={{
             display: 'flex',

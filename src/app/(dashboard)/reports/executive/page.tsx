@@ -89,7 +89,7 @@ export default function ExecutiveReportPage() {
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Compliance Status Report</h1>
-            <p className="text-sm text-gray-500 mt-0.5">Executive Board Summary &mdash; {data.reportYear}</p>
+            <p className="text-sm text-gray-500 mt-0.5">Executive Board Summary - {data.reportYear}</p>
           </div>
           <div className="text-right text-sm text-gray-600">
             <p className="font-semibold">{data.facilityName}</p>
@@ -105,9 +105,9 @@ export default function ExecutiveReportPage() {
           <div>
             <p className="font-bold text-red-800 text-sm">Items Requiring Immediate Board Attention</p>
             <ul className="mt-1 space-y-0.5 text-sm text-red-700 list-disc list-inside">
-              {data.incidents.sentinelOpen > 0 && <li>{data.incidents.sentinelOpen} open sentinel event(s) &mdash; RCA required within 45 days (JC)</li>}
+              {data.incidents.sentinelOpen > 0 && <li>{data.incidents.sentinelOpen} open sentinel event(s) - RCA required within 45 days (JC)</li>}
               {data.workforce.csDiscrepancies > 0 && <li>{data.workforce.csDiscrepancies} unresolved controlled substance discrepanc{data.workforce.csDiscrepancies > 1 ? 'ies' : 'y'} (DEA)</li>}
-              {data.safety.restraintDeathsYtd > 0 && <li>{data.safety.restraintDeathsYtd} restraint/seclusion death{data.safety.restraintDeathsYtd > 1 ? 's' : ''} YTD &mdash; CMS 24-hr reporting required</li>}
+              {data.safety.restraintDeathsYtd > 0 && <li>{data.safety.restraintDeathsYtd} restraint/seclusion death{data.safety.restraintDeathsYtd > 1 ? 's' : ''} YTD - CMS 24-hr reporting required</li>}
               {data.qoc.immediateJeopardy > 0 && <li>{data.qoc.immediateJeopardy} Immediate Jeopardy QOC complaint{data.qoc.immediateJeopardy > 1 ? 's' : ''} open (CMS)</li>}
               {data.incidents.adhsOverdue > 0 && <li>{data.incidents.adhsOverdue} ADHS incident report{data.incidents.adhsOverdue > 1 ? 's' : ''} past filing deadline (ARS 36-2402)</li>}
               {data.grievances.overdueAck > 0 && <li>{data.grievances.overdueAck} grievance{data.grievances.overdueAck > 1 ? 's' : ''} past 7-day acknowledgment deadline (CMS 482.13(e))</li>}
@@ -269,7 +269,7 @@ export default function ExecutiveReportPage() {
       </section>
 
       <p className="text-xs text-gray-400 mt-6 text-center print:block hidden">
-        Confidential &mdash; Prepared by NyxCitadel Compliance Platform &mdash; {data.facilityName} &mdash; {format(new Date(data.generatedAt), 'MMMM d, yyyy')}
+        Confidential - Prepared by NyxCitadel Compliance Platform - {data.facilityName} - {format(new Date(data.generatedAt), 'MMMM d, yyyy')}
       </p>
     </div>
   );

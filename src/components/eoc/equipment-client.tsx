@@ -125,7 +125,7 @@ export function EquipmentClient({ items }: { items: EquipmentItem[] }) {
                     <div className="min-w-0">
                       <p className="text-sm font-semibold text-foreground leading-snug">{e.equipmentName}</p>
                       <p className="text-xs text-slate-500 mt-0.5">
-                        {e.location} · <span className="text-slate-600">{e.equipmentId ?? '—'}</span>
+                        {e.location} · <span className="text-slate-600">{e.equipmentId ?? '-'}</span>
                       </p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">

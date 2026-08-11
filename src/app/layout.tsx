@@ -19,12 +19,12 @@ export function generateMetadata(): Metadata {
       template: '%s | NyxCitadel',
     },
     description:
-      'The only healthcare compliance platform that never sleeps. CMS, Joint Commission, OSHA, and State DOH monitoring — automated alerts, CAP tracking, QAPI, and AI-powered survey readiness for behavioral health and acute care facilities.',
+      'The only healthcare compliance platform that never sleeps. CMS, Joint Commission, OSHA, and State DOH monitoring - automated alerts, CAP tracking, QAPI, and AI-powered survey readiness for behavioral health and acute care facilities.',
     metadataBase: new URL(appUrl),
     openGraph: {
       title: 'NyxCitadel | Healthcare Compliance That Never Sleeps',
       description:
-        'Automated regulatory intelligence, survey readiness, QAPI, and AI-powered compliance management — built for behavioral health and acute psychiatric facilities.',
+        'Automated regulatory intelligence, survey readiness, QAPI, and AI-powered compliance management - built for behavioral health and acute psychiatric facilities.',
       url: appUrl,
       siteName: 'NyxCitadel',
       type: 'website',

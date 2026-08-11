@@ -16,7 +16,7 @@ export function RegulatoryUpdatesBadge() {
         const data = await res.json();
         if (!cancelled) setCount(data.count ?? 0);
       } catch {
-        // silently ignore — badge just won't show
+        // silently ignore - badge just won't show
       }
     }
 

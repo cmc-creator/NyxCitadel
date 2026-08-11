@@ -22,7 +22,7 @@ export default function DashboardError({
       </div>
       <h2 className="text-xl font-bold text-foreground">Something went wrong</h2>
       <p className="mt-2 text-sm text-muted-foreground max-w-sm">
-        An unexpected error occurred while loading this page. Your data is safe — please try again.
+        An unexpected error occurred while loading this page. Your data is safe - please try again.
       </p>
       {error.digest && (
         <p className="mt-1 text-xs text-muted-foreground/60 font-mono">

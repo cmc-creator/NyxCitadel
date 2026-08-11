@@ -99,7 +99,7 @@ function EPRow({ ep, surveyId, initial, onSaved }: EPRowProps) {
       setSaved(true);
       setDirty(false);
     } catch {
-      // silent — user can retry
+      // silent - user can retry
     } finally {
       setSaving(false);
     }
@@ -262,7 +262,7 @@ function ChapterPanel({ chapter, surveyId, findingsMap, onSaved }: ChapterPanelP
           {chapter.standards.map(standard => (
             <div key={standard.ref} className="mb-4">
               <div className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2 border-b border-slate-800 pb-1">
-                {standard.ref} — {standard.title}
+                {standard.ref} - {standard.title}
               </div>
               {standard.eps.map(ep => (
                 <EPRow
@@ -370,7 +370,7 @@ export function TracerClient({ survey, chapters, savedFindings }: Props) {
             pct >= 80 ? 'text-green-400' :
             pct >= 60 ? 'text-yellow-400' : 'text-red-400'
           }`}>
-            {pct !== null ? `${pct}%` : '—'}
+            {pct !== null ? `${pct}%` : '-'}
           </div>
         </div>
         <div className="bg-card border border-border rounded-xl p-3 text-center">
@@ -390,7 +390,7 @@ export function TracerClient({ survey, chapters, savedFindings }: Props) {
       {notMetCount > 0 && (
         <div className="flex items-center gap-2 bg-red-950/30 border border-red-800 rounded-lg px-4 py-2 text-sm text-red-300">
           <AlertTriangle className="w-4 h-4 flex-shrink-0" />
-          {notMetCount} Not Met finding{notMetCount !== 1 ? 's' : ''} — view the Findings Report to create Plans of Correction.
+          {notMetCount} Not Met finding{notMetCount !== 1 ? 's' : ''} - view the Findings Report to create Plans of Correction.
         </div>
       )}
 

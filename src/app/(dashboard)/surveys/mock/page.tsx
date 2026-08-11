@@ -47,7 +47,7 @@ export default async function MockSurveyListPage() {
             Mock Surveys
           </h1>
           <p className="text-sm text-muted-foreground mt-0.5">
-            Chapter-by-chapter tracer tool — score each Element of Performance, generate findings reports, and link deficiencies to the POC tracker.
+            Chapter-by-chapter tracer tool - score each Element of Performance, generate findings reports, and link deficiencies to the POC tracker.
           </p>
         </div>
         <Link
@@ -134,7 +134,7 @@ export default async function MockSurveyListPage() {
                           {pct}% <span className="text-xs text-muted-foreground font-normal">({metCount}/{scored})</span>
                         </span>
                       ) : (
-                        <span className="text-muted-foreground text-xs">—</span>
+                        <span className="text-muted-foreground text-xs">-</span>
                       )}
                     </td>
                     <td className="p-3">

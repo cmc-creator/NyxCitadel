@@ -35,7 +35,7 @@ export function AckButton({ updateId, initialAcked, ackedAt }: Props) {
         }
       }
     } catch {
-      setError('Network error — please try again.');
+      setError('Network error - please try again.');
     } finally {
       setLoading(false);
     }

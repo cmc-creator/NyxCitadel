@@ -34,7 +34,7 @@ export default function PublicError({
             Something went wrong
           </h1>
           <p className="text-slate-400 text-sm leading-relaxed mb-2">
-            An unexpected error occurred. Your data is safe — please try again or return home.
+            An unexpected error occurred. Your data is safe - please try again or return home.
           </p>
           {error.digest && (
             <p className="text-xs text-slate-600 font-mono mb-6">

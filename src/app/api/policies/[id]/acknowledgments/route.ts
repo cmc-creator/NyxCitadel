@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 
 type Ctx = { params: { id: string } };
 
-// GET /api/policies/[id]/acknowledgments — list all ack records for this policy
+// GET /api/policies/[id]/acknowledgments - list all ack records for this policy
 export async function GET(_req: NextRequest, { params }: Ctx) {
   const session = await auth();
   if (!session?.user?.facilityId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -28,7 +28,7 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
   return NextResponse.json(acks);
 }
 
-// POST /api/policies/[id]/acknowledgments — send acknowledgment requests
+// POST /api/policies/[id]/acknowledgments - send acknowledgment requests
 // Body: { recipients: [{ name: string, email: string }] }
 export async function POST(req: NextRequest, { params }: Ctx) {
   const session = await auth();

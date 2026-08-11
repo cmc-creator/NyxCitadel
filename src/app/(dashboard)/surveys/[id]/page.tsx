@@ -104,13 +104,13 @@ export default async function SurveyDetailPage({ params }: { params: { id: strin
       {responseOverdue && (
         <div className="flex items-center gap-2 bg-red-950/20 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
           <AlertTriangle className="w-4 h-4 shrink-0" />
-          <span><strong>Response overdue</strong> — deadline was {formatDate(survey.responseDeadline!)}.</span>
+          <span><strong>Response overdue</strong> - deadline was {formatDate(survey.responseDeadline!)}.</span>
         </div>
       )}
       {!responseOverdue && daysLeft !== null && daysLeft >= 0 && daysLeft <= 7 && !survey.responseSubmitted && (
         <div className="flex items-center gap-2 bg-amber-950/20 border border-amber-200 text-amber-700 rounded-lg px-4 py-3 text-sm">
           <Clock className="w-4 h-4 shrink-0" />
-          <span>Response due in <strong>{daysLeft} day{daysLeft !== 1 ? 's' : ''}</strong> — {formatDate(survey.responseDeadline!)}.</span>
+          <span>Response due in <strong>{daysLeft} day{daysLeft !== 1 ? 's' : ''}</strong> - {formatDate(survey.responseDeadline!)}.</span>
         </div>
       )}
       {survey.responseSubmitted && (

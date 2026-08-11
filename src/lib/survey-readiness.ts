@@ -72,7 +72,7 @@ export async function getSurveyReadinessScore(facilityId: string): Promise<Surve
       },
     }),
 
-    // Incident follow-up — sentinel/major that need RCA
+    // Incident follow-up - sentinel/major that need RCA
     prisma.incident.count({
       where: { facilityId, severity: { in: ['SENTINEL', 'MAJOR'] } },
     }),
@@ -112,7 +112,7 @@ export async function getSurveyReadinessScore(facilityId: string): Promise<Surve
     maxScore: 25,
     pct: Math.round((capScore / 25) * 100),
     detail: overdueHighCaps === 0
-      ? `${totalCaps} total open — no overdue high-priority`
+      ? `${totalCaps} total open - no overdue high-priority`
       : `${overdueHighCaps} overdue high/critical CAP${overdueHighCaps > 1 ? 's' : ''}`,
   };
 

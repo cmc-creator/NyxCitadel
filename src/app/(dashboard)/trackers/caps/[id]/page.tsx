@@ -100,7 +100,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
       {isOverdue && (
         <div className="bg-red-950/20 border border-red-200 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-          <p className="text-sm text-red-800"><strong>Overdue</strong> &mdash; target date was {formatDate(cap.targetDate)}.</p>
+          <p className="text-sm text-red-800"><strong>Overdue</strong> - target date was {formatDate(cap.targetDate)}.</p>
         </div>
       )}
 
@@ -108,7 +108,7 @@ export default async function CapDetailPage({ params }: { params: { id: string }
         <div className="bg-blue-950/20 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
           <p className="text-sm text-blue-800">
-            <strong>Vigilance Monitoring Active</strong> &mdash; ends {formatDate(cap.vigilanceEndDate!)}.
+            <strong>Vigilance Monitoring Active</strong> - ends {formatDate(cap.vigilanceEndDate!)}.
             Breaches: <strong>{cap.vigilanceBreaches ?? 0}</strong>
           </p>
         </div>

@@ -88,7 +88,7 @@ async function getMyDayTasks(facilityId: string, userId: string): Promise<DailyT
       orderBy: { responseDueDate: 'asc' },
     }),
 
-    // ── Grievances — Acknowledgment ───────────────────────────────────────
+    // ── Grievances - Acknowledgment ───────────────────────────────────────
     prisma.grievanceRecord.findMany({
       where: { facilityId, acknowledgmentDate: null, acknowledgmentDueDate: { lt: startOfDay(now) }, status: { notIn: ['CLOSED', 'RESOLVED'] } },
       select: { id: true, grievanceNumber: true, complainantName: true, summary: true, acknowledgmentDueDate: true },
@@ -99,7 +99,7 @@ async function getMyDayTasks(facilityId: string, userId: string): Promise<DailyT
       select: { id: true, grievanceNumber: true, complainantName: true, summary: true, acknowledgmentDueDate: true },
     }),
 
-    // ── Grievances — Resolution ───────────────────────────────────────────
+    // ── Grievances - Resolution ───────────────────────────────────────────
     prisma.grievanceRecord.findMany({
       where: { facilityId, resolutionDate: null, resolutionDueDate: { lt: startOfDay(now) }, status: { notIn: ['CLOSED', 'RESOLVED'] } },
       select: { id: true, grievanceNumber: true, complainantName: true, summary: true, resolutionDueDate: true },
@@ -243,11 +243,11 @@ async function getMyDayTasks(facilityId: string, userId: string): Promise<DailyT
       dueDate: q.responseDueDate.toISOString(),
       urgency: urgency(q.responseDueDate),
       href: `/trackers/qoc/${q.id}`,
-      regulatoryNote: isIJ ? '⚠ Immediate Jeopardy — expedited response required' : undefined,
+      regulatoryNote: isIJ ? '⚠ Immediate Jeopardy - expedited response required' : undefined,
     });
   }
 
-  // Grievance — Acknowledgment
+  // Grievance - Acknowledgment
   for (const g of [...overdueGrievAck, ...todayGrievAck]) {
     tasks.push({
       id: `griev-ack-${g.id}`,
@@ -261,7 +261,7 @@ async function getMyDayTasks(facilityId: string, userId: string): Promise<DailyT
     });
   }
 
-  // Grievance — Resolution
+  // Grievance - Resolution
   for (const g of [...overdueGrievRes, ...todayGrievRes, ...weekGrievRes]) {
     tasks.push({
       id: `griev-res-${g.id}`,
@@ -390,7 +390,7 @@ async function getMyDayTasks(facilityId: string, userId: string): Promise<DailyT
       type: 'REG_UPDATE',
       label: u.urgency === 'CRITICAL' ? '🚨 Regulatory' : '⚠ Regulatory',
       title: u.title,
-      subtitle: `${u.regulatoryBody} · ${u.urgency === 'CRITICAL' ? 'Critical — immediate action required' : 'High priority — review within 7 days'} · Acknowledge when reviewed`,
+      subtitle: `${u.regulatoryBody} · ${u.urgency === 'CRITICAL' ? 'Critical - immediate action required' : 'High priority - review within 7 days'} · Acknowledge when reviewed`,
       dueDate: dueDate.toISOString(),
       urgency: u.urgency === 'CRITICAL' ? 'overdue' : 'today',
       href: `/regulatory-updates/${u.id}`,
@@ -463,7 +463,7 @@ export default async function MyDayPage() {
         <CalendarDays className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-teal-400/70" />
         <span>
           Tasks are sourced from your open POCs, QOC/LOI letters, grievances, CAPs, policy reviews, scheduled
-          calendar events, ADHS reports, and QAPI projects. Check off items as you action them — the list
+          calendar events, ADHS reports, and QAPI projects. Check off items as you action them - the list
           refreshes daily and shows anything due within the next 7 days.
         </span>
       </div>

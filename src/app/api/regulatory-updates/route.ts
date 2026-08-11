@@ -95,9 +95,9 @@ export async function POST(req: NextRequest) {
   });
 
   const urgencyLabel: Record<string, string> = {
-    CRITICAL:      'CRITICAL – Immediate Action Required',
-    HIGH:          'High Priority – Review Within 7 Days',
-    MEDIUM:        'Medium – Review Within 30 Days',
+    CRITICAL:      'CRITICAL - Immediate Action Required',
+    HIGH:          'High Priority - Review Within 7 Days',
+    MEDIUM:        'Medium - Review Within 30 Days',
     INFORMATIONAL: 'Informational',
   };
 

@@ -174,11 +174,11 @@ export function DeficienciesClient({ items }: { items: DeficiencyItem[] }) {
                         </span>
                       </td>
                       <td className="px-4 py-3">
-                        <span className="text-xs text-muted-foreground/70">{d.assignedTo ?? '—'}</span>
+                        <span className="text-xs text-muted-foreground/70">{d.assignedTo ?? '-'}</span>
                       </td>
                       <td className="px-4 py-3">
                         <p className={`text-xs font-medium ${overdue ? 'text-red-400' : 'text-slate-300'}`}>
-                          {d.resolvedDate ?? d.dueDate ?? '—'}
+                          {d.resolvedDate ?? d.dueDate ?? '-'}
                         </p>
                         {overdue && (
                           <p className="text-xs text-red-500 mt-0.5 flex items-center gap-0.5">

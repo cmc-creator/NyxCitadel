@@ -3,7 +3,7 @@
  * For Hospital Pharmacy - Inpatient Psychiatric / Behavioral Health Facility
  *
  * Primary Sources:
- * - 21 CFR Part 1300–1321 - DEA Controlled Substances Regulations
+ * - 21 CFR Part 1300-1321 - DEA Controlled Substances Regulations
  *   - 21 CFR 1301 - Registration
  *   - 21 CFR 1304 - Records & Reports
  *   - 21 CFR 1306 - Prescriptions

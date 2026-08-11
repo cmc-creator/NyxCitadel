@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Sparkles, PartyPopper, Rocket, Bot, BookOpen, PlayCircle, X } from 'lucide-react';
+import { startGeniusTour } from '@/components/onboarding/GeniusWalkthrough';
 
 const STORAGE_KEY = 'nyxcitadel:onboarding-seen:v1';
 
@@ -28,7 +29,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Show if never seen — but DON'T set localStorage yet.
+    // Show if never seen - but DON'T set localStorage yet.
     // We set it on explicit dismiss so SetupWizard can sequence after this.
     const hasSeen = window.localStorage.getItem(STORAGE_KEY);
     if (!hasSeen) setOpen(true);
@@ -122,14 +123,17 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
             </div>
 
             <div className="grid gap-3">
-              <Link
-                href="/walkthrough"
-                onClick={handleClose}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 px-4 py-3 text-sm font-semibold text-white transition"
+              <button
+                type="button"
+                onClick={() => {
+                  handleClose();
+                  startGeniusTour('executive');
+                }}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 px-4 py-3 text-sm font-semibold text-white transition shadow-lg shadow-teal-900/30"
               >
                 <PlayCircle className="w-4 h-4" />
                 Start Show-and-Tell Walkthrough
-              </Link>
+              </button>
               <Link
                 href="/guide"
                 onClick={handleClose}

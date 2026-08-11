@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, Save, Loader2, ShieldCheck, ChevronDown, ChevronUp } from 'lucide-react';
 
 /**
- * CMS Conditions of Participation — Psychiatric Hospital (42 CFR Part 482)
+ * CMS Conditions of Participation - Psychiatric Hospital (42 CFR Part 482)
  *
  * Required CoPs for psychiatric hospitals:
  *   482.13  Patient Rights
@@ -214,7 +214,7 @@ export default function CopPage() {
               CMS Conditions of Participation
             </h1>
             <p className="text-sm text-slate-400 mt-1">
-              Psychiatric hospital CoP self-assessment — 42 CFR Part 482. Document compliance status
+              Psychiatric hospital CoP self-assessment - 42 CFR Part 482. Document compliance status
               and corrective actions for each Condition.
             </p>
           </div>

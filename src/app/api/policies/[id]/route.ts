@@ -102,7 +102,7 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
         }
       }
     } catch {
-      // Non-fatal — policy was saved
+      // Non-fatal - policy was saved
     }
   }
 

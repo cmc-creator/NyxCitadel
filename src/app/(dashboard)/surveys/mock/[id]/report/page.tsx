@@ -85,7 +85,7 @@ export default async function SurveyReportPage({ params }: Props) {
               pct === null ? 'text-muted-foreground' :
               pct >= 80 ? 'text-green-400' : pct >= 60 ? 'text-yellow-400' : 'text-red-400'
             }`}>
-              {pct !== null ? `${pct}%` : '—'}
+              {pct !== null ? `${pct}%` : '-'}
             </div>
             <div className="text-xs text-muted-foreground">Overall Compliance</div>
           </div>
@@ -115,7 +115,7 @@ export default async function SurveyReportPage({ params }: Props) {
       {notMetFindings.length === 0 ? (
         <div className="bg-green-950/30 border border-green-800 rounded-xl p-8 text-center">
           <CheckCircle2 className="w-10 h-10 text-green-400 mx-auto mb-2" />
-          <p className="text-green-300 font-semibold">No findings — all scored EPs met!</p>
+          <p className="text-green-300 font-semibold">No findings - all scored EPs met!</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -178,7 +178,7 @@ export default async function SurveyReportPage({ params }: Props) {
         <details className="bg-card border border-border rounded-xl">
           <summary className="px-4 py-3 cursor-pointer text-sm font-medium text-slate-400 hover:text-foreground flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-green-400" />
-            Met Findings ({metFindings.length}) — click to expand
+            Met Findings ({metFindings.length}) - click to expand
           </summary>
           <div className="px-4 pb-4">
             <div className="divide-y divide-border">

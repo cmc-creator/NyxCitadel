@@ -30,7 +30,7 @@ export interface ComplianceSection {
 }
 
 // ─────────────────────────────────────────────────────────────────
-// TJC (The Joint Commission) — Annual Comprehensive Accreditation Manual
+// TJC (The Joint Commission) - Annual Comprehensive Accreditation Manual
 // ─────────────────────────────────────────────────────────────────
 export const TJC_ANNUAL: RegulatoryTemplate = {
   id: 'tjc-annual',
@@ -230,7 +230,7 @@ export const TJC_ANNUAL: RegulatoryTemplate = {
 };
 
 // ─────────────────────────────────────────────────────────────────
-// CMS (Centers for Medicare & Medicaid Services) — Conditions of Participation
+// CMS (Centers for Medicare & Medicaid Services) - Conditions of Participation
 // ─────────────────────────────────────────────────────────────────
 export const CMS_ANNUAL: RegulatoryTemplate = {
   id: 'cms-annual',
@@ -366,7 +366,7 @@ export const CMS_ANNUAL: RegulatoryTemplate = {
 };
 
 // ─────────────────────────────────────────────────────────────────
-// AZDHS (Arizona Department of Health Services) — Licensing Standards
+// AZDHS (Arizona Department of Health Services) - Licensing Standards
 // ─────────────────────────────────────────────────────────────────
 export const AZDHS_ANNUAL: RegulatoryTemplate = {
   id: 'azdhs-annual',

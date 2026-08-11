@@ -25,7 +25,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Patient Rights: Exercise of Rights',
     description: 'The patient or their representative has the right to participate in the development and implementation of the plan of care. Patients have the right to make decisions regarding their medical care, including the right to accept or refuse treatment.',
     category: 'CMS',
-    surveyorTips: 'Review a sample of medical records for documented patient participation in care planning. Surveyors may interview patients about whether they feel involved in their care decisions. Check advance directive documentation — a common deficiency is failure to document patient preferences regarding advance directives.',
+    surveyorTips: 'Review a sample of medical records for documented patient participation in care planning. Surveyors may interview patients about whether they feel involved in their care decisions. Check advance directive documentation - a common deficiency is failure to document patient preferences regarding advance directives.',
     keywords: 'care planning advance directive informed consent refuse treatment',
   },
   {
@@ -61,7 +61,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Medical Staff',
     description: 'Hospitals must have an organized medical staff responsible for quality of care provided to patients. Medical staff must operate under bylaws approved by the governing body and must be accountable to the governing body.',
     category: 'CMS',
-    surveyorTips: 'Review medical staff bylaws for currency and governing body approval. Surveyors will check credentialing files — verify that all privileged practitioners have current credentials, competency documentation, and peer review. Expired credentials are a common deficiency.',
+    surveyorTips: 'Review medical staff bylaws for currency and governing body approval. Surveyors will check credentialing files - verify that all privileged practitioners have current credentials, competency documentation, and peer review. Expired credentials are a common deficiency.',
     keywords: 'medical staff bylaws credentialing privileges peer review governing body',
   },
   {
@@ -70,7 +70,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Nursing Services',
     description: 'Hospitals must have an organized nursing service that provides 24-hour nursing care. There must be a sufficient number of qualified RNs to assess patient needs and ensure nursing care is planned and delivered by qualified staff.',
     category: 'CMS',
-    surveyorTips: 'Staffing ratios and competency documentation are focal points. Surveyors will review staff schedules, competency files, and may observe nursing practice directly. Ensure float pool and agency nurses have facility-specific orientation documented. Licensed nursing staff must have a valid, unencumbered license — verify with the state board before each shift.',
+    surveyorTips: 'Staffing ratios and competency documentation are focal points. Surveyors will review staff schedules, competency files, and may observe nursing practice directly. Ensure float pool and agency nurses have facility-specific orientation documented. Licensed nursing staff must have a valid, unencumbered license - verify with the state board before each shift.',
     keywords: 'nursing staffing ratios RN competency 24-hour care',
   },
   {
@@ -79,7 +79,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Medical Record Services',
     description: 'Hospitals must maintain a medical record for each inpatient and outpatient. Medical records must be retained and contain sufficient information to justify diagnosis and treatment. Records must be completed within 30 days of discharge.',
     category: 'CMS',
-    surveyorTips: 'Record completeness and timeliness are common deficiencies. Surveyors will pull records and check for all required elements: authentication, operative reports, discharge summaries, and informed consent. Run a delinquent record report before survey — any record over 30 days delinquent is a finding.',
+    surveyorTips: 'Record completeness and timeliness are common deficiencies. Surveyors will pull records and check for all required elements: authentication, operative reports, discharge summaries, and informed consent. Run a delinquent record report before survey - any record over 30 days delinquent is a finding.',
     keywords: 'medical records documentation delinquent discharge summary informed consent',
   },
   {
@@ -97,7 +97,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Laboratory Services',
     description: 'Hospitals must maintain or have access to laboratory services to meet the needs of patients. Laboratory services must be available 24 hours a day. The laboratory must be certified under CLIA.',
     category: 'CMS',
-    surveyorTips: 'Verify CLIA certificate currency and ensure it covers all tests performed. Critical value notification and documentation process is frequently reviewed — check logs for timely physician notification of critical values. Point-of-care testing must be included in QC programs.',
+    surveyorTips: 'Verify CLIA certificate currency and ensure it covers all tests performed. Critical value notification and documentation process is frequently reviewed - check logs for timely physician notification of critical values. Point-of-care testing must be included in QC programs.',
     keywords: 'laboratory CLIA critical values point-of-care testing quality control',
   },
   {
@@ -143,7 +143,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Improve the Accuracy of Patient Identification',
     description: 'Use at least two patient identifiers when providing care, treatment, or services. Acceptable identifiers include patient name, assigned identification number, date of birth, or phone number.',
     category: 'JC',
-    surveyorTips: 'Tracer activity will include direct observation of staff using two identifiers before medication administration, blood draws, and procedures. Staff must be able to verbalize the two-identifier policy. Surveyors frequently find identifiers posted on doors or rooms instead of verifying directly with the patient — that does not count.',
+    surveyorTips: 'Tracer activity will include direct observation of staff using two identifiers before medication administration, blood draws, and procedures. Staff must be able to verbalize the two-identifier policy. Surveyors frequently find identifiers posted on doors or rooms instead of verifying directly with the patient - that does not count.',
     keywords: 'patient identification two identifiers name DOB armband',
   },
   {
@@ -179,7 +179,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Hand Hygiene',
     description: 'Comply with current hand hygiene guidelines from CDC or WHO. Set goals for improving hand hygiene compliance and improve compliance with hand hygiene guidelines.',
     category: 'JC',
-    surveyorTips: 'Hand hygiene is observed in real time throughout the survey. Surveyors watch before and after patient contact. Dispenser availability, product availability, and staff technique are all observed. Have current compliance rates available — surveyors will ask. Rates below 90% invite increased scrutiny.',
+    surveyorTips: 'Hand hygiene is observed in real time throughout the survey. Surveyors watch before and after patient contact. Dispenser availability, product availability, and staff technique are all observed. Have current compliance rates available - surveyors will ask. Rates below 90% invite increased scrutiny.',
     keywords: 'hand hygiene hand washing CDC WHO compliance rate dispenser',
   },
   {
@@ -215,7 +215,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Safety and Security Management Plan',
     description: 'The hospital manages safety and security risks. Must identify security-sensitive areas, establish a process to identify patients, visitors, and staff, and maintain records of security incidents.',
     category: 'JC',
-    surveyorTips: 'Infant/child abduction prevention is a focus — surveyors will trace your HUGS/security band system. Review your security incident log. Surveyors will check that your security management plan is current, staff know reporting processes, and that workplace violence incidents are tracked in your QAPI program.',
+    surveyorTips: 'Infant/child abduction prevention is a focus - surveyors will trace your HUGS/security band system. Review your security incident log. Surveyors will check that your security management plan is current, staff know reporting processes, and that workplace violence incidents are tracked in your QAPI program.',
     keywords: 'security infant abduction workplace violence safety management plan',
   },
   {
@@ -224,7 +224,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Fire Safety: Fire Drills',
     description: 'Fire drills must be conducted at least quarterly for each shift on each floor or unit. Drills are evaluated for staff response and corrective action is implemented for identified deficiencies.',
     category: 'JC',
-    surveyorTips: 'Maintain fire drill logs with dates, times, floors, shifts, participants, and critique notes. Surveyors count drills by shift — many hospitals miss the night shift quarterly requirement. Ensure drill critique documentation shows that identified gaps were addressed in subsequent drills.',
+    surveyorTips: 'Maintain fire drill logs with dates, times, floors, shifts, participants, and critique notes. Surveyors count drills by shift - many hospitals miss the night shift quarterly requirement. Ensure drill critique documentation shows that identified gaps were addressed in subsequent drills.',
     keywords: 'fire drill quarterly shifts log critique corrective action',
   },
   {
@@ -260,7 +260,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Safety Culture and Environment',
     description: 'Leaders create and maintain a culture of safety and quality throughout the hospital. Processes must be in place for identifying and managing behaviors that undermine a safety culture.',
     category: 'JC',
-    surveyorTips: 'Surveyors conduct confidential staff interviews throughout the survey asking about safety culture, willingness to report errors, and concerns about intimidating behaviors. Your Culture of Safety survey data should be available. Show the actions taken in response to survey findings — data alone without action is a deficiency.',
+    surveyorTips: 'Surveyors conduct confidential staff interviews throughout the survey asking about safety culture, willingness to report errors, and concerns about intimidating behaviors. Your Culture of Safety survey data should be available. Show the actions taken in response to survey findings - data alone without action is a deficiency.',
     keywords: 'safety culture leadership staff interviews intimidating behavior reporting',
   },
   {
@@ -297,7 +297,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Bloodborne Pathogens',
     description: 'Employers must protect workers from exposure to blood and other potentially infectious materials. Requirements include: Exposure Control Plan, HBV vaccination program, PPE provision, training, and post-exposure protocols.',
     category: 'OSHA',
-    surveyorTips: 'OSHA inspectors request the written Exposure Control Plan first — it must be updated annually. Verify that sharps injury logs are complete, all occupationally exposed employees have been offered hepatitis B vaccination, and annual bloodborne pathogen training records are current. Review your post-exposure evaluation process.',
+    surveyorTips: 'OSHA inspectors request the written Exposure Control Plan first - it must be updated annually. Verify that sharps injury logs are complete, all occupationally exposed employees have been offered hepatitis B vaccination, and annual bloodborne pathogen training records are current. Review your post-exposure evaluation process.',
     keywords: 'bloodborne pathogens exposure control plan hepatitis B sharps PPE training',
   },
   {
@@ -342,7 +342,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Safe Patient Handling and Ergonomics',
     description: 'Healthcare employers must address musculoskeletal injuries from patient lifting and repositioning. A Safe Patient Handling program with mechanical lift equipment reduces injury risk. Many states have enacted Safe Patient Handling laws.',
     category: 'OSHA',
-    surveyorTips: 'Check that mechanical lifting equipment is available on all units where transfers occur, that equipment is maintained and inspected regularly, and that staff are trained in its use. Review your OSHA 300 Log for MSD cases — a pattern of musculoskeletal injuries signals need for a program update.',
+    surveyorTips: 'Check that mechanical lifting equipment is available on all units where transfers occur, that equipment is maintained and inspected regularly, and that staff are trained in its use. Review your OSHA 300 Log for MSD cases - a pattern of musculoskeletal injuries signals need for a program update.',
     keywords: 'safe patient handling ergonomics lifting MSD musculoskeletal mechanical lift',
   },
   {
@@ -351,7 +351,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Means of Egress',
     description: 'Exit routes must be permanent, adequate, and properly maintained. Exit signs must be illuminated. Exit access, exit, and exit discharge areas must be unobstructed.',
     category: 'OSHA',
-    surveyorTips: 'Walk all clinical areas looking for exit signs with burned-out bulbs, blocked exits, locked doors without proper hardware, and storage in exit corridors. OSHA inspectors find blocked exits in nearly every healthcare inspection — storage creep in stairwells and exit corridors is a persistent issue.',
+    surveyorTips: 'Walk all clinical areas looking for exit signs with burned-out bulbs, blocked exits, locked doors without proper hardware, and storage in exit corridors. OSHA inspectors find blocked exits in nearly every healthcare inspection - storage creep in stairwells and exit corridors is a persistent issue.',
     keywords: 'exit routes egress exit signs obstructions storage corridors stairwells',
   },
   // ── Arizona ADHS Standards ────────────────────────────────────────
@@ -415,7 +415,7 @@ export const standardsLibrary: Standard[] = [
     title: 'Physical Environment and Safety (AZ)',
     description: 'Hospitals must comply with the Arizona State Fire Marshal requirements in addition to Life Safety Code. ADHS conducts environment of care surveys that include life safety inspections. Construction and renovation projects require ADHS plan review and approval.',
     category: 'ADHS',
-    surveyorTips: 'Any construction or renovation project — including minor work in patient areas — may require ADHS plan review. Contact your ADHS regional office before starting projects. Maintain documentation of State Fire Marshal inspection reports and ensure all corrective actions are completed and closed.',
+    surveyorTips: 'Any construction or renovation project - including minor work in patient areas - may require ADHS plan review. Contact your ADHS regional office before starting projects. Maintain documentation of State Fire Marshal inspection reports and ensure all corrective actions are completed and closed.',
     keywords: 'Arizona Fire Marshal life safety construction renovation environment plan review',
   },
   {

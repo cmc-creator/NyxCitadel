@@ -147,7 +147,7 @@ export default async function EocDeficiencyDetailPage({ params }: { params: { id
           {def.round && (
             <Section title="Originating Round">
               <Link href={`/eoc/rounds/${def.round.id}`} className="text-sm text-teal-600 hover:underline">
-                {def.round.roundNumber} — {def.round.roundType.replace(/_/g, ' ')} →
+                {def.round.roundNumber} - {def.round.roundType.replace(/_/g, ' ')} →
               </Link>
             </Section>
           )}

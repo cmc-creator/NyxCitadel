@@ -239,7 +239,7 @@ export default function UsersSettingsPage() {
                 value={form.department}
                 onChange={e => setForm(f => ({ ...f, department: e.target.value }))}
               >
-                <option value="">— Select department —</option>
+                <option value="">- Select department -</option>
                 {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
             </div>

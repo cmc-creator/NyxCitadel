@@ -107,18 +107,18 @@ const modules = [
 ];
 
 const recentDeficiencies = [
-  { id: 'DEF-2026-007', location: 'Room 118 – Bathroom', category: 'LIGATURE_RISK', severity: 'HIGH', status: 'OPEN', desc: 'Door hinge plates non-ligature-resistant', daysOpen: 3 },
+  { id: 'DEF-2026-007', location: 'Room 118 - Bathroom', category: 'LIGATURE_RISK', severity: 'HIGH', status: 'OPEN', desc: 'Door hinge plates non-ligature-resistant', daysOpen: 3 },
   { id: 'DEF-2026-006', location: 'Seclusion Room 1', category: 'LIFE_SAFETY', severity: 'HIGH', status: 'IN_PROGRESS', desc: 'Emergency ligature cutter not mounted at door', daysOpen: 8 },
-  { id: 'DEF-2026-005', location: 'Nurses Station – Wing B', category: 'FIRE_SAFETY', severity: 'MEDIUM', status: 'IN_PROGRESS', desc: 'Fire door closer inoperable – does not latch', daysOpen: 14 },
-  { id: 'DEF-2026-004', location: 'Medication Room', category: 'INFECTION_CONTROL', severity: 'MEDIUM', status: 'OPEN', desc: 'Hand hygiene dispenser empty – bracket corroded', daysOpen: 5 },
-  { id: 'DEF-2026-003', location: 'Janitor Closet – 1st Floor', category: 'SECURITY', severity: 'LOW', status: 'RESOLVED', desc: 'Unsecured chemical storage – lock installed', daysOpen: 21 },
+  { id: 'DEF-2026-005', location: 'Nurses Station - Wing B', category: 'FIRE_SAFETY', severity: 'MEDIUM', status: 'IN_PROGRESS', desc: 'Fire door closer inoperable - does not latch', daysOpen: 14 },
+  { id: 'DEF-2026-004', location: 'Medication Room', category: 'INFECTION_CONTROL', severity: 'MEDIUM', status: 'OPEN', desc: 'Hand hygiene dispenser empty - bracket corroded', daysOpen: 5 },
+  { id: 'DEF-2026-003', location: 'Janitor Closet - 1st Floor', category: 'SECURITY', severity: 'LOW', status: 'RESOLVED', desc: 'Unsecured chemical storage - lock installed', daysOpen: 21 },
 ];
 
 const upcomingPm = [
-  { name: 'Fire Panel Main – Notifier NFS2-3030', category: 'FIRE_ALARM', due: '2026-03-18', status: 'DUE_SOON', vendor: 'Arizona Fire Systems' },
-  { name: 'Emergency Generator – Cummins 500kW', category: 'GENERATOR', due: '2026-03-22', status: 'DUE_SOON', vendor: 'Cummins Power Systems' },
+  { name: 'Fire Panel Main - Notifier NFS2-3030', category: 'FIRE_ALARM', due: '2026-03-18', status: 'DUE_SOON', vendor: 'Arizona Fire Systems' },
+  { name: 'Emergency Generator - Cummins 500kW', category: 'GENERATOR', due: '2026-03-22', status: 'DUE_SOON', vendor: 'Cummins Power Systems' },
   { name: 'Kitchen Hood Suppression System', category: 'FIRE_SUPPRESSION', due: '2026-03-05', status: 'OVERDUE', vendor: 'Ansul Service AZ' },
-  { name: 'Elevator – Kone MiniSpace (Wing A)', category: 'ELEVATOR', due: '2026-04-01', status: 'UPCOMING', vendor: 'KONE Americas' },
+  { name: 'Elevator - Kone MiniSpace (Wing A)', category: 'ELEVATOR', due: '2026-04-01', status: 'UPCOMING', vendor: 'KONE Americas' },
 ];
 
 const eocProgramStatus = [

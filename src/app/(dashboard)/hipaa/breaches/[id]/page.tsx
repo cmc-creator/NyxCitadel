@@ -160,7 +160,7 @@ export default async function HipaaBreachDetailPage({ params }: { params: { id: 
               <div>
                 <dt className="text-xs text-muted-foreground/70">Reportable Breach</dt>
                 <dd className={`text-sm font-semibold mt-0.5 ${isReportable ? 'text-red-600' : 'text-green-600'}`}>
-                  {isReportable ? 'Yes — Reportable' : 'No / Under Review'}
+                  {isReportable ? 'Yes - Reportable' : 'No / Under Review'}
                 </dd>
               </div>
               {hhsDue && <Field label="HHS Notify By" value={formatDate(hhsDue)} />}

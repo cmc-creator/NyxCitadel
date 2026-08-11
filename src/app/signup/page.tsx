@@ -192,7 +192,7 @@ export default function SignupPage() {
             <div className="rounded-2xl border border-teal-500/20 bg-teal-500/6 p-6 flex flex-col sm:flex-row items-center justify-between gap-5">
               <div>
                 <h3 className="text-base font-bold text-white mb-1">Ready to see it live?</h3>
-                <p className="text-sm text-slate-400 leading-relaxed">Tell us about your facility and we&apos;ll set up a personalized demo with real data — free, no credit card required.</p>
+                <p className="text-sm text-slate-400 leading-relaxed">Tell us about your facility and we&apos;ll set up a personalized demo with real data - free, no credit card required.</p>
               </div>
               <button
                 onClick={() => setTab('request')}

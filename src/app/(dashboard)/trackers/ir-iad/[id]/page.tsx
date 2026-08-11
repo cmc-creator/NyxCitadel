@@ -99,7 +99,7 @@ export default async function IrIadDetailPage({ params }: { params: { id: string
         <div className="bg-teal-950/20 border border-indigo-200 rounded-xl p-4 flex items-start gap-3">
           <Brain className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-indigo-800">AI Triage &mdash; {ir.aiTriageSeverity}</p>
+            <p className="text-sm font-semibold text-indigo-800">AI Triage - {ir.aiTriageSeverity}</p>
             {ir.aiTriageReason && <p className="text-xs text-indigo-700 mt-0.5">{ir.aiTriageReason}</p>}
             {aiTags && aiTags.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-1.5">

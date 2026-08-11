@@ -6,7 +6,7 @@ import HvaEditForm from './HvaEditForm';
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: { year: string } }) {
-  return { title: `${params.year} HVA – Edit` };
+  return { title: `${params.year} HVA - Edit` };
 }
 
 export default async function HvaEditPage({ params }: { params: { year: string } }) {

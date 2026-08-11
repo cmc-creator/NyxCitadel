@@ -5,7 +5,7 @@ import { formatDistanceToNow, isPast, isToday, isTomorrow } from 'date-fns';
 export interface AttentionItem {
   id: string;
   href: string;
-  label: string;       // e.g. "CAP-0042 — Fall Risk Mitigation"
+  label: string;       // e.g. "CAP-0042 - Fall Risk Mitigation"
   sublabel: string;    // e.g. "Target date was Mar 15"
   urgency: 'critical' | 'high' | 'medium';
   category: string;    // e.g. "CAP" | "Grievance" | "IR/IAD"

@@ -92,7 +92,7 @@ const INTEGRATIONS: Integration[] = [
   {
     key: 'ical',
     name: 'Calendar Sync (iCal / Outlook)',
-    description: 'Subscribe to your compliance calendar in Outlook, Google Calendar, or Apple Calendar. Click a button below to subscribe instantly — no copy-paste required.',
+    description: 'Subscribe to your compliance calendar in Outlook, Google Calendar, or Apple Calendar. Click a button below to subscribe instantly - no copy-paste required.',
     category: 'Integrations',
     status: 'available',
     logoText: 'CAL',

@@ -94,7 +94,7 @@ export function LigatureClient({ items: initialItems }: { items: LigatureItem[] 
   }
 
   function fmt(dateStr: string | null) {
-    if (!dateStr) return '—';
+    if (!dateStr) return '-';
     return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   }
 
@@ -112,7 +112,7 @@ export function LigatureClient({ items: initialItems }: { items: LigatureItem[] 
           </div>
           <h1 className="text-2xl font-bold text-foreground mt-1">Ligature Risk Assessment</h1>
           <p className="text-sm text-muted-foreground/70 mt-0.5">
-            TJC EC.02.06.01 — Psychiatric Environment Ligature Point Tracking
+            TJC EC.02.06.01 - Psychiatric Environment Ligature Point Tracking
           </p>
         </div>
         <Link
@@ -130,7 +130,7 @@ export function LigatureClient({ items: initialItems }: { items: LigatureItem[] 
           <span className="font-semibold">TJC EC.02.06.01</span> requires psychiatric facilities to conduct a
           comprehensive ligature risk assessment and implement time-limited plans of correction for all identified risks.
           IMMEDIATE risks must be corrected before patient occupancy. HIGH risks require a written mitigation plan within
-          72 hours and correction within 30–45 days. All accepted risks require Medical Director / Administrator sign-off
+          72 hours and correction within 30-45 days. All accepted risks require Medical Director / Administrator sign-off
           with documented rationale.
         </p>
       </div>

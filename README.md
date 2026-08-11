@@ -1,8 +1,8 @@
-# NyxCitadel — Hospital Compliance & Risk Management Platform
+# NyxCitadel - Hospital Compliance & Risk Management Platform
 
 > White-label compliance, risk management, and emergency management platform for healthcare facilities.
 >
-> Currently configured for: Destiny Springs Healthcare — Acute Psychiatric Inpatient, Peoria, AZ
+> Currently configured for: Destiny Springs Healthcare - Acute Psychiatric Inpatient, Peoria, AZ
 
 ---
 
@@ -57,7 +57,7 @@
 
 ## Prerequisites
 
-### Step 1 — Install Node.js
+### Step 1 - Install Node.js
 
 NyxCitadel requires **Node.js 20 LTS** or newer.
 
@@ -70,7 +70,7 @@ node --version
 npm --version
 ```
 
-### Step 2 — Install PostgreSQL
+### Step 2 - Install PostgreSQL
 
 1. Download PostgreSQL from <https://www.postgresql.org/download/windows/>.
 1. During install, note the password for the `postgres` user and the configured port.
@@ -165,13 +165,13 @@ Override these values during seed with environment variables:
 
 ## GitHub Repository Setup
 
-### Step 1 — Create the Repository
+### Step 1 - Create the Repository
 
 1. Go to <https://github.com/new>.
 1. Create a private repository named `NyxCitadel` or similar.
 1. Do not initialize it with a README or `.gitignore`.
 
-### Step 2 — Initialize Git and Push
+### Step 2 - Initialize Git and Push
 
 ```powershell
 cd "\\192.168.168.182\Folder Redirection\Ccooper\Documents\GitHub\NyxCitadel"
@@ -184,7 +184,7 @@ git branch -M main
 git push -u origin main
 ```
 
-### Step 3 — Protect `main`
+### Step 3 - Protect `main`
 
 In GitHub branch protection rules, enable:
 
@@ -197,23 +197,23 @@ In GitHub branch protection rules, enable:
 
 Vercel is the recommended deployment platform for Next.js.
 
-### Step 1 — Create a Vercel Account
+### Step 1 - Create a Vercel Account
 
 Create or sign in to a Vercel account at <https://vercel.com>.
 
-### Step 2 — Import the Project
+### Step 2 - Import the Project
 
 1. In Vercel, choose **Add New → Project**.
 1. Import the `NyxCitadel` GitHub repository.
 1. Confirm the detected framework is **Next.js**.
 
-### Step 3 — Provision Postgres
+### Step 3 - Provision Postgres
 
 1. In the Vercel project, open **Storage**.
 1. Create a Postgres database.
 1. Vercel will inject database connection variables automatically.
 
-### Step 4 — Configure Remaining Environment Variables
+### Step 4 - Configure Remaining Environment Variables
 
 Add the following in Vercel project settings:
 
@@ -227,7 +227,7 @@ Add the following in Vercel project settings:
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` | SMTP settings for signup, alerts, and export email delivery |
 | `SMTP_FROM` | Branded sender identity |
 
-### Step 5 — Deploy
+### Step 5 - Deploy
 
 Deploy from the Vercel dashboard, then run production schema setup locally with the pulled production env file:
 

@@ -266,7 +266,7 @@ export async function generateComplianceAlerts({ userId, facilityId, deliverEmai
       alerts.push({
         type: NotificationType.REGULATORY_UPDATE,
         title: `New Regulatory Update: ${update.title}`,
-        message: `${update.regulatoryBody} — ${update.summary.slice(0, 200)}${update.summary.length > 200 ? '…' : ''}`,
+        message: `${update.regulatoryBody} - ${update.summary.slice(0, 200)}${update.summary.length > 200 ? '…' : ''}`,
         linkUrl: '/regulatory-updates',
       });
     }

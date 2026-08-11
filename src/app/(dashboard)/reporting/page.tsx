@@ -162,7 +162,7 @@ export default async function ReportingPage() {
                   <tr key={s.id} className={`border-b border-border last:border-0 ${i % 2 === 1 ? 'bg-slate-900/20' : ''}`}>
                     <td className="p-3 font-medium text-foreground">{TYPE_LABELS[s.submissionType] ?? s.submissionType}</td>
                     <td className="p-3 text-slate-400">{s.reportingPeriod}</td>
-                    <td className="p-3 text-slate-400">{s.dueDate ? formatDate(s.dueDate) : '—'}</td>
+                    <td className="p-3 text-slate-400">{s.dueDate ? formatDate(s.dueDate) : '-'}</td>
                     <td className="p-3">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${cfg.cls}`}>
                         {cfg.label}

@@ -146,7 +146,7 @@ export function getRegulatoryAlertEmail(data: {
           ? '<span style="background:#fef2f2;color:#dc2626;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid #fecaca;">CRITICAL</span>'
           : '<span style="background:#fff7ed;color:#ea580c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid #fed7aa;">HIGH</span>';
         const agencyLabel = u.agency.replace(/_/g, '/');
-        const docLabel = u.docType ? ` &mdash; ${u.docType}` : '';
+        const docLabel = u.docType ? ` - ${u.docType}` : '';
         return `
           <div class="list-item">
             <h3>${badge}&nbsp; ${agencyLabel}${docLabel}</h3>
@@ -182,9 +182,9 @@ export function getRegulatoryUpdatePublishedEmail(data: {
   const url  = `${base}/regulatory-updates/${data.updateId}`;
 
   const urgencyColors: Record<string, { bg: string; text: string; border: string; label: string }> = {
-    CRITICAL:      { bg: '#450a0a', text: '#fca5a5', border: '#7f1d1d', label: 'CRITICAL — Immediate Action Required' },
-    HIGH:          { bg: '#431407', text: '#fdba74', border: '#7c2d12', label: 'HIGH — Review Within 7 Days' },
-    MEDIUM:        { bg: '#451a03', text: '#fcd34d', border: '#78350f', label: 'MEDIUM — Review Within 30 Days' },
+    CRITICAL:      { bg: '#450a0a', text: '#fca5a5', border: '#7f1d1d', label: 'CRITICAL - Immediate Action Required' },
+    HIGH:          { bg: '#431407', text: '#fdba74', border: '#7c2d12', label: 'HIGH - Review Within 7 Days' },
+    MEDIUM:        { bg: '#451a03', text: '#fcd34d', border: '#78350f', label: 'MEDIUM - Review Within 30 Days' },
     INFORMATIONAL: { bg: '#1e293b', text: '#94a3b8', border: '#334155', label: 'INFORMATIONAL' },
   };
 
@@ -209,7 +209,7 @@ export function getRegulatoryUpdatePublishedEmail(data: {
     <div class="section">
       ${banner}
       <div class="list-item">
-        <h3>${data.regulatoryBody} &mdash; ${data.title}</h3>
+        <h3>${data.regulatoryBody} - ${data.title}</h3>
         <p>${data.summary.slice(0, 300)}${data.summary.length > 300 ? '&hellip;' : ''}</p>
         <div class="meta"><a href="${url}" style="color:#0d7377;text-decoration:none;">Open in NyxCitadel &rarr;</a></div>
       </div>

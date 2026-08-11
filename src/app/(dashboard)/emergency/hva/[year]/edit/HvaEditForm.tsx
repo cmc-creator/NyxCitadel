@@ -66,9 +66,9 @@ const PRESETS: Record<HazardType, string[]> = {
   INFRASTRUCTURE: ['Water Main Break','Sewer System Failure','Structural Damage','Elevator Failure','Food Safety / Kitchen Failure'],
 };
 
-const PROB_LABELS  = ['0 – N/A', '1 – Low', '2 – Moderate', '3 – High'];
-const MAG_LABELS   = ['0 – N/A', '1 – Limited', '2 – Moderate', '3 – Catastrophic'];
-const PREP_LABELS  = ['0 – N/A', '1 – Well Prepared', '2 – Partially Prepared', '3 – Not Prepared'];
+const PROB_LABELS  = ['0 - N/A', '1 - Low', '2 - Moderate', '3 - High'];
+const MAG_LABELS   = ['0 - N/A', '1 - Limited', '2 - Moderate', '3 - Catastrophic'];
+const PREP_LABELS  = ['0 - N/A', '1 - Well Prepared', '2 - Partially Prepared', '3 - Not Prepared'];
 
 function emptyRow(type: HazardType = 'NATURAL'): HazardRow {
   return { hazardName: '', hazardType: type, probability: 1, magnitude: 1, preparedness: 1, mitigationPlan: '', responsibleParty: '', notes: '' };

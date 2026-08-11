@@ -4,9 +4,9 @@
  *
  * Primary Sources:
  * - 45 CFR Part 164 Subpart A - General Administrative Requirements
- * - 45 CFR Part 164 Subpart C - Security Rule (§ 164.302–164.318)
- * - 45 CFR Part 164 Subpart D - Notification in the Case of Breach (§ 164.400–164.414)
- * - 45 CFR Part 164 Subpart E - Privacy Rule (§ 164.500–164.534)
+ * - 45 CFR Part 164 Subpart C - Security Rule (§ 164.302-164.318)
+ * - 45 CFR Part 164 Subpart D - Notification in the Case of Breach (§ 164.400-164.414)
+ * - 45 CFR Part 164 Subpart E - Privacy Rule (§ 164.500-164.534)
  * - HHS Office for Civil Rights (OCR) Guidance Documents
  * - 42 CFR Part 2 - Substance Use Disorder Patient Records (SUD-specific)
  *
@@ -56,7 +56,7 @@ export const hipaaPrivacyRequirements: ComplianceRequirement[] = [
     title: 'Patient Privacy Rights Process Audit',
     description:
       'Quarterly audit of patient rights request processes: access to PHI (30-day response), ' +
-      'amendment requests, accounting of disclosures, restriction requests per 45 CFR 164.522–164.528.',
+      'amendment requests, accounting of disclosures, restriction requests per 45 CFR 164.522-164.528.',
     category: EventCategory.PATIENT_RIGHTS_REVIEW,
     regulatoryBody: RegulatoryBody.OTHER,
     standardRef: '45 CFR 164.522-164.528',

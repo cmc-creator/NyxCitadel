@@ -137,7 +137,7 @@ export default async function CommitteeMeetingDetailPage({ params }: { params: {
           <AttachmentComposer
             sourceType="COMMITTEE_MEETING"
             sourceId={meeting.id}
-            sourceLabel={`${meeting.committeeType.replace(/_/g, ' ')} — ${meeting.meetingDate.toLocaleDateString()}`}
+            sourceLabel={`${meeting.committeeType.replace(/_/g, ' ')} - ${meeting.meetingDate.toLocaleDateString()}`}
             title="Add Meeting Attachment"
           />
         </div>

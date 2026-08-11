@@ -6,13 +6,13 @@ export const dynamic = 'force-dynamic';
 
 // ── GET /api/regulatory-references ──────────────────────────────────────────
 // Query params:
-//   q         – keyword search in title / standardRef / description / notes
-//   body      – regulatoryBody exact match (e.g. "CMS", "DEA")
-//   priority  – "CRITICAL" | "HIGH" | "MEDIUM" | "LOW"
-//   frequency – "ANNUAL" | "MONTHLY" | ...
-//   builtin   – "true" | "false" | omit for all
-//   page      – page number (default 1)
-//   limit     – results per page (default 100)
+//   q         - keyword search in title / standardRef / description / notes
+//   body      - regulatoryBody exact match (e.g. "CMS", "DEA")
+//   priority  - "CRITICAL" | "HIGH" | "MEDIUM" | "LOW"
+//   frequency - "ANNUAL" | "MONTHLY" | ...
+//   builtin   - "true" | "false" | omit for all
+//   page      - page number (default 1)
+//   limit     - results per page (default 100)
 export async function GET(req: NextRequest) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

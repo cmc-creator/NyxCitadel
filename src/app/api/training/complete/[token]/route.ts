@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 type Ctx = { params: { token: string } };
 
-// GET — fetch training details for the public completion page
+// GET - fetch training details for the public completion page
 export async function GET(_req: NextRequest, { params }: Ctx) {
   const record = await prisma.trainingRecord.findUnique({
     where: { completionToken: params.token },
@@ -33,7 +33,7 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
   return NextResponse.json({ ...record, facilityName: facility?.name ?? 'Your Facility' });
 }
 
-// POST — record completion
+// POST - record completion
 // Body: { completedDate?: string, score?: number, notes?: string }
 export async function POST(req: NextRequest, { params }: Ctx) {
   const record = await prisma.trainingRecord.findUnique({

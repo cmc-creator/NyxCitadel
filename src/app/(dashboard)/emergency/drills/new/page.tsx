@@ -83,7 +83,7 @@ export default function NewDrillPage() {
         <div className="px-6 py-5 space-y-4">
           <div>
             <label className="block text-xs font-medium text-muted-foreground mb-1">Drill Name *</label>
-            <input name="drillName" required className="form-input w-full" placeholder="e.g. Q1 Fire Drill – Day Shift – Unit 3B" />
+            <input name="drillName" required className="form-input w-full" placeholder="e.g. Q1 Fire Drill - Day Shift - Unit 3B" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>

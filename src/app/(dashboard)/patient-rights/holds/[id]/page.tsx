@@ -14,7 +14,7 @@ const STATUS_OPTIONS = [
   { value: 'EXTENDED', label: 'Extended', color: 'bg-orange-100 text-orange-800' },
   { value: 'DISCHARGED', label: 'Discharged', color: 'bg-green-100 text-green-800' },
   { value: 'CONVERTED_VOLUNTARY', label: 'Converted to Voluntary', color: 'bg-blue-100 text-blue-800' },
-  { value: 'COURT_ORDERED_CONTINUED', label: 'Court Ordered – Continued', color: 'bg-purple-100 text-purple-800' },
+  { value: 'COURT_ORDERED_CONTINUED', label: 'Court Ordered - Continued', color: 'bg-purple-100 text-purple-800' },
 ];
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {

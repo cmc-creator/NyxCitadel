@@ -11,7 +11,7 @@ function escapeIcsText(text: string): string {
 }
 
 function foldLine(line: string): string {
-  // RFC 5545 §3.1 — fold at 75 octets
+  // RFC 5545 §3.1 - fold at 75 octets
   const result: string[] = []
   while (line.length > 75) {
     result.push(line.slice(0, 75))
@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
     `PRODID:-//NyxCitadel//Compliance Calendar//EN`,
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    foldLine(`X-WR-CALNAME:${escapeIcsText(facility.name)} — Compliance Calendar`),
+    foldLine(`X-WR-CALNAME:${escapeIcsText(facility.name)} - Compliance Calendar`),
     'X-WR-TIMEZONE:UTC',
   ]
 

@@ -25,7 +25,7 @@ export async function POST(_req: NextRequest) {
   });
   const qrDataUrl = await QRCode.toDataURL(otpUri);
 
-  // Store secret temporarily (not yet "enabled") — user must verify before we enable
+  // Store secret temporarily (not yet "enabled") - user must verify before we enable
   await prisma.user.update({
     where: { id: session.user.id },
     data: { totpSecret: secret, totpEnabled: false },

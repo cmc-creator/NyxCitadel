@@ -198,7 +198,7 @@ export function DepartmentPanel({ department }: DepartmentPanelProps) {
   return (
     <div className={`rounded-xl border p-4 ${config.color}`}>
       <div className="flex items-center justify-between mb-3">
-        <p className="text-xs font-semibold text-white uppercase tracking-wider">{department} &mdash; Your Quick-Start</p>
+        <p className="text-xs font-semibold text-white uppercase tracking-wider">{department} - Your Quick-Start</p>
         <Link href="/settings/profile" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">
           Change
         </Link>

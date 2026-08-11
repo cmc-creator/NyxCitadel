@@ -108,7 +108,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
                 className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition"
               >
                 <CreditCard className="w-4 h-4" />
-                Start Subscription — 30 days free
+                Start Subscription - 30 days free
               </button>
             </form>
           ) : (

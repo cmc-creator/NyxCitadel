@@ -30,9 +30,9 @@ export default async function CredentialingPage() {
   const totalActive = await prisma.provider.count({ where: { facilityId, status: 'ACTIVE' } });
 
   const subModules = [
-    { href: '/credentialing/providers', title: 'Provider Directory', description: 'All credentialed providers — status, specialty, privileges, and reappointment dates.', icon: '👩‍⚕️', badge: 'CVO', badgeColor: 'bg-blue-100 text-blue-700', stat: `${totalActive} Active Providers`, statColor: 'text-emerald-400' },
-    { href: '/credentialing/licenses', title: 'License Tracking', description: 'Medical, DEA, APRN, and state licenses — expiry alerts, verification, and renewal workflow.', icon: '📜', badge: 'Auto-Alert', badgeColor: 'bg-amber-100 text-amber-700', stat: expiringLicenses.length > 0 ? `${expiringLicenses.length} Expiring <90 days` : 'All licenses current', statColor: expiringLicenses.length > 0 ? 'text-amber-400' : 'text-emerald-400' },
-    { href: '/credentialing/oppe', title: 'OPPE Records', description: 'Ongoing Professional Practice Evaluation — quarterly metrics per provider reviewed by MEC.', icon: '📊', badge: 'TJC MS.06', badgeColor: 'bg-teal-100 text-teal-700', stat: 'OPPE tracking', statColor: 'text-blue-400' },
+    { href: '/credentialing/providers', title: 'Provider Directory', description: 'All credentialed providers - status, specialty, privileges, and reappointment dates.', icon: '👩‍⚕️', badge: 'CVO', badgeColor: 'bg-blue-100 text-blue-700', stat: `${totalActive} Active Providers`, statColor: 'text-emerald-400' },
+    { href: '/credentialing/licenses', title: 'License Tracking', description: 'Medical, DEA, APRN, and state licenses - expiry alerts, verification, and renewal workflow.', icon: '📜', badge: 'Auto-Alert', badgeColor: 'bg-amber-100 text-amber-700', stat: expiringLicenses.length > 0 ? `${expiringLicenses.length} Expiring <90 days` : 'All licenses current', statColor: expiringLicenses.length > 0 ? 'text-amber-400' : 'text-emerald-400' },
+    { href: '/credentialing/oppe', title: 'OPPE Records', description: 'Ongoing Professional Practice Evaluation - quarterly metrics per provider reviewed by MEC.', icon: '📊', badge: 'TJC MS.06', badgeColor: 'bg-teal-100 text-teal-700', stat: 'OPPE tracking', statColor: 'text-blue-400' },
   ];
 
   const statusConfig: Record<string, { label: string; color: string }> = {
@@ -88,7 +88,7 @@ export default async function CredentialingPage() {
                 <div key={l.id} className="px-5 py-3 flex items-center justify-between">
                   <div>
                     <p className="text-sm font-semibold text-white">{l.provider.lastName}, {l.provider.firstName}</p>
-                    <p className="text-xs text-muted-foreground/70">{l.licenseType} — {l.licenseNumber}</p>
+                    <p className="text-xs text-muted-foreground/70">{l.licenseType} - {l.licenseNumber}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-xs text-muted-foreground/70">Expires {l.expiryDate.toLocaleDateString()}</p>
@@ -145,7 +145,7 @@ export default async function CredentialingPage() {
                 <td className="px-4 py-2.5 text-indigo-300 text-xs font-semibold">{p.credentials}</td>
                 <td className="px-4 py-2.5 text-slate-300 text-xs">{p.specialty}</td>
                 <td className="px-4 py-2.5 text-muted-foreground/70 text-xs">{p.providerType.replace(/_/g, ' ')}</td>
-                <td className="px-4 py-2.5 text-muted-foreground/70 text-xs">{p.reappointmentDate ? p.reappointmentDate.toLocaleDateString() : '—'}</td>
+                <td className="px-4 py-2.5 text-muted-foreground/70 text-xs">{p.reappointmentDate ? p.reappointmentDate.toLocaleDateString() : '-'}</td>
                 <td className="px-4 py-2.5">
                   <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig[p.status]?.color ?? 'bg-muted/30 text-muted-foreground'}`}>
                     {statusConfig[p.status]?.label ?? p.status}

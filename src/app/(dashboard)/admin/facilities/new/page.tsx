@@ -141,7 +141,7 @@ export default function NewFacilityPage() {
         <div className="bg-card border border-border rounded-xl p-6 space-y-4">
           <div>
             <h2 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide">Initial Admin User</h2>
-            <p className="text-xs text-muted-foreground mt-0.5">Optional — create the first admin account for this facility.</p>
+            <p className="text-xs text-muted-foreground mt-0.5">Optional - create the first admin account for this facility.</p>
           </div>
 
           <div className="grid grid-cols-1 gap-4">

@@ -142,7 +142,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                           <p className="truncate" title={item.riskDescription}>{item.riskDescription}</p>
                           {item.currentControls && <p className="text-xs text-muted-foreground/70 truncate">Controls: {item.currentControls}</p>}
                         </td>
-                        <td className="py-2 pr-2 text-muted-foreground">{item.category ? item.category.replace(/_/g, ' ') : '—'}</td>
+                        <td className="py-2 pr-2 text-muted-foreground">{item.category ? item.category.replace(/_/g, ' ') : '-'}</td>
                         <td className="py-2 pr-2 text-center font-medium">{item.likelihood}</td>
                         <td className="py-2 pr-2 text-center font-medium">{item.severity}</td>
                         <td className="py-2 pr-2 text-center">
@@ -153,7 +153,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                             {item.riskLevel}
                           </span>
                         </td>
-                        <td className="py-2 pr-2 text-muted-foreground">{item.assignedTo ?? '—'}</td>
+                        <td className="py-2 pr-2 text-muted-foreground">{item.assignedTo ?? '-'}</td>
                         <td className="py-2">
                           <span className={`px-1.5 py-0.5 rounded text-xs ${ITEM_STATUS_COLOR[item.status]}`}>{item.status}</span>
                         </td>
@@ -162,7 +162,7 @@ export default async function RiskAssessmentDetailPage({ params }: { params: { i
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-muted-foreground/70 mt-3">L = Likelihood (1–5) &middot; S = Severity (1–5) &middot; Score = L &times; S</p>
+              <p className="text-xs text-muted-foreground/70 mt-3">L = Likelihood (1-5) &middot; S = Severity (1-5) &middot; Score = L &times; S</p>
             </Section>
           )}
 

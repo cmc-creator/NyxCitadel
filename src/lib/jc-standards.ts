@@ -1,6 +1,6 @@
 /**
  * Joint Commission CAMH Standards Library
- * Acute/Psychiatric Hospital Program — scored Element of Performance (EP) library
+ * Acute/Psychiatric Hospital Program - scored Element of Performance (EP) library
  * Used by the Mock Survey Tracer Tool to present standards for scoring.
  *
  * Scope: Behavioral Health / Acute Psychiatric (CAMH)
@@ -46,7 +46,7 @@ export const JC_STANDARDS: Chapter[] = [
     standards: [
       {
         ref: 'NPSG.01.01.01', chapter: 'NPSG',
-        title: 'Identify patients correctly — use two identifiers',
+        title: 'Identify patients correctly - use two identifiers',
         eps: [
           ep('NPSG.01.01.01', 'EP 1', 'Use at least two patient identifiers when providing care, treatment, or services.', 'A'),
           ep('NPSG.01.01.01', 'EP 2', 'Label containers used for blood and other specimens in the presence of the patient.', 'A'),
@@ -88,7 +88,7 @@ export const JC_STANDARDS: Chapter[] = [
       },
       {
         ref: 'NPSG.15.01.01', chapter: 'NPSG',
-        title: 'Identify safety risks inherent in the patient population — suicide risk',
+        title: 'Identify safety risks inherent in the patient population - suicide risk',
         eps: [
           ep('NPSG.15.01.01', 'EP 1', 'Conduct a validated suicide risk assessment for all patients being evaluated or treated for behavioral health conditions.', 'A'),
           ep('NPSG.15.01.01', 'EP 2', 'Reassess suicide risk at defined intervals during the episode of care.', 'A'),
@@ -134,7 +134,7 @@ export const JC_STANDARDS: Chapter[] = [
       },
       {
         ref: 'EC.02.06.01', chapter: 'EC',
-        title: 'Establish and maintain a safe, functional environment — ligature risk',
+        title: 'Establish and maintain a safe, functional environment - ligature risk',
         eps: [
           ep('EC.02.06.01', 'EP 1', 'Assess environmental risks for suicide by ligature in patient care areas.', 'A'),
           ep('EC.02.06.01', 'EP 2', 'Minimize ligature risks where clinically appropriate.', 'A'),
@@ -177,7 +177,7 @@ export const JC_STANDARDS: Chapter[] = [
       },
       {
         ref: 'IC.02.02.01', chapter: 'IC',
-        title: 'Reduce the risk of infections — transmission-based precautions',
+        title: 'Reduce the risk of infections - transmission-based precautions',
         eps: [
           ep('IC.02.02.01', 'EP 1', 'Implement transmission-based precautions based on CDC guidelines.', 'A'),
           ep('IC.02.02.01', 'EP 2', 'Educate patients and families on transmission-based precautions.', 'C'),

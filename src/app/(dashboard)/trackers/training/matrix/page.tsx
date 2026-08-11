@@ -111,7 +111,7 @@ export default async function CompetencyMatrixPage({
   // Build locked name set by matching staffName against lockedEmails via training records
   const lockedStaffNames = new Set<string>();
   for (const r of records) {
-    // staffEmail is on training records — use it to check lock status
+    // staffEmail is on training records - use it to check lock status
     const rec = r as RecordRow & { staffEmail?: string | null };
     if (rec.staffEmail && lockedEmails.has(rec.staffEmail.toLowerCase())) {
       lockedStaffNames.add(r.staffName);
@@ -154,7 +154,7 @@ export default async function CompetencyMatrixPage({
             Staff Competency Matrix
           </h1>
           <p className="text-sm text-muted-foreground mt-0.5">
-            Required training compliance &mdash; {staffList.length} staff
+            Required training compliance - {staffList.length} staff
             {deptFilter ? ` in ${deptFilter}` : ''}, {REQUIRED_CATEGORIES.length} categories
             {lockoutCount > 0 && (
               <span className="ml-2 text-red-400 font-medium">&bull; {lockoutCount} scheduling lockout{lockoutCount !== 1 ? 's' : ''}</span>
@@ -283,14 +283,14 @@ export default async function CompetencyMatrixPage({
                         </div>
                       </div>
                     </td>
-                    <td className="px-3 py-2.5 text-muted-foreground/70">{staff.department ?? '—'}</td>
+                    <td className="px-3 py-2.5 text-muted-foreground/70">{staff.department ?? '-'}</td>
                     <td className="px-2 py-2.5 text-center">
                       {isLocked ? (
                         <Link href="/trackers/training/compliance" title="View lockout details">
                           <ShieldOff className="w-4 h-4 text-red-500 mx-auto hover:text-red-400" />
                         </Link>
                       ) : (
-                        <span className="text-muted-foreground/20">&mdash;</span>
+                        <span className="text-muted-foreground/20"> - </span>
                       )}
                     </td>
                     {REQUIRED_CATEGORIES.map(cat => {

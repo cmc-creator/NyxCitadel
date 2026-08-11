@@ -43,7 +43,7 @@ export default async function CapAuditReportPage({ params }: { params: { id: str
 
   return (
     <div className="min-h-screen bg-white text-black font-sans p-8 max-w-4xl mx-auto print:p-0">
-      {/* Print button — hidden in print */}
+      {/* Print button - hidden in print */}
       <div className="flex justify-end mb-6 print:hidden">
         <PrintButton className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700">
           Print / Save PDF
@@ -75,7 +75,7 @@ export default async function CapAuditReportPage({ params }: { params: { id: str
           <Row label="Status" value={cap.status.replace(/_/g, ' ')} />
           <Row label="Target Date" value={formatDate(cap.targetDate)} />
           {cap.completedDate && <Row label="Completed Date" value={formatDate(cap.completedDate)} />}
-          {cap.assignee && <Row label="Assignee" value={`${cap.assignee.name}${cap.assignee.title ? ` — ${cap.assignee.title}` : ''}`} />}
+          {cap.assignee && <Row label="Assignee" value={`${cap.assignee.name}${cap.assignee.title ? ` - ${cap.assignee.title}` : ''}`} />}
           {cap.sourceRef && <Row label="Source Reference" value={cap.sourceRef} />}
           {cap.regulatoryBody && <Row label="Regulatory Body" value={cap.regulatoryBody.replace(/_/g, ' ')} />}
         </div>
@@ -146,8 +146,8 @@ export default async function CapAuditReportPage({ params }: { params: { id: str
                   <td className="border border-gray-300 px-3 py-2 whitespace-nowrap">{format(new Date(entry.auditDate), 'MM/dd/yyyy')}</td>
                   <td className="border border-gray-300 px-3 py-2 font-semibold">{RESULT_LABEL[entry.result]}</td>
                   <td className="border border-gray-300 px-3 py-2">{entry.auditor.name ?? entry.auditor.email}</td>
-                  <td className="border border-gray-300 px-3 py-2">{entry.notes ?? '—'}</td>
-                  <td className="border border-gray-300 px-3 py-2 whitespace-nowrap">{entry.nextAuditDate ? format(new Date(entry.nextAuditDate), 'MM/dd/yyyy') : '—'}</td>
+                  <td className="border border-gray-300 px-3 py-2">{entry.notes ?? '-'}</td>
+                  <td className="border border-gray-300 px-3 py-2 whitespace-nowrap">{entry.nextAuditDate ? format(new Date(entry.nextAuditDate), 'MM/dd/yyyy') : '-'}</td>
                 </tr>
               ))}
             </tbody>
@@ -174,7 +174,7 @@ export default async function CapAuditReportPage({ params }: { params: { id: str
                   <td className="border border-gray-300 px-3 py-2 whitespace-nowrap">{format(new Date(h.timestamp), 'MM/dd/yyyy')}</td>
                   <td className="border border-gray-300 px-3 py-2 font-semibold">{h.action}</td>
                   <td className="border border-gray-300 px-3 py-2">{h.actorName}</td>
-                  <td className="border border-gray-300 px-3 py-2">{h.note ?? '—'}</td>
+                  <td className="border border-gray-300 px-3 py-2">{h.note ?? '-'}</td>
                 </tr>
               ))}
             </tbody>
@@ -188,7 +188,7 @@ export default async function CapAuditReportPage({ params }: { params: { id: str
           <h2 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3 border-b border-gray-200 pb-1">Linked Incidents</h2>
           <ul className="text-sm space-y-1">
             {cap.incidents.map((inc, i) => (
-              <li key={i}>{inc.incidentNumber} &mdash; {inc.incidentType.replace(/_/g, ' ')} &mdash; {formatDate(inc.dateOccurred)}</li>
+              <li key={i}>{inc.incidentNumber} - {inc.incidentType.replace(/_/g, ' ')} - {formatDate(inc.dateOccurred)}</li>
             ))}
           </ul>
         </section>
@@ -203,7 +203,7 @@ export default async function CapAuditReportPage({ params }: { params: { id: str
               <li key={i} className="flex items-center gap-2">
                 <span className="text-gray-500">{i + 1}.</span>
                 <span>{a.fileName}</span>
-                <span className="text-gray-400 text-xs">— {format(new Date(a.createdAt), 'MM/dd/yyyy')}</span>
+                <span className="text-gray-400 text-xs">- {format(new Date(a.createdAt), 'MM/dd/yyyy')}</span>
               </li>
             ))}
           </ul>

@@ -3,7 +3,7 @@ import { authConfig } from '@/auth.config';
 import { NextResponse } from 'next/server';
 
 // ---------------------------------------------------------------------------
-// Login rate limiter — 10 attempts per IP per 15 minutes
+// Login rate limiter - 10 attempts per IP per 15 minutes
 // In-memory: provides per-instance protection. For multi-region production,
 // replace with Vercel KV / Upstash (@upstash/ratelimit).
 // ---------------------------------------------------------------------------

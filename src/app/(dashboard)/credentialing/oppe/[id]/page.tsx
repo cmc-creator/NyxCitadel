@@ -77,7 +77,7 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
               OPPE - {oppe.provider.firstName} {oppe.provider.lastName}, {oppe.provider.credentials}
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              {oppe.provider.specialty} &middot; {formatDate(oppe.periodStart)} – {formatDate(oppe.periodEnd)}
+              {oppe.provider.specialty} &middot; {formatDate(oppe.periodStart)} - {formatDate(oppe.periodEnd)}
             </p>
           </div>
         </div>
@@ -125,7 +125,7 @@ export default async function OppeDetailPage({ params }: { params: { id: string 
           <Section title="Review Summary">
             <dl className="space-y-3">
               <Field label="Review Cycle" value={oppe.reviewCycle} />
-              <Field label="Period" value={`${formatDate(oppe.periodStart)} – ${formatDate(oppe.periodEnd)}`} />
+              <Field label="Period" value={`${formatDate(oppe.periodStart)} - ${formatDate(oppe.periodEnd)}`} />
               <div>
                 <dt className="text-xs text-muted-foreground/70">Total Cases</dt>
                 <dd className="text-sm font-medium text-foreground mt-0.5">{oppe.totalCases}</dd>

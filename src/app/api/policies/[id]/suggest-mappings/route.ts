@@ -8,7 +8,7 @@ import { CARF_STANDARDS } from '@/lib/carf-standards';
 
 export const dynamic = 'force-dynamic';
 
-// Condensed standard list for prompt — just ref + title
+// Condensed standard list for prompt - just ref + title
 function getStandardsSummary(): string {
   const tjc = JC_STANDARDS.flatMap(ch =>
     ch.standards.map(s => `TJC|${s.ref}|${s.title}`)

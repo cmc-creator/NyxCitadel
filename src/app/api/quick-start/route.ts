@@ -8,7 +8,7 @@ export async function POST() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   if (!['SUPER_ADMIN', 'ADMIN'].includes(session.user.role)) {
-    return NextResponse.json({ error: 'Forbidden — Admin role required' }, { status: 403 });
+    return NextResponse.json({ error: 'Forbidden - Admin role required' }, { status: 403 });
   }
 
   const result = await applyQuickStartTemplates(session.user.facilityId);

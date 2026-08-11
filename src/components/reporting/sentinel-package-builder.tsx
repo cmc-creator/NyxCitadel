@@ -131,7 +131,7 @@ export function SentinelPackageBuilder({ incidents }: Props) {
               onChange={e => setSelectedId(e.target.value)}
               className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-teal-500"
             >
-              <option value="">— Select sentinel event —</option>
+              <option value="">- Select sentinel event -</option>
               {incidents.map(i => (
                 <option key={i.id} value={i.id}>
                   {i.title} ({new Date(i.incidentDate).toLocaleDateString()})

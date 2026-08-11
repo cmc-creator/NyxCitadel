@@ -26,7 +26,7 @@ export function RunScrapeButton() {
       setResult(data);
       setState(data.ok ? 'done' : 'error');
     } catch {
-      setResult({ ok: false, error: 'Network error — check console' });
+      setResult({ ok: false, error: 'Network error - check console' });
       setState('error');
     }
   }
@@ -59,7 +59,7 @@ export function RunScrapeButton() {
               <CheckCircle2 className="w-4 h-4 text-teal-500 shrink-0 mt-0.5" />
               <div className="space-y-0.5">
                 <p className="font-medium text-foreground">
-                  Scrape complete — {result.newCount ?? 0} new update{result.newCount === 1 ? '' : 's'} saved
+                  Scrape complete - {result.newCount ?? 0} new update{result.newCount === 1 ? '' : 's'} saved
                 </p>
                 <p className="text-xs text-muted-foreground">
                   Fetched {result.totalFetched ?? 0} items from {result.sources?.length ?? 0} source{(result.sources?.length ?? 0) === 1 ? '' : 's'}

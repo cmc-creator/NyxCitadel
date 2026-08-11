@@ -69,7 +69,7 @@ function LoginForm() {
           }
         }
       } catch {
-        // ignore preflight errors — fall through to normal signIn
+        // ignore preflight errors - fall through to normal signIn
       }
     }
 

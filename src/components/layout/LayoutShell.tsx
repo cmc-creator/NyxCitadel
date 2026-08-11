@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Sidebar } from './sidebar';
 import { TopBar } from './topbar';
+import { GeniusWalkthrough } from '@/components/onboarding/GeniusWalkthrough';
+import { FloatingAiCoPilot } from '@/components/ai/FloatingAiCoPilot';
 
 interface LayoutShellProps {
   user: {
@@ -21,9 +23,11 @@ export function LayoutShell({ user, children }: LayoutShellProps) {
 
   return (
     <>
+      <GeniusWalkthrough />
+      <FloatingAiCoPilot />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isCollapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} />
       <div className={`flex-1 transition-all duration-300 flex flex-col min-w-0 ${sidebarCollapsed ? 'md:ml-20' : 'md:ml-64'}`}>
-        <TopBar user={user} onMenuToggle={() => setSidebarOpen(true)} />
+        <TopBar user={user} onMenuClick={() => setSidebarOpen(true)} />
         <main className="flex-1 p-4 md:p-6 overflow-auto">
           {children}
         </main>
@@ -31,3 +35,5 @@ export function LayoutShell({ user, children }: LayoutShellProps) {
     </>
   );
 }
+
+

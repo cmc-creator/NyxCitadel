@@ -7,7 +7,7 @@
  * Run with:
  *   npx tsx prisma/seed-reg-library.ts
  *
- * Safe to re-run — uses upsert on refId so existing entries are updated
+ * Safe to re-run - uses upsert on refId so existing entries are updated
  * rather than duplicated.  Custom (isBuiltIn=false) entries are never touched.
  *
  * After updating any compliance/*.ts file, re-run this script so the DB
@@ -70,7 +70,7 @@ async function main() {
         updated++;
       }
     } catch {
-      console.warn(`  ⚠️  Skipped ${req.id} — ${req.title.slice(0, 50)}`);
+      console.warn(`  ⚠️  Skipped ${req.id} - ${req.title.slice(0, 50)}`);
       skipped++;
     }
   }

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { X, CheckCircle, Building2, Users, Calendar, Zap, ChevronRight, Loader2, Sparkles, type LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 
-// Only set when ALL steps complete AND user explicitly closes — never on simple dismiss.
+// Only set when ALL steps complete AND user explicitly closes - never on simple dismiss.
 const WIZARD_DONE_KEY  = 'nyxcitadel:setup-wizard-done:v1';
 // Per-step completion tracking (preserved across sessions)
 const WIZARD_STEPS_KEY = 'nyxcitadel:setup-wizard-completed:v1:completed';
@@ -28,7 +28,7 @@ const setupSteps: SetupStep[] = [
   {
     id: 'quick-start',
     title: 'Load Quick-Start Templates',
-    description: 'Populate your calendar, policies, and a sample CAP with best-practice compliance templates — ready to customize in minutes.',
+    description: 'Populate your calendar, policies, and a sample CAP with best-practice compliance templates - ready to customize in minutes.',
     icon: Sparkles,
     action: { label: 'Apply Templates', apiEndpoint: '/api/quick-start', method: 'POST' },
   },
@@ -81,14 +81,14 @@ export function SetupWizard() {
       if (saved) setCompletedSteps(new Set(JSON.parse(saved)));
     } catch { /* ignore */ }
 
-    // Permanently done? Stop here — don't show wizard.
+    // Permanently done? Stop here - don't show wizard.
     if (window.localStorage.getItem(WIZARD_DONE_KEY)) return;
 
     // Open immediately if WelcomeOnboarding was already dismissed in a prior session
     if (window.localStorage.getItem(WELCOME_SEEN_KEY)) {
       setIsOpen(true);
     } else {
-      // First-ever session: WelcomeOnboarding is showing now — wait for it to close first
+      // First-ever session: WelcomeOnboarding is showing now - wait for it to close first
       const handler = () => setIsOpen(true);
       window.addEventListener('nyx:welcome-done', handler);
       return () => window.removeEventListener('nyx:welcome-done', handler);
@@ -120,15 +120,15 @@ export function SetupWizard() {
       const data = await res.json().catch(() => ({}));
       if (res.ok) {
         const msg = data.calendarEventsCreated !== undefined
-          ? `Loaded ${data.calendarEventsCreated} calendar events, ${data.policiesCreated} policies, and ${data.capsCreated} CAP — ready to customize.`
+          ? `Loaded ${data.calendarEventsCreated} calendar events, ${data.policiesCreated} policies, and ${data.capsCreated} CAP - ready to customize.`
           : 'Templates applied successfully.';
         setStepMessage({ id: step.id, text: msg, ok: true });
         markCompleted(step.id);
       } else {
-        setStepMessage({ id: step.id, text: data.error ?? 'Something went wrong — try again.', ok: false });
+        setStepMessage({ id: step.id, text: data.error ?? 'Something went wrong - try again.', ok: false });
       }
     } catch {
-      setStepMessage({ id: step.id, text: 'Network error — check your connection and try again.', ok: false });
+      setStepMessage({ id: step.id, text: 'Network error - check your connection and try again.', ok: false });
     }
     setLoadingStep(null);
   }, [loadingStep, markCompleted]);
@@ -183,7 +183,7 @@ export function SetupWizard() {
                 <p className="text-sm text-slate-400 mt-0.5">
                   {allDone
                     ? 'Your facility is configured and ready. This guide will not show again.'
-                    : `${completedSteps.size} of ${setupSteps.length} steps complete — click any step to continue.`}
+                    : `${completedSteps.size} of ${setupSteps.length} steps complete - click any step to continue.`}
                 </p>
               </div>
             </div>
@@ -306,7 +306,7 @@ export function SetupWizard() {
                 onClick={closePermanently}
                 className="w-full px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition-all"
               >
-                Got it — go to dashboard
+                Got it - go to dashboard
               </button>
             ) : (
               <>

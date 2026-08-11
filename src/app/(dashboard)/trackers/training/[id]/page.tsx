@@ -79,7 +79,7 @@ export default async function TrainingDetailPage({ params }: { params: { id: str
       {isExpired && (
         <div className="bg-red-950/20 border border-red-200 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-          <p className="text-sm text-red-800"><strong>Training Expired</strong> &mdash; expired on {formatDate(record.expiryDate!)}.</p>
+          <p className="text-sm text-red-800"><strong>Training Expired</strong> - expired on {formatDate(record.expiryDate!)}.</p>
         </div>
       )}
 

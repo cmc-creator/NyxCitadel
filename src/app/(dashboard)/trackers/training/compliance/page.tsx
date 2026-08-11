@@ -86,7 +86,7 @@ export default function ComplianceGatekeeperPage() {
               <s.icon className={`w-4 h-4 ${s.color}`} />
               <span className="text-xs text-muted-foreground">{s.label}</span>
             </div>
-            <p className={`text-2xl font-bold ${s.color}`}>{loading ? '—' : s.value}</p>
+            <p className={`text-2xl font-bold ${s.color}`}>{loading ? '-' : s.value}</p>
           </div>
         ))}
       </div>
@@ -126,11 +126,11 @@ export default function ComplianceGatekeeperPage() {
                     <div className="font-medium text-foreground/90">{u.name ?? u.email}</div>
                     <div className="text-xs text-muted-foreground">{u.email}</div>
                   </td>
-                  <td className="px-4 py-4 text-sm text-muted-foreground">{u.department ?? '—'}</td>
+                  <td className="px-4 py-4 text-sm text-muted-foreground">{u.department ?? '-'}</td>
                   <td className="px-4 py-4 text-xs text-muted-foreground">
-                    {u.scheduleBlockedAt ? new Date(u.scheduleBlockedAt).toLocaleDateString() : '—'}
+                    {u.scheduleBlockedAt ? new Date(u.scheduleBlockedAt).toLocaleDateString() : '-'}
                   </td>
-                  <td className="px-4 py-4 text-xs text-muted-foreground max-w-xs truncate">{u.scheduleBlockReason ?? '—'}</td>
+                  <td className="px-4 py-4 text-xs text-muted-foreground max-w-xs truncate">{u.scheduleBlockReason ?? '-'}</td>
                   <td className="px-5 py-4 text-right">
                     <ComplianceLockoutOverrideButton
                       userId={u.id}
@@ -152,7 +152,7 @@ export default function ComplianceGatekeeperPage() {
             <AlertTriangle className="w-3.5 h-3.5 text-amber-400" /> At-Risk Staff
           </h2>
           <p className="text-xs text-muted-foreground/70 mt-0.5">
-            Required training due within 63 days — non-completion triggers lockout
+            Required training due within 63 days - non-completion triggers lockout
           </p>
         </div>
         {loading ? (
@@ -184,7 +184,7 @@ export default function ComplianceGatekeeperPage() {
                       <div className="font-medium text-foreground/90 text-sm">{r.staffName}</div>
                       {r.staffEmail && <div className="text-xs text-muted-foreground">{r.staffEmail}</div>}
                     </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground">{r.department ?? '—'}</td>
+                    <td className="px-4 py-3 text-sm text-muted-foreground">{r.department ?? '-'}</td>
                     <td className="px-4 py-3 text-sm text-foreground/80">{r.trainingName}</td>
                     <td className="px-4 py-3">
                       <span className={`text-xs font-medium px-2 py-0.5 rounded ${STATUS_COLORS[r.status] ?? 'bg-muted/30 text-muted-foreground'}`}>
@@ -192,14 +192,14 @@ export default function ComplianceGatekeeperPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 text-sm text-muted-foreground">
-                      {r.expiryDate ? new Date(r.expiryDate).toLocaleDateString() : '—'}
+                      {r.expiryDate ? new Date(r.expiryDate).toLocaleDateString() : '-'}
                     </td>
                     <td className="px-4 py-3">
                       {daysLeft !== null ? (
                         <span className={`text-sm font-semibold ${daysLeft <= 15 ? 'text-red-500' : daysLeft <= 30 ? 'text-amber-500' : 'text-muted-foreground'}`}>
                           {daysLeft}d
                         </span>
-                      ) : '—'}
+                      ) : '-'}
                     </td>
                   </tr>
                 );

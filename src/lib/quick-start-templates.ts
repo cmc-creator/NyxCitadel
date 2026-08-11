@@ -26,25 +26,25 @@ function buildCalendarTemplates(facilityId: string): Prisma.CalendarEventCreateM
 
   return [
     // CMS / Survey
-    { facilityId, title: 'CMS Mock Survey – Internal Prep', dueDate: addDays(now, 60), category: EventCategory.CMS_MOCK_SURVEY, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Self-assessment survey simulation to identify gaps before state visit.' },
+    { facilityId, title: 'CMS Mock Survey - Internal Prep', dueDate: addDays(now, 60), category: EventCategory.CMS_MOCK_SURVEY, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Self-assessment survey simulation to identify gaps before state visit.' },
     { facilityId, title: 'ADHS Annual Licensing Renewal', dueDate: date(10, 1), category: EventCategory.AZ_LICENSE_RENEWAL, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Arizona ADHS facility license renewal submission deadline.' },
     // QAPI
-    { facilityId, title: 'QAPI Committee Meeting – Q1', dueDate: date(3, 15), category: EventCategory.QAPI_MEETING, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Quarterly QAPI committee review.' },
-    { facilityId, title: 'QAPI Committee Meeting – Q2', dueDate: date(6, 15), category: EventCategory.QAPI_MEETING, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Quarterly QAPI committee review.' },
-    { facilityId, title: 'QAPI Committee Meeting – Q3', dueDate: date(9, 15), category: EventCategory.QAPI_MEETING, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Quarterly QAPI committee review.' },
-    { facilityId, title: 'QAPI Committee Meeting – Q4', dueDate: date(12, 15), category: EventCategory.QAPI_MEETING, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Quarterly QAPI committee review.' },
+    { facilityId, title: 'QAPI Committee Meeting - Q1', dueDate: date(3, 15), category: EventCategory.QAPI_MEETING, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Quarterly QAPI committee review.' },
+    { facilityId, title: 'QAPI Committee Meeting - Q2', dueDate: date(6, 15), category: EventCategory.QAPI_MEETING, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Quarterly QAPI committee review.' },
+    { facilityId, title: 'QAPI Committee Meeting - Q3', dueDate: date(9, 15), category: EventCategory.QAPI_MEETING, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Quarterly QAPI committee review.' },
+    { facilityId, title: 'QAPI Committee Meeting - Q4', dueDate: date(12, 15), category: EventCategory.QAPI_MEETING, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Quarterly QAPI committee review.' },
     // Training
     { facilityId, title: 'Annual Staff Competency Reviews', dueDate: date(9, 30), category: EventCategory.STAFF_TRAINING, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Annual clinical competency validation for all direct-care staff.' },
     { facilityId, title: 'CPR / First Aid Recertification', dueDate: date(6, 30), category: EventCategory.STAFF_TRAINING, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'BLS recertification for clinical staff. 100% compliance required.' },
-    { facilityId, title: 'HIPAA & Privacy Training – Annual', dueDate: date(3, 31), category: EventCategory.STAFF_TRAINING, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Annual HIPAA workforce training per 45 CFR 164.530(b).' },
+    { facilityId, title: 'HIPAA & Privacy Training - Annual', dueDate: date(3, 31), category: EventCategory.STAFF_TRAINING, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Annual HIPAA workforce training per 45 CFR 164.530(b).' },
     // EM / Drills
-    { facilityId, title: 'Fire Evacuation Drill – Jan', dueDate: date(1, 28), category: EventCategory.FULL_SCALE_DRILL, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Monthly fire evacuation drill – P.M. shift.' },
-    { facilityId, title: 'Fire Evacuation Drill – Apr', dueDate: date(4, 28), category: EventCategory.FULL_SCALE_DRILL, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Monthly fire evacuation drill – A.M. shift.' },
-    { facilityId, title: 'Fire Evacuation Drill – Jul', dueDate: date(7, 28), category: EventCategory.FULL_SCALE_DRILL, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Monthly fire evacuation drill – P.M. shift.' },
-    { facilityId, title: 'Fire Evacuation Drill – Oct', dueDate: date(10, 28), category: EventCategory.FULL_SCALE_DRILL, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Monthly fire evacuation drill – A.M. shift.' },
-    { facilityId, title: 'Tabletop Exercise – Emergency Preparedness', dueDate: date(5, 15), category: EventCategory.TABLETOP_EXERCISE, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Annual tabletop exercise per JC EM.03.01.03.' },
+    { facilityId, title: 'Fire Evacuation Drill - Jan', dueDate: date(1, 28), category: EventCategory.FULL_SCALE_DRILL, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Monthly fire evacuation drill - P.M. shift.' },
+    { facilityId, title: 'Fire Evacuation Drill - Apr', dueDate: date(4, 28), category: EventCategory.FULL_SCALE_DRILL, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Monthly fire evacuation drill - A.M. shift.' },
+    { facilityId, title: 'Fire Evacuation Drill - Jul', dueDate: date(7, 28), category: EventCategory.FULL_SCALE_DRILL, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Monthly fire evacuation drill - P.M. shift.' },
+    { facilityId, title: 'Fire Evacuation Drill - Oct', dueDate: date(10, 28), category: EventCategory.FULL_SCALE_DRILL, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Monthly fire evacuation drill - A.M. shift.' },
+    { facilityId, title: 'Tabletop Exercise - Emergency Preparedness', dueDate: date(5, 15), category: EventCategory.TABLETOP_EXERCISE, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Annual tabletop exercise per JC EM.03.01.03.' },
     // Policy reviews
-    { facilityId, title: 'Patient Rights Policies – Annual Review', dueDate: addDays(now, 90), category: EventCategory.CMS_CONDITIONS_REVIEW, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Annual review of Patient Rights policy set per CMS §482.13.' },
+    { facilityId, title: 'Patient Rights Policies - Annual Review', dueDate: addDays(now, 90), category: EventCategory.CMS_CONDITIONS_REVIEW, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Annual review of Patient Rights policy set per CMS §482.13.' },
     { facilityId, title: 'Infection Control Program Review', dueDate: date(11, 1), category: EventCategory.CMS_CONDITIONS_REVIEW, priority: Priority.MEDIUM, status: EventStatus.UPCOMING, description: 'Annual IC program evaluation and ICRA update.' },
     { facilityId, title: 'Emergency Operations Plan (EOP) Review', dueDate: date(2, 1), category: EventCategory.CMS_CONDITIONS_REVIEW, priority: Priority.HIGH, status: EventStatus.UPCOMING, description: 'Annual EOP review per CMS CoP §482.15.' },
   ];

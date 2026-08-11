@@ -32,7 +32,7 @@ export default async function ResilienceScorecardPage() {
   // Parallel data fetching
   const [trainingAll, trainingCompleted, recentIR, openCaps, openGrievances, openIR, facility, recentDrills] =
     await Promise.all([
-      // All required training records – group by department
+      // All required training records - group by department
       prisma.trainingRecord.findMany({
         where: { facilityId, isRequired: true },
         select: { department: true, status: true },

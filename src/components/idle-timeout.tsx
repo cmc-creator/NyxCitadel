@@ -20,7 +20,7 @@ export function IdleTimeout() {
       if (warningTimer.current) clearTimeout(warningTimer.current);
 
       warningTimer.current = setTimeout(() => {
-        // Non-blocking in-page warning — replaces browser confirm to stay CSP-safe
+        // Non-blocking in-page warning - replaces browser confirm to stay CSP-safe
         const banner = document.getElementById('__idle-warning-banner__');
         if (banner) banner.style.display = 'flex';
       }, IDLE_TIMEOUT_MS - WARNING_BEFORE_MS);

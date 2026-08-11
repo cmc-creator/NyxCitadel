@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     select: { passwordHash: true, isActive: true, totpEnabled: true },
   });
 
-  // Same response for invalid user as wrong password — avoid user enumeration
+  // Same response for invalid user as wrong password - avoid user enumeration
   if (!user || !user.passwordHash || !user.isActive) {
     return NextResponse.json({ requires2fa: false });
   }

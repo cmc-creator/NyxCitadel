@@ -78,7 +78,7 @@ export default async function ComplianceTrackerPage({
             </div>
             <h3 className="text-lg font-semibold text-foreground mb-1">No compliance requirements tracked</h3>
             <p className="text-sm text-muted-foreground max-w-sm mb-6">
-              Start by adding the regulatory requirements your facility must meet — ADHS, CMS, Joint Commission, and more. NyxCitadel will track due dates and send alerts.
+              Start by adding the regulatory requirements your facility must meet - ADHS, CMS, Joint Commission, and more. NyxCitadel will track due dates and send alerts.
             </p>
             <Link
               href="/trackers/compliance/new"

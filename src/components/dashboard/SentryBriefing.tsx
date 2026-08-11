@@ -68,7 +68,7 @@ export function SentryBriefing() {
 
       <div className="flex-1 min-w-0">
         <p className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${labelCls}`}>
-          Sentry &mdash; Daily Briefing
+          Sentry - Daily Briefing
         </p>
         {error ? (
           <p className="text-xs text-red-400">Could not generate briefing. Try refreshing.</p>

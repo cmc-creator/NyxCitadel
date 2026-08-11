@@ -273,7 +273,7 @@ export function DailyChecklistClient({ tasks }: { tasks: DailyTask[] }) {
             />
           </div>
           <p className="text-xs text-muted-foreground/50 mt-1">
-            Check off items as you action them — resets at midnight
+            Check off items as you action them - resets at midnight
           </p>
         </div>
       )}

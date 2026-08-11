@@ -17,7 +17,7 @@ export const maxDuration = 60; // Vercel Pro allows up to 300s; 60s is safe
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET;
 
-  // Fail closed — if CRON_SECRET is not configured, refuse all requests.
+  // Fail closed - if CRON_SECRET is not configured, refuse all requests.
   if (!secret) {
     return NextResponse.json({ error: 'CRON_SECRET not configured' }, { status: 500 });
   }

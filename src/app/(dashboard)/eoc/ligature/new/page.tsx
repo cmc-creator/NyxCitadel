@@ -55,7 +55,7 @@ export default function NewLigatureItemPage() {
           <ShieldAlert className="w-6 h-6 text-amber-400" />
           Add Ligature Risk Item
         </h1>
-        <p className="text-sm text-muted-foreground mt-0.5">TJC EC.02.06.01 — Document identified ligature point with risk level and mitigation plan.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">TJC EC.02.06.01 - Document identified ligature point with risk level and mitigation plan.</p>
       </div>
 
       {error && (
@@ -72,14 +72,14 @@ export default function NewLigatureItemPage() {
               name="itemDescription"
               required
               className="form-input w-full"
-              placeholder="e.g. Towel bar – exposed J-hook style, not ligature-resistant"
+              placeholder="e.g. Towel bar - exposed J-hook style, not ligature-resistant"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">Location *</label>
-              <input name="location" required className="form-input w-full" placeholder="e.g. Room 118 – Bathroom" />
+              <input name="location" required className="form-input w-full" placeholder="e.g. Room 118 - Bathroom" />
             </div>
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">Unit / Zone</label>
@@ -93,10 +93,10 @@ export default function NewLigatureItemPage() {
               <option value="">Select…</option>
               {RISK_LEVELS.map(r => (
                 <option key={r} value={r}>
-                  {r === 'IMMEDIATE' ? 'IMMEDIATE — Must correct before patient occupancy' :
-                   r === 'HIGH'      ? 'HIGH — Mitigation plan within 72h, correct within 30-45d' :
-                   r === 'MEDIUM'    ? 'MEDIUM — Correct within 60-90 days' :
-                                       'LOW — Correct within 6 months or accept with sign-off'}
+                  {r === 'IMMEDIATE' ? 'IMMEDIATE - Must correct before patient occupancy' :
+                   r === 'HIGH'      ? 'HIGH - Mitigation plan within 72h, correct within 30-45d' :
+                   r === 'MEDIUM'    ? 'MEDIUM - Correct within 60-90 days' :
+                                       'LOW - Correct within 6 months or accept with sign-off'}
                 </option>
               ))}
             </select>

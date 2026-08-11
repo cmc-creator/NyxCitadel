@@ -110,7 +110,7 @@ export default async function BreachLogPage({ searchParams }: { searchParams: { 
               </div>
               <div className="text-right text-xs">
                 <p className="text-muted-foreground/70">Discovered: {b.discoveryDate.toLocaleDateString()}</p>
-                <p className={`font-bold mt-1 ${riskColor[b.riskAssessment ?? ''] ?? 'text-muted-foreground/70'}`}>Risk: {b.riskAssessment ?? '—'}</p>
+                <p className={`font-bold mt-1 ${riskColor[b.riskAssessment ?? ''] ?? 'text-muted-foreground/70'}`}>Risk: {b.riskAssessment ?? '-'}</p>
               </div>
             </div>
             {b.description && <p className="text-xs text-muted-foreground/70 mb-3">{b.description}</p>}

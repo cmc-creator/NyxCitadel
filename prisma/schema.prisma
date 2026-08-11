@@ -205,7 +205,7 @@ model User {
 
   boardReports    BoardReport[]
 
-  // Compliance Gatekeeper — scheduling lockout
+  // Compliance Gatekeeper - scheduling lockout
   scheduleBlocked      Boolean   @default(false)
   scheduleBlockedAt    DateTime?
   scheduleBlockReason  String?
@@ -907,7 +907,7 @@ model HvaHazard {
   hazardType     HazardType
   probability    Int           // 0-3 scale
   magnitude      Int           // 0-3 scale
-  preparedness   Int           // 0-3 scale (inverse — lower = less prepared)
+  preparedness   Int           // 0-3 scale (inverse - lower = less prepared)
   riskScore      Float         // calculated: (probability * magnitude * preparedness) / max
   mitigationPlan String?       @db.Text
   responsibleParty String?
@@ -1307,10 +1307,10 @@ enum NotificationType {
 }
 
 enum UpdateUrgency {
-  CRITICAL       // Immediate action required — regulatory mandate enforcement
-  HIGH           // Review within 7 days — change affects current practice
-  MEDIUM         // Review within 30 days — guidance update or clarification
-  INFORMATIONAL  // Awareness only — new resource, best practice revision
+  CRITICAL       // Immediate action required - regulatory mandate enforcement
+  HIGH           // Review within 7 days - change affects current practice
+  MEDIUM         // Review within 30 days - guidance update or clarification
+  INFORMATIONAL  // Awareness only - new resource, best practice revision
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1334,7 +1334,7 @@ model AuditLog {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // RISK ASSESSMENTS
-// JC LD.04.04.01 — annual proactive risk assessment required
+// JC LD.04.04.01 - annual proactive risk assessment required
 // ─────────────────────────────────────────────────────────────────────────────
 
 model RiskAssessment {
@@ -1423,7 +1423,7 @@ enum RiskItemStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// QAPI — QUALITY ASSESSMENT & PERFORMANCE IMPROVEMENT
+// QAPI - QUALITY ASSESSMENT & PERFORMANCE IMPROVEMENT
 // CMS 42 CFR 482.21 (required for CMS-certified hospitals)
 // JC PI.01.01.01 / PI.02.01.01
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1563,8 +1563,8 @@ model GeneratedResponse {
 }
 
 enum ResponseTemplateCategory {
-  PATIENT_GRIEVANCE_ACKNOWLEDGMENT     // CMS 482.13(e) — due within 7 days
-  PATIENT_GRIEVANCE_RESOLUTION         // CMS 482.13(e) — due within 30 days
+  PATIENT_GRIEVANCE_ACKNOWLEDGMENT     // CMS 482.13(e) - due within 7 days
+  PATIENT_GRIEVANCE_RESOLUTION         // CMS 482.13(e) - due within 30 days
   SENTINEL_EVENT_FAMILY_NOTICE         // Family notification after sentinel event
   PLAN_OF_CORRECTION                   // POC to surveying agency
   CAP_COMPLETION_NOTICE                // CAP verified/closed notification
@@ -1589,7 +1589,7 @@ enum ResponseStatus {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PATIENT GRIEVANCE TRACKER
-// CMS 42 CFR 482.13(e) — Joint Commission RI.01.07.01
+// CMS 42 CFR 482.13(e) - Joint Commission RI.01.07.01
 // AZ ADHS A.A.C. R9-10-209 (patient rights / grievances)
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -1680,7 +1680,7 @@ enum GrievanceStatus {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PLAN OF CORRECTION (POC)
-// For survey/inspection findings — CMS, JC, AZ ADHS
+// For survey/inspection findings - CMS, JC, AZ ADHS
 // ─────────────────────────────────────────────────────────────────────────────
 
 model PlanOfCorrection {
@@ -1753,7 +1753,7 @@ enum PocFindingStatus {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ROOT CAUSE ANALYSIS (RCA)
-// JC LD.04.04.05 — Required for sentinel events and serious incidents
+// JC LD.04.04.05 - Required for sentinel events and serious incidents
 // ─────────────────────────────────────────────────────────────────────────────
 
 model RootCauseAnalysis {
@@ -1816,7 +1816,7 @@ enum RcaStatus {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // QOC / LOI TRACKER
-// CMS 42 CFR 488 — Quality of Care Complaints & Letters of Investigation
+// CMS 42 CFR 488 - Quality of Care Complaints & Letters of Investigation
 // ─────────────────────────────────────────────────────────────────────────────
 
 model QocComplaint {
@@ -1893,7 +1893,7 @@ enum QocInvestigationType {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // IR / IAD TRACKER
-// Incident Report & Incident/Adverse Data — ADHS, AHCCCS, JC Reporting
+// Incident Report & Incident/Adverse Data - ADHS, AHCCCS, JC Reporting
 // ARS 36-2402, ADHS R9-10-120, AHCCCS ACOM Policy
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -1933,7 +1933,7 @@ model IncidentReport {
   familyNotified          Boolean         @default(false)
   familyNotifiedDate      DateTime?
 
-  // Regulatory reporting — ADHS
+  // Regulatory reporting - ADHS
   adhsReportable          Boolean         @default(false)
   adhsReportableCategory  String?         // "24-hour", "5-day", "annual IAD"
   adhsReported            Boolean         @default(false)
@@ -1941,12 +1941,12 @@ model IncidentReport {
   adhsConfirmationNumber  String?
   adhsReportDue           DateTime?       // auto-calc deadline
 
-  // Regulatory reporting — AHCCCS
+  // Regulatory reporting - AHCCCS
   ahcccsReportable        Boolean         @default(false)
   ahcccsReported          Boolean         @default(false)
   ahcccsReportDate        DateTime?
 
-  // Regulatory reporting — Joint Commission
+  // Regulatory reporting - Joint Commission
   jcReportable            Boolean         @default(false)
   jcReported              Boolean         @default(false)
   jcReportDate            DateTime?
@@ -2047,15 +2047,15 @@ enum IrSeverity {
 // ENVIRONMENT OF CARE (EOC)
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Ligature risk items — critical for psychiatric facilities
+// Ligature risk items - critical for psychiatric facilities
 model LigatureRiskItem {
   id              String              @id @default(cuid())
   facilityId      String
   facility        Facility            @relation(fields: [facilityId], references: [id])
   itemNumber      String              // e.g. "LIG-2026-001"
-  location        String              // e.g. "Room 112 – Bathroom"
+  location        String              // e.g. "Room 112 - Bathroom"
   unit            String?             // e.g. "Acute Adult Unit"
-  itemDescription String              // e.g. "Towel bar – not ligature-resistant"
+  itemDescription String              // e.g. "Towel bar - not ligature-resistant"
   riskLevel       LigatureRiskLevel
   status          LigatureItemStatus  @default(OPEN)
   identifiedDate  DateTime
@@ -2241,7 +2241,7 @@ enum PmStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// RESTRAINT & SECLUSION — CMS §482.13(e)–(f), TJC RC.02.01.01
+// RESTRAINT & SECLUSION - CMS §482.13(e)-(f), TJC RC.02.01.01
 // ─────────────────────────────────────────────────────────────────────────────
 
 model RestraintEvent {
@@ -2314,7 +2314,7 @@ enum RsStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// INFECTION CONTROL — CMS §482.42, TJC IC standards
+// INFECTION CONTROL - CMS §482.42, TJC IC standards
 // ─────────────────────────────────────────────────────────────────────────────
 
 model IcRiskAssessment {
@@ -2423,7 +2423,7 @@ model HandHygieneAudit {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CREDENTIALING & PRIVILEGING — TJC MS.06.01
+// CREDENTIALING & PRIVILEGING - TJC MS.06.01
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Provider {
@@ -2501,7 +2501,7 @@ model ClinicalPrivilege {
   id              String              @id @default(cuid())
   providerId      String
   provider        Provider            @relation(fields: [providerId], references: [id])
-  category        String              // "Psychiatry – Inpatient", "Procedures", etc.
+  category        String              // "Psychiatry - Inpatient", "Procedures", etc.
   description     String              @db.Text
   grantedDate     DateTime
   expiryDate      DateTime?
@@ -2584,7 +2584,7 @@ enum FppeStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// TREATMENT PLANNING — CMS, TJC PC.01.02.03, ADHS (Psych-specific)
+// TREATMENT PLANNING - CMS, TJC PC.01.02.03, ADHS (Psych-specific)
 // ─────────────────────────────────────────────────────────────────────────────
 
 model TreatmentPlan {
@@ -2639,7 +2639,7 @@ model TreatmentPlanReview {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HIPAA / PRIVACY COMPLIANCE — 45 CFR Parts 160 & 164
+// HIPAA / PRIVACY COMPLIANCE - 45 CFR Parts 160 & 164
 // ─────────────────────────────────────────────────────────────────────────────
 
 model HipaaBreachLog {
@@ -2726,7 +2726,7 @@ enum BaaStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PATIENT RIGHTS — CMS §482.13, TJC RI standards
+// PATIENT RIGHTS - CMS §482.13, TJC RI standards
 // ─────────────────────────────────────────────────────────────────────────────
 
 model ConsentRecord {
@@ -2828,7 +2828,7 @@ model InvoluntaryHoldLog {
   facility        Facility        @relation(fields: [facilityId], references: [id])
   patientMrn      String?
   patientInitials String
-  holdType        String          // "Title 36 – 72hr", "Court Order 5-Day", etc.
+  holdType        String          // "Title 36 - 72hr", "Court Order 5-Day", etc.
   holdStartDate   DateTime
   holdExpiryDate  DateTime
   petitionerName  String?
@@ -2854,7 +2854,7 @@ enum HoldStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MEDICATION MANAGEMENT / PHARMACY — CMS MM CoP, TJC MM standards
+// MEDICATION MANAGEMENT / PHARMACY - CMS MM CoP, TJC MM standards
 // ─────────────────────────────────────────────────────────────────────────────
 
 model ControlledSubstanceLog {
@@ -3071,7 +3071,7 @@ model PtMeeting {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// GOVERNANCE / COMMITTEES — TJC GV standards
+// GOVERNANCE / COMMITTEES - TJC GV standards
 // ─────────────────────────────────────────────────────────────────────────────
 
 model CommitteeMeeting {
@@ -3150,7 +3150,7 @@ enum GovDocStatus {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// WORKFORCE HEALTH & SAFETY — OSHA 300, CMS §482.11
+// WORKFORCE HEALTH & SAFETY - OSHA 300, CMS §482.11
 // ─────────────────────────────────────────────────────────────────────────────
 
 model EmployeeHealthRecord {
@@ -3236,7 +3236,7 @@ enum OshaOutcome {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DISCHARGE PLANNING — CMS §482.43, Conditions of Participation
+// DISCHARGE PLANNING - CMS §482.43, Conditions of Participation
 // ─────────────────────────────────────────────────────────────────────────────
 
 model DischargePlan {
