@@ -9,6 +9,7 @@ import {
 import { UnannouncedSurveyDossierModal } from '@/components/executive/UnannouncedSurveyDossierModal';
 import { ExecutiveBoardSummaryWidget } from '@/components/executive/ExecutiveBoardSummaryWidget';
 import { SentinelEventCountdownWidget } from '@/components/executive/SentinelEventCountdownWidget';
+import { ComplianceRoiWidget } from '@/components/executive/ComplianceRoiWidget';
 
 export const metadata = { title: 'Dashboard | NyxCitadel' };
 
@@ -85,6 +86,9 @@ export default async function DashboardPage() {
 
       {/* C-Suite Executive Board Summary Widget */}
       <ExecutiveBoardSummaryWidget />
+
+      {/* Executive ROI & Fine Exposure Prevention Widget */}
+      <ComplianceRoiWidget />
 
       {/* Quick Start Grid */}
       <div>

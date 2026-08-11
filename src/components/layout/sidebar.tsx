@@ -15,6 +15,7 @@ import {
   Siren,
   BookOpen,
   Settings,
+  Sliders,
   LogOut,
   ShieldCheck,
   AlertTriangle,
@@ -238,6 +239,7 @@ const navSections: NavSection[] = [
         badgeColor: 'bg-amber-100 text-amber-700',
         tourId: 'eoc',
         children: [
+          { href: '/eoc/map',          label: 'Unit Risk Heatmap', icon: Building2, badge: 'HEATMAP', badgeColor: 'bg-teal-100 text-teal-700' },
           { href: '/eoc/ligature',     label: 'Ligature Risk',  icon: CircleAlert,  badge: 'TJC', badgeColor: 'bg-amber-100 text-amber-700' },
           { href: '/eoc/rounds',       label: 'Safety Rounds',  icon: ClipboardList },
           { href: '/eoc/deficiencies', label: 'Deficiencies',   icon: AlertTriangle },
@@ -359,6 +361,7 @@ const bottomNavItems: NavItem[] = [
     children: [
       { href: '/settings/profile',       label: 'My Profile',        icon: UserCircle },
       { href: '/settings',               label: 'General Settings',  icon: Settings },
+      { href: '/settings/features',      label: 'Feature Flags',     icon: Sliders, badge: 'MODULAR', badgeColor: 'bg-teal-100 text-teal-700' },
       { href: '/settings/security',      label: 'Security (2FA)',    icon: Lock },
       { href: '/settings/facility',      label: 'Facility Config',   icon: Building2 },
       { href: '/settings/users',         label: 'User Management',   icon: Users2 },
