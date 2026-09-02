@@ -20,7 +20,8 @@
     "db:reset:demo": "prisma migrate reset --force && tsx prisma/seed.ts && tsx prisma/seed-reg-library.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:unit": "node --test --import tsx src/lib/ai/sentry-actions.test.ts"
+    "test:unit": "node --test --import tsx src/lib/ai/sentry-actions.test.ts",
+    "smoke:prod": "bash scripts/smoke-prod.sh"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",

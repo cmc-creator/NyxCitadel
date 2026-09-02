@@ -35,7 +35,8 @@ Configure the following in your Vercel Project Settings → **Environment Variab
 | `STRIPE_PRICE_ID` | Default subscription price id | Required with live Stripe |
 | `ENABLE_DEMO_TOOLS` | Demo admin tooling | Must be unset/`false` in production |
 
-For private beta vs public vs enterprise stage gates, see `docs/GO_LIVE_PUNCHLIST.md`.
+For private beta vs public vs enterprise stage gates, see `docs/GO_LIVE_PUNCHLIST.md`.  
+For copy-paste beta env setup and smoke commands, see `docs/BETA_GO_LIVE_RUNBOOK.md`.
 
 ---
 
