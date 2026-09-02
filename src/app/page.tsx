@@ -557,8 +557,7 @@ export default async function RootPage() {
             <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-5 scroll-fade">
               The unfair{' '}
               <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent pb-[0.12em]">
-                advantage your{' '}
-                <span className="whitespace-nowrap">facility deserves</span>
+                advantage your facility deserves
               </span>
             </h2>
             <p className="text-lg text-muted-foreground/70 max-w-2xl mx-auto">
