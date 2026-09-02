@@ -199,7 +199,7 @@ export default async function RootPage() {
   const isLoggedIn  = !!session;
 
   return (
-    <div className="min-h-screen bg-[#060b16] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#060b16] text-white overflow-x-clip">
 
       {/* ── Multi-layer background ── */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -294,18 +294,18 @@ export default async function RootPage() {
       <section className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-12">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/40 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6 shadow-[0_0_20px_rgba(13,115,119,0.25)] animate-fade-in-up">
-              <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/40 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6 shadow-[0_0_20px_rgba(13,115,119,0.25)] animate-fade-in-up max-w-full whitespace-normal">
+              <Sparkles className="w-3.5 h-3.5 animate-pulse flex-shrink-0" />
               The Only Healthcare Compliance Platform That Never Sleeps
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-6 animate-fade-in-up delay-100">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.2] tracking-tight mb-6 animate-fade-in-up delay-100">
               Stop Chasing{' '}
-              <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent pb-[0.12em]">
                 Regulations.
               </span>
               <br />
               Let NyxCitadel<sup className="text-2xl font-normal align-super">™</sup>{' '}
-              <span className="bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent pb-[0.12em]">
                 Chase Them For{'\u00A0'}You.
               </span>
             </h1>
@@ -446,7 +446,7 @@ export default async function RootPage() {
         <div className="bg-gradient-to-r from-teal-900/30 to-blue-900/30 border border-teal-500/20 rounded-2xl p-8 sm:p-12 text-center overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-blue-500/10 pointer-events-none" />
           <div className="relative z-10">
-            <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold leading-[1.2] mb-4">
               Early access - <span className="text-teal-400">founding customers wanted.</span>
             </h2>
                         <p className="text-slate-300 max-w-2xl mx-auto mb-8 text-lg">
@@ -469,13 +469,13 @@ export default async function RootPage() {
       <section id="intel" className="relative z-10 max-w-7xl mx-auto px-6 py-24">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 text-rose-300 text-xs font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 text-rose-300 text-xs font-semibold mb-6 max-w-full whitespace-normal">
               <Radio className="w-3.5 h-3.5" />
               Live Regulatory Intelligence Engine
             </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-5 scroll-fade">
+            <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-5 scroll-fade">
               The rules change{' '}
-              <span className="bg-gradient-to-r from-rose-400 to-orange-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-rose-400 to-orange-400 bg-clip-text text-transparent pb-[0.12em]">
                 constantly.
               </span>
               <br />We track every <span className="whitespace-nowrap">single one.</span>
@@ -550,14 +550,15 @@ export default async function RootPage() {
       <section id="quality" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-teal-950/15 to-transparent">
         <div className="max-w-7xl mx-auto px-6 py-24">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6">
-              <BrainCircuit className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6 max-w-full whitespace-normal">
+              <BrainCircuit className="w-3.5 h-3.5 flex-shrink-0" />
               Built for Quality &amp; Risk Professionals
             </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold mb-5 scroll-fade">
+            <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-5 scroll-fade">
               The unfair{' '}
-              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent whitespace-nowrap">
-                advantage your facility deserves
+              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent pb-[0.12em]">
+                advantage your{' '}
+                <span className="whitespace-nowrap">facility deserves</span>
               </span>
             </h2>
             <p className="text-lg text-muted-foreground/70 max-w-2xl mx-auto">
@@ -584,12 +585,12 @@ export default async function RootPage() {
       ══════════════════════════════ */}
       <section id="features" className="relative z-10 max-w-7xl mx-auto px-6 py-24">
         <div className="text-center mb-14">
-          <h2 className="text-4xl lg:text-5xl font-extrabold mb-5 scroll-fade">
+          <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-5 scroll-fade">
             Every tool your compliance{' '}
-            <span className="whitespace-nowrap">team needs.{' '}
-            <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
+            <span className="whitespace-nowrap">team needs.</span>{' '}
+            <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent pb-[0.12em]">
               Unified.
-            </span></span>
+            </span>
           </h2>
           <p className="text-lg text-muted-foreground/70 max-w-2xl mx-auto">
             Nine fully-integrated modules covering every corner of healthcare compliance -
@@ -628,9 +629,9 @@ export default async function RootPage() {
                 <HeartPulse className="w-3.5 h-3.5" />
                 QAPI &amp; Risk Management
               </div>
-              <h2 className="text-4xl font-extrabold leading-tight mb-5 scroll-fade">
+              <h2 className="text-4xl font-extrabold leading-[1.2] mb-5 scroll-fade">
                 Quality isn&apos;t a report.{' '}
-                <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent pb-[0.12em]">
                   It&apos;s a culture.
                 </span>{' '}
                 We help you <span className="whitespace-nowrap">build it.</span>
@@ -722,9 +723,9 @@ export default async function RootPage() {
             <Lock className="w-3.5 h-3.5" />
             Deep Regulatory Alignment
           </div>
-          <h2 className="text-4xl lg:text-5xl font-extrabold mb-4 scroll-fade">
+          <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-4 scroll-fade">
             Every standard. Every agency.{' '}
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent whitespace-nowrap">Every time.</span>
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent whitespace-nowrap pb-[0.12em]">Every time.</span>
           </h2>
           <p className="text-muted-foreground/70 max-w-2xl mx-auto mb-12 text-lg">
             NyxCitadel isn&apos;t built around one regulation - it&apos;s built around the entire
@@ -772,9 +773,9 @@ export default async function RootPage() {
               <Sparkles className="w-3.5 h-3.5" />
               Simple, Transparent Pricing
             </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold mb-5 scroll-fade">
+            <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-5 scroll-fade">
               The right plan for{'\u00a0'}
-              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent pb-[0.12em]">
                 every facility.
               </span>
             </h2>
@@ -877,9 +878,9 @@ export default async function RootPage() {
                 className="shadow-2xl shadow-teal-500/30"
               />
             </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold mb-5">
+            <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-5">
               Your next survey is coming.{' '}
-              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent pb-[0.12em]">
                 Are you <span className="whitespace-nowrap">ready?</span>
               </span>
             </h2>
@@ -947,9 +948,9 @@ export default async function RootPage() {
               <span className="text-lg">🤖</span>
               AI Assistant
             </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6 scroll-fade">
+            <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-6 scroll-fade">
               Meet{' '}
-              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent pb-[0.12em]">
                 Sentry
               </span>
             </h2>

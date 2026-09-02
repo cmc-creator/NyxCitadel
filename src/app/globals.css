@@ -288,6 +288,7 @@
 
 .animate-fade-in-up {
   animation: fade-in-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  overflow: visible;
 }
 .animate-fade-in {
   animation: fade-in 0.55s ease both;
