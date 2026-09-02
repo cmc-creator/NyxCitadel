@@ -2,6 +2,8 @@
 
 This document provides a step-by-step guide for deploying **NyxCitadel** to production on **Vercel** with a PostgreSQL database.
 
+For stage gates (private beta vs public launch vs enterprise), see `docs/GO_LIVE_PUNCHLIST.md`.
+
 ---
 
 ## 1. Prerequisites & Environment Setup
