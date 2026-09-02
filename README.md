@@ -355,6 +355,7 @@ If you need demo workflows later, explicitly enable them with `ENABLE_DEMO_TOOLS
 Use these assets during hospital security and procurement cycles:
 
 - `docs/GO_LIVE_PUNCHLIST.md` — beta vs public vs enterprise launch gates
+- `docs/BETA_GO_LIVE_RUNBOOK.md` — copy-paste private beta deploy + smoke commands
 - `docs/SECURITY_HARDENING_CHECKLIST.md`
 - `docs/PROCUREMENT_BAA_PACK.md`
 - `/admin/pilot-kpis`

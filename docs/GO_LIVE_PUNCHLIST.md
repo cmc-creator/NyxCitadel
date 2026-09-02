@@ -3,6 +3,7 @@
 Concrete launch checklist ordered by stage. Use this to decide what can ship now versus what must wait.
 
 Related docs:
+- `docs/BETA_GO_LIVE_RUNBOOK.md` — **copy-paste private beta deploy + smoke commands**
 - `docs/PRODUCTION_DEPLOYMENT_CHECKLIST.md` — Vercel/DB/cron deploy steps
 - `docs/SECURITY_HARDENING_CHECKLIST.md` — enterprise security gates
 - `docs/PROCUREMENT_BAA_PACK.md` — buyer legal/security packet outline
@@ -234,7 +235,9 @@ Completed in-repo (does **not** replace production ops smoke tests):
 - [x] Label custom HVA builder as Coming soon
 - [x] Fix blocking TypeScript errors and set `typescript.ignoreBuildErrors: false`
 - [x] Add GitHub Actions CI (`npm test` + `tsc --noEmit`)
+- [x] Private beta runbook + `npm run smoke:prod` (`docs/BETA_GO_LIVE_RUNBOOK.md`)
+- [x] Cron routes fail closed when `CRON_SECRET` is missing
 - [ ] Full ESLint gate (`ignoreDuringBuilds` still true — Stage B follow-up)
 - [ ] Live Stripe checkout verification in production (ops)
-- [ ] Production cron / SMTP / AI smoke tests (ops)
+- [ ] Production cron / SMTP / AI smoke tests (ops) — use `npm run smoke:prod`
 - [ ] Rotate seed admin password + enable 2FA on production admin (ops)
