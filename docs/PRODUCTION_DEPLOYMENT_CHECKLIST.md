@@ -21,8 +21,19 @@ Configure the following in your Vercel Project Settings → **Environment Variab
 | `SMTP_HOST` | Email server host | `smtp.resend.com` |
 | `SMTP_PORT` | Email server port | `587` |
 | `SMTP_USER` | Email server username | `resend` |
-| `SMTP_PASS` | Email server password / API key | `re_123456789` |
+| `SMTP_PASSWORD` | Email server password / API key | `re_123456789` |
 | `SMTP_FROM` | Branded email sender identity | `NyxCitadel Alerts <alerts@nyxcitadel.com>` |
+
+### Optional / stage-gated variables
+
+| Environment Variable | Description | Notes |
+| :--- | :--- | :--- |
+| `STRIPE_SECRET_KEY` | Stripe secret key | Required for live paid checkout (Stage B) |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret | Required with live Stripe |
+| `STRIPE_PRICE_ID` | Default subscription price id | Required with live Stripe |
+| `ENABLE_DEMO_TOOLS` | Demo admin tooling | Must be unset/`false` in production |
+
+For private beta vs public vs enterprise stage gates, see `docs/GO_LIVE_PUNCHLIST.md`.
 
 ---
 

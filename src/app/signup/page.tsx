@@ -13,7 +13,7 @@ import {
 const PLAN_FEATURES = {
   starter: ['1 Facility', '5 Users', 'Compliance Calendar', 'Policy Manager', 'Incident Tracker', 'CAP Tracker', 'Email Support'],
   professional: ['3 Facilities', '20 Users', 'Everything in Starter', 'Sentry™ Assistant', 'Emergency Management', 'QAPI / Board Reports', 'Resilience Scorecard', 'Priority Support'],
-  enterprise: ['Unlimited Facilities', 'Unlimited Users', 'Everything in Professional', 'White-Label Option', 'SSO / SAML', 'Dedicated Consultant', 'SLA Guarantee', 'Custom Integrations'],
+  enterprise: ['Unlimited Facilities', 'Unlimited Users', 'Everything in Professional', 'White-Label Option', 'SSO / SAML (on request)', 'Dedicated Consultant', 'SLA Guarantee', 'Custom Integrations'],
 };
 
 

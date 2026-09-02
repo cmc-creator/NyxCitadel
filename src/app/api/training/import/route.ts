@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { logAudit } from '@/lib/audit';
+import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,9 +15,11 @@ const VALID_CATEGORIES = [
 
 const VALID_STATUSES = ['PENDING','IN_PROGRESS','COMPLETED','EXPIRED','OVERDUE','EXEMPT'];
 
+type TrainingImportRow = Omit<Prisma.TrainingRecordUncheckedCreateInput, 'facilityId'>;
+
 function parseRow(row: Record<string, string>): {
   ok: true;
-  data: Parameters<typeof prisma.trainingRecord.create>[0]['data'];
+  data: TrainingImportRow;
 } | { ok: false; error: string } {
   const staffName   = row['staffName']?.trim()   || row['staff_name']?.trim()   || row['Staff Name']?.trim();
   const trainingName = row['trainingName']?.trim() || row['training_name']?.trim() || row['Training Name']?.trim();
@@ -62,7 +65,6 @@ function parseRow(row: Record<string, string>): {
       provider:     row['provider']?.trim()  || row['Provider']?.trim()  || null,
       notes:        row['notes']?.trim()     || row['Notes']?.trim()     || null,
       regulatoryBody: null,
-      facilityId:   '', // filled per-record below
     },
   };
 }
@@ -90,7 +92,7 @@ export async function POST(req: NextRequest) {
     }
     try {
       const record = await prisma.trainingRecord.create({
-        data: { ...parsed.data, facilityId },
+        data: { ...parsed.data, facilityId } satisfies Prisma.TrainingRecordUncheckedCreateInput,
       });
       results.push({ index: i, ok: true, id: record.id });
     } catch (err) {

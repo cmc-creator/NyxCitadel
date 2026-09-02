@@ -270,7 +270,11 @@ export default function BulkUploadPage() {
                         <span className="text-xs text-muted-foreground truncate">{entry.file.name}</span>
                         {entry.uploadStatus === 'uploading' && <Loader2 className="w-3.5 h-3.5 text-blue-500 animate-spin flex-shrink-0" />}
                         {entry.uploadStatus === 'done' && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />}
-                        {entry.uploadStatus === 'error' && <AlertCircle className="w-3.5 h-3.5 text-red-500 flex-shrink-0" title={entry.uploadError} />}
+                        {entry.uploadStatus === 'error' && (
+                          <span title={entry.uploadError} className="flex-shrink-0">
+                            <AlertCircle className="w-3.5 h-3.5 text-red-500" />
+                          </span>
+                        )}
                       </div>
                       <button onClick={() => removeEntry(idx)} className="text-muted-foreground/50 hover:text-red-500 transition flex-shrink-0">
                         <X className="w-4 h-4" />

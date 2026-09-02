@@ -147,7 +147,8 @@ const pricingTiers = [
       { label: 'Risk assessment module', included: true },
       { label: 'Phone & email support', included: true },
       { label: 'Custom regulatory feeds', included: false },
-      { label: 'White-label & SSO', included: false },
+      { label: 'White-label branding', included: false },
+      { label: 'SSO / SAML (roadmap)', included: false },
     ],
   },
   {
@@ -164,7 +165,7 @@ const pricingTiers = [
       { label: 'Everything in Professional', included: true },
       { label: 'Custom regulatory feed configuration', included: true },
       { label: 'White-label branding', included: true },
-      { label: 'SSO / SAML integration', included: true },
+      { label: 'SSO / SAML (available on request)', included: true },
       { label: 'Dedicated compliance consultant', included: true },
       { label: 'Custom API access', included: true },
       { label: 'SLA guarantee', included: true },

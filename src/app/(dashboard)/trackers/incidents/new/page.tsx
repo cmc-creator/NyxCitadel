@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { AlertTriangle, ArrowLeft } from 'lucide-react';
 import { AiFieldHelper } from '@/components/ai/AiFieldHelper';
 import { SentryPageGuide } from '@/components/ai/SentryPageGuide';
+import { VoiceIncidentModal } from '@/components/trackers/VoiceIncidentModal';
 
 const INCIDENT_TYPES = [
   'FALL', 'MEDICATION_ERROR', 'ELOPEMENT', 'ASSAULT_PATIENT_ON_PATIENT',
@@ -24,6 +25,22 @@ export default function NewIncidentPage() {
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const [immediateActions, setImmediateActions] = useState('');
+  const [dateOccurred, setDateOccurred] = useState('');
+
+  function handleApplyVoiceData(data: {
+    incidentType: string;
+    severity: string;
+    description: string;
+    unit: string;
+    dateOccurred: string;
+  }) {
+    setIncidentType(INCIDENT_TYPES.includes(data.incidentType) ? data.incidentType : 'OTHER');
+    setSeverity(SEVERITY_LEVELS.includes(data.severity) ? data.severity : data.severity || '');
+    setDescription(data.description);
+    setLocation(data.unit);
+    // datetime-local expects YYYY-MM-DDTHH:mm; voice parse may return a date-only string
+    setDateOccurred(data.dateOccurred.includes('T') ? data.dateOccurred : `${data.dateOccurred}T00:00`);
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -33,7 +50,7 @@ export default function NewIncidentPage() {
     const data = {
       incidentType,
       severity,
-      dateOccurred:      (form.elements.namedItem('dateOccurred') as HTMLInputElement).value,
+      dateOccurred:      dateOccurred || (form.elements.namedItem('dateOccurred') as HTMLInputElement).value,
       location,
       description,
       immediateActions,
@@ -131,7 +148,14 @@ export default function NewIncidentPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Date &amp; Time of Incident *</label>
-              <input name="dateOccurred" type="datetime-local" required className="form-input w-full" />
+              <input
+                name="dateOccurred"
+                type="datetime-local"
+                required
+                value={dateOccurred}
+                onChange={e => setDateOccurred(e.target.value)}
+                className="form-input w-full"
+              />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">Location</label>
