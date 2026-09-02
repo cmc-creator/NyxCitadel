@@ -36,14 +36,16 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
 
   // Version control: if changeNote provided, increment version and append history
   let newVersion = existing.version;
+  let newVersionNumber = Math.floor(parseFloat(existing.version) || 1);
   let newRevisionHistory = (existing.revisionHistory ?? []) as Array<{ version: string; date: string; changedBy: string; summary: string }>;
 
   if (body.changeNote) {
-    newVersion = existing.version + 1;
+    newVersionNumber = Math.floor(parseFloat(existing.version) || 1) + 1;
+    newVersion = String(newVersionNumber);
     newRevisionHistory = [
       ...newRevisionHistory,
       {
-        version: newVersion.toString(),
+        version: newVersion,
         date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
         changedBy: session.user.name ?? session.user.email ?? 'Unknown',
         summary: body.changeNote,
@@ -88,7 +90,7 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
             facilityName: facility?.name ?? 'Your Facility',
             policyTitle: policy.title,
             policyNumber: policy.policyNumber ?? '',
-            newVersion,
+            newVersion: newVersionNumber,
             changedBy: session.user.name ?? session.user.email ?? 'Staff',
             changeNote: body.changeNote,
             effectiveDate: policy.effectiveDate

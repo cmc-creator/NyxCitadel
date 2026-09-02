@@ -335,8 +335,16 @@ export function HVAFormBuilder() {
   }
 
   return (
-    <div className="text-sm text-muted-foreground">
-      Custom assessment builder coming soon.
+    <div className="rounded-lg border border-dashed border-border bg-muted/20 px-4 py-3 text-sm text-muted-foreground">
+      <span className="inline-flex items-center gap-2 font-medium text-foreground">
+        Custom assessment builder
+        <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-600">
+          Coming soon
+        </span>
+      </span>
+      <p className="mt-1 text-xs text-muted-foreground">
+        Use the standard HVA templates for now. A drag-and-drop custom builder is on the roadmap.
+      </p>
     </div>
   );
 }

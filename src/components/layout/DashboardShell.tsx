@@ -26,7 +26,7 @@ export function DashboardShell({ user, children }: DashboardShellProps) {
       </div>
       <div className="flex-1 lg:ml-64 print:ml-0 flex flex-col min-w-0">
         <div className="print:hidden">
-          <TopBar user={user} onMenuToggle={() => setMobileOpen(true)} />
+          <TopBar user={user} onMenuClick={() => setMobileOpen(true)} />
         </div>
         <main className="flex-1 p-4 lg:p-6 overflow-auto">
           <ErrorBoundary>{children}</ErrorBoundary>

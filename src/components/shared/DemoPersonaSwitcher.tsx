@@ -4,24 +4,28 @@ import { useState, useEffect } from 'react';
 import { UserCheck, Crown, ShieldCheck, ClipboardCheck, Users } from 'lucide-react';
 import { startGeniusTour } from '@/components/onboarding/GeniusWalkthrough';
 
+type DemoPersonaId = 'executive' | 'risk_manager' | 'master' | 'staff';
+
 export const HOSPITAL_ROLES = [
   { id: 'executive' as const, label: 'Executive Leadership (CEO / Board)', icon: Crown },
   { id: 'risk_manager' as const, label: 'Risk & Patient Safety Manager', icon: ShieldCheck },
-  { id: 'compliance' as const, label: 'Quality & Compliance Officer', icon: ClipboardCheck },
+  { id: 'master' as const, label: 'Quality & Compliance Officer', icon: ClipboardCheck },
   { id: 'staff' as const, label: 'Clinical & Department Staff', icon: Users },
 ];
 
 export function DemoPersonaSwitcher() {
-  const [selectedRole, setSelectedRole] = useState<'executive' | 'risk_manager' | 'compliance' | 'staff'>('executive');
+  const [selectedRole, setSelectedRole] = useState<DemoPersonaId>('executive');
 
   useEffect(() => {
-    const saved = window.localStorage.getItem('nyxcitadel:demo-persona:v1') as any;
-    if (saved && ['executive', 'risk_manager', 'compliance', 'staff'].includes(saved)) {
-      setSelectedRole(saved);
+    const saved = window.localStorage.getItem('nyxcitadel:demo-persona:v1');
+    // Map legacy "compliance" persona id to master tour
+    const normalized = saved === 'compliance' ? 'master' : saved;
+    if (normalized && ['executive', 'risk_manager', 'master', 'staff'].includes(normalized)) {
+      setSelectedRole(normalized as DemoPersonaId);
     }
   }, []);
 
-  const handleSelectRole = (roleId: 'executive' | 'risk_manager' | 'compliance' | 'staff') => {
+  const handleSelectRole = (roleId: DemoPersonaId) => {
     setSelectedRole(roleId);
     window.localStorage.setItem('nyxcitadel:demo-persona:v1', roleId);
     startGeniusTour(roleId);
@@ -37,7 +41,7 @@ export function DemoPersonaSwitcher() {
         <span className="text-[10px] uppercase font-bold text-amber-400/80">Role:</span>
         <select
           value={selectedRole}
-          onChange={(e) => handleSelectRole(e.target.value as any)}
+          onChange={(e) => handleSelectRole(e.target.value as DemoPersonaId)}
           className="bg-transparent text-amber-200 font-bold text-xs focus:outline-none cursor-pointer"
         >
           {HOSPITAL_ROLES.map((role) => (

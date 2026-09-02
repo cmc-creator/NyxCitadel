@@ -221,3 +221,20 @@ Sell Enterprise only when:
 **Operate as Stage A (private beta).**  
 Do not call the product publicly launched until Stage B is complete.  
 Do not sell Enterprise SSO / full enterprise readiness until Stage C is complete.
+
+---
+
+## Engineering progress log
+
+Completed in-repo (does **not** replace production ops smoke tests):
+
+- [x] Document Stripe + `ENABLE_DEMO_TOOLS` in `.env.example`
+- [x] Document Stripe / demo vars in `PRODUCTION_DEPLOYMENT_CHECKLIST.md`
+- [x] Qualify SSO marketing copy (landing + signup) as roadmap / on request
+- [x] Label custom HVA builder as Coming soon
+- [x] Fix blocking TypeScript errors and set `typescript.ignoreBuildErrors: false`
+- [x] Add GitHub Actions CI (`npm test` + `tsc --noEmit`)
+- [ ] Full ESLint gate (`ignoreDuringBuilds` still true — Stage B follow-up)
+- [ ] Live Stripe checkout verification in production (ops)
+- [ ] Production cron / SMTP / AI smoke tests (ops)
+- [ ] Rotate seed admin password + enable 2FA on production admin (ops)

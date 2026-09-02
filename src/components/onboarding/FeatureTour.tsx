@@ -9,7 +9,7 @@ const tourSteps = [
       title: 'Welcome to NyxCitadel',
       description:
         'This 2-minute tour covers the main areas of your compliance command center. Use the arrows to move between stops, or press Escape to exit anytime.',
-      side: 'over' as const,
+      side: 'top' as const,
       align: 'center' as const,
     },
   },
