@@ -3,10 +3,12 @@ const { withSentryConfig } = require("@sentry/nextjs");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
+    // ESLint still has legacy warnings/errors across the monorepo.
+    // CI runs `npm test` + `tsc --noEmit`; full lint gate is a Stage B follow-up.
     ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client'],

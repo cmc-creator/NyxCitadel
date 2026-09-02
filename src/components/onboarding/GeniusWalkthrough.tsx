@@ -451,7 +451,7 @@ export function GeniusWalkthrough() {
   }, []);
 
   const tour = activePersona ? PERSONA_TOURS[activePersona] : null;
-  const currentStep = tour ? tour.steps[stepIndex] : null;
+  const currentStep: TourStep | null = tour ? (tour.steps[stepIndex] as TourStep) : null;
 
   // Handle step change & page routing
   const navigateToStep = useCallback((step: TourStep) => {
@@ -502,7 +502,7 @@ export function GeniusWalkthrough() {
     if (isLast) {
       setIsOpen(false);
     } else {
-      const nextStep = tour.steps[stepIndex + 1];
+      const nextStep = tour.steps[stepIndex + 1] as TourStep;
       setStepIndex((prev) => prev + 1);
       navigateToStep(nextStep);
     }
@@ -510,7 +510,7 @@ export function GeniusWalkthrough() {
 
   const handleBack = () => {
     if (!isFirst) {
-      const prevStep = tour.steps[stepIndex - 1];
+      const prevStep = tour.steps[stepIndex - 1] as TourStep;
       setStepIndex((prev) => prev - 1);
       navigateToStep(prevStep);
     }
