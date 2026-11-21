@@ -13,7 +13,7 @@ const STATUS_CONFIG: Record<string, { label: string; cls: string; icon: typeof C
   canceled:  { label: 'Canceled',          cls: 'bg-red-950/30 text-red-300 border-red-700/40',       icon: XCircle },
 };
 
-export default async function BillingPage({ searchParams }: { searchParams: { success?: string; canceled?: string; reason?: string } }) {
+export default async function BillingPage({ searchParams }: { searchParams: { success?: string; canceled?: string; reason?: string; error?: string } }) {
   const session = await auth();
   if (!session?.user?.facilityId) redirect('/login');
 
@@ -44,7 +44,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
   }
 
   return (
-    <div className="space-y-6 max-w-2xl">
+    <div className="space-y-6 max-w-4xl">
       <div>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <CreditCard className="w-6 h-6 text-teal-600" />
@@ -67,6 +67,27 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
         </div>
       )}
 
+      {searchParams.error === 'unavailable' && (
+        <div className="bg-red-950/30 border border-red-700/50 rounded-xl px-5 py-4 flex items-center gap-3 text-sm text-red-300">
+          <XCircle className="w-5 h-5 flex-shrink-0" />
+          Billing is not available right now. Please contact us to set up your subscription.
+        </div>
+      )}
+
+      {searchParams.error === 'enterprise' && (
+        <div className="bg-amber-950/20 border border-amber-700/30 rounded-xl px-5 py-4 flex items-center gap-3 text-sm text-amber-300">
+          <AlertTriangle className="w-5 h-5 flex-shrink-0" />
+          Enterprise plans are set up by our team. Please contact us and we will get you started.
+        </div>
+      )}
+
+      {searchParams.error === 'checkout' && (
+        <div className="bg-red-950/30 border border-red-700/50 rounded-xl px-5 py-4 flex items-center gap-3 text-sm text-red-300">
+          <XCircle className="w-5 h-5 flex-shrink-0" />
+          Checkout could not be started. Please try again, or contact us if it keeps happening.
+        </div>
+      )}
+
       {searchParams.reason === 'canceled' && (
         <div className="bg-red-950/30 border border-red-700/50 rounded-xl px-5 py-4 flex items-center gap-3 text-sm text-red-300">
           <XCircle className="w-5 h-5 flex-shrink-0" />
@@ -79,8 +100,8 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Current Plan</p>
-            <p className="text-xl font-bold text-foreground">NyxCitadel Professional</p>
-            <p className="text-2xl font-black text-teal-400 mt-1">$199<span className="text-sm font-normal text-muted-foreground">/month per facility</span></p>
+            <p className="text-xl font-bold text-foreground">NyxCitadel Subscription</p>
+            <p className="text-sm text-muted-foreground mt-1">Plans start at $399/month, billed monthly. Compare the plans below.</p>
           </div>
           <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border ${cfg.cls}`}>
             <Icon className="w-3.5 h-3.5" />
@@ -100,18 +121,8 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
           )}
         </div>
 
-        <div className="flex gap-3 pt-1">
-          {!hasSubscription ? (
-            <form action="/api/billing/checkout" method="POST">
-              <button
-                type="submit"
-                className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition"
-              >
-                <CreditCard className="w-4 h-4" />
-                Start Subscription - 30 days free
-              </button>
-            </form>
-          ) : (
+        {hasSubscription ? (
+          <div className="flex gap-3 pt-1">
             <form action="/api/billing/portal" method="POST">
               <button
                 type="submit"
@@ -121,7 +132,84 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
                 Manage Billing
               </button>
             </form>
-          )}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground pt-1">No active subscription yet. Pick a plan below to start, with 30 days free.</p>
+        )}
+      </div>
+
+      {/* Plans */}
+      <div>
+        <h2 className="text-sm font-semibold text-foreground mb-4">Plans</h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="bg-card border border-border rounded-xl p-6 flex flex-col">
+            <p className="text-base font-bold text-foreground">Starter</p>
+            <p className="text-sm text-muted-foreground mt-0.5">Everything you need to stay survey-ready.</p>
+            <p className="text-3xl font-black text-teal-400 mt-3">$399<span className="text-sm font-normal text-muted-foreground">/month</span></p>
+            <ul className="space-y-1.5 text-sm text-muted-foreground mt-4 flex-1">
+              <li>1 facility</li>
+              <li>Up to 5 users</li>
+              <li>Compliance calendar and tracker</li>
+              <li>Policy and procedure management</li>
+              <li>Incident management and CAPs</li>
+              <li>Basic reporting and exports</li>
+            </ul>
+            {!hasSubscription && (
+              <form action="/api/billing/checkout" method="POST" className="mt-5">
+                <input type="hidden" name="plan" value="starter" />
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition w-full justify-center"
+                >
+                  <CreditCard className="w-4 h-4" />
+                  Start Starter - 30 days free
+                </button>
+              </form>
+            )}
+          </div>
+
+          <div className="bg-card border border-teal-500/60 rounded-xl p-6 flex flex-col">
+            <p className="text-base font-bold text-foreground">Professional</p>
+            <p className="text-sm text-muted-foreground mt-0.5">The full platform - built for quality teams.</p>
+            <p className="text-3xl font-black text-teal-400 mt-3">$799<span className="text-sm font-normal text-muted-foreground">/month</span></p>
+            <ul className="space-y-1.5 text-sm text-muted-foreground mt-4 flex-1">
+              <li>Up to 3 facilities</li>
+              <li>Up to 20 users</li>
+              <li>Everything in Starter</li>
+              <li>QAPI and performance improvement</li>
+              <li>Emergency preparedness suite</li>
+              <li>Survey management and POCs</li>
+              <li>Sentry AI assistant</li>
+              <li>Executive and board dashboards</li>
+            </ul>
+            {!hasSubscription && (
+              <form action="/api/billing/checkout" method="POST" className="mt-5">
+                <input type="hidden" name="plan" value="professional" />
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition w-full justify-center"
+                >
+                  <CreditCard className="w-4 h-4" />
+                  Start Professional - 30 days free
+                </button>
+              </form>
+            )}
+          </div>
+
+          <div className="bg-card border border-border rounded-xl p-6 flex flex-col">
+            <p className="text-base font-bold text-foreground">Enterprise</p>
+            <p className="text-sm text-muted-foreground mt-0.5">Unlimited scale. Dedicated support. Fully custom.</p>
+            <p className="text-3xl font-black text-teal-400 mt-3">Custom</p>
+            <ul className="space-y-1.5 text-sm text-muted-foreground mt-4 flex-1">
+              <li>Unlimited facilities</li>
+              <li>Unlimited users</li>
+              <li>Everything in Professional</li>
+              <li>White-label branding</li>
+              <li>Dedicated compliance consultant</li>
+              <li>Priority 24/7 support</li>
+            </ul>
+            <p className="text-sm text-muted-foreground mt-5">Contact us for pricing and setup.</p>
+          </div>
         </div>
       </div>
 

@@ -3,24 +3,38 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Stripe from 'stripe';
 
-export async function POST(_req: NextRequest) {
+export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.facilityId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const facilityId = session.user.facilityId;
   const baseUrl = process.env.APP_URL || process.env.NEXTAUTH_URL || '';
 
-  if (!process.env.STRIPE_SECRET_KEY) {
-    // Demo / Fallback mode: activate trial and redirect back to billing page
-    await prisma.facility.update({
-      where: { id: facilityId },
-      data: {
-        subscriptionStatus: 'active',
-        trialEndsAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      },
-    });
+  // Plan selection: the billing page posts a `plan` form field.
+  // Anything missing or unrecognized defaults to starter.
+  let plan = 'starter';
+  try {
+    const form = await req.formData();
+    const raw = form.get('plan');
+    if (typeof raw === 'string' && raw.trim()) plan = raw.trim().toLowerCase();
+  } catch {
+    // No readable form body: fall through with the starter default.
+  }
 
-    return NextResponse.redirect(`${baseUrl}/settings/billing?success=1`, { status: 303 });
+  // Enterprise is sold by our team, never through self-serve checkout.
+  if (plan === 'enterprise') {
+    return NextResponse.redirect(`${baseUrl}/settings/billing?error=enterprise`, { status: 303 });
+  }
+  if (plan !== 'starter' && plan !== 'professional') plan = 'starter';
+
+  const priceId = plan === 'professional'
+    ? process.env.STRIPE_PRICE_ID_PROFESSIONAL
+    : process.env.STRIPE_PRICE_ID_STARTER || process.env.STRIPE_PRICE_ID;
+
+  // Fail closed: without Stripe configured, checkout is unavailable and the
+  // facility subscription state is left exactly as it was.
+  if (!process.env.STRIPE_SECRET_KEY || !priceId) {
+    return NextResponse.redirect(`${baseUrl}/settings/billing?error=unavailable`, { status: 303 });
   }
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2026-04-22.dahlia' });
@@ -46,16 +60,16 @@ export async function POST(_req: NextRequest) {
       customer: customerId,
       mode: 'subscription',
       payment_method_types: ['card'],
-      line_items: [{ price: process.env.STRIPE_PRICE_ID!, quantity: 1 }],
+      line_items: [{ price: priceId, quantity: 1 }],
       subscription_data: { trial_period_days: 30 },
       success_url: `${baseUrl}/settings/billing?success=1`,
       cancel_url: `${baseUrl}/settings/billing?canceled=1`,
-      metadata: { facilityId },
+      metadata: { facilityId, plan },
     });
 
-    return NextResponse.redirect(checkoutSession.url || `${baseUrl}/settings/billing?success=1`, { status: 303 });
+    return NextResponse.redirect(checkoutSession.url || `${baseUrl}/settings/billing?error=checkout`, { status: 303 });
   } catch (err) {
     console.error('Stripe checkout error:', err);
-    return NextResponse.redirect(`${baseUrl}/settings/billing?success=1`, { status: 303 });
+    return NextResponse.redirect(`${baseUrl}/settings/billing?error=checkout`, { status: 303 });
   }
 }
