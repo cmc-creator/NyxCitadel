@@ -303,7 +303,7 @@ export default async function CompetencyMatrixPage({
                           <Link
                             href={href}
                             className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border transition-opacity hover:opacity-70 ${cfg.bg}`}
-                            title={`${staff.name} \u2014 ${CAT_LABEL[cat]}: ${cfg.label}`}
+                            title={`${staff.name} - ${CAT_LABEL[cat]}: ${cfg.label}`}
                           >
                             <cfg.icon className={`w-4 h-4 ${cfg.text}`} />
                           </Link>

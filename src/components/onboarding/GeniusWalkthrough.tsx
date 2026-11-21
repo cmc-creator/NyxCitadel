@@ -68,7 +68,7 @@ export const PERSONA_TOURS = {
             { key: 'Sentinel Events', val: '0 Active' },
             { key: 'TJC Inspection', val: 'Window Active' },
           ],
-          snippet: '"Attention Feed: Towel bar non-conformity identified in Room 118 — CAP-2026-001 assigned to Facility Ops."',
+          snippet: '"Attention Feed: Towel bar non-conformity identified in Room 118 - CAP-2026-001 assigned to Facility Ops."',
         },
       },
       {
@@ -148,7 +148,7 @@ export const PERSONA_TOURS = {
         actionHint: 'Check the Compliance Gatekeeper tab to see staff with expiring certs.',
         exampleCard: {
           label: 'LIVE DEMO EXAMPLE: Gatekeeper Scheduling Lockout',
-          title: 'Shift Lockout Trigger — CPI Crisis De-Escalation Cert',
+          title: 'Shift Lockout Trigger - CPI Crisis De-Escalation Cert',
           badge: 'Automated Lockout',
           metrics: [
             { key: 'Staff Tracked', val: '45 Clinical Staff' },
@@ -217,7 +217,7 @@ export const PERSONA_TOURS = {
         actionHint: 'Notice the live risk score breakdown and facility health index.',
         exampleCard: {
           label: 'EXAMPLE: Executive Dashboard Metrics',
-          title: 'Destiny Springs Healthcare — Live Index 94.2%',
+          title: 'Destiny Springs Healthcare - Live Index 94.2%',
           badge: 'Executive View',
           metrics: [
             { key: 'Facility Score', val: '94.2% Tier A' },
@@ -236,7 +236,7 @@ export const PERSONA_TOURS = {
         actionHint: 'Export directly to PDF or share live executive link with leadership.',
         exampleCard: {
           label: 'EXAMPLE: Auto-Generated Deck',
-          title: 'Q1 Board Deck — 14-Slide PDF Compilation',
+          title: 'Q1 Board Deck - 14-Slide PDF Compilation',
           badge: 'Board Ready',
           snippet: '"Auto-compiled from live incident logs, QAPI metrics, and training records."',
         },
@@ -254,7 +254,7 @@ export const PERSONA_TOURS = {
           label: 'EXAMPLE: Sentry AI Query',
           title: '"Summarize top Joint Commission vulnerabilities"',
           badge: 'Sentry Insight',
-          snippet: '"1. Ligature risk points (EC.02.06.01) — 1 active CAP. 2. Restraint documentation timing — resolved in Q1."',
+          snippet: '"1. Ligature risk points (EC.02.06.01) - 1 active CAP. 2. Restraint documentation timing - resolved in Q1."',
         },
       },
     ],
@@ -296,7 +296,7 @@ export const PERSONA_TOURS = {
         actionHint: 'Open Mock Survey Tracer Mode to simulate an actual unannounced survey.',
         exampleCard: {
           label: 'EXAMPLE: Tracer Worksheet',
-          title: 'TJC Mock Survey — Score 96.4%',
+          title: 'TJC Mock Survey - Score 96.4%',
           badge: 'Tracer Audit',
           snippet: '"Evidence Vault: 14 supporting PDF documents verified for EC & RI standards."',
         },
@@ -353,7 +353,7 @@ export const PERSONA_TOURS = {
         actionHint: 'Inspect open ligature risk items and mitigation timelines.',
         exampleCard: {
           label: 'EXAMPLE: Ligature Item',
-          title: 'Towel Bar Fixture — Room 118 Bathroom',
+          title: 'Towel Bar Fixture - Room 118 Bathroom',
           badge: 'TJC EC.02.06.01',
           snippet: '"Status: Mitigation Plan assigned. Sloped non-ligature fixture installation in progress."',
         },

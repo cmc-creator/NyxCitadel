@@ -201,7 +201,7 @@ export default function ProfilePage() {
               value={form.department}
               onChange={e => setForm(f => ({ ...f, department: e.target.value }))}
             >
-              <option value="">&#8212; Select department &#8212;</option>
+              <option value="">- Select department -</option>
               {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
             </select>
             <p className="text-xs text-muted-foreground/60 mt-1">Setting your department personalizes the dashboard quick-start panel.</p>

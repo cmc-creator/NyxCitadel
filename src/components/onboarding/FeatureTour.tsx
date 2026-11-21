@@ -26,7 +26,7 @@ const tourSteps = [
     popover: {
       title: 'Compliance Calendar',
       description:
-        'Every regulatory deadline in one place \u2014 CMS CoP reviews, TJC survey windows, ADHS reporting cycles, QAPI quarters, and custom events your team adds. Color-coded by type and urgency.',
+        'Every regulatory deadline in one place - CMS CoP reviews, TJC survey windows, ADHS reporting cycles, QAPI quarters, and custom events your team adds. Color-coded by type and urgency.',
     },
   },
   {
@@ -42,7 +42,7 @@ const tourSteps = [
     popover: {
       title: 'Training & Competency',
       description:
-        'Track required training completions for every staff member. The Compliance Gatekeeper automatically restricts system access for anyone with overdue mandatory training \u2014 no manual follow-up needed.',
+        'Track required training completions for every staff member. The Compliance Gatekeeper automatically restricts system access for anyone with overdue mandatory training - no manual follow-up needed.',
     },
   },
   {
@@ -58,7 +58,7 @@ const tourSteps = [
     popover: {
       title: 'Board Report',
       description:
-        'An auto-generated executive dashboard that pulls live data from across the system \u2014 incidents, quality metrics, compliance status, training rates, and risk indicators. Ready to share directly with your board.',
+        'An auto-generated executive dashboard that pulls live data from across the system - incidents, quality metrics, compliance status, training rates, and risk indicators. Ready to share directly with your board.',
     },
   },
   {

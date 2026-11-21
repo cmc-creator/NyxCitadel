@@ -3,7 +3,7 @@ import { Rss, Globe, Shield, Building2, FileText, Bell, ArrowRight, Info, Refres
 import { prisma } from '@/lib/prisma';
 import { RunScrapeButton } from '@/components/settings/RunScrapeButton';
 
-export const metadata = { title: 'Regulatory Update Alerts \u2014 Settings' };
+export const metadata = { title: 'Regulatory Update Alerts - Settings' };
 
 const SOURCES = [
   {

@@ -3,11 +3,11 @@
 Concrete launch checklist ordered by stage. Use this to decide what can ship now versus what must wait.
 
 Related docs:
-- `docs/BETA_GO_LIVE_RUNBOOK.md` — **copy-paste private beta deploy + smoke commands**
-- `docs/PRODUCTION_DEPLOYMENT_CHECKLIST.md` — Vercel/DB/cron deploy steps
-- `docs/SECURITY_HARDENING_CHECKLIST.md` — enterprise security gates
-- `docs/PROCUREMENT_BAA_PACK.md` — buyer legal/security packet outline
-- `docs/DEMO_PLAYBOOK.md` — scripted demos (only if `ENABLE_DEMO_TOOLS=true`)
+- `docs/BETA_GO_LIVE_RUNBOOK.md` - **copy-paste private beta deploy + smoke commands**
+- `docs/PRODUCTION_DEPLOYMENT_CHECKLIST.md` - Vercel/DB/cron deploy steps
+- `docs/SECURITY_HARDENING_CHECKLIST.md` - enterprise security gates
+- `docs/PROCUREMENT_BAA_PACK.md` - buyer legal/security packet outline
+- `docs/DEMO_PLAYBOOK.md` - scripted demos (only if `ENABLE_DEMO_TOOLS=true`)
 
 ---
 
@@ -23,7 +23,7 @@ The landing page currently markets **private beta / founding customers**. Stay i
 
 ---
 
-## Stage A — Private beta (do this week)
+## Stage A - Private beta (do this week)
 
 Goal: safely onboard a small set of invited facilities. No public paid conversion required.
 
@@ -95,7 +95,7 @@ Ship Stage A only when:
 
 ---
 
-## Stage B — Public launch (after beta is stable)
+## Stage B - Public launch (after beta is stable)
 
 Goal: anyone can sign up from the marketing site and convert to a paid plan without white-glove setup.
 
@@ -150,7 +150,7 @@ Ship Stage B only when:
 
 ---
 
-## Stage C — Enterprise rollout (hospital procurement)
+## Stage C - Enterprise rollout (hospital procurement)
 
 Goal: pass security/legal review for health-system contracts. Do not sell as enterprise-ready until this stage is done.
 
@@ -194,7 +194,7 @@ Sell Enterprise only when:
 
 | Question | If yes | If no |
 | :--- | :--- | :--- |
-| Can you invite 1–3 facilities with manual setup? | Proceed with **Stage A** | Finish A1–A3 first |
+| Can you invite 1-3 facilities with manual setup? | Proceed with **Stage A** | Finish A1-A3 first |
 | Can a stranger sign up and pay without help? | You need **Stage B** complete | Keep beta messaging |
 | Is a hospital security questionnaire due? | Start **Stage C** now | Don’t claim enterprise-ready |
 | Is SSO listed on the public pricing page? | Only keep it if Stage C SSO is done; otherwise remove/qualify | OK for now |
@@ -237,7 +237,7 @@ Completed in-repo (does **not** replace production ops smoke tests):
 - [x] Add GitHub Actions CI (`npm test` + `tsc --noEmit`)
 - [x] Private beta runbook + `npm run smoke:prod` (`docs/BETA_GO_LIVE_RUNBOOK.md`)
 - [x] Cron routes fail closed when `CRON_SECRET` is missing
-- [ ] Full ESLint gate (`ignoreDuringBuilds` still true — Stage B follow-up)
+- [ ] Full ESLint gate (`ignoreDuringBuilds` still true - Stage B follow-up)
 - [ ] Live Stripe checkout verification in production (ops)
-- [ ] Production cron / SMTP / AI smoke tests (ops) — use `npm run smoke:prod`
+- [ ] Production cron / SMTP / AI smoke tests (ops) - use `npm run smoke:prod`
 - [ ] Rotate seed admin password + enable 2FA on production admin (ops)

@@ -180,7 +180,7 @@ export default async function DepartmentScorecardsPage() {
                   <div className="flex items-end justify-between mb-2">
                     <span className="text-xs text-muted-foreground">Training Compliance</span>
                     <span className={`text-2xl font-bold ${rateColor}`}>
-                      {rate !== null ? `${rate}%` : '\u2014'}
+                      {rate !== null ? `${rate}%` : '-'}
                     </span>
                   </div>
                   {dept.trainingTotal > 0 && (

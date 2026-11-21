@@ -140,7 +140,7 @@ export default function CalendarView({ initialEvents }: { initialEvents: CalEven
     if (view === 'week') {
       const ws = startOfWeek(current, { weekStartsOn: 0 });
       const we = endOfWeek(current, { weekStartsOn: 0 });
-      return `${format(ws,'MMM d')} \u2013 ${format(we,'MMM d, yyyy')}`;
+      return `${format(ws,'MMM d')} - ${format(we,'MMM d, yyyy')}`;
     }
     return 'All Events';
   };

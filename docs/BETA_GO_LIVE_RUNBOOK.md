@@ -100,7 +100,7 @@ npx dotenv -e .env.production.local -- npm run db:seed:clean
 If the seed already ran with defaults, rotate the admin password immediately:
 
 ```bash
-# Example for a known admin email — edit scripts/reset-admin-password.mjs email if needed
+# Example for a known admin email - edit scripts/reset-admin-password.mjs email if needed
 node --env-file=.env.production.local scripts/reset-admin-password.mjs 'YourNewStrongPassword!'
 ```
 
@@ -148,18 +148,18 @@ curl -i -H "Authorization: Bearer $CRON_SECRET" https://YOUR_DOMAIN/api/cron/exp
 
 ---
 
-## 5) Manual product smoke (10–15 minutes)
+## 5) Manual product smoke (10-15 minutes)
 
 Sign in as the founding admin, then:
 
-1. **Sentry AI** — open the assistant; ask: `What are Joint Commission HVA requirements?`
-2. **Calendar** — open `/calendar`; confirm it loads without error
-3. **Incident → CAP** — create one incident, attach/create a CAP
-4. **Users** — add one non-admin user; confirm they cannot open `/admin`
-5. **Export** — download one CSV / report from Export Center
-6. **Email** — trigger a password reset or notification and confirm delivery
-7. **Onboarding** — run Genius Tour once; confirm no dead links
-8. **Admin** — confirm **Reset Demo Data** is **not** visible
+1. **Sentry AI** - open the assistant; ask: `What are Joint Commission HVA requirements?`
+2. **Calendar** - open `/calendar`; confirm it loads without error
+3. **Incident → CAP** - create one incident, attach/create a CAP
+4. **Users** - add one non-admin user; confirm they cannot open `/admin`
+5. **Export** - download one CSV / report from Export Center
+6. **Email** - trigger a password reset or notification and confirm delivery
+7. **Onboarding** - run Genius Tour once; confirm no dead links
+8. **Admin** - confirm **Reset Demo Data** is **not** visible
 
 ---
 

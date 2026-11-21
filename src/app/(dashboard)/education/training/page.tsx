@@ -186,7 +186,7 @@ export default async function MyTrainingPage({
           <div>
             <h2 className="text-sm font-semibold text-foreground">Required Training</h2>
             <p className="text-xs text-muted-foreground/70 mt-0.5">
-              {overdueCount > 0 ? `${overdueCount} overdue \u2014 ` : ''}
+              {overdueCount > 0 ? `${overdueCount} overdue - ` : ''}
               completion required to maintain scheduling access
             </p>
           </div>
@@ -242,14 +242,14 @@ export default async function MyTrainingPage({
                         </span>
                       </td>
                       <td className="px-4 py-3 text-xs text-muted-foreground">
-                        {r.expiryDate ? new Date(r.expiryDate).toLocaleDateString() : '\u2014'}
+                        {r.expiryDate ? new Date(r.expiryDate).toLocaleDateString() : '-'}
                       </td>
                       <td className="px-4 py-3">
                         {daysLeft !== null ? (
                           <span className={`text-sm font-semibold ${daysLeft < 0 ? 'text-red-500' : daysLeft <= 15 ? 'text-red-400' : daysLeft <= 30 ? 'text-amber-400' : daysLeft <= 63 ? 'text-yellow-400' : 'text-muted-foreground'}`}>
                             {daysLeft < 0 ? `${Math.abs(daysLeft)}d overdue` : `${daysLeft}d`}
                           </span>
-                        ) : '\u2014'}
+                        ) : '-'}
                       </td>
                     </tr>
                   );
@@ -303,7 +303,7 @@ export default async function MyTrainingPage({
                         </span>
                       </td>
                       <td className="px-4 py-3 text-xs text-muted-foreground">
-                        {r.completedDate ? new Date(r.completedDate).toLocaleDateString() : '\u2014'}
+                        {r.completedDate ? new Date(r.completedDate).toLocaleDateString() : '-'}
                       </td>
                     </tr>
                   );

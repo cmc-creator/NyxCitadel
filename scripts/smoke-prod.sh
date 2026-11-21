@@ -40,7 +40,7 @@ check() {
     green "PASS  $name (HTTP $code)"
     PASS=$((PASS + 1))
   else
-    red "FAIL  $name (expected HTTP $expected, got $code) — $url"
+    red "FAIL  $name (expected HTTP $expected, got $code) - $url"
     if [[ -s /tmp/nyx-smoke-body.txt ]]; then
       head -c 300 /tmp/nyx-smoke-body.txt | tr '\n' ' '
       echo
@@ -93,7 +93,7 @@ done
 
 # Cron auth checks
 if [[ -z "$CRON_SECRET" ]]; then
-  yellow "WARN  CRON_SECRET not set — skipping cron auth checks"
+  yellow "WARN  CRON_SECRET not set - skipping cron auth checks"
   WARN=$((WARN + 1))
 else
   for path in \

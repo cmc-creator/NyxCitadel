@@ -112,7 +112,7 @@ export function buildAttentionItems(data: {
     items.push({
       id: `cap-${cap.id}`,
       href: `/trackers/caps/${cap.id}`,
-      label: `${cap.capNumber} \u2014 ${cap.title}`,
+      label: `${cap.capNumber} - ${cap.title}`,
       sublabel: relativeDate(cap.targetDate),
       urgency: 'critical',
       category: 'CAP',
@@ -127,7 +127,7 @@ export function buildAttentionItems(data: {
       items.push({
         id: `griev-ack-${g.id}`,
         href: `/trackers/grievances/${g.id}`,
-        label: `${g.grievanceNumber} \u2014 ${g.chiefComplaint.slice(0, 60)}`,
+        label: `${g.grievanceNumber} - ${g.chiefComplaint.slice(0, 60)}`,
         sublabel: `Acknowledgment ${relativeDate(g.acknowledgmentDueDate)} \u00b7 CMS 7-day rule`,
         urgency: 'critical',
         category: 'Grievance',
@@ -136,7 +136,7 @@ export function buildAttentionItems(data: {
       items.push({
         id: `griev-res-${g.id}`,
         href: `/trackers/grievances/${g.id}`,
-        label: `${g.grievanceNumber} \u2014 ${g.chiefComplaint.slice(0, 60)}`,
+        label: `${g.grievanceNumber} - ${g.chiefComplaint.slice(0, 60)}`,
         sublabel: `Resolution ${relativeDate(g.resolutionDueDate)} \u00b7 CMS 30-day rule`,
         urgency: 'critical',
         category: 'Grievance',
@@ -149,7 +149,7 @@ export function buildAttentionItems(data: {
     items.push({
       id: `adhs-${ir.id}`,
       href: `/trackers/ir-iad/${ir.id}`,
-      label: `${ir.reportNumber} \u2014 ${ir.incidentType.replace(/_/g, ' ')}`,
+      label: `${ir.reportNumber} - ${ir.incidentType.replace(/_/g, ' ')}`,
       sublabel: `ADHS report ${ir.adhsReportDue ? relativeDate(ir.adhsReportDue) : 'overdue'} \u00b7 ARS 36-2402`,
       urgency: 'critical',
       category: 'IR/IAD',
@@ -161,7 +161,7 @@ export function buildAttentionItems(data: {
     items.push({
       id: `qoc-${qoc.id}`,
       href: `/trackers/qoc/${qoc.id}`,
-      label: qoc.cmsComplaintNumber ?? `QOC \u2014 ${qoc.complainantName ?? 'Unnamed'}`,
+      label: qoc.cmsComplaintNumber ?? `QOC - ${qoc.complainantName ?? 'Unnamed'}`,
       sublabel: `Response ${qoc.responseDueDate ? relativeDate(qoc.responseDueDate) : 'overdue'} \u00b7 CMS 10-day window`,
       urgency: 'critical',
       category: 'QOC',
@@ -173,7 +173,7 @@ export function buildAttentionItems(data: {
     items.push({
       id: `iad-${ir.id}`,
       href: `/trackers/ir-iad/${ir.id}`,
-      label: `${ir.reportNumber} \u2014 ${ir.incidentType.replace(/_/g, ' ')}`,
+      label: `${ir.reportNumber} - ${ir.incidentType.replace(/_/g, ' ')}`,
       sublabel: 'IAD submission pending \u00b7 file with ADHS',
       urgency: 'high',
       category: 'IR/IAD',
@@ -186,7 +186,7 @@ export function buildAttentionItems(data: {
       items.push({
         id: `cap-soon-${cap.id}`,
         href: `/trackers/caps/${cap.id}`,
-        label: `${cap.capNumber} \u2014 ${cap.title}`,
+        label: `${cap.capNumber} - ${cap.title}`,
         sublabel: relativeDate(cap.targetDate),
         urgency: 'medium',
         category: 'CAP',
