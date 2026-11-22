@@ -165,7 +165,7 @@ const pricingTiers = [
       { label: 'Everything in Professional', included: true },
       { label: 'Custom regulatory feed configuration', included: true },
       { label: 'White-label branding', included: true },
-      { label: 'SSO / SAML (available on request)', included: true },
+      { label: 'SSO / SAML (on the Enterprise roadmap)', included: false },
       { label: 'Dedicated compliance consultant', included: true },
       { label: 'Custom API access', included: true },
       { label: 'SLA guarantee', included: true },
