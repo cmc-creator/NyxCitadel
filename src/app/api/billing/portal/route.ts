@@ -27,7 +27,7 @@ export async function POST(_req: NextRequest) {
       return_url: `${process.env.NEXTAUTH_URL}/settings/billing`,
     });
 
-    return NextResponse.json({ url: portalSession.url });
+    return NextResponse.redirect(portalSession.url, { status: 303 });
   } catch (err) {
     console.error('Stripe portal error:', err);
     return NextResponse.json({ error: 'Failed to create portal session' }, { status: 500 });

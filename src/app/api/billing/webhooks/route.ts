@@ -27,13 +27,35 @@ export async function POST(req: NextRequest) {
         const session = event.data.object as Stripe.Checkout.Session;
         const facilityId = session.metadata?.facilityId;
         if (!facilityId || !session.subscription) break;
-        const sub = await stripe.subscriptions.retrieve(session.subscription as string);
         await prisma.facility.update({
           where: { id: facilityId },
+          data: {
+            stripeCustomerId: typeof session.customer === 'string' ? session.customer : session.customer?.id,
+            stripeSubscriptionId: session.subscription as string,
+            subscriptionStatus: 'trialing',
+          },
+        });
+        break;
+      }
+
+      case 'customer.subscription.created': {
+        const sub = event.data.object as Stripe.Subscription;
+        const customerId = typeof sub.customer === 'string' ? sub.customer : sub.customer.id;
+        const facility =
+          (sub.metadata?.facilityId
+            ? await prisma.facility.findUnique({ where: { id: sub.metadata.facilityId } })
+            : null) ??
+          (await prisma.facility.findFirst({ where: { stripeCustomerId: customerId } }));
+        if (!facility) break;
+        await prisma.facility.update({
+          where: { id: facility.id },
           data: {
             stripeSubscriptionId: sub.id,
             subscriptionStatus: sub.status,
             trialEndsAt: sub.trial_end ? new Date(sub.trial_end * 1000) : null,
+            currentPeriodEnd: sub.items?.data?.[0]?.current_period_end
+              ? new Date(sub.items.data[0].current_period_end * 1000)
+              : null,
           },
         });
         break;
@@ -48,6 +70,9 @@ export async function POST(req: NextRequest) {
           data: {
             subscriptionStatus: sub.status,
             trialEndsAt: sub.trial_end ? new Date(sub.trial_end * 1000) : null,
+            currentPeriodEnd: sub.items?.data?.[0]?.current_period_end
+              ? new Date(sub.items.data[0].current_period_end * 1000)
+              : null,
           },
         });
         break;
