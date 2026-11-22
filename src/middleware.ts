@@ -43,6 +43,14 @@ export default auth(function middleware(req) {
       );
     }
   }
+
+  // Expose the current pathname to server components. The dashboard layout's
+  // subscription guard reads x-pathname to exempt /settings/billing (and
+  // /api/billing) from its canceled-subscription redirect; nothing set this
+  // header before, so the billing page redirected to itself in a loop.
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set('x-pathname', req.nextUrl.pathname);
+  return NextResponse.next({ request: { headers: requestHeaders } });
 });
 
 export const config = {
