@@ -120,10 +120,6 @@ const pricingTiers = [
       { label: 'Incident management & CAPs', included: true },
       { label: 'Basic reporting & exports', included: true },
       { label: 'Email regulatory alerts', included: true },
-      { label: 'QAPI & quality modules', included: false },
-      { label: 'Emergency preparedness suite', included: false },
-      { label: 'Sentry™ Assistant', included: false },
-      { label: 'Executive & board dashboards', included: false },
     ],
   },
   {
@@ -358,7 +354,6 @@ export default async function RootPage() {
             <div className="flex flex-wrap items-center gap-5 mt-10 pt-8 border-t border-white/5">
               {[
                 { icon: Lock,        label: 'HIPAA Encrypted' },
-                { icon: CheckCircle, label: 'SOC 2 Ready' },
                 { icon: Star,        label: 'CMS Aligned' },
                 { icon: BadgeCheck,  label: 'Joint Commission Ready' },
               ].map(({ icon: Icon, label }) => (
@@ -1091,7 +1086,7 @@ export default async function RootPage() {
                 ))}
               </ul>
               <div className="space-y-2">
-                {['HIPAA Compliant', 'SOC 2 Ready', 'CMS Aligned'].map(badge => (
+                {['HIPAA Compliant', 'CMS Aligned'].map(badge => (
                   <div key={badge} className="flex items-center gap-1.5 text-[11px] text-slate-600">
                     <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" /> {badge}
                   </div>
