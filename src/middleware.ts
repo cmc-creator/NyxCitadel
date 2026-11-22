@@ -44,13 +44,29 @@ export default auth(function middleware(req) {
     }
   }
 
+  // Store shell flag: the store builds load the site with ?shell=store.
+  // Persist it as a cookie and expose it as a request header so server
+  // components can leave purchase UI out of the HTML (see src/lib/shell.ts).
+  const shellParam = req.nextUrl.searchParams.get('shell');
+  const shellCookie = req.cookies.get('nyx-shell')?.value;
+  const isShell = shellParam === 'store' || shellCookie === 'store';
+
   // Expose the current pathname to server components. The dashboard layout's
   // subscription guard reads x-pathname to exempt /settings/billing (and
   // /api/billing) from its canceled-subscription redirect; nothing set this
   // header before, so the billing page redirected to itself in a loop.
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set('x-pathname', req.nextUrl.pathname);
-  return NextResponse.next({ request: { headers: requestHeaders } });
+  if (isShell) requestHeaders.set('x-nyx-shell', 'store');
+  const response = NextResponse.next({ request: { headers: requestHeaders } });
+  if (shellParam === 'store' && shellCookie !== 'store') {
+    response.cookies.set('nyx-shell', 'store', {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: 'lax',
+    });
+  }
+  return response;
 });
 
 export const config = {

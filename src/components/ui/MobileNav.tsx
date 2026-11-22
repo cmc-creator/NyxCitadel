@@ -66,7 +66,7 @@ export function MobileNav({ isLoggedIn }: MobileNavProps) {
                       amber
                         ? 'text-amber-300 hover:bg-amber-400/8'
                         : 'text-slate-300 hover:text-white hover:bg-white/5'
-                    }`}
+                    }${label === 'Pricing' ? ' nyx-shell-hide' : ''}`}
                   >
                     {label}
                     <ChevronRight className="w-4 h-4 opacity-40" />
@@ -80,7 +80,7 @@ export function MobileNav({ isLoggedIn }: MobileNavProps) {
                       amber
                         ? 'text-amber-300 hover:bg-amber-400/8'
                         : 'text-slate-300 hover:text-white hover:bg-white/5'
-                    }`}
+                    }${label === 'Pricing' ? ' nyx-shell-hide' : ''}`}
                   >
                     {label}
                     <ChevronRight className="w-4 h-4 opacity-40" />

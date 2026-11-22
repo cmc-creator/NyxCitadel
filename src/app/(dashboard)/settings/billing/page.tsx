@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { isStoreShell } from '@/lib/shell';
 import { redirect } from 'next/navigation';
 import { CreditCard, CheckCircle2, AlertTriangle, Clock, XCircle } from 'lucide-react';
 
@@ -37,6 +38,9 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
   const cfg = STATUS_CONFIG[status] ?? STATUS_CONFIG.trialing;
   const Icon = cfg.icon;
   const hasSubscription = !!facility.stripeSubscriptionId;
+  // Store shells hide every purchase entry point on this page (plans are
+  // sold on the web only); the plan status display still renders.
+  const storeShell = isStoreShell();
 
   function fmt(d: Date | null) {
     if (!d) return null;
@@ -91,7 +95,9 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
       {searchParams.reason === 'canceled' && (
         <div className="bg-red-950/30 border border-red-700/50 rounded-xl px-5 py-4 flex items-center gap-3 text-sm text-red-300">
           <XCircle className="w-5 h-5 flex-shrink-0" />
-          Your subscription has been canceled. Reactivate to regain access.
+          {storeShell
+            ? 'Your subscription has been canceled. Please contact the NyxCitadel team to restore access.'
+            : 'Your subscription has been canceled. Reactivate to regain access.'}
         </div>
       )}
 
@@ -101,7 +107,11 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
           <div>
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Current Plan</p>
             <p className="text-xl font-bold text-foreground">NyxCitadel Subscription</p>
-            <p className="text-sm text-muted-foreground mt-1">Plans start at $399/month, billed monthly. Compare the plans below.</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              {storeShell
+                ? 'Your facility plan is shown here. Billing is managed by the NyxCitadel team.'
+                : 'Plans start at $399/month, billed monthly. Compare the plans below.'}
+            </p>
           </div>
           <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border ${cfg.cls}`}>
             <Icon className="w-3.5 h-3.5" />
@@ -121,7 +131,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
           )}
         </div>
 
-        {hasSubscription ? (
+        {hasSubscription && !storeShell ? (
           <div className="flex gap-3 pt-1">
             <form action="/api/billing/portal" method="POST">
               <button
@@ -134,11 +144,25 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
             </form>
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground pt-1">No active subscription yet. Pick a plan below to start, with 30 days free.</p>
+          <p className="text-sm text-muted-foreground pt-1">
+            {storeShell
+              ? 'Plan and billing changes for your facility are handled by the NyxCitadel team.'
+              : 'No active subscription yet. Pick a plan below to start, with 30 days free.'}
+          </p>
         )}
       </div>
 
-      {/* Plans */}
+      {/* Plans: in store shells the plan cards and their Start buttons are
+          replaced with a neutral note, since plans are not sold in the app */}
+      {storeShell ? (
+        <div className="bg-card border border-border rounded-xl p-6">
+          <h2 className="text-sm font-semibold text-foreground mb-2">Plans</h2>
+          <p className="text-sm text-muted-foreground">
+            NyxCitadel plans are set up by our team for each facility. To change plans,
+            contact the NyxCitadel team and we will take care of it.
+          </p>
+        </div>
+      ) : (
       <div>
         <h2 className="text-sm font-semibold text-foreground mb-4">Plans</h2>
         <div className="grid gap-4 md:grid-cols-3">
@@ -212,6 +236,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
           </div>
         </div>
       </div>
+      )}
 
       {/* What's included */}
       <div className="bg-card border border-border rounded-xl p-6">

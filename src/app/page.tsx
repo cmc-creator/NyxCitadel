@@ -1,6 +1,7 @@
 import { LogoImage } from '@/components/ui/LogoImage';
 import { MobileNav } from '@/components/ui/MobileNav';
 import { auth } from '@/lib/auth';
+import { isStoreShell } from '@/lib/shell';
 import Link from 'next/link';
 import {
   Shield, AlertTriangle, BarChart3, CheckCircle, ArrowRight, Activity,
@@ -194,6 +195,9 @@ export default async function RootPage() {
   let session = null;
   try { session = await auth(); } catch { /* treat as unauthenticated if auth misconfigured */ }
   const isLoggedIn  = !!session;
+  // Store shells hide the pricing section and its nav links: plans are
+  // sold on the web only (see src/lib/shell.ts).
+  const storeShell = isStoreShell();
 
   return (
     <div className="min-h-screen bg-[#060b16] text-white overflow-x-clip">
@@ -238,7 +242,7 @@ export default async function RootPage() {
               { label: 'Sentry AI',  href: '#sentry' },
               { label: 'Pricing',    href: '#pricing' },
               { label: 'Guide',      href: '/guide', isLink: true },
-            ].map(({ label, href, isLink }) =>
+            ].filter(({ label }) => !(storeShell && label === 'Pricing')).map(({ label, href, isLink }) =>
               isLink ? (
                 <Link key={label} href={href}
                   className="px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
@@ -761,6 +765,7 @@ export default async function RootPage() {
       {/* ══════════════════════════════
           PRICING
       ══════════════════════════════ */}
+      {!storeShell && (
       <section id="pricing" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-amber-950/15 via-transparent to-transparent">
         <div className="max-w-7xl mx-auto px-6 py-24">
           <div className="text-center mb-14">
@@ -856,6 +861,7 @@ export default async function RootPage() {
           </p>
         </div>
       </section>
+      )}
 
       {/* ══════════════════════════════
           FINAL CTA
@@ -1044,7 +1050,7 @@ export default async function RootPage() {
                   { label: 'Regulatory Intel', href: '#intel' },
                   { label: 'User Guide', href: '/guide' },
                   { label: 'Walkthrough', href: '/walkthrough' },
-                ].map(({ label, href }) => (
+                ].filter(({ label }) => !(storeShell && label === 'Pricing')).map(({ label, href }) => (
                   <li key={label}>
                     <a href={href} className="text-xs text-slate-500 hover:text-slate-300 transition-colors">{label}</a>
                   </li>

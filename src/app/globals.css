@@ -565,3 +565,11 @@
 .driver-overlay {
   background: rgba(0, 0, 0, 0.6) !important;
 }
+
+/* Store shells: hide client-rendered purchase UI. The data-shell
+   attribute is set on <html> by the root layout when the store shell
+   flag is present (see src/lib/shell.ts). Server-rendered purchase
+   surfaces are removed before render instead of relying on this rule. */
+[data-shell="store"] .nyx-shell-hide {
+  display: none !important;
+}

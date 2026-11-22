@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/components/providers/auth-provider';
+import { isStoreShell } from '@/lib/shell';
 
 const inter = Inter({ subsets: ['latin'] });
 const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://nyxcitadel.com';
@@ -52,8 +53,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Store shells get data-shell="store" on <html>; globals.css uses it to
+  // hide client-rendered purchase UI (server-rendered purchase UI is left
+  // out before render by isStoreShell checks in the pages themselves).
+  const storeShell = isStoreShell();
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="dark" data-shell={storeShell ? 'store' : undefined} suppressHydrationWarning>
       <body className={inter.className}>
         <AuthProvider>
           {children}

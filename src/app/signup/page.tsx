@@ -156,8 +156,10 @@ export default function SignupPage() {
               ))}
             </div>
 
-            {/* Pricing reminder */}
-            <div className="bg-slate-900/40 border border-white/6 rounded-2xl p-6">
+            {/* Pricing reminder - hidden in store shells by the data-shell
+                rule in globals.css (client page, so the server-rendered
+                data-shell attribute does the hiding; see src/lib/shell.ts) */}
+            <div className="nyx-shell-hide bg-slate-900/40 border border-white/6 rounded-2xl p-6">
               <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
                 <Star className="w-4 h-4 text-amber-400" /> Pricing Overview
               </h3>
