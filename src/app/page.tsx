@@ -441,24 +441,24 @@ export default async function RootPage() {
       </section>
 
             {/* ══════════════════════════════
-          EARLY ACCESS CTA
+          LIVE CTA
       ══════════════════════════════ */}
       <section className="relative z-10 max-w-7xl mx-auto px-6 py-16">
         <div className="bg-gradient-to-r from-teal-900/30 to-blue-900/30 border border-teal-500/20 rounded-2xl p-8 sm:p-12 text-center overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-blue-500/10 pointer-events-none" />
           <div className="relative z-10">
             <h2 className="text-3xl sm:text-4xl font-extrabold leading-[1.2] mb-4">
-              Early access - <span className="text-teal-400">founding customers wanted.</span>
+              Now live and <span className="text-teal-400">onboarding new facilities.</span>
             </h2>
                         <p className="text-slate-300 max-w-2xl mx-auto mb-8 text-lg">
-              We are currently in private beta, working closely with a select group of hospitals and behavioral health facilities. Join us early to shape the future of NyxCitadel and secure lifetime founding pricing.
+              NyxCitadel is live and in use by hospitals and behavioral health facilities today. New facilities start with a guided 90 day pilot, with hands-on onboarding from day one.
             </p>
             <Link
               href="/signup"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 shadow-lg shadow-teal-900/40"
               style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)'}}
             >
-              Request Early Access <ArrowRight className="w-5 h-5" />
+              Get Started <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>
