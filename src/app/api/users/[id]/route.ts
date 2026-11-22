@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { userCapReached } from '@/lib/plan-limits';
 
 // GET /api/users/[id] - fetch a single user
 export async function GET(
@@ -54,7 +55,7 @@ export async function PATCH(
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
-  const target = await prisma.user.findUnique({ where: { id: params.id }, select: { facilityId: true } });
+  const target = await prisma.user.findUnique({ where: { id: params.id }, select: { facilityId: true, isActive: true } });
   if (!target || target.facilityId !== facilityId) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
@@ -68,6 +69,18 @@ export async function PATCH(
     isActive?: boolean;
     password?: string;
   };
+
+  // Reactivating a user grows the active count, so the plan user cap
+  // applies here too. Deactivation is never blocked.
+  if (isAdmin && body.isActive === true && !target.isActive) {
+    const cap = await userCapReached(facilityId);
+    if (cap !== null) {
+      return NextResponse.json(
+        { error: `Plan limit reached: your plan includes up to ${cap} users.` },
+        { status: 403 },
+      );
+    }
+  }
 
   const data: Record<string, unknown> = {};
   if (body.name !== undefined)       data.name       = body.name;

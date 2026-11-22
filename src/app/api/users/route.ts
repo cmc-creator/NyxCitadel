@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { logAudit } from '@/lib/audit';
+import { userCapReached } from '@/lib/plan-limits';
 
 // GET /api/users - list all users in the facility
 export async function GET() {
@@ -61,6 +62,15 @@ export async function POST(req: NextRequest) {
 
   if (!body.email || !body.password) {
     return NextResponse.json({ error: 'email and password are required' }, { status: 400 });
+  }
+
+  // Plan user cap: block creation when the facility is already at its cap.
+  const cap = await userCapReached(facilityId);
+  if (cap !== null) {
+    return NextResponse.json(
+      { error: `Plan limit reached: your plan includes up to ${cap} users.` },
+      { status: 403 },
+    );
   }
 
   // Check email uniqueness

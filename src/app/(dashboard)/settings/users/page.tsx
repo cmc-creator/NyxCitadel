@@ -144,7 +144,12 @@ export default function UsersSettingsPage() {
     const method = u.isActive ? 'DELETE' : 'PATCH';
     const body   = u.isActive ? undefined : JSON.stringify({ isActive: true });
     const headers = u.isActive ? undefined : { 'Content-Type': 'application/json' };
-    await fetch(`/api/users/${u.id}`, { method, body, headers });
+    const res = await fetch(`/api/users/${u.id}`, { method, body, headers });
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({})) as { error?: string };
+      setFlash({ type: 'err', msg: d.error ?? 'Update failed.' });
+      return;
+    }
     await load();
   }
 
