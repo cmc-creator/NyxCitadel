@@ -151,7 +151,7 @@ export default function ContactPage() {
           <div className="flex flex-wrap items-center gap-5">
             {[
               { icon: Lock, label: 'HIPAA BAA on all plans' },
-              { icon: ShieldCheck, label: 'SOC 2 security posture' },
+              { icon: ShieldCheck, label: 'Strong security posture' },
               { icon: CheckCircle, label: 'No-pressure evaluations' },
             ].map(({ icon: Icon, label }) => (
               <div key={label} className="flex items-center gap-1.5 text-xs text-slate-500">

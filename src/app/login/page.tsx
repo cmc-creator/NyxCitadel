@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
-  Loader2, AlertCircle, Shield, CheckCircle,
+  Loader2, AlertCircle, CheckCircle,
   Lock, Eye, EyeOff, ArrowLeft,
   ClipboardList, BarChart3, AlertTriangle,
 } from 'lucide-react';
@@ -176,7 +176,6 @@ function LoginForm() {
         <div className="relative z-10 flex items-center gap-5 pt-8 border-t border-white/5">
           {[
             { icon: Lock,         label: 'HIPAA Secure' },
-            { icon: Shield,       label: 'SOC 2 Ready' },
             { icon: CheckCircle,  label: 'CMS Aligned' },
           ].map(({ icon: Icon, label }) => (
             <div key={label} className="flex items-center gap-1.5 text-xs text-slate-500">

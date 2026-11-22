@@ -124,7 +124,7 @@ export default function OGImage() {
           }}
         >
           <div style={{ display: 'flex', gap: 12 }}>
-            {['HIPAA Compliant', 'CMS Aligned', 'JC Ready', 'SOC 2 Ready'].map((badge) => (
+            {['HIPAA Compliant', 'CMS Aligned', 'JC Ready'].map((badge) => (
               <div
                 key={badge}
                 style={{
