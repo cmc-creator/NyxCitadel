@@ -2,7 +2,7 @@
 
 > White-label compliance, risk management, and emergency management platform for healthcare facilities.
 >
-> Currently configured for: Destiny Springs Healthcare - Acute Psychiatric Inpatient, Peoria, AZ
+> Ships with fictional demo seed data (Riverside General Hospital - Acute Psychiatric Inpatient, Riverside, AZ). Each deployment configures its own facility; the platform is fully white-label.
 
 ---
 

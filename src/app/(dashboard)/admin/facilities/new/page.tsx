@@ -86,7 +86,7 @@ export default function NewFacilityPage() {
                 required
                 value={form.name}
                 onChange={(e) => set('name', e.target.value)}
-                placeholder="Destiny Springs Behavioral Health"
+                placeholder="Riverside General Hospital"
                 className="form-input w-full"
               />
             </Field>

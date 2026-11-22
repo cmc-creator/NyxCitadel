@@ -1,6 +1,6 @@
 /**
  * NyxCitadel Database Seed Script
- * Seeds Destiny Springs Healthcare (AZ acute psychiatric) as the demo facility
+ * Seeds Riverside General Hospital (AZ acute psychiatric) as the fictional demo facility
  *
  * Run with: npm run db:seed
  */
@@ -17,22 +17,22 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Seeding NyxCitadel database...\n');
 
-  // ─── 1. Create Destiny Springs Healthcare facility ──────────────────────
-  console.log('Creating facility: Destiny Springs Healthcare...');
+  // ─── 1. Create Riverside General Hospital facility ──────────────────────
+  console.log('Creating facility: Riverside General Hospital...');
   const facility = await prisma.facility.upsert({
-    where: { id: 'destiny-springs' },
+    where: { id: 'riverside-general' },
     update: {},
     create: {
-      id: 'destiny-springs',
-      name: 'Destiny Springs Healthcare',
-      shortName: 'DSH',
-      address: '13451 N 94th Drive',
-      city: 'Peoria',
+      id: 'riverside-general',
+      name: 'Riverside General Hospital',
+      shortName: 'RGH',
+      address: '1200 W Demo Parkway',
+      city: 'Riverside',
       state: 'AZ',
-      zip: '85381',
-      phone: '(623) 236-2000',
-      primaryColor: '#5b21b6',    // Deep purple
-      secondaryColor: '#8b5cf6',
+      zip: '85000',
+      phone: '(602) 555-0100',
+      primaryColor: '#9A7B2D',    // Nyx gold
+      secondaryColor: '#C9A84C',
       facilityType: FacilityType.ACUTE_PSYCH,
       bedCount: 60,
       timezone: 'America/Phoenix',
@@ -43,13 +43,13 @@ async function main() {
 
   // ─── 2. Create admin user ────────────────────────────────────────────────
   console.log('\nCreating admin user...');
-  const adminPassword = await hash('Admin@DSH2026!', 12);
+  const adminPassword = await hash('Admin@RGH2026!', 12);
   const adminUser = await prisma.user.upsert({
-    where: { email: 'admin@destinysprings.com' },
+    where: { email: 'admin@riverside-general.example' },
     update: {},
     create: {
-      email: 'admin@destinysprings.com',
-      name: 'DSH Administrator',
+      email: 'admin@riverside-general.example',
+      name: 'RGH Administrator',
       passwordHash: adminPassword,
       role: UserRole.ADMIN,
       title: 'Compliance & Risk Manager',
@@ -61,12 +61,12 @@ async function main() {
   console.log(`  ✅ Admin user: ${adminUser.email}`);
 
   // Compliance officer user
-  const compPassword = await hash('Compliance@DSH2026!', 12);
+  const compPassword = await hash('Compliance@RGH2026!', 12);
   const compUser = await prisma.user.upsert({
-    where: { email: 'compliance@destinysprings.com' },
+    where: { email: 'compliance@riverside-general.example' },
     update: {},
     create: {
-      email: 'compliance@destinysprings.com',
+      email: 'compliance@riverside-general.example',
       name: 'Compliance Officer',
       passwordHash: compPassword,
       role: UserRole.COMPLIANCE_OFFICER,
@@ -79,12 +79,12 @@ async function main() {
   console.log(`  ✅ Compliance user: ${compUser.email}`);
 
   // EM Coordinator
-  const emPassword = await hash('Emergency@DSH2026!', 12);
+  const emPassword = await hash('Emergency@RGH2026!', 12);
   const emUser = await prisma.user.upsert({
-    where: { email: 'emc@destinysprings.com' },
+    where: { email: 'emc@riverside-general.example' },
     update: {},
     create: {
-      email: 'emc@destinysprings.com',
+      email: 'emc@riverside-general.example',
       name: 'EM Coordinator',
       passwordHash: emPassword,
       role: UserRole.EM_COORDINATOR,
@@ -352,7 +352,7 @@ async function main() {
       variables: ['{{PATIENT_NAME}}', '{{COMPLAINANT_NAME}}', '{{DATE_RECEIVED}}', '{{GRIEVANCE_NUMBER}}', '{{ASSIGNED_TO}}', '{{FACILITY_NAME}}', '{{CONTACT_PHONE}}'],
       bodyTemplate: `Dear {{COMPLAINANT_NAME}},
 
-We are writing to acknowledge receipt of your grievance received by Destiny Springs Healthcare on {{DATE_RECEIVED}}.
+We are writing to acknowledge receipt of your grievance received by Riverside General Hospital on {{DATE_RECEIVED}}.
 
 Your concerns have been assigned grievance number {{GRIEVANCE_NUMBER}} and have been referred to {{ASSIGNED_TO}} for thorough review and investigation.
 
@@ -364,7 +364,7 @@ Sincerely,
 
 Patient Rights Officer
 {{FACILITY_NAME}}
-Destiny Springs Healthcare | Peoria, AZ`,
+Riverside General Hospital | Riverside, AZ`,
       instructions: 'Must be sent within 7 calendar days of grievance receipt. Reference CMS 482.13(e). Retain copy in grievance file.',
     },
     {
@@ -401,7 +401,7 @@ Sincerely,
 
 Patient Rights Officer
 {{FACILITY_NAME}}
-Destiny Springs Healthcare | Peoria, AZ`,
+Riverside General Hospital | Riverside, AZ`,
       instructions: 'Must be sent within 30 calendar days of grievance receipt. Must include: investigation steps, findings, actions taken, appeal rights. Retain in grievance file.',
     },
     {
@@ -409,7 +409,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
       name: 'Sentinel Event Family Notification',
       category: 'SENTINEL_EVENT_FAMILY_NOTICE',
       description: 'Prompt notification to patient\'s family/authorized representative following a sentinel event. Joint Commission requires timely, compassionate communication.',
-      subject: 'Regarding {{PATIENT_NAME}} - Important Update from Destiny Springs Healthcare',
+      subject: 'Regarding {{PATIENT_NAME}} - Important Update from Riverside General Hospital',
       daysRequired: 1,
       regulatoryRef: 'JC RI.01.07.01, LD.04.04.05',
       variables: ['{{PATIENT_NAME}}', '{{FAMILY_NAME}}', '{{EVENT_DATE}}', '{{FACILITY_NAME}}', '{{CONTACT_PHONE}}', '{{CONTACT_NAME}}'],
@@ -433,7 +433,7 @@ With sincere concern,
 
 Chief Medical Officer / Clinical Director
 {{FACILITY_NAME}}
-Destiny Springs Healthcare | Peoria, AZ`,
+Riverside General Hospital | Riverside, AZ`,
       instructions: 'Contact family immediately (same day). Compassionate, transparent communication required. Activate family liaison. Document all communications.',
     },
     {
@@ -441,7 +441,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
       name: 'AZ ADHS Adverse Event Notification',
       category: 'STATE_ADVERSE_EVENT_REPORT',
       description: 'Cover letter for mandatory adverse event reporting to Arizona Department of Health Services per A.A.C. R9-10-211.',
-      subject: 'Mandatory Adverse Event Notification - {{INCIDENT_NUMBER}} - Destiny Springs Healthcare',
+      subject: 'Mandatory Adverse Event Notification - {{INCIDENT_NUMBER}} - Riverside General Hospital',
       daysRequired: 1,
       regulatoryRef: 'A.A.C. R9-10-211',
       variables: ['{{INCIDENT_NUMBER}}', '{{EVENT_DATE}}', '{{EVENT_TYPE}}', '{{FACILITY_NAME}}', '{{FACILITY_LICENSE_NUMBER}}', '{{CONTACT_NAME}}', '{{CONTACT_PHONE}}', '{{CONTACT_EMAIL}}'],
@@ -451,14 +451,14 @@ Division of Licensing Services
 Phoenix, AZ 85007
 
 RE: Mandatory Adverse Event Notification
-Facility: Destiny Springs Healthcare
+Facility: Riverside General Hospital
 License Number: {{FACILITY_LICENSE_NUMBER}}
 Incident Reference: {{INCIDENT_NUMBER}}
 Event Date: {{EVENT_DATE}}
 
 Dear ADHS Licensing Division,
 
-Pursuant to A.A.C. R9-10-211, Destiny Springs Healthcare hereby provides notification of the following adverse event:
+Pursuant to A.A.C. R9-10-211, Riverside General Hospital hereby provides notification of the following adverse event:
 
 Event Type: {{EVENT_TYPE}}
 Date of Occurrence: {{EVENT_DATE}}
@@ -466,7 +466,7 @@ Reference Number: {{INCIDENT_NUMBER}}
 
 [Detailed description of the event to be attached]
 
-Destiny Springs Healthcare has initiated an immediate investigation and has implemented interim protective measures as required. A comprehensive root cause analysis is underway, and a complete report with corrective action plan will be submitted within the required timeframe.
+Riverside General Hospital has initiated an immediate investigation and has implemented interim protective measures as required. A comprehensive root cause analysis is underway, and a complete report with corrective action plan will be submitted within the required timeframe.
 
 Please contact our compliance officer, {{CONTACT_NAME}}, at {{CONTACT_PHONE}} or {{CONTACT_EMAIL}} with any questions or requests for additional information.
 
@@ -475,7 +475,7 @@ Respectfully submitted,
 {{CONTACT_NAME}}
 Compliance / Risk Officer
 {{FACILITY_NAME}}
-Destiny Springs Healthcare | Peoria, AZ`,
+Riverside General Hospital | Riverside, AZ`,
       instructions: 'Must be submitted to ADHS within 24 hours of discovery per A.A.C. R9-10-211. Use secure portal submission when available. Retain proof of submission.',
     },
     {
@@ -483,14 +483,14 @@ Destiny Springs Healthcare | Peoria, AZ`,
       name: 'Plan of Correction Cover Letter',
       category: 'PLAN_OF_CORRECTION',
       description: 'Formal cover letter to accompany a Plan of Correction submitted to a regulatory body following a survey.',
-      subject: 'Plan of Correction - {{SURVEY_DATE}} Survey - Destiny Springs Healthcare',
+      subject: 'Plan of Correction - {{SURVEY_DATE}} Survey - Riverside General Hospital',
       daysRequired: 10,
       regulatoryRef: 'CMS / JC / ADHS POC requirements',
       variables: ['{{REGULATORY_BODY}}', '{{SURVEY_DATE}}', '{{POC_NUMBER}}', '{{FACILITY_NAME}}', '{{FACILITY_LICENSE_NUMBER}}', '{{CONTACT_NAME}}', '{{CONTACT_PHONE}}', '{{SUBMISSION_DATE}}'],
       bodyTemplate: `{{REGULATORY_BODY}}
 
 RE: Plan of Correction
-Facility: Destiny Springs Healthcare
+Facility: Riverside General Hospital
 License / Provider Number: {{FACILITY_LICENSE_NUMBER}}
 Survey Date: {{SURVEY_DATE}}
 POC Reference: {{POC_NUMBER}}
@@ -498,7 +498,7 @@ Submission Date: {{SUBMISSION_DATE}}
 
 Dear Survey Team,
 
-Destiny Springs Healthcare submits this Plan of Correction in response to the deficiency findings identified during the survey conducted on {{SURVEY_DATE}}.
+Riverside General Hospital submits this Plan of Correction in response to the deficiency findings identified during the survey conducted on {{SURVEY_DATE}}.
 
 We have thoroughly reviewed each finding and have developed the attached comprehensive Plan of Correction that addresses every cited deficiency. Our plan details:
 
@@ -516,7 +516,7 @@ Respectfully submitted,
 
 Chief Executive Officer / Administrator
 {{FACILITY_NAME}}
-Destiny Springs Healthcare | Peoria, AZ
+Riverside General Hospital | Riverside, AZ
 
 CERTIFICATION
 I certify that the information contained in this Plan of Correction is true and accurate, to the best of my knowledge.
@@ -530,7 +530,7 @@ Signature / Date`,
       name: 'CAP Completion Verification Notice',
       category: 'CAP_COMPLETION_NOTICE',
       description: 'Notification confirming that a Corrective Action Plan has been completed and verified with evidence.',
-      subject: 'CAP Completion Verification - {{CAP_NUMBER}} - Destiny Springs Healthcare',
+      subject: 'CAP Completion Verification - {{CAP_NUMBER}} - Riverside General Hospital',
       daysRequired: null,
       regulatoryRef: null,
       variables: ['{{CAP_NUMBER}}', '{{ORIGINAL_FINDING}}', '{{COMPLETION_DATE}}', '{{EVIDENCE_SUMMARY}}', '{{VERIFIED_BY}}', '{{FACILITY_NAME}}'],
@@ -549,7 +549,7 @@ Date Verified: {{COMPLETION_DATE}}
 All corrective actions identified in the original CAP have been implemented. Monitoring procedures are in place to ensure sustained compliance.
 
 {{FACILITY_NAME}}
-Destiny Springs Healthcare`,
+Riverside General Hospital`,
       instructions: 'Send to relevant department heads and file in compliance record. If CAP was tied to a regulatory finding, submit to the regulatory body as required.',
     },
     {
@@ -557,7 +557,7 @@ Destiny Springs Healthcare`,
       name: 'Incident Family Notification',
       category: 'INCIDENT_FAMILY_NOTIFICATION',
       description: 'Notification to patient\'s family/representative following a significant incident. AZ patients have right to notification per AZ Mental Health Bill of Rights.',
-      subject: 'Regarding {{PATIENT_NAME}} - Notification from Destiny Springs Healthcare',
+      subject: 'Regarding {{PATIENT_NAME}} - Notification from Riverside General Hospital',
       daysRequired: 1,
       regulatoryRef: 'AZ Mental Health Bill of Rights, A.R.S. 36-504',
       variables: ['{{PATIENT_NAME}}', '{{FAMILY_NAME}}', '{{INCIDENT_DATE}}', '{{INCIDENT_TYPE}}', '{{CURRENT_STATUS}}', '{{CONTACT_NAME}}', '{{CONTACT_PHONE}}', '{{FACILITY_NAME}}'],
@@ -578,7 +578,7 @@ Sincerely,
 
 Clinical Director / Charge Nurse
 {{FACILITY_NAME}}
-Destiny Springs Healthcare | Peoria, AZ`,
+Riverside General Hospital | Riverside, AZ`,
       instructions: 'Contact within 24 hours. Document notification in medical record. Ensure authorized representative is on file.',
     },
     {
@@ -586,7 +586,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
       name: 'Joint Commission RFI Response',
       category: 'REGULATORY_INQUIRY_RESPONSE',
       description: 'Response to a Joint Commission Request for Information (RFI) following a complaint investigation.',
-      subject: 'Response to Request for Information - {{RFI_NUMBER}} - Destiny Springs Healthcare',
+      subject: 'Response to Request for Information - {{RFI_NUMBER}} - Riverside General Hospital',
       daysRequired: 5,
       regulatoryRef: 'JC Standards',
       variables: ['{{RFI_NUMBER}}', '{{RFI_DATE}}', '{{COMPLAINT_SUMMARY}}', '{{FACILITY_NAME}}', '{{FACILITY_ACCREDITATION_NUMBER}}', '{{CONTACT_NAME}}', '{{CONTACT_PHONE}}', '{{RESPONSE_SUMMARY}}'],
@@ -598,12 +598,12 @@ Oakbrook Terrace, IL 60181
 RE: Response to Request for Information
 RFI Number: {{RFI_NUMBER}}
 RFI Date: {{RFI_DATE}}
-Facility: Destiny Springs Healthcare
+Facility: Riverside General Hospital
 Accreditation Number: {{FACILITY_ACCREDITATION_NUMBER}}
 
 Dear Joint Commission Complaint Investigations Team,
 
-Destiny Springs Healthcare is pleased to provide the following response to your Request for Information dated {{RFI_DATE}} regarding {{COMPLAINT_SUMMARY}}.
+Riverside General Hospital is pleased to provide the following response to your Request for Information dated {{RFI_DATE}} regarding {{COMPLAINT_SUMMARY}}.
 
 RESPONSE SUMMARY
 {{RESPONSE_SUMMARY}}
@@ -616,7 +616,7 @@ Respectfully submitted,
 
 CEO / Compliance Officer
 {{FACILITY_NAME}}
-Destiny Springs Healthcare | Peoria, AZ`,
+Riverside General Hospital | Riverside, AZ`,
       instructions: 'Respond within the timeline specified in the JC RFI letter (typically 5-10 business days). Include all referenced documentation. Copy legal counsel if warranted.',
     },
     {
@@ -624,7 +624,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
       name: 'Complaint Acknowledgment',
       category: 'COMPLAINT_ACKNOWLEDGMENT',
       description: 'General acknowledgment letter for complaints received via any channel.',
-      subject: 'Acknowledgment of Your Complaint - Destiny Springs Healthcare',
+      subject: 'Acknowledgment of Your Complaint - Riverside General Hospital',
       daysRequired: 2,
       regulatoryRef: null,
       variables: ['{{COMPLAINANT_NAME}}', '{{DATE_RECEIVED}}', '{{COMPLAINT_REF}}', '{{ASSIGNED_TO}}', '{{CONTACT_PHONE}}', '{{FACILITY_NAME}}'],
@@ -640,7 +640,7 @@ Sincerely,
 
 Patient Experience / Compliance Team
 {{FACILITY_NAME}}
-Destiny Springs Healthcare | Peoria, AZ`,
+Riverside General Hospital | Riverside, AZ`,
       instructions: 'Send acknowledgment within 2 business days. Log in complaints register. Route to appropriate department.',
     },
     {
@@ -648,20 +648,20 @@ Destiny Springs Healthcare | Peoria, AZ`,
       name: 'Survey Entrance Conference Response',
       category: 'SURVEY_RESPONSE_COVER',
       description: 'Formal response cover letter when responding to a regulatory agency survey or inspection.',
-      subject: 'Survey Response - {{SURVEY_DATE}} - Destiny Springs Healthcare',
+      subject: 'Survey Response - {{SURVEY_DATE}} - Riverside General Hospital',
       daysRequired: 10,
       regulatoryRef: 'CMS / ADHS / JC',
       variables: ['{{REGULATORY_BODY}}', '{{SURVEY_DATE}}', '{{FACILITY_NAME}}', '{{FACILITY_LICENSE}}', '{{CONTACT_NAME}}', '{{CONTACT_PHONE}}'],
       bodyTemplate: `{{REGULATORY_BODY}}
 
 RE: Survey Response
-Facility: Destiny Springs Healthcare
+Facility: Riverside General Hospital
 License/Provider #: {{FACILITY_LICENSE}}
 Survey Date: {{SURVEY_DATE}}
 
 Dear Survey Team,
 
-On behalf of Destiny Springs Healthcare, we respectfully submit our formal response to the findings identified during the survey conducted on {{SURVEY_DATE}}.
+On behalf of Riverside General Hospital, we respectfully submit our formal response to the findings identified during the survey conducted on {{SURVEY_DATE}}.
 
 We have carefully reviewed each finding and are committed to full compliance with all applicable standards, regulations, and conditions of participation. Our responses, detailed in the attached documentation, reflect our commitment to providing safe, high-quality care to the individuals we serve.
 
@@ -673,7 +673,7 @@ Respectfully,
 
 CEO / Administrator
 {{FACILITY_NAME}}
-Destiny Springs Healthcare | Peoria, AZ`,
+Riverside General Hospital | Riverside, AZ`,
       instructions: 'Coordinate with clinical, quality, and compliance leadership before submission. Legal review recommended for adverse findings.',
     },
   ];
@@ -1372,7 +1372,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
     await prisma.ligatureRiskItem.upsert({
       where: { id: item.id },
       update: {},
-      create: { ...item, facilityId: 'destiny-springs' },
+      create: { ...item, facilityId: 'riverside-general' },
     });
   }
   console.log(`  ✅ Seeded ${ligatureItems.length} ligature risk items`);
@@ -1386,7 +1386,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
     where: { id: eocRound1Id },
     update: {},
     create: {
-      id: eocRound1Id, facilityId: 'destiny-springs',
+      id: eocRound1Id, facilityId: 'riverside-general',
       roundNumber: 'EOC-ROUND-2026-LIG-01',
       roundType: 'LIGATURE_RISK' as const,
       conductedDate: new Date('2026-02-20'),
@@ -1402,7 +1402,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
     where: { id: eocRound2Id },
     update: {},
     create: {
-      id: eocRound2Id, facilityId: 'destiny-springs',
+      id: eocRound2Id, facilityId: 'riverside-general',
       roundNumber: 'EOC-ROUND-2026-02',
       roundType: 'LIFE_SAFETY_GENERAL' as const,
       conductedDate: new Date('2026-02-07'),
@@ -1418,7 +1418,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
     where: { id: eocRound3Id },
     update: {},
     create: {
-      id: eocRound3Id, facilityId: 'destiny-springs',
+      id: eocRound3Id, facilityId: 'riverside-general',
       roundNumber: 'EOC-ROUND-2026-03',
       roundType: 'LIFE_SAFETY_GENERAL' as const,
       conductedDate: new Date('2026-03-07'),
@@ -1494,7 +1494,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
     await prisma.eocDeficiency.upsert({
       where: { id: d.id },
       update: {},
-      create: { ...d, facilityId: 'destiny-springs', photoUrls: [] },
+      create: { ...d, facilityId: 'riverside-general', photoUrls: [] },
     });
   }
   console.log(`  ✅ Seeded ${deficiencies.length} EOC deficiencies`);
@@ -1579,7 +1579,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
     await prisma.equipmentPm.upsert({
       where: { id: item.id },
       update: {},
-      create: { ...item, facilityId: 'destiny-springs' },
+      create: { ...item, facilityId: 'riverside-general' },
     });
   }
   console.log(`  ✅ Seeded ${equipmentItems.length} equipment PM records`);
@@ -1738,7 +1738,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
       firstName: 'Elena', lastName: 'Vasquez', credentials: 'MD',
       specialty: 'Psychiatry', providerType: 'PHYSICIAN' as const,
       department: 'Inpatient Psychiatry',
-      primaryEmail: 'evasquez@destinysprings.com',
+      primaryEmail: 'evasquez@riverside-general.example',
       phone: '(623) 555-0101',
       status: 'ACTIVE' as const,
       initialAppointDate: new Date(`${y-3}-07-01`),
@@ -1750,7 +1750,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
       firstName: 'James', lastName: 'Ortega', credentials: 'DO',
       specialty: 'Psychiatry', providerType: 'PHYSICIAN' as const,
       department: 'Inpatient Psychiatry',
-      primaryEmail: 'jortega@destinysprings.com',
+      primaryEmail: 'jortega@riverside-general.example',
       phone: '(623) 555-0102',
       status: 'ACTIVE' as const,
       initialAppointDate: new Date(`${y-2}-03-01`),
@@ -1762,7 +1762,7 @@ Destiny Springs Healthcare | Peoria, AZ`,
       firstName: 'Priya', lastName: 'Sharma', credentials: 'PMHNP-BC',
       specialty: 'Psychiatric Mental Health NP', providerType: 'ADVANCED_PRACTICE' as const,
       department: 'Outpatient Services',
-      primaryEmail: 'psharma@destinysprings.com',
+      primaryEmail: 'psharma@riverside-general.example',
       phone: '(623) 555-0103',
       status: 'ACTIVE' as const,
       initialAppointDate: new Date(`${y-1}-10-01`),
@@ -2190,9 +2190,9 @@ Destiny Springs Healthcare | Peoria, AZ`,
   console.log('\n✅ Seed complete!\n');
   console.log('─────────────────────────────────────────────────');
   console.log('LOGIN CREDENTIALS:');
-  console.log('  Admin:        admin@destinysprings.com  /  Admin@DSH2026!');
-  console.log('  Compliance:   compliance@destinysprings.com  /  Compliance@DSH2026!');
-  console.log('  EM Coord:     emc@destinysprings.com  /  Emergency@DSH2026!');
+  console.log('  Admin:        admin@riverside-general.example  /  Admin@RGH2026!');
+  console.log('  Compliance:   compliance@riverside-general.example  /  Compliance@RGH2026!');
+  console.log('  EM Coord:     emc@riverside-general.example  /  Emergency@RGH2026!');
   console.log('─────────────────────────────────────────────────\n');
 }
 

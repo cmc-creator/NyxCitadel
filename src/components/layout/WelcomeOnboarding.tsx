@@ -121,7 +121,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
             <div>
               <h3 className="font-bold text-teal-200 text-sm">Interactive 7-Step Show-and-Tell Masterclass</h3>
               <p className="text-xs text-slate-300 mt-0.5">
-                Explore live interactive target rings, concrete hospital data examples (Destiny Springs Healthcare), and automated regulatory workflows.
+                Explore live interactive target rings, concrete hospital data examples (Riverside General Hospital), and automated regulatory workflows.
               </p>
             </div>
             <button
@@ -172,7 +172,7 @@ export function WelcomeOnboarding({ userName }: { userName?: string | null }) {
         <div className="p-4 bg-slate-900 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 flex-shrink-0">
           <div className="flex items-center gap-2 text-xs text-slate-400">
             <BookOpen className="w-4 h-4 text-teal-400" />
-            <span>Pre-populated Destiny Springs Healthcare sample dataset loaded</span>
+            <span>Pre-populated Riverside General Hospital sample dataset loaded</span>
           </div>
 
           <div className="flex items-center gap-2">

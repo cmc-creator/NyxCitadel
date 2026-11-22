@@ -199,7 +199,7 @@ export default function FacilitySettingsPage() {
             </div>
             <Field label="City">
               <input type="text" value={form.city} onChange={e => set('city', e.target.value)}
-                placeholder="Peoria" className="form-input w-full text-sm" />
+                placeholder="Riverside" className="form-input w-full text-sm" />
             </Field>
             <div className="grid grid-cols-2 gap-2">
               <Field label="State">

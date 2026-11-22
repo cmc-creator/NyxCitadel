@@ -39,7 +39,7 @@ export function UnannouncedSurveyDossierModal() {
                     </span>
                   </h2>
                   <p className="text-xs text-slate-300">
-                    Destiny Springs Healthcare · License #BHS-004921 · Acute Psychiatric (90 Beds)
+                    Riverside General Hospital · License #AZ-DOH-PSY-84920 · Acute Psychiatric (90 Beds)
                   </p>
                 </div>
               </div>
@@ -84,7 +84,7 @@ export function UnannouncedSurveyDossierModal() {
                   <div className="space-y-1.5 text-xs text-muted-foreground">
                     <div className="flex justify-between border-b border-border/40 pb-1">
                       <span>AZ ADHS Behavioral License:</span>
-                      <span className="font-mono font-bold text-foreground">#BHS-004921 (Active)</span>
+                      <span className="font-mono font-bold text-foreground">#AZ-DOH-PSY-84920 (Active)</span>
                     </div>
                     <div className="flex justify-between border-b border-border/40 pb-1">
                       <span>Joint Commission Accreditation:</span>

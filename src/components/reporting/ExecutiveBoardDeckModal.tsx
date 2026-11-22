@@ -28,7 +28,7 @@ interface ExecutiveBoardDeckModalProps {
 export function ExecutiveBoardDeckModal({
   isOpen,
   onClose,
-  facilityName = 'Destiny Springs Healthcare',
+  facilityName = 'Riverside General Hospital',
   complianceScore = 98.4,
   openCaps = 2,
   incidentCount = 14,

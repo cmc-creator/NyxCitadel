@@ -5,23 +5,23 @@ import { FacilityType } from '@prisma/client';
 export async function POST() {
   try {
     let dbSeeded = false;
-    let seededFacilityName = 'Destiny Springs Healthcare';
+    let seededFacilityName = 'Riverside General Hospital';
 
     // Attempt DB seed if Prisma/DB is accessible
     if (process.env.POSTGRES_URL || process.env.DATABASE_URL) {
       try {
         await prisma.facility.upsert({
-          where: { id: 'destiny-springs' },
+          where: { id: 'riverside-general' },
           update: {},
           create: {
-            id: 'destiny-springs',
-            name: 'Destiny Springs Healthcare',
-            shortName: 'DSH',
-            address: '13451 N 94th Drive',
-            city: 'Peoria',
+            id: 'riverside-general',
+            name: 'Riverside General Hospital',
+            shortName: 'RGH',
+            address: '1200 W Demo Parkway',
+            city: 'Riverside',
             state: 'AZ',
-            zip: '85381',
-            phone: '(623) 236-2000',
+            zip: '85000',
+            phone: '(602) 555-0100',
             facilityType: FacilityType.ACUTE_PSYCH,
             bedCount: 60,
             timezone: 'America/Phoenix',
@@ -46,7 +46,7 @@ export async function POST() {
         trainingRecords: 45,
         eocItems: 18,
       },
-      message: 'Demo dataset initialized successfully for Destiny Springs Healthcare.',
+      message: 'Demo dataset initialized successfully for Riverside General Hospital.',
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

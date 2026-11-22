@@ -66,7 +66,7 @@ In **Vercel → Project → Settings → Environment Variables**, set at least *
 
 | Variable | Example |
 | :--- | :--- |
-| `SEED_FACILITY_NAME` | `Destiny Springs Healthcare` |
+| `SEED_FACILITY_NAME` | `Riverside General Hospital` |
 | `SEED_ADMIN_EMAIL` | `admin@yourfacility.com` |
 | `SEED_ADMIN_PASSWORD` | strong unique password |
 | `SEED_ADMIN_NAME` | `Site Administrator` |

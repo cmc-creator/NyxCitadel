@@ -210,7 +210,7 @@ export default function WalkthroughPage() {
     try {
       await fetch('/api/demo/seed', { method: 'POST' }).catch(() => {});
       const summary = seedDemoStorage();
-      setSeedMessage(`Successfully loaded ${summary.incidentsCount} Incidents, ${summary.capsCount} CAPs, ${summary.surveysCount} Surveys & ${summary.calendarItemsCount} Deadlines for Destiny Springs Healthcare.`);
+      setSeedMessage(`Successfully loaded ${summary.incidentsCount} Incidents, ${summary.capsCount} CAPs, ${summary.surveysCount} Surveys & ${summary.calendarItemsCount} Deadlines for Riverside General Hospital.`);
     } catch (e) {
       setSeedMessage('Demo dataset refreshed successfully!');
     } finally {
@@ -257,7 +257,7 @@ export default function WalkthroughPage() {
               Demo Data Generator
             </h3>
             <p className="text-xs text-muted-foreground mt-0.5 max-w-xl">
-              {seedMessage ?? 'Click below to load or reset pre-populated sample records (Incidents, CAPs, Tracers, Calendar, Training) for Destiny Springs Healthcare.'}
+              {seedMessage ?? 'Click below to load or reset pre-populated sample records (Incidents, CAPs, Tracers, Calendar, Training) for Riverside General Hospital.'}
             </p>
           </div>
         </div>

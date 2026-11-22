@@ -15,12 +15,12 @@ export interface DemoSeedSummary {
 }
 
 export const DEMO_FACILITY = {
-  id: 'destiny-springs',
-  name: 'Destiny Springs Healthcare',
-  shortName: 'DSH',
+  id: 'riverside-general',
+  name: 'Riverside General Hospital',
+  shortName: 'RGH',
   facilityType: 'ACUTE_PSYCH',
   bedCount: 60,
-  city: 'Peoria',
+  city: 'Riverside',
   state: 'AZ',
 };
 

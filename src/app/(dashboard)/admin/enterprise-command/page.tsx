@@ -32,8 +32,8 @@ interface FacilityScorecard {
 const FACILITIES: FacilityScorecard[] = [
   {
     id: 'fac-1',
-    name: 'Destiny Springs Healthcare',
-    location: 'Peoria, AZ',
+    name: 'Riverside General Hospital',
+    location: 'Riverside, AZ',
     beds: 120,
     complianceScore: 98.4,
     surveyStatus: 'Compliant',

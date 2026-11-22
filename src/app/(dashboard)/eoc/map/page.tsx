@@ -43,7 +43,7 @@ export default function HospitalFloorplanPage() {
             Hospital Unit & Ligature Risk Heatmap
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
-            Destiny Springs Healthcare · 90 Beds Inpatient Psych Architectural Layout
+            Riverside General Hospital · 90 Beds Inpatient Psych Architectural Layout
           </p>
         </div>
 

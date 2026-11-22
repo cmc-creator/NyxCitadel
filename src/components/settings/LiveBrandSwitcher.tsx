@@ -16,13 +16,13 @@ export interface BrandPreset {
 
 export const BRAND_PRESETS: BrandPreset[] = [
   {
-    id: 'destiny-springs',
-    name: 'Destiny Springs Healthcare',
-    shortName: 'Destiny Springs',
+    id: 'riverside-general',
+    name: 'Riverside General Hospital',
+    shortName: 'Riverside General',
     primaryColor: '#0d9488', // teal-600
     accentColor: '#06b6d4',  // cyan-500
     badge: 'Acute Psychiatric',
-    state: 'Peoria, AZ',
+    state: 'Riverside, AZ',
   },
   {
     id: 'banner-health',
@@ -54,10 +54,10 @@ export const BRAND_PRESETS: BrandPreset[] = [
 ];
 
 export function LiveBrandSwitcherModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [selectedId, setSelectedId] = useState('destiny-springs');
+  const [selectedId, setSelectedId] = useState('riverside-general');
 
   useEffect(() => {
-    const saved = window.localStorage.getItem('nyxcitadel:selected-brand') || 'destiny-springs';
+    const saved = window.localStorage.getItem('nyxcitadel:selected-brand') || 'riverside-general';
     setSelectedId(saved);
   }, []);
 

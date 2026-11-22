@@ -17,7 +17,7 @@ export function ComplianceRoiWidget() {
                 Annual Impact
               </span>
             </h3>
-            <p className="text-xs text-muted-foreground">Quantified time savings and fine exposure reduction for Destiny Springs Healthcare.</p>
+            <p className="text-xs text-muted-foreground">Quantified time savings and fine exposure reduction for Riverside General Hospital.</p>
           </div>
         </div>
       </div>

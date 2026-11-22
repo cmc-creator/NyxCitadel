@@ -26,7 +26,7 @@ export function AdhsFilingGenerator() {
 
   const [copied, setCopied] = useState(false);
 
-  const facilityName = 'Destiny Springs Healthcare';
+  const facilityName = 'Riverside General Hospital';
   const adhsLicense = 'AZ-DOH-PSY-84920';
 
   const generatedFilingText = `ARIZONA DEPARTMENT OF HEALTH SERVICES (ADHS)
@@ -36,7 +36,7 @@ Rule Authority: A.A.C. R9-10-108 & A.A.C. R9-10-202
 FACILITY INFORMATION:
 - Facility Name: ${facilityName}
 - ADHS License Number: ${adhsLicense}
-- Facility Type: Acute Psychiatric Inpatient Hospital (Peoria, AZ)
+- Facility Type: Acute Psychiatric Inpatient Hospital (Riverside, AZ)
 
 INCIDENT DETAILS:
 - Incident Category: ${incidentType}

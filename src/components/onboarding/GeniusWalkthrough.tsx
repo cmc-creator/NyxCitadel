@@ -60,7 +60,7 @@ export const PERSONA_TOURS = {
         actionHint: 'Check the top stats cards and the Attention Feed on the right for urgent priorities.',
         exampleCard: {
           label: 'LIVE DEMO EXAMPLE: Facility Health Snapshot',
-          title: 'Destiny Springs Healthcare (Acute Psychiatric, Peoria AZ)',
+          title: 'Riverside General Hospital (Acute Psychiatric, Riverside AZ)',
           badge: 'Health Index: 94.2%',
           metrics: [
             { key: 'Compliance Index', val: '94.2% (Tier A)' },
@@ -217,7 +217,7 @@ export const PERSONA_TOURS = {
         actionHint: 'Notice the live risk score breakdown and facility health index.',
         exampleCard: {
           label: 'EXAMPLE: Executive Dashboard Metrics',
-          title: 'Destiny Springs Healthcare - Live Index 94.2%',
+          title: 'Riverside General Hospital - Live Index 94.2%',
           badge: 'Executive View',
           metrics: [
             { key: 'Facility Score', val: '94.2% Tier A' },

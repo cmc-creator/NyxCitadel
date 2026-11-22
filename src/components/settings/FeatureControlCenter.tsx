@@ -21,7 +21,7 @@ const FEATURE_DEFINITIONS: {
   {
     key: 'vipDemoMode',
     title: 'VIP Demo Mode & Role Switcher',
-    desc: 'Enable VIP Demo banner, pre-populated Destiny Springs Healthcare data, and hospital persona switcher.',
+    desc: 'Enable VIP Demo banner, pre-populated Riverside General Hospital data, and hospital persona switcher.',
     icon: Sliders,
     category: 'Demo & Presentation',
   },

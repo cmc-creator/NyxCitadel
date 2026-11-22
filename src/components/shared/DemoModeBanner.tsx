@@ -70,7 +70,7 @@ export function DemoModeBanner() {
         <div>
           <span className="font-bold text-amber-300">VIP Demo Mode Active:</span>{' '}
           <span className="text-slate-300">
-            {seededMessage ?? 'Pre-populated hospital dataset loaded for Destiny Springs Healthcare.'}
+            {seededMessage ?? 'Pre-populated hospital dataset loaded for Riverside General Hospital.'}
           </span>
         </div>
       </div>

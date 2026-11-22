@@ -76,7 +76,7 @@ export default async function DashboardPage() {
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Welcome back, {session.user.name || 'there'}!</h1>
-            <p className="text-slate-300 text-sm md:text-base">Executive Command Center for Destiny Springs Healthcare (Acute Psychiatric).</p>
+            <p className="text-slate-300 text-sm md:text-base">Executive Command Center for your facility (Acute Psychiatric).</p>
           </div>
 
           <div className="flex items-center gap-2">
