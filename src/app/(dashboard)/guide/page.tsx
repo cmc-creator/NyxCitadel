@@ -163,7 +163,7 @@ export default function GuidePage() {
             <Link
               href="/walkthrough"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white"
-              style={{ background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)' }}
             >
               Open Walkthrough <ChevronRight className="w-4 h-4" />
             </Link>

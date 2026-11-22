@@ -47,7 +47,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
     <div className="space-y-6 max-w-4xl">
       <div>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <CreditCard className="w-6 h-6 text-teal-600" />
+          <CreditCard className="w-6 h-6 text-citadel-gold-dark" />
           Billing
         </h1>
         <p className="text-sm text-muted-foreground mt-0.5">Manage your NyxCitadel subscription for {facility.name}.</p>
@@ -145,7 +145,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
           <div className="bg-card border border-border rounded-xl p-6 flex flex-col">
             <p className="text-base font-bold text-foreground">Starter</p>
             <p className="text-sm text-muted-foreground mt-0.5">Everything you need to stay survey-ready.</p>
-            <p className="text-3xl font-black text-teal-400 mt-3">$399<span className="text-sm font-normal text-muted-foreground">/month</span></p>
+            <p className="text-3xl font-black text-citadel-gold mt-3">$399<span className="text-sm font-normal text-muted-foreground">/month</span></p>
             <ul className="space-y-1.5 text-sm text-muted-foreground mt-4 flex-1">
               <li>1 facility</li>
               <li>Up to 5 users</li>
@@ -159,7 +159,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
                 <input type="hidden" name="plan" value="starter" />
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition w-full justify-center"
+                  className="inline-flex items-center gap-2 bg-citadel-gold-dark hover:bg-citadel-gold text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition w-full justify-center"
                 >
                   <CreditCard className="w-4 h-4" />
                   Start Starter - 30 days free
@@ -168,10 +168,10 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
             )}
           </div>
 
-          <div className="bg-card border border-teal-500/60 rounded-xl p-6 flex flex-col">
+          <div className="bg-card border border-citadel-gold/60 rounded-xl p-6 flex flex-col">
             <p className="text-base font-bold text-foreground">Professional</p>
             <p className="text-sm text-muted-foreground mt-0.5">The full platform - built for quality teams.</p>
-            <p className="text-3xl font-black text-teal-400 mt-3">$799<span className="text-sm font-normal text-muted-foreground">/month</span></p>
+            <p className="text-3xl font-black text-citadel-gold mt-3">$799<span className="text-sm font-normal text-muted-foreground">/month</span></p>
             <ul className="space-y-1.5 text-sm text-muted-foreground mt-4 flex-1">
               <li>Up to 3 facilities</li>
               <li>Up to 20 users</li>
@@ -187,7 +187,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
                 <input type="hidden" name="plan" value="professional" />
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition w-full justify-center"
+                  className="inline-flex items-center gap-2 bg-citadel-gold-dark hover:bg-citadel-gold text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition w-full justify-center"
                 >
                   <CreditCard className="w-4 h-4" />
                   Start Professional - 30 days free
@@ -199,7 +199,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
           <div className="bg-card border border-border rounded-xl p-6 flex flex-col">
             <p className="text-base font-bold text-foreground">Enterprise</p>
             <p className="text-sm text-muted-foreground mt-0.5">Unlimited scale. Dedicated support. Fully custom.</p>
-            <p className="text-3xl font-black text-teal-400 mt-3">Custom</p>
+            <p className="text-3xl font-black text-citadel-gold mt-3">Custom</p>
             <ul className="space-y-1.5 text-sm text-muted-foreground mt-4 flex-1">
               <li>Unlimited facilities</li>
               <li>Unlimited users</li>
@@ -227,7 +227,7 @@ export default async function BillingPage({ searchParams }: { searchParams: { su
             'Emergency management and drill tracking',
           ].map((item) => (
             <li key={item} className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-teal-500 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-citadel-gold flex-shrink-0 mt-0.5" />
               {item}
             </li>
           ))}

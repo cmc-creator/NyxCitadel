@@ -92,10 +92,10 @@ export function TopBar({ user, onMenuClick }: TopBarProps) {
         <div className="flex-1 max-w-md">
           <button
             onClick={openCommandPalette}
-            className="w-full flex items-center justify-between pl-3 pr-2 py-1.5 text-sm bg-muted border border-border/40 rounded-lg text-muted-foreground hover:border-teal-500/40 hover:bg-card transition group"
+            className="w-full flex items-center justify-between pl-3 pr-2 py-1.5 text-sm bg-muted border border-border/40 rounded-lg text-muted-foreground hover:border-citadel-gold/40 hover:bg-card transition group"
           >
             <div className="flex items-center gap-2">
-              <Search className="w-4 h-4 text-muted-foreground group-hover:text-teal-400 transition-colors" />
+              <Search className="w-4 h-4 text-muted-foreground group-hover:text-citadel-gold transition-colors" />
               <span className="text-xs">Search items or press <kbd className="font-mono bg-background/80 px-1.5 py-0.5 rounded text-[10px]">Ctrl+K</kbd>...</span>
             </div>
           </button>
@@ -111,7 +111,7 @@ export function TopBar({ user, onMenuClick }: TopBarProps) {
             title="Switch Facility White-Label Brand"
             className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-muted/60 hover:bg-muted border border-border/60 text-muted-foreground hover:text-foreground transition-all"
           >
-            <Palette className="w-3.5 h-3.5 text-teal-400" />
+            <Palette className="w-3.5 h-3.5 text-citadel-gold" />
             Brand Theme
           </button>
 
@@ -119,7 +119,7 @@ export function TopBar({ user, onMenuClick }: TopBarProps) {
           <button
             onClick={() => startGeniusTour('executive')}
             title="Start Interactive Guided Tour"
-            className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-teal-500/10 border border-teal-500/30 text-teal-400 hover:bg-teal-500/20 transition-all"
+            className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-citadel-gold/10 border border-citadel-gold/30 text-citadel-gold hover:bg-citadel-gold/20 transition-all"
           >
             <PlayCircle className="w-3.5 h-3.5" />
             Genius Tour
@@ -134,11 +134,11 @@ export function TopBar({ user, onMenuClick }: TopBarProps) {
             className="flex items-center gap-2 rounded-lg px-1.5 py-1 hover:bg-muted/60 transition-colors group"
             title="My Profile"
           >
-            <div className="w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0 group-hover:ring-2 group-hover:ring-teal-500/50 transition-all">
+            <div className="w-8 h-8 rounded-full bg-citadel-gold-dark flex items-center justify-center text-white text-sm font-semibold flex-shrink-0 group-hover:ring-2 group-hover:ring-citadel-gold/50 transition-all">
               {user.name?.charAt(0)?.toUpperCase() ?? user.email?.charAt(0)?.toUpperCase() ?? 'U'}
             </div>
             <div className="hidden md:block text-right">
-              <p className="text-sm font-medium text-foreground leading-none group-hover:text-teal-400 transition-colors">
+              <p className="text-sm font-medium text-foreground leading-none group-hover:text-citadel-gold transition-colors">
                 {user.name ?? user.email}
               </p>
               <p className="text-xs text-muted-foreground mt-0.5">

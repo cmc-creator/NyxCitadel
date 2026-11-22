@@ -18,7 +18,7 @@ export default function NotFound() {
           <Link
             href="/"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-colors text-white"
-            style={{ background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)' }}
+            style={{ background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)' }}
           >
             <Home className="w-4 h-4" />
             Return Home

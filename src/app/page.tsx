@@ -128,9 +128,9 @@ const pricingTiers = [
     price: '$799',
     period: '/mo, billed monthly',
     badge: 'Most Popular',
-    color: 'border-teal-500/60',
-    buttonStyle: 'text-white shadow-lg shadow-teal-900/40',
-    buttonInlineStyle: {background:'linear-gradient(135deg,#0d7377 0%,#14a4a8 100%)'},
+    color: 'border-citadel-gold/60',
+    buttonStyle: 'text-white shadow-lg shadow-amber-900/40',
+    buttonInlineStyle: {background:'linear-gradient(135deg,#9a7b2d 0%,#c9a84c 100%)'},
     features: [
       { label: 'Up to 3 facilities', included: true },
       { label: 'Up to 20 users', included: true },
@@ -200,9 +200,9 @@ export default async function RootPage() {
 
       {/* ── Multi-layer background ── */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-60 -right-60 w-[900px] h-[900px] bg-teal-700/15 rounded-full blur-[140px]" />
+        <div className="absolute -top-60 -right-60 w-[900px] h-[900px] bg-amber-700/15 rounded-full blur-[140px]" />
         <div className="absolute top-1/3 -left-80 w-[700px] h-[700px] bg-blue-800/12 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-teal-800/12 rounded-full blur-[130px]" />
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-amber-800/12 rounded-full blur-[130px]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-amber-900/8 rounded-full blur-[100px]" />
         <div
           className="absolute inset-0 opacity-[0.018]"
@@ -219,12 +219,12 @@ export default async function RootPage() {
           {/* ── Brand ── */}
           <Link href="/" className="flex items-center gap-3.5 flex-shrink-0 group">
             <div className="relative">
-              <div className="absolute inset-0 rounded-xl bg-teal-500/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <LogoImage width={96} height={96} priority className="h-12 w-12 sm:h-[96px] sm:w-[96px] flex-shrink-0 drop-shadow-[0_0_24px_rgba(13,115,119,0.75)] relative" />
+              <div className="absolute inset-0 rounded-xl bg-citadel-gold/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <LogoImage width={96} height={96} priority className="h-12 w-12 sm:h-[96px] sm:w-[96px] flex-shrink-0 drop-shadow-[0_0_24px_rgba(154,123,45,0.75)] relative" />
             </div>
             <div className="flex flex-col leading-none">
               <span className="font-extrabold text-[1.15rem] tracking-tight text-white">
-                NyxCitadel<sup className="text-[9px] font-normal align-super ml-0.5 text-teal-400">™</sup>
+                NyxCitadel<sup className="text-[9px] font-normal align-super ml-0.5 text-citadel-gold">™</sup>
               </span>
               <span className="text-[10px] font-medium tracking-widest text-slate-500 uppercase mt-0.5">Healthcare Compliance</span>
             </div>
@@ -262,8 +262,8 @@ export default async function RootPage() {
           <div className="flex items-center gap-3 flex-shrink-0">
             {isLoggedIn ? (
               <Link href="/dashboard"
-                className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(13,115,119,0.45)]"
-                style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.3)'}}>
+                className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(154,123,45,0.45)]"
+                style={{background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)', boxShadow: '0 4px 20px rgba(154,123,45,0.3)'}}>
                 Dashboard <ChevronRight className="w-4 h-4" />
               </Link>
             ) : (
@@ -273,8 +273,8 @@ export default async function RootPage() {
                   Sign In
                 </Link>
                 <Link href="/signup"
-                  className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(13,115,119,0.45)]"
-                  style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.3)'}}>
+                  className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(154,123,45,0.45)]"
+                  style={{background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)', boxShadow: '0 4px 20px rgba(154,123,45,0.3)'}}>
                   Get Started <ChevronRight className="w-4 h-4" />
                 </Link>
               </>
@@ -291,13 +291,13 @@ export default async function RootPage() {
       <section className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-12">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/40 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6 shadow-[0_0_20px_rgba(13,115,119,0.25)] animate-fade-in-up max-w-full whitespace-normal">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-citadel-gold/40 bg-citadel-gold/10 text-citadel-gold-light text-xs font-semibold mb-6 shadow-[0_0_20px_rgba(154,123,45,0.25)] animate-fade-in-up max-w-full whitespace-normal">
               <Sparkles className="w-3.5 h-3.5 animate-pulse flex-shrink-0" />
               The Only Healthcare Compliance Platform That Never Sleeps
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.2] tracking-tight mb-6 animate-fade-in-up delay-100">
               Stop Chasing{' '}
-              <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent pb-[0.12em]">
+              <span className="bg-gradient-to-r from-citadel-gold-light via-citadel-gold to-citadel-gold-dark bg-clip-text text-transparent pb-[0.12em]">
                 Regulations.
               </span>
               <br />
@@ -323,7 +323,7 @@ export default async function RootPage() {
                 <Link
                   href="/dashboard"
                   className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-lg transition-all hover:-translate-y-0.5"
-                  style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 8px 30px rgba(13,115,119,0.4)'}}
+                  style={{background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)', boxShadow: '0 8px 30px rgba(154,123,45,0.4)'}}
                 >
                   Go to Dashboard <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -332,13 +332,13 @@ export default async function RootPage() {
                   <Link
                     href="/signup"
                     className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-lg transition-all hover:-translate-y-0.5"
-                    style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 8px 30px rgba(13,115,119,0.4)'}}
+                    style={{background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)', boxShadow: '0 8px 30px rgba(154,123,45,0.4)'}}
                   >
                     Get Started Free <ArrowRight className="w-5 h-5" />
                   </Link>
                   <Link
                     href="/signup#demo"
-                    className="flex items-center gap-2 px-7 py-3.5 border border-white/10 hover:border-teal-500/50 rounded-xl font-semibold text-slate-300 hover:text-white transition-all hover:-translate-y-0.5"
+                    className="flex items-center gap-2 px-7 py-3.5 border border-white/10 hover:border-citadel-gold/50 rounded-xl font-semibold text-slate-300 hover:text-white transition-all hover:-translate-y-0.5"
                   >
                     Try Live Demo
                   </Link>
@@ -380,7 +380,7 @@ export default async function RootPage() {
                   { label: 'Open Findings',   value: '3',   color: 'text-orange-400', bg: 'bg-orange-500/10 border-orange-500/20' },
                   { label: 'Policies Due',    value: '7',   color: 'text-yellow-400', bg: 'bg-yellow-500/10 border-yellow-500/20' },
                   { label: 'Training Comp.',  value: '96%', color: 'text-green-400',  bg: 'bg-green-500/10 border-green-500/20'  },
-                  { label: 'Compliance Score',value: '97',  color: 'text-teal-300', bg: 'bg-teal-500/10 border-teal-500/20' },
+                  { label: 'Compliance Score',value: '97',  color: 'text-citadel-gold-light', bg: 'bg-citadel-gold/10 border-citadel-gold/20' },
                 ].map(item => (
                   <div key={item.label} className={`rounded-xl p-3 border ${item.bg}`}>
                     <p className="text-xs text-slate-500 mb-1">{item.label}</p>
@@ -409,9 +409,9 @@ export default async function RootPage() {
               </div>
               <p className="text-[11px] text-slate-300">CMS updated F0880 infection control requirements</p>
             </div>
-            <div className="absolute -bottom-6 -left-6 bg-teal-500/10 border border-teal-500/30 backdrop-blur-sm rounded-xl p-3.5 shadow-2xl">
+            <div className="absolute -bottom-6 -left-6 bg-citadel-gold/10 border border-citadel-gold/30 backdrop-blur-sm rounded-xl p-3.5 shadow-2xl">
               <p className="text-xs text-slate-500 mb-0.5">Facility Risk Level</p>
-              <p className="text-3xl font-extrabold text-teal-300">Low <span className="text-base font-normal text-slate-500">Risk</span></p>
+              <p className="text-3xl font-extrabold text-citadel-gold-light">Low <span className="text-base font-normal text-slate-500">Risk</span></p>
               <p className="text-[11px] text-green-400 mt-0.5">↓ Improved this quarter</p>
             </div>
           </div>
@@ -421,11 +421,11 @@ export default async function RootPage() {
       {/* ══════════════════════════════
           STATS BAR
       ══════════════════════════════ */}
-      <section className="relative z-10 border-y border-white/5 bg-gradient-to-r from-slate-900/80 via-teal-950/20 to-slate-900/80 backdrop-blur-sm">
+      <section className="relative z-10 border-y border-white/5 bg-gradient-to-r from-slate-900/80 via-amber-950/20 to-slate-900/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map(s => (
             <div key={s.label} className="text-center px-2">
-              <p className="text-3xl lg:text-4xl font-extrabold bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent mb-1">
+              <p className="text-3xl lg:text-4xl font-extrabold bg-gradient-to-r from-citadel-gold-light via-citadel-gold to-citadel-gold-dark bg-clip-text text-transparent mb-1">
                 {s.value}
               </p>
               <p className="text-sm font-semibold text-slate-300">{s.label}</p>
@@ -439,19 +439,19 @@ export default async function RootPage() {
           LIVE CTA
       ══════════════════════════════ */}
       <section className="relative z-10 max-w-7xl mx-auto px-6 py-16">
-        <div className="bg-gradient-to-r from-teal-900/30 to-blue-900/30 border border-teal-500/20 rounded-2xl p-8 sm:p-12 text-center overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-blue-500/10 pointer-events-none" />
+        <div className="bg-gradient-to-r from-amber-900/25 to-yellow-900/20 border border-amber-500/20 rounded-2xl p-8 sm:p-12 text-center overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-yellow-500/10 pointer-events-none" />
           <div className="relative z-10">
             <h2 className="text-3xl sm:text-4xl font-extrabold leading-[1.2] mb-4">
-              Now live and <span className="text-teal-400">onboarding new facilities.</span>
+              Now live and <span className="text-citadel-gold-light">onboarding new facilities.</span>
             </h2>
                         <p className="text-slate-300 max-w-2xl mx-auto mb-8 text-lg">
               NyxCitadel is live and in use by hospitals and behavioral health facilities today. New facilities start with a guided 90 day pilot, with hands-on onboarding from day one.
             </p>
             <Link
               href="/signup"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 shadow-lg shadow-teal-900/40"
-              style={{background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)'}}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 shadow-lg shadow-amber-900/40"
+              style={{background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)'}}
             >
               Get Started <ArrowRight className="w-5 h-5" />
             </Link>
@@ -508,7 +508,7 @@ export default async function RootPage() {
           <div className="bg-slate-900/80 border border-white/8 rounded-2xl overflow-hidden shadow-2xl">
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/5 bg-white/2">
               <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-teal-400" />
+                <Globe className="w-4 h-4 text-citadel-gold" />
                 <span className="text-sm font-bold text-white">Regulatory Change Feed</span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-green-400">
@@ -527,14 +527,14 @@ export default async function RootPage() {
                   </div>
                   <p className="text-sm text-slate-300 leading-snug">{item.text}</p>
                   <div className="flex items-center gap-3 mt-2">
-                    <span className="text-xs text-teal-400 cursor-pointer hover:text-teal-300">View affected policies →</span>
+                    <span className="text-xs text-citadel-gold cursor-pointer hover:text-citadel-gold-light">View affected policies →</span>
                     <span className="text-xs text-blue-400 cursor-pointer hover:text-blue-300">Create action item →</span>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="px-5 py-3 bg-teal-500/5 border-t border-teal-500/10 text-center">
-              <span className="text-xs text-teal-400 font-medium">+ 847 historical regulatory changes tracked this year</span>
+            <div className="px-5 py-3 bg-citadel-gold/5 border-t border-citadel-gold/10 text-center">
+              <span className="text-xs text-citadel-gold font-medium">+ 847 historical regulatory changes tracked this year</span>
             </div>
           </div>
         </div>
@@ -543,16 +543,16 @@ export default async function RootPage() {
       {/* ══════════════════════════════
           WHY NYXCITADEL
       ══════════════════════════════ */}
-      <section id="quality" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-teal-950/15 to-transparent">
+      <section id="quality" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-amber-950/15 to-transparent">
         <div className="max-w-7xl mx-auto px-6 py-24">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6 max-w-full whitespace-normal">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-citadel-gold/30 bg-citadel-gold/10 text-citadel-gold-light text-xs font-semibold mb-6 max-w-full whitespace-normal">
               <BrainCircuit className="w-3.5 h-3.5 flex-shrink-0" />
               Built for Quality &amp; Risk Professionals
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-5 scroll-fade">
               The unfair{' '}
-              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent pb-[0.12em]">
+              <span className="bg-gradient-to-r from-citadel-gold-light to-citadel-gold bg-clip-text text-transparent pb-[0.12em]">
                 advantage your facility deserves
               </span>
             </h2>
@@ -563,9 +563,9 @@ export default async function RootPage() {
           </div>
           <div className="grid lg:grid-cols-3 gap-8">
             {painPoints.map(p => (
-              <div key={p.title} className="relative bg-slate-900/60 border border-white/8 rounded-2xl p-8 hover:border-teal-500/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-teal-900/20">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-500/30 to-blue-500/30 border border-white/10 flex items-center justify-center mb-5">
-                  <p.icon className="w-6 h-6 text-teal-300" />
+              <div key={p.title} className="relative bg-slate-900/60 border border-white/8 rounded-2xl p-8 hover:border-citadel-gold/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-900/20">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-citadel-gold/30 to-amber-500/30 border border-white/10 flex items-center justify-center mb-5">
+                  <p.icon className="w-6 h-6 text-citadel-gold-light" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{p.title}</h3>
                 <p className="text-muted-foreground/70 leading-relaxed">{p.body}</p>
@@ -583,7 +583,7 @@ export default async function RootPage() {
           <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-5 scroll-fade">
             Every tool your compliance{' '}
             <span className="whitespace-nowrap">team needs.</span>{' '}
-            <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent pb-[0.12em]">
+            <span className="bg-gradient-to-r from-citadel-gold-light to-citadel-gold bg-clip-text text-transparent pb-[0.12em]">
               Unified.
             </span>
           </h2>
@@ -712,7 +712,7 @@ export default async function RootPage() {
       {/* ══════════════════════════════
           STANDARDS SECTION
       ══════════════════════════════ */}
-      <section id="compliance" className="relative z-10 bg-gradient-to-r from-blue-950/30 via-teal-950/20 to-blue-950/30 border-y border-white/5">
+      <section id="compliance" className="relative z-10 bg-gradient-to-r from-blue-950/30 via-amber-950/20 to-blue-950/30 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-6 py-20 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-300 text-xs font-semibold mb-6">
             <Lock className="w-3.5 h-3.5" />
@@ -761,16 +761,16 @@ export default async function RootPage() {
       {/* ══════════════════════════════
           PRICING
       ══════════════════════════════ */}
-      <section id="pricing" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-teal-950/15 via-transparent to-transparent">
+      <section id="pricing" className="relative z-10 border-y border-white/5 bg-gradient-to-b from-amber-950/15 via-transparent to-transparent">
         <div className="max-w-7xl mx-auto px-6 py-24">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-citadel-gold/30 bg-citadel-gold/10 text-citadel-gold-light text-xs font-semibold mb-6">
               <Sparkles className="w-3.5 h-3.5" />
               Simple, Transparent Pricing
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-5 scroll-fade">
               The right plan for{'\u00a0'}
-              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent pb-[0.12em]">
+              <span className="bg-gradient-to-r from-citadel-gold-light to-citadel-gold bg-clip-text text-transparent pb-[0.12em]">
                 every facility.
               </span>
             </h2>
@@ -786,20 +786,20 @@ export default async function RootPage() {
                 key={tier.name}
                 className={`relative flex flex-col bg-slate-900/60 border ${
                   tier.badge === 'Most Popular'
-                    ? tier.color + ' ring-2 ring-teal-500/50 shadow-[0_0_60px_rgba(13,115,119,0.35),0_25px_60px_rgba(0,0,0,0.5)]'
+                    ? tier.color + ' ring-2 ring-citadel-gold/50 shadow-[0_0_60px_rgba(154,123,45,0.35),0_25px_60px_rgba(0,0,0,0.5)]'
                     : tier.color
                 } rounded-2xl p-7 hover:-translate-y-1 transition-all duration-200`}
               >
                 {tier.badge === 'Most Popular' && (
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-teal-500/10 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-citadel-gold/10 via-transparent to-transparent pointer-events-none" />
                 )}
                 {tier.badge && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
                     <span
                       className={`text-xs font-bold px-3 py-1 rounded-full text-white shadow-lg ${
-                        tier.badge === 'Most Popular' ? 'shadow-teal-900/40' : 'bg-gradient-to-r from-blue-600 to-cyan-600 shadow-blue-900/40'
+                        tier.badge === 'Most Popular' ? 'shadow-amber-900/40' : 'bg-gradient-to-r from-blue-600 to-cyan-600 shadow-blue-900/40'
                       }`}
-                      style={tier.badge === 'Most Popular' ? {background:'linear-gradient(135deg,#0d7377 0%,#14a4a8 100%)'} : undefined}
+                      style={tier.badge === 'Most Popular' ? {background:'linear-gradient(135deg,#9a7b2d 0%,#c9a84c 100%)'} : undefined}
                     >
                       {tier.badge}
                     </span>
@@ -852,7 +852,7 @@ export default async function RootPage() {
                     <p className="text-center text-sm text-slate-600 mt-8">
             Cancel anytime. No annual commitment required for our standard tiers.
             Need a custom quote?{' '}
-            <a href="mailto:sales@nyxcitadel.com" className="text-teal-400 hover:text-teal-300 underline underline-offset-2">Contact our sales team.</a>
+            <a href="mailto:sales@nyxcitadel.com" className="text-citadel-gold hover:text-citadel-gold-light underline underline-offset-2">Contact our sales team.</a>
           </p>
         </div>
       </section>
@@ -861,21 +861,21 @@ export default async function RootPage() {
           FINAL CTA
       ══════════════════════════════ */}
       <section id="about" className="relative z-10 max-w-7xl mx-auto px-6 py-28 text-center">
-        <div className="relative bg-gradient-to-br from-teal-900/40 via-slate-900/70 to-blue-900/40 border border-teal-500/20 rounded-3xl p-14 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-teal-600/8 via-transparent to-amber-600/6 pointer-events-none" />
-          <div className="absolute -top-20 -right-20 w-64 h-64 bg-teal-500/15 rounded-full blur-[80px] pointer-events-none" />
+        <div className="relative bg-gradient-to-br from-amber-900/40 via-slate-900/70 to-yellow-900/30 border border-amber-500/20 rounded-3xl p-14 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-600/8 via-transparent to-yellow-600/6 pointer-events-none" />
+          <div className="absolute -top-20 -right-20 w-64 h-64 bg-amber-500/15 rounded-full blur-[80px] pointer-events-none" />
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-500/15 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative z-10">
             <div className="flex justify-center mb-5">
               <LogoImage
                 width={72}
                 height={72}
-                className="shadow-2xl shadow-teal-500/30"
+                className="shadow-2xl shadow-amber-500/30"
               />
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-5">
               Your next survey is coming.{' '}
-              <span className="bg-gradient-to-r from-teal-400 to-amber-300 bg-clip-text text-transparent pb-[0.12em]">
+              <span className="bg-gradient-to-r from-citadel-gold-light to-citadel-gold bg-clip-text text-transparent pb-[0.12em]">
                 Are you <span className="whitespace-nowrap">ready?</span>
               </span>
             </h2>
@@ -893,7 +893,7 @@ export default async function RootPage() {
                 <Link
                   href="/dashboard"
                   className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl font-bold text-xl transition-all hover:-translate-y-1"
-                  style={{background:'linear-gradient(135deg,#0d7377 0%,#14a4a8 100%)',boxShadow:'0 16px 40px rgba(13,115,119,0.45)'}}
+                  style={{background:'linear-gradient(135deg,#9a7b2d 0%,#c9a84c 100%)',boxShadow:'0 16px 40px rgba(154,123,45,0.45)'}}
                 >
                   Go to Your Dashboard <ArrowRight className="w-6 h-6" />
                 </Link>
@@ -902,13 +902,13 @@ export default async function RootPage() {
                   <Link
                     href="/signup"
                     className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl font-bold text-xl transition-all hover:-translate-y-1"
-                    style={{background:'linear-gradient(135deg,#0d7377 0%,#14a4a8 100%)',boxShadow:'0 16px 40px rgba(13,115,119,0.45)'}}
+                    style={{background:'linear-gradient(135deg,#9a7b2d 0%,#c9a84c 100%)',boxShadow:'0 16px 40px rgba(154,123,45,0.45)'}}
                   >
                     Get Started Free <ArrowRight className="w-6 h-6" />
                   </Link>
                   <Link
                     href="/login"
-                    className="inline-flex items-center gap-3 px-8 py-4 border border-white/15 hover:border-teal-500/50 rounded-2xl font-semibold text-lg text-slate-300 hover:text-white transition-all hover:-translate-y-1"
+                    className="inline-flex items-center gap-3 px-8 py-4 border border-white/15 hover:border-citadel-gold/50 rounded-2xl font-semibold text-lg text-slate-300 hover:text-white transition-all hover:-translate-y-1"
                   >
                     Sign In
                   </Link>
@@ -939,13 +939,13 @@ export default async function RootPage() {
       <section id="sentry" className="relative z-10 max-w-7xl mx-auto px-6 py-28 scroll-mt-20">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
           <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 text-xs font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-semibold mb-6">
               <span className="text-lg">🤖</span>
               AI Assistant
             </div>
             <h2 className="text-4xl lg:text-5xl font-extrabold leading-[1.2] mb-6 scroll-fade">
               Meet{' '}
-              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent pb-[0.12em]">
+              <span className="bg-gradient-to-r from-citadel-gold-light to-citadel-gold bg-clip-text text-transparent pb-[0.12em]">
                 Sentry
               </span>
             </h2>
@@ -954,35 +954,35 @@ export default async function RootPage() {
             </p>
             <ul className="space-y-3 mb-8 max-w-md">
               <li className="flex items-start gap-3 group">
-                <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-emerald-500/30 transition-colors duration-200">
-                  <Check className="w-3 h-3 text-emerald-400" />
+                <div className="w-5 h-5 rounded-full bg-citadel-gold/15 border border-citadel-gold/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-citadel-gold/25 transition-colors duration-200">
+                  <Check className="w-3 h-3 text-citadel-gold" />
                 </div>
                 <span className="text-slate-300">Draft CAPs with full context awareness</span>
               </li>
               <li className="flex items-start gap-3 group">
-                <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-emerald-500/30 transition-colors duration-200">
-                  <Check className="w-3 h-3 text-emerald-400" />
+                <div className="w-5 h-5 rounded-full bg-citadel-gold/15 border border-citadel-gold/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-citadel-gold/25 transition-colors duration-200">
+                  <Check className="w-3 h-3 text-citadel-gold" />
                 </div>
                 <span className="text-slate-300">Generate incident reports from natural language</span>
               </li>
               <li className="flex items-start gap-3 group">
-                <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-emerald-500/30 transition-colors duration-200">
-                  <Check className="w-3 h-3 text-emerald-400" />
+                <div className="w-5 h-5 rounded-full bg-citadel-gold/15 border border-citadel-gold/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-citadel-gold/25 transition-colors duration-200">
+                  <Check className="w-3 h-3 text-citadel-gold" />
                 </div>
                 <span className="text-slate-300">Edit all fields before creating records</span>
               </li>
               <li className="flex items-start gap-3 group">
-                <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-emerald-500/30 transition-colors duration-200">
-                  <Check className="w-3 h-3 text-emerald-400" />
+                <div className="w-5 h-5 rounded-full bg-citadel-gold/15 border border-citadel-gold/40 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-citadel-gold/25 transition-colors duration-200">
+                  <Check className="w-3 h-3 text-citadel-gold" />
                 </div>
                 <span className="text-slate-300">HIPAA-compliant, facility context-aware</span>
               </li>
             </ul>
           </div>
           <div className="relative hidden lg:flex items-center justify-center">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/20 to-teal-600/10 rounded-3xl blur-3xl" />
-            <div className="relative bg-gradient-to-br from-slate-900/80 via-slate-800/80 to-slate-900/80 border border-emerald-500/30 rounded-2xl p-8 w-full max-w-md shadow-2xl shadow-emerald-900/30 hover:shadow-emerald-900/50 transition-all duration-300 hover:-translate-y-2">
-              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-emerald-500/10">
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-600/20 to-yellow-600/10 rounded-3xl blur-3xl" />
+            <div className="relative bg-gradient-to-br from-slate-900/80 via-slate-800/80 to-slate-900/80 border border-amber-500/30 rounded-2xl p-8 w-full max-w-md shadow-2xl shadow-amber-900/30 hover:shadow-amber-900/50 transition-all duration-300 hover:-translate-y-2">
+              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-amber-500/10">
                 <span className="text-3xl">🤖</span>
                 <div>
                   <p className="font-bold text-white text-lg">Sentry Assistant</p>
@@ -995,11 +995,11 @@ export default async function RootPage() {
                   <p className="text-sm text-slate-100">"Draft a CAP for the F-835 deficiency about documentation"</p>
                 </div>
                 <div className="flex justify-center">
-                  <Zap className="w-4 h-4 text-emerald-400" />
+                  <Zap className="w-4 h-4 text-amber-400" />
                 </div>
-                <div className="bg-emerald-900/30 rounded-lg p-3 border border-emerald-500/20">
-                  <p className="text-xs text-emerald-300 mb-1.5">Sentry generates:</p>
-                  <p className="text-sm text-emerald-100 font-medium">• Title • Deficiency explanation • Root cause • Corrective action steps • Timeline</p>
+                <div className="bg-amber-900/30 rounded-lg p-3 border border-amber-500/20">
+                  <p className="text-xs text-amber-300 mb-1.5">Sentry generates:</p>
+                  <p className="text-sm text-amber-100 font-medium">• Title • Deficiency explanation • Root cause • Corrective action steps • Timeline</p>
                 </div>
               </div>
             </div>
@@ -1019,7 +1019,7 @@ export default async function RootPage() {
                 <LogoImage width={40} height={40} />
                 <div>
                   <span className="font-extrabold text-sm text-white">
-                    NyxCitadel<sup className="text-[9px] font-normal text-teal-400">™</sup>
+                    NyxCitadel<sup className="text-[9px] font-normal text-citadel-gold">™</sup>
                   </span>
                 </div>
               </div>

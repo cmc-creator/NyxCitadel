@@ -65,7 +65,7 @@ export default function ContactPage() {
             width={40}
             height={40}
             unoptimized
-            className="h-10 w-auto rounded-lg flex-shrink-0 drop-shadow-[0_0_12px_rgba(13,115,119,0.45)]"
+            className="h-10 w-auto rounded-lg flex-shrink-0 drop-shadow-[0_0_12px_rgba(154,123,45,0.45)]"
           />
           <div className="flex flex-col leading-none">
             <span className="font-bold text-sm text-white">NyxCitadel<sup className="text-[9px] font-normal text-teal-400">™</sup></span>
@@ -162,7 +162,7 @@ export default function ContactPage() {
           <Link
             href="/signup"
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white flex-shrink-0"
-            style={{ background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.3)' }}
+            style={{ background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)', boxShadow: '0 4px 20px rgba(154,123,45,0.3)' }}
           >
             Request Access <ChevronRight className="w-4 h-4" />
           </Link>

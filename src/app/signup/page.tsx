@@ -60,9 +60,9 @@ export default function SignupPage() {
     <div className="min-h-screen bg-[#060b16] flex flex-col">
       {/* Background glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-60 -left-40 w-[700px] h-[700px] bg-teal-700/15 rounded-full blur-[140px]" />
+        <div className="absolute -top-60 -left-40 w-[700px] h-[700px] bg-amber-700/15 rounded-full blur-[140px]" />
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-700/10 rounded-full blur-[130px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-teal-900/10 rounded-full blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-amber-900/10 rounded-full blur-[100px]" />
         <div
           className="absolute inset-0 opacity-[0.015]"
           style={{
@@ -87,10 +87,10 @@ export default function SignupPage() {
                 img.src = '/logo-white.svg';
               }
             }}
-            className="h-12 w-auto rounded-lg flex-shrink-0 drop-shadow-[0_0_14px_rgba(13,115,119,0.5)]"
+            className="h-12 w-auto rounded-lg flex-shrink-0 drop-shadow-[0_0_14px_rgba(154,123,45,0.5)]"
           />
           <div className="flex flex-col leading-none">
-            <span className="font-bold text-white tracking-tight">NyxCitadel<sup className="text-[10px] align-super ml-0.5 font-normal text-teal-400">™</sup></span>
+            <span className="font-bold text-white tracking-tight">NyxCitadel<sup className="text-[10px] align-super ml-0.5 font-normal text-citadel-gold">™</sup></span>
             <span className="text-[10px] text-slate-500 uppercase tracking-wider">Healthcare Compliance</span>
           </div>
         </Link>
@@ -102,12 +102,12 @@ export default function SignupPage() {
       <main className="relative z-10 flex-1 flex flex-col items-center justify-start px-4 py-12">
         {/* Heading */}
         <div className="text-center mb-10 max-w-2xl">
-          <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/25 rounded-full px-4 py-1.5 text-xs font-medium text-teal-300 mb-5 shadow-[0_0_16px_rgba(13,115,119,0.2)]">
+          <div className="inline-flex items-center gap-2 bg-citadel-gold/10 border border-citadel-gold/25 rounded-full px-4 py-1.5 text-xs font-medium text-citadel-gold-light mb-5 shadow-[0_0_16px_rgba(154,123,45,0.2)]">
             <Sparkles className="w-3.5 h-3.5 animate-pulse" /> Built for Behavioral Health &amp; Acute Psychiatric Facilities
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-4">
             Get started with{'\u00a0'}
-            <span className="bg-gradient-to-r from-teal-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-citadel-gold-light via-citadel-gold to-citadel-gold-dark bg-clip-text text-transparent">
               NyxCitadel<sup className="text-base align-super">™</sup>
             </span>
           </h1>
@@ -116,7 +116,7 @@ export default function SignupPage() {
           </p>
           <div className="mt-5 flex items-center justify-center gap-4 text-sm">
             <Link href="/guide" className="text-muted-foreground/70 hover:text-white transition-colors">Read the user guide</Link>
-            <Link href="/walkthrough" className="text-teal-300 hover:text-teal-200 transition-colors">Watch the walkthrough</Link>
+            <Link href="/walkthrough" className="text-citadel-gold-light hover:text-citadel-gold transition-colors">Watch the walkthrough</Link>
           </div>
         </div>
 
@@ -124,13 +124,13 @@ export default function SignupPage() {
         <div className="flex gap-0.5 bg-slate-900/60 border border-white/8 rounded-xl p-1 mb-8">
           <button
             onClick={() => setTab('demo')}
-            className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === 'demo' ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20' : 'text-muted-foreground/70 hover:text-white'}`}
+            className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === 'demo' ? 'bg-citadel-gold-dark text-white shadow-lg shadow-amber-900/40' : 'text-muted-foreground/70 hover:text-white'}`}
           >
             Try Live Demo
           </button>
           <button
             onClick={() => setTab('request')}
-            className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === 'request' ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20' : 'text-muted-foreground/70 hover:text-white'}`}
+            className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === 'request' ? 'bg-citadel-gold-dark text-white shadow-lg shadow-amber-900/40' : 'text-muted-foreground/70 hover:text-white'}`}
           >
             Request Access
           </button>
@@ -142,7 +142,7 @@ export default function SignupPage() {
             {/* What you'll see */}
             <div className="grid sm:grid-cols-3 gap-4">
               {[
-                { icon: BarChart2, title: 'Compliance Command Center', desc: 'Live dashboard with overdue events, watch-list alerts, training compliance bars, and real-time QAPI metrics.', color: 'text-teal-400 bg-teal-500/10 border-teal-500/15' },
+                { icon: BarChart2, title: 'Compliance Command Center', desc: 'Live dashboard with overdue events, watch-list alerts, training compliance bars, and real-time QAPI metrics.', color: 'text-citadel-gold bg-citadel-gold/10 border-citadel-gold/15' },
                 { icon: ClipboardList, title: '10+ Tracking Modules', desc: 'Incidents, CAPs, grievances, QOC/LOI, IR/IAD, policies, training, risk assessments, and more.', color: 'text-blue-400 bg-blue-500/10 border-blue-500/15' },
                 { icon: AlertTriangle, title: 'AI-Powered Triage', desc: 'Sentry™ assistant answers CMS/JC/ADHS questions, drafts CAP language, and interprets regulatory standards.', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/15' },
               ].map(({ icon: Icon, title, desc, color }) => (
@@ -167,10 +167,10 @@ export default function SignupPage() {
                   { name: 'Professional', price: '$799', period: '/mo', features: PLAN_FEATURES.professional, highlight: true },
                   { name: 'Enterprise', price: 'Custom', period: '', features: PLAN_FEATURES.enterprise, highlight: false },
                 ].map(plan => (
-                  <div key={plan.name} className={`rounded-xl p-4 border ${plan.highlight ? 'bg-teal-600/10 border-teal-500/30' : 'bg-slate-800/30 border-white/8'}`}>
+                  <div key={plan.name} className={`rounded-xl p-4 border ${plan.highlight ? 'bg-citadel-gold/10 border-citadel-gold/30' : 'bg-slate-800/30 border-white/8'}`}>
                     <div className="flex items-baseline justify-between mb-3">
                       <p className="text-sm font-bold text-white">{plan.name}</p>
-                      <p className="text-sm font-bold text-teal-400">{plan.price}<span className="text-xs font-normal text-slate-500">{plan.period}</span></p>
+                      <p className="text-sm font-bold text-citadel-gold">{plan.price}<span className="text-xs font-normal text-slate-500">{plan.period}</span></p>
                     </div>
                     <ul className="space-y-1.5">
                       {plan.features.slice(0, 5).map(f => (
@@ -189,7 +189,7 @@ export default function SignupPage() {
             </div>
 
             {/* Demo tab CTA */}
-            <div className="rounded-2xl border border-teal-500/20 bg-teal-500/6 p-6 flex flex-col sm:flex-row items-center justify-between gap-5">
+            <div className="rounded-2xl border border-citadel-gold/20 bg-citadel-gold/5 p-6 flex flex-col sm:flex-row items-center justify-between gap-5">
               <div>
                 <h3 className="text-base font-bold text-white mb-1">Ready to see it live?</h3>
                 <p className="text-sm text-slate-400 leading-relaxed">Tell us about your facility and we&apos;ll set up a personalized demo with real data - free, no credit card required.</p>
@@ -197,7 +197,7 @@ export default function SignupPage() {
               <button
                 onClick={() => setTab('request')}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white flex-shrink-0 transition-all hover:-translate-y-px"
-                style={{ background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)', boxShadow: '0 4px 20px rgba(13,115,119,0.3)' }}
+                style={{ background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)', boxShadow: '0 4px 20px rgba(154,123,45,0.3)' }}
               >
                 Request Access <ChevronRight className="w-4 h-4" />
               </button>
@@ -217,7 +217,7 @@ export default function SignupPage() {
                   We'll be in touch within 1 business day to schedule your personalized demo and discuss your facility's needs.
                 </p>
                 <div className="flex gap-3 justify-center">
-                  <Link href="/login" className="text-sm text-teal-400 hover:text-teal-300 flex items-center gap-1">
+                  <Link href="/login" className="text-sm text-citadel-gold hover:text-citadel-gold-light flex items-center gap-1">
                     Sign in <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -237,7 +237,7 @@ export default function SignupPage() {
                         <input
                           required type="text" placeholder="Jane Smith"
                           value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                          className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-teal-500/60 focus:ring-1 focus:ring-teal-500/30 transition"
+                          className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-citadel-gold/60 focus:ring-1 focus:ring-citadel-gold/30 transition"
                         />
                       </div>
                     </div>
@@ -248,7 +248,7 @@ export default function SignupPage() {
                         <input
                           required type="email" placeholder="you@facility.com"
                           value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                          className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-teal-500/60 focus:ring-1 focus:ring-teal-500/30 transition"
+                          className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-citadel-gold/60 focus:ring-1 focus:ring-citadel-gold/30 transition"
                         />
                       </div>
                     </div>
@@ -261,7 +261,7 @@ export default function SignupPage() {
                       <input
                         required type="text" placeholder="Sunridge Behavioral Health"
                         value={form.facility} onChange={e => setForm(f => ({ ...f, facility: e.target.value }))}
-                        className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-teal-500/60 focus:ring-1 focus:ring-teal-500/30 transition"
+                        className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-citadel-gold/60 focus:ring-1 focus:ring-citadel-gold/30 transition"
                       />
                     </div>
                   </div>
@@ -271,7 +271,7 @@ export default function SignupPage() {
                       <label className="block text-xs font-medium text-muted-foreground/70 mb-1.5">Facility type</label>
                       <select
                         value={form.facilityType} onChange={e => setForm(f => ({ ...f, facilityType: e.target.value }))}
-                        className="w-full px-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-slate-300 focus:outline-none focus:border-teal-500/60 transition"
+                        className="w-full px-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-slate-300 focus:outline-none focus:border-citadel-gold/60 transition"
                       >
                         <option value="">Select type</option>
                         <option value="acute_psych">Acute Psychiatric</option>
@@ -287,7 +287,7 @@ export default function SignupPage() {
                       <input
                         type="number" placeholder="e.g. 60" min="1"
                         value={form.beds} onChange={e => setForm(f => ({ ...f, beds: e.target.value }))}
-                        className="w-full px-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-teal-500/60 transition"
+                        className="w-full px-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-citadel-gold/60 transition"
                       />
                     </div>
                   </div>
@@ -299,7 +299,7 @@ export default function SignupPage() {
                       <input
                         type="tel" placeholder="(602) 555-0100"
                         value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                        className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-teal-500/60 transition"
+                        className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-citadel-gold/60 transition"
                       />
                     </div>
                   </div>
@@ -309,13 +309,13 @@ export default function SignupPage() {
                     <textarea
                       rows={3} placeholder="e.g. managing Joint Commission survey readiness, tracking sentinel events, staff training compliance..."
                       value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                      className="w-full px-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-teal-500/60 focus:ring-1 focus:ring-teal-500/30 transition resize-none"
+                      className="w-full px-3 py-2.5 rounded-lg bg-slate-800/70 border border-white/8 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-citadel-gold/60 focus:ring-1 focus:ring-citadel-gold/30 transition resize-none"
                     />
                   </div>
 
                   <button
                     type="submit" disabled={loading}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-500 disabled:opacity-60 text-white font-semibold text-sm px-6 py-3 rounded-xl transition-all shadow-lg shadow-teal-500/20"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-citadel-gold-dark hover:bg-citadel-gold disabled:opacity-60 text-white font-semibold text-sm px-6 py-3 rounded-xl transition-all shadow-lg shadow-amber-900/40"
                   >
                     {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</> : <>Request Access <ChevronRight className="w-4 h-4" /></>}
                   </button>
@@ -326,7 +326,7 @@ export default function SignupPage() {
                       {(submitError.toLowerCase().includes('email') || submitError.toLowerCase().includes('delivery') || submitError.toLowerCase().includes('unavailable')) && (
                         <p className="text-xs text-slate-400 text-center">
                           You can reach us directly at{' '}
-                          <a href="mailto:sales@nyxcitadel.com" className="text-teal-400 hover:text-teal-300 underline">sales@nyxcitadel.com</a>
+                          <a href="mailto:sales@nyxcitadel.com" className="text-citadel-gold hover:text-citadel-gold-light underline">sales@nyxcitadel.com</a>
                         </p>
                       )}
                     </div>

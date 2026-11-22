@@ -3,11 +3,10 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   CITADEL DESIGN SYSTEM - Luxury · Heraldic · Teal · Gold · Sapphire
+   CITADEL DESIGN SYSTEM - Luxury · Heraldic · Gold · Sapphire
    Palette drawn from the NyxCitadel stained-glass crest:
-     Teal/Aqua  #0ea5a0  hsl(177 82% 35%)
+     Gold (brand) #c9a84c  hsl(44 53% 54%) - Deep #9a7b2d - Light #e5c878
      Sapphire   #1d4ed8  hsl(221 74% 48%)
-     Gold       #c49a2a  hsl(43 65% 46%)
      Midnight   #080d1c  hsl(228 42% 7%)
 ═══════════════════════════════════════════════════════════════════════════ */
 @layer base {
@@ -18,7 +17,7 @@
     --card-foreground: 224 30% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 30% 10%;
-    --primary: 177 82% 32%;
+    --primary: 43 55% 39%;
     --primary-foreground: 0 0% 100%;
     --secondary: 220 14% 92%;
     --secondary-foreground: 224 25% 20%;
@@ -30,22 +29,22 @@
     --destructive-foreground: 0 0% 100%;
     --border: 220 13% 86%;
     --input: 220 13% 88%;
-    --ring: 177 82% 32%;
+    --ring: 43 55% 39%;
     --radius: 0.75rem;
-    --brand: 177 82% 32%;
+    --brand: 43 55% 39%;
     --brand-foreground: 0 0% 100%;
-    --brand-light: 177 60% 92%;
+    --brand-light: 44 60% 90%;
     --gold: 43 65% 46%;
     --gold-light: 43 65% 88%;
     --sidebar-bg: 228 42% 6%;
     --sidebar-fg: 185 30% 92%;
     --sidebar-muted: 210 15% 52%;
-    --sidebar-accent: 177 82% 42%;
+    --sidebar-accent: 44 53% 54%;
     --sidebar-gold: 43 65% 52%;
     --sidebar-border: 228 32% 12%;
   }
 
-  /* CITADEL DARK - Midnight navy, teal glow, antique gold */
+  /* CITADEL DARK - Midnight navy, antique gold glow */
   .dark {
     --background: 228 38% 5%;
     --foreground: 185 20% 92%;
@@ -53,7 +52,7 @@
     --card-foreground: 185 20% 92%;
     --popover: 228 32% 9%;
     --popover-foreground: 185 20% 92%;
-    --primary: 177 82% 42%;
+    --primary: 44 53% 54%;
     --primary-foreground: 228 42% 6%;
     --secondary: 228 28% 12%;
     --secondary-foreground: 185 18% 82%;
@@ -65,26 +64,26 @@
     --destructive-foreground: 0 0% 100%;
     --border: 228 22% 14%;
     --input: 228 28% 11%;
-    --ring: 177 82% 42%;
-    --brand: 177 82% 42%;
+    --ring: 44 53% 54%;
+    --brand: 44 53% 54%;
     --brand-foreground: 228 42% 5%;
-    --brand-light: 177 40% 14%;
+    --brand-light: 44 45% 14%;
     --gold: 43 65% 52%;
     --gold-light: 43 50% 18%;
     --sidebar-bg: 228 45% 4%;
     --sidebar-fg: 185 22% 92%;
     --sidebar-muted: 210 12% 48%;
-    --sidebar-accent: 177 82% 44%;
+    --sidebar-accent: 44 53% 54%;
     --sidebar-gold: 43 65% 54%;
     --sidebar-border: 228 30% 10%;
   }
 
   [data-facility="destiny-springs"] {
-    --brand: 258 80% 60%;
+    --brand: 44 53% 54%;
     --brand-foreground: 0 0% 100%;
-    --brand-light: 258 40% 18%;
+    --brand-light: 44 45% 16%;
     --sidebar-bg: 258 35% 6%;
-    --sidebar-accent: 258 80% 65%;
+    --sidebar-accent: 44 60% 62%;
   }
 }
 
@@ -313,7 +312,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SIDEBAR - heraldic fortress wall, midnight navy + teal/gold accents
+   SIDEBAR - heraldic fortress wall, midnight navy + gold accents
 ═══════════════════════════════════════════════════════════════════════════ */
 .sidebar {
   background: linear-gradient(180deg,
@@ -367,7 +366,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(14,165,160,0.04) 0%, transparent 60%);
+    background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 60%);
     pointer-events: none;
     border-radius: inherit;
   }
@@ -481,7 +480,7 @@
   .card-elevated-lg { @apply bg-card rounded-2xl border border-border shadow-md; }
 
   .text-citadel {
-    background: linear-gradient(135deg, hsl(214 20% 90%) 0%, hsl(218 30% 70%) 50%, hsl(251 80% 78%) 100%);
+    background: linear-gradient(135deg, hsl(214 20% 90%) 0%, hsl(218 30% 70%) 50%, hsl(44 68% 68%) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -508,14 +507,14 @@
 @import 'driver.js/dist/driver.css';
 .nyx-tour-popover.driver-popover {
   background-color: #0f172a;
-  border: 1px solid rgba(20, 184, 166, 0.3);
+  border: 1px solid rgba(201, 168, 76, 0.35);
   border-radius: 12px;
   color: #f1f5f9;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
   max-width: 320px;
 }
 .nyx-tour-popover .driver-popover-title {
-  color: #5eead4;
+  color: #e5c878;
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 6px;
@@ -533,7 +532,7 @@
   margin-top: 14px;
 }
 .nyx-tour-popover .driver-popover-footer button {
-  background: #0d9488;
+  background: #9a7b2d;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -544,7 +543,8 @@
   transition: background 0.15s;
 }
 .nyx-tour-popover .driver-popover-footer button:hover {
-  background: #0f766e;
+  background: #c9a84c;
+  color: #1c1503;
 }
 .nyx-tour-popover .driver-popover-footer .driver-popover-prev-btn {
   background: transparent;

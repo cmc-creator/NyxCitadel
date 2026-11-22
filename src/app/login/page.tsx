@@ -137,7 +137,7 @@ function LoginForm() {
                   img.src = '/logo-white.svg';
                 }
               }}
-              className="h-16 w-auto flex-shrink-0 drop-shadow-[0_0_18px_rgba(13,115,119,0.6)]"
+              className="h-16 w-auto flex-shrink-0 drop-shadow-[0_0_18px_rgba(154,123,45,0.6)]"
             />
             <div>
               <p className="font-bold text-xl text-white tracking-tight">NyxCitadel</p>
@@ -298,7 +298,7 @@ function LoginForm() {
                 type="submit"
                 disabled={loading}
                 className="w-full flex items-center justify-center gap-2 py-3 px-4 mt-2 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all shadow-lg shadow-teal-900/30"
-                style={{background:'linear-gradient(135deg,#0d7377 0%,#14a4a8 100%)'}}
+                style={{background:'linear-gradient(135deg,#9a7b2d 0%,#c9a84c 100%)'}}
               >
                 {loading ? (
                   <>

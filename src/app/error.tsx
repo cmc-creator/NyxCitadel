@@ -46,7 +46,7 @@ export default function PublicError({
             <button
               onClick={reset}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-all"
-              style={{ background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)' }}
             >
               <RefreshCw className="w-4 h-4" />
               Try again

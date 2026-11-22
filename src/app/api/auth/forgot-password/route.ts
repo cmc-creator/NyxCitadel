@@ -41,12 +41,12 @@ export async function POST(req: NextRequest) {
       subject: 'Reset your NyxCitadel password',
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto;">
-          <h2 style="color:#0d7377;">Password Reset Request</h2>
+          <h2 style="color:#9a7b2d;">Password Reset Request</h2>
           <p>Hi ${user.name ?? 'there'},</p>
           <p>We received a request to reset the password for your NyxCitadel account.</p>
           <p style="margin:24px 0;">
             <a href="${resetUrl}"
-               style="background:#0d7377;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">
+               style="background:#9a7b2d;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">
               Reset Password
             </a>
           </p>

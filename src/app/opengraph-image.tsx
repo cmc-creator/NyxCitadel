@@ -27,7 +27,7 @@ export default function OGImage() {
           right: -140,
           width: 580,
           height: 580,
-          background: 'radial-gradient(circle, rgba(13,115,119,0.60) 0%, transparent 68%)',
+          background: 'radial-gradient(circle, rgba(154,123,45,0.60) 0%, transparent 68%)',
           borderRadius: '50%',
           display: 'flex',
         }}
@@ -76,8 +76,8 @@ export default function OGImage() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              background: 'rgba(13,115,119,0.22)',
-              border: '1px solid rgba(13,115,119,0.52)',
+              background: 'rgba(154,123,45,0.22)',
+              border: '1px solid rgba(154,123,45,0.52)',
               borderRadius: 100,
               padding: '9px 24px',
             }}

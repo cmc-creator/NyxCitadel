@@ -64,7 +64,7 @@ const INDICATORS: Indicator[] = [
 ];
 
 const PREDEFINED_KEYS = new Set(INDICATORS.map(i => i.key));
-const CUSTOM_COLORS = ['#0d7377','#14a4a8','#f59e0b','#8b5cf6','#06b6d4','#f43f5e','#84cc16','#fb923c'];
+const CUSTOM_COLORS = ['#9a7b2d','#c9a84c','#f59e0b','#8b5cf6','#06b6d4','#f43f5e','#84cc16','#fb923c'];
 const STORAGE_KEY = 'qapi_custom_metrics_v1';
 
 function calcRate(ind: Indicator, num: number, den: number, ptDays: number, doses: number): number | null {

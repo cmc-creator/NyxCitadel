@@ -18,7 +18,7 @@ export function MetricTrendChart({
   data,
   unit,
   target,
-  color = '#7c3aed',
+  color = '#c9a84c',
 }: {
   data: MetricPoint[];
   unit?: string;
@@ -58,7 +58,7 @@ export function IncidentBarChart({ data }: { data: { name: string; count: number
         <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#94a3b8' }} />
         <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} allowDecimals={false} />
         <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e2e8f0' }} />
-        <Bar dataKey="count" fill="#7c3aed" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="count" fill="#c9a84c" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   );

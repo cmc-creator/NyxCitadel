@@ -12,7 +12,7 @@ function htmlWrap(content: string): string {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;color:#374151;background:#f9fafb;margin:0}
 .wrap{max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb}
-.hdr{background:linear-gradient(135deg,#0d7377,#14a4a8);color:#fff;padding:28px 32px}
+.hdr{background:linear-gradient(135deg,#9a7b2d,#c9a84c);color:#fff;padding:28px 32px}
 .hdr h2{margin:0;font-size:20px}
 .hdr p{margin:6px 0 0;opacity:.85;font-size:13px}
 .body{padding:28px 32px}
@@ -20,7 +20,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;l
 .chip-red{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5}
 .chip-amber{background:#fffbeb;color:#d97706;border:1px solid #fcd34d}
 .chip-blue{background:#eff6ff;color:#2563eb;border:1px solid #93c5fd}
-.btn{display:inline-block;background:#0d7377;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;margin-top:16px}
+.btn{display:inline-block;background:#9a7b2d;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;margin-top:16px}
 .row{display:flex;gap:8px;margin:4px 0;font-size:14px}
 .label{color:#6b7280;min-width:130px;flex-shrink:0}
 .val{color:#111827;font-weight:500}
@@ -168,7 +168,7 @@ export function getPolicyAmendedEmail(opts: {
       <div class="row"><span class="label">Updated By</span><span class="val">${opts.changedBy}</span></div>
       ${opts.effectiveDate ? `<div class="row"><span class="label">Effective Date</span><span class="val">${opts.effectiveDate}</span></div>` : ''}
       ${opts.nextReviewDate ? `<div class="row"><span class="label">Next Review</span><span class="val">${opts.nextReviewDate}</span></div>` : ''}
-      <div style="margin-top:16px;padding:12px 16px;background:#f9fafb;border-left:3px solid #0d7377;border-radius:4px">
+      <div style="margin-top:16px;padding:12px 16px;background:#f9fafb;border-left:3px solid #9a7b2d;border-radius:4px">
         <p style="margin:0;font-size:13px;color:#374151"><strong>Change Summary:</strong><br>${opts.changeNote}</p>
       </div>
       <p style="font-size:13px;color:#6b7280;margin-top:12px">Staff may be required to re-read and acknowledge this policy. Verify with your compliance officer.</p>
@@ -239,7 +239,7 @@ export function getPolicyAckRequestEmail(opts: {
       <div class="row"><span class="label">Policy #</span><span class="val">${opts.policyNumber}</span></div>
       <div class="row"><span class="label">Version</span><span class="val"><span class="chip chip-blue">v${opts.version}</span></span></div>
       <div class="row"><span class="label">Sent By</span><span class="val">${opts.sentBy}</span></div>
-      ${opts.changeNote ? `<div style="margin-top:14px;padding:12px 16px;background:#f9fafb;border-left:3px solid #0d7377;border-radius:4px"><p style="margin:0;font-size:13px;color:#374151"><strong>What Changed:</strong><br>${opts.changeNote}</p></div>` : ''}
+      ${opts.changeNote ? `<div style="margin-top:14px;padding:12px 16px;background:#f9fafb;border-left:3px solid #9a7b2d;border-radius:4px"><p style="margin:0;font-size:13px;color:#374151"><strong>What Changed:</strong><br>${opts.changeNote}</p></div>` : ''}
       <p style="margin-top:16px;font-size:13px;color:#6b7280">Click the button below to confirm you have read this policy. Your acknowledgment will be recorded with a timestamp for survey compliance documentation.</p>
       <a href="${opts.ackUrl}" class="btn" style="margin-top:20px;display:inline-block">Acknowledge Policy &rarr;</a>
       <p style="font-size:11px;color:#9ca3af;margin-top:16px">If the button does not work, copy and paste this link into your browser:<br>${opts.ackUrl}</p>
@@ -276,7 +276,7 @@ export function getTrainingAssignmentEmail(opts: {
       <div class="row"><span class="label">Category</span><span class="val">${opts.category.replace(/_/g, ' ')}</span></div>
       <div class="row"><span class="label">Assigned By</span><span class="val">${opts.assignedBy}</span></div>
       ${opts.expiryDate ? `<div class="row"><span class="label">Must Complete By</span><span class="val" style="color:#d97706;font-weight:700">${opts.expiryDate}</span></div>` : ''}
-      ${opts.reason ? `<div style="margin-top:14px;padding:12px 16px;background:#f9fafb;border-left:3px solid #0d7377;border-radius:4px"><p style="margin:0;font-size:13px;color:#374151"><strong>Reason:</strong><br>${opts.reason}</p></div>` : ''}
+      ${opts.reason ? `<div style="margin-top:14px;padding:12px 16px;background:#f9fafb;border-left:3px solid #9a7b2d;border-radius:4px"><p style="margin:0;font-size:13px;color:#374151"><strong>Reason:</strong><br>${opts.reason}</p></div>` : ''}
       <p style="margin-top:16px;font-size:13px;color:#6b7280">Once you have completed this training, click the button below to confirm your completion. Your record will be updated automatically.</p>
       <a href="${opts.completionUrl}" class="btn" style="margin-top:20px;display:inline-block">Confirm Completion &rarr;</a>
       <p style="font-size:11px;color:#9ca3af;margin-top:16px">If the button does not work, copy and paste this link into your browser:<br>${opts.completionUrl}</p>
@@ -335,15 +335,15 @@ export function getOnboardingWelcomeEmail(data: OnboardingEmailData) {
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: linear-gradient(135deg, #0d7377 0%, #14a4a8 100%); color: white; padding: 40px 20px; border-radius: 12px 12px 0 0; text-align: center; }
+    .header { background: linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%); color: white; padding: 40px 20px; border-radius: 12px 12px 0 0; text-align: center; }
     .header h1 { margin: 0; font-size: 28px; }
     .header p { margin: 8px 0 0 0; opacity: 0.95; }
     .content { background: #f0fdfa; padding: 40px 20px; border-radius: 0 0 12px 12px; }
     .section { margin-bottom: 30px; }
     .section h2 { color: #1f2937; font-size: 18px; margin-top: 0; }
-    .cta-button { display: inline-block; background: #0d7377; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 10px 0; }
+    .cta-button { display: inline-block; background: #9a7b2d; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 10px 0; }
     .cta-button:hover { background: #0b6165; }
-    .step { background: white; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #0d7377; }
+    .step { background: white; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #9a7b2d; }
     .step-title { font-weight: 600; color: #1f2937; }
     .step-desc { color: #6b7280; font-size: 14px; margin: 5px 0 0 0; }
     .footer { color: #9ca3af; font-size: 12px; text-align: center; margin-top: 30px; }

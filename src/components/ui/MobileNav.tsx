@@ -96,7 +96,7 @@ export function MobileNav({ isLoggedIn }: MobileNavProps) {
                   href="/dashboard"
                   onClick={() => setOpen(false)}
                   className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-white"
-                  style={{ background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)' }}
+                  style={{ background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)' }}
                 >
                   Go to Dashboard <ChevronRight className="w-4 h-4" />
                 </Link>
@@ -113,7 +113,7 @@ export function MobileNav({ isLoggedIn }: MobileNavProps) {
                     href="/signup"
                     onClick={() => setOpen(false)}
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-white"
-                    style={{ background: 'linear-gradient(135deg, #0d7377 0%, #14a4a8 100%)' }}
+                    style={{ background: 'linear-gradient(135deg, #9a7b2d 0%, #c9a84c 100%)' }}
                   >
                     Get Started <ChevronRight className="w-4 h-4" />
                   </Link>

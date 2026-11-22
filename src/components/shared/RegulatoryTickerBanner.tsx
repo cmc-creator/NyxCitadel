@@ -35,11 +35,11 @@ export function RegulatoryTickerBanner() {
   if (!enabled || dismissed) return null;
 
   return (
-    <div className="bg-gradient-to-r from-purple-950 via-slate-900 to-teal-950 border-b border-purple-500/30 text-purple-200 px-4 py-2 shadow-md flex flex-wrap items-center justify-between gap-3 text-xs">
+    <div className="bg-gradient-to-r from-amber-950 via-slate-900 to-yellow-950 border-b border-amber-500/30 text-amber-200 px-4 py-2 shadow-md flex flex-wrap items-center justify-between gap-3 text-xs">
       <div className="flex items-center gap-2.5">
-        <Radio className="w-4 h-4 text-purple-400 animate-pulse flex-shrink-0" />
+        <Radio className="w-4 h-4 text-amber-400 animate-pulse flex-shrink-0" />
         <div>
-          <span className="font-bold text-purple-300">2026 Regulatory Update Ticker:</span>{' '}
+          <span className="font-bold text-amber-300">2026 Regulatory Update Ticker:</span>{' '}
           <span className="text-slate-300">
             AZ ADHS A.A.C. R9-10-308 Behavioral Health De-escalation & Restraint Training Rule Revision Effective Q2 2026.
           </span>
@@ -48,21 +48,21 @@ export function RegulatoryTickerBanner() {
 
       <div className="flex items-center gap-2">
         {analysisText ? (
-          <div className="text-[11px] text-teal-300 font-medium bg-teal-950/60 px-3 py-1 rounded-lg border border-teal-500/30 max-w-md truncate">
+          <div className="text-[11px] text-amber-300 font-medium bg-amber-950/60 px-3 py-1 rounded-lg border border-amber-500/30 max-w-md truncate">
             {analysisText}
           </div>
         ) : (
           <button
             onClick={handleAnalyze}
             disabled={analyzing}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition shadow-sm"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs transition shadow-sm"
           >
             <Sparkles className={`w-3.5 h-3.5 ${analyzing ? 'animate-spin' : ''}`} />
             {analyzing ? 'Analyzing Impact...' : 'Analyze Impact with Sentry AI'}
           </button>
         )}
 
-        <button onClick={() => setDismissed(true)} className="text-purple-400/60 hover:text-purple-200 p-1">
+        <button onClick={() => setDismissed(true)} className="text-amber-400/60 hover:text-amber-200 p-1">
           <X className="w-4 h-4" />
         </button>
       </div>

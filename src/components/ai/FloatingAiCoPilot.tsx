@@ -112,22 +112,22 @@ export function FloatingAiCoPilot() {
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end pointer-events-none">
       {/* Expanded AI Drawer */}
       {isOpen && (
-        <div className="bg-card/95 backdrop-blur-md border border-teal-500/40 rounded-2xl w-80 sm:w-96 shadow-2xl overflow-hidden mb-3 pointer-events-auto animate-in fade-in slide-in-from-bottom-5 duration-200 flex flex-col max-h-[500px]">
+        <div className="bg-card/95 backdrop-blur-md border border-amber-500/40 rounded-2xl w-80 sm:w-96 shadow-2xl overflow-hidden mb-3 pointer-events-auto animate-in fade-in slide-in-from-bottom-5 duration-200 flex flex-col max-h-[500px]">
           {/* Header */}
-          <div className="bg-gradient-to-r from-teal-950 to-cyan-950 p-4 border-b border-teal-500/30 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-amber-950 to-yellow-950 p-4 border-b border-amber-500/30 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-teal-500/20 border border-teal-500/40 text-teal-300 flex items-center justify-center">
-                <Sparkles className="w-4 h-4 animate-pulse text-teal-400" />
+              <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center">
+                <Sparkles className="w-4 h-4 animate-pulse text-amber-400" />
               </div>
               <div>
                 <h3 className="font-bold text-white text-sm">Sentry AI Co-Pilot</h3>
-                <p className="text-[10px] text-teal-300">Arizona & TJC Regulatory Assistant</p>
+                <p className="text-[10px] text-amber-300">Arizona & TJC Regulatory Assistant</p>
               </div>
             </div>
 
             <button
               onClick={() => setIsOpen(false)}
-              className="text-teal-300 hover:text-white p-1 rounded-lg hover:bg-teal-900/50"
+              className="text-amber-300 hover:text-white p-1 rounded-lg hover:bg-amber-900/50"
             >
               <X className="w-4 h-4" />
             </button>
@@ -141,7 +141,7 @@ export function FloatingAiCoPilot() {
                 className={cn('flex gap-2.5 text-xs', m.role === 'user' ? 'justify-end' : 'justify-start')}
               >
                 {m.role === 'assistant' && (
-                  <div className="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 border border-teal-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Bot className="w-3.5 h-3.5" />
                   </div>
                 )}
@@ -149,7 +149,7 @@ export function FloatingAiCoPilot() {
                   className={cn(
                     'p-3 rounded-xl max-w-[85%] leading-relaxed',
                     m.role === 'user'
-                      ? 'bg-teal-600 text-white rounded-br-none'
+                      ? 'bg-amber-600 text-white rounded-br-none'
                       : 'bg-muted/80 text-foreground border border-border/60 rounded-bl-none'
                   )}
                 >
@@ -163,7 +163,7 @@ export function FloatingAiCoPilot() {
               </div>
             ))}
             {loading && (
-              <div className="flex items-center gap-2 text-xs text-teal-400">
+              <div className="flex items-center gap-2 text-xs text-amber-400">
                 <Sparkles className="w-3.5 h-3.5 animate-spin" /> Sentry AI thinking...
               </div>
             )}
@@ -176,7 +176,7 @@ export function FloatingAiCoPilot() {
               <button
                 key={i}
                 onClick={() => handleSend(act.prompt)}
-                className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-300 hover:bg-teal-500/20 transition-all text-left truncate max-w-full"
+                className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 hover:bg-amber-500/20 transition-all text-left truncate max-w-full"
               >
                 ⚡ {act.label}
               </button>
@@ -205,14 +205,14 @@ export function FloatingAiCoPilot() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder={isListening ? 'Listening...' : 'Ask Sentry AI...'}
-              className="flex-1 text-xs p-2 bg-muted border border-border/60 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
+              className="flex-1 text-xs p-2 bg-muted border border-border/60 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
 
             <button
               type="button"
               onClick={() => handleSend()}
               disabled={!input.trim()}
-              className="p-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white disabled:opacity-40 transition-all"
+              className="p-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white disabled:opacity-40 transition-all"
             >
               <Send className="w-4 h-4" />
             </button>
@@ -229,10 +229,10 @@ export function FloatingAiCoPilot() {
       {/* Floating Toggle Badge */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white text-xs font-bold transition-all shadow-2xl shadow-teal-900/50 hover:scale-105 group border border-teal-400/40"
+        className="pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold transition-all shadow-2xl shadow-amber-900/50 hover:scale-105 group border border-amber-400/40"
       >
         <span className="relative flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-200 opacity-75" />
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-200 opacity-75" />
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
         </span>
         <Sparkles className="w-4 h-4 animate-pulse" />

@@ -65,7 +65,7 @@ export default function TermsPage() {
       <header className="relative z-10 flex items-center justify-between px-6 md:px-10 py-5 border-b border-white/6">
         <Link href="/" className="flex items-center gap-2.5">
           <Image src="/citadellogo-clean.png" alt="NyxCitadel" width={40} height={40} unoptimized
-            className="h-10 w-auto rounded-lg flex-shrink-0 drop-shadow-[0_0_12px_rgba(13,115,119,0.45)]" />
+            className="h-10 w-auto rounded-lg flex-shrink-0 drop-shadow-[0_0_12px_rgba(154,123,45,0.45)]" />
           <div className="flex flex-col leading-none">
             <span className="font-bold text-sm text-white">NyxCitadel<sup className="text-[9px] font-normal text-teal-400">™</sup></span>
             <span className="text-[10px] text-slate-500 uppercase tracking-wider">Healthcare Compliance</span>

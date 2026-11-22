@@ -28,7 +28,7 @@ export default function GlobalError({
             {error.digest && <span style={{ display: 'block', marginTop: 6, fontFamily: 'monospace', fontSize: 11, color: '#475569' }}>ID: {error.digest}</span>}
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button onClick={reset} style={{ padding: '10px 20px', borderRadius: 10, background: 'linear-gradient(135deg,#0d7377,#14a4a8)', color: '#fff', fontWeight: 600, fontSize: 14, border: 'none', cursor: 'pointer' }}>
+            <button onClick={reset} style={{ padding: '10px 20px', borderRadius: 10, background: 'linear-gradient(135deg,#9a7b2d,#c9a84c)', color: '#fff', fontWeight: 600, fontSize: 14, border: 'none', cursor: 'pointer' }}>
               Try again
             </button>
             <a href="/" style={{ padding: '10px 20px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', color: '#94a3b8', fontWeight: 500, fontSize: 14, textDecoration: 'none' }}>

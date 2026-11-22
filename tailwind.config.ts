@@ -69,16 +69,17 @@ const config: Config = {
         },
         // Luxury citadel palette (from citadellogo.png stained-glass crest)
         citadel: {
+          // Brand accent scale - gold family (token key kept for class compatibility)
           teal: {
-            DEFAULT: 'hsl(177 82% 42%)',
-            dark:    'hsl(177 82% 32%)',
-            light:   'hsl(177 82% 62%)',
-            muted:   'hsl(177 50% 30%)',
+            DEFAULT: 'hsl(44 53% 54%)',
+            dark:    'hsl(43 55% 39%)',
+            light:   'hsl(44 68% 68%)',
+            muted:   'hsl(43 40% 32%)',
           },
           gold: {
-            DEFAULT: 'hsl(43 65% 52%)',
-            dark:    'hsl(43 65% 38%)',
-            light:   'hsl(43 65% 68%)',
+            DEFAULT: 'hsl(44 53% 54%)',
+            dark:    'hsl(43 55% 39%)',
+            light:   'hsl(44 68% 68%)',
           },
           navy: {
             DEFAULT: 'hsl(228 38% 5%)',
