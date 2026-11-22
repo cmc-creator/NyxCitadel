@@ -84,7 +84,10 @@ export async function POST(req: NextRequest) {
         if (!facility) break;
         await prisma.facility.update({
           where: { id: facility.id },
-          data: { subscriptionStatus: 'canceled' },
+          data: {
+            subscriptionStatus: 'canceled',
+            stripeSubscriptionId: null,
+          },
         });
         break;
       }
