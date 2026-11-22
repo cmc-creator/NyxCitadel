@@ -47,6 +47,7 @@ model Facility {
   subscriptionStatus    String?  @default("trialing")
   trialEndsAt           DateTime?
   currentPeriodEnd      DateTime?
+  subscriptionPlan      String?
 
   // Relations
   users           User[]
