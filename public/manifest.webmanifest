@@ -1,0 +1,31 @@
+{
+  "background_color": "#070911",
+  "description": "White-label compliance and risk platform for hospitals and healthcare facilities.",
+  "display": "standalone",
+  "icons": [
+    {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "/store-assets/icon-192.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "/store-assets/icon-512.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "/store-assets/icon-512.png",
+      "type": "image/png"
+    }
+  ],
+  "name": "NyxCitadel - Hospital Compliance and Risk",
+  "orientation": "any",
+  "scope": "https://nyxcitadel.com/",
+  "short_name": "NyxCitadel",
+  "start_url": "https://nyxcitadel.com",
+  "theme_color": "#070911"
+}
