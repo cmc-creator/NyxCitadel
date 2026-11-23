@@ -1,0 +1,1 @@
+{"dependencies":{"@capacitor/android":"^8.0.0","@capacitor/cli":"^8.0.0","@capacitor/core":"^8.0.0","@capacitor/ios":"^8.0.0"},"description":"NyxCitadel store shell. Capacitor wrapper that loads the live site, following the Feed the Bear native pattern.","name":"nyxcitadel-native","private":true,"version":"1.0.0"}
