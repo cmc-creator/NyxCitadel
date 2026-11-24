@@ -9,13 +9,13 @@ import { VoiceIncidentModal } from '@/components/trackers/VoiceIncidentModal';
 
 const INCIDENT_TYPES = [
   'PATIENT_FALL', 'MEDICATION_ERROR', 'ELOPEMENT', 'ASSAULT_PATIENT_TO_STAFF',
-  'ASSAULT_PATIENT_TO_PATIENT', 'SELF_HARM', 'SUICIDE_ATTEMPT', 'SUICIDE_COMPLETION',
-  'RESTRAINT_SECLUSION_INJURY', 'ABUSE_NEGLECT', 'SEXUAL_ASSAULT', 'EQUIPMENT_FAILURE',
-  'INFECTION_OUTBREAK', 'PRIVACY_BREACH', 'WORKPLACE_INJURY', 'SENTINEL_EVENT',
-  'NEAR_MISS', 'OTHER',
+  'ASSAULT_PATIENT_TO_PATIENT', 'SELF_HARM', 'SUICIDE_ATTEMPT', 'RESTRAINT_SECLUSION',
+  'EQUIPMENT_FAILURE', 'INFECTION', 'PRIVACY_BREACH', 'COMPLAINT_GRIEVANCE',
+  'SENTINEL_EVENT', 'NEAR_MISS', 'WORKPLACE_INJURY', 'PROPERTY_DAMAGE',
+  'SECURITY_INCIDENT', 'ABUSE_NEGLECT', 'OTHER',
 ];
 
-const SEVERITY_LEVELS = ['NEAR_MISS', 'MINOR', 'MODERATE', 'SERIOUS', 'SENTINEL'];
+const SEVERITY_LEVELS = ['MINOR', 'MODERATE', 'MAJOR', 'CATASTROPHIC', 'SENTINEL'];
 
 export default function NewIncidentPage() {
   const router = useRouter();
@@ -51,16 +51,16 @@ export default function NewIncidentPage() {
     const data = {
       incidentType,
       severity,
-      incidentDate:      dateOccurred || (form.elements.namedItem('dateOccurred') as HTMLInputElement).value,
+      dateOccurred:      dateOccurred || (form.elements.namedItem('dateOccurred') as HTMLInputElement).value,
       location,
-      briefDescription:  description,
+      description,
       immediateActions,
       patientInvolved:   (form.elements.namedItem('patientInvolved') as HTMLInputElement).checked,
       reportableToState: (form.elements.namedItem('reportableToState') as HTMLInputElement).checked,
     };
 
     try {
-      const res = await fetch('/api/incident-reports', {
+      const res = await fetch('/api/incidents', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
