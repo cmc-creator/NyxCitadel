@@ -8,13 +8,14 @@ import { SentryPageGuide } from '@/components/ai/SentryPageGuide';
 import { VoiceIncidentModal } from '@/components/trackers/VoiceIncidentModal';
 
 const INCIDENT_TYPES = [
-  'FALL', 'MEDICATION_ERROR', 'ELOPEMENT', 'ASSAULT_PATIENT_ON_PATIENT',
-  'ASSAULT_PATIENT_ON_STAFF', 'SELF_HARM', 'SUICIDE_ATTEMPT', 'DEATH',
-  'RESTRAINT_ADVERSE_EVENT', 'SECLUSION_ADVERSE_EVENT', 'PROPERTY_DAMAGE',
-  'VISITOR_INJURY', 'EQUIPMENT_FAILURE', 'FIRE', 'UTILITY_FAILURE', 'OTHER',
+  'PATIENT_FALL', 'MEDICATION_ERROR', 'ELOPEMENT', 'ASSAULT_PATIENT_TO_STAFF',
+  'ASSAULT_PATIENT_TO_PATIENT', 'SELF_HARM', 'SUICIDE_ATTEMPT', 'SUICIDE_COMPLETION',
+  'RESTRAINT_SECLUSION_INJURY', 'ABUSE_NEGLECT', 'SEXUAL_ASSAULT', 'EQUIPMENT_FAILURE',
+  'INFECTION_OUTBREAK', 'PRIVACY_BREACH', 'WORKPLACE_INJURY', 'SENTINEL_EVENT',
+  'NEAR_MISS', 'OTHER',
 ];
 
-const SEVERITY_LEVELS = ['MINOR', 'MODERATE', 'MAJOR', 'CATASTROPHIC', 'SENTINEL'];
+const SEVERITY_LEVELS = ['NEAR_MISS', 'MINOR', 'MODERATE', 'SERIOUS', 'SENTINEL'];
 
 export default function NewIncidentPage() {
   const router = useRouter();
@@ -58,18 +59,23 @@ export default function NewIncidentPage() {
       reportableToState: (form.elements.namedItem('reportableToState') as HTMLInputElement).checked,
     };
 
-    const res = await fetch('/api/incident-reports', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+    try {
+      const res = await fetch('/api/incident-reports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
 
-    if (res.ok) {
-      router.push('/trackers/incidents');
-      router.refresh();
-    } else {
-      const body = await res.json();
-      setError(body.error ?? 'Failed to save incident report.');
+      if (res.ok) {
+        router.push('/trackers/incidents');
+        router.refresh();
+        return;
+      }
+      const body = await res.json().catch(() => null);
+      setError(body?.error ?? 'Failed to save incident report.');
+    } catch {
+      setError('Failed to save incident report. Please check your connection and try again.');
+    } finally {
       setSaving(false);
     }
   }
