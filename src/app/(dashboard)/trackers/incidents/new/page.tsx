@@ -50,9 +50,9 @@ export default function NewIncidentPage() {
     const data = {
       incidentType,
       severity,
-      dateOccurred:      dateOccurred || (form.elements.namedItem('dateOccurred') as HTMLInputElement).value,
+      incidentDate:      dateOccurred || (form.elements.namedItem('dateOccurred') as HTMLInputElement).value,
       location,
-      description,
+      briefDescription:  description,
       immediateActions,
       patientInvolved:   (form.elements.namedItem('patientInvolved') as HTMLInputElement).checked,
       reportableToState: (form.elements.namedItem('reportableToState') as HTMLInputElement).checked,
