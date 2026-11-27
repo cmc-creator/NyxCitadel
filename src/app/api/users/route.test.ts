@@ -5,7 +5,8 @@ import { GET, POST } from '@/app/api/users/route';
 
 vi.mock('@/lib/prisma', () => ({
   prisma: {
-    user: { findMany: vi.fn(), findUnique: vi.fn(), create: vi.fn() },
+    user: { findMany: vi.fn(), findUnique: vi.fn(), create: vi.fn(), count: vi.fn() },
+    facility: { findUnique: vi.fn() },
   },
 }));
 
@@ -44,6 +45,12 @@ describe('POST /api/users', () => {
     vi.mocked(auth).mockResolvedValueOnce({
       user: { id: 'admin1', facilityId: 'f1', role: 'ADMIN' },
     } as any);
+    // Plan cap check runs first: a facility with no subscription is in
+    // trial state (cap 20) and this facility is well under it.
+    vi.mocked(prisma.facility.findUnique).mockResolvedValueOnce({
+      subscriptionPlan: null, subscriptionStatus: null, stripeSubscriptionId: null,
+    } as any);
+    vi.mocked(prisma.user.count).mockResolvedValueOnce(0);
     vi.mocked(prisma.user.findUnique).mockResolvedValueOnce(null);
     vi.mocked(prisma.user.create).mockResolvedValueOnce({
       id: 'u-new', name: 'Bob', email: 'bob@f1.com', role: 'STAFF',
@@ -67,6 +74,10 @@ describe('POST /api/users', () => {
     vi.mocked(auth).mockResolvedValueOnce({
       user: { id: 'admin1', facilityId: 'f1', role: 'ADMIN' },
     } as any);
+    vi.mocked(prisma.facility.findUnique).mockResolvedValueOnce({
+      subscriptionPlan: null, subscriptionStatus: null, stripeSubscriptionId: null,
+    } as any);
+    vi.mocked(prisma.user.count).mockResolvedValueOnce(0);
     vi.mocked(prisma.user.findUnique).mockResolvedValueOnce({
       id: 'existing', email: 'dup@f1.com',
     } as any);
@@ -77,5 +88,27 @@ describe('POST /api/users', () => {
     const res = await POST(req);
 
     expect(res.status).toBe(409);
+  });
+
+  it('returns 403 when the facility is at its plan user cap', async () => {
+    vi.mocked(auth).mockResolvedValueOnce({
+      user: { id: 'admin1', facilityId: 'f1', role: 'ADMIN' },
+    } as any);
+    // Starter plan with a live subscription caps at 5 active users,
+    // and this facility already has 5.
+    vi.mocked(prisma.facility.findUnique).mockResolvedValueOnce({
+      subscriptionPlan: 'starter', subscriptionStatus: 'active', stripeSubscriptionId: 'sub_123',
+    } as any);
+    vi.mocked(prisma.user.count).mockResolvedValueOnce(5);
+
+    const req = {
+      json: vi.fn().mockResolvedValue({ email: 'extra@f1.com', password: 'secret123' }),
+    } as any;
+    const res = await POST(req);
+
+    expect(res.status).toBe(403);
+    const body = await res.json();
+    expect(body.error).toContain('Plan limit reached');
+    expect(prisma.user.create).not.toHaveBeenCalled();
   });
 });
