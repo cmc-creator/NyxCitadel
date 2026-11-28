@@ -2,7 +2,8 @@
 
 import { TrendingUp, Clock, ShieldCheck, DollarSign, Award } from 'lucide-react';
 
-export function ComplianceRoiWidget() {
+export function ComplianceRoiWidget({ facilityName }: { facilityName?: string }) {
+  const displayFacilityName = facilityName?.trim() ? facilityName : 'your facility';
   return (
     <div className="bg-gradient-to-r from-teal-950/40 via-slate-900 to-cyan-950/40 border border-teal-500/30 rounded-2xl p-6 shadow-xl space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
@@ -17,7 +18,7 @@ export function ComplianceRoiWidget() {
                 Annual Impact
               </span>
             </h3>
-            <p className="text-xs text-muted-foreground">Quantified time savings and fine exposure reduction for Riverside General Hospital.</p>
+            <p className="text-xs text-muted-foreground">Quantified time savings and fine exposure reduction for {displayFacilityName}.</p>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { 
@@ -69,6 +70,13 @@ export default async function DashboardPage() {
   const session = await auth();
   if (!session) redirect('/login');
 
+  const facility = session.user.facilityId
+    ? await prisma.facility.findUnique({
+        where: { id: session.user.facilityId },
+        select: { name: true },
+      })
+    : null;
+
   return (
     <div className="space-y-8 pb-16">
       {/* Hero */}
@@ -93,7 +101,7 @@ export default async function DashboardPage() {
       <ExecutiveBoardSummaryWidget />
 
       {/* Executive ROI & Fine Exposure Prevention Widget */}
-      <ComplianceRoiWidget />
+      <ComplianceRoiWidget facilityName={facility?.name ?? undefined} />
 
       {/* Quick Start Grid */}
       <div>

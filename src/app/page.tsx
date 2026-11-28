@@ -406,14 +406,14 @@ export default async function RootPage() {
                 ))}
               </div>
             </div>
-            <div className="absolute -top-7 -right-4 bg-red-500/10 border border-red-500/30 backdrop-blur-sm rounded-xl p-3 shadow-2xl max-w-[200px]">
+            <div className="absolute bottom-full right-2 mb-3 bg-red-500/10 border border-red-500/30 backdrop-blur-sm rounded-xl p-3 shadow-2xl max-w-[200px]">
               <div className="flex items-center gap-2 mb-1">
                 <Bell className="w-3.5 h-3.5 text-red-400" />
                 <span className="text-xs font-bold text-red-300">Reg Alert</span>
               </div>
               <p className="text-[11px] text-slate-300">CMS updated F0880 infection control requirements</p>
             </div>
-            <div className="absolute -bottom-6 -left-6 bg-citadel-gold/10 border border-citadel-gold/30 backdrop-blur-sm rounded-xl p-3.5 shadow-2xl">
+            <div className="absolute top-full left-2 mt-3 bg-citadel-gold/10 border border-citadel-gold/30 backdrop-blur-sm rounded-xl p-3.5 shadow-2xl">
               <p className="text-xs text-slate-500 mb-0.5">Facility Risk Level</p>
               <p className="text-3xl font-extrabold text-citadel-gold-light">Low <span className="text-base font-normal text-slate-500">Risk</span></p>
               <p className="text-[11px] text-green-400 mt-0.5">↓ Improved this quarter</p>
